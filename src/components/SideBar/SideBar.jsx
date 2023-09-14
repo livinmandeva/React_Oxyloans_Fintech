@@ -144,7 +144,10 @@ const Sidebar = (props) => {
                 </li> */}
                 <li
                   className={`${
-                    "/" === pathName ? "active submenu" : "submenu"
+                    "/loadwaletThroughQr" === pathName ||
+                    "/loadwalletThroughVirtualAccount" === pathName
+                      ? "active submenu"
+                      : "submenu"
                   }`}
                 >
                   <Link
@@ -259,7 +262,11 @@ const Sidebar = (props) => {
                 <li
                   className={`${
                     "/myinterestEarning" === pathName ||
-                    "/myhighvalueDeals" === pathName
+                    "/myhighvalueDeals" === pathName ||
+                    "/myRunningDelas" === pathName ||
+                    "/myholdamount" === pathName ||
+                    "/earningCertificate" === pathName ||
+                    "/loansStatement" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -310,16 +317,7 @@ const Sidebar = (props) => {
                           Hold Amount
                         </Link>
                       </li>
-                      {/* <li>
-                        <Link
-                          to="/editinvoice"
-                          className={`${
-                            "/editinvoice" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Partially Cloed Deals
-                        </Link>
-                      </li> */}
+
                       <li>
                         <Link
                           to="/myinterestEarning"
@@ -369,28 +367,30 @@ const Sidebar = (props) => {
                 </li>
                 <li
                   className={`${
-                    "/students" === pathName ||
-                    "/studentsview" === pathName ||
-                    "/addstudent" === pathName ||
-                    "/editstudent" === pathName
+                    "/withdrawdealfromDeal" === pathName ||
+                    "/withdrawalFromWallet" === pathName ||
+                    "/MywithdrawalHistory" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
                 >
                   <Link
                     to="#"
-                    className={isSideMenu == "Students" ? "subdrop" : ""}
+                    className={isSideMenu == "WithdrawFunds" ? "subdrop" : ""}
                     onClick={() =>
-                      toggleSidebar(isSideMenu == "Students" ? "" : "Students")
+                      toggleSidebar(
+                        isSideMenu == "WithdrawFunds" ? "" : "WithdrawFunds"
+                      )
                     }
                   >
                     <i className="fa-solid fa-wallet"></i>
                     <span>Withdraw Funds</span> <span className="menu-arrow" />
                   </Link>
-                  {isSideMenu == "Students" ? (
+                  {isSideMenu == "WithdrawFunds" ? (
                     <ul
                       style={{
-                        display: isSideMenu == "Students" ? "block" : "none",
+                        display:
+                          isSideMenu == "WithdrawFunds" ? "block" : "none",
                       }}
                     >
                       <li>
@@ -434,7 +434,8 @@ const Sidebar = (props) => {
                   className={`${
                     "/mytransactions" === pathName ||
                     "/membershipHistory" === pathName ||
-                    "/walletToWalletHistory" === pathName
+                    "/walletToWalletHistory" === pathName ||
+                    "/WalletToWallet" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -510,8 +511,8 @@ const Sidebar = (props) => {
 
                 <li
                   className={`${
-                    "/teacherslist" === pathName ||
-                    "/teachersprofile" === pathName ||
+                    "/writetous" === pathName ||
+                    "/emicalculator" === pathName ||
                     "/addteacher" === pathName ||
                     "/editteacher" === pathName
                       ? "active submenu"
@@ -520,18 +521,18 @@ const Sidebar = (props) => {
                 >
                   <Link
                     to="#"
-                    className={isSideMenu == "Teachers" ? "subdrop" : ""}
+                    className={isSideMenu == "HelpDesk" ? "subdrop" : ""}
                     onClick={() =>
-                      toggleSidebar(isSideMenu == "Teachers" ? "" : "Teachers")
+                      toggleSidebar(isSideMenu == "HelpDesk" ? "" : "HelpDesk")
                     }
                   >
                     <i className="fa-solid fa-handshake-angle"></i>
                     <span> Help Desk</span> <span className="menu-arrow" />
                   </Link>
-                  {isSideMenu == "Teachers" ? (
+                  {isSideMenu == "HelpDesk" ? (
                     <ul
                       style={{
-                        display: isSideMenu == "Teachers" ? "block" : "none",
+                        display: isSideMenu == "HelpDesk" ? "block" : "none",
                       }}
                     >
                       <li>
@@ -582,7 +583,8 @@ const Sidebar = (props) => {
 
                 <li
                   className={`${
-                    "/configautoInvest" === pathName
+                    "/configautoInvest" === pathName ||
+                    "/autoInvestHistory" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
