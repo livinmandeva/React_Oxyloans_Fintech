@@ -9,12 +9,12 @@ import FeatherIcon from "feather-icons-react";
 const Login = () => {
   let inputRef = useRef();
   const showIcon = () => (
-    <i class="feather feather-eye" aria-hidden="true">
+    <i className="feather feather-eye" aria-hidden="true">
       <FeatherIcon icon="eye" />
     </i>
   );
   const hideIcon = () => (
-    <i class="feather feather-eye-slash" aria-hidden="true">
+    <i className="feather feather-eye-slash" aria-hidden="true">
       <FeatherIcon icon="eye-off" />
     </i>
   );
@@ -36,7 +36,7 @@ const Login = () => {
                   </p>
                   <h2>Sign in</h2>
                   {/* Form */}
-                  <form action="./admindashboard">
+                  <form action="#">
                     <div className="form-group">
                       <label>
                         Username <span className="login-danger">*</span>
@@ -76,12 +76,14 @@ const Login = () => {
                       <Link to="/forgotpassword">Forgot Password?</Link>
                     </div>
                     <div className="form-group">
-                      <button
-                        className="btn btn-primary btn-block"
-                        type="submit"
-                      >
-                        Login
-                      </button>
+                      <Link to="/admindashboard">
+                        <button
+                          className="btn btn-primary btn-block"
+                          type="submit"
+                        >
+                          Login
+                        </button>
+                      </Link>
                     </div>
                   </form>
                   {/* /Form */}
