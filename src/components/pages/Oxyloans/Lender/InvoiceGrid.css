@@ -1,0 +1,107 @@
+.card11{
+    
+
+    display: grid;
+    grid-template-columns: 24% 18.4% 18.4% 16% auto;
+    gap: 2px;
+    padding: 11px 0px;
+
+}
+.card10{
+    display: grid;
+    grid-template-columns: 24% 14% 17% 14% 16% auto;
+    gap: 2px;
+    padding: 11px 0px;
+}
+.card-body1 {
+    padding: 0.7rem 0px ;
+    margin-top: 10px;
+
+}
+.card-body11{
+    display: flex;
+    flex-direction: column;
+
+}
+.card-title{
+    font-size: 15px !important;
+
+}
+.card-text{
+    font-size: 12px !important;
+    margin: 4px 2px;
+}
+.btn-1{
+  height: 1.8rem;
+  padding: auto;
+  width: auto;
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: none;
+  border: none;
+}
+.btn-2{
+    height: 1.8rem;
+    padding: auto;
+    width: auto;
+    background-color: rgb(35, 184, 35);
+    color: white;
+    border-radius: 5px;
+    font-size: 13px;
+    box-shadow: none;
+    border: none;
+  }
+
+@media screen  and (max-width:780px) {
+    /* . */
+    .card11 {display: flex;flex-direction: column;}
+}
+.cardheader{
+    padding: 8px 10px;
+}
+.card-header{
+    border-bottom: none !important;
+    /* display: flex; */
+}
+
+.card12{
+    display: grid;
+    grid-template-columns: 12% 12% 10% 10%  auto auto auto auto auto;
+    gap: 2px;
+    /* padding: 11px 4px; */
+    padding: 1rem  4px!important;
+}
+
+.bi-whatsapp{
+    font-size: 14px;
+    color: white;
+}
+.card-data{
+    color: #000000;
+    font-weight: 500;
+}
+.card-des{
+    color: gray;
+}
+/* .form-control{
+    height: 3.3rem;
+    font-size: 20px;
+} */
+/* form-control */
+.button-qr{
+    height: auto;
+    width: auto;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center;
+
+}   .btn-primary-1{
+    height: 3rem;
+    width: 8rem;
+    margin-top: 1rem !important;
+    /* background: transparent;
+    border: 2px solid rgb(32, 32, 233);
+    color:rgb(32, 32, 233) ; */
+} 
