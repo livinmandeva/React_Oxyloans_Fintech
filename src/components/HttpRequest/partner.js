@@ -1,4 +1,34 @@
+import axios from "axios";
 const userisIn = "local";
-let baseurl = (userisIn = "local"
-  ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
-  : "https://fintech.oxyloans.com/oxyloans/v1/user/");
+let API_BASE_URL =
+  userisIn == "local"
+    ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
+    : "https://fintech.oxyloans.com/oxyloans/v1/user/";
+
+const handleApiRequestPartnerService = async (
+  endpoint,
+  method,
+  data = null,
+  headers = {},
+  accessToken = null
+) => {
+  try {
+    const response = await axios({
+      method,
+      url: `${API_BASE_URL}/${endpoint}`,
+      data,
+      headers: {
+        "Content-Type": "application/json",
+        accessToken,
+        ...headers,
+      },
+    });
+
+    if (response.ok) {
+      const processedData = response.data;
+      return processedData;
+    }
+  } catch (error) {
+    throw error;
+  }
+};

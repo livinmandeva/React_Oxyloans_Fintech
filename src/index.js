@@ -17,11 +17,7 @@ import "./assets/plugins/fontawesome/css/all.min.css";
 import Approuter from "./approuter";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <Approuter />
-  </React.StrictMode>
-);
+root.render(<Approuter />);
 
 // ReactDOM.render(
 //   <Approuter/>,

@@ -11,7 +11,7 @@ const API_URL_otp =
 export const loginUser = async (email, password, dataIpv4, dataIpv6) => {
   var data = {
     password: password,
-    email: email, // Use the correct variable here
+    email: email,
     ipAddress: dataIpv4,
     ipAddressResponse: dataIpv6,
     loginType: "WEB",
@@ -47,7 +47,6 @@ export const validateInput = (email, password) => {
   if (!password || password.length < 6) {
     return "Password must be at least 6 characters long";
   }
-
   return null;
 };
 
@@ -78,7 +77,6 @@ export const verifypannumber = async (pannumber, address, time, id, date) => {
   var data = {
     address: address,
     dob: date,
-
     panNumber: pannumber,
     timeInMilliSeconds: time,
     userId: id,
@@ -142,7 +140,6 @@ export const moblieloginotp = async (moblie) => {
   };
   try {
     const response = await axios.post(API_URL_otp, data);
-
     return {
       responseData: response.data,
     };
