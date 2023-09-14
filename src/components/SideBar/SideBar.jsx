@@ -197,9 +197,9 @@ const Sidebar = (props) => {
 
                 <li
                   className={`${
-                    "/subject" === pathName ||
-                    "/addsubject" === pathName ||
-                    "/editsubject" === pathName
+                    "/regularRunningDeal" === pathName ||
+                    "/regularEscrowDeals" === pathName ||
+                    "/regularPersonalDeal" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
