@@ -13,19 +13,19 @@ import { useHistory } from "react-router-dom";
 const Login = () => {
   let inputRef = useRef();
   const showIcon = () => (
-    <i class="feather feather-eye" aria-hidden="true">
+    <i className="feather feather-eye" aria-hidden="true">
       <FeatherIcon icon="eye" />
     </i>
   );
   const hideIcon = () => (
-    <i class="feather feather-eye-slash" aria-hidden="true">
+    <i className="feather feather-eye-slash" aria-hidden="true">
       <FeatherIcon icon="eye-off" />
     </i>
   );
 
   const [email, setEmail] = useState("");
   const [moblie, setmoblie] = useState("");
-  const [loginwithotp, setloginwithotp] = useState(true);
+  const [loginwithotp, setloginwithotp] = useState(false);
   const [password, setPassword] = useState("");
   const history = useHistory();
   const [response, setResponse] = useState(null);
@@ -144,164 +144,170 @@ const Login = () => {
                 <img className="img-fluid" src={login} alt="Logo" />
               </div>
               <div className="login-right">
-              {loginwithotp ? (
-  <>
-    <div className="login-right-wrap">
-      <h1>Welcome to Oxyloans</h1>
-      <p className="account-subtitle">
-        Need an account? <Link to="/register">Sign Up</Link>
-      </p>
-      <h2>Sign in</h2>
+                {loginwithotp ? (
+                  <>
+                    <div className="login-right-wrap">
+                      <h1>Welcome to Oxyloans</h1>
+                      <p className="account-subtitle">
+                        Need an account? <Link to="/register">Sign Up</Link>
+                      </p>
+                      <h2>Sign in</h2>
 
-      {/* Form */}
-      <div className="form-group">
-        <label>
-          Mobile number <span className="login-danger">*</span>
-        </label>
-        <input
-          className="form-control"
-          type="text"
-          value={moblie} // Correct variable name, should be "mobile"
-          name="mobile" // Corrected the input name to "mobile"
-          onChange={(event) => setmoblie(event.target.value)}
-        />
-        <span className="profile-views">
-          <i className="fas fa-user-circle" />
-        </span>
-      </div>
+                      {/* Form */}
+                      <div className="form-group">
+                        <label>
+                          Mobile number <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          value={moblie} // Correct variable name, should be "mobile"
+                          name="mobile" // Corrected the input name to "mobile"
+                          onChange={(event) => setmoblie(event.target.value)}
+                        />
+                        <span className="profile-views">
+                          <i className="fas fa-user-circle" />
+                        </span>
+                      </div>
 
-      {oftermoblieotp ? (
-        <>
-          <div className="form-group">
-            <label>
-              Mobile OTP <span className="login-danger">*</span>
-            </label>
-            <input
-              className="form-control"
-              type="text"
-              value={otp}
-              name="otp"
-              onChange={(event) => setmoblieotp(event.target.value)}
-            />
-            <span className="profile-views">
-              <i className="fas fa-user-circle" />
-            </span>
-          </div>
-          <div className="form-group">
-            <button
-              className="btn btn-primary btn-block"
-              onClick={handleotpsubmit}
-              type="button" // Changed from "submit" to "button"
-            >
-              Submit
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="form-group">
-            <button
-              className="btn btn-primary btn-block"
-              onClick={handleLoginotp}
-              type="button" // Changed from "submit" to "button"
-            >
-              Send OTP
-            </button>
-          </div>
-        </>
-      )}
-    </div>
-  </>
-) : (
-  <>
-    <div className="login-right-wrap">
-      <h1>Welcome to Your App</h1> {/* Specify your app's name */}
-      <p className="account-subtitle">
-        Need an account? <Link to="/register">Sign Up</Link>
-      </p>
-      <h2>Sign in</h2>
-      {/* Form */}
-      <div className="form-group">
-        <label>
-          Username <span className="login-danger">*</span>
-        </label>
-        <input
-          className="form-control"
-          type="text"
-          value={email}
-          name="email" // Corrected the input name to "email"
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <span className="profile-views">
-          <i className="fas fa-user-circle" />
-        </span>
-      </div>
-      <div className="form-group">
-        <label>
-          Password <span className="login-danger">*</span>
-        </label>
-        <input
-          ref={inputRef}
-          className="form-control pass-input"
-          type="password"
-          name="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        {error && <div className="errormessage">{error}</div>}
-        <ReactPasswordToggleIcon
-          inputRef={inputRef}
-          showIcon={showIcon}
-          hideIcon={hideIcon}
-        />
-      </div>
-      <div className="forgotpass">
-        <div className="remember-me">
-          <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
-            {" "}
-            Remember me
-            <input type="checkbox" name="remember" /> {/* Specify a name for the checkbox */}
-            <span className="checkmark" />
-          </label>
-        </div>
-        <Link to="/forgotpassword">Forgot Password?</Link>
-      </div>
-      <div className="form-group">
-        <button
-          className="btn btn-primary btn-block"
-          onClick={handleLogin}
-          type="button" // Changed from "submit" to "button"
-        >
-          Login
-        </button>
-      </div>
-      {/* Response from API */}
-      {response && (
-        <div>Response from API: {JSON.stringify(response)}</div>
-      )}
-      <div className="login-or">
-        <span className="or-line" />
-        <span className="span-or">or</span>
-      </div>
-      {/* Social Login */}
-      <div className="social-login">
-        <Link to="#">
-          <i className="fab fa-google-plus-g" />
-        </Link>
-        <Link to="/whatapplogin">
-          <i className="fa fa-whatsapp" /> {/* Removed extra spaces */}
-        </Link>
-        <Link onClick={() => setloginwithotp(true)}> {/* Corrected the onClick handler */}
-          <i className="fab fa-facebook-f" />
-        </Link>
-        <Link to="#">
-          <i className="fab fa-twitter" />
-        </Link>
-      </div>
-    </div>
-  </>
-)}
-
+                      {oftermoblieotp ? (
+                        <>
+                          <div className="form-group">
+                            <label>
+                              Mobile OTP <span className="login-danger">*</span>
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={otp}
+                              name="otp"
+                              onChange={(event) =>
+                                setmoblieotp(event.target.value)
+                              }
+                            />
+                            <span className="profile-views">
+                              <i className="fas fa-user-circle" />
+                            </span>
+                          </div>
+                          <div className="form-group">
+                            <button
+                              className="btn btn-primary btn-block"
+                              onClick={handleotpsubmit}
+                              type="button" // Changed from "submit" to "button"
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="form-group">
+                            <button
+                              className="btn btn-primary btn-block"
+                              onClick={handleLoginotp}
+                              type="button" // Changed from "submit" to "button"
+                            >
+                              Send OTP
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="login-right-wrap">
+                      <h1>Welcome to Oxyloans</h1>{" "}
+                      {/* Specify your app's name */}
+                      <p className="account-subtitle">
+                        Need an account? <Link to="/register">Sign Up</Link>
+                      </p>
+                      <h2>Sign in</h2>
+                      {/* Form */}
+                      <div className="form-group">
+                        <label>
+                          Username <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          value={email}
+                          name="email" // Corrected the input name to "email"
+                          onChange={(event) => setEmail(event.target.value)}
+                        />
+                        <span className="profile-views">
+                          <i className="fas fa-user-circle" />
+                        </span>
+                      </div>
+                      <div className="form-group">
+                        <label>
+                          Password <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          ref={inputRef}
+                          className="form-control pass-input"
+                          type="password"
+                          name="password"
+                          value={password}
+                          onChange={(event) => setPassword(event.target.value)}
+                        />
+                        {error && <div className="errormessage">{error}</div>}
+                        <ReactPasswordToggleIcon
+                          inputRef={inputRef}
+                          showIcon={showIcon}
+                          hideIcon={hideIcon}
+                        />
+                      </div>
+                      <div className="forgotpass">
+                        <div className="remember-me">
+                          <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
+                            {" "}
+                            Remember me
+                            <input type="checkbox" name="remember" />{" "}
+                            {/* Specify a name for the checkbox */}
+                            <span className="checkmark" />
+                          </label>
+                        </div>
+                        <Link to="/forgotpassword">Forgot Password?</Link>
+                      </div>
+                      <div className="form-group">
+                        <button
+                          className="btn btn-primary btn-block"
+                          onClick={handleLogin}
+                          type="button" // Changed from "submit" to "button"
+                        >
+                          Login
+                        </button>
+                      </div>
+                      {/* Response from API */}
+                      {response && (
+                        <div>Response from API: {JSON.stringify(response)}</div>
+                      )}
+                      <div className="login-or">
+                        <span className="or-line" />
+                        <span className="span-or">or</span>
+                      </div>
+                      {/* Social Login */}
+                      <div className="social-login">
+                        <Link to="#">
+                          <i className="fab fa-google-plus-g" />
+                        </Link>
+                        <Link to="/whatapplogin">
+                          <i className="fa fa-whatsapp" />{" "}
+                          {/* Removed extra spaces */}
+                        </Link>
+                        <Link onClick={() => setloginwithotp(true)}>
+                          {" "}
+                          {/* Corrected the onClick handler */}
+                          <i className="fab fa-facebook-f" />
+                        </Link>
+                        <Link to="#">
+                          <i className="fab fa-twitter" />
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

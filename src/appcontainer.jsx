@@ -213,9 +213,12 @@ const appcontainer = () => {
         <Route path="/admindashboard" component={AdminDashboard} />
 
         <Route path="/loadwaletThroughQr" component={LoadwaletThroughQr} />
-        <Route path="/lender_register"   component ={LenderRegister} />
-        <Route path="/borrower_register"   component ={BorrowerRegister} />
-        <Route path="/register_active_proceed"   component ={Register_active_proceed} />
+        <Route path="/lender_register" component={LenderRegister} />
+        <Route path="/borrower_register" component={BorrowerRegister} />
+        <Route
+          path="/register_active_proceed"
+          component={Register_active_proceed}
+        />
         <Route path="/forgotpassword1" component={ForgotPassword3} />
         <Route path="/partnerRegister" component={PartnerRegister} />
         <Route

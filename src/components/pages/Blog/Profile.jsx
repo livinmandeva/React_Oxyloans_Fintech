@@ -3,6 +3,7 @@ import SideBar from "../../SideBar/SideBar";
 import Header from "../../Header/Header";
 import { Link } from "react-router-dom";
 import { avatar02 } from "../../imagepath";
+import FeatherIcon from "feather-icons-react";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {
@@ -112,15 +113,15 @@ const Profile = () => {
                       </Link>
                     </li>
 
-                    {/* <li className="nav-item">
+                    <li className="nav-item">
                       <Link
                         className="nav-link"
                         data-bs-toggle="tab"
-                        to="#kyc_tab"
+                        to="#uploadKyc_tab"
                       >
-                        Kyc
+                        Upload KYC
                       </Link>
-                    </li> */}
+                    </li>
                   </ul>
                 </div>
                 <div className="tab-content profile-tab-cont">
@@ -516,6 +517,152 @@ const Profile = () => {
                     </div>
                   </div>
                   {/* ///profile Tab */}
+
+                  {/* KycTab */}
+
+                  <div id="uploadKyc_tab" className="tab-pane fade">
+                    <div className="card">
+                      <div className="card-body">
+                        <h5 className="card-title">Upload Kyc</h5>
+                        <div className="row">
+                          <div className="col-md-12 col-lg-12 row">
+                            <form>
+                              <div className="row mt-3">
+                                <div className="form-group col-12 col-md-6">
+                                  <p className="settings-label">
+                                    Pan Card <span className="star-red">*</span>
+                                  </p>
+                                  <div className="settings-btn">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      name="image"
+                                      id="file"
+                                      className="hide-input"
+                                    />
+                                    <label htmlFor="file" className="upload">
+                                      <i className="feather-upload">
+                                        <FeatherIcon icon="upload" />
+                                      </i>
+                                    </label>
+                                  </div>
+                                  {/* <h6 className="settings-size">
+                                    <span>
+                                      Image Uploaded
+                                      <i className="fa fa-chek text-bg-dark"></i>
+                                    </span>
+                                  </h6> */}
+                                </div>
+
+                                <div className="form-group col-12 col-md-6">
+                                  <p className="settings-label">
+                                    cheque leaf
+                                    <span className="star-red">*</span>
+                                  </p>
+                                  <div className="settings-btn">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      name="image"
+                                      id="file"
+                                      className="hide-input"
+                                    />
+                                    <label htmlFor="file" className="upload">
+                                      <i className="feather-upload">
+                                        <FeatherIcon icon="upload" />
+                                      </i>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="form-group col-12 col-md-6">
+                                  <p className="settings-label">
+                                    Aadhar
+                                    <span className="star-red">*</span>
+                                  </p>
+                                  <div className="settings-btn">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      name="image"
+                                      id="file"
+                                      className="hide-input"
+                                    />
+                                    <label htmlFor="file" className="upload">
+                                      <i className="feather-upload">
+                                        <FeatherIcon icon="upload" />
+                                      </i>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="form-group col-12 col-md-6">
+                                  <p className="settings-label">
+                                    Driving license
+                                    <span className="star-red">*</span>
+                                  </p>
+                                  <div className="settings-btn">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      name="image"
+                                      id="file"
+                                      className="hide-input"
+                                    />
+                                    <label htmlFor="file" className="upload">
+                                      <i className="feather-upload">
+                                        <FeatherIcon icon="upload" />
+                                      </i>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="form-group col-12 col-md-6">
+                                  <p className="settings-label">
+                                    Voter ID
+                                    <span className="star-red">*</span>
+                                  </p>
+                                  <div className="settings-btn">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      name="image"
+                                      id="file"
+                                      className="hide-input"
+                                    />
+                                    <label htmlFor="file" className="upload">
+                                      <i className="feather-upload">
+                                        <FeatherIcon icon="upload" />
+                                      </i>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div className="form-group col-12 col-md-6">
+                                  <p className="settings-label">
+                                    Passport
+                                    <span className="star-red">*</span>
+                                  </p>
+                                  <div className="settings-btn">
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      name="image"
+                                      id="file"
+                                      className="hide-input"
+                                    />
+                                    <label htmlFor="file" className="upload">
+                                      <i className="feather-upload">
+                                        <FeatherIcon icon="upload" />
+                                      </i>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Kyc Tab End */}
                 </div>
               </div>
             </div>
