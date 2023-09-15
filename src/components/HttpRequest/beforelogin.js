@@ -1,32 +1,35 @@
 import axios from "axios";
-
 const userisIn = "local";
-let baseurl = (userisIn = "local"
-  ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
-  : "https://fintech.oxyloans.com/oxyloans/v1/user/");
+let API_BASE_URL =
+  userisIn == "local"
+    ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
+    : "https://fintech.oxyloans.com/oxyloans/v1/user/";
 
-const handleipv6 = () => {
-  axios({
-    method: "get",
-    url: "https://ipapi.co/json/",
-  })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((error) => {
-      console.log(error);
+const handleApiRequestBeforeLogin = async (method, url) => {
+  try {
+    const response = await axios({
+      method,
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    throw error;
+  }
 };
 
-const handleip4 = () => {
-  axios({
-    method: "get",
-    url: "https://api.ipify.org/?format=json",
-  })
-    .then((res) => {
-      console.log(res.data.ip);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+export const handleip4 = () => {
+  return handleApiRequestBeforeLogin(
+    "get",
+    "https://api.ipify.org/?format=json"
+  );
+};
+
+export const handleipv6 = () => {
+  return handleApiRequestBeforeLogin("get", "https://ipapi.co/json/");
 };
