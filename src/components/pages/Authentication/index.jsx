@@ -35,67 +35,67 @@ const Login = () => {
   const [dataIpv6, setdataIpv6] = useState({});
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    handleipv6().then((data) => {
-      setdataIpv6(data.ip);
-    });
-    handleip4().then((data) => {
-      setdataIpv4(data.ip);
-    });
-  }, []);
+  // useEffect(() => {
+  //   handleipv6().then((data) => {
+  //     setdataIpv6(data.ip);
+  //   });
+  //   handleip4().then((data) => {
+  //     setdataIpv4(data.ip);
+  //   });
+  // }, []);
 
-  const handleLogin = async () => {
-    const validationError = api.validateInput(email, password);
+  // const handleLogin = async () => {
+  //   const validationError = api.validateInput(email, password);
 
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
+  //   if (validationError) {
+  //     setError(validationError);
+  //     return;
+  //   }
 
-    try {
-      const loginResponse = await api.loginUser(
-        email,
-        password,
-        dataIpv4,
-        dataIpv6
-      );
-      setResponse(loginResponse);
-      history.push("/admindashboard");
-      setError(null);
-    } catch (error) {
-      console.error("Error:", error.response.data.errorMessage);
-      setError(error.response.data.errorMessage);
-    }
-  };
+  //   try {
+  //     const loginResponse = await api.loginUser(
+  //       email,
+  //       password,
+  //       dataIpv4,
+  //       dataIpv6
+  //     );
+  //     setResponse(loginResponse);
+  //     history.push("/admindashboard");
+  //     setError(null);
+  //   } catch (error) {
+  //     console.error("Error:", error.response.data.errorMessage);
+  //     setError(error.response.data.errorMessage);
+  //   }
+  // };
 
-  const handleLoginotp = async () => {
-    const validationError = api.validatemoblie(moblie);
+  // const handleLoginotp = async () => {
+  //   const validationError = api.validatemoblie(moblie);
 
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
+  //   if (validationError) {
+  //     setError(validationError);
+  //     return;
+  //   }
 
-    try {
-      const loginResponse = await api.moblieloginotp(moblie);
+  //   try {
+  //     const loginResponse = await api.moblieloginotp(moblie);
 
-      setoftermoblieotp(true);
-    } catch (error) {
-      console.error("Error:", error.response.data.errorMessage);
-      setError(error.response.data.errorMessage);
-      setError("An error occurred during login");
-    }
-  };
+  //     setoftermoblieotp(true);
+  //   } catch (error) {
+  //     console.error("Error:", error.response.data.errorMessage);
+  //     setError(error.response.data.errorMessage);
+  //     setError("An error occurred during login");
+  //   }
+  // };
 
-  const handleotpsubmit = async () => {
-    try {
-      const loginResponse = await api.validateotpsubmit(moblie, otp);
-    } catch (error) {
-      console.error("Error:", error.response.data.errorMessage);
-      setError(error.response.data.errorMessage);
-      setError("An error occurred during login");
-    }
-  };
+  // const handleotpsubmit = async () => {
+  //   try {
+  //     const loginResponse = await api.validateotpsubmit(moblie, otp);
+  //   } catch (error) {
+  //     console.error("Error:", error.response.data.errorMessage);
+  //     setError(error.response.data.errorMessage);
+  //     setError("An error occurred during login");
+  //   }
+  // };
 
   return (
     <>
@@ -169,7 +169,7 @@ const Login = () => {
                           <div className="form-group">
                             <button
                               className="btn btn-primary btn-block"
-                              onClick={handleLoginotp}
+                              onClick={{}}
                               type="button"
                             >
                               Send OTP
@@ -241,7 +241,7 @@ const Login = () => {
                         <div className="form-group">
                           <button
                             className="btn btn-primary btn-block"
-                            onClick={handleLogin}
+                            onClick={{}}
                             type="button"
                           >
                             Login

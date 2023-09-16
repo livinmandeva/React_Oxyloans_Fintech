@@ -23,9 +23,7 @@ const handleApiRequestAfterLoginService = async (
         ...headers,
       },
     });
-
     // Add your common logic here
-
     if (response.ok) {
       const processedData = response.data;
       return processedData;

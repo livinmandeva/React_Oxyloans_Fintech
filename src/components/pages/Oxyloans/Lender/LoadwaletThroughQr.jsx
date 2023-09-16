@@ -98,10 +98,7 @@ const LoadwaletThroughQr = () => {
                             <h4>How to load the wallet through UPI</h4>
                           </div>
                           <div className="ratio ratio-21x9">
-                            <iframe
-                              src="https://www.youtube.com/embed/RUg_WsZ-90g?rel=0"
-                              height="500px"
-                            />
+                            <iframe src="https://www.youtube.com/embed/RUg_WsZ-90g?rel=0" />
                           </div>
                           <div className="personal-activity">
                             {/* <div className="personal-icons">
