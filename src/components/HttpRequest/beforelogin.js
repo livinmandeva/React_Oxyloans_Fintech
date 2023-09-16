@@ -5,31 +5,63 @@ let API_BASE_URL =
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
     : "https://fintech.oxyloans.com/oxyloans/v1/user/";
 
-const handleApiRequestBeforeLogin = async (method, url) => {
+const handleApiRequestBeforeLogin = async (
+  method,
+  BASE_URL,
+  End_Url,
+  POSTDATA
+) => {
   try {
     const response = await axios({
       method,
-      url: url,
+      url: `${BASE_URL}${End_Url}`,
+      data: POSTDATA,
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     if (response.status == 200) {
-      return response.data;
+      return response;
     }
   } catch (error) {
-    throw error;
+    return error;
   }
 };
 
-export const handleip4 = () => {
-  return handleApiRequestBeforeLogin(
-    "get",
-    "https://api.ipify.org/?format=json"
+export const userloginSection = async (email, password) => {
+  const checkLoginMode = email.includes("@") == true ? true : false;
+  const postdata =
+    checkLoginMode === true
+      ? JSON.stringify({ password: password, email: email })
+      : JSON.stringify({
+          password: password,
+          mobileNumber: email,
+        });
+
+  const response = await handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    "login?grantType=PWD",
+    postdata
   );
+
+  if (response.status == 200) {
+    const accessTokenFromHeader = response.headers["accesstoken"];
+    sessionStorage.setItem("token", accessTokenFromHeader);
+    return response;
+  } else {
+    return response;
+  }
 };
 
-export const handleipv6 = () => {
-  return handleApiRequestBeforeLogin("get", "https://ipapi.co/json/");
-};
+// export const handleip4 = () => {
+//   return handleApiRequestBeforeLogin(
+//     "get",
+//     "https://api.ipify.org/?format=json"
+//   );
+// };
+
+// export const handleipv6 = () => {
+//   return handleApiRequestBeforeLogin("get", "https://ipapi.co/json/");
+// };

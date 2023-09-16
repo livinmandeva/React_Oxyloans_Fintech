@@ -93,7 +93,15 @@ const LoadwaletThroughQr = () => {
                   <div className="col-lg-6">
                     <div className="student-personals-grp">
                       <div className="card">
-                        <div className="card-body">
+                        <h4 className="header-title">
+                          How to load the wallet through UPI
+                        </h4>
+                        <p className="sub-header"></p>
+                        {/* 16:9 aspect ratio */}
+                        <div className="ratio ratio-16x9">
+                          <iframe src="https://www.youtube.com/embed/RUg_WsZ-90g?rel=0" />
+                        </div>
+                        {/* <div className="card-body">
                           <div className="heading-detail">
                             <h4>How to load the wallet through UPI</h4>
                           </div>
@@ -101,36 +109,8 @@ const LoadwaletThroughQr = () => {
                             <iframe src="https://www.youtube.com/embed/RUg_WsZ-90g?rel=0" />
                           </div>
                           <div className="personal-activity">
-                            {/* <div className="personal-icons">
-                              <i className="feather-user">
-                                <FeatherIcon icon="user" />
-                              </i>
-                            </div> */}
-                          </div>
-
-                          {/* <div className="personal-activity">
-                            <div className="personal-icons">
-                              <i className="feather-mail">
-                                <FeatherIcon icon="briefcase" />
-                              </i>
-                            </div>
-                            <div className="views-personal">
-                              <h4>BANK</h4>
-                              <h5> ICICI</h5>
-                            </div>
-                          </div>
-                          <div className="personal-activity">
-                            <div className="personal-icons">
-                              <i className="feather-user">
-                                <FeatherIcon icon="user" />
-                              </i>
-                            </div>
-                            <div className="views-personal">
-                              <h4>Account Type</h4>
-                              <h5>Current account</h5>
-                            </div>
-                          </div> */}
-                        </div>
+                          
+                        </div> */}
                       </div>
                     </div>
                   </div>
