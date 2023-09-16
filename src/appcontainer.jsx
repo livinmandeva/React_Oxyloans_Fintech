@@ -122,7 +122,7 @@ const appcontainer = () => {
           path="/loadwalletThroughVirtualAccount"
           component={LoadwalletThroughVirtualAccount}
         />
-        <Route path="/whatapplog" component={Whatapplog} />
+        <Route path="/whatapplogin" component={Whatapplog} />
 
         {/* 
         oxyroutes End */}
