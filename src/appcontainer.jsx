@@ -3,10 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import Login from "./components/pages/Authentication";
-
 import Register from "./components/pages/Authentication/Register";
 import ForgotPassword from "./components/pages/Authentication/ForgotPassword";
-
 import Error404 from "./components/pages/Authentication/Error-404";
 import ConfigautoInvest from "./components/pages/Oxyloans/Lender/ConfigautoInvest";
 import AdminDashboard from "./components/pages/Dashboard/AdminDashboard";
