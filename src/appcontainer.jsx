@@ -6,6 +6,7 @@ import Login from "./components/pages/Authentication";
 
 import Register from "./components/pages/Authentication/Register";
 import ForgotPassword from "./components/pages/Authentication/ForgotPassword";
+
 import Error404 from "./components/pages/Authentication/Error-404";
 import ConfigautoInvest from "./components/pages/Oxyloans/Lender/ConfigautoInvest";
 import AdminDashboard from "./components/pages/Dashboard/AdminDashboard";
@@ -123,7 +124,7 @@ const appcontainer = () => {
           path="/loadwalletThroughVirtualAccount"
           component={LoadwalletThroughVirtualAccount}
         />
-        <Route path="/whatapplogin" component={Whatapplog} />
+        <Route path="/whatapplog" component={Whatapplog} />
 
         {/* 
         oxyroutes End */}
