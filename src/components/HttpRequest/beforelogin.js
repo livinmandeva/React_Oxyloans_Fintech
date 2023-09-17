@@ -48,7 +48,8 @@ export const userloginSection = async (email, password) => {
 
   if (response.status == 200) {
     const accessTokenFromHeader = response.headers["accesstoken"];
-    sessionStorage.setItem("token", accessTokenFromHeader);
+    sessionStorage.setItem("accessToken", accessTokenFromHeader);
+    sessionStorage.setItem("userId", response.data.id);
     return response;
   } else {
     return response;

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { useHistory } from "react-router-dom";
 import { userloginSection } from "../../HttpRequest/beforelogin";
+import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 
 const Login = () => {
   const history = useHistory();
@@ -62,13 +63,17 @@ const Login = () => {
   const submitloginhandler = async () => {
     let { email, password } = userLogInInfo;
     const retriveresponse = await userloginSection(email, password);
+
     if (retriveresponse.request.status == 200) {
+      toastrSuccess("Login Suceess !");
+      history.push("/dashboard");
     } else {
-      setUserLoginInfo({
-        ...userLogInInfo,
-        error: true,
-        errormessage: retriveresponse.response.data.errorMessage,
-      });
+      toastrWarning(retriveresponse.response.data.errorMessage);
+      // setUserLoginInfo({
+      //   ...userLogInInfo,
+      //   error: true,
+      //   errormessage: retriveresponse.response.data.errorMessage,
+      // });
     }
   };
 

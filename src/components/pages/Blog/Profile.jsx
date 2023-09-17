@@ -4,9 +4,24 @@ import Header from "../../Header/Header";
 import { Link } from "react-router-dom";
 import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
+import { useState, useEffect } from "react";
+
+import { getUserDetails } from "../../HttpRequest/afterlogin";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {
+  const [dashboarddata, setdashboarddata] = useState({
+    profileData: null,
+  });
+  useEffect(() => {
+    getUserDetails().then((data) => {
+      setdashboarddata({
+        ...dashboarddata,
+        profileData: data,
+      });
+    });
+  }, []);
+
   return (
     <>
       <div className="main-wrapper">
@@ -49,16 +64,34 @@ const Profile = () => {
                       </Link>
                     </div>
                     <div className="col ms-md-n2 profile-user-info">
-                      <h4 className="user-name mb-0">Mandeva Liveen</h4>
+                      <h4 className="user-name mb-0">
+                        {dashboarddata.profileData != null
+                          ? dashboarddata.profileData.data.firstName
+                          : "Livin"}
+                      </h4>
                       <h6 className="text-muted">
-                        LR36549 {", Oxy Founding Lender"}
+                        LR
+                        {dashboarddata.profileData != null
+                          ? dashboarddata.profileData.data.userId
+                          : "LR18"}
+                        {`, ${
+                          dashboarddata.profileData != null
+                            ? dashboarddata.profileData.data.groupName
+                            : "NewLender"
+                        }`}
                       </h6>
                       <div className="user-Location">
                         <i className="fas fa-map-marker-alt" /> Flat No 201,
                         Balaji Arcade Apts
                       </div>
                       <div className="about-text">
-                        Battalion Kondapur, Kothaguda
+                        {dashboarddata.profileData != null
+                          ? dashboarddata.profileData.data.address
+                          : ""}
+                        ,
+                        {dashboarddata.profileData != null
+                          ? dashboarddata.profileData.data.city
+                          : ""}
                       </div>
                       <div className="user-Location my-1">
                         <i className="fa-solid fa-calendar-days" /> Validity :
@@ -139,8 +172,8 @@ const Profile = () => {
                               <span>Personal Details</span>
                               <Link
                                 className="edit-link"
-                                // data-bs-toggle="modal"
-                                to="#"
+                                data-bs-toggle="modal"
+                                to="#profile_tab"
                               >
                                 <i className="far fa-edit me-1" />
                                 Edit
@@ -150,36 +183,55 @@ const Profile = () => {
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
                                 Name
                               </p>
-                              <p className="col-sm-9">Mandeva Liveeb </p>
+                              <p className="col-sm-9">
+                                {dashboarddata.profileData != null
+                                  ? dashboarddata.profileData.data.firstName
+                                  : "Livin"}
+                              </p>
                             </div>
                             <div className="row">
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
                                 Date of Birth
                               </p>
-                              <p className="col-sm-9">15/08/1997</p>
+                              <p className="col-sm-9">
+                                {dashboarddata.profileData != null
+                                  ? dashboarddata.profileData.data.dob
+                                  : "15/08/1997"}
+                              </p>
                             </div>
                             <div className="row">
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
                                 Email ID
                               </p>
-                              <p className="col-sm-9">livinmandeva@gmail.com</p>
+                              <p className="col-sm-9">
+                                {dashboarddata.profileData != null
+                                  ? dashboarddata.profileData.data.email
+                                  : "test@123"}
+                              </p>
                             </div>
                             <div className="row">
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
                                 Mobile
                               </p>
-                              <p className="col-sm-9">7569084614</p>
+                              <p className="col-sm-9">
+                                {dashboarddata.profileData != null
+                                  ? dashboarddata.profileData.data.mobileNumber
+                                  : "7569084614"}
+                              </p>
                             </div>
                             <div className="row">
                               <p className="col-sm-3 text-muted text-sm-end mb-0">
                                 Address
                               </p>
                               <p className="col-sm-9 mb-0">
-                                Gumpula
+                                {dashboarddata.profileData != null
+                                  ? dashboarddata.profileData.data.address
+                                  : ""}
                                 <br />
-                                suryapet
+                                {dashboarddata.profileData != null
+                                  ? dashboarddata.profileData.data.city
+                                  : ""}
                                 <br />
-                                Telangana
                               </p>
                             </div>
                           </div>

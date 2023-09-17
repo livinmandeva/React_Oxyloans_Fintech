@@ -9,18 +9,44 @@ import { Chart as GoogleChart } from "react-google-charts";
 import {
   awardicon01,
   awardicon04,
-  socialicon01,
-  socialicon02,
-  socialicon03,
-  socialicon04,
   dashboard1,
   dashboard2,
   dashboard3,
   dashboard4,
 } from "../../imagepath";
 import Footer from "../../Footer/Footer";
+import {
+  getuserMembershipValidity,
+  getUserDetails,
+} from "../../HttpRequest/afterlogin";
 
 const AdminDashboard = () => {
+  const [dashboarddata, setdashboarddata] = useState({
+    profileData: null,
+  });
+  const [membershipdata, setmembershipdata] = useState({
+    dashboardData: null,
+  });
+
+  useEffect(() => {
+    getuserMembershipValidity().then((data) => {
+      console.log("info");
+      console.log("membershipdata" + data);
+      setmembershipdata({
+        ...membershipdata,
+        dashboardData: data,
+      });
+    });
+    getUserDetails().then((data) => {
+      setdashboarddata({
+        ...dashboarddata,
+        profileData: data,
+      });
+    });
+  }, []);
+
+  console.log(dashboarddata);
+
   const [data, setObject] = useState({
     chart: {
       height: 350,
@@ -448,7 +474,13 @@ const AdminDashboard = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="page-sub-header">
-                    <h3 className="page-title">Welcome Liveen!</h3>
+                    <h3 className="page-title">
+                      Welcome{" "}
+                      {dashboarddata.profileData != null
+                        ? dashboarddata.profileData.data.firstName
+                        : ""}
+                      !
+                    </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item active">
                         <Link to="/admindashboard">Home</Link>
@@ -469,7 +501,12 @@ const AdminDashboard = () => {
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
                         <h6>Wallet </h6>
-                        <h3>500000</h3>
+                        <h3>
+                          {membershipdata.dashboardData != null
+                            ? membershipdata.dashboardData.data
+                                .totalWalletCreditedAmount
+                            : 10}
+                        </h3>
                       </div>
                       <div className="db-icon">
                         <img
@@ -489,7 +526,12 @@ const AdminDashboard = () => {
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
                         <h6>Active Deals</h6>
-                        <h3>9</h3>
+                        <h3>
+                          {membershipdata.dashboardData != null
+                            ? membershipdata.dashboardData.data
+                                .numberOfActiveDealsCount
+                            : 1}
+                        </h3>
                       </div>
                       <div className="db-icon">
                         <img
@@ -509,7 +551,12 @@ const AdminDashboard = () => {
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
                         <h6>Closed Deals</h6>
-                        <h3>5</h3>
+                        <h3>
+                          {membershipdata.dashboardData != null
+                            ? membershipdata.dashboardData.data
+                                .numberOfClosedDealsCount
+                            : 2}
+                        </h3>
                       </div>
                       <div className="db-icon">
                         <img
@@ -529,7 +576,14 @@ const AdminDashboard = () => {
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
                         <h6>Disburse Deals</h6>
-                        <h3>14</h3>
+                        <h3>
+                          {membershipdata.dashboardData != null
+                            ? membershipdata.dashboardData.data
+                                .numberOfClosedDealsCount +
+                              membershipdata.dashboardData.data
+                                .numberOfActiveDealsCount
+                            : 3}
+                        </h3>
                       </div>
                       <div className="db-icon">
                         <img

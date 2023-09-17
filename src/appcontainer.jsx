@@ -58,7 +58,8 @@ const appcontainer = () => {
         <Route path="/register" component={Register} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/error404" component={Error404} />
-        <Route path="/admindashboard" component={AdminDashboard} />
+        <Route path="/dashboard" component={AdminDashboard} />
+        ``
         <Route path="/loadwaletThroughQr" component={LoadwaletThroughQr} />
         <Route path="/lender_register" component={LenderRegister} />
         <Route path="/borrower_register" component={BorrowerRegister} />
@@ -123,7 +124,6 @@ const appcontainer = () => {
           component={LoadwalletThroughVirtualAccount}
         />
         <Route path="/whatapplogin" component={Whatapplog} />
-
         {/* 
         oxyroutes End */}
       </Switch>

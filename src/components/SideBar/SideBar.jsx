@@ -108,12 +108,8 @@ const Sidebar = (props) => {
             <div id="sidebar-menu" className="sidebar-menu">
               {/* Main Menu */}
               <ul>
-                <li
-                  className={`${
-                    "/admindashboard" === pathName ? "active" : ""
-                  }`}
-                >
-                  <Link to="/admindashboard">
+                <li className={`${"/dashboard" === pathName ? "active" : ""}`}>
+                  <Link to="/dashboard">
                     <i className="fa-solid fa-gauge"></i>{" "}
                     <span> Dashboard </span>
                     <span className="menu-arrow"></span>
@@ -703,7 +699,7 @@ const Sidebar = (props) => {
                   )}
                 </li>
 
-                <li className={`${"/timetable" === pathName ? "active" : ""}`}>
+                <li className={`${"/" === pathName ? "active" : ""}`}>
                   <Link to="/login">
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Sign Out</span>
