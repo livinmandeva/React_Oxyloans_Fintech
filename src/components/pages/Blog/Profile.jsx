@@ -170,11 +170,8 @@ const Profile = () => {
                           <div className="card-body">
                             <h5 className="card-title d-flex justify-content-between">
                               <span>Personal Details</span>
-                              <Link
-                                className="edit-link"
-                                data-bs-toggle="modal"
-                                to="#profile_tab"
-                              >
+
+                              <Link className="edit-link" to="#bankAccount_tab">
                                 <i className="far fa-edit me-1" />
                                 Edit
                               </Link>
@@ -247,12 +244,6 @@ const Profile = () => {
                                 <i className="far fa-edit me-1" /> Edit
                               </Link>
                             </h5>
-                            {/* <button className="btn btn-success" type="button">
-                              <i className="fe fe-check-verified">
-                                <FeatherIcon icon="check-verified" />
-                              </i>
-                              Active
-                            </button> */}
                           </div>
                         </div>
                         {/* /Account Status */}
@@ -286,70 +277,113 @@ const Profile = () => {
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Bank Account Details</h5>
+                        <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
                             <form>
                               <div className="row">
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Name as Per Bank</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Name as Per Bank
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Enter your Name"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Account Number</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Account Number
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder=" Enter your Account Number"
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Confirm Account Number</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Confirm Account Number
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder=" Confirm Account Number"
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-md-4">
-                                  <label>IFSC Code</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    IFSC Code
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder=" Enter your IFSC Code"
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Bank Name</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Bank Name
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder=" Enter your Bank Name"
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Branch</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Branch
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder=" Enter your Branch"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Branch</label>
-                                  <input type="text" className="form-control" />
+
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    city <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Enter your City"
+                                  />
                                 </div>
 
-                                <div className="form-group col-12 col-md-4">
-                                  <label>city</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Mobile Number
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Enter your Mobile Number"
+                                  />
                                 </div>
-
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Mobile Number</label>
-                                  <input type="text" className="form-control" />
-                                </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Otp</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Otp <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Enter your Mobile otp"
+                                  />
                                 </div>
 
                                 <div className="col-12 row">
@@ -385,55 +419,100 @@ const Profile = () => {
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Nominee Details</h5>
+                        <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
                             <form>
                               <div className="row">
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Nominee Name</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Nominee Name
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Enter your Nominee Name"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Relation</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Relation
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Enter your  Relation"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Nominee Email</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Nominee Email
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="email"
                                     className="form-control"
+                                    placeholder=" Enter  Nominee Email"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Nominee Mobile Number</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Nominee Mobile Number
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     minLength={10}
                                     className="form-control"
+                                    placeholder=" Enter  Nominee mobile no "
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Account No</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Account No
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder="  Nominee Name Account No"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>IFSC Code</label>
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    IFSC Code
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder="Nominee IFSC Code"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Bank Name</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Bank Name
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Nominee Bank Name"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-md-4">
-                                  <label>Branch</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Branch
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Nominee Branch"
+                                  />
                                 </div>
 
                                 <div className="row col-12">
@@ -461,97 +540,196 @@ const Profile = () => {
                           <div className="col-md-12 col-lg-12 row">
                             <form>
                               <div className="row mt-3">
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>First Name</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    First Name
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter First Name"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Last Name</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Last Name
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Last Name"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>PAN Number</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    PAN Number
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter PAN Number"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Aadhaar Number </label>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Aadhaar Number
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder="Enter Aadhar Number"
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Date of Birth</label>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Date of Birth
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="date"
                                     className="form-control datetimepicker"
                                   />
                                 </div>
 
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Father Name </label>
-                                  <input type="text" className="form-control" />
-                                </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Mobile No </label>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Father Name
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
-                                    type="number"
-                                    minLength={10}
+                                    type="text"
                                     className="form-control"
+                                    placeholder="Enter Father Name"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>WhatsApp No </label>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Mobile No
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
-                                    minLength={10}
+                                    maxLength={10}
                                     className="form-control"
+                                    placeholder="Enter Mobile Name"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Email ID </label>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    WhatsApp No
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="number"
+                                    maxLength={10}
+                                    className="form-control"
+                                    placeholder="Enter WhatsApp Name"
+                                  />
+                                </div>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Email ID
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="email"
                                     className="form-control"
+                                    placeholder="Enter Email Id"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Residence Address</label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Residence Address
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Residence Address"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Pin Code </label>
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Pin Code
+                                    <span className="login-danger">*</span>
+                                  </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    placeholder="Enter Pincode"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Locality </label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Locality
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Locality "
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>City </label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    City <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter City "
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>State </label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    State
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter State"
+                                  />
                                 </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Facebook URL </label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Facebook URL
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Facebook Url"
+                                  />
                                 </div>
 
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Twitter URL </label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Twitter URL
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Twitter Url"
+                                  />
                                 </div>
 
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Linkedin URL </label>
-                                  <input type="text" className="form-control" />
+                                <div className="form-group col-12 col-sm-4 local-forms">
+                                  <label>
+                                    Linkedin URL
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter Linkedin  Url"
+                                  />
                                 </div>
                                 <div className="col-12 ">
                                   <button

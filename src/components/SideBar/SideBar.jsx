@@ -88,8 +88,6 @@ const Sidebar = (props) => {
 
   let pathName = props.location.pathname;
 
-  console.log("Working", pathName);
-
   return (
     <>
       <div className="sidebar" id="sidebar">

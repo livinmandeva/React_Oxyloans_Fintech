@@ -1,4 +1,5 @@
 import axios from "axios";
+import { error } from "jquery";
 const userisIn = "local";
 const API_BASE_URL =
   userisIn == "local"
@@ -62,5 +63,57 @@ export const getUserDetails = async () => {
     "GET",
     token
   );
+  return response;
+};
+
+export const submitWithdrawalRequestFromWallet = async (postdate) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    userType: "LENDER",
+    amount: postdate.withdrawAmount,
+    amountRequiredDate: postdate.setGivendate,
+    withdrawalReason: postdate.withdraReason,
+    rating: postdate.withdrawRating,
+    feedBack: postdate.withdrawFeedback,
+    adminComments: "",
+    status: "INITIATED",
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `savewithdrawalfundsinfo`,
+    "POST",
+    token,
+    postdatastring
+  );
+
+  return response;
+};
+
+export const loadVirtualAccount = () => {
+  const userId = getUserId();
+  return {
+    userId,
+  };
+};
+
+export const submitWalletToWallet = async (postdat) => {
+  const token = getToken();
+
+  const postdatastring = JSON.stringify({
+    senderId: postdat.senderId,
+    receiverId: postdat.receiverId.substring(2),
+    amount: postdat.amount,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `wallet_amount_transfer`,
+    "POST",
+    token,
+    postdatastring
+  );
+
   return response;
 };

@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { bulidingicon, profilebg, profileuser } from "../../../imagepath";
+import { bulidingicon } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import { loadVirtualAccount } from "../../../HttpRequest/afterlogin";
 
 const LoadwalletThroughVirtualAccount = () => {
+  const [userid, setUserid] = useState("");
+
+  useEffect(() => {
+    const getUser = loadVirtualAccount();
+    setUserid(getUser.userId);
+  }, []);
+
   return (
     <>
       <div className="main-wrapper">
         {/* Header */}
         <Header />
-
         {/* Sidebar */}
         <SideBar />
-
         {/* Page Wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
@@ -48,9 +54,9 @@ const LoadwalletThroughVirtualAccount = () => {
                           </div>
 
                           <ul style={{ listStyle: "block" }}>
-                            <li>OXYLRV34447 is your virtual account.</li>
+                            <li>OXYLRV{userid} is your virtual account.</li>
                             <li>
-                              Add 'OXYLRV34447' as a beneficiary in your bank
+                              Add 'OXYLRV{userid}' as a beneficiary in your bank
                               account and Initiate the fund transfer
                             </li>
                             <li>
@@ -106,7 +112,7 @@ const LoadwalletThroughVirtualAccount = () => {
                             </div>
                             <div className="views-personal">
                               <h4>Account Number </h4>
-                              <h5>OXYLRV34447</h5>
+                              <h5>OXYLRV{userid}</h5>
                             </div>
                           </div>
                           <div className="personal-activity">

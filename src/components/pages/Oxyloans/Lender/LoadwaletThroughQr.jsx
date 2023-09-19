@@ -49,7 +49,7 @@ const LoadwaletThroughQr = () => {
                           <div className="heading-detail">
                             <h4>
                               {" "}
-                              <i class="fa-solid fa-qrcode"></i> Load Your
+                              <i className="fa-solid fa-qrcode"></i> Load Your
                               wallet with QR Scan
                             </h4>
                           </div>
@@ -60,12 +60,12 @@ const LoadwaletThroughQr = () => {
                             <>
                               {" "}
                               <input
-                                class="form-control"
+                                className="form-control"
                                 placeholder="Enter the Amount"
                               />
-                              <div class="d-grid gap-2 d-md-block mt-2 button-qr">
+                              <div className="d-grid gap-2 d-md-block mt-2 button-qr">
                                 <button
-                                  class="btn btn-primary btn-primary-1"
+                                  className="btn btn-primary btn-primary-1"
                                   type="button"
                                   onClick={() => {
                                     setqrcode(true);

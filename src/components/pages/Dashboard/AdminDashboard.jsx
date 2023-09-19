@@ -30,8 +30,6 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     getuserMembershipValidity().then((data) => {
-      console.log("info");
-      console.log("membershipdata" + data);
       setmembershipdata({
         ...membershipdata,
         dashboardData: data,
@@ -44,8 +42,6 @@ const AdminDashboard = () => {
       });
     });
   }, []);
-
-  console.log(dashboarddata);
 
   const [data, setObject] = useState({
     chart: {

@@ -3,12 +3,58 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import ReactStars from "react-rating-stars-component";
+import { submitWithdrawalRequestFromWallet } from "../../../HttpRequest/afterlogin";
+import {
+  HandleWithFooter,
+  WarningAlert,
+} from "../../Base UI Elements/SweetAlert";
 
 const WithdrawalFromWallet = () => {
-  const [date, setDate] = useState(new Date());
+  const [withdrawrequest, setwithdrawRequest] = useState({
+    date: new Date(),
+    withdrawAmount: "",
+    withdrawFeedback: "",
+    withdrawRating: "",
+    withdraReason: "",
+    setGivendate: "",
+    isvalid: true,
+  });
+
   const handleChange = (date) => {
-    setDate(date);
+    setwithdrawRequest({
+      ...withdrawrequest,
+      date,
+      setGivendate: date.toJSON().slice(0, 10).split("-").reverse().join("/"),
+    });
   };
+
+  const ratingChanged = (newRating) => {
+    setwithdrawRequest({
+      ...withdrawrequest,
+      withdrawRating: newRating,
+    });
+  };
+
+  const handleInputchange = (event) => {
+    const { name, value } = event.target;
+    setwithdrawRequest({
+      ...withdrawrequest,
+      [name]: value,
+    });
+  };
+  const withdrawrequestHandler = async () => {
+    const response = submitWithdrawalRequestFromWallet(withdrawrequest);
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        HandleWithFooter();
+      } else {
+        WarningAlert(data.response.data.errorMessage);
+      }
+    });
+  };
+
   return (
     <>
       <div className="main-wrapper">
@@ -63,7 +109,13 @@ const WithdrawalFromWallet = () => {
                               Withdrawal Amount
                               <span className="login-danger">*</span>
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="withdrawAmount"
+                              onChange={handleInputchange}
+                              placeholder="Enther the Withdraw Amount"
+                            />
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -72,7 +124,13 @@ const WithdrawalFromWallet = () => {
                               Feedback
                               <span className="login-danger">*</span>
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                              type="text"
+                              name="withdrawFeedback"
+                              className="form-control"
+                              onChange={handleInputchange}
+                              placeholder="Enther the Feedback"
+                            />
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -81,7 +139,13 @@ const WithdrawalFromWallet = () => {
                               Reason
                               <span className="login-danger">*</span>
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="withdraReason"
+                              onChange={handleInputchange}
+                              placeholder="Enther the Reson"
+                            />
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -92,24 +156,33 @@ const WithdrawalFromWallet = () => {
                             </label>
 
                             <DatePicker
-                              selected={date}
+                              selected={withdrawrequest.date}
                               onChange={handleChange}
+                              dateFormat="dd/MM/yyyy"
                               className="form-control datetimepicker"
                             />
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
                           <div className="form-group local-forms">
-                            <label>
-                              Rating 1 to 5
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input type="text" className="form-control" />
+                            <span>
+                              Rating
+                              <ReactStars
+                                count={5}
+                                onChange={ratingChanged}
+                                size={24}
+                                activeColor="#ffd700"
+                              />
+                            </span>
                           </div>
                         </div>
                         <div className="col-12">
                           <div className="student-submit">
-                            <button type="submit" className="btn btn-primary">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={withdrawrequestHandler}
+                            >
                               Submit
                             </button>
                           </div>

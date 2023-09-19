@@ -2,18 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import {
-  avatar03,
-  avatar04,
-  avatar06,
-  avatar08,
-  avatar09,
-  avatar10,
-  avatar11,
-  avatar12,
-  invoicesicon5,
-} from "../../../imagepath";
 
 const RegularRunningDeal = () => {
   return (

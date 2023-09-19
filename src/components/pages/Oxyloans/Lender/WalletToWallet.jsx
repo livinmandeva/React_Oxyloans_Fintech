@@ -1,15 +1,69 @@
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import {
+  HandleWithFooter,
+  WarningAlert,
+} from "../../Base UI Elements/SweetAlert";
+
+import {
+  loadVirtualAccount,
+  submitWalletToWallet,
+} from "../../../HttpRequest/afterlogin";
 
 const WalletToWallet = () => {
-  const [date, setDate] = useState(new Date());
-  const handleChange = (date) => {
-    setDate(date);
+  const [walletTowallet, setWaletToWallet] = useState({
+    senderId: "",
+    receiverId: "",
+    amount: "",
+    isValid: true,
+  });
+
+  const handleInputchange = (event) => {
+    const { name, value } = event.target;
+    setWaletToWallet({
+      ...walletTowallet,
+      [name]: value,
+    });
   };
+
+  const handleSubmitHandler = () => {
+    const response = submitWalletToWallet(walletTowallet);
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        HandleWithFooter(
+          "The wallet-to-wallet transfer was successful. Your withdrawal request has been initiated, and the receiver will receive the wallet amount after OxyAdmins approval."
+        );
+      } else {
+        WarningAlert(data.response.data.errorMessage);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (walletTowallet.amount != "" && walletTowallet.receiverId != "") {
+      setWaletToWallet({
+        ...walletTowallet,
+        isValid: false,
+      });
+    } else {
+      setWaletToWallet({
+        ...walletTowallet,
+        isValid: true,
+      });
+    }
+  }, [walletTowallet.amount, walletTowallet.receiverId]);
+
+  useEffect(() => {
+    const getUser = loadVirtualAccount();
+    setWaletToWallet({
+      ...walletTowallet,
+      senderId: getUser.userId,
+    });
+  }, []);
+
   return (
     <>
       <div className="main-wrapper">
@@ -68,7 +122,12 @@ const WalletToWallet = () => {
                               My User ID
                               <span className="login-danger">*</span>
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              disabled={true}
+                              value={`LR${walletTowallet.senderId}`}
+                            />
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -77,7 +136,13 @@ const WalletToWallet = () => {
                               Receiver ID
                               <span className="login-danger">*</span>
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter Receiver Id"
+                              name="receiverId"
+                              onChange={handleInputchange}
+                            />
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -86,13 +151,24 @@ const WalletToWallet = () => {
                               Transfer Amount
                               <span className="login-danger">*</span>
                             </label>
-                            <input type="text" className="form-control" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="amount"
+                              placeholder="Enter Transfer Amount"
+                              onChange={handleInputchange}
+                            />
                           </div>
                         </div>
 
                         <div className="col-12">
                           <div className="student-submit">
-                            <button type="submit" className="btn btn-primary">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={handleSubmitHandler}
+                              disabled={walletTowallet.isValid}
+                            >
                               Submit
                             </button>
                           </div>
