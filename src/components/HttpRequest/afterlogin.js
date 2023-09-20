@@ -5,7 +5,7 @@ const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
     : "https://fintech.oxyloans.com/oxyloans/v1/user/";
-    // http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/19/readingQueriesFromUsers
+// http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/19/readingQueriesFromUsers
 const getToken = () => {
   return sessionStorage.getItem("accessToken");
 };
@@ -66,34 +66,32 @@ export const getUserDetails = async () => {
   return response;
 };
 
+export const writequery = async (userdata, queryfiledinput) => {
+  const token = getToken();
+  const userId = getUserId();
+  console.log("User Data:", userdata);
+  const postwritequerydata = {
+    query: "ui",
+    documentId: 0,
+    email: userdata.profileData.data.email,
+    mobileNumber: userdata.profileData.data.mobileNumber,
+    id: userId,
+  };
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/readingQueriesFromUsers`,
+    "POST",
+    token,
+    postwritequerydata
+  );
 
-export const  writequery=async( userdata ,queryfiledinput)=>{
-     const    token =getToken();
-     const userId=getUserId();
-     console.log('User Data:', userdata);
-     const postwritequerydata={
-      query: "ui",
-       documentId: 0,
-       email: userdata.profileData.data.email,
-       mobileNumber: userdata.profileData.data.mobileNumber,
-       id: userId 
-     }
-     const response = await handleApiRequestAfterLoginService(
-      API_BASE_URL,
-      `${userId}/readingQueriesFromUsers`,
-      "POST",
-      token,
-      postwritequerydata
-    );
-  
-    return response
-}
-export const fileuploads= async(files)=>{
-  const    token =getToken();
-  const userId=getUserId();
+  return response;
+};
+export const fileuploads = async (files) => {
+  const token = getToken();
+  const userId = getUserId();
   const formData = new FormData();
   formData.append("USERQUERYSCREENSHOT", files);
-
 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -103,9 +101,8 @@ export const fileuploads= async(files)=>{
     formData
   );
 
-  return response
-}
-
+  return response;
+};
 
 export const submitWithdrawalRequestFromWallet = async (postdate) => {
   const token = getToken();
