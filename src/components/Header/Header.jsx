@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getUserDetails } from "../HttpRequest/afterlogin";
 import {
   logo,
   logosmall,
@@ -18,7 +19,11 @@ import {
   oxylogodashboard,
 } from "../imagepath";
 
-const Header = () => {
+const Header = (profile) => {
+  const [dashboarddata, setdashboarddata] = useState({
+    profileData: null,
+  });
+
   const handlesidebar = () => {
     document.body.classList.toggle("mini-sidebar");
   };
@@ -44,6 +49,15 @@ const Header = () => {
     return () => {
       maximizeBtn.removeEventListener("click", handleClick);
     };
+  }, []);
+
+  useEffect(() => {
+    getUserDetails().then((data) => {
+      setdashboarddata({
+        ...dashboarddata,
+        profileData: data,
+      });
+    });
   }, []);
   return (
     <>
@@ -129,8 +143,7 @@ const Header = () => {
               <div className="topnav-dropdown-header">
                 <span className="notification-title">Notifications</span>
                 <Link to="#" className="clear-noti">
-                  {" "}
-                  Clear All{" "}
+                  Clear All
                 </Link>
               </div>
               <div className="noti-content">
@@ -274,7 +287,11 @@ const Header = () => {
                   alt="Ryan Taylor"
                 />
                 <div className="user-text">
-                  <h6>Livin mandeva</h6>
+                  <h6>
+                    {dashboarddata.profileData != null
+                      ? dashboarddata.profileData.data.firstName
+                      : ""}
+                  </h6>
                   {/* <p className="text-muted mb-0">Administrator</p> */}
                 </div>
               </span>
@@ -289,8 +306,20 @@ const Header = () => {
                   />
                 </div>
                 <div className="user-text">
-                  <p className="text-muted mb-0">Oxy Founding </p>
-                  <p className="text-muted mb-0">Wallet : 8000000</p>
+                  <p className="text-muted mb-0">
+                    {dashboarddata.profileData != null
+                      ? dashboarddata.profileData.data.groupName
+                      : "NewLender"}
+                  </p>
+                  <p className="text-muted mb-0">
+                    Wallet :{" "}
+                    {dashboarddata.profileData != null
+                      ? dashboarddata.profileData.data.lenderWalletAmount -
+                        dashboarddata.profileData.data
+                          .holdAmountInDealParticipation -
+                        dashboarddata.profileData.data.equityAmount
+                      : ""}
+                  </p>
                 </div>
               </div>
               <Link className="dropdown-item" to="/profile">

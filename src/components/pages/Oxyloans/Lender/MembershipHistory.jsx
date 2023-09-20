@@ -90,6 +90,7 @@ const MembershipHistory = () => {
                           total: datasource.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
                         }}
                         columns={columns}
                         dataSource={datasource}

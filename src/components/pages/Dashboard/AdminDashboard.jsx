@@ -498,10 +498,13 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Wallet </h6>
                         <h3>
-                          {membershipdata.dashboardData != null
-                            ? membershipdata.dashboardData.data
-                                .totalWalletCreditedAmount
-                            : 10}
+                          {dashboarddata.profileData != null
+                            ? dashboarddata.profileData.data
+                                .lenderWalletAmount -
+                              dashboarddata.profileData.data
+                                .holdAmountInDealParticipation -
+                              dashboarddata.profileData.data.equityAmount
+                            : ""}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -603,8 +606,19 @@ const AdminDashboard = () => {
                       <span className="text-bold text-success mx-lg-1">
                         Congratulation :
                       </span>
-                      You are a lifetime membership-waived user. You can
-                      participate in Multiple deals until 14 years
+                      {dashboarddata.profileData != null
+                        ? dashboarddata.profileData.data.groupName ==
+                          "NEWLENDER"
+                          ? "you are an  New Lender, You can get membership to participate in multiple deal "
+                          : `You are an ${
+                              dashboarddata.profileData.data.groupName ==
+                              "OXYMARCH09"
+                                ? "Oxy Founding Lender"
+                                : "NewLender"
+                            } group member, and your validity is up to: ${
+                              membershipdata.dashboardData.data.validityDate
+                            }`
+                        : ""}
                     </span>
                   </div>
                 </div>
