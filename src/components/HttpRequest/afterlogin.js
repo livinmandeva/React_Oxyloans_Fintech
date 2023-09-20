@@ -1,6 +1,6 @@
 import axios from "axios";
 import { error } from "jquery";
-const userisIn = "local";
+const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -153,5 +153,21 @@ export const submitWalletToWallet = async (postdat) => {
     postdatastring
   );
 
+  return response;
+};
+
+export const highvalueDeals = async (pageNo = 1) => {
+  const token = getToken();
+  const postdatastring = JSON.stringify({
+    pageNo,
+    pageSize: 20,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `assert_based_closed_deals`,
+    "POST",
+    token,
+    postdatastring
+  );
   return response;
 };

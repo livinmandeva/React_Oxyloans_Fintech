@@ -470,7 +470,7 @@ const AdminDashboard = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="page-sub-header">
-                    <h3 className="page-title">
+                    <h3 className="page-title text-lowercase">
                       Welcome{" "}
                       {dashboarddata.profileData != null
                         ? dashboarddata.profileData.data.firstName
@@ -608,11 +608,13 @@ const AdminDashboard = () => {
                       </span>
                       {dashboarddata.profileData != null
                         ? dashboarddata.profileData.data.groupName ==
-                          "NEWLENDER"
-                          ? "you are an  New Lender, You can get membership to participate in multiple deal "
+                          "NewLender"
+                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
                           : `You are an ${
                               dashboarddata.profileData.data.groupName ==
-                              "OXYMARCH09"
+                                "OXYMARCH09" ||
+                              dashboarddata.profileData.data.groupName ==
+                                "OxyPremiuimLenders"
                                 ? "Oxy Founding Lender"
                                 : "NewLender"
                             } group member, and your validity is up to: ${

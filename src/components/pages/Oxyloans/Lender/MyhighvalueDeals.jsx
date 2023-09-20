@@ -4,57 +4,67 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
-
+import { highvalueDeals } from "../../../HttpRequest/afterlogin";
 const MyhighvalueDeals = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedHighValueDeals, setHighValueDeals] = useState({
+    apiData: "",
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
+  const onSelectChange = () => {
+    setHighValueDeals({});
   };
 
-  const datasource = [
-    {
-      key: Math.random(),
-      DealName: "S21 One Month Lock",
-      DealAmount: "10,000,000",
-      FundsStartDate: "2021-10-04",
-      DealClosedDate: "2021-11-03",
-      NoofParticipatedLenders: "	2",
-    },
-    {
-      key: Math.random(),
-      DealName: "MAHE YlyPay 1.7 YesATW",
-      DealAmount: "60,000,000",
-      FundsStartDate: "2022-03-02",
-      DealClosedDate: "2023-03-07",
-      NoofParticipatedLenders: "1",
-    },
-  ];
+  useEffect(() => {
+    const response = highvalueDeals();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setHighValueDeals({
+          ...selectedHighValueDeals,
+          apiData: data.data.borrowerDealsResponseDto,
+        });
+      }
+    });
+  }, []);
+
+  const datasource = [];
+  {
+    selectedHighValueDeals.apiData != ""
+      ? selectedHighValueDeals.apiData.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            DealName: data.dealName,
+            DealAmount: data.dealAmount,
+            FundsStartDate: data.fundsAcceptanceStartDate,
+            DealClosedDate: data.dealClosedDate,
+            NoofParticipatedLenders: data.numberOfLendersParticipated,
+          });
+        })
+      : "";
+  }
 
   const columns = [
     {
-      title: "DealName",
+      title: "Deal Name",
       dataIndex: "DealName",
       sorter: (a, b) => a.DealName.length - b.DealName.length,
     },
     {
-      title: "DealAmount",
+      title: "Deal Amount",
       dataIndex: "DealAmount",
       sorter: (a, b) => a.DealAmount.length - b.DealAmount.length,
     },
     {
-      title: "FundsStartDate",
+      title: "Funds Start Date",
       dataIndex: "FundsStartDate",
       sorter: (a, b) => a.FundsStartDate.length - b.FundsStartDate.length,
     },
     {
-      title: "DealClosedDate",
+      title: "Deal Closed Date",
       dataIndex: "DealClosedDate",
       sorter: (a, b) => a.DealClosedDate.length - b.DealClosedDate.length,
     },
     {
-      title: "NoofParticipatedLenders",
+      title: "Participated Lenders",
       dataIndex: "NoofParticipatedLenders",
       sorter: (a, b) =>
         a.NoofParticipatedLenders.length - b.NoofParticipatedLenders.length,
@@ -93,9 +103,10 @@ const MyhighvalueDeals = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: datasource.length,
+                          total: selectedHighValueDeals.apiData.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
                         }}
                         columns={columns}
                         dataSource={datasource}

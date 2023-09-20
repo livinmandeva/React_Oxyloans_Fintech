@@ -286,7 +286,7 @@ const Header = (profile) => {
                   width={31}
                   alt="Ryan Taylor"
                 />
-                <div className="user-text">
+                <div className="user-text text-wrap text-lowercase">
                   <h6>
                     {dashboarddata.profileData != null
                       ? dashboarddata.profileData.data.firstName
@@ -307,9 +307,16 @@ const Header = (profile) => {
                 </div>
                 <div className="user-text">
                   <p className="text-muted mb-0">
+                    LR{" "}
+                    {dashboarddata.profileData != null
+                      ? dashboarddata.profileData.data.userId
+                      : "01"}
+                  </p>
+
+                  <p className="text-muted mb-0">
                     {dashboarddata.profileData != null
                       ? dashboarddata.profileData.data.groupName
-                      : "NewLender"}
+                      : "New Lender"}
                   </p>
                   <p className="text-muted mb-0">
                     Wallet :{" "}
