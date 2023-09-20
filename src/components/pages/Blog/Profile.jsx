@@ -81,16 +81,14 @@ const Profile = () => {
                         }`}
                       </h6>
                       <div className="user-Location">
-                        <i className="fas fa-map-marker-alt" /> Flat No 201,
-                        Balaji Arcade Apts
+                        <i className="fas fa-map-marker-alt" />{" "}
+                        {dashboarddata.profileData != null
+                          ? dashboarddata.profileData.data.city
+                          : ""}
                       </div>
                       <div className="about-text">
                         {dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.address
-                          : ""}
-                        ,
-                        {dashboarddata.profileData != null
-                          ? dashboarddata.profileData.data.city
                           : ""}
                       </div>
                       <div className="user-Location my-1">
