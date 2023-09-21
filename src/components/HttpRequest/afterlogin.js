@@ -170,4 +170,6 @@ export const highvalueDeals = async (pageNo = 1) => {
     postdatastring
   );
   return response;
+
 };
+
