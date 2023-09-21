@@ -44,23 +44,6 @@ const MembershipHistory = () => {
       : "";
   }
 
-  // const datasource = [
-  //   {
-  //     key: Math.random(),
-  //     PaymentDate: "2023-08-28",
-  //     TransactionNumber: "orderOXY05060828202318",
-  //     Amount: "5900",
-  //     PaidThrough: "Cashfree",
-  //   },
-  //   {
-  //     key: Math.random(),
-  //     PaymentDate: "2023-02-09",
-  //     TransactionNumber: "OXYLRV18",
-  //     Amount: "5900",
-  //     PaidThrough: "Wallet",
-  //   },
-  // ];
-
   const columns = [
     {
       title: "Payment Date",
@@ -118,7 +101,7 @@ const MembershipHistory = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: datasource.length,
+                          total: membershiphistory.apiData.count,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],

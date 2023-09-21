@@ -14,7 +14,7 @@ export const toastrInfo = () => {
   alertify.message("Have fun storming the castle!");
 };
 export const toastrWarning = (message) => {
-  alertify.set("notifier", "position", "bottom-center");
+  alertify.set("notifier", "position", "top-right");
   alertify.error(message);
 };
 export const toastrError = () => {

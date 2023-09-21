@@ -1,12 +1,82 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import { Table, Pagination } from "antd";
+import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getDashboardInvestment } from "../../../HttpRequest/afterlogin";
 
 const DashboardTransactions = () => {
+  const [dashboardInvestment, setdashboardInvestment] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+    pageNo: 1,
+    pageSize: 5,
+  });
+
+  const investmentdashboardPagination = (dats) => {
+    setdashboardInvestment({
+      ...dashboardInvestment,
+      pageNo: dats.current,
+      pageSize: dats.pageSize,
+    });
+  };
+
+  useEffect(() => {
+    const response = getDashboardInvestment(
+      dashboardInvestment.pageNo,
+      dashboardInvestment.pageSize
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setdashboardInvestment({
+          ...dashboardInvestment,
+          apiData: data.data,
+          loading: false,
+          hasdata:
+            data.data.lenderWalletHistoryResponseDto.length == 0 ? false : true,
+        });
+      }
+    });
+  }, [dashboardInvestment.pageNo]);
+
+  const datasource = [];
+  {
+    dashboardInvestment.apiData != ""
+      ? dashboardInvestment.apiData.lenderWalletHistoryResponseDto.map(
+          (data) => {
+            datasource.push({
+              key: Math.random(),
+              Date: data.walletLoaded,
+              Description: data.remarks,
+              Amount: data.amount,
+            });
+          }
+        )
+      : "";
+  }
+  /*mandeva */
+  const columns = [
+    {
+      title: "Date",
+      dataIndex: "Date",
+      sorter: (a, b) => a.Date - b.Date,
+    },
+    {
+      title: "Description",
+      dataIndex: "Description",
+      sorter: (a, b) => a.Description - b.Description,
+    },
+    {
+      title: "Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+  ];
+
   return (
     <>
       <div className="main-wrapper">
@@ -51,7 +121,33 @@ const DashboardTransactions = () => {
                         </ul>
                       </div>
                       <div className="card-body">
-                        <div className="table-responsive">
+                        <div>
+                          <Table
+                            className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
+                            pagination={{
+                              total: dashboardInvestment.apiData.countValue,
+                              defaultPageSize: 5,
+                              showTotal: (total, range) =>
+                                `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                              position: ["topRight"],
+                              showSizeChanger: false,
+                              onShowSizeChange: onShowSizeChange,
+                              size: "default",
+                            }}
+                            columns={columns}
+                            expandable={true}
+                            dataSource={
+                              dashboardInvestment.hasdata ? datasource : []
+                            }
+                            loading={dashboardInvestment.loading}
+                            onChange={investmentdashboardPagination}
+                          />
+                        </div>
+
+                        <div
+                          className="table-responsive"
+                          style={{ display: "none" }}
+                        >
                           <table className="table star-student table-hover table-center table-borderless table-striped">
                             <thead className="thead-light">
                               <tr>

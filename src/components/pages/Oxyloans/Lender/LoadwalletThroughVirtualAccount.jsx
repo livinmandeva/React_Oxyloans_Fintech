@@ -36,7 +36,7 @@ const LoadwalletThroughVirtualAccount = () => {
                       <li className="breadcrumb-item">
                         <Link to="/students">DashBoard</Link>
                       </li>
-                      <li className="breadcrumb-item active">QR Code</li>
+                      <li className="breadcrumb-item active">Scan-QR</li>
                     </ul>
                   </div>
                 </div>

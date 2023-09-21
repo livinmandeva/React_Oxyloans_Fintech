@@ -4,55 +4,59 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getWithdrawaFromDeal } from "../../../HttpRequest/afterlogin";
 
 const WithdrawdealfromDeal = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [participatedDeals, setparticipatedDeals] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  useEffect(() => {
+    const response = getWithdrawaFromDeal();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setparticipatedDeals({
+          ...participatedDeals,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+  }, []);
 
-  const datasource = [
-    {
-      key: Math.random(),
-      DealName: "SD-2S-20L-31MAY23",
-      DealType: "NORMAL",
-      ParticipatedAmount: "30000",
-      RoI: "1.75%",
-      Duration: "3 Months",
-      DealStatus: "Running",
-      RequestedAmount: "	0",
-      action: (
-        <Link to="/withdrawdealFounds">
-          <button type="submit" className="btn w-100 btn-primary btn-xs">
-            Withdraw
-          </button>
-        </Link>
-      ),
-    },
-    {
-      key: Math.random(),
-      DealName: "S21 Exclusive 4 Founding Lenders3",
-      DealType: "NORMAL",
-      ParticipatedAmount: "	100000",
-      RoI: "2%",
-      Duration: "39 Months",
-      DealStatus: "Running",
-      RequestedAmount: "0",
-      action: (
-        <Link to="/withdrawdealFounds">
-          <button type="submit" className="btn w-100 btn-primary btn-xs">
-            Withdraw
-          </button>
-        </Link>
-      ),
-    },
-  ];
+  console.log(participatedDeals);
+
+  const datasource = [];
+  {
+    participatedDeals.apiData != ""
+      ? participatedDeals.apiData.lenderPaticipatedResponseDto.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            DealName: data.dealName,
+            DealType: data.dealType,
+            ParticipatedAmount: data.paticipatedAmount,
+            RoI: data.rateOfInterest + " % ",
+            Duration: data.dealDuration + " M ",
+            DealStatus: data.currentStatus,
+            RequestedAmount: data.requestedAmount,
+            action: (
+              <Link to="/withdrawdealFounds">
+                <button type="submit" className="btn w-100 btn-primary btn-xs">
+                  Withdraw
+                </button>
+              </Link>
+            ),
+          });
+        })
+      : "";
+  }
 
   const columns = [
     {
-      title: "DealName",
+      title: "Deal Name",
       dataIndex: "DealName",
       sorter: (a, b) => a.DealName.length - b.DealName.length,
     },
@@ -62,31 +66,32 @@ const WithdrawdealfromDeal = () => {
       sorter: (a, b) => a.DealType.length - b.DealType.length,
     },
     {
-      title: "ParticipatedAmount",
+      title: "Participated Amount",
       dataIndex: "ParticipatedAmount",
-      sorter: (a, b) =>
-        a.ParticipatedAmount.length - b.ParticipatedAmount.length,
+      sorter: (a, b) => a.ParticipatedAmount - b.ParticipatedAmount,
     },
     {
       title: "RoI",
       dataIndex: "RoI",
-      sorter: (a, b) => a.RoI.length - b.RoI.length,
+      sorter: (a, b) => a.RoI - b.RoI,
     },
     {
       title: "Duration",
       dataIndex: "Duration",
-      sorter: (a, b) => a.Duration.length - b.Duration.length,
+      sorter: (a, b) => a.Duration - b.Duration,
     },
     {
-      title: "DealStatus",
+      title: "Deal Status",
       dataIndex: "DealStatus",
+      sorter: (a, b) => a.DealStatus.length - b.DealStatus.length,
     },
     {
-      title: "RequestedAmount",
+      title: "Requested Amount",
       dataIndex: "RequestedAmount",
+      sorter: (a, b) => a.RequestedAmount - b.RequestedAmount,
     },
     {
-      title: "action",
+      title: "Action",
       dataIndex: "action",
     },
   ];
@@ -136,10 +141,14 @@ const WithdrawdealfromDeal = () => {
                           total: datasource.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={datasource}
                         expandable={true}
+                        dataSource={participatedDeals.hasdata ? datasource : []}
+                        loading={participatedDeals.loading}
                       />
                     </div>
                   </div>

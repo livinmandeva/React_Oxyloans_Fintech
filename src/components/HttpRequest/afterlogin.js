@@ -156,20 +156,19 @@ export const submitWalletToWallet = async (postdat) => {
   return response;
 };
 
-export const profilesubmit= async (profiole)=>{}
+export const profilesubmit = async (profiole) => {};
 
-export const TicketHistoryapi= async()=>{
+export const TicketHistoryapi = async () => {
   const token = getToken();
   const userId = getUserId();
-  const data ={
-      "pageNo": 1,
-      "pageSize": 10,
-      "status": "",
-      "userId": userId
+  const data = {
+    pageNo: 1,
+    pageSize: 10,
+    status: "",
+    userId: userId,
+  };
 
-  }
-
-  const response= await handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `queryDetailsBasedOnUserId`,
     "POST",
@@ -178,7 +177,7 @@ export const TicketHistoryapi= async()=>{
   );
 
   return response;
-}
+};
 export const highvalueDeals = async (pageNo = 1) => {
   const token = getToken();
   const postdatastring = JSON.stringify({
@@ -193,9 +192,7 @@ export const highvalueDeals = async (pageNo = 1) => {
     postdatastring
   );
   return response;
-
 };
-
 
 export const getMyWalletTowalletHistory = async (pageNo = 1) => {
   const token = getToken();
@@ -209,15 +206,72 @@ export const getMyWalletTowalletHistory = async (pageNo = 1) => {
   return response;
 };
 
+export const getMembershiphistory = async (pageNo = 1) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    pageNo,
+    pageSize: 100,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/fee_details_for_lender`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
 export const getMyfinancialEarnings = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/financial_year_data`,
+    "GET",
+    token
+  );
+  return response;
 };
 
 export const getMyToatlInterestEarnings = async () => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `monthly_interest_earnings`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
 };
 
 export const getMyWithdrawalHistory = async (pageNo = 1) => {
-};
-export const getMembershiphistory = async (pageNo = 1) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    page: {
+      pageNo,
+      pageSize: 100,
+    },
+    firstName: "",
+    lastName: "",
+    userId: userId,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lenderwithdrawalfundssearch`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
 };
 
 export const getMyTransactions = async (pageNo = 1) => {
@@ -229,6 +283,48 @@ export const getMyTransactions = async (pageNo = 1) => {
     `${userId}/lenderHistory`,
     "GET",
     token
+  );
+  return response;
+};
+
+export const getWithdrawaFromDeal = async () => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    pageNo: 1,
+    pageSize: 50,
+    dealType: "NORMAL",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderPaticipatedDealBasedOnDealType`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getDashboardInvestment = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    requestType: "WALLETCREDITED",
+    pageSize,
+    pageNo,
+    searchType: "DESC",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `newLenderDashboard`,
+    "POST",
+    token,
+    postdatastring
   );
   return response;
 };

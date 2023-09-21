@@ -290,7 +290,6 @@ const Header = (profile) => {
                 />
                 <div className="user-text text-wrap text-lowercase">
                   <h6>
-                    {console.log(dashboarddata.profileData)}
                     {dashboarddata.profileData === null ||
                     dashboarddata.profileData === undefined
                       ? ""

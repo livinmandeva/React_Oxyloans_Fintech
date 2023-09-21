@@ -27,8 +27,6 @@ const MywithdrawalHistory = () => {
     });
   }, []);
 
-  console.log(mywithdrawalHistory);
-
   const datasource = [];
   {
     mywithdrawalHistory.apiData != ""
