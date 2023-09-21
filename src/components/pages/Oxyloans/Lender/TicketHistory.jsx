@@ -1,12 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-
+  import {TicketHistoryapi}  from '../../../HttpRequest/afterlogin'
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import ViewTicketHistory from "./ViewTicketHistory";import './InvoiceGrid.css'
+
 
 const TicketHistory = () => {
+
+
+  const [ticket,setticketdata]= useState({})
+  const [apires,setapires]=useState([])
+
+  useEffect(()=>{  handleWriteClick()
+
+
+  },[])
+  const handleWriteClick = async () => {
+   
+
+    const response = TicketHistoryapi();
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        console.log(data)
+        setticketdata(data)
+        // alert("success");
+        var queryDetailsArray = data.data.listOfUserQueryDetailsResponseDto;
+        
+
+        // Initialize an array to store email addresses
+        var emailAddresses = [];
+        
+        // Loop through the array and extract the "email" property for each item
+        for (var i = 0; i < queryDetailsArray.length; i++) {
+            var email = queryDetailsArray[i];
+            emailAddresses.push(email);
+        }
+        
+        // Now, the "emailAddresses" array contains all the email addresses
+        console.log(emailAddresses);
+        setapires(queryDetailsArray)
+        // console.log(queryDetailsArray)
+      } else {
+        alert("error");
+      }
+    });
+  };
+  // console.log("api" + apires)
   return (
     <>
       <div className="main-wrapper">
@@ -62,18 +105,31 @@ const TicketHistory = () => {
                               </tr>
                             </thead>
                             <tbody>
-                             
-                              <tr>
+                            {apires.map((item ,index) => (
+                              
+                         <tr key={index}>
                                 <td className="text-center">
-                                  <div>4</div>
+                                  <div>{item.sNo}</div>
                                 </td>
                                 <td className="text-center">
-                                  <div>2023-07-14</div>
+                                  <div><strong>Ticket Id :</strong>{item.ticketId}</div>
+                                  <div> <strong>Received On :</strong> {item.receivedOn}</div>
+                                  <div><strong>Status </strong>  {item.status}</div>
+                            
                                 </td>
-                                <td className="text-center">GL EscrYly ICIC</td>
-                                <td className="text-center">1185</td>
+                                <td className="text-center">{item.query}</td>
+                                <td className="text-center">
+                                  <div className="buttn">
+                                   <button className=" btn btn-secondary statusbutton">View Comments</button>
+                                   <button className=" btn btn-dark statusbutton statusbutton2">Inquiries Reply</button>
+                                   <Link to="/writetous" ><button className=" btn btn-warning statusbutton statusbutton3">Write Reply</button>  </Link>
+                                   <button className=" btn btn-info statusbutton statusbutton4">Cancel</button>
+                                  </div>
+                                </td>
                               </tr>
-                              <tr>
+
+                            ))}
+                              {/* <tr>
                                 <td className="text-center">
                                   <div>5</div>
                                 </td>
@@ -82,7 +138,7 @@ const TicketHistory = () => {
                                 </td>
                                 <td className="text-center">36months2.2ROI</td>
                                 <td className="text-center">1185</td>
-                              </tr>
+                              </tr> */}
                             </tbody>
                           </table>
                         </div>

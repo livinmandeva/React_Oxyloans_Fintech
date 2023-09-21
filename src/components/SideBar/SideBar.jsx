@@ -541,9 +541,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/teachersprofile"
+                          to="/ticketHistory"
                           className={`${
-                            "/teachersprofile" === pathName ? "active" : ""
+                            "/ticketHistory" === pathName ? "active" : ""
                           }`}
                         >
                           View Ticket History

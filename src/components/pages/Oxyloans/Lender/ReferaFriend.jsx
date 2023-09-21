@@ -1,11 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "../../../SideBar/SideBar";
 import Header from "../../../Header/Header";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";import  {profilesubmit}   from '../../../HttpRequest/afterlogin'
 import { avatar02 } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react";
 
 const ReferaFriend = () => {
+
+  // { "email": "turuu@gmail.com",
+  //  "mobileNumber": "8790439332",
+  //   "name": "iyt", "mailContent": 0,
+  //    "mailSubject": 0,
+  //     "referrerId": "42213",
+  //      "primaryType": "LENDER",
+  //       "citizenType": "NONNRI",
+  //        "seekerRequestedId": "0",
+  //         "inviteType": "SingleInvite",
+  //          "userType": null } https://fintech.oxyloans.com/oxyloans/v1/user/lenderReferring      
+
+  const [profile ,setprofile]=useState({
+    email:'',
+    mobileNumber:'',
+    name: "", 
+    mailSubject:"" ,
+    referrerId: "",
+    primaryType:"" ,
+    citizenType: "",
+    seekerRequestedId:"0",
+    inviteType: "SingleInvite",
+    mailContent:0,
+    
+  })
+
+  const   handlechanges =(event)=>{
+     const {name , value }= event.target;
+
+     setprofile({
+      ...profile,
+      [name]: value,
+     })
+  }
+
+
+  const handleprofilesubmit =(event)=>{
+    event.preventDefault();
+   const response =  profilesubmit(profile);
+
+   response.then((data) => {
+    console.log(data);
+    if (data.request.status == 200) {
+      alert("success")
+
+    } else {
+      alert("error");
+    }
+  });
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -202,50 +252,52 @@ const ReferaFriend = () => {
                         <h5 className="card-title">Referral Details</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                            <form>
                               <div className="row mt-3">
                                 <div className="form-group col-12 col-sm-4">
                                   <label>Friend Name </label>
-                                  <input type="text" className="form-control" />
+                                  <input type="text" className="form-control" name="name"  onChange={handlechanges}/>
                                 </div>
                                 <div className="form-group col-12 col-sm-4">
                                   <label>Friend Email</label>
-                                  <input type="text" className="form-control" />
+                                  <input type="email" className="form-control" name="email"  onChange={handlechanges}/>
                                 </div>
                                 <div className="form-group col-12 col-sm-4">
                                   <label>Friend Location</label>
-                                  <input type="text" className="form-control" />
+                                  <input type="text" className="form-control" name="citizenType"  onChange={handlechanges}/>
                                 </div>
                                 <div className="form-group col-12 col-sm-6">
                                   <label>Frined Mobile </label>
                                   <input
                                     type="number"
                                     className="form-control"
+                                    name="mobileNumber"  onChange={handlechanges}
                                   />
                                 </div>
 
                                 <div className="form-group col-12 col-sm-6">
                                   <label>Email Subject </label>
                                   <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
+                                    name="mailSubject"  onChange={handlechanges}
                                   />
                                 </div>
 
                                 <div className="form-group col-12 col-sm-12">
                                   <label>Email Content </label>
-                                  <textarea className="form-control"></textarea>
+                                  <textarea className="form-control"
+                                  name="mailContent"  ></textarea>
                                 </div>
                                 <div className="col-12 ">
                                   <button
                                     className="btn btn-primary col-md-4 col-12"
                                     type="submit"
+                                        onClick={handleprofilesubmit}
                                   >
                                     Save Deatils
                                   </button>
                                 </div>
                               </div>
-                            </form>
                           </div>
                         </div>
                       </div>

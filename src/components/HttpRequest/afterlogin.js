@@ -1,5 +1,5 @@
 import axios from "axios";
-import { error } from "jquery";
+import { data, error } from "jquery";
 const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
@@ -156,6 +156,29 @@ export const submitWalletToWallet = async (postdat) => {
   return response;
 };
 
+export const profilesubmit= async (profile)=>{}
+
+export const TicketHistoryapi= async()=>{
+  const token = getToken();
+  const userId = getUserId();
+  const data ={
+      "pageNo": 1,
+      "pageSize": 10,
+      "status": "",
+      "userId": userId
+
+  }
+
+  const response= await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `queryDetailsBasedOnUserId`,
+    "POST",
+    token,
+    data
+  );
+
+  return response;
+}
 export const highvalueDeals = async (pageNo = 1) => {
   const token = getToken();
   const postdatastring = JSON.stringify({
