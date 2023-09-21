@@ -4,49 +4,70 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getMyfinancialEarnings } from "../../../HttpRequest/afterlogin";
 
 const EarningCertificate = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [myfyearnings, setmyfyearnings] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  const profitearnedCertificate = (pa, er, ey) => {};
 
-  const datasource = [
-    {
-      key: Math.random(),
+  useEffect(() => {
+    const response = getMyfinancialEarnings();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setmyfyearnings({
+          ...myfyearnings,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.length == 0 ? false : true,
+        });
+      }
+    });
+  }, []);
 
-      SO: "1",
-      FY: "2023-2024",
-      EARNINGS: "0",
-      DOWNLOADFYREPORT: (
-        <button type="submit" className="btn w-40 btn-primary btn-xs ">
-          Download
-        </button>
-      ),
-      EMAILFYREPORT: (
-        <button type="submit" className="btn w-40 btn-warning btn-xs ">
-          Email
-        </button>
-      ),
-    },
-    {
-      SO: "2",
-      FY: "2022-2023",
-      EARNINGS: "0",
-      DOWNLOADFYREPORT: (
-        <button type="submit" className="btn w-40 btn-primary btn-xs">
-          Download
-        </button>
-      ),
-      EMAILFYREPORT: (
-        <button type="submit" className="btn w-40 btn-warning btn-xs">
-          Email
-        </button>
-      ),
-    },
-  ];
+  const datasource = [];
+  {
+    myfyearnings.apiData != ""
+      ? myfyearnings.apiData.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            SO: data.sNo,
+            FY: data.financialYear,
+            EARNINGS: data.incomeEarned,
+            DOWNLOADFYREPORT: (
+              <button
+                type="submit"
+                className="btn w-40 btn-primary btn-xs"
+                onClick={profitearnedCertificate(
+                  data.startDate,
+                  data.endDate,
+                  "DOWNLOAD"
+                )}
+              >
+                Download
+              </button>
+            ),
+            EMAILFYREPORT: (
+              <button
+                type="submit"
+                className="btn w-40 btn-warning btn-xs"
+                onClick={profitearnedCertificate(
+                  data.startDate,
+                  data.endDate,
+                  "EMAIL"
+                )}
+              >
+                Email
+              </button>
+            ),
+          });
+        })
+      : "";
+  }
 
   const columns = [
     {
@@ -60,10 +81,16 @@ const EarningCertificate = () => {
       sorter: (a, b) => a.FY.length - b.FY.length,
     },
     {
+      title: "Earnings",
+      dataIndex: "EARNINGS",
+      sorter: (a, b) => a.EARNINGS - b.EARNINGS,
+    },
+    {
       title: "DOWNLOAD FY REPORT",
       dataIndex: "DOWNLOADFYREPORT",
       sorter: (a, b) => a.DOWNLOADFYREPORT.length - b.DOWNLOADFYREPORT.length,
     },
+
     {
       title: "EMAIL FY REPORT",
       dataIndex: "EMAILFYREPORT",
@@ -106,10 +133,12 @@ const EarningCertificate = () => {
                           total: datasource.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
                         }}
                         columns={columns}
-                        dataSource={datasource}
+                        dataSource={myfyearnings.hasdata ? datasource : []}
                         expandable={true}
+                        loading={myfyearnings.loading}
                       />
                     </div>
                   </div>

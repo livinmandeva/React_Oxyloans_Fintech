@@ -47,23 +47,6 @@ const WalletToWalletHistory = () => {
       : "";
   }
 
-  // const datasource = [
-  //   {
-  //     key: Math.random(),
-  //     ReceiverId: "LR37202",
-  //     ReceiverName: "Lakshmi Anoosha Pasumarthy",
-  //     TransformedDate: "2023-03-07",
-  //     Amount: "1350000",
-  //   },
-  //   {
-  //     key: Math.random(),
-  //     ReceiverId: "LR37207",
-  //     ReceiverName: "Lakshmi Anoosha Pasumarthy",
-  //     TransformedDate: "2023-03-09",
-  //     Amount: "130000",
-  //   },
-  // ];
-
   const columns = [
     {
       title: "ReceiverId",

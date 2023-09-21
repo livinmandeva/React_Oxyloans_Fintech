@@ -13,6 +13,10 @@ const Myholdamount = () => {
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
+  const checkCallBack = (pagination) => {
+    console.log(pagination);
+  };
+
   const datasource = [
     {
       key: Math.random(),
@@ -113,10 +117,13 @@ const Myholdamount = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
                         dataSource={datasource}
-                        expandable={true}
+                        expandable={false}
+                        onChange={checkCallBack}
                       />
                     </div>
                   </div>

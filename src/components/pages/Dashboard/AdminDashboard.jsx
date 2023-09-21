@@ -30,16 +30,20 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     getuserMembershipValidity().then((data) => {
-      setmembershipdata({
-        ...membershipdata,
-        dashboardData: data,
-      });
+      if (data.request.status == 200) {
+        setmembershipdata({
+          ...membershipdata,
+          dashboardData: data,
+        });
+      }
     });
     getUserDetails().then((data) => {
-      setdashboarddata({
-        ...dashboarddata,
-        profileData: data,
-      });
+      if (data.request.status == 200) {
+        setdashboarddata({
+          ...dashboarddata,
+          profileData: data,
+        });
+      }
     });
   }, []);
 
@@ -504,7 +508,7 @@ const AdminDashboard = () => {
                               dashboarddata.profileData.data
                                 .holdAmountInDealParticipation -
                               dashboarddata.profileData.data.equityAmount
-                            : ""}
+                            : "0"}
                         </h3>
                       </div>
                       <div className="db-icon">

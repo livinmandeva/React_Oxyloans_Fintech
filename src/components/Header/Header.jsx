@@ -53,10 +53,12 @@ const Header = (profile) => {
 
   useEffect(() => {
     getUserDetails().then((data) => {
-      setdashboarddata({
-        ...dashboarddata,
-        profileData: data,
-      });
+      if (data.request.status == 200) {
+        setdashboarddata({
+          ...dashboarddata,
+          profileData: data,
+        });
+      }
     });
   }, []);
   return (
@@ -288,9 +290,11 @@ const Header = (profile) => {
                 />
                 <div className="user-text text-wrap text-lowercase">
                   <h6>
-                    {dashboarddata.profileData != null
-                      ? dashboarddata.profileData.data.firstName
-                      : ""}
+                    {console.log(dashboarddata.profileData)}
+                    {dashboarddata.profileData === null ||
+                    dashboarddata.profileData === undefined
+                      ? ""
+                      : dashboarddata.profileData.data.firstName}
                   </h6>
                   {/* <p className="text-muted mb-0">Administrator</p> */}
                 </div>

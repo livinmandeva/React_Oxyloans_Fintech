@@ -1,37 +1,52 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import FeatherIcon from "feather-icons-react";
+import { useState, useEffect } from "react";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
+import { getMyToatlInterestEarnings } from "../../../HttpRequest/afterlogin";
 
 const MyinterestEarning = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [myinterestEarnigs, setmyinterestEarnigs] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+    totalEarnigAmount: 0,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  useEffect(() => {
+    const response = getMyToatlInterestEarnings();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setmyinterestEarnigs({
+          ...myinterestEarnigs,
+          apiData: data.data,
+          totalEarnigAmount: data.data.totalInterestEarned,
+          loading: false,
+          hasdata: data.data.listOfInterestDetails.length == 0 ? false : true,
+        });
+      }
+    });
+  }, []);
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const datasource = [
-    {
-      DealName: "3YRLock RoI2.1ATW0.75pm",
-      InterestAmount: "3570",
-      PaidDate: "	2023-08-28",
-    },
-    {
-      DealName: "36MLock RoI2.1 NoATW",
-      InterestAmount: "	6300",
-      PaidDate: "2023-08-29",
-    },
-  ];
+  console.log(myinterestEarnigs);
+
+  const datasource = [];
+  {
+    myinterestEarnigs.apiData != ""
+      ? myinterestEarnigs.apiData.listOfInterestDetails.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            DealName: data.dealName,
+            InterestAmount: data.interestAmount,
+            PaidDate: data.paidDate,
+          });
+        })
+      : "";
+  }
+
   const column = [
     {
       key: Math.random(),
@@ -43,13 +58,13 @@ const MyinterestEarning = () => {
       key: Math.random(),
       title: "Interest Amount",
       dataIndex: "InterestAmount",
-      sorter: (a, b) => a.InterestAmount.length - b.InterestAmount.length,
+      sorter: (a, b) => a.InterestAmount - b.InterestAmount,
     },
     {
       key: Math.random(),
       title: "Paid Date",
       dataIndex: "PaidDate",
-      sorter: (a, b) => a.PaidDate.length - b.PaidDate.length,
+      sorter: (a, b) => a.PaidDate - b.PaidDate,
     },
   ];
   return (
@@ -128,7 +143,8 @@ const MyinterestEarning = () => {
                       <div className="row align-items-center">
                         <div className="col">
                           <h6 className="page-title">
-                            Total Interest Earned : 10000
+                            Total Interest Earned :{" "}
+                            {myinterestEarnigs.totalEarnigAmount}
                           </h6>
                         </div>
                       </div>
@@ -142,9 +158,13 @@ const MyinterestEarning = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={column}
-                        dataSource={datasource}
+                        dataSource={myinterestEarnigs.hasdata ? datasource : []}
+                        expandable={true}
+                        loading={myinterestEarnigs.loading}
                       />
                     </div>
                   </div>

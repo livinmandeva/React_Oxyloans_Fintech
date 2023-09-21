@@ -213,3 +213,33 @@ export const getMyWalletTowalletHistory = async (pageNo = 1) => {
   );
   return response;
 };
+
+export const getMyfinancialEarnings = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/financial_year_data`,
+    "GET",
+    token
+  );
+  return response;
+};
+
+export const getMyToatlInterestEarnings = async () => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `monthly_interest_earnings`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};

@@ -8,6 +8,8 @@ import { highvalueDeals } from "../../../HttpRequest/afterlogin";
 const MyhighvalueDeals = () => {
   const [selectedHighValueDeals, setHighValueDeals] = useState({
     apiData: "",
+    hasdata: false,
+    loading: true,
   });
 
   useEffect(() => {
@@ -17,6 +19,9 @@ const MyhighvalueDeals = () => {
         setHighValueDeals({
           ...selectedHighValueDeals,
           apiData: data.data.borrowerDealsResponseDto,
+          loading: false,
+          hasdata:
+            data.data.borrowerDealsResponseDto.length == 0 ? false : true,
         });
       }
     });
@@ -106,9 +111,11 @@ const MyhighvalueDeals = () => {
                           onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={datasource}
+                        dataSource={
+                          selectedHighValueDeals.hasdata ? datasource : []
+                        }
                         expandable={true}
-                        loading={false}
+                        loading={selectedHighValueDeals.loading}
                       />
                     </div>
                   </div>
