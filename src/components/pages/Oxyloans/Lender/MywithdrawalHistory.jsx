@@ -4,43 +4,51 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
 
 const MywithdrawalHistory = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [mywithdrawalHistory, setmywithdrawalHistory] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  useEffect(() => {
+    const response = getMyWithdrawalHistory();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setmywithdrawalHistory({
+          ...mywithdrawalHistory,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.results.length == 0 ? false : true,
+        });
+      }
+    });
+  }, []);
 
-  const datasource = [
-    {
-      key: Math.random(),
-      raisedon: "10/04/2023",
-      amount: "50000",
-      reason: "Personal",
-      requestedFrom: "WALLET",
-      status: "APPROVED",
-      action: (
-        <button type="submit" className="btn w-100 btn-primary btn-xs">
-          Cancel Request
-        </button>
-      ),
-    },
-    {
-      key: Math.random(),
-      raisedon: "11/04/2023",
-      amount: "150000",
-      reason: "Personal",
-      requestedFrom: "WALLET",
-      status: "APPROVED",
-      action: (
-        <button type="submit" className="btn w-100 btn-primary btn-xs">
-          Cancel Request
-        </button>
-      ),
-    },
-  ];
+  console.log(mywithdrawalHistory);
+
+  const datasource = [];
+  {
+    mywithdrawalHistory.apiData != ""
+      ? mywithdrawalHistory.apiData.results.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            raisedon: data.amountRequiredDate,
+            amount: data.amount,
+            reason: data.withdrawalReason,
+            requestedFrom: data.requestFrom,
+            status: data.status,
+            action: (
+              <button type="submit" className="btn w-100 btn-primary btn-xs">
+                Cancel Request
+              </button>
+            ),
+          });
+        })
+      : "";
+  }
 
   const columns = [
     {
@@ -110,10 +118,15 @@ const MywithdrawalHistory = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={datasource}
+                        dataSource={
+                          mywithdrawalHistory.hasdata ? datasource : []
+                        }
                         expandable={true}
+                        loading={mywithdrawalHistory.loading}
                       />
                     </div>
                   </div>

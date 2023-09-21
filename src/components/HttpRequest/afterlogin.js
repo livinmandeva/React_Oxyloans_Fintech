@@ -243,3 +243,25 @@ export const getMyToatlInterestEarnings = async () => {
   );
   return response;
 };
+
+export const getMyWithdrawalHistory = async (pageNo = 1) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    page: {
+      pageNo,
+      pageSize: 100,
+    },
+    firstName: "",
+    lastName: "",
+    userId: userId,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lenderwithdrawalfundssearch`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
