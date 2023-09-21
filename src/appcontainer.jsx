@@ -96,8 +96,8 @@ const appcontainer = () => {
         <Route path="/myRunningDelas" component={MyRunningDelas} />
         <Route path="/myclosedDeals" component={MyclosedDeals} />
         <Route path="/myholdamount" component={Myholdamount} />
-        <Route path="/ticketHistory" component={TicketHistory} />
         <Route path="/mypartiallClosedDeal" component={MypartiallClosedDeal} />
+        <Route path="/ticketHistory" component={TicketHistory} />
         <Route path="/myinterestEarning" component={MyinterestEarning} />
         <Route path="/myhighvalueDeals" component={MyhighvalueDeals} />
         <Route path="/earningCertificate" component={EarningCertificate} />
