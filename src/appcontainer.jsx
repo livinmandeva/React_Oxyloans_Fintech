@@ -30,7 +30,7 @@ import RegularPersonalDeal from "./components/pages/Oxyloans/Lender/RegularPerso
 import RegularRunningDeal from "./components/pages/Oxyloans/Lender/RegularRunningDeal";
 import TransferWalletToWallet from "./components/pages/Oxyloans/Lender/TransferWalletToWallet";
 import ViewAutoHistory from "./components/pages/Oxyloans/Lender/ViewAutoHistory";
-import ViewTicketHistory from "./components/pages/Oxyloans/Lender/ViewTicketHistory";
+
 import WalletToWallet from "./components/pages/Oxyloans/Lender/WalletToWallet";
 import WithdrawdealfromDeal from "./components/pages/Oxyloans/Lender/WithdrawdealfromDeal";
 import Withdrawdealfromwallet from "./components/pages/Oxyloans/Lender/Withdrawdealfromwallet";
@@ -85,7 +85,6 @@ const appcontainer = () => {
         />
         <Route path="/mywithdrawalHistory" component={MywithdrawalHistory} />
         <Route path="/writetous" component={Writetous} />
-        <Route path="/viewTicketHistory" component={ViewTicketHistory} />
         <Route path="/emicalculator" component={Emicalculator} />
         <Route path="/configautoInvest" component={ConfigautoInvest} />
         <Route path="/viewAutoHistory" component={ViewAutoHistory} />
