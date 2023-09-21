@@ -4,37 +4,68 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getMembershiphistory } from "../../../HttpRequest/afterlogin";
 
 const MembershipHistory = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [membershiphistory, setmembershiphistory] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  useEffect(() => {
+    const response = getMembershiphistory();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setmembershiphistory({
+          ...membershiphistory,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+  }, []);
 
-  const datasource = [
-    {
-      key: Math.random(),
-      PaymentDate: "2023-08-28",
-      TransactionNumber: "orderOXY05060828202318",
-      Amount: "5900",
-      PaidThrough: "Cashfree",
-    },
-    {
-      key: Math.random(),
-      PaymentDate: "2023-02-09",
-      TransactionNumber: "OXYLRV18",
-      Amount: "5900",
-      PaidThrough: "Wallet",
-    },
-  ];
+  console.log(membershiphistory);
+
+  const datasource = [];
+  {
+    membershiphistory.apiData != ""
+      ? membershiphistory.apiData.listOfTransactions.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            PaymentDate: data.paymentDate,
+            TransactionNumber: data.transactionNumber,
+            Amount: data.amount,
+            PaidThrough: data.paidType,
+          });
+        })
+      : "";
+  }
+
+  // const datasource = [
+  //   {
+  //     key: Math.random(),
+  //     PaymentDate: "2023-08-28",
+  //     TransactionNumber: "orderOXY05060828202318",
+  //     Amount: "5900",
+  //     PaidThrough: "Cashfree",
+  //   },
+  //   {
+  //     key: Math.random(),
+  //     PaymentDate: "2023-02-09",
+  //     TransactionNumber: "OXYLRV18",
+  //     Amount: "5900",
+  //     PaidThrough: "Wallet",
+  //   },
+  // ];
 
   const columns = [
     {
       title: "Payment Date",
       dataIndex: "PaymentDate",
-      sorter: (a, b) => a.PaymentDate.length - b.PaymentDate.length,
+      sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
     {
       title: "Transaction Number",
@@ -44,7 +75,7 @@ const MembershipHistory = () => {
     {
       title: "Amount",
       dataIndex: "Amount",
-      sorter: (a, b) => a.Amount.length - b.Amount.length,
+      sorter: (a, b) => a.Amount - b.Amount,
     },
     {
       title: "PaidThrough",
@@ -91,10 +122,13 @@ const MembershipHistory = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={datasource}
+                        dataSource={membershiphistory.hasdata ? datasource : []}
                         expandable={true}
+                        loading={membershiphistory.loading}
                       />
                     </div>
                   </div>

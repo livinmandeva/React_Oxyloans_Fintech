@@ -4,37 +4,71 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getMyWalletTowalletHistory } from "../../../HttpRequest/afterlogin";
 
 const WalletToWalletHistory = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [mywalletTowalletHistory, setmywalletTowalletHistory] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  useEffect(() => {
+    const response = getMyWalletTowalletHistory();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setmywalletTowalletHistory({
+          ...mywalletTowalletHistory,
+          apiData: data.data,
+          loading: false,
+          hasdata:
+            data.data.walletTransferLenderToLenderResponseDto.length == 0
+              ? false
+              : true,
+        });
+      }
+    });
+  }, []);
 
-  const datasource = [
-    {
-      key: Math.random(),
-      ReceiverId: "LR37202",
-      ReceiverName: "Lakshmi Anoosha Pasumarthy",
-      TransformedDate: "2023-03-07",
-      Amount: "1350000",
-    },
-    {
-      key: Math.random(),
-      ReceiverId: "LR37207",
-      ReceiverName: "Lakshmi Anoosha Pasumarthy",
-      TransformedDate: "2023-03-09",
-      Amount: "130000",
-    },
-  ];
+  const datasource = [];
+  {
+    mywalletTowalletHistory.apiData != ""
+      ? mywalletTowalletHistory.apiData.walletTransferLenderToLenderResponseDto.map(
+          (data) => {
+            datasource.push({
+              key: Math.random(),
+              ReceiverId: data.receiverId,
+              ReceiverName: data.receiverName,
+              TransformedDate: data.transformedDate,
+              Amount: data.amount,
+            });
+          }
+        )
+      : "";
+  }
+
+  // const datasource = [
+  //   {
+  //     key: Math.random(),
+  //     ReceiverId: "LR37202",
+  //     ReceiverName: "Lakshmi Anoosha Pasumarthy",
+  //     TransformedDate: "2023-03-07",
+  //     Amount: "1350000",
+  //   },
+  //   {
+  //     key: Math.random(),
+  //     ReceiverId: "LR37207",
+  //     ReceiverName: "Lakshmi Anoosha Pasumarthy",
+  //     TransformedDate: "2023-03-09",
+  //     Amount: "130000",
+  //   },
+  // ];
 
   const columns = [
     {
       title: "ReceiverId",
       dataIndex: "ReceiverId",
-      sorter: (a, b) => a.ReceiverId.length - b.ReceiverId.length,
+      sorter: (a, b) => a.ReceiverId - b.ReceiverId,
     },
     {
       title: "ReceiverName",
@@ -44,12 +78,12 @@ const WalletToWalletHistory = () => {
     {
       title: "TransformedDate",
       dataIndex: "TransformedDate",
-      sorter: (a, b) => a.TransformedDate.length - b.TransformedDate.length,
+      sorter: (a, b) => a.TransformedDate - b.TransformedDate,
     },
     {
       title: "Amount",
       dataIndex: "Amount",
-      sorter: (a, b) => a.Amount.length - b.Amount.length,
+      sorter: (a, b) => a.Amount - b.Amount,
     },
   ];
 

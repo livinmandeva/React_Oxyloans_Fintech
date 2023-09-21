@@ -160,7 +160,7 @@ export const highvalueDeals = async (pageNo = 1) => {
   const token = getToken();
   const postdatastring = JSON.stringify({
     pageNo,
-    pageSize: 20,
+    pageSize: 100,
   });
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -168,6 +168,48 @@ export const highvalueDeals = async (pageNo = 1) => {
     "POST",
     token,
     postdatastring
+  );
+  return response;
+};
+
+export const getMembershiphistory = async (pageNo = 1) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    pageNo,
+    pageSize: 100,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/fee_details_for_lender`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getMyTransactions = async (pageNo = 1) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderHistory`,
+    "GET",
+    token
+  );
+  return response;
+};
+
+export const getMyWalletTowalletHistory = async (pageNo = 1) => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/wallet-to-wallet-debit-history`,
+    "GET",
+    token
   );
   return response;
 };

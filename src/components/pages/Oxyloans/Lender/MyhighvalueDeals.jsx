@@ -10,10 +10,6 @@ const MyhighvalueDeals = () => {
     apiData: "",
   });
 
-  const onSelectChange = () => {
-    setHighValueDeals({});
-  };
-
   useEffect(() => {
     const response = highvalueDeals();
     response.then((data) => {
@@ -51,23 +47,22 @@ const MyhighvalueDeals = () => {
     {
       title: "Deal Amount",
       dataIndex: "DealAmount",
-      sorter: (a, b) => a.DealAmount.length - b.DealAmount.length,
+      sorter: (a, b) => a.DealAmount - b.DealAmount,
     },
     {
       title: "Funds Start Date",
       dataIndex: "FundsStartDate",
-      sorter: (a, b) => a.FundsStartDate.length - b.FundsStartDate.length,
+      sorter: (a, b) => a.FundsStartDate - b.FundsStartDate,
     },
     {
       title: "Deal Closed Date",
       dataIndex: "DealClosedDate",
-      sorter: (a, b) => a.DealClosedDate.length - b.DealClosedDate.length,
+      sorter: (a, b) => a.DealClosedDate - b.DealClosedDate,
     },
     {
       title: "Participated Lenders",
       dataIndex: "NoofParticipatedLenders",
-      sorter: (a, b) =>
-        a.NoofParticipatedLenders.length - b.NoofParticipatedLenders.length,
+      sorter: (a, b) => a.NoofParticipatedLenders - b.NoofParticipatedLenders,
     },
   ];
 
@@ -107,10 +102,13 @@ const MyhighvalueDeals = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
                         dataSource={datasource}
                         expandable={true}
+                        loading={false}
                       />
                     </div>
                   </div>
