@@ -49,6 +49,7 @@ import ForgotPassword3 from "./components/pages/Authentication/ForgotPassword3";
 import Whatapplog from "./components/pages/Authentication/Whatapplog";
 import PartnerRegister from "./components/pages/Authentication/PartnerRegister";
 import Profile from "./components/pages/Blog/Profile";
+import TicketHistory from "./components/pages/Oxyloans/Lender/TicketHistory";
 
 const appcontainer = () => {
   return (
@@ -95,6 +96,7 @@ const appcontainer = () => {
         <Route path="/myRunningDelas" component={MyRunningDelas} />
         <Route path="/myclosedDeals" component={MyclosedDeals} />
         <Route path="/myholdamount" component={Myholdamount} />
+        <Route path="/ticketHistory" component={TicketHistory} />
         <Route path="/mypartiallClosedDeal" component={MypartiallClosedDeal} />
         <Route path="/myinterestEarning" component={MyinterestEarning} />
         <Route path="/myhighvalueDeals" component={MyhighvalueDeals} />
