@@ -117,7 +117,7 @@ const TicketHistory = () => {
                                   <div><strong>Status </strong>  {item.status}</div>
                             
                                 </td>
-                                <td className="text-center">{item.query}</td>
+                                <td className="text-center"   >{item.query}</td>
                                 <td className="text-center">
                                   <div className="buttn">
                                    <button className=" btn btn-secondary statusbutton">View Comments</button>
