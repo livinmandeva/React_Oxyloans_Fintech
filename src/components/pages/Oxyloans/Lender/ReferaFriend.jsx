@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "../../../SideBar/SideBar";
 import Header from "../../../Header/Header";
-import { Link } from "react-router-dom";import  {profilesubmit}   from '../../../HttpRequest/afterlogin'
+import { Link } from "react-router-dom";import  {getUserId , profilesubmit  ,getemailcontent ,   bulkinvitegmailLink}   from '../../../HttpRequest/afterlogin'
 import { avatar02 } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react";
+import {
+  HandleWithFooter,
+  WarningAlert,
+} from "../../Base UI Elements/SweetAlert";
 
 const ReferaFriend = () => {
 
@@ -22,15 +26,23 @@ const ReferaFriend = () => {
     email:'',
     mobileNumber:'',
     name: "", 
-    mailSubject:"" ,
+    mailSubject:0,
     referrerId: "",
-    primaryType:"" ,
-    citizenType: "",
+    primaryType:"LENDER" ,
+    citizenType: "NONNRI",
     seekerRequestedId:"0",
     inviteType: "SingleInvite",
     mailContent:0,
     
   })
+  
+  const [emailres, setEmailres] = useState({
+    emailcontent: "",
+    emailsubject: "",
+    buttomemail: "",
+  });
+  const [url ,seturl]=useState("")
+  // const [emailsubject ,setemailsubject] =useState("");const [buttomemail,setbuttomemail]=useState("")
 
   const   handlechanges =(event)=>{
      const {name , value }= event.target;
@@ -42,6 +54,45 @@ const ReferaFriend = () => {
   }
 
 
+ 
+  useEffect(() => {
+    const getemail = async () => {
+      try {
+        const response = await getemailcontent(); // Assuming getemailcontent is an async function
+
+        console.log(response.data);
+        setEmailres({
+          ...emailres,
+          emailcontent: response.data.mailContent,
+          emailsubject: response.data.mailSubject,
+          buttomemail: response.data.bottomOfTheMail,
+        });
+
+        if (response.status === 200) {
+          // alert("Success");
+        } else {
+          alert("Error");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error");
+      }
+    };
+
+    getemail();
+    const userid = getUserId(); 
+       setprofile({
+         ...profile,
+         referrerId:userid
+       })
+       
+  }, []);
+
+
+  useEffect(()=>{
+    handlebulkInvite()
+  },  [url])
+
   const handleprofilesubmit =(event)=>{
     event.preventDefault();
    const response =  profilesubmit(profile);
@@ -50,12 +101,29 @@ const ReferaFriend = () => {
     console.log(data);
     if (data.request.status == 200) {
       alert("success")
-
+      HandleWithFooter("lender invited successfully");
     } else {
-      alert("error");
+      WarningAlert(data.response.data.errorMessage);
     }
   });
+  }   
+
+
+  const handlebulkInvite= async()=>{
+      const response = bulkinvitegmailLink()   
+      response.then((data)=>{
+        console.log(data);
+        seturl(data.data.signInUrl)
+        if(data.request.status == 200){
+      
+        } else {
+          WarningAlert(data.response.data.errorMessage);
+        }
+      })
   }
+
+  const emailcontentdata = emailres.emailcontent + emailres.buttomemail
+       
   return (
     <>
       <div className="main-wrapper">
@@ -149,7 +217,10 @@ const ReferaFriend = () => {
                         className="nav-link"
                         data-bs-toggle="tab"
                         to="#BulkInvite_tab"
-                      >
+                       
+                       
+                       onClick={handlebulkInvite}
+                       >
                         Bulk Invite
                       </Link>
                     </li>
@@ -183,13 +254,17 @@ const ReferaFriend = () => {
                           <div className="col-md-12 col-lg-12 d-flex justify-content-center">
                             <form>
                               <div className="row">
-                                <button
+                                
+                                 <a href={url}   
+                                //  <button  
+                              
                                   className="btn btn-outline-primary my-lg-3 border-2 "
                                   type="button"
                                 >
                                   Browse From Computer
-                                </button>
+                                {/* </button> */}   </a>
 
+                        
                                 <button className="btn btn-outline-warning my-lg-3 border-2 ">
                                   Invite Through Gmail
                                 </button>
@@ -263,9 +338,18 @@ const ReferaFriend = () => {
                                 </div>
                                 <div className="form-group col-12 col-sm-4">
                                   <label>Friend Location</label>
-                                  <input type="text" className="form-control" name="citizenType"  onChange={handlechanges}/>
+                                       <select    className="form-control form-select" 
+                                                                  
+                                          name="citizenType"
+                                          value={profile.citizenType}
+                                          onChange={handlechanges}
+                                        >
+                                          <option value="NRI">NRI</option>
+                                          <option value="NONNRI">NON NRI</option>
+                                        </select>
                                 </div>
-                                <div className="form-group col-12 col-sm-6">
+                            
+                                <div className="form-group col-12 col-sm-4">
                                   <label>Frined Mobile </label>
                                   <input
                                     type="number"
@@ -278,14 +362,15 @@ const ReferaFriend = () => {
                                   <label>Email Subject </label>
                                   <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control"   
+                                    value={emailres.emailsubject}
                                     name="mailSubject"  onChange={handlechanges}
                                   />
                                 </div>
 
                                 <div className="form-group col-12 col-sm-12">
                                   <label>Email Content </label>
-                                  <textarea className="form-control"
+                                    <textarea className="form-control"  value={emailcontentdata}
                                   name="mailContent"  ></textarea>
                                 </div>
                                 <div className="col-12 ">
