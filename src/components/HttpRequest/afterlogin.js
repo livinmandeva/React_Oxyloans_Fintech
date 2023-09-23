@@ -250,7 +250,11 @@ export const getemailcontent = async () => {
   );
   return response;
 };
+<<<<<<< Updated upstream
 export const highvalueDeals = async (pageNo = 1, pageSize = 10) => {
+=======
+export const highvalueDeals = async (pageNo = 1) => {
+>>>>>>> Stashed changes
   const token = getToken();
   const postdatastring = JSON.stringify({
     pageNo,
