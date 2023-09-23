@@ -1,68 +1,89 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import FeatherIcon from "feather-icons-react";
+import { useState, useEffect } from "react";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
+import { referralEarningsInfo } from "../../../HttpRequest/afterlogin";
 
 const MyEarnings = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [referalMyearnigs, setreferalMyearnigs] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+    pageNo: 1,
+    pageSize: 5,
+    defaultPageSize: 5,
+  });
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
+  const referalMyearnigsPagination = (Pagination) => {
+    setreferalMyearnigs({
+      ...referalMyearnigs,
+      defaultPageSize: Pagination.pageSize,
+      pageNo: Pagination.current,
+      pageSize: Pagination.pageSize,
+    });
   };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const datasource = [
-    {
-      id: "1",
-      RefereeName: "Vinayvasu sangishetty",
-      RefereeId: "LR43505",
-      EarnedAmount: 100,
-      PaymentStatus: "Paid",
-      TransferredOn: "	2023-08-30",
-      Remarks: "Paid for student deal(tenure is less than 90 days)",
-    },
-    {
-      id: "2",
-      RefereeName: "Shubaa Sudhindra",
-      RefereeId: "LR39316",
-      EarnedAmount: 275,
-      PaymentStatus: "Paid",
-      TransferredOn: "2023-08-01",
-      Remarks: "Paid for student deal(tenure is less than 90 days)",
-    },
-  ];
+  useEffect(() => {
+    const response = referralEarningsInfo(
+      referalMyearnigs.pageNo,
+      referalMyearnigs.pageSize
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setreferalMyearnigs({
+          ...referalMyearnigs,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+  }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
+
+  console.log(referalMyearnigs);
+  const datasource = [];
+  {
+    referalMyearnigs.apiData != ""
+      ? referalMyearnigs.apiData.lenderReferenceAmountResponse.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            RefereeName: data.userName,
+            RefereeId: data.refereeNewId,
+            EarnedAmount: data.amount,
+            PaymentStatus: data.paymentStatus,
+            TransferredOn:
+              data.transferredOn == ""
+                ? "Yet To be Credit"
+                : data.transferredOn,
+            Remarks: data.remarks == null ? "No Remarks" : data.remarks,
+          });
+        })
+      : "";
+  }
+
   const column = [
     {
-      title: "RefereeName",
+      title: "Referee Name",
       dataIndex: "RefereeName",
       sorter: (a, b) => a.RefereeName.length - b.RefereeName.length,
     },
+
     {
-      title: "RefereeId",
-      dataIndex: "RefereeId",
-      sorter: (a, b) => a.RefereeId.length - b.RefereeId.length,
-    },
-    {
-      title: "EarnedAmount",
+      title: "Earned Amount",
       dataIndex: "EarnedAmount",
       sorter: (a, b) => a.EarnedAmount.length - b.EarnedAmount.length,
     },
     {
-      title: "PaymentStatus",
+      title: "Payment Status",
       dataIndex: "PaymentStatus",
       sorter: (a, b) => a.PaymentStatus.length - b.PaymentStatus.length,
     },
     {
-      title: "TransferredOn",
+      title: "Transferred On",
       dataIndex: "TransferredOn",
       sorter: (a, b) => a.TransferredOn.length - b.TransferredOn.length,
     },
@@ -130,10 +151,10 @@ const MyEarnings = () => {
                     <button className="btn btn-xs col-md-2 btn-info col-12">
                       Invite Borrower
                     </button>
-                    <button className="btn btn-xs col-md-3 btn-warning mx-lg-2 col-12">
+                    <button className="btn btn-xs col-md-2 btn-warning  mx-lg-1 col-12">
                       Invite Lender
                     </button>
-                    <button className="btn btn-xs col-md-3 btn-success mx-lg-2 col-12">
+                    <button className="btn btn-xs col-md-2 btn-success mx-lg-1  col-12">
                       Invite An NRI
                     </button>
                     <button className="btn btn-xs col-md-3 btn-danger col-12 ">
@@ -148,13 +169,18 @@ const MyEarnings = () => {
                       <Table
                         className="table table-stripped table-hover datatable"
                         pagination={{
-                          total: datasource.length,
+                          total: referalMyearnigs.apiData.count,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
+                          showSizeChanger: false,
+                          onShowSizeChange: onShowSizeChange,
                         }}
                         columns={column}
-                        dataSource={datasource}
+                        dataSource={referalMyearnigs.hasdata ? datasource : []}
+                        expandable={true}
+                        loading={referalMyearnigs.loading}
+                        onChange={referalMyearnigsPagination}
                       />
                     </div>
                   </div>

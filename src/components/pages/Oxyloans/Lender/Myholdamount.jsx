@@ -6,13 +6,6 @@ import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 
 const Myholdamount = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
   const checkCallBack = (pagination) => {
     console.log(pagination);
   };
@@ -20,7 +13,6 @@ const Myholdamount = () => {
   const datasource = [
     {
       key: Math.random(),
-
       Sno: 1,
       Extraamount: "30100",
       Extraamountpaiddetails: "INR 30100 is paid for the deal DEALDEAL",
@@ -47,18 +39,18 @@ const Myholdamount = () => {
       sorter: (a, b) => a.Sno.length - b.Sno.length,
     },
     {
-      title: "Extraamount",
+      title: "Extra amount",
       dataIndex: "Extraamount",
       sorter: (a, b) => a.Extraamount.length - b.Extraamount.length,
     },
     {
-      title: "Extraamountpaiddetails",
+      title: "Extraamount paid details",
       dataIndex: "Extraamountpaiddetails",
       sorter: (a, b) =>
         a.Extraamountpaiddetails.length - b.Extraamountpaiddetails.length,
     },
     {
-      title: "Deductiondetails",
+      title: "Deduction details",
       dataIndex: "Deductiondetails",
       sorter: (a, b) => a.Deductiondetails.length - b.Deductiondetails.length,
     },

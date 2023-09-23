@@ -11,10 +11,25 @@ const MembershipHistory = () => {
     apiData: "",
     hasdata: false,
     loading: true,
+    pageNo: 1,
+    pageSize: 5,
+    defaultPageSize: 5,
   });
 
+  const membershiphistoryPagination = (Pagination) => {
+    setmembershiphistory({
+      ...membershiphistory,
+      defaultPageSize: Pagination.pageSize,
+      pageNo: Pagination.current,
+      pageSize: Pagination.pageSize,
+    });
+  };
+
   useEffect(() => {
-    const response = getMembershiphistory();
+    const response = getMembershiphistory(
+      membershiphistory.pageNo,
+      membershiphistory.pageSize
+    );
     response.then((data) => {
       if (data.request.status == 200) {
         setmembershiphistory({
@@ -25,9 +40,7 @@ const MembershipHistory = () => {
         });
       }
     });
-  }, []);
-
-  console.log(membershiphistory);
+  }, [membershiphistory.pageNo, membershiphistory.pageSize]);
 
   const datasource = [];
   {
@@ -112,6 +125,7 @@ const MembershipHistory = () => {
                         dataSource={membershiphistory.hasdata ? datasource : []}
                         expandable={true}
                         loading={membershiphistory.loading}
+                        onChange={membershiphistoryPagination}
                       />
                     </div>
                   </div>

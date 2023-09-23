@@ -11,10 +11,25 @@ const WithdrawdealfromDeal = () => {
     apiData: "",
     hasdata: false,
     loading: true,
+    pageNo: 1,
+    pageSize: 5,
+    defaultPageSize: 5,
   });
 
+  const withdrawalFromDealPagination = (Pagination) => {
+    setparticipatedDeals({
+      ...participatedDeals,
+      defaultPageSize: Pagination.pageSize,
+      pageNo: Pagination.current,
+      pageSize: Pagination.pageSize,
+    });
+  };
+
   useEffect(() => {
-    const response = getWithdrawaFromDeal();
+    const response = getWithdrawaFromDeal(
+      participatedDeals.pageNo,
+      participatedDeals.pageSize
+    );
     response.then((data) => {
       if (data.request.status == 200) {
         setparticipatedDeals({
@@ -25,9 +40,7 @@ const WithdrawdealfromDeal = () => {
         });
       }
     });
-  }, []);
-
-  console.log(participatedDeals);
+  }, [participatedDeals.pageNo, participatedDeals.pageSize]);
 
   const datasource = [];
   {
@@ -66,7 +79,7 @@ const WithdrawdealfromDeal = () => {
       sorter: (a, b) => a.DealType.length - b.DealType.length,
     },
     {
-      title: "Participated Amount",
+      title: "Participated",
       dataIndex: "ParticipatedAmount",
       sorter: (a, b) => a.ParticipatedAmount - b.ParticipatedAmount,
     },
@@ -86,7 +99,7 @@ const WithdrawdealfromDeal = () => {
       sorter: (a, b) => a.DealStatus.length - b.DealStatus.length,
     },
     {
-      title: "Requested Amount",
+      title: "Requested",
       dataIndex: "RequestedAmount",
       sorter: (a, b) => a.RequestedAmount - b.RequestedAmount,
     },
@@ -149,6 +162,7 @@ const WithdrawdealfromDeal = () => {
                         expandable={true}
                         dataSource={participatedDeals.hasdata ? datasource : []}
                         loading={participatedDeals.loading}
+                        onChange={withdrawalFromDealPagination}
                       />
                     </div>
                   </div>

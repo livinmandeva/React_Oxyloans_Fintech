@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";import {getcontactdeatils}    from '../../../HttpRequest/afterlogin'
+import { Link } from "react-router-dom";
+import { getcontactdeatils } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
@@ -7,7 +8,37 @@ import { Table } from "antd";
 import { data } from "jquery";
 
 const Mycontacts = () => {
+  const [contactdata, setcontactData] = useState({
+    apidata: [],
+    hasdata: false,
+    loading: true,
+    pageNo: 1,
+    pageSize: 5,
+  });
 
+  useEffect(() => {
+    const getemailcontact = async () => {
+      const response = getcontactdeatils();
+      response.then((data) => {
+        if (data.request.status == 200) {
+          setcontactData({
+            ...contactdata,
+            apidata: data.data,
+            loading: false,
+            hasdata: data.data.length == 0 ? false : true,
+          });
+        }
+      });
+    };
+    getemailcontact();
+  }, []);
+
+  const datasource = contactdata.apidata.map((apidata, index) => ({
+    id: index + 1,
+    Email: apidata.emailAddress,
+    ContactName: apidata.contactName,
+    Invite: <input type="checkbox" id="selectAll" />,
+  }));
 
   const column = [
     {
@@ -27,45 +58,8 @@ const Mycontacts = () => {
     },
 
     ,
-  ];  const [contactdata , setcontactData]=useState({
-    apidata:[],
-    hasdata: false,
-    loading: true,
-    pageNo: 1,
-    pageSize: 5,
-  })
+  ];
 
-  useEffect(()=>{
-  const getemailcontact = async()=>{
-    const response = getcontactdeatils()
-    response.then((data)=>{
-      console.log(data)
-      if(data.request.status == 200){
-    setcontactData({
-      ...contactdata,
-      apidata:data.data,
-      loading: false,
-      hasdata:data.data.length == 0 ? false : true,
-    });
-
-
-      }
-    })
-  }
-  getemailcontact()
-  },[])
-
-  
-
-  const datasource = contactdata.apidata.map((apidata, index) => ({
-    id: index + 1,
-    Email: apidata.emailAddress,
-    ContactName: apidata.contactName,
-    Invite: <input type="checkbox" id="selectAll" />,
-  }));
-
-   
-  
   return (
     <>
       <div className="main-wrapper">
@@ -110,7 +104,6 @@ const Mycontacts = () => {
                           <Link to="#" className="btn btn-warning">
                             Invite All
                           </Link>
-                          
                         </div>
                       </div>
                     </div>
@@ -120,14 +113,14 @@ const Mycontacts = () => {
                         className="table border-0 star-student table-hover table-center mb-0 datatable table-striped dataTable no-footer"
                         pagination={{
                           total: datasource.length,
-                          
+                          defaultPageSize: 5,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
+                          showLessItems: true,
                         }}
                         columns={column}
                         dataSource={datasource}
-                        // rowSelection={rowSelection}
-                        // rowKey={(record) => record.id}
                       />
                     </div>
                   </div>

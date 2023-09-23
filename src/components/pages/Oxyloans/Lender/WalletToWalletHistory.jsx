@@ -37,8 +37,8 @@ const WalletToWalletHistory = () => {
           (data) => {
             datasource.push({
               key: Math.random(),
-              ReceiverId: data.receiverId,
-              ReceiverName: data.receiverName,
+              ReceiverId: "LR" + data.receiverId,
+              ReceiverName: "LR" + data.receiverName,
               TransformedDate: data.transformedDate,
               Amount: data.amount,
             });

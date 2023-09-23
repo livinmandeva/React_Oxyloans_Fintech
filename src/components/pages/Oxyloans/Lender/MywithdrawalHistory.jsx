@@ -11,10 +11,24 @@ const MywithdrawalHistory = () => {
     apiData: "",
     hasdata: false,
     loading: true,
+    pageNo: 1,
+    pageSize: 5,
+    defaultPageSize: 5,
   });
+  const mywithdrawalPagination = (Pagination) => {
+    setmywithdrawalHistory({
+      ...mywithdrawalHistory,
+      defaultPageSize: Pagination.pageSize,
+      pageNo: Pagination.current,
+      pageSize: Pagination.pageSize,
+    });
+  };
 
   useEffect(() => {
-    const response = getMyWithdrawalHistory();
+    const response = getMyWithdrawalHistory(
+      mywithdrawalHistory.pageNo,
+      mywithdrawalHistory.pageSize
+    );
     response.then((data) => {
       if (data.request.status == 200) {
         setmywithdrawalHistory({
@@ -25,7 +39,7 @@ const MywithdrawalHistory = () => {
         });
       }
     });
-  }, []);
+  }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
 
   const datasource = [];
   {
@@ -39,7 +53,7 @@ const MywithdrawalHistory = () => {
             requestedFrom: data.requestFrom,
             status: data.status,
             action: (
-              <button type="submit" className="btn w-100 btn-primary btn-xs">
+              <button type="submit" className="btn  w-70 btn-primary btn-xs">
                 Cancel Request
               </button>
             ),
@@ -52,27 +66,27 @@ const MywithdrawalHistory = () => {
     {
       title: "Raised on",
       dataIndex: "raisedon",
-      sorter: (a, b) => a.raisedon.length - b.raisedon.length,
+      sorter: (a, b) => a.raisedon - b.raisedon,
     },
     {
       title: "Amount",
       dataIndex: "amount",
-      sorter: (a, b) => a.amount.length - b.amount.length,
+      sorter: (a, b) => a.amount - b.amount,
     },
     {
       title: "Reason",
       dataIndex: "reason",
-      sorter: (a, b) => a.reason.length - b.reason.length,
+      sorter: (a, b) => a.reason - b.reason,
     },
     {
       title: "Requested From",
       dataIndex: "requestedFrom",
-      sorter: (a, b) => a.requestedFrom.length - b.requestedFrom.length,
+      sorter: (a, b) => a.requestedFrom - b.requestedFrom,
     },
     {
       title: "Status",
       dataIndex: "status",
-      sorter: (a, b) => a.status.length - b.status.length,
+      sorter: (a, b) => a.status - b.status,
     },
     {
       title: "Action",
@@ -112,7 +126,8 @@ const MywithdrawalHistory = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: datasource.length,
+                          total: mywithdrawalHistory.apiData.totalCount,
+                          defaultPageSize: mywithdrawalHistory.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
@@ -125,6 +140,7 @@ const MywithdrawalHistory = () => {
                         }
                         expandable={true}
                         loading={mywithdrawalHistory.loading}
+                        onChange={mywithdrawalPagination}
                       />
                     </div>
                   </div>

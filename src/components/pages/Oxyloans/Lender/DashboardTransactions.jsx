@@ -161,10 +161,6 @@ const DashboardTransactions = () => {
     });
   }, [dashboardInterestEarnings.pageNo, dashboardInterestEarnings.pageSize]);
 
-  {
-    console.log(dashboardInterestEarnings);
-  }
-
   useEffect(() => {
     const response = getDashboardReferralEarnings(
       dashboardReferralEarnings.pageNo,
@@ -281,7 +277,8 @@ const DashboardTransactions = () => {
               RoI: data.rateofinterest + " % ",
               Tenure: data.tenure + " M ",
               Date: data.participatedDate,
-              ClosedDate: data.dealClosedDate,
+              ClosedDate:
+                data.dealClosedDate == null ? "Running" : data.dealClosedDate,
               Amount: data.participatedAmount,
               LoanStatus: data.pricipaleReturnedStatus,
             });
@@ -362,11 +359,6 @@ const DashboardTransactions = () => {
   ];
 
   const dealsvsearningscolumn = [
-    {
-      title: "S.No",
-      dataIndex: "SNo",
-      sorter: (a, b) => a.SNo - b.SNo,
-    },
     {
       title: "Deal Name",
       dataIndex: "DealName",

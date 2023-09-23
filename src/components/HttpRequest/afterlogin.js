@@ -13,6 +13,13 @@ export const getUserId = () => {
   return sessionStorage.getItem("userId");
 };
 
+export const loadVirtualAccount = () => {
+  const userId = getUserId();
+  return {
+    userId,
+  };
+};
+
 const handleApiRequestAfterLoginService = async (
   baseurl,
   endpoint,
@@ -177,20 +184,13 @@ export const submitWithdrawalRequestFromWallet = async (postdate) => {
   return response;
 };
 
-export const loadVirtualAccount = () => {
-  const userId = getUserId();
-  return {
-    userId,
-  };
-};
-
-export const submitWalletToWallet = async (postdat) => {
+export const submitWalletToWallet = async (postdata) => {
   const token = getToken();
 
   const postdatastring = JSON.stringify({
-    senderId: postdat.senderId,
-    receiverId: postdat.receiverId.substring(2),
-    amount: postdat.amount,
+    senderId: postdata.senderId,
+    receiverId: postdata.receiverId.substring(2),
+    amount: postdata.amount,
   });
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -203,10 +203,10 @@ export const submitWalletToWallet = async (postdat) => {
   return response;
 };
 
-export const profilesubmit = async (profiole) => {
+export const profilesubmit = async (profile) => {
   const token = getToken();
   const userId = getUserId();
-  const data = profiole;
+  const data = profile;
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderReferring`,
@@ -279,12 +279,12 @@ export const getMyWalletTowalletHistory = async (pageNo = 1) => {
   return response;
 };
 
-export const getMembershiphistory = async (pageNo = 1) => {
+export const getMembershiphistory = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
   const postdatastring = JSON.stringify({
     pageNo,
-    pageSize: 100,
+    pageSize,
   });
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -325,13 +325,13 @@ export const getMyToatlInterestEarnings = async () => {
   return response;
 };
 
-export const getMyWithdrawalHistory = async (pageNo = 1) => {
+export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
   const postdatastring = JSON.stringify({
     page: {
       pageNo,
-      pageSize: 100,
+      pageSize,
     },
     firstName: "",
     lastName: "",
@@ -360,13 +360,13 @@ export const getMyTransactions = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
-export const getWithdrawaFromDeal = async () => {
+export const getWithdrawaFromDeal = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
 
   const postdatastring = JSON.stringify({
-    pageNo: 1,
-    pageSize: 50,
+    pageNo,
+    pageSize,
     dealType: "NORMAL",
   });
 
@@ -495,6 +495,25 @@ export const getdashboardDealsVsEarnings = async (
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `newLenderDashboard`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const referralEarningsInfo = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    pageNo,
+    pageSize,
+    paymentStatus: "",
+    userId,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `referralBonusAmountBasedOnStatus`,
     "POST",
     token,
     postdatastring
