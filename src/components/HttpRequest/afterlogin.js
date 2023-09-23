@@ -100,19 +100,19 @@ export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
-export  const getcontactdeatils= async()=>{
+export const getcontactdeatils = async () => {
   const token = getToken();
   const userId = getUserId();
-  
-  const response =await  handleApiRequestAfterLoginService(
+
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     // user/getLenderStoredEmailContacts/${suserId}
     `getLenderStoredEmailContacts/${userId}`,
     "GET",
-    token,
+    token
   );
-  return  response;
-}
+  return response;
+};
 export const writequery = async (userdata, queryfiledinput) => {
   const token = getToken();
   const userId = getUserId();
@@ -250,11 +250,8 @@ export const getemailcontent = async () => {
   );
   return response;
 };
-<<<<<<< Updated upstream
+
 export const highvalueDeals = async (pageNo = 1, pageSize = 10) => {
-=======
-export const highvalueDeals = async (pageNo = 1) => {
->>>>>>> Stashed changes
   const token = getToken();
   const postdatastring = JSON.stringify({
     pageNo,
