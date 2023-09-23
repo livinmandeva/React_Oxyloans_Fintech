@@ -9,7 +9,7 @@ const API_BASE_URL =
 const getToken = () => {
   return sessionStorage.getItem("accessToken");
 };
-export  const getUserId = () => {
+export const getUserId = () => {
   return sessionStorage.getItem("userId");
 };
 
@@ -54,14 +54,14 @@ export const getuserMembershipValidity = async () => {
   return response;
 };
 
-export const bulkinvitegmailLink= async () =>{
+export const bulkinvitegmailLink = async () => {
   const token = getToken();
   const userId = getUserId();
   let userType;
-  if(userId.trim().toUpperCase().startsWith("LR")){
-     userType="LENDER"
-  }else{
-     userType="BORROWER"
+  if (userId.trim().toUpperCase().startsWith("LR")) {
+    userType = "LENDER";
+  } else {
+    userType = "BORROWER";
   }
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -70,8 +70,7 @@ export const bulkinvitegmailLink= async () =>{
     token
   );
   return response;
-}
-
+};
 
 export const getUserDetails = async () => {
   const token = getToken();
@@ -188,19 +187,17 @@ export const submitWalletToWallet = async (postdat) => {
 };
 
 export const profilesubmit = async (profiole) => {
-
   const token = getToken();
   const userId = getUserId();
-  const data=profiole;
-  const response= await handleApiRequestAfterLoginService(
-
+  const data = profiole;
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderReferring`,
     "POST",
     token,
     data
   );
-  
+
   return response;
 };
 
@@ -225,19 +222,17 @@ export const TicketHistoryapi = async () => {
   return response;
 };
 
-
-export const getemailcontent= async()=>{
+export const getemailcontent = async () => {
   const token = getToken();
   const userId = getUserId();
-  const response =await handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `mailContentShowingToLender`,
     "GET",
-    token,
-
+    token
   );
   return response;
-}
+};
 export const highvalueDeals = async (pageNo = 1) => {
   const token = getToken();
   const postdatastring = JSON.stringify({

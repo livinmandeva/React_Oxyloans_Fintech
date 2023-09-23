@@ -158,11 +158,9 @@ const MyinterestEarning = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
-<<<<<<< Updated upstream
+
                           showSizeChanger: true,
                           onShowSizeChange: onShowSizeChange,
-=======
->>>>>>> Stashed changes
                         }}
                         columns={column}
                         dataSource={myinterestEarnigs.hasdata ? datasource : []}
