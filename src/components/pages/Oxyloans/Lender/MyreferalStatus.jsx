@@ -1,31 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
-import SideBar from "../../../SideBar/SideBar";
+import SideBar from "../../../SideBar/SideBar";import  {Myreferal}  from '../../../HttpRequest/afterlogin'
 import Footer from "../../../Footer/Footer";
 import { Table } from "antd";
 
 const MyreferalStatus = () => {
-  const datasource = [
-    {
-      id: 1,
-      Email: "sravya@gmail.com",
-      UserName: "sravya",
-      MobileNumber: "7569084614",
-      Status: "invite",
-      ReferredOn: "02-08-23",
-      ViewReferee: <span className="badge badge-danger">View Referee</span>,
-    },
-    {
-      id: 1,
-      Email: "lvinmandeva@gmail.com",
-      UserName: "liveen",
-      MobileNumber: "7569084614",
-      Status: "invite",
-      ReferredOn: "02-09-23",
-      ViewReferee: <span className="badge badge-danger">View Referee</span>,
-    },
-  ];
+  // const datasource = [
+  //   {
+  //     id: 1,
+  //     Email: "sravya@gmail.com",
+  //     UserName: "sravya",
+  //     MobileNumber: "7569084614",
+  //     Status: "invite",
+  //     ReferredOn: "02-08-23",
+  //     ViewReferee: <span className="badge badge-danger">View Referee</span>,
+  //   },
+  //   {
+  //     id: 1,
+  //     Email: "lvinmandeva@gmail.com",
+  //     UserName: "liveen",
+  //     MobileNumber: "7569084614",
+  //     Status: "invite",
+  //     ReferredOn: "02-09-23",
+  //     ViewReferee: <span className="badge badge-danger">View Referee</span>,
+  //   },
+  // ];
   const column = [
     {
       title: "UserName",
@@ -60,7 +60,44 @@ const MyreferalStatus = () => {
     },
 
     ,
-  ];
+  ];    const [referdata,setreferaldata]=useState({
+    pageNo: 1,
+		pageSize: 10,
+  });   const [data ,  setdata]=useState([]);const  [datapa,setdatapa]=useState("")
+
+ 
+
+useEffect(()=>{
+  const Myrefera =async ()=>{
+    const response =  Myreferal(referdata)
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        console.log(data.data.listOfLenderReferenceDetails)
+        setdata(data.data.listOfLenderReferenceDetails)
+        setdatapa(data.data)
+        // alert("success")
+
+      } else {
+        alert("error")
+      }
+    });
+  }
+  Myrefera()
+
+
+},[])
+
+const datasource = data.map((item, index) => ({
+  id: index + 1,
+  Email: item.refereeEmail,
+  UserName: item.refereeName,
+  MobileNumber: item.refereeMobileNumber,
+  Status: item.status,
+  ReferredOn: item.referredOn,
+  ViewReferee: <span className="badge badge-danger">View Referee</span>,
+}));
+  
   return (
     <>
       <div className="main-wrapper">
