@@ -10,27 +10,43 @@ const MyhighvalueDeals = () => {
     apiData: "",
     hasdata: false,
     loading: true,
+    pageNo: 1,
+    pageSize: 10,
+    defaultPageSize: 10,
   });
 
+  const setHighValueDealsPagination = (dats) => {
+    console.log(dats);
+    setHighValueDeals({
+      ...selectedHighValueDeals,
+      defaultPageSize: dats.pageSize,
+      pageNo: dats.current,
+      pageSize: dats.pageSize,
+    });
+  };
+
   useEffect(() => {
-    const response = highvalueDeals();
+    const response = highvalueDeals(
+      selectedHighValueDeals.pageNo,
+      selectedHighValueDeals.pageSize
+    );
     response.then((data) => {
       if (data.request.status == 200) {
         setHighValueDeals({
           ...selectedHighValueDeals,
-          apiData: data.data.borrowerDealsResponseDto,
+          apiData: data.data,
           loading: false,
           hasdata:
             data.data.borrowerDealsResponseDto.length == 0 ? false : true,
         });
       }
     });
-  }, []);
+  }, [selectedHighValueDeals.pageNo, selectedHighValueDeals.pageSize]);
 
   const datasource = [];
   {
     selectedHighValueDeals.apiData != ""
-      ? selectedHighValueDeals.apiData.map((data) => {
+      ? selectedHighValueDeals.apiData.borrowerDealsResponseDto.map((data) => {
           datasource.push({
             key: Math.random(),
             DealName: data.dealName,
@@ -103,12 +119,19 @@ const MyhighvalueDeals = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: selectedHighValueDeals.apiData.length,
+                          total:
+                            selectedHighValueDeals.apiData.assertDealsCount,
+                          defaultPageSize:
+                            selectedHighValueDeals.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
                           showSizeChanger: true,
                           onShowSizeChange: onShowSizeChange,
+                          size: "default",
+                          showLessItems: true,
+                          pageSizeOptions: [5, 10, 15, 20],
+                          responsive: true,
                         }}
                         columns={columns}
                         dataSource={
@@ -116,6 +139,7 @@ const MyhighvalueDeals = () => {
                         }
                         expandable={true}
                         loading={selectedHighValueDeals.loading}
+                        onChange={setHighValueDealsPagination}
                       />
                     </div>
                   </div>

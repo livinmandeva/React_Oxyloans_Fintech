@@ -83,19 +83,22 @@ export const getUserDetails = async () => {
   );
   return response;
 };
-export const Myreferal=async(referdata)=>{
+export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
-  const data=referdata
-  const response =await handleApiRequestAfterLoginService(
+  const postdata = JSON.stringify({
+    pageNo,
+    pageSize,
+  });
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/displayingReferrerInfo`,
     "POST",
     token,
-    data
+    postdata
   );
   return response;
-}
+};
 export const writequery = async (userdata, queryfiledinput) => {
   const token = getToken();
   const userId = getUserId();
@@ -233,11 +236,11 @@ export const getemailcontent = async () => {
   );
   return response;
 };
-export const highvalueDeals = async (pageNo = 1) => {
+export const highvalueDeals = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const postdatastring = JSON.stringify({
     pageNo,
-    pageSize: 20,
+    pageSize,
   });
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -322,6 +325,161 @@ export const getMyWithdrawalHistory = async (pageNo = 1) => {
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderwithdrawalfundssearch`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getMyTransactions = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderHistory`,
+    "GET",
+    token
+  );
+  return response;
+};
+
+export const getWithdrawaFromDeal = async () => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    pageNo: 1,
+    pageSize: 50,
+    dealType: "NORMAL",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderPaticipatedDealBasedOnDealType`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getDashboardInvestment = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    requestType: "WALLETCREDITED",
+    pageSize,
+    pageNo,
+    searchType: "DESC",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `newLenderDashboard`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getDashboardPrincipalReturned = async (
+  pageNo = 1,
+  pageSize = 10
+) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    requestType: "LENDERPRICIPAL",
+    pageSize,
+    pageNo,
+    searchType: "DESC",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `newLenderDashboard`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getDashboardInterestEarnings = async (
+  pageNo = 1,
+  pageSize = 10
+) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    requestType: "LENDERINTEREST",
+    pageSize,
+    pageNo,
+    searchType: "DESC",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `newLenderDashboard`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getDashboardReferralEarnings = async (
+  pageNo = 1,
+  pageSize = 10
+) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    requestType: "REFERRALBONUS",
+    pageSize,
+    pageNo,
+    searchType: "DESC",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `newLenderDashboard`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getdashboardDealsVsEarnings = async (
+  pageNo = 1,
+  pageSize = 10
+) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    userId,
+    requestType: "LENDERPATICIPATION",
+    pageSize,
+    pageNo,
+    searchType: "DESC",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `newLenderDashboard`,
     "POST",
     token,
     postdatastring

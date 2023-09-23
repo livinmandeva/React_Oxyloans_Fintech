@@ -89,13 +89,13 @@ const WithdrawalFromWallet = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-header">
-                    <p className="note_point text-bold fst-italic">
+                    <div className="note_point text-bold fst-italic mx-3">
                       <code>
                         <b>Note : </b>
                       </code>
                       Funds will be Credited to your Bank account within 7
                       working days.
-                    </p>
+                    </div>
                   </div>
                   <div className="card-body">
                     <form>

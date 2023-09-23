@@ -1,31 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
-import SideBar from "../../../SideBar/SideBar";import  {Myreferal}  from '../../../HttpRequest/afterlogin'
+import SideBar from "../../../SideBar/SideBar";
+import { Myreferal } from "../../../HttpRequest/afterlogin";
 import Footer from "../../../Footer/Footer";
 import { Table } from "antd";
+import { onShowSizeChange, itemRender } from "../../../Pagination";
 
 const MyreferalStatus = () => {
-  // const datasource = [
-  //   {
-  //     id: 1,
-  //     Email: "sravya@gmail.com",
-  //     UserName: "sravya",
-  //     MobileNumber: "7569084614",
-  //     Status: "invite",
-  //     ReferredOn: "02-08-23",
-  //     ViewReferee: <span className="badge badge-danger">View Referee</span>,
-  //   },
-  //   {
-  //     id: 1,
-  //     Email: "lvinmandeva@gmail.com",
-  //     UserName: "liveen",
-  //     MobileNumber: "7569084614",
-  //     Status: "invite",
-  //     ReferredOn: "02-09-23",
-  //     ViewReferee: <span className="badge badge-danger">View Referee</span>,
-  //   },
-  // ];
+  const [referdata, setreferaldata] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+    pageNo: 1,
+    pageSize: 10,
+    defaultPageSize: 10,
+  });
+
+  const referalStatusPagination = (dats) => {
+    console.log(dats);
+    setreferaldata({
+      ...referdata,
+      defaultPageSize: dats.pageSize,
+      pageNo: dats.current,
+      pageSize: dats.pageSize,
+    });
+  };
+
+  useEffect(() => {
+    const response = Myreferal(referdata.pageNo, referdata.pageSize);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setreferaldata({
+          ...referdata,
+          apiData: data.data,
+          loading: false,
+          hasdata:
+            data.data.listOfLenderReferenceDetails.length == 0 ? false : true,
+        });
+      }
+    });
+  }, [referdata.pageNo, referdata.pageSize]);
+
+  const datasource = [];
+  {
+    referdata.apiData != ""
+      ? referdata.apiData.listOfLenderReferenceDetails.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            Email: data.refereeEmail,
+            UserName: data.refereeName,
+            MobileNumber: data.refereeMobileNumber,
+            Status: data.status,
+            ReferredOn: data.referredOn,
+            ViewReferee: (
+              <span className="badge badge-danger">View Referee</span>
+            ),
+          });
+        })
+      : "";
+  }
+
   const column = [
     {
       title: "UserName",
@@ -60,44 +95,7 @@ const MyreferalStatus = () => {
     },
 
     ,
-  ];    const [referdata,setreferaldata]=useState({
-    pageNo: 1,
-		pageSize: 10,
-  });   const [data ,  setdata]=useState([]);const  [datapa,setdatapa]=useState("")
-
- 
-
-useEffect(()=>{
-  const Myrefera =async ()=>{
-    const response =  Myreferal(referdata)
-    response.then((data) => {
-      console.log(data);
-      if (data.request.status == 200) {
-        console.log(data.data.listOfLenderReferenceDetails)
-        setdata(data.data.listOfLenderReferenceDetails)
-        setdatapa(data.data)
-        // alert("success")
-
-      } else {
-        alert("error")
-      }
-    });
-  }
-  Myrefera()
-
-
-},[])
-
-const datasource = data.map((item, index) => ({
-  id: index + 1,
-  Email: item.refereeEmail,
-  UserName: item.refereeName,
-  MobileNumber: item.refereeMobileNumber,
-  Status: item.status,
-  ReferredOn: item.referredOn,
-  ViewReferee: <span className="badge badge-danger">View Referee</span>,
-}));
-  
+  ];
   return (
     <>
       <div className="main-wrapper">
@@ -157,14 +155,23 @@ const datasource = data.map((item, index) => ({
                       <Table
                         className="table border-0 star-student table-hover table-center mb-0 datatable table-striped dataTable no-footer"
                         pagination={{
-                          total: datasource.length,
+                          total: referdata.apiData.countOfReferees,
+                          defaultPageSize: referdata.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          size: "default",
+                          showLessItems: true,
+                          pageSizeOptions: [5, 10, 15, 20],
+                          responsive: true,
                         }}
                         columns={column}
                         dataSource={datasource}
-                        // rowSelection={rowSelection}
-                        // rowKey={(record) => record.id}
+                        expandable={true}
+                        loading={referdata.loading}
+                        onChange={referalStatusPagination}
                       />
                     </div>
                   </div>

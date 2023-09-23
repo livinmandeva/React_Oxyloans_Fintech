@@ -11,10 +11,25 @@ const Mytransactions = () => {
     apiData: "",
     hasdata: false,
     loading: true,
+    pageNo: 1,
+    pageSize: 6,
+    defaultPageSize: 6,
   });
 
+  const mytransactionpagination = (dats) => {
+    setmytransactions({
+      ...mytransactions,
+      defaultPageSize: dats.pageSize,
+      pageNo: dats.current,
+      pageSize: dats.pageSize,
+    });
+  };
+
   useEffect(() => {
-    const response = getMyTransactions();
+    const response = getMyTransactions(
+      mytransactions.pageNo,
+      mytransactions.pageSize
+    );
     response.then((data) => {
       if (data.request.status == 200) {
         setmytransactions({
@@ -25,7 +40,7 @@ const Mytransactions = () => {
         });
       }
     });
-  }, []);
+  }, [mytransactions.pageNo, mytransactions.pageSize]);
 
   console.log(mytransactions);
 
@@ -105,16 +120,22 @@ const Mytransactions = () => {
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
                           total: datasource.length,
+                          defaultPageSize: mytransactions.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
-                          showSizeChanger: true,
+                          showSizeChanger: false,
                           onShowSizeChange: onShowSizeChange,
+                          size: "default",
+                          showLessItems: true,
+                          pageSizeOptions: [5, 10, 15, 20],
+                          responsive: true,
                         }}
                         columns={columns}
                         dataSource={mytransactions.hasdata ? datasource : []}
                         expandable={true}
                         loading={mytransactions.loading}
+                        onChange={mytransactionpagination}
                       />
                     </div>
                   </div>

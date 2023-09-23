@@ -105,7 +105,7 @@ const MembershipHistory = () => {
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
-                          showSizeChanger: true,
+                          showSizeChanger: false,
                           onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}

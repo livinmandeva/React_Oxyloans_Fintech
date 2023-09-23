@@ -5,6 +5,9 @@ import SideBar from "../../SideBar/SideBar";
 import ProgressBar from "react-customizable-progressbar";
 import { Link } from "react-router-dom";
 import { Chart as GoogleChart } from "react-google-charts";
+import { getDashboardInvestment } from "../../HttpRequest/afterlogin";
+import { Table, Pagination } from "antd";
+import { onShowSizeChange, itemRender } from "../../Pagination";
 
 import {
   awardicon01,
@@ -28,6 +31,24 @@ const AdminDashboard = () => {
     dashboardData: null,
   });
 
+  const [dashboardInvestment, setdashboardInvestment] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+    pageNo: 1,
+    pageSize: 6,
+    defaultPageSize: 6,
+  });
+
+  const investmentdashboardPagination = (dats) => {
+    setdashboardInvestment({
+      ...dashboardInvestment,
+      defaultPageSize: dats.pageSize,
+      pageNo: dats.current,
+      pageSize: dats.pageSize,
+    });
+  };
+
   useEffect(() => {
     getuserMembershipValidity().then((data) => {
       if (data.request.status == 200) {
@@ -46,6 +67,40 @@ const AdminDashboard = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    const response = getDashboardInvestment(
+      dashboardInvestment.pageNo,
+      dashboardInvestment.pageSize
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setdashboardInvestment({
+          ...dashboardInvestment,
+          apiData: data.data,
+          loading: false,
+          hasdata:
+            data.data.lenderWalletHistoryResponseDto.length == 0 ? false : true,
+        });
+      }
+    });
+  }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
+
+  const datasource = [];
+  {
+    dashboardInvestment.apiData != ""
+      ? dashboardInvestment.apiData.lenderWalletHistoryResponseDto.map(
+          (data) => {
+            datasource.push({
+              key: Math.random(),
+              Date: data.walletLoaded,
+              Description: data.remarks,
+              Amount: data.amount,
+            });
+          }
+        )
+      : "";
+  }
 
   const [data, setObject] = useState({
     chart: {
@@ -457,6 +512,23 @@ const AdminDashboard = () => {
     [new Date(2023, 11, 10), 38447],
   ];
 
+  const columns = [
+    {
+      title: "Date",
+      dataIndex: "Date",
+      sorter: (a, b) => a.Date - b.Date,
+    },
+    {
+      title: "Description",
+      dataIndex: "Description",
+      sorter: (a, b) => a.Description.length - b.Description.length,
+    },
+    {
+      title: "Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+  ];
   return (
     <>
       <div className="main-wrapper">
@@ -909,53 +981,28 @@ const AdminDashboard = () => {
                     </ul>
                   </div>
                   <div className="card-body">
-                    <div className="table-responsive">
-                      <table className="table star-student table-hover table-center table-borderless table-striped">
-                        <thead className="thead-light">
-                          <tr>
-                            <th>Date</th>
-                            <th> Description</th>
-                            <th className="text-center"> Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="text-nowrap">
-                              <div>2023-07-14</div>
-                            </td>
-                            <td className="text-nowrap">student deals</td>
-                            <td className="text-center">50000</td>
-                          </tr>
-                          <tr>
-                            <td className="text-nowrap">
-                              <div>2023-07-14</div>
-                            </td>
-                            <td className="text-nowrap">QR</td>
-                            <td className="text-center">90000</td>
-                          </tr>
-                          <tr>
-                            <td className="text-nowrap">
-                              <div>2023-07-14</div>
-                            </td>
-                            <td className="text-nowrap"> /ATTN/</td>
-                            <td className="text-center">1185</td>
-                          </tr>
-                          <tr>
-                            <td className="text-nowrap">
-                              <div>2023-07-14</div>
-                            </td>
-                            <td className="text-nowrap">GL EscrYly ICIC</td>
-                            <td className="text-center">1185</td>
-                          </tr>
-                          <tr>
-                            <td className="text-nowrap">
-                              <div>2023-07-14</div>
-                            </td>
-                            <td className="text-nowrap">36months2.2ROI</td>
-                            <td className="text-center">1185</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div>
+                      <Table
+                        className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
+                        pagination={{
+                          total: dashboardInvestment.apiData.countValue,
+                          defaultPageSize: dashboardInvestment.defaultPageSize,
+                          position: ["topRight"],
+                          showSizeChanger: false,
+                          onShowSizeChange: onShowSizeChange,
+                          size: "default",
+                          showLessItems: true,
+                          pageSizeOptions: [5, 10, 15, 20],
+                          responsive: true,
+                        }}
+                        columns={columns}
+                        expandable={true}
+                        dataSource={
+                          dashboardInvestment.hasdata ? datasource : []
+                        }
+                        loading={dashboardInvestment.loading}
+                        onChange={investmentdashboardPagination}
+                      />
                     </div>
                   </div>
                 </div>
@@ -1012,7 +1059,32 @@ const AdminDashboard = () => {
                           <span>Participate</span>
                         </div>
                       </div>
-                      <div className="activity-awards mb-0">
+                      <div className="activity-awards">
+                        <div className="award-boxs">
+                          <img src={awardicon04} alt="Award" />
+                        </div>
+                        <div className="award-list-outs">
+                          <h4>Escrow Deal : SD 2S 20L - 04JAN22</h4>
+                          <h5> Min : 5000, max : 1000000, ROI : 1.75% PM</h5>
+                        </div>
+                        <div className="award-time-list">
+                          <span>Participate</span>
+                        </div>
+                      </div>
+                      <div className="activity-awards">
+                        <div className="award-boxs">
+                          <img src={awardicon04} alt="Award" />
+                        </div>
+                        <div className="award-list-outs">
+                          <h4>Escrow Deal : SD 2S 20L - 04JAN22</h4>
+                          <h5> Min : 5000, max : 1000000, ROI : 1.75% PM</h5>
+                        </div>
+                        <div className="award-time-list">
+                          <span>Participate</span>
+                        </div>
+                      </div>
+
+                      <div className="activity-awards">
                         <div className="award-boxs">
                           <img src={awardicon04} alt="Award" />
                         </div>
