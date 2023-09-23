@@ -99,6 +99,20 @@ export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   );
   return response;
 };
+
+export  const getcontactdeatils= async()=>{
+  const token = getToken();
+  const userId = getUserId();
+  
+  const response =await  handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    // user/getLenderStoredEmailContacts/${suserId}
+    `getLenderStoredEmailContacts/${userId}`,
+    "GET",
+    token,
+  );
+  return  response;
+}
 export const writequery = async (userdata, queryfiledinput) => {
   const token = getToken();
   const userId = getUserId();
