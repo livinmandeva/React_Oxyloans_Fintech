@@ -84,7 +84,19 @@ export const getUserDetails = async () => {
   );
   return response;
 };
-
+export const Myreferal=async(referdata)=>{
+  const token = getToken();
+  const userId = getUserId();
+  const data=referdata
+  const response =await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/displayingReferrerInfo`,
+    "POST",
+    token,
+    data
+  );
+  return response;
+}
 export const writequery = async (userdata, queryfiledinput) => {
   const token = getToken();
   const userId = getUserId();
