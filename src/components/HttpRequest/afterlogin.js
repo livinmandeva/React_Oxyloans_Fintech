@@ -520,3 +520,15 @@ export const referralEarningsInfo = async (pageNo = 1, pageSize = 10) => {
   );
   return response;
 };
+
+export const getholdamountInfo = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/hold-amount-details`,
+    "GET",
+    token
+  );
+  return response;
+};

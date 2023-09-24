@@ -4,60 +4,68 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { getholdamountInfo } from "../../../HttpRequest/afterlogin";
 
 const Myholdamount = () => {
-  const checkCallBack = (pagination) => {
-    console.log(pagination);
-  };
+  const [holdamountInfo, setholdamountInfo] = useState({
+    apiData: "",
+    hasdata: false,
+    loading: true,
+    pageNo: 1,
+    pageSize: 5,
+    defaultPageSize: 5,
+  });
 
-  const datasource = [
-    {
-      key: Math.random(),
-      Sno: 1,
-      Extraamount: "30100",
-      Extraamountpaiddetails: "INR 30100 is paid for the deal DEALDEAL",
-      Deductiondetails:
-        "Principal amount 30100 is deducted from the deal test today hold 1 on null.",
-      Status: "CLOSED",
-    },
-    {
-      key: Math.random(),
-      Sno: 2,
-      Extraamount: "30100",
-      Extraamountpaiddetails: "INR 10000 is paid for the deal DEALDEAL",
+  useEffect(() => {
+    const response = getholdamountInfo();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setholdamountInfo({
+          ...holdamountInfo,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.length == 0 ? false : true,
+        });
+      }
+    });
+  }, []);
 
-      Deductiondetails:
-        "Interest amount 9000 is deducted from the deal test today hold 1",
-      Status: "DELETE",
-    },
-  ];
+  const datasource = [];
+  {
+    holdamountInfo.apiData != ""
+      ? holdamountInfo.apiData.map((data) => {
+          datasource.push({
+            key: Math.random(),
+            Extraamount: data.holdAmount,
+            Extraamountpaiddetails: comments,
+            Deductiondetails: data.comments,
+            Status: data.status,
+          });
+        })
+      : "";
+  }
 
   const columns = [
-    {
-      title: "Sno",
-      dataIndex: "Sno",
-      sorter: (a, b) => a.Sno.length - b.Sno.length,
-    },
     {
       title: "Extra amount",
       dataIndex: "Extraamount",
       sorter: (a, b) => a.Extraamount.length - b.Extraamount.length,
     },
     {
-      title: "Extraamount paid details",
+      title: "Extra paid details",
       dataIndex: "Extraamountpaiddetails",
       sorter: (a, b) =>
         a.Extraamountpaiddetails.length - b.Extraamountpaiddetails.length,
     },
     {
-      title: "Deduction details",
-      dataIndex: "Deductiondetails",
-      sorter: (a, b) => a.Deductiondetails.length - b.Deductiondetails.length,
-    },
-    {
       title: "Status",
       dataIndex: "Status",
       sorter: (a, b) => a.Status.length - b.Status.length,
+    },
+    {
+      title: "Deduction details",
+      dataIndex: "Deductiondetails",
+      sorter: (a, b) => a.Deductiondetails.length - b.Deductiondetails.length,
     },
   ];
 
@@ -113,9 +121,9 @@ const Myholdamount = () => {
                           onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={datasource}
-                        expandable={false}
-                        onChange={checkCallBack}
+                        dataSource={holdamountInfo.hasdata ? datasource : []}
+                        expandable={true}
+                        loading={holdamountInfo.loading}
                       />
                     </div>
                   </div>

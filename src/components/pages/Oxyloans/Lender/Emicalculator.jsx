@@ -7,18 +7,55 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 
 const Emicalculator = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [startDate1, setStartDate1] = useState(new Date());
-  const [roi, setroi] = useState([
+  const [loatamount, setLoanAmount] = useState("");
+  const [inputTenure, setinputTenure] = useState("");
+  const [inputroi, setinputroi] = useState("");
+  const [emiType, setemiType] = useState("");
+
+  const [tenureDropdown, settenureDropdown] = useState([
     { id: 1, text: "1" },
     { id: 2, text: "2" },
     { id: 3, text: "3" },
+    { id: 4, text: "4" },
+    { id: 5, text: "5" },
+    { id: 6, text: "6" },
+    { id: 7, text: "7" },
+    { id: 8, text: "8" },
+    { id: 9, text: "9" },
+    { id: 10, text: "10" },
+    { id: 11, text: "11" },
+    { id: 12, text: "12" },
+  ]);
+
+  const [roi, setroi] = useState([
+    { id: 10, text: "10" },
+    { id: 11, text: "11" },
+    { id: 12, text: "12" },
+    { id: 13, text: "13" },
+    { id: 14, text: "14" },
+    { id: 15, text: "15" },
+    { id: 16, text: "16" },
+    { id: 17, text: "17" },
+    { id: 18, text: "18" },
+    { id: 19, text: "19" },
+    { id: 20, text: "20" },
+    { id: 21, text: "21" },
+    { id: 22, text: "22" },
+    { id: 23, text: "23" },
+    { id: 24, text: "24" },
+    { id: 30, text: "30" },
+    { id: 36, text: "36" },
+    { id: 40, text: "40" },
   ]);
 
   const [options, setOptions] = useState([
     { id: 1, text: "Flat" },
     { id: 2, text: "Reduce" },
   ]);
+
+  const executeSelectedOption = () => {
+    console.log(this);
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -66,7 +103,11 @@ const Emicalculator = () => {
                             <input
                               type="text"
                               className="form-control"
-                              placeholder=""
+                              placeholder="Loan Amount"
+                              value={loatamount}
+                              onChange={(event) =>
+                                setLoanAmount(event.target.value)
+                              }
                             />
                           </div>
                         </div>
@@ -75,10 +116,12 @@ const Emicalculator = () => {
                             <label>
                               ROI <span className="login-danger">*</span>
                             </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter ROI"
+                            <Select2
+                              className="w-100 form-group local-forms form-control select"
+                              data={roi}
+                              options={{
+                                placeholder: "Enter ROI",
+                              }}
                             />
                           </div>
                         </div>
@@ -90,7 +133,7 @@ const Emicalculator = () => {
 
                             <Select2
                               className="w-100 form-group local-forms form-control select"
-                              data={roi}
+                              data={tenureDropdown}
                               options={{
                                 placeholder: "tenure",
                               }}
@@ -115,7 +158,7 @@ const Emicalculator = () => {
 
                         <div className="col-12">
                           <div className="student-submit">
-                            <button type="submit" className="btn btn-primary">
+                            <button type="button" className="btn btn-primary">
                               Submit
                             </button>
                           </div>

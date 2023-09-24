@@ -1,55 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from '../../../Header/Header'
-import SideBar from '../../../SideBar/SideBar'
-import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
-import './InvoiceGrid.css'
+import Header from "../../../Header/Header";
+import SideBar from "../../../SideBar/SideBar";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import "./InvoiceGrid.css";
 
 const MyRunningDelas = () => {
   return (
     <>
-       <div className="main-wrapper">
-                {/* Header */}
-                <Header />
-                {/* Sidebar */}
-                <SideBar />
-                {/* Page Wrapper */}
-                <div class="page-wrapper">
+      <div className="main-wrapper">
+        {/* Header */}
+        <Header />
+        {/* Sidebar */}
+        <SideBar />
+        {/* Page Wrapper */}
+        <div class="page-wrapper">
+          <div class="content container-fluid">
+            {/* Page Header */}
+            <div className="page-header">
+              <div className="row align-items-center">
+                <div className="col">
+                  <h3 className="page-title">Participated & Closed Deals </h3>
+                  <ul className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to="/admindashboard">Dashboard</Link>
+                    </li>
+                    <li className="breadcrumb-item active">View deals</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
-                    <div class="content container-fluid">
-                        {/* Page Header */}
-                        <div className="page-header">
-                            <div className="row align-items-center">
-                                <div className="col">
-                                    <h3 className="page-title">Running & Closed Deals </h3>
-                                    <ul className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/admindashboard">Dashboard</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active">View deals</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+            {/* Invoice Header */}
+            <div className="page-header">
+              <div className="row align-items-center">
+                <div className="col" />
+                <div className="col-auto">
+                  <Link to="/invoicelist" className="invoices-links">
+                    <FeatherIcon className="feather feather-list" icon="list" />
+                  </Link>
+                  <Link to="/invoicegrid" className="invoices-links active">
+                    <FeatherIcon className="feather feather-grid" icon="grid" />
+                  </Link>
+                </div>
+              </div>
+            </div>
 
-                        {/* Invoice Header */}
-                        <div className="page-header">
-                            <div className="row align-items-center">
-                                <div className="col" />
-                                <div className="col-auto">
-                                    <Link to="/invoicelist" className="invoices-links">
-                                        <FeatherIcon className="feather feather-list" icon="list" />
-                                    </Link>
-                                    <Link to="/invoicegrid" className="invoices-links active">
-                                        <FeatherIcon className="feather feather-grid" icon="grid" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+            {/* Report Filter */}
 
-                        {/* Report Filter */}
-
-                        {/* <div className="card report-card">
+            {/* <div className="card report-card">
                             <div className="card-body pb-0">
                                 <div className="row">
                                     <div className="col-md-12">
@@ -308,11 +307,11 @@ const MyRunningDelas = () => {
                                 </div>
                             </div>
                         </div> */}
-                        <>
-                            <div className="card invoices-tabs-card border-0">
-                                <div className="card-body card-body pt-0 pb-0">
-                                    <div className="invoices-main-tabs border-0 pb-0">
-                                        {/* <div className="row align-items-center">
+            <>
+              <div className="card invoices-tabs-card border-0">
+                <div className="card-body card-body pt-0 pb-0">
+                  <div className="invoices-main-tabs border-0 pb-0">
+                    {/* <div className="row align-items-center">
                                             <div className="col-lg-12 col-md-12">
                                                 <div className="invoices-settings-btn invoices-settings-btn-one">
                                                     <Link
@@ -327,89 +326,111 @@ const MyRunningDelas = () => {
                                                 </div>
                                             </div>
                                         </div> */}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
+                  <div className="card invoices-grid-card w-100">
+                    <div className="card-header row">
+                      <Link
+                        to="/viewinvoice"
+                        className="invoice-grid-link col-sm-12 col-lg-4"
+                      >
+                        Deal Name: SD-4S-39L-01SEP23
+                      </Link>
 
-<div class="card  card10">
-                                
-                                <div class="card-header">
-                                <h5 class="card-title">Deal Info</h5>
-                                  <div class="card-body card-body1">
-                                 <p class="card-text"><strong>Deal Name:</strong> SD-4S-39L-01SEP23</p>
-                                 <p class="card-text"><strong>Deal Id: </strong> 440</p>
-                                 <p class="card-text"><strong>Borrower Ids: </strong> 45173, 43130, 44034, 42281,</p>
-                                 <p class="card-text"><strong>Borrower Documents : </strong><a href='3'>Click here to View</a></p>
-                                 <p class="card-text"><strong>Started : </strong> 01-09-2023 02:13:55</p>
-                                 <p class="card-text"><strong>Last Participated : </strong>01-09-2023 02:25:12</p>
-                                 <p class="card-text"><strong>Deal Specific Comments : </strong>Short term</p>
-                                </div>
-                                </div>
-                              
-                                <div class="card-header">
-                                <h5 class="card-title">RoI & Duration</h5>
-                                  <div class="card-body card-body1">
-                                 <p class="card-text"><strong>Duration :</strong>  3 M</p>
-                                 <p class="card-text"><strong>ROI :</strong> 2 % </p>
-                                 <p class="card-text"><strong>Status :  </strong> Closed</p>
-                                 {/* <p class="card-text"><strong>Fund Status :  </strong>Achieved</p> */}
-                                </div>
-                                </div>
-                              
-                                <div class="card-header">
-                                <h5 class="card-title">	Payout Type</h5>
-                                  <div class="card-body card-body1">
-                                 <p class="card-text">MONTHLY<strong>
-                              Participated Date
-                               </strong>  2023-07-20</p>
-                                 <p class="card-text"><strong>Interest Earned</strong> 1733</p>
-                                 {/* <p class="card-text"><strong>Min : </strong> 15,000</p> */}    <button className='btn- btn-2'><i class="fa-brands fa-whatsapp"></i> Join Deal</button>
-                                 <p class="card-text"><strong>Withdrawal Details :- ATW :  </strong>NO </p>
-                                </div>
-                                </div>
-                                <div class="card-header">
-                                <h5 class="card-title">Participation Amount</h5>
-                                  <div class="card-body card-body1">
-                                 <p class="card-text">  10,000</p>
-                                 {/* <p class="card-text"><strong>Deal Id: </strong> 440</p>
-                                 <p class="card-text"><strong>Borrower Ids: </strong> 45173, 43130, 44034, 42281,</p>
-                                 <p class="card-text"><strong>Borrower Documents : </strong><a href='3'>Click here to View</a></p>
-                                 <p class="card-text"><strong>Started : </strong> 01-09-2023 02:13:55</p>
-                                 <p class="card-text"><strong>Last Participated : </strong>01-09-2023 02:25:12</p>
-                                 <p class="card-text"><strong>Deal Specific Comments : </strong>Short term</p> */}
-                                </div>
-                                </div>
-                              
-                                <div class="card-header">
-                                <h5 class="card-title card-title1">	Participation Details</h5>
-                                  <div class="card-body card-body1 card-body11">
-                                 {/* <p class="card-text"><strong>Payable ROI :  </strong>  1.7 % PM</p>   */}
-                                 <button className='btn- btn-2'  style={{backgroundColor: '#f39c12',margin: '4px',}}><i class="fa-brands fa-whatsapp"></i> Details</button>
-                                 <button className='btn- btn-2'  style={{backgroundColor: '#367fa9',margin: '4px'}}> View Statement</button>
-                                 <button className='btn- btn-2'  style={{backgroundColor: '#00c0ef',margin: '4px'}}><i class="fa-solid fa-pencil"></i>  Raise a Query </button>
-                                 
-                                 {/* <p class="card-text"><strong>Withdrawal Details :-</strong> </p>
-                                 <p class="card-text"><strong>ATW : </strong> NO</p> */}
-                                 {/* <p class="card-text"><strong>Max : </strong>200,000  </p> */}
-                                </div>
-                                </div>	
-                                <div class="card-header">
-                                <h5 class="card-title">	Principal Payout To</h5>
-                                  <div class="card-body card-body1">
-                              
-                                  <button className='btn- btn-1'>Participate</button>
-                                 {/* <p class="card-text"><strong>Deal opened & Closed Time  </strong></p>
-                                 <p class="card-text">2000-05-02<strong> to </strong>2000-06-02 </p> */}
-                                 {/* <p class="card-text"><strong>ATW : </strong> NO</p> */}
-                                 {/* <p class="card-text"><strong>Max : </strong>200,000  </p> */}
-                                </div>
-                                </div>		
-                               
-                              </div>
+                      <div className="col-sm-12 col-lg-2">RoI : 24 % PA</div>
+                      <div className="col-sm-12 col-lg-3">
+                        Tenure : 4 Months
+                      </div>
+                      <div className="col-auto col-lg-3">
+                        Participated : 10000000
+                      </div>
+                      {/* <div>Status : Open</div> */}
+                    </div>
+                    <div className="card-middle row">
+                      <div className="col-sm-12 col-lg-6">
+                        <h6>Deal Type : Escrow</h6>
+                        <h6>First Interest : 14/09/2023</h6>
+                        <h6>Participated Date : 2022-09-24</h6>
+                      </div>
+                      <div className="col-sm-12 col-lg-6">
+                        <small>
+                          Comments : We wish every registered Lender to
+                          experience the system without paying processing fee.
+                          We trust a good one month experience will enable
+                          lender to pay fee and participate with higher amounts.
+                        </small>
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="row align-items-center">
+                        <div className="col-sm-6 col-lg-2">
+                          <span>Deal-ID </span>
+                          <h6 className="mb-0">245</h6>
+                        </div>
+                        <div className="col-sm-6 col-lg-2">
+                          <span>Interest Earned</span>
+                          <h6 className="mb-0">INR 23467</h6>
+                        </div>
+                        <div className="col-sm-6 col-lg-2">
+                          <span>Payout to </span>
+                          <h6 className="mb-0">BANKACCOUNT</h6>
+                        </div>
+                        <div className="col-sm-6 col-lg-2">
+                          <span>Is ATW</span>
+                          <h6 className="mb-0">NO</h6>
+                        </div>
+                        <div className="col-sm-6 col-lg-2">
+                          <span>ATW ROI</span>
+                          <h6 className="mb-0">1.2 % PM</h6>
+                        </div>
 
+                        <div className="col-sm-6 col-lg-2">
+                          <span>Deal Status</span>
+                          <h6 className="mb-0"> Achieved</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card-footer">
+                      <div className="row align-items-center">
+                        <div className="col-auto">
+                          <span className="badge bg-success-dark">
+                            Participation Details
+                          </span>
+                        </div>
 
-                                {/* <div className="col-sm-6 col-lg-12 col-xl-12 d-flex">
+                        <div className="col-auto">
+                          <span className="badge bg-primary-dark">
+                            View Statement
+                          </span>
+                        </div>
+
+                        <div className="col-auto">
+                          <span className="badge bg-success">
+                            <i className="fa fa-whatsapp"></i> Join Deal
+                          </span>
+                        </div>
+
+                        <div className="col-auto">
+                          <span className="badge bg-danger">Raise A query</span>
+                        </div>
+
+                        <div className="col-auto">
+                          <span className="badge bg-info">Edit PayOut</span>
+                        </div>
+
+                        <div className="col-auto">
+                          <span className="badge bg-success-dark">
+                            Participate
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="col-sm-6 col-lg-12 col-xl-12 d-flex">
                                     <div className="card invoices-grid-card w-100">
                                         <div className="card-header d-flex justify-content-between align-items-center">
                                             <Link to="/viewinvoice" className="invoice-grid-link">
@@ -891,9 +912,9 @@ const MyRunningDelas = () => {
                                         </div>
                                     </div>
                                 </div> */}
-                                <div className="col-sm-6 col-lg-4 col-xl-3 d-flex">
-                                    <div className="card invoices-grid-card w-100">
-                                        {/* <div className="card-header d-flex justify-content-between align-items-center">
+                <div className="col-sm-6 col-lg-4 col-xl-3 d-flex">
+                  <div className="card invoices-grid-card w-100">
+                    {/* <div className="card-header d-flex justify-content-between align-items-center">
                                             <Link to="/viewinvoice" className="invoice-grid-link">
                                                 IN093439#@016
                                             </Link>
@@ -922,7 +943,7 @@ const MyRunningDelas = () => {
                                                 </div>
                                             </div>
                                         </div> */}
-                                        {/* <div className="card-middle">
+                    {/* <div className="card-middle">
                                             <h2 className="card-middle-avatar">
                                                 <Link to="/profile">
                                                     <img
@@ -957,23 +978,23 @@ const MyRunningDelas = () => {
                                                 </div>
                                             </div>
                                         </div> */}
-                                    </div>
-                                </div>
-                                {/* <div className="col-lg-12">
+                  </div>
+                </div>
+                {/* <div className="col-lg-12">
                                     <div className="invoice-load-btn">
                                         <Link to="#" className="btn">
                                             <span className="spinner-border text-primary" /> Load more
                                         </Link>
                                     </div>
                                 </div> */}
-                            </div>
-                        </>
-                    </div>
-                </div>
-                {/* /Page Wrapper */}
-            </div>
+              </div>
             </>
-  )
+          </div>
+        </div>
+        {/* /Page Wrapper */}
+      </div>
+    </>
+  );
 };
 
 export default MyRunningDelas;
