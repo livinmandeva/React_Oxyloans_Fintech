@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import { Myreferal } from "../../../HttpRequest/afterlogin";
+import { Myreferal    ,downloadreferal} from "../../../HttpRequest/afterlogin";
 import Footer from "../../../Footer/Footer";
 import { Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
@@ -16,8 +16,10 @@ const MyreferalStatus = () => {
     pageSize: 5,
     defaultPageSize: 5,
     datasource: [],
+   
   });
-
+      
+  const [ referlink,setrefer]=useState("")
   const referdashboardPagination = (Pagination) => {
     console.log(Pagination);
     setreferaldata({
@@ -41,6 +43,7 @@ const MyreferalStatus = () => {
         });
       }
     });
+    downloadreferalstatus()
   }, [referdata.pageNo, referdata.pageSize]);
 
   const datasource = [];
@@ -62,7 +65,16 @@ const MyreferalStatus = () => {
         })
       : "";
   }
-
+const downloadreferalstatus=async()=>{
+  const response =downloadreferal()
+  
+    response.then((data)=>{
+      if(data.request.status == 200){
+        setrefer(data.data.downloadUrl)
+        console.log(data.data)
+      }
+    })
+}
   const column = [
     {
       title: "User Name",
@@ -135,9 +147,9 @@ const MyreferalStatus = () => {
                           <h3 className="page-title"></h3>
                         </div>
                         <div className="col-auto text-end float-end ms-auto download-grp">
-                          <Link to="#" className="btn btn-danger me-2">
+                          <a href={referlink}   className="btn btn-danger me-2">
                             Referal Status
-                          </Link>
+                          </a>
                           <Link to="addsalary" className="btn btn-warning me-2">
                             Invite Borrower
                           </Link>

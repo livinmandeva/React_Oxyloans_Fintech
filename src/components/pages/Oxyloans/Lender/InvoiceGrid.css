@@ -122,3 +122,25 @@
     border: 2px solid rgb(32, 32, 233);
     color:rgb(32, 32, 233) ; */
 } 
+.statuscolor{
+    color: rgb(12, 172, 12);
+    padding: 2px;
+    border: 1px solid rgb(5, 176, 5);
+    background-color: rgb(212, 252, 212);
+    border-radius: 3px;
+    
+}
+.statuscolorpending{
+    color: #dc3545;
+    padding: 2px;
+    border: 1px solid #dc3545;
+    background-color: rgb(254 192 181 / 32%);
+    border-radius: 3px;
+}
+.wordbrak{
+    width: 100px !important;
+    overflow: hidden;
+    word-break: break-word;
+
+}
+

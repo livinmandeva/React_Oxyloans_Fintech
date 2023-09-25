@@ -25,6 +25,7 @@ const WithdrawdealfromDeal = () => {
     });
   };
 
+  
   useEffect(() => {
     const response = getWithdrawaFromDeal(
       participatedDeals.pageNo,
@@ -42,30 +43,35 @@ const WithdrawdealfromDeal = () => {
     });
   }, [participatedDeals.pageNo, participatedDeals.pageSize]);
 
+
   const datasource = [];
-  {
-    participatedDeals.apiData != ""
-      ? participatedDeals.apiData.lenderPaticipatedResponseDto.map((data) => {
-          datasource.push({
-            key: Math.random(),
-            DealName: data.dealName,
-            DealType: data.dealType,
-            ParticipatedAmount: data.paticipatedAmount,
-            RoI: data.rateOfInterest + " % ",
-            Duration: data.dealDuration + " M ",
-            DealStatus: data.currentStatus,
-            RequestedAmount: data.requestedAmount,
-            action: (
-              <Link to="/withdrawdealFounds">
-                <button type="submit" className="btn w-100 btn-primary btn-xs">
-                  Withdraw
-                </button>
-              </Link>
-            ),
-          });
-        })
-      : "";
+
+  if (participatedDeals.apiData !== "") {
+    participatedDeals.apiData.lenderPaticipatedResponseDto.forEach((data) => {
+      const nextPageUrl = `/withdrawdealFounds?dealId=${data.dealId}&currentAmount=${data.currentValue}&requestedAmount=${data.requestedAmount}&dealName=${data.dealName}&roi=${data.rateOfInterest}`;
+  
+      datasource.push({
+        key: Math.random(),
+        DealName: data.dealName,
+        DealType: data.dealType,
+        ParticipatedAmount: data.paticipatedAmount,
+        RoI: data.rateOfInterest + " % ",
+        Duration: data.dealDuration + " M ",
+        DealStatus: data.currentStatus,
+        RequestedAmount: data.requestedAmount,
+        action: (
+          <Link to={nextPageUrl}>
+            <button type="submit" className="btn w-100 btn-primary btn-xs">
+              Withdraw
+            </button>
+          </Link>
+        ),
+      });
+    });
   }
+  
+
+
 
   const columns = [
     {

@@ -95,11 +95,14 @@ const TicketHistory = () => {
                       </div> */}
                       <div className="card-body">
                         <div className="table-responsive">
-                          <table className="table star-student table-hover table-center table-borderless table-striped">
+                          <table className="table star-student table-hover table-center table-borderless table-striped ">
                             <thead className="thead-light">
                               <tr>
-                                <th className="text-center">S#</th>
-                                <th className="text-center"> Ticket Id</th>
+                              <th className="text-center"> Ticket Id</th>
+                              <th className="text-center"> Received On</th>
+                              <th className="text-center"> Status</th>
+                              
+                               
                                 <th className="text-center"> Query</th>
                                 <th className="text-center">Admin Comments</th>
                               </tr>
@@ -109,21 +112,20 @@ const TicketHistory = () => {
                               
                          <tr key={index}>
                                 <td className="text-center">
-                                  <div>{item.sNo}</div>
+                                <div>{item.ticketId}</div>
                                 </td>
                                 <td className="text-center">
-                                  <div><strong>Ticket Id :</strong>{item.ticketId}</div>
-                                  <div> <strong>Received On :</strong> {item.receivedOn}</div>
-                                  <div><strong>Status </strong>  {item.status}</div>
-                            
+                                 
+                                  <div>{item.receivedOn}</div>
                                 </td>
-                                <td className="text-center"   >{item.query}</td>
+                                <td>   <div className={item.status === 'Completed' ? 'badge badge-success' : 'badge badge-danger'}> {item.status}</div></td>
+                                <td className={item.query.length >= 50 ? 'wordbrak text-center':'notword text-center'}  style={{wordWrap:'break-word'}}  >{item.query}</td>
                                 <td className="text-center">
                                   <div className="buttn">
-                                   <button className=" btn btn-secondary statusbutton">View Comments</button>
-                                   <button className=" btn btn-dark statusbutton statusbutton2">Inquiries Reply</button>
-                                   <Link to="/writetous" ><button className=" btn btn-warning statusbutton statusbutton3">Write Reply</button>  </Link>
-                                   <button className=" btn btn-info statusbutton statusbutton4">Cancel</button>
+                                   <div className=" badge bg-success-dark">View Comments</div>
+                                   <div className="badge bg-warning">Inquiries Reply</div>
+                                   <Link to="/writetous" ><div className=" badge bg-success">Write Reply</div>  </Link>
+                                   <div className=" badge bg-success-dark">Cancel</div>
                                   </div>
                                 </td>
                               </tr>
@@ -162,3 +164,5 @@ const TicketHistory = () => {
 };
 
 export default TicketHistory;
+
+
