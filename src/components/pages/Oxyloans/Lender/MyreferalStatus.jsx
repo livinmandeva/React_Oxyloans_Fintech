@@ -4,7 +4,7 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { Myreferal    ,downloadreferal} from "../../../HttpRequest/afterlogin";
 import Footer from "../../../Footer/Footer";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 
 const MyreferalStatus = () => {
@@ -15,10 +15,14 @@ const MyreferalStatus = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
-    datasource: [],
+    datasource: [],nriinvite:false,
+    inviteborrowerlink:false,
+    invaitlenderlink:false,
+
+    
    
   });
-      
+  const [copySuccess, setCopySuccess] = useState(false);
   const [ referlink,setrefer]=useState("")
   const referdashboardPagination = (Pagination) => {
     console.log(Pagination);
@@ -74,7 +78,29 @@ const downloadreferalstatus=async()=>{
         console.log(data.data)
       }
     })
-}
+}    
+
+
+
+
+
+const Invitelender=async()=>{
+  const userId=localStorage.getItem("userType")
+  const input = document.createElement('input');
+  input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand('copy');
+  document.body.removeChild(input);
+  
+  setreferaldata({
+    ...referdata,
+    invaitlenderlink:!referdata.invaitlenderlink
+  })
+  
+  }
+
+ 
   const column = [
     {
       title: "User Name",
@@ -109,6 +135,49 @@ const downloadreferalstatus=async()=>{
     },
   ];
 
+
+const  handlenriinvite =()=>{
+
+
+  const userId=localStorage.getItem("userType")
+  const input = document.createElement('input');
+  input.value = `https://www.oxyloans.com/new/nrilenderregistration?ref=${userId}`;
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand('copy');
+  document.body.removeChild(input);
+  setreferaldata({
+    ...referdata,
+    nriinvite:!referdata.nriinvite
+  })
+}
+  const Inviteborrower = () => {
+
+    const userId=localStorage.getItem("userType")
+    const input = document.createElement('input');
+    input.value = `https://www.oxyloans.com/new/register_borrower?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    setreferaldata({
+      ...referdata,
+      inviteborrowerlink:!referdata.inviteborrowerlink
+    })
+  };
+
+
+  // const handleCopyClick = () => {
+  //   const input = document.createElement('input');
+  //   input.value = link;
+  //   document.body.appendChild(input);
+  //   input.select();
+  //   document.execCommand('copy');
+  //   document.body.removeChild(input);
+  //   setCopySuccess(true);
+  // };
+
+
   return (
     <>
       <div className="main-wrapper">
@@ -128,7 +197,7 @@ const downloadreferalstatus=async()=>{
                   <h3 className="page-title">Referral Infos</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard </Link>
+                      <Link to="/admindashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My Deals</li>
                   </ul>
@@ -150,16 +219,21 @@ const downloadreferalstatus=async()=>{
                           <a href={referlink}   className="btn btn-danger me-2">
                             Referal Status
                           </a>
-                          <Link to="addsalary" className="btn btn-warning me-2">
-                            Invite Borrower
-                          </Link>
-                          <Link to="addsalary" className="btn btn-info me-2">
-                            Invite an NRI
-                          </Link>
+                          <Button 
+                          // to="addsalary"
+                          onClick={Inviteborrower}
+                           className="btn btn-warning me-2">
+                            {referdata.inviteborrowerlink ? <>copied</> : <>Invite Borrower</>}
+                          </Button>
+                          <Button  onClick={handlenriinvite} className="btn btn-info me-2">
+                          {referdata.nriinvite ? <> copyed</> :<>Invite an NRI</>}  
+                          </Button>
 
-                          <Link to="addsalary" className="btn btn-success me-2">
-                            Invite A lender
-                          </Link>
+                          <Button     onClick={Invitelender} className="btn btn-success me-2">
+        {/* {copySuccess ? 'Link Copied!' : 'Invite A lender'} */}
+
+       {referdata.invaitlenderlink ? <> copyed</> :<>Invite an Lender</>} 
+      </Button>
                         </div>
                       </div>
                     </div>
