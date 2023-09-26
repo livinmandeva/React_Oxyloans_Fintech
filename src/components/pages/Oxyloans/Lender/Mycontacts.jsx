@@ -5,7 +5,7 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import { Table } from "antd";
-import { data } from "jquery";
+import { data, event } from "jquery";
 
 const Mycontacts = () => {
   const [contactdata, setcontactData] = useState({
@@ -14,6 +14,7 @@ const Mycontacts = () => {
     loading: true,
     pageNo: 1,
     pageSize: 5,
+    selectAll:false
   });
 
   useEffect(() => {
@@ -37,9 +38,26 @@ const Mycontacts = () => {
     id: index + 1,
     Email: apidata.emailAddress,
     ContactName: apidata.contactName,
-    Invite: <input type="checkbox" id="selectAll" />,
+    Invite: contactdata.selectAll ? (<input
+        type="checkbox"
+        checked
+       
+      />):(
+      <input
+      type="checkbox"
+         onClick={()=>handleCheckboxClick(index + 1)}
+     
+    />)
+     
+    ),
   }));
 
+
+
+  const handleCheckboxClick =  (id)=>{
+    
+    console.log(id)
+  }
   const column = [
     {
       title: "Email",
@@ -59,6 +77,14 @@ const Mycontacts = () => {
 
     ,
   ];
+
+
+  const HandleselectClick=()=>{
+    setcontactData({
+      ...contactdata,
+      selectAll:true
+    })
+  }
 
   return (
     <>
@@ -101,7 +127,7 @@ const Mycontacts = () => {
                           <Link to="#" className="btn btn-outline-primary me-2">
                             Send Invite
                           </Link>
-                          <Link to="#" className="btn btn-warning">
+                        <Link className="btn btn-warning"  onClick={HandleselectClick}>
                             Invite All
                           </Link>
                         </div>
