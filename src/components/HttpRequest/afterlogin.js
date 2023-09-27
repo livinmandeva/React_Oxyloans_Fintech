@@ -91,11 +91,10 @@ export const getUserDetails = async () => {
   return response;
 };
 
-export const LoadwaletThroughQr1 =async(amount)=>{
-
+export const LoadwalletThroughQrScan = async (amount) => {
   const token = getToken();
   const userId = getUserId();
-	var data = {
+  var data = {
     userId: userId,
     amount: amount,
   };
@@ -104,33 +103,45 @@ export const LoadwaletThroughQr1 =async(amount)=>{
     API_BASE_URL,
     `QRTransactionInitiation`,
     "POST",
-  
-    token,
-    data,
-    
-   );
 
-   return response;
-}
-export const Earning= async()=>{
+    token,
+    data
+  );
+
+  return response;
+};
+
+export const checkqrcodetransaction = async (qrid) => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${qrid}/qrStatusCheck`,
+    "PATCH",
+    token
+  );
+
+  return response;
+};
+
+export const Earning = async () => {
   const token = getToken();
   const userId = getUserId();
 
-  const data={
+  const data = {
     userId: userId,
-    paymentStatus: "" 
-  }
+    paymentStatus: "",
+  };
 
-  const response = await  handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `downLoadLinkForBonusAmount`,
     data,
     "POST",
-    
-    token,
+    token
   );
-   return response;
-}
+  return response;
+};
 export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();

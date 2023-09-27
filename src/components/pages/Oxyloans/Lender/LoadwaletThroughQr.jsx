@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { LoadwaletThroughQr1 } from "../../../HttpRequest/afterlogin";
+import {
+  LoadwalletThroughQrScan,
+  checkqrcodetransaction,
+} from "../../../HttpRequest/afterlogin";
+import { QRCode, Space } from "antd";
+import {
+  HandleWithFooter,
+  WarningAlert,
+} from "../../Base UI Elements/SweetAlert";
 
 const LoadwaletThroughQr = () => {
-  const [qrcode, setqrcode] = useState(false);
+  const [qrcodeImageStatus, setqrcodeImageStatus] = useState("active");
   const [loadwaletThroughQr, setloadwaletThroughQr] = useState({
     qrcode: false,
     qrcodeimage: "",
@@ -16,46 +24,82 @@ const LoadwaletThroughQr = () => {
     showqrcode: true,
     qrcodeStatus: "",
     qrUrlID: "",
+    isvalid: false,
   });
 
   const handlechange = (event) => {
     const { name, value } = event.target;
-
     setloadwaletThroughQr({
       ...loadwaletThroughQr,
       [name]: value,
     });
   };
-  const LoadwaletThroughQr = async () => {
-    const response = LoadwaletThroughQr1(loadwaletThroughQr.amount);
+
+  const loadYourWalletFunction = async () => {
+    const response = LoadwalletThroughQrScan(loadwaletThroughQr.amount);
     response.then((data) => {
-      console.log(data);
       if (data.request.status == 200) {
-        console.log(data);
         setloadwaletThroughQr({
           ...loadwaletThroughQr,
           qrUrlpath: data.data.qrGenerationString,
           qrcodeStatus: data.data.status,
           qrUrlID: data.data.qrTableId,
+          isvalid: true,
+          qrcode: true,
         });
+
+        updateTheValueTimeOut();
       }
     });
   };
 
-  useEffect(() => {
-    // This effect will run 10 seconds after component mounts and set qrcode to false
-    const timerId = setTimeout(() => {
-      setqrcode(false);
-    }, 16000);
-
-    // Clear the timer when the component unmounts or when you want to cancel it
-    return () => clearTimeout(timerId);
-  }, []);
-
-  const checkqrcodetransaction = (qrUrlID) => {
-    console.log(qrUrlID);
-    // Implement your checkqrcodetransaction logic here
+  const updateTheValueTimeOut = () => {
+    setTimeout(() => {
+      setqrcodeImageStatus("loading");
+    }, 20000);
   };
+
+  useEffect(() => {
+    if (qrcodeImageStatus == "loading") {
+      const intervalId = setInterval(() => {
+        knowthestatusQrPayment();
+      }, 1000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [qrcodeImageStatus]);
+
+  const knowthestatusQrPayment = () => {
+    const qRStatusresponse = checkqrcodetransaction(loadwaletThroughQr.qrUrlID);
+
+    qRStatusresponse.then((data) => {
+      if (data.request.status == 200) {
+        if (data.data.status == "SUCCESS") {
+          HandleWithFooter(
+            "Your Tranaction was Sucessfull and loaded the same amount Your Wallet"
+          );
+          clearInterval(intervalId);
+        }
+      } else {
+        alert("called failed");
+        WarningAlert(data.response.data.errorMessage);
+      }
+    });
+  };
+
+  // useEffect(() => {
+  //   const timerId = setTimeout(() => {
+  //     setqrcode(false);
+  //   }, 16000);
+
+  //   return () => clearTimeout(timerId);
+  // }, []);
+
+  // const checkqrcodetransaction = (qrUrlID) => {
+  //   console.log(qrUrlID);
+  // };
   return (
     <>
       <div className="main-wrapper">
@@ -99,18 +143,15 @@ const LoadwaletThroughQr = () => {
                             </h4>
                           </div>
 
-                          {qrcode ? (
+                          {loadwaletThroughQr.qrcode &&
+                          loadwaletThroughQr.isvalid ? (
                             <>
-                              {/* {loadwaletThroughQr.showqrcode && (
-                                <QRCodeGenerator
-                                  qrUrlpath={loadwaletThroughQr.qrUrlpath}
-                                />
-                              )} */}
-                              {/* //{" "}
                               <div className="row col-12 d-flex justify-content-center">
-                                // <QRCode value={"-"} />
-                                //{" "}
-                              </div> */}
+                                <QRCode
+                                  value={loadwaletThroughQr.qrUrlpath}
+                                  status={qrcodeImageStatus}
+                                />
+                              </div>
                             </>
                           ) : (
                             <>
@@ -124,12 +165,7 @@ const LoadwaletThroughQr = () => {
                                 <button
                                   className="btn btn-primary btn-primary-1"
                                   type="button"
-                                  onClick={() => {
-                                    setqrcode(true);
-                                    setTimeout(() => {
-                                      LoadwaletThroughQr();
-                                    }, 0);
-                                  }}
+                                  onClick={loadYourWalletFunction}
                                 >
                                   Button
                                 </button>

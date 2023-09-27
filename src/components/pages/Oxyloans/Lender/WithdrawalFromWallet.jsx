@@ -57,7 +57,6 @@ const WithdrawalFromWallet = () => {
     });
   };
 
-  
   return (
     <>
       <div className="main-wrapper">
