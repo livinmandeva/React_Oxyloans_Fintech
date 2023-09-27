@@ -89,17 +89,6 @@ const LoadwaletThroughQr = () => {
     });
   };
 
-  // useEffect(() => {
-  //   const timerId = setTimeout(() => {
-  //     setqrcode(false);
-  //   }, 16000);
-
-  //   return () => clearTimeout(timerId);
-  // }, []);
-
-  // const checkqrcodetransaction = (qrUrlID) => {
-  //   console.log(qrUrlID);
-  // };
   return (
     <>
       <div className="main-wrapper">
