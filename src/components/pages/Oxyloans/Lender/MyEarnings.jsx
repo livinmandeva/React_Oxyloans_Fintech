@@ -6,7 +6,7 @@ import { onShowSizeChange, itemRender } from "../../../Pagination";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { referralEarningsInfo } from "../../../HttpRequest/afterlogin";
+import { Earning , referralEarningsInfo } from "../../../HttpRequest/afterlogin";
 
 const MyEarnings = () => {
   const [referalMyearnigs, setreferalMyearnigs] = useState({
@@ -16,6 +16,11 @@ const MyEarnings = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
+    Invitelender:'',
+    inviteborrower:'',
+    invitenri:'',borrowerlink:true,earninglink:'',
+    lenderlink:true,invitenrilink:true
+
   });
 
   const referalMyearnigsPagination = (Pagination) => {
@@ -65,6 +70,72 @@ const MyEarnings = () => {
       : "";
   }
 
+  const Invitelender=async()=>{
+    const userId=localStorage.getItem("userType")
+    const input = document.createElement('input');
+    input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    
+    setreferalMyearnigs({
+      ...referalMyearnigs,
+      Invitelender:!referalMyearnigs.Invitelender,
+      lenderlink:false
+    })
+    
+    }
+  const Inviteborrower=async()=>{
+      const userId=localStorage.getItem("userType")
+      const input = document.createElement('input');
+      input.value = `https://www.oxyloans.com/new/register_borrower?ref=${userId}`;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      
+      setreferalMyearnigs({
+        ...referalMyearnigs,
+        Inviteborrower:!referalMyearnigs.Inviteborrower,
+        borrowerlink:false
+      })
+      
+      }
+      const Invitenri=async()=>{
+        const userId=localStorage.getItem("userType")
+        const input = document.createElement('input');
+        input.value = `https://www.oxyloans.com/new/nrilenderregistration?ref=${userId}`;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        
+        setreferalMyearnigs({
+          ...referalMyearnigs,
+          invitenri:!referalMyearnigs.invitenri,
+          invitenrilink:false
+        })
+        
+        }
+
+const EarningStatementlink=async()=>{
+
+      const response =Earning()
+      response.then((data)=>{
+        //  if (data.request.status == 200) {
+          console.log(data)
+
+          setreferalMyearnigs({
+            ...referalMyearnigs,
+            earninglink:data.downloadLink
+          })
+        // }
+      }) 
+}
+  useEffect(()=>{
+    EarningStatementlink()
+  },[])
   const column = [
     {
       title: "Referee Name",
@@ -148,14 +219,14 @@ const MyEarnings = () => {
               <div className="col-sm-12">
                 <div className="card card-table">
                   <div className="card-header">
-                    <button className="btn btn-xs col-md-2 btn-info col-12">
-                      Invite Borrower
+                    <button onClick={Inviteborrower} className="btn btn-xs col-md-2 btn-info col-12">
+                     {referalMyearnigs.borrowerlink  ? <>Invite Borrower</> : <> copied</>} 
                     </button>
-                    <button className="btn btn-xs col-md-2 btn-warning  mx-lg-1 col-12">
-                      Invite Lender
+                    <button onClick={Invitelender} className="btn btn-xs col-md-2 btn-warning  mx-lg-1 col-12">
+                        {referalMyearnigs.lenderlink  ? <>Invite Lender</> : <> copied</>} 
                     </button>
-                    <button className="btn btn-xs col-md-2 btn-success mx-lg-1  col-12">
-                      Invite An NRI
+                    <button onClick={Invitenri} className="btn btn-xs col-md-2 btn-success mx-lg-1  col-12">
+                    {referalMyearnigs.invitenrilink ?  <>Invite An NRI</> : <>copied</>}  
                     </button>
                     <button className="btn btn-xs col-md-3 btn-danger col-12 ">
                       Earning Statement

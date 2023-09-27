@@ -90,6 +90,47 @@ export const getUserDetails = async () => {
   );
   return response;
 };
+
+export const LoadwaletThroughQr1 =async(amount)=>{
+
+  const token = getToken();
+  const userId = getUserId();
+	var data = {
+    userId: userId,
+    amount: amount,
+  };
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `QRTransactionInitiation`,
+    "POST",
+  
+    token,
+    data,
+    
+   );
+
+   return response;
+}
+export const Earning= async()=>{
+  const token = getToken();
+  const userId = getUserId();
+
+  const data={
+    userId: userId,
+    paymentStatus: "" 
+  }
+
+  const response = await  handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `downLoadLinkForBonusAmount`,
+    data,
+    "POST",
+    
+    token,
+  );
+   return response;
+}
 export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();

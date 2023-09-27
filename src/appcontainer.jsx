@@ -50,6 +50,7 @@ import Whatapplog from "./components/pages/Authentication/Whatapplog";
 import PartnerRegister from "./components/pages/Authentication/PartnerRegister";
 import Profile from "./components/pages/Blog/Profile";
 import TicketHistory from "./components/pages/Oxyloans/Lender/TicketHistory";
+import QRCodeGenerator from "./components/pages/Oxyloans/Lender/QRCodeGenerator";
 
 const appcontainer = () => {
   return (
@@ -87,6 +88,7 @@ const appcontainer = () => {
         <Route path="/mywithdrawalHistory" component={MywithdrawalHistory} />
         <Route path="/writetous" component={Writetous} />
         <Route path="/viewTicketHistory" component={ViewTicketHistory} />
+        <Route path="/QRCodeGenerator" component={QRCodeGenerator} />
         <Route path="/emicalculator" component={Emicalculator} />
         <Route path="/configautoInvest" component={ConfigautoInvest} />
         <Route path="/viewAutoHistory" component={ViewAutoHistory} />

@@ -1,15 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import Footer from "../../../Footer/Footer";
+import Footer from "../../../Footer/Footer";import QRious from 'qrious';
 import { bulidingicon, profilebg, profileuser } from "../../../imagepath";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";import {LoadwaletThroughQr1}  from '../../../HttpRequest/afterlogin'
 import "./InvoiceGrid.css";
+import QRCodeGenerator from "./QRCodeGenerator";
 
 const LoadwaletThroughQr = () => {
   const [qrcode, setqrcode] = useState(false);
+   const [loadwaletThroughQr ,setloadwaletThroughQr]=useState({
+    qrcode:false,
+    qrcodeimage:'',
+    amount:'',link:'',
+    qrUrlpath:'',
+    showqrcode:true,
+    qrcodeStatus:'',
+    qrUrlID:''
+   })
+//   {
+//     "status": "INITIATED",
+//     "qrGenerationString": "upi://pay?pa=oxyloans@icici&pn=oxyloans&tr=MNO813426092023130625=&am=1.00&cu=INR&mc=5411",
+//     "qrTableId": 5199,
+//     "userId": null,
+//     "merchantTransactionId": null,
+//     "amount": null,
+//     "billNumber": null,
+//     "bankRRN": null,
+//     "transactionDate": null
+// }
 
+const handlechange=(event)=>{
+  const {name, value}=event.target;
+  
+  setloadwaletThroughQr({
+    ...loadwaletThroughQr,
+    [name]:value
+  })
+
+
+}
+const LoadwaletThroughQr=async()=>{
+  const response = LoadwaletThroughQr1(loadwaletThroughQr.amount)
+  response.then((data) => {
+    console.log(data)
+    if (data.request.status == 200) {
+
+      console.log(data)
+       setloadwaletThroughQr({
+        ...loadwaletThroughQr,
+        qrUrlpath:data.data.qrGenerationString,
+        qrcodeStatus:data.data.status,
+        qrUrlID:data.data.qrTableId,
+       })
+
+  }
+
+  })
+}   
+
+useEffect(() => {
+  // This effect will run 10 seconds after component mounts and set qrcode to false
+  const timerId = setTimeout(() => {
+    setqrcode(false);
+  }, 16000);
+
+  // Clear the timer when the component unmounts or when you want to cancel it
+  return () => clearTimeout(timerId);
+}, [])
+
+
+
+const checkqrcodetransaction = (qrUrlID) => {
+
+  console.log(qrUrlID)
+  // Implement your checkqrcodetransaction logic here
+};
   return (
     <>
       <div className="main-wrapper">
@@ -55,24 +122,33 @@ const LoadwaletThroughQr = () => {
                           </div>
 
                           {qrcode ? (
-                            <></>
+                            <>
+                               {loadwaletThroughQr.showqrcode && (
+         <QRCodeGenerator qrUrlpath={loadwaletThroughQr.qrUrlpath} />
+      )} </>
                           ) : (
                             <>
                               {" "}
                               <input
                                 className="form-control"
-                                placeholder="Enter the Amount"
+                                placeholder="Enter the Amount" 
+                                name="amount"   onChange={handlechange}
                               />
                               <div className="d-grid gap-2 d-md-block mt-2 button-qr">
-                                <button
-                                  className="btn btn-primary btn-primary-1"
-                                  type="button"
-                                  onClick={() => {
-                                    setqrcode(true);
-                                  }}
-                                >
-                                  Button
-                                </button>
+                              <button
+  className="btn btn-primary btn-primary-1"
+  type="button"
+  onClick={() => {
+    setqrcode(true);
+    // Call LoadwaletThroughQr inside a setTimeout to ensure the state update is complete
+    setTimeout(() => {
+      LoadwaletThroughQr();
+    }, 0); // You can use a minimal delay, e.g., 0 milliseconds
+  }}
+>
+  Button
+</button>
+
                               </div>
                             </>
                           )}
