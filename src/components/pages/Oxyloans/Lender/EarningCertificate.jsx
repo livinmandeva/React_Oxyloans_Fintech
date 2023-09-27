@@ -39,30 +39,28 @@ const EarningCertificate = () => {
             FY: data.financialYear,
             EARNINGS: data.incomeEarned,
             DOWNLOADFYREPORT: (
-              <button
-                type="submit"
-                className="btn w-40 btn-primary btn-xs"
+              <span
+                className="badge bg-success"
                 onClick={profitearnedCertificate(
                   data.startDate,
                   data.endDate,
                   "DOWNLOAD"
                 )}
               >
-                Download
-              </button>
+                Download FY Report
+              </span>
             ),
             EMAILFYREPORT: (
-              <button
-                type="submit"
-                className="btn w-40 btn-warning btn-xs"
+              <span
+                className="badge bg-info"
                 onClick={profitearnedCertificate(
                   data.startDate,
                   data.endDate,
                   "EMAIL"
                 )}
               >
-                Email
-              </button>
+                Get FY Email Report
+              </span>
             ),
           });
         })

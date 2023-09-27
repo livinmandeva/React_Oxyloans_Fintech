@@ -2,81 +2,60 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import Footer from "../../../Footer/Footer";import QRious from 'qrious';
-import { bulidingicon, profilebg, profileuser } from "../../../imagepath";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";import {LoadwaletThroughQr1}  from '../../../HttpRequest/afterlogin'
-import "./InvoiceGrid.css";
-import QRCodeGenerator from "./QRCodeGenerator";
+import Footer from "../../../Footer/Footer";
+import { LoadwaletThroughQr1 } from "../../../HttpRequest/afterlogin";
 
 const LoadwaletThroughQr = () => {
   const [qrcode, setqrcode] = useState(false);
-   const [loadwaletThroughQr ,setloadwaletThroughQr]=useState({
-    qrcode:false,
-    qrcodeimage:'',
-    amount:'',link:'',
-    qrUrlpath:'',
-    showqrcode:true,
-    qrcodeStatus:'',
-    qrUrlID:''
-   })
-//   {
-//     "status": "INITIATED",
-//     "qrGenerationString": "upi://pay?pa=oxyloans@icici&pn=oxyloans&tr=MNO813426092023130625=&am=1.00&cu=INR&mc=5411",
-//     "qrTableId": 5199,
-//     "userId": null,
-//     "merchantTransactionId": null,
-//     "amount": null,
-//     "billNumber": null,
-//     "bankRRN": null,
-//     "transactionDate": null
-// }
+  const [loadwaletThroughQr, setloadwaletThroughQr] = useState({
+    qrcode: false,
+    qrcodeimage: "",
+    amount: "",
+    link: "",
+    qrUrlpath: "",
+    showqrcode: true,
+    qrcodeStatus: "",
+    qrUrlID: "",
+  });
 
-const handlechange=(event)=>{
-  const {name, value}=event.target;
-  
-  setloadwaletThroughQr({
-    ...loadwaletThroughQr,
-    [name]:value
-  })
+  const handlechange = (event) => {
+    const { name, value } = event.target;
 
+    setloadwaletThroughQr({
+      ...loadwaletThroughQr,
+      [name]: value,
+    });
+  };
+  const LoadwaletThroughQr = async () => {
+    const response = LoadwaletThroughQr1(loadwaletThroughQr.amount);
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        console.log(data);
+        setloadwaletThroughQr({
+          ...loadwaletThroughQr,
+          qrUrlpath: data.data.qrGenerationString,
+          qrcodeStatus: data.data.status,
+          qrUrlID: data.data.qrTableId,
+        });
+      }
+    });
+  };
 
-}
-const LoadwaletThroughQr=async()=>{
-  const response = LoadwaletThroughQr1(loadwaletThroughQr.amount)
-  response.then((data) => {
-    console.log(data)
-    if (data.request.status == 200) {
+  useEffect(() => {
+    // This effect will run 10 seconds after component mounts and set qrcode to false
+    const timerId = setTimeout(() => {
+      setqrcode(false);
+    }, 16000);
 
-      console.log(data)
-       setloadwaletThroughQr({
-        ...loadwaletThroughQr,
-        qrUrlpath:data.data.qrGenerationString,
-        qrcodeStatus:data.data.status,
-        qrUrlID:data.data.qrTableId,
-       })
+    // Clear the timer when the component unmounts or when you want to cancel it
+    return () => clearTimeout(timerId);
+  }, []);
 
-  }
-
-  })
-}   
-
-useEffect(() => {
-  // This effect will run 10 seconds after component mounts and set qrcode to false
-  const timerId = setTimeout(() => {
-    setqrcode(false);
-  }, 16000);
-
-  // Clear the timer when the component unmounts or when you want to cancel it
-  return () => clearTimeout(timerId);
-}, [])
-
-
-
-const checkqrcodetransaction = (qrUrlID) => {
-
-  console.log(qrUrlID)
-  // Implement your checkqrcodetransaction logic here
-};
+  const checkqrcodetransaction = (qrUrlID) => {
+    console.log(qrUrlID);
+    // Implement your checkqrcodetransaction logic here
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -115,7 +94,6 @@ const checkqrcodetransaction = (qrUrlID) => {
                         <div className="card-body">
                           <div className="heading-detail">
                             <h4>
-                              {" "}
                               <i className="fa-solid fa-qrcode"></i> Load Your
                               wallet with QR Scan
                             </h4>
@@ -123,32 +101,38 @@ const checkqrcodetransaction = (qrUrlID) => {
 
                           {qrcode ? (
                             <>
-                               {loadwaletThroughQr.showqrcode && (
-         <QRCodeGenerator qrUrlpath={loadwaletThroughQr.qrUrlpath} />
-      )} </>
+                              {/* {loadwaletThroughQr.showqrcode && (
+                                <QRCodeGenerator
+                                  qrUrlpath={loadwaletThroughQr.qrUrlpath}
+                                />
+                              )} */}
+                              {/* //{" "}
+                              <div className="row col-12 d-flex justify-content-center">
+                                // <QRCode value={"-"} />
+                                //{" "}
+                              </div> */}
+                            </>
                           ) : (
                             <>
-                              {" "}
                               <input
                                 className="form-control"
-                                placeholder="Enter the Amount" 
-                                name="amount"   onChange={handlechange}
+                                placeholder="Enter the Amount"
+                                name="amount"
+                                onChange={handlechange}
                               />
                               <div className="d-grid gap-2 d-md-block mt-2 button-qr">
-                              <button
-  className="btn btn-primary btn-primary-1"
-  type="button"
-  onClick={() => {
-    setqrcode(true);
-    // Call LoadwaletThroughQr inside a setTimeout to ensure the state update is complete
-    setTimeout(() => {
-      LoadwaletThroughQr();
-    }, 0); // You can use a minimal delay, e.g., 0 milliseconds
-  }}
->
-  Button
-</button>
-
+                                <button
+                                  className="btn btn-primary btn-primary-1"
+                                  type="button"
+                                  onClick={() => {
+                                    setqrcode(true);
+                                    setTimeout(() => {
+                                      LoadwaletThroughQr();
+                                    }, 0);
+                                  }}
+                                >
+                                  Button
+                                </button>
                               </div>
                             </>
                           )}
@@ -173,20 +157,10 @@ const checkqrcodetransaction = (qrUrlID) => {
                           How to load the wallet through UPI
                         </h4>
                         <p className="sub-header"></p>
-                        {/* 16:9 aspect ratio */}
+
                         <div className="ratio ratio-16x9">
                           <iframe src="https://www.youtube.com/embed/RUg_WsZ-90g?rel=0" />
                         </div>
-                        {/* <div className="card-body">
-                          <div className="heading-detail">
-                            <h4>How to load the wallet through UPI</h4>
-                          </div>
-                          <div className="ratio ratio-21x9">
-                            <iframe src="https://www.youtube.com/embed/RUg_WsZ-90g?rel=0" />
-                          </div>
-                          <div className="personal-activity">
-                          
-                        </div> */}
                       </div>
                     </div>
                   </div>

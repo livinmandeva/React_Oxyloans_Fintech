@@ -148,19 +148,19 @@ export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
-export const downloadreferal= async ()=>{
+export const downloadreferal = async () => {
   const token = getToken();
   const userId = getUserId();
 
-  const response= await   handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/referralBonusAmountLink`,
     "GET",
-    token,
+    token
   );
-  
+
   return response;
-}
+};
 export const getcontactdeatils = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -175,17 +175,17 @@ export const getcontactdeatils = async () => {
   return response;
 };
 
-export const handleapicall=async (data)=>{
+export const handleapicall = async (data) => {
   const token = getToken();
   const userId = getUserId();
 
-  const data1={ 
+  const data1 = {
     userId: userId,
-     dealId: data.dealId,
-      currentAmount: data.currentAmount,
-       requestedAmount: data.requestedAmount,
-        withDrawalFunds: data.withdrawAmount
-       }
+    dealId: data.dealId,
+    currentAmount: data.currentAmount,
+    requestedAmount: data.requestedAmount,
+    withDrawalFunds: data.withdrawAmount,
+  };
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     // user/getLenderStoredEmailContacts/${suserId}
@@ -194,8 +194,8 @@ export const handleapicall=async (data)=>{
     "POST",
     token
   );
-  return response
-}
+  return response;
+};
 export const writequery = async (userdata, queryfiledinput) => {
   const token = getToken();
   const userId = getUserId();

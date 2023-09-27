@@ -15,14 +15,12 @@ const Profile = () => {
   });
   useEffect(() => {
     getUserDetails().then((data) => {
-       localStorage.setItem("userType",data.data.userDisplayId)
+      localStorage.setItem("userType", data.data.userDisplayId);
       setdashboarddata({
         ...dashboarddata,
         profileData: data,
       });
-
     });
-
   }, []);
 
   return (

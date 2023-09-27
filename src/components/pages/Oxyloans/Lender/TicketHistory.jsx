@@ -3,46 +3,40 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-  import {TicketHistoryapi}  from '../../../HttpRequest/afterlogin'
+import { TicketHistoryapi } from "../../../HttpRequest/afterlogin";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import ViewTicketHistory from "./ViewTicketHistory";import './InvoiceGrid.css'
-
+import ViewTicketHistory from "./ViewTicketHistory";
+import "./InvoiceGrid.css";
 
 const TicketHistory = () => {
+  const [ticket, setticketdata] = useState({});
+  const [apires, setapires] = useState([]);
 
-
-  const [ticket,setticketdata]= useState({})
-  const [apires,setapires]=useState([])
-
-  useEffect(()=>{  handleWriteClick()
-
-
-  },[])
+  useEffect(() => {
+    handleWriteClick();
+  }, []);
   const handleWriteClick = async () => {
-   
-
     const response = TicketHistoryapi();
     response.then((data) => {
       console.log(data);
       if (data.request.status == 200) {
-        console.log(data)
-        setticketdata(data)
+        console.log(data);
+        setticketdata(data);
         // alert("success");
         var queryDetailsArray = data.data.listOfUserQueryDetailsResponseDto;
-        
 
         // Initialize an array to store email addresses
         var emailAddresses = [];
-        
+
         // Loop through the array and extract the "email" property for each item
         for (var i = 0; i < queryDetailsArray.length; i++) {
-            var email = queryDetailsArray[i];
-            emailAddresses.push(email);
+          var email = queryDetailsArray[i];
+          emailAddresses.push(email);
         }
-        
+
         // Now, the "emailAddresses" array contains all the email addresses
         console.log(emailAddresses);
-        setapires(queryDetailsArray)
+        setapires(queryDetailsArray);
         // console.log(queryDetailsArray)
       } else {
         alert("error");
@@ -98,49 +92,62 @@ const TicketHistory = () => {
                           <table className="table star-student table-hover table-center table-borderless table-striped ">
                             <thead className="thead-light">
                               <tr>
-                              <th className="text-center"> Ticket Id</th>
-                              <th className="text-center"> Received On</th>
-                              <th className="text-center"> Status</th>
-                              
-                               
-                                <th className="text-center"> Query</th>
+                                <th className="text-center"> Ticket Id</th>
+                                <th className="text-center"> Received On</th>
+                                <th className="text-center"> Status</th>
+                                <th className=""> Query</th>
                                 <th className="text-center">Admin Comments</th>
                               </tr>
                             </thead>
                             <tbody>
-                            {apires.map((item ,index) => (
-                              
-                         <tr key={index}>
-                                <td className="text-center">
-                                <div>{item.ticketId}</div>
-                                </td>
-                                <td className="text-center">
-                                 
-                                  <div>{item.receivedOn}</div>
-                                </td>
-                                <td>   <div className={item.status === 'Completed' ? 'badge badge-success' : 'badge badge-danger'}> {item.status}</div></td>
-                                <td className={item.query.length >= 50 ? 'wordbrak text-center':'notword text-center'}  style={{wordWrap:'break-word'}}  >{item.query}</td>
-                                <td className="text-center">
-                                  <div className="buttn">
-                                   <div className=" badge bg-success-dark">View Comments</div>
-                                   <div className="badge bg-warning">Inquiries Reply</div>
-                                   <Link to="/writetous" ><div className=" badge bg-success">Write Reply</div>  </Link>
-                                   <div className=" badge bg-success-dark">Cancel</div>
-                                  </div>
-                                </td>
-                              </tr>
-
-                            ))}
-                              {/* <tr>
-                                <td className="text-center">
-                                  <div>5</div>
-                                </td>
-                                <td className="text-center">
-                                  <div>2023-07-14</div>
-                                </td>
-                                <td className="text-center">36months2.2ROI</td>
-                                <td className="text-center">1185</td>
-                              </tr> */}
+                              {apires.map((item, index) => (
+                                <tr key={index}>
+                                  <td className="text-center">
+                                    <div>{item.ticketId}</div>
+                                  </td>
+                                  <td className="text-center">
+                                    <div>{item.receivedOn}</div>
+                                  </td>
+                                  <td>
+                                    <div
+                                      className={
+                                        item.status === "Completed"
+                                          ? "badge badge-success"
+                                          : "badge badge-danger"
+                                      }
+                                    >
+                                      {item.status}
+                                    </div>
+                                  </td>
+                                  <td
+                                    className=""
+                                    style={{
+                                      width: "20px",
+                                      whiteSpace: "break-spaces",
+                                    }}
+                                  >
+                                    {item.query}
+                                  </td>
+                                  <td className="text-center">
+                                    <div className="buttn">
+                                      <div className=" badge bg-success-dark">
+                                        View Comments
+                                      </div>
+                                      <div className="badge bg-warning">
+                                        Inquiries Reply
+                                      </div>
+                                      <Link to="/writetous">
+                                        <div className=" badge bg-success">
+                                          Write Reply
+                                        </div>{" "}
+                                      </Link>
+                                      <div className=" badge bg-success-dark">
+                                        Cancel
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
                             </tbody>
                           </table>
                         </div>
@@ -148,8 +155,6 @@ const TicketHistory = () => {
                     </div>
                     {/* /Star Students */}
                   </div>
-                 
-
                 </div>
               </div>
             </div>
@@ -164,5 +169,3 @@ const TicketHistory = () => {
 };
 
 export default TicketHistory;
-
-

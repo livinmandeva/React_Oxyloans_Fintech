@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserDetails } from "../HttpRequest/afterlogin";
+import CountUp from "react-countup";
 import {
   logo,
   logosmall,
@@ -105,34 +106,15 @@ const Header = (profile) => {
         </Link>
         {/* /Mobile Menu Toggle */}
         {/* Header Right Menu */}
+
         <ul className="nav user-menu">
-          <li
-            className="nav-item dropdown language-drop me-2"
-            style={{ display: "none" }}
-          >
-            <Link
-              to="#"
-              className="dropdown-toggle nav-link header-nav-list"
-              data-bs-toggle="dropdown"
-            >
-              <img src={headericon01} alt="" />
-            </Link>
-            <div className="dropdown-menu">
-              <Link to="#" className="dropdown-item">
-                <img src={lr} alt="" height={16} />
-                <span className="flagg">English</span>
-              </Link>
-              <Link to="#" className="dropdown-item">
-                <img src={bl} alt="" height={16} />
-                <span className="flagg">Francais</span>
-              </Link>
-              <Link to="#" className="dropdown-item">
-                <img src={cn} alt="" height={16} />
-                <span className="flagg">Turkce</span>
-              </Link>
+          <li className="nav-item dropdown language-drop me-2">
+            <div>
+              <CountUp start={60} end={0} duration={60} prefix=" 30 : " />
             </div>
           </li>
           {/* Notifications */}
+
           <li className="nav-item dropdown noti-dropdown me-2">
             <Link
               to="#"
