@@ -619,3 +619,21 @@ export const getholdamountInfo = async () => {
   );
   return response;
 };
+
+export const myclosedDealsInfo = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    pageNo,
+    pageSize,
+    userId,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `closedDealsForUserBasedOnPagination`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};

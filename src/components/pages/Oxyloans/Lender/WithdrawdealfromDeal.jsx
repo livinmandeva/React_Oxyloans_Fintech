@@ -25,7 +25,6 @@ const WithdrawdealfromDeal = () => {
     });
   };
 
-  
   useEffect(() => {
     const response = getWithdrawaFromDeal(
       participatedDeals.pageNo,
@@ -43,13 +42,12 @@ const WithdrawdealfromDeal = () => {
     });
   }, [participatedDeals.pageNo, participatedDeals.pageSize]);
 
-
   const datasource = [];
 
   if (participatedDeals.apiData !== "") {
     participatedDeals.apiData.lenderPaticipatedResponseDto.forEach((data) => {
       const nextPageUrl = `/withdrawdealFounds?dealId=${data.dealId}&currentAmount=${data.currentValue}&requestedAmount=${data.requestedAmount}&dealName=${data.dealName}&roi=${data.rateOfInterest}`;
-  
+
       datasource.push({
         key: Math.random(),
         DealName: data.dealName,
@@ -69,9 +67,6 @@ const WithdrawdealfromDeal = () => {
       });
     });
   }
-  
-
-
 
   const columns = [
     {

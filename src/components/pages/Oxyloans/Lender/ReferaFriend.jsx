@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../../../SideBar/SideBar";
 import Header from "../../../Header/Header";
-import { Link } from "react-router-dom";import  {getUserId , profilesubmit  ,getemailcontent ,   bulkinvitegmailLink}   from '../../../HttpRequest/afterlogin'
+import { Link } from "react-router-dom";
+import {
+  getUserId,
+  profilesubmit,
+  getemailcontent,
+  bulkinvitegmailLink,
+} from "../../../HttpRequest/afterlogin";
 import { avatar02 } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import {
@@ -10,57 +16,38 @@ import {
 } from "../../Base UI Elements/SweetAlert";
 
 const ReferaFriend = () => {
-
-  // { "email": "turuu@gmail.com",
-  //  "mobileNumber": "8790439332",
-  //   "name": "iyt", "mailContent": 0,
-  //    "mailSubject": 0,
-  //     "referrerId": "42213",
-  //      "primaryType": "LENDER",
-  //       "citizenType": "NONNRI",
-  //        "seekerRequestedId": "0",
-  //         "inviteType": "SingleInvite",
-  //          "userType": null } https://fintech.oxyloans.com/oxyloans/v1/user/lenderReferring      
-
-  const [profile ,setprofile]=useState({
-    email:'',
-    mobileNumber:'',
-    name: "", 
-    mailSubject:0,
+  const [profile, setprofile] = useState({
+    email: "",
+    mobileNumber: "",
+    name: "",
+    mailSubject: 0,
     referrerId: "",
-    primaryType:"LENDER" ,
+    primaryType: "LENDER",
     citizenType: "NONNRI",
-    seekerRequestedId:"0",
+    seekerRequestedId: "0",
     inviteType: "SingleInvite",
-    mailContent:0,
-    
-  })
-  
+    mailContent: 0,
+  });
+
   const [emailres, setEmailres] = useState({
     emailcontent: "",
     emailsubject: "",
     buttomemail: "",
   });
-  const [url ,seturl]=useState("")
-  // const [emailsubject ,setemailsubject] =useState("");const [buttomemail,setbuttomemail]=useState("")
+  const [url, seturl] = useState("");
 
-  const   handlechanges =(event)=>{
-     const {name , value }= event.target;
-
-     setprofile({
+  const handlechanges = (event) => {
+    const { name, value } = event.target;
+    setprofile({
       ...profile,
       [name]: value,
-     })
-  }
+    });
+  };
 
-
- 
   useEffect(() => {
     const getemail = async () => {
       try {
         const response = await getemailcontent(); // Assuming getemailcontent is an async function
-
-        console.log(response.data);
         setEmailres({
           ...emailres,
           emailcontent: response.data.mailContent,
@@ -69,61 +56,54 @@ const ReferaFriend = () => {
         });
 
         if (response.status === 200) {
-          // alert("Success");
         } else {
-          alert("Error");
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("Error");
       }
     };
 
     getemail();
-    const userid = getUserId(); 
-       setprofile({
-         ...profile,
-         referrerId:userid
-       })
-       
+    const userid = getUserId();
+    setprofile({
+      ...profile,
+      referrerId: userid,
+    });
   }, []);
 
+  useEffect(() => {
+    handlebulkInvite();
+  }, [url]);
 
-  useEffect(()=>{
-    handlebulkInvite()
-  },  [url])
-
-  const handleprofilesubmit =(event)=>{
+  const handleprofilesubmit = (event) => {
     event.preventDefault();
-   const response =  profilesubmit(profile);
+    const response = profilesubmit(profile);
 
-   response.then((data) => {
-    console.log(data);
-    if (data.request.status == 200) {
-      alert("success")
-      HandleWithFooter("lender invited successfully");
-    } else {
-      WarningAlert(data.response.data.errorMessage);
-    }
-  });
-  }   
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        alert("success");
+        HandleWithFooter("lender invited successfully");
+      } else {
+        WarningAlert(data.response.data.errorMessage);
+      }
+    });
+  };
 
+  const handlebulkInvite = async () => {
+    const response = bulkinvitegmailLink();
+    response.then((data) => {
+      console.log(data);
+      seturl(data.data.signInUrl);
+      if (data.request.status == 200) {
+      } else {
+        WarningAlert(data.response.data.errorMessage);
+      }
+    });
+  };
 
-  const handlebulkInvite= async()=>{
-      const response = bulkinvitegmailLink()   
-      response.then((data)=>{
-        console.log(data);
-        seturl(data.data.signInUrl)
-        if(data.request.status == 200){
-      
-        } else {
-          WarningAlert(data.response.data.errorMessage);
-        }
-      })
-  }
+  const emailcontentdata = emailres.emailcontent + emailres.buttomemail;
 
-  const emailcontentdata = emailres.emailcontent + emailres.buttomemail
-       
   return (
     <>
       <div className="main-wrapper">
@@ -182,8 +162,7 @@ const ReferaFriend = () => {
                           href="https://sites.google.com/oxyloans.com/referrer-faq/home"
                           target="_blank"
                         >
-                          {" "}
-                          FAQS / MORE{" "}
+                          FAQS / MORE
                         </a>
                       </li>
                     </ul>
@@ -217,10 +196,8 @@ const ReferaFriend = () => {
                         className="nav-link"
                         data-bs-toggle="tab"
                         to="#BulkInvite_tab"
-                       
-                       
-                       onClick={handlebulkInvite}
-                       >
+                        onClick={handlebulkInvite}
+                      >
                         Bulk Invite
                       </Link>
                     </li>
@@ -254,17 +231,17 @@ const ReferaFriend = () => {
                           <div className="col-md-12 col-lg-12 d-flex justify-content-center">
                             <form>
                               <div className="row">
-                                
-                                 <a href={url}   
-                                //  <button  
-                              
+                                <a
+                                  href={url}
+                                  //  <button
+
                                   className="btn btn-outline-primary my-lg-3 border-2 "
                                   type="button"
                                 >
                                   Browse From Computer
-                                {/* </button> */}   </a>
+                                  {/* </button> */}{" "}
+                                </a>
 
-                        
                                 <button className="btn btn-outline-warning my-lg-3 border-2 ">
                                   Invite Through Gmail
                                 </button>
@@ -327,62 +304,77 @@ const ReferaFriend = () => {
                         <h5 className="card-title">Referral Details</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                              <div className="row mt-3">
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Friend Name </label>
-                                  <input type="text" className="form-control" name="name"  onChange={handlechanges}/>
-                                </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Friend Email</label>
-                                  <input type="email" className="form-control" name="email"  onChange={handlechanges}/>
-                                </div>
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Friend Location</label>
-                                       <select    className="form-control form-select" 
-                                                                  
-                                          name="citizenType"
-                                          value={profile.citizenType}
-                                          onChange={handlechanges}
-                                        >
-                                          <option value="NRI">NRI</option>
-                                          <option value="NONNRI">NON NRI</option>
-                                        </select>
-                                </div>
-                            
-                                <div className="form-group col-12 col-sm-4">
-                                  <label>Frined Mobile </label>
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    name="mobileNumber"  onChange={handlechanges}
-                                  />
-                                </div>
-
-                                <div className="form-group col-12 col-sm-6">
-                                  <label>Email Subject </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"   
-                                    value={emailres.emailsubject}
-                                    name="mailSubject"  onChange={handlechanges}
-                                  />
-                                </div>
-
-                                <div className="form-group col-12 col-sm-12">
-                                  <label>Email Content </label>
-                                    <textarea className="form-control"  value={emailcontentdata}
-                                  name="mailContent"  ></textarea>
-                                </div>
-                                <div className="col-12 ">
-                                  <button
-                                    className="btn btn-primary col-md-4 col-12"
-                                    type="submit"
-                                        onClick={handleprofilesubmit}
-                                  >
-                                    Save Deatils
-                                  </button>
-                                </div>
+                            <div className="row mt-3">
+                              <div className="form-group col-12 col-sm-4">
+                                <label>Friend Name </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="name"
+                                  onChange={handlechanges}
+                                />
                               </div>
+                              <div className="form-group col-12 col-sm-4">
+                                <label>Friend Email</label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  name="email"
+                                  onChange={handlechanges}
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4">
+                                <label>Friend Location</label>
+                                <select
+                                  className="form-control form-select"
+                                  name="citizenType"
+                                  value={profile.citizenType}
+                                  onChange={handlechanges}
+                                >
+                                  <option value="NRI">NRI</option>
+                                  <option value="NONNRI">NON NRI</option>
+                                </select>
+                              </div>
+
+                              <div className="form-group col-12 col-sm-4">
+                                <label>Frined Mobile </label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  name="mobileNumber"
+                                  onChange={handlechanges}
+                                />
+                              </div>
+
+                              <div className="form-group col-12 col-sm-6">
+                                <label>Email Subject </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  value={emailres.emailsubject}
+                                  name="mailSubject"
+                                  onChange={handlechanges}
+                                />
+                              </div>
+
+                              <div className="form-group col-12 col-sm-12">
+                                <label>Email Content </label>
+                                <textarea
+                                  className="form-control"
+                                  value={emailcontentdata}
+                                  name="mailContent"
+                                ></textarea>
+                              </div>
+                              <div className="col-12 ">
+                                <button
+                                  className="btn btn-primary col-md-4 col-12"
+                                  type="submit"
+                                  onClick={handleprofilesubmit}
+                                >
+                                  Save Deatils
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

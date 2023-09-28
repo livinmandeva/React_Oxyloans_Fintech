@@ -2718,6 +2718,7 @@ footer p {
   right: 0;
   width: 144px;
   height: 144px;
+  z-index: -1;
 }
 .login-wrapper .loginbox .login-right {
   align-items: center;
@@ -10160,3 +10161,5 @@ span.flagg {
   opacity: 0.2;
   background: white;
 }
+
+

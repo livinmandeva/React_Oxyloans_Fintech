@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserDetails } from "../HttpRequest/afterlogin";
 import CountUp from "react-countup";
+
+import {
+  HandleWithFooter,
+  WarningAlert,
+} from "../pages/Base UI Elements/SweetAlert";
 import {
   logo,
   logosmall,
@@ -59,6 +64,8 @@ const Header = (profile) => {
           ...dashboarddata,
           profileData: data,
         });
+      } else if (data.response.data.errorCode != "200") {
+        WarningAlert(data.response.data.errorMessage);
       }
     });
   }, []);
@@ -108,11 +115,11 @@ const Header = (profile) => {
         {/* Header Right Menu */}
 
         <ul className="nav user-menu">
-          <li className="nav-item dropdown language-drop me-2">
+          {/* <li className="nav-item dropdown language-drop me-2">
             <div>
               <CountUp start={60} end={0} duration={60} prefix=" 30 : " />
             </div>
-          </li>
+          </li> */}
           {/* Notifications */}
 
           <li className="nav-item dropdown noti-dropdown me-2">

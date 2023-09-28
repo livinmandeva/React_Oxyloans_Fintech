@@ -11,6 +11,7 @@ const Emicalculator = () => {
   const [inputTenure, setinputTenure] = useState("");
   const [inputroi, setinputroi] = useState("");
   const [emiType, setemiType] = useState("");
+  const [isvalid, setisValid] = useState(true);
 
   const [tenureDropdown, settenureDropdown] = useState([
     { id: 1, text: "1" },
@@ -116,13 +117,23 @@ const Emicalculator = () => {
                             <label>
                               ROI <span className="login-danger">*</span>
                             </label>
-                            <Select2
+
+                            <select className="w-100 form-group local-forms form-control select">
+                              <options value="">Choose RoI</options>
+                              <options value="">1</options>
+                              <options value="">2</options>
+                              <options value="">3</options>
+                            </select>
+                            {/* <Select2
                               className="w-100 form-group local-forms form-control select"
                               data={roi}
+                              onSelect={(val) =>
+                                setinputroi(val.params.data.text)
+                              }
                               options={{
                                 placeholder: "Enter ROI",
                               }}
-                            />
+                            /> */}
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -137,6 +148,9 @@ const Emicalculator = () => {
                               options={{
                                 placeholder: "tenure",
                               }}
+                              onSelect={(val) =>
+                                setinputTenure(val.params.data.text)
+                              }
                             />
                           </div>
                         </div>
@@ -152,6 +166,9 @@ const Emicalculator = () => {
                               options={{
                                 placeholder: "Emi Type",
                               }}
+                              onSelect={(val) =>
+                                setemiType(val.params.data.text)
+                              }
                             />
                           </div>
                         </div>

@@ -61,7 +61,6 @@ const appcontainer = () => {
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/error404" component={Error404} />
         <Route path="/dashboard" component={AdminDashboard} />
-        ``
         <Route path="/loadwaletThroughQr" component={LoadwaletThroughQr} />
         <Route path="/lender_register" component={LenderRegister} />
         <Route path="/borrower_register" component={BorrowerRegister} />
