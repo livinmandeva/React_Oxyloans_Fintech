@@ -56,13 +56,32 @@ const LoadwaletThroughQr = () => {
   const updateTheValueTimeOut = () => {
     setTimeout(() => {
       setqrcodeImageStatus("loading");
-    }, 20000);
+    }, 15000);
   };
 
   useEffect(() => {
     if (qrcodeImageStatus == "loading") {
       const intervalId = setInterval(() => {
-        knowthestatusQrPayment();
+        const qRStatusresponse = checkqrcodetransaction(
+          loadwaletThroughQr.qrUrlID
+        );
+        qRStatusresponse.then((data) => {
+          if (data.request.status == 200) {
+            if (data.data.status == "SUCCESS") {
+              HandleWithFooter(
+                "Your Tranaction was Sucessfull and loaded the same amount Your Wallet"
+              );
+              clearInterval(intervalId);
+              return false;
+            }
+          } else if (data.response.data.errorCode != "200") {
+            setqrcodeImageStatus("expired");
+            WarningAlert(
+              data.response.data.errorMessage + "  Please Try Again"
+            );
+            clearInterval(intervalId);
+          }
+        });
       }, 1000);
 
       return () => {
@@ -71,30 +90,11 @@ const LoadwaletThroughQr = () => {
     }
   }, [qrcodeImageStatus]);
 
-  const knowthestatusQrPayment = () => {
-    const qRStatusresponse = checkqrcodetransaction(loadwaletThroughQr.qrUrlID);
-
-    qRStatusresponse.then((data) => {
-      if (data.request.status == 200) {
-        if (data.data.status == "SUCCESS") {
-          HandleWithFooter(
-            "Your Tranaction was Sucessfull and loaded the same amount Your Wallet"
-          );
-          clearInterval(intervalId);
-        }
-      } else {
-        alert("called failed");
-        WarningAlert(data.response.data.errorMessage);
-      }
-    });
-  };
-
   return (
     <>
       <div className="main-wrapper">
         {/* Header */}
         <Header />
-
         {/* Sidebar */}
         <SideBar />
 
