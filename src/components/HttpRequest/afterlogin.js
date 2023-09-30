@@ -637,3 +637,24 @@ export const myclosedDealsInfo = async (pageNo = 1, pageSize = 10) => {
   );
   return response;
 };
+
+export const getEmiTableInformation = async (params) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    loanAmount: params.loanAmount,
+    rateOfInterest: params.inputroi,
+    tenure: params.inputTenure,
+    calculationType: params.emiType,
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `borrowerEmiDetails`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};

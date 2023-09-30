@@ -14,6 +14,7 @@ const TicketHistory = () => {
 
   useEffect(() => {
     handleWriteClick();
+    return () => {};
   }, []);
   const handleWriteClick = async () => {
     const response = TicketHistoryapi();

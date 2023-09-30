@@ -44,6 +44,7 @@ const MyclosedDeals = () => {
         });
       }
     });
+    return () => {};
   }, [myclosedDeals.pageNo, myclosedDeals.pageSize]);
 
   const datasource = [];

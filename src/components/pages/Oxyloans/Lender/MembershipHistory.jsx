@@ -40,6 +40,7 @@ const MembershipHistory = () => {
         });
       }
     });
+    return () => {};
   }, [membershiphistory.pageNo, membershiphistory.pageSize]);
 
   const datasource = [];

@@ -121,6 +121,7 @@ const DashboardTransactions = () => {
         });
       }
     });
+    return () => {};
   }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
 
   useEffect(() => {
@@ -140,6 +141,7 @@ const DashboardTransactions = () => {
         });
       }
     });
+    return () => {};
   }, [dashboardPrincipalReturns.pageNo, dashboardPrincipalReturns.pageSize]);
 
   useEffect(() => {
@@ -159,6 +161,7 @@ const DashboardTransactions = () => {
         });
       }
     });
+    return () => {};
   }, [dashboardInterestEarnings.pageNo, dashboardInterestEarnings.pageSize]);
 
   useEffect(() => {
@@ -177,6 +180,7 @@ const DashboardTransactions = () => {
         });
       }
     });
+    return () => {};
   }, [dashboardReferralEarnings.pageNo, dashboardReferralEarnings.pageSize]);
 
   useEffect(() => {
@@ -197,6 +201,7 @@ const DashboardTransactions = () => {
         });
       }
     });
+    return () => {};
   }, [dashboardDealsVsEarnings.pageNo, dashboardDealsVsEarnings.pageSize]);
 
   const datasource = [];

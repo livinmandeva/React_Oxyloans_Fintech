@@ -21,6 +21,7 @@ const Profile = () => {
         profileData: data,
       });
     });
+    return () => {};
   }, []);
 
   return (

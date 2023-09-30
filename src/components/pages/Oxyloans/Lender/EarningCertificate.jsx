@@ -27,6 +27,7 @@ const EarningCertificate = () => {
         });
       }
     });
+    return () => {};
   }, []);
 
   const datasource = [];

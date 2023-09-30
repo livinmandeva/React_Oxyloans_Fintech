@@ -41,6 +41,7 @@ const MyhighvalueDeals = () => {
         });
       }
     });
+    return () => {};
   }, [selectedHighValueDeals.pageNo, selectedHighValueDeals.pageSize]);
 
   const datasource = [];

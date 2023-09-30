@@ -40,6 +40,7 @@ const Mytransactions = () => {
         });
       }
     });
+    return () => {};
   }, [mytransactions.pageNo, mytransactions.pageSize]);
 
   console.log(mytransactions);

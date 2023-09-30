@@ -14,7 +14,7 @@ const Mycontacts = () => {
     loading: true,
     pageNo: 1,
     pageSize: 5,
-    selectAll:false
+    selectAll: false,
   });
 
   useEffect(() => {
@@ -32,32 +32,25 @@ const Mycontacts = () => {
       });
     };
     getemailcontact();
+    return () => {};
   }, []);
 
   const datasource = contactdata.apidata.map((apidata, index) => ({
     id: index + 1,
     Email: apidata.emailAddress,
     ContactName: apidata.contactName,
-    Invite: contactdata.selectAll ? (<input
-        type="checkbox"
-        checked
-       
-      />):(
-      <input
-      type="checkbox"
-         onClick={()=>handleCheckboxClick(index + 1)}
-     
-    />)
-     
+    Invite: contactdata.selectAll ? (
+      <input type="checkbox" checked />
+    ) : (
+      <input type="checkbox" onClick={() => handleCheckboxClick(index + 1)} />
+    ),
+
     // ),
   }));
 
-
-
-  const handleCheckboxClick =  (id)=>{
-    
-    console.log(id)
-  }
+  const handleCheckboxClick = (id) => {
+    console.log(id);
+  };
   const column = [
     {
       title: "Email",
@@ -78,15 +71,15 @@ const Mycontacts = () => {
     ,
   ];
 
-useEffect(()=>{
-
-},[contactdata.selectAll])
-  const HandleselectClick=()=>{
+  useEffect(() => {
+    return () => {};
+  }, [contactdata.selectAll]);
+  const HandleselectClick = () => {
     setcontactData({
       ...contactdata,
-      selectAll:!contactdata.selectAll
-    })
-  }
+      selectAll: !contactdata.selectAll,
+    });
+  };
 
   return (
     <>
@@ -129,11 +122,18 @@ useEffect(()=>{
                           <Link to="#" className="btn btn-outline-primary me-2">
                             Send Invite
                           </Link>
-                        {/* <Link className="btn btn-warning"  onClick={HandleselectClick}>
+                          {/* <Link className="btn btn-warning"  onClick={HandleselectClick}>
                             Invite All
                           </Link> */}
-                          <Button className="btn btn-warning"  onClick={HandleselectClick}>
-                           {contactdata.selectAll ? <>Deselect All</> : <>Invite All</>} 
+                          <Button
+                            className="btn btn-warning"
+                            onClick={HandleselectClick}
+                          >
+                            {contactdata.selectAll ? (
+                              <>Deselect All</>
+                            ) : (
+                              <>Invite All</>
+                            )}
                           </Button>
                         </div>
                       </div>

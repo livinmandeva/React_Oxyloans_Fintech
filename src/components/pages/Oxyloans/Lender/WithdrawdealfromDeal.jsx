@@ -40,6 +40,7 @@ const WithdrawdealfromDeal = () => {
         });
       }
     });
+    return () => {};
   }, [participatedDeals.pageNo, participatedDeals.pageSize]);
 
   const datasource = [];

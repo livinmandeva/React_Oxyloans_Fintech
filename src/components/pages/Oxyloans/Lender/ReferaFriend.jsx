@@ -69,10 +69,12 @@ const ReferaFriend = () => {
       ...profile,
       referrerId: userid,
     });
+    return () => {};
   }, []);
 
   useEffect(() => {
     handlebulkInvite();
+    return () => {};
   }, [url]);
 
   const handleprofilesubmit = (event) => {

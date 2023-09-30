@@ -28,6 +28,7 @@ const WalletToWalletHistory = () => {
         });
       }
     });
+    return () => {};
   }, []);
 
   const datasource = [];
