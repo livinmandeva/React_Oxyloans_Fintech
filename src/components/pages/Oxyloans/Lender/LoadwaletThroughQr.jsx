@@ -95,7 +95,7 @@ const LoadwaletThroughQr = () => {
         {/* Header */}
         <Header />
 
-        {/* Sidebar */}
+      {/* Sidebar */}
         <SideBar />
 
         {/* Page Wrapper */}

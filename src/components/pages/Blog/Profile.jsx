@@ -11,6 +11,9 @@ import { getUserDetails } from "../../HttpRequest/afterlogin";
 
 const Profile = () => {
   const [dashboarddata, setdashboarddata] = useState({
+    sendotpbtn:true,
+    verifyotp:false,
+    submitbankdeatail:false,
     profileData: null,
   });
   useEffect(() => {
@@ -23,6 +26,58 @@ const Profile = () => {
     });
   }, []);
 
+  const handlechange = (event) => {
+    const { name, value } = event.target;
+    setUserProfile((prevUserProfile) => ({
+      ...prevUserProfile,
+      [name]: value,
+    }), () => {
+      console.log(userProfile); // Log the updated state here.
+    });
+  };
+  // const handlechange =(event)=>{
+  //   const {name , value}=event.target;
+
+  //   setUserProfile({
+  //     ...userProfile,
+  //     [name]:value
+  //   })
+
+  // }
+
+  
+const handleprofileUpdate=()=>{
+
+
+  // alert(userProfile)
+  console.log(userProfile)
+  const response =profileupadate(userProfile)
+  response.then((data)=>{
+
+      console.log(data)
+  })
+}
+
+
+const sendotp=async()=>{
+  
+
+    console.log(bankaccountprofile.moblieNumber)
+  const response = sendMoblieOtp(bankaccountprofile);
+  response.then((data)=>{
+     console.log(data);  
+  
+  })
+
+}  
+const handlebankchange=(event)=>{
+                     
+  const {value , name}=event.target;
+  setBankaccountProfile({
+    ...bankaccountprofile,
+     [name]:value,
+  })
+}
   return (
     <>
       <div className="main-wrapper">
@@ -279,7 +334,7 @@ const Profile = () => {
                         <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
-                            <form>
+              
                               <div className="row">
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -290,6 +345,8 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your Name"
+                                    name="userName"
+                                    onChange={handlebankchange}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -406,7 +463,7 @@ const Profile = () => {
                                   </button>
                                 </div>
                               </div>
-                            </form>
+                          
                           </div>
                         </div>
                       </div>
@@ -537,7 +594,6 @@ const Profile = () => {
                         <h5 className="card-title">Personal Details</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                            <form>
                               <div className="row mt-3">
                                 <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
@@ -547,7 +603,9 @@ const Profile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Enter First Name"
+                                    placeholder="Enter First Name"  onChange={handlechange}
+                                    value={userProfile.firstName}
+                                    name="firstName"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -592,6 +650,9 @@ const Profile = () => {
                                   <input
                                     type="date"
                                     className="form-control datetimepicker"
+                                    onChange={handlechange}
+                                    value={userProfile.dob}
+                                    name="dob"
                                   />
                                 </div>
 
@@ -604,6 +665,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Father Name"
+                                    onChange={handlechange}
+                                    value={userProfile.fatherName}
+                                    name="fatherName"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -616,6 +680,9 @@ const Profile = () => {
                                     maxLength={10}
                                     className="form-control"
                                     placeholder="Enter Mobile Name"
+                                    onChange={handlechange}
+                                    value={userProfile.mobileNumber}
+                                    name="mobileNumber"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -628,9 +695,12 @@ const Profile = () => {
                                     maxLength={10}
                                     className="form-control"
                                     placeholder="Enter WhatsApp Name"
+                                    onChange={handlechange}
+                                    value={userProfile.whatappNumber}
+                                    name="whatappNumber"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
+                                {/* <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
                                     Email ID
                                     <span className="login-danger">*</span>
@@ -639,8 +709,13 @@ const Profile = () => {
                                     type="email"
                                     className="form-control"
                                     placeholder="Enter Email Id"
+                                    onChange={handlechange}
+                                    value={userProfile.email}
+                                    name="email"
                                   />
-                                </div>
+                                </div> */}
+
+
                                 <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
                                     Residence Address
@@ -650,6 +725,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Residence Address"
+                                    onChange={handlechange}
+                                    value={userProfile.residenceAddress}
+                                    name="permanentAddress"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -661,6 +739,9 @@ const Profile = () => {
                                     type="number"
                                     className="form-control"
                                     placeholder="Enter Pincode"
+                                    onChange={handlechange}
+                                    value={userProfile.pinCode}
+                                    name="pinCode"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -672,6 +753,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Locality "
+                                    onChange={handlechange}
+                                    value={userProfile.address}
+                                    name="address"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -682,6 +766,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter City "
+                                    onChange={handlechange}
+                                    value={userProfile.city}
+                                    name="city"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -693,6 +780,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter State"
+                                    onChange={handlechange}
+                                    value={userProfile.state}
+                                    name="state"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -704,6 +794,10 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Facebook Url"
+                                    onChange={handlechange}
+                                    value={userProfile.facebookUrl}
+                                    name="facebookUrl"
+                                    
                                   />
                                 </div>
 
@@ -716,6 +810,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Twitter Url"
+                                    onChange={handlechange}
+                                    value={userProfile.twitterUrl}
+                                    name="twitterUrl"
                                   />
                                 </div>
 
@@ -728,18 +825,20 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Linkedin  Url"
+                                    onChange={handlechange}
+                                    value={userProfile.linkedinUrl}
+                                    name="linkedinUrl"
                                   />
                                 </div>
                                 <div className="col-12 ">
                                   <button
                                     className="btn btn-primary col-md-4 col-12"
-                                    type="submit"
+                                    type="submit"  onClick={handleprofileUpdate}
                                   >
                                     Save Deatils
                                   </button>
                                 </div>
                               </div>
-                            </form>
                           </div>
                         </div>
                       </div>
