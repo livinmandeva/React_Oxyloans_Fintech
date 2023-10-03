@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
@@ -6,29 +6,35 @@ import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { getMyWalletTowalletHistory } from "../../../HttpRequest/afterlogin";
 
-const WalletToWalletHistory = () => {
+const WalletToWalletHistory = React.memo((pros) => {
   const [mywalletTowalletHistory, setmywalletTowalletHistory] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
   });
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     const response = getMyWalletTowalletHistory();
-    response.then((data) => {
-      if (data.request.status == 200) {
-        setmywalletTowalletHistory({
-          ...mywalletTowalletHistory,
-          apiData: data.data,
-          loading: false,
-          hasdata:
-            data.data.walletTransferLenderToLenderResponseDto.length == 0
-              ? false
-              : true,
-        });
-      }
-    });
-    return () => {};
+    return response;
+  }, []);
+
+  useMemo(() => {
+    fetchData()
+      .then((data) => {
+        console.log("data fetch");
+        if (data.request.status == 200) {
+          setmywalletTowalletHistory({
+            ...mywalletTowalletHistory,
+            apiData: data.data,
+            loading: false,
+            hasdata:
+              data.data.walletTransferLenderToLenderResponseDto.length == 0
+                ? false
+                : true,
+          });
+        }
+      })
+      .catch((error) => {});
   }, []);
 
   const datasource = [];
@@ -123,6 +129,6 @@ const WalletToWalletHistory = () => {
       </div>
     </>
   );
-};
+});
 
 export default WalletToWalletHistory;

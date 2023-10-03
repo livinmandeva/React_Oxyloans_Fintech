@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getUserDetails } from "../HttpRequest/afterlogin";
 import CountUp from "react-countup";
@@ -57,6 +57,22 @@ const Header = (profile) => {
     };
   }, []);
 
+  // const fetchData = getUserDetails();
+
+  // useMemo(() => {
+  //   fetchData.then((data) => {
+  //     if (data.request.status == 200) {
+  //       setdashboarddata({
+  //         ...dashboarddata,
+  //         profileData: data,
+  //       });
+  //       console.log("its rerenders again");
+  //     } else if (data.response.data.errorCode != "200") {
+  //       WarningAlert(data.response.data.errorMessage);
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
@@ -69,6 +85,7 @@ const Header = (profile) => {
       }
     });
   }, []);
+
   return (
     <>
       {/* Header */}
