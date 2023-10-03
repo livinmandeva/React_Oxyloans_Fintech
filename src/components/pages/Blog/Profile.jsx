@@ -6,77 +6,81 @@ import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
 
-import {profileupadate , getUserDetails,  updatebank, verifyBankAccountAndIfsc, handleapicall ,sendMoblieOtp } from "../../HttpRequest/afterlogin";
+import {
+  profileupadate,
+  getUserDetails,
+  handleapicall,
+  sendMoblieOtp,
+} from "../../HttpRequest/afterlogin";
 import { event } from "jquery";
 import MyRichTextEditor from "../Oxyloans/Lender/MyRichTextEditor";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {
   const [dashboarddata, setdashboarddata] = useState({
-    sendotpbtn:true,
-    verifyotp:false,
-    submitbankdeatail:false,
+    sendotpbtn: true,
+    verifyotp: false,
+    submitbankdeatail: false,
     profileData: null,
-    isValid:true,
-
+    isValid: true,
   });
-  const[userProfile,setUserProfile]=useState({
+  const [userProfile, setUserProfile] = useState({
     address: "",
     city: "",
     dob: "",
     facebookUrl: "",
-    fatherName : "",
-    firstName : "",
-    lastName : "",
-    linkedinUrl : "",
-    locality : "",
+    fatherName: "",
+    firstName: "",
+    lastName: "",
+    linkedinUrl: "",
+    locality: "",
     middleName: "",
     panNumber: "",
-    permanentAddress : "",
+    permanentAddress: "",
     pinCode: "",
     state: "",
     twitterUrl: "",
-    whatsAppNumber:"",
-    aadharNumber:""
-  })
+    whatsAppNumber: "",
+    aadharNumber: "",
+  });
 
+  const [bankaccountprofile, setBankaccountProfile] = useState({
+    sendMobileOtp: "",
+    moblieNumber: "",
+    bankAccount: "",
 
-  const[bankaccountprofile ,setBankaccountProfile] =useState({
-    sendMobileOtp:"",
-    moblieNumber:"",
-    bankAccount:"",
-      
-    accountNumber: "",city:"",
-      bankAddress:"",
-      bankName: "",
-      branchName: "",
-      confirmAccountNumber: "",
-      ifscCode: "",
-      mobileOtp: "",
-      mobileOtpSession: "",
-      bankAccountError:"",
-      updateBankDetails: true,
-      userName: ""
-  })
+    accountNumber: "",
+    bankAddress: "",
+    bankName: "",
+    branchName: "",
+    confirmAccountNumber: "",
+    ifscCode: "",
+    mobileOtp: "",
+    mobileOtpSession: "",
+    bankAccountError: "",
+    updateBankDetails: true,
+    userName: "",
+  });
 
-const [kycdocuments , setkycdocument]=useState({
-  pancard:"",
-  check:"",
-})
   useEffect(() => {
-    if (bankaccountprofile.accountNumber !== bankaccountprofile.confirmAccountNumber) {
-      setBankaccountProfile(prevProfile => ({
+    if (
+      bankaccountprofile.accountNumber !==
+      bankaccountprofile.confirmAccountNumber
+    ) {
+      setBankaccountProfile((prevProfile) => ({
         ...prevProfile,
-        bankAccountError: 'Confirm Account Number does not match Account Number'
+        bankAccountError:
+          "Confirm Account Number does not match Account Number",
       }));
     } else {
-      setBankaccountProfile(prevProfile => ({
+      setBankaccountProfile((prevProfile) => ({
         ...prevProfile,
-        bankAccountError: ""
+        bankAccountError: "",
       }));
     }
+    return () => {};
   }, [bankaccountprofile.confirmAccountNumber]);
-  
+
   useEffect(() => {
     if (
       bankaccountprofile.bankName !== "" &&
@@ -84,21 +88,23 @@ const [kycdocuments , setkycdocument]=useState({
       bankaccountprofile.ifscCode !== "" &&
       bankaccountprofile.mobileNumber !== "" &&
       bankaccountprofile.accountNumber !== "" &&
-      bankaccountprofile.confirmAccountNumber !== "" 
+      bankaccountprofile.confirmAccountNumber !== ""
       // bankaccountprofile. !== ""
     ) {
       setdashboarddata({
         ...dashboarddata,
-        isValid: false
+        isValid: false,
       });
     } else {
       setdashboarddata({
         ...dashboarddata,
-        isValid: true
+        isValid: true,
       });
     }
+
+    return () => {};
   }, [bankaccountprofile]);
-  
+
   useEffect(() => {
     getUserDetails().then((data) => {
       localStorage.setItem("userType", data.data.userDisplayId);
@@ -123,38 +129,23 @@ const [kycdocuments , setkycdocument]=useState({
         pinCode: data.data.pinCode,
         state: data.data.state,
         twitterUrl: data.data.urlsDto.twitterUrl,
-        whatsAppNumber:data.data.whatappNumber,
-        aadharNumber:data.data.aadharNumber
-      })
-      setBankaccountProfile({
-        
-        ...bankaccountprofile,
-
-        moblieNumber:data.data.mobileNumber,
-        city:data.data.city,
-        bankAccount:data.data.bankAccount,  
-        accountNumber: data.data.accountNumber,
-         bankAddress:data.data.bankAddress,
-         bankName: data.data.bankName,
-         branchName: data.data.branchName,
-         confirmAccountNumber: data.data.accountNumber,
-         ifscCode: data.data.ifscCode,
-        //  mobileOtp: "",
-        //  mobileOtpSession: "",
-      })
+        whatsAppNumber: data.data.whatappNumber,
+        aadharNumber: data.data.aadharNumber,
+      });
     });
   }, []);
-   const handlefileupload=(event)=>{
-
-   }
+  const handlefileupload = (event) => {};
   const handlechange = (event) => {
     const { name, value } = event.target;
-    setUserProfile((prevUserProfile) => ({
-      ...prevUserProfile,
-      [name]: value,
-    }), () => {
-      console.log(userProfile); // Log the updated state here.
-    });
+    setUserProfile(
+      (prevUserProfile) => ({
+        ...prevUserProfile,
+        [name]: value,
+      }),
+      () => {
+        console.log(userProfile); // Log the updated state here.
+      }
+    );
   };
   // const handlechange =(event)=>{
   //   const {name , value}=event.target;
@@ -166,58 +157,29 @@ const [kycdocuments , setkycdocument]=useState({
 
   // }
 
-  
-const handleprofileUpdate=()=>{
+  const handleprofileUpdate = () => {
+    // alert(userProfile)
+    console.log(userProfile);
+    const response = profileupadate(userProfile);
+    response.then((data) => {
+      console.log(data);
+    });
+  };
 
-
-  // alert(userProfile)
-  console.log(userProfile)
-  const response =profileupadate(userProfile)
-  response.then((data)=>{
-
-      console.log(data)
-  })
-}
-
-
-
-useEffect(()=>{
-  console.log(bankaccountprofile.accountNumber)
-  const response = verifyBankAccountAndIfsc(bankaccountprofile);
-  response.then((data)=>{
-     console.log("verifyBankAccountAndIfsc" +data);  
-  
-  })
-},[bankaccountprofile.accountNumber, bankaccountprofile.ifscCode])
-const sendotp=async()=>{
-  
-
-    console.log(bankaccountprofile.moblieNumber)
-  const response = sendMoblieOtp(bankaccountprofile);
-  response.then((data)=>{
-     console.log(data);
-     localStorage.setItem("OtpSeesion",data.data.mobileOtpSession)  
-  
-  })
-
-}  
-const handlebankchange=(event)=>{
-                     
-  const {value , name}=event.target;
-  setBankaccountProfile({
-    ...bankaccountprofile,
-     [name]:value,
-  })
-}
-
-const updatebankDeatils=()=>{
-  response = updatebank(bankaccountprofile)
-
-  response.then((data)=>{
-    console.log("Upadtedbankdeatils" + data)
-
-  })
-}
+  const sendotp = async () => {
+    console.log(bankaccountprofile.moblieNumber);
+    const response = sendMoblieOtp(bankaccountprofile);
+    response.then((data) => {
+      console.log(data);
+    });
+  };
+  const handlebankchange = (event) => {
+    const { value, name } = event.target;
+    setBankaccountProfile({
+      ...bankaccountprofile,
+      [name]: value,
+    });
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -474,147 +436,164 @@ const updatebankDeatils=()=>{
                         <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
-              
-                              <div className="row">
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Name as Per Bank
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder=" Enter your Name"
-                                    value={bankaccountprofile.userName}
-                                    name="userName"
-                                    onChange={handlebankchange}
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Account Number
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control" name="accountNumber"  onChange={handlebankchange}
-                                    placeholder=" Enter your Account Number"
-                                    value={bankaccountprofile.accountNumber} />
-                                </div>
+                            <div className="row">
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Name as Per Bank
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder=" Enter your Name"
+                                  name="userName"
+                                  onChange={handlebankchange}
+                                />
+                              </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Account Number
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  name="accountNumber"
+                                  onChange={handlebankchange}
+                                  placeholder=" Enter your Account Number"
+                                />
+                              </div>
 
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Confirm Account Number
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control"  name="confirmAccountNumber"  onChange={handlebankchange}
-                                    placeholder=" Confirm Account Number"
-                                    value={bankaccountprofile.confirmAccountNumber} />
-                                   {bankaccountprofile.bankAccountError && <span className="login-danger">{bankaccountprofile.bankAccountError}</span>}
-                                </div>
-                               
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    IFSC Code
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control" name="ifscCode" onChange={handlebankchange}
-                                    placeholder=" Enter your IFSC Code"
-                                    value={bankaccountprofile.ifscCode}
-                                  />
-                                </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Confirm Account Number
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  name="confirmAccountNumber"
+                                  onChange={handlebankchange}
+                                  placeholder=" Confirm Account Number"
+                                />
+                                {bankaccountprofile.bankAccountError && (
+                                  <span className="login-danger">
+                                    {bankaccountprofile.bankAccountError}
+                                  </span>
+                                )}
+                              </div>
 
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Bank Name
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"  name="bankName"   onChange={handlebankchange}
-                                    placeholder=" Enter your Bank Name"     value={bankaccountprofile.bankName}
-                                  />
-                                </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  IFSC Code
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="ifscCode"
+                                  onChange={handlebankchange}
+                                  placeholder=" Enter your IFSC Code"
+                                />
+                              </div>
 
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Branch
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"   name="branchName"    value={bankaccountprofile.branchName}
-                                    placeholder=" Enter your Branch"   onChange={handlebankchange}
-                                  />
-                                </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Bank Name
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="bankName"
+                                  onChange={handlebankchange}
+                                  placeholder=" Enter your Bank Name"
+                                />
+                              </div>
 
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    city <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"    value={bankaccountprofile.city}   name="city"  
-                                    placeholder=" Enter your City"  onChange={handlebankchange}
-                                  />
-                                </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Branch
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="branchName"
+                                  placeholder=" Enter your Branch"
+                                  onChange={handlebankchange}
+                                />
+                              </div>
 
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Mobile Number
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"   name="moblieNumber"     value={bankaccountprofile.mobileNumber}
-                                    placeholder=" Enter your Mobile Number" 
-                                    onChange={handlebankchange}
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-md-4 local-forms">
-                                  <label>
-                                    Otp <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control" name="otp"
-                                    placeholder=" Enter your Mobile otp"     
-                                    onChange={handlebankchange}
-                                  />
-                                </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  city <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="city"
+                                  placeholder=" Enter your City"
+                                  onChange={handlebankchange}
+                                />
+                              </div>
 
-                                <div className="col-12 row">
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Mobile Number
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="moblieNumber"
+                                  placeholder=" Enter your Mobile Number"
+                                  onChange={handlebankchange}
+                                />
+                              </div>
+                              <div className="form-group col-12 col-md-4 local-forms">
+                                <label>
+                                  Otp <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  name="otp"
+                                  placeholder=" Enter your Mobile otp"
+                                  onChange={handlebankchange}
+                                />
+                              </div>
+
+                              <div className="col-12 row">
                                 {dashboarddata.sendotpbtn && (
-                                    <button
-                                      className="btn btn-info col-md-2 mx-2"
-                                      type="submit"
-                                      // disabled={dashboarddata.isValid}
-                                      onClick={sendotp}
-                                    >
-                                      Send Otp
-                                    </button>
-                                  )}
-                                 {dashboarddata.verifyotp  &&  <button
+                                  <button
+                                    className="btn btn-info col-md-2 mx-2"
+                                    type="submit"
+                                    // disabled={dashboarddata.isValid}
+                                    onClick={sendotp}
+                                  >
+                                    Send Otp
+                                  </button>
+                                )}
+                                {dashboarddata.verifyotp && (
+                                  <button
                                     className="btn btn-primary col-md-2 mx-2"
                                     type="submit"
                                   >
                                     Verify
-                                  </button>}
-                                 
-                                 {dashboarddata.submitbankdeatail  &&  <button
+                                  </button>
+                                )}
+
+                                {dashboarddata.submitbankdeatail && (
+                                  <button
                                     className="btn btn-success col-md-2 mx-2"
                                     type="submit"
                                   >
                                     Save Details
-                                  </button>}
-                                 
-                                </div>
+                                  </button>
+                                )}
                               </div>
-                         
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -745,125 +724,123 @@ const updatebankDeatils=()=>{
                         <h5 className="card-title">Personal Details</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                          
-                              <div className="row mt-3">
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    First Name
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter First Name"  onChange={handlechange}
-                                    value={userProfile.firstName}
-                                    name="firstName"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Last Name
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Last Name"
-                                    onChange={handlechange}
-                                    value={userProfile.lastName}
-                                    name="lastName"
-                                    
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    PAN Number
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter PAN Number"
-                                    onChange={handlechange}
-                                    value={userProfile.panNumber}
-                                    name="panNumber"
-                             
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Aadhaar Number
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Enter Aadhar Number"
-                                    onChange={handlechange}
-                                    value={userProfile.aadharNumber}
-                                    name="aadharNumber"
-                                  />
-                                </div>
+                            <div className="row mt-3">
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  First Name
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter First Name"
+                                  onChange={handlechange}
+                                  value={userProfile.firstName}
+                                  name="firstName"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Last Name
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Last Name"
+                                  onChange={handlechange}
+                                  value={userProfile.lastName}
+                                  name="lastName"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  PAN Number
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter PAN Number"
+                                  onChange={handlechange}
+                                  value={userProfile.panNumber}
+                                  name="panNumber"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Aadhaar Number
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="Enter Aadhar Number"
+                                  onChange={handlechange}
+                                  value={userProfile.aadharNumber}
+                                  name="aadharNumber"
+                                />
+                              </div>
 
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Date of Birth
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="date"
-                                    className="form-control datetimepicker"
-                                    onChange={handlechange}
-                                    value={userProfile.dob}
-                                    name="dob"
-                                  />
-                                </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Date of Birth
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="date"
+                                  className="form-control datetimepicker"
+                                  onChange={handlechange}
+                                  value={userProfile.dob}
+                                  name="dob"
+                                />
+                              </div>
 
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Father Name
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Father Name"
-                                    onChange={handlechange}
-                                    value={userProfile.fatherName}
-                                    name="fatherName"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Mobile No
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="number"
-                                    maxLength={10}
-                                    className="form-control"
-                                    placeholder="Enter Mobile Name"
-                                    onChange={handlechange}
-                                    value={userProfile.mobileNumber}
-                                    name="mobileNumber"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    WhatsApp No
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="number"
-                                    maxLength={10}
-                                    className="form-control"
-                                    placeholder="Enter WhatsApp Name"
-                                    onChange={handlechange}
-                                    value={userProfile.whatappNumber}
-                                    name="whatappNumber"
-                                  />
-                                </div>
-                                {/* <div className="form-group col-12 col-sm-4 local-forms">
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Father Name
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Father Name"
+                                  onChange={handlechange}
+                                  value={userProfile.fatherName}
+                                  name="fatherName"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Mobile No
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  maxLength={10}
+                                  className="form-control"
+                                  placeholder="Enter Mobile Name"
+                                  onChange={handlechange}
+                                  value={userProfile.mobileNumber}
+                                  name="mobileNumber"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  WhatsApp No
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  maxLength={10}
+                                  className="form-control"
+                                  placeholder="Enter WhatsApp Name"
+                                  onChange={handlechange}
+                                  value={userProfile.whatappNumber}
+                                  name="whatappNumber"
+                                />
+                              </div>
+                              {/* <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
                                     Email ID
                                     <span className="login-danger">*</span>
@@ -878,130 +855,129 @@ const updatebankDeatils=()=>{
                                   />
                                 </div> */}
 
-
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Residence Address
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Residence Address"
-                                    onChange={handlechange}
-                                    value={userProfile.residenceAddress}
-                                    name="permanentAddress"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Pin Code
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Enter Pincode"
-                                    onChange={handlechange}
-                                    value={userProfile.pinCode}
-                                    name="pinCode"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Locality
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Locality "
-                                    onChange={handlechange}
-                                    value={userProfile.address}
-                                    name="address"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    City <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter City "
-                                    onChange={handlechange}
-                                    value={userProfile.city}
-                                    name="city"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    State
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter State"
-                                    onChange={handlechange}
-                                    value={userProfile.state}
-                                    name="state"
-                                  />
-                                </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Facebook URL
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Facebook Url"
-                                    onChange={handlechange}
-                                    value={userProfile.facebookUrl}
-                                    name="facebookUrl"
-                                    
-                                  />
-                                </div>
-
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Twitter URL
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Twitter Url"
-                                    onChange={handlechange}
-                                    value={userProfile.twitterUrl}
-                                    name="twitterUrl"
-                                  />
-                                </div>
-
-                                <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Linkedin URL
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter Linkedin  Url"
-                                    onChange={handlechange}
-                                    value={userProfile.linkedinUrl}
-                                    name="linkedinUrl"
-                                  />
-                                </div>
-                                <div className="col-12 ">
-                                  <button
-                                    className="btn btn-primary col-md-4 col-12"
-                                    type="submit"  onClick={handleprofileUpdate}
-                                  >
-                                    Save Deatils
-                                  </button>
-                                </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Residence Address
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Residence Address"
+                                  onChange={handlechange}
+                                  value={userProfile.residenceAddress}
+                                  name="permanentAddress"
+                                />
                               </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Pin Code
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="Enter Pincode"
+                                  onChange={handlechange}
+                                  value={userProfile.pinCode}
+                                  name="pinCode"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Locality
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Locality "
+                                  onChange={handlechange}
+                                  value={userProfile.address}
+                                  name="address"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  City <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter City "
+                                  onChange={handlechange}
+                                  value={userProfile.city}
+                                  name="city"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  State
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter State"
+                                  onChange={handlechange}
+                                  value={userProfile.state}
+                                  name="state"
+                                />
+                              </div>
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Facebook URL
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Facebook Url"
+                                  onChange={handlechange}
+                                  value={userProfile.facebookUrl}
+                                  name="facebookUrl"
+                                />
+                              </div>
+
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Twitter URL
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Twitter Url"
+                                  onChange={handlechange}
+                                  value={userProfile.twitterUrl}
+                                  name="twitterUrl"
+                                />
+                              </div>
+
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Linkedin URL
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Linkedin  Url"
+                                  onChange={handlechange}
+                                  value={userProfile.linkedinUrl}
+                                  name="linkedinUrl"
+                                />
+                              </div>
+                              <div className="col-12 ">
+                                <button
+                                  className="btn btn-primary col-md-4 col-12"
+                                  type="submit"
+                                  onClick={handleprofileUpdate}
+                                >
+                                  Save Deatils
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1029,7 +1005,7 @@ const updatebankDeatils=()=>{
                                       accept="image/*"
                                       name="image"
                                       id="file"
-                                      className="hide-input"     
+                                      className="hide-input"
                                       onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
@@ -1099,7 +1075,7 @@ const updatebankDeatils=()=>{
                                       accept="image/*"
                                       name="image"
                                       id="file"
-                                      className="hide-input"    
+                                      className="hide-input"
                                       onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
@@ -1121,7 +1097,7 @@ const updatebankDeatils=()=>{
                                       name="image"
                                       onChange={handlefileupload}
                                       id="file"
-                                      className="hide-input"    
+                                      className="hide-input"
                                     />
                                     <label htmlFor="file" className="upload">
                                       <i className="feather-upload">
@@ -1139,7 +1115,7 @@ const updatebankDeatils=()=>{
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"   
+                                      name="image"
                                       onChange={handlefileupload}
                                       id="file"
                                       className="hide-input"

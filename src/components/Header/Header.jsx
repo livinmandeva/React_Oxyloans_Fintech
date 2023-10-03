@@ -2,15 +2,14 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getUserDetails } from "../HttpRequest/afterlogin";
 import CountUp from "react-countup";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchData } from "../Redux/Slice";
 
 import {
   HandleWithFooter,
   WarningAlert,
 } from "../pages/Base UI Elements/SweetAlert";
 import {
-  logo,
-  logosmall,
-  headericon01,
   headericon05,
   avatar02,
   avatar11,
@@ -18,14 +17,14 @@ import {
   avatar13,
   headericon04,
   avatar01,
-  lr,
-  bl,
-  cn,
   oxylogomobile,
   oxylogodashboard,
 } from "../imagepath";
 
 const Header = (profile) => {
+  const dispatch = useDispatch();
+  const reduxStoreData = useSelector((data) => data.counter.userProfile);
+
   const [dashboarddata, setdashboarddata] = useState({
     profileData: null,
   });
@@ -57,23 +56,8 @@ const Header = (profile) => {
     };
   }, []);
 
-  // const fetchData = getUserDetails();
-
-  // useMemo(() => {
-  //   fetchData.then((data) => {
-  //     if (data.request.status == 200) {
-  //       setdashboarddata({
-  //         ...dashboarddata,
-  //         profileData: data,
-  //       });
-  //       console.log("its rerenders again");
-  //     } else if (data.response.data.errorCode != "200") {
-  //       WarningAlert(data.response.data.errorMessage);
-  //     }
-  //   });
-  // }, []);
-
   useEffect(() => {
+    dispatch(fetchData());
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
         setdashboarddata({
@@ -269,12 +253,7 @@ const Header = (profile) => {
               </div>
             </div>
           </li>
-          {/* /Notifications */}
-          {/* <li className="nav-item zoom-screen me-2">
-                                <Link to="#" className="nav-link header-nav-list">
-                                    <img src={headericon04} alt="" />
-                                </Link>
-                            </li> */}
+
           <li className="nav-item  has-arrow dropdown-heads ">
             <Link to="#" className="win-maximize maximize-icon">
               <img src={headericon04} alt="" />
@@ -296,12 +275,13 @@ const Header = (profile) => {
                 />
                 <div className="user-text text-wrap text-lowercase">
                   <h6>
-                    {dashboarddata.profileData === null ||
-                    dashboarddata.profileData === undefined
-                      ? ""
-                      : dashboarddata.profileData.data.firstName}
+                    {reduxStoreData.length != 0
+                      ? reduxStoreData.firstName
+                      : dashboarddata.profileData != null ||
+                        dashboarddata.profileData != undefined
+                      ? dashboarddata.profileData.data.firstName
+                      : ""}
                   </h6>
-                  {/* <p className="text-muted mb-0">Administrator</p> */}
                 </div>
               </span>
             </Link>
@@ -316,20 +296,28 @@ const Header = (profile) => {
                 </div>
                 <div className="user-text">
                   <p className="text-muted mb-0">
-                    LR{" "}
-                    {dashboarddata.profileData != null
+                    LR {""}
+                    {reduxStoreData.length != 0
+                      ? reduxStoreData.userId
+                      : dashboarddata.profileData != null
                       ? dashboarddata.profileData.data.userId
                       : "01"}
                   </p>
 
                   <p className="text-muted mb-0">
-                    {dashboarddata.profileData != null
+                    {reduxStoreData.length != 0
+                      ? reduxStoreData.groupName
+                      : dashboarddata.profileData != null
                       ? dashboarddata.profileData.data.groupName
                       : "New Lender"}
                   </p>
                   <p className="text-muted mb-0">
-                    Wallet :{" "}
-                    {dashboarddata.profileData != null
+                    Wallet :
+                    {reduxStoreData.length != 0
+                      ? reduxStoreData.lenderWalletAmount -
+                        reduxStoreData.holdAmountInDealParticipation -
+                        reduxStoreData.equityAmount
+                      : dashboarddata.profileData != null
                       ? dashboarddata.profileData.data.lenderWalletAmount -
                         dashboarddata.profileData.data
                           .holdAmountInDealParticipation -

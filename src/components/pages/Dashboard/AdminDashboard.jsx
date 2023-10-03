@@ -8,6 +8,9 @@ import { Chart as GoogleChart } from "react-google-charts";
 import { getDashboardInvestment } from "../../HttpRequest/afterlogin";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../Pagination";
+import { fetchData } from "../../Redux/Slice";
+import { fetchDatadashboard } from "../../Redux/SliceDashboard";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   awardicon01,
@@ -24,6 +27,10 @@ import {
 } from "../../HttpRequest/afterlogin";
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+  const getdashboardData = useSelector((data) => data.dashboard.fetchDashboard);
+  const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
+
   const [dashboarddata, setdashboarddata] = useState({
     profileData: null,
   });
@@ -48,45 +55,6 @@ const AdminDashboard = () => {
       pageSize: dats.pageSize,
     });
   };
-
-  useEffect(() => {
-    getuserMembershipValidity().then((data) => {
-      if (data.request.status == 200) {
-        setmembershipdata({
-          ...membershipdata,
-          dashboardData: data,
-        });
-      }
-    });
-    getUserDetails().then((data) => {
-      if (data.request.status == 200) {
-        setdashboarddata({
-          ...dashboarddata,
-          profileData: data,
-        });
-      }
-    });
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    const response = getDashboardInvestment(
-      dashboardInvestment.pageNo,
-      dashboardInvestment.pageSize
-    );
-    response.then((data) => {
-      if (data.request.status == 200) {
-        setdashboardInvestment({
-          ...dashboardInvestment,
-          apiData: data.data,
-          loading: false,
-          hasdata:
-            data.data.lenderWalletHistoryResponseDto.length == 0 ? false : true,
-        });
-      }
-    });
-    return () => {};
-  }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
 
   const datasource = [];
   {
@@ -531,6 +499,48 @@ const AdminDashboard = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
   ];
+
+  useEffect(() => {
+    dispatch(fetchDatadashboard());
+    dispatch(fetchData());
+    getuserMembershipValidity().then((data) => {
+      if (data.request.status == 200) {
+        setmembershipdata({
+          ...membershipdata,
+          dashboardData: data,
+        });
+      }
+    });
+    getUserDetails().then((data) => {
+      if (data.request.status == 200) {
+        setdashboarddata({
+          ...dashboarddata,
+          profileData: data,
+        });
+      }
+    });
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const response = getDashboardInvestment(
+      dashboardInvestment.pageNo,
+      dashboardInvestment.pageSize
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setdashboardInvestment({
+          ...dashboardInvestment,
+          apiData: data.data,
+          loading: false,
+          hasdata:
+            data.data.lenderWalletHistoryResponseDto.length == 0 ? false : true,
+        });
+      }
+    });
+    return () => {};
+  }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
+
   return (
     <>
       <div className="main-wrapper">
@@ -550,7 +560,9 @@ const AdminDashboard = () => {
                   <div className="page-sub-header">
                     <h3 className="page-title text-lowercase">
                       Welcome{" "}
-                      {dashboarddata.profileData != null
+                      {getreducerprofiledata.length != 0
+                        ? getreducerprofiledata.firstName
+                        : dashboarddata.profileData != null
                         ? dashboarddata.profileData.data.firstName
                         : ""}
                       !
@@ -576,7 +588,11 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Wallet </h6>
                         <h3>
-                          {dashboarddata.profileData != null
+                          {getreducerprofiledata.length != 0
+                            ? getreducerprofiledata.lenderWalletAmount -
+                              getreducerprofiledata.holdAmountInDealParticipation -
+                              getreducerprofiledata.equityAmount
+                            : dashboarddata.profileData != null
                             ? dashboarddata.profileData.data
                                 .lenderWalletAmount -
                               dashboarddata.profileData.data
@@ -604,10 +620,12 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Active Deals</h6>
                         <h3>
-                          {membershipdata.dashboardData != null
+                          {getdashboardData.length != 0
+                            ? getdashboardData.numberOfActiveDealsCount
+                            : membershipdata.dashboardData != null
                             ? membershipdata.dashboardData.data
                                 .numberOfActiveDealsCount
-                            : 1}
+                            : 0}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -629,10 +647,12 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Closed Deals</h6>
                         <h3>
-                          {membershipdata.dashboardData != null
+                          {getdashboardData.length != 0
+                            ? getdashboardData.numberOfClosedDealsCount
+                            : membershipdata.dashboardData != null
                             ? membershipdata.dashboardData.data
                                 .numberOfClosedDealsCount
-                            : 2}
+                            : 0}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -654,12 +674,15 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Disburse Deals</h6>
                         <h3>
-                          {membershipdata.dashboardData != null
+                          {getdashboardData.length != 0
+                            ? getdashboardData.numberOfClosedDealsCount +
+                              getdashboardData.numberOfActiveDealsCount
+                            : membershipdata.dashboardData != null
                             ? membershipdata.dashboardData.data
                                 .numberOfClosedDealsCount +
                               membershipdata.dashboardData.data
                                 .numberOfActiveDealsCount
-                            : 3}
+                            : 0}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -684,7 +707,21 @@ const AdminDashboard = () => {
                       <span className="text-bold text-success mx-lg-1">
                         Congratulation :
                       </span>
-                      {dashboarddata.profileData != null
+                      {getreducerprofiledata.length != 0
+                        ? getreducerprofiledata.groupName == "NewLender"
+                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
+                          : `You are an ${
+                              getreducerprofiledata.groupName == "OXYMARCH09" ||
+                              getreducerprofiledata.groupName ==
+                                "OxyPremiuimLenders"
+                                ? "Oxy Founding Lender"
+                                : "NewLender"
+                            } group member, and your validity is up to: ${
+                              getdashboardData.validityDate
+                            }`
+                        : ""}
+
+                      {/* {dashboarddata.profileData != null
                         ? dashboarddata.profileData.data.groupName ==
                           "NewLender"
                           ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
@@ -698,7 +735,7 @@ const AdminDashboard = () => {
                             } group member, and your validity is up to: ${
                               membershipdata.dashboardData.data.validityDate
                             }`
-                        : ""}
+                        : ""} */}
                     </span>
                   </div>
                 </div>
@@ -751,31 +788,6 @@ const AdminDashboard = () => {
                       <div className="col-8">
                         <h6 className="card-title">Deal Activity</h6>
                       </div>
-                      {/* <div className="col-6">
-                        <ul className="chart-list-out">
-                          <li>
-                            <span className="circle-blue" />
-                            Earning
-                          </li>
-                          <li>
-                            <span className="circle-green" />
-                            Active Deal
-                          </li>
-                          <li>
-                            <span className="circle-green" />
-                            Closed Deal
-                          </li>
-                          <li>
-                            <span className="circle-green" />
-                            Disburas
-                          </li>
-                          <li className="star-menus">
-                            <Link to="#">
-                              <i className="fas fa-ellipsis-v" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </div> */}
                     </div>
                   </div>
                   <div className="card-body">
@@ -799,28 +811,6 @@ const AdminDashboard = () => {
                       <div className="col-6">
                         <h6 className="card-title">Investment In Deals</h6>
                       </div>
-                      {/* <div className="col-7">
-                        <ul className="chart-list-out">
-                          <li>
-                            <span className="circle-green" />
-                            Total Lend Amount
-                          </li>
-                          <li>
-                            <span className="circle-blue" />
-                            Student
-                          </li>
-                          <li>
-                            <span className="circle-green" />
-                            Escow
-                          </li>
-
-                          <li className="star-menus">
-                            <Link to="#">
-                              <i className="fas fa-ellipsis-v" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </div> */}
                     </div>
                   </div>
                   <div className="card-body">

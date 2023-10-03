@@ -6,15 +6,24 @@ import Footer from "../../../Footer/Footer";
 import { bulidingicon } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { loadVirtualAccount } from "../../../HttpRequest/afterlogin";
+import { useSelector, useDispatch } from "react-redux";
+import { getProfile } from "../../../Redux/Slice";
 
 const LoadwalletThroughVirtualAccount = () => {
   const [userid, setUserid] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUser = loadVirtualAccount();
     setUserid(getUser.userId);
+    // dispatch(getProfile({ getUser }));
     return () => {};
   }, []);
+
+  const reducerData = useSelector((data) => {
+    console.log(data);
+    return data.counter.value;
+  });
 
   return (
     <>

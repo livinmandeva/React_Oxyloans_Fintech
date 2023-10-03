@@ -8,8 +8,11 @@ import FeatherIcon from "feather-icons-react";
 import { useHistory } from "react-router-dom";
 import { userloginSection } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
+import { useDispatch } from "react-redux";
+import { getProfile } from "../../Redux/Slice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [userLogInInfo, setUserLoginInfo] = useState({
     email: "",
@@ -66,14 +69,10 @@ const Login = () => {
 
     if (retriveresponse.request.status == 200) {
       toastrSuccess("Login Suceess !");
+      // dispatch(getProfile({ res: retriveresponse.data }));
       history.push("/dashboard");
     } else {
       toastrWarning(retriveresponse.response.data.errorMessage);
-      // setUserLoginInfo({
-      //   ...userLogInInfo,
-      //   error: true,
-      //   errormessage: retriveresponse.response.data.errorMessage,
-      // });
     }
   };
 

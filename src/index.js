@@ -13,11 +13,17 @@ import "./assets/plugins/select2/css/select2.min.css";
 //Font Awesome
 import "./assets/plugins/fontawesome/css/fontawesome.min.css";
 import "./assets/plugins/fontawesome/css/all.min.css";
-
 import Approuter from "./approuter";
 
+import { Provider } from "react-redux";
+import store from "./components/Redux/Store";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Approuter />);
+root.render(
+  <Provider store={store}>
+    <Approuter />
+  </Provider>
+);
 
 // ReactDOM.render(
 //   <Approuter/>,
