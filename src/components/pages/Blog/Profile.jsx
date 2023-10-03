@@ -6,7 +6,7 @@ import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
 
-import {profileupadate , getUserDetails, handleapicall ,sendMoblieOtp } from "../../HttpRequest/afterlogin";
+import {profileupadate , getUserDetails,  updatebank, verifyBankAccountAndIfsc, handleapicall ,sendMoblieOtp } from "../../HttpRequest/afterlogin";
 import { event } from "jquery";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
@@ -45,7 +45,7 @@ const Profile = () => {
     moblieNumber:"",
     bankAccount:"",
       
-    accountNumber: "",
+    accountNumber: "",city:"",
       bankAddress:"",
       bankName: "",
       branchName: "",
@@ -58,7 +58,10 @@ const Profile = () => {
       userName: ""
   })
 
-
+const [kycdocuments , setkycdocument]=useState({
+  pancard:"",
+  check:"",
+})
   useEffect(() => {
     if (bankaccountprofile.accountNumber !== bankaccountprofile.confirmAccountNumber) {
       setBankaccountProfile(prevProfile => ({
@@ -122,9 +125,27 @@ const Profile = () => {
         whatsAppNumber:data.data.whatappNumber,
         aadharNumber:data.data.aadharNumber
       })
+      setBankaccountProfile({
+        
+        ...bankaccountprofile,
+
+        moblieNumber:data.data.mobileNumber,
+        city:data.data.city,
+        bankAccount:data.data.bankAccount,  
+        accountNumber: data.data.accountNumber,
+         bankAddress:data.data.bankAddress,
+         bankName: data.data.bankName,
+         branchName: data.data.branchName,
+         confirmAccountNumber: data.data.accountNumber,
+         ifscCode: data.data.ifscCode,
+        //  mobileOtp: "",
+        //  mobileOtpSession: "",
+      })
     });
   }, []);
+   const handlefileupload=(event)=>{
 
+   }
   const handlechange = (event) => {
     const { name, value } = event.target;
     setUserProfile((prevUserProfile) => ({
@@ -158,13 +179,23 @@ const handleprofileUpdate=()=>{
 }
 
 
+
+useEffect(()=>{
+  console.log(bankaccountprofile.accountNumber)
+  const response = verifyBankAccountAndIfsc(bankaccountprofile);
+  response.then((data)=>{
+     console.log("verifyBankAccountAndIfsc" +data);  
+  
+  })
+},[bankaccountprofile.accountNumber, bankaccountprofile.ifscCode])
 const sendotp=async()=>{
   
 
     console.log(bankaccountprofile.moblieNumber)
   const response = sendMoblieOtp(bankaccountprofile);
   response.then((data)=>{
-     console.log(data);  
+     console.log(data);
+     localStorage.setItem("OtpSeesion",data.data.mobileOtpSession)  
   
   })
 
@@ -175,6 +206,15 @@ const handlebankchange=(event)=>{
   setBankaccountProfile({
     ...bankaccountprofile,
      [name]:value,
+  })
+}
+
+const updatebankDeatils=()=>{
+  response = updatebank(bankaccountprofile)
+
+  response.then((data)=>{
+    console.log("Upadtedbankdeatils" + data)
+
   })
 }
   return (
@@ -444,6 +484,7 @@ const handlebankchange=(event)=>{
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your Name"
+                                    value={bankaccountprofile.userName}
                                     name="userName"
                                     onChange={handlebankchange}
                                   />
@@ -457,7 +498,7 @@ const handlebankchange=(event)=>{
                                     type="number"
                                     className="form-control" name="accountNumber"  onChange={handlebankchange}
                                     placeholder=" Enter your Account Number"
-                                  />
+                                    value={bankaccountprofile.accountNumber} />
                                 </div>
 
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -469,7 +510,7 @@ const handlebankchange=(event)=>{
                                     type="number"
                                     className="form-control"  name="confirmAccountNumber"  onChange={handlebankchange}
                                     placeholder=" Confirm Account Number"
-                                  />
+                                    value={bankaccountprofile.confirmAccountNumber} />
                                    {bankaccountprofile.bankAccountError && <span className="login-danger">{bankaccountprofile.bankAccountError}</span>}
                                 </div>
                                
@@ -482,6 +523,7 @@ const handlebankchange=(event)=>{
                                     type="text"
                                     className="form-control" name="ifscCode" onChange={handlebankchange}
                                     placeholder=" Enter your IFSC Code"
+                                    value={bankaccountprofile.ifscCode}
                                   />
                                 </div>
 
@@ -493,7 +535,7 @@ const handlebankchange=(event)=>{
                                   <input
                                     type="text"
                                     className="form-control"  name="bankName"   onChange={handlebankchange}
-                                    placeholder=" Enter your Bank Name"
+                                    placeholder=" Enter your Bank Name"     value={bankaccountprofile.bankName}
                                   />
                                 </div>
 
@@ -504,7 +546,7 @@ const handlebankchange=(event)=>{
                                   </label>
                                   <input
                                     type="text"
-                                    className="form-control"   name="branchName"
+                                    className="form-control"   name="branchName"    value={bankaccountprofile.branchName}
                                     placeholder=" Enter your Branch"   onChange={handlebankchange}
                                   />
                                 </div>
@@ -515,7 +557,7 @@ const handlebankchange=(event)=>{
                                   </label>
                                   <input
                                     type="text"
-                                    className="form-control"   name="city"  
+                                    className="form-control"    value={bankaccountprofile.city}   name="city"  
                                     placeholder=" Enter your City"  onChange={handlebankchange}
                                   />
                                 </div>
@@ -527,7 +569,7 @@ const handlebankchange=(event)=>{
                                   </label>
                                   <input
                                     type="text"
-                                    className="form-control"   name="moblieNumber"
+                                    className="form-control"   name="moblieNumber"     value={bankaccountprofile.mobileNumber}
                                     placeholder=" Enter your Mobile Number" 
                                     onChange={handlebankchange}
                                   />
@@ -986,7 +1028,8 @@ const handlebankchange=(event)=>{
                                       accept="image/*"
                                       name="image"
                                       id="file"
-                                      className="hide-input"
+                                      className="hide-input"     
+                                      onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
                                       <i className="feather-upload">
@@ -1014,6 +1057,7 @@ const handlebankchange=(event)=>{
                                       name="image"
                                       id="file"
                                       className="hide-input"
+                                      onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
                                       <i className="feather-upload">
@@ -1034,6 +1078,7 @@ const handlebankchange=(event)=>{
                                       name="image"
                                       id="file"
                                       className="hide-input"
+                                      onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
                                       <i className="feather-upload">
@@ -1053,7 +1098,8 @@ const handlebankchange=(event)=>{
                                       accept="image/*"
                                       name="image"
                                       id="file"
-                                      className="hide-input"
+                                      className="hide-input"    
+                                      onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
                                       <i className="feather-upload">
@@ -1072,8 +1118,9 @@ const handlebankchange=(event)=>{
                                       type="file"
                                       accept="image/*"
                                       name="image"
+                                      onChange={handlefileupload}
                                       id="file"
-                                      className="hide-input"
+                                      className="hide-input"    
                                     />
                                     <label htmlFor="file" className="upload">
                                       <i className="feather-upload">
@@ -1091,7 +1138,8 @@ const handlebankchange=(event)=>{
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="image"   
+                                      onChange={handlefileupload}
                                       id="file"
                                       className="hide-input"
                                     />

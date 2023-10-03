@@ -102,6 +102,7 @@ const TicketHistory = () => {
                             </thead>
                             <tbody>
                               {apires.map((item, index) => (
+
                                 <tr key={index}>
                                   <td className="text-center">
                                     <div>{item.ticketId}</div>
@@ -131,24 +132,26 @@ const TicketHistory = () => {
                                   </td>
                                   <td className="text-center">
                                     <div className="buttn">
-                                      <div className=" badge bg-success-dark">
+                                      <div className="badge bg-success col-md-8 col-12">
                                         View Comments
                                       </div>
-                                      <div className="badge bg-warning">
+                                      <div className="badge bg-warning  col-md-8 col-12">
                                         Inquiries Reply
                                       </div>
-                                      <Link to="/writetous">
-                                        <div className=" badge bg-success">
+                                      <Link className=" badge bg-info col-md-8 col-12" to="/writetous" >
+                                        <div className="">
                                           Write Reply
                                         </div>{" "}
                                       </Link>
-                                      <div className=" badge bg-success-dark">
+                                      <div className=" badge bg-success-dark  col-md-8 col-12">
                                         Cancel
                                       </div>
                                     </div>
                                   </td>
                                 </tr>
+
                               ))}
+                         
                             </tbody>
                           </table>
                         </div>

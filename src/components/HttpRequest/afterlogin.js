@@ -170,6 +170,25 @@ export const checkqrcodetransaction = async (qrid) => {
   return response;
 };
 
+
+export const verifyBankAccountAndIfsc= async(bankaccountprofile)=>{
+  const token = getToken();
+  const userId = getUserId();
+  const data={
+   bankAccount: bankaccountprofile.accountNumber,
+   ifscCode: bankaccountprofile.ifscCode
+  };
+  
+const  response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    "verifyBankAccountAndIfsc",
+    "POST",
+    token,
+    data
+
+  );
+  return response;
+}
 export const Earning = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -188,6 +207,39 @@ export const Earning = async () => {
   );
   return response;
 };
+
+export const uploadkyc =async  ()=>{
+  
+}
+export const updatebank=async(bankaccountprofile)=>{
+  const token = getToken();
+  const userId = getUserId();
+  const mobileOtpSession= localStorage.getItem("OtpSeesion")
+   const data={
+
+  accountNumber: bankaccountprofile.accountNumber,
+  bankAddress: bankaccountprofile.bankAddress,
+  bankName: bankaccountprofile.bankName,
+  branchName:bankaccountprofile.branchName,
+  confirmAccountNumber: bankaccountprofile.confirmAccountNumber,
+  ifscCode: bankaccountprofile.ifscCode,
+  mobileOtp: bankaccountprofile.mobileOtp,
+  mobileOtpSession: mobileOtpSession,
+  updateBankDetails: true,
+  userName: "JOHN DOE"
+   }
+
+   console.log(userProfile)
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `personal/${userId}`,
+    "PATCH",
+    token,
+    data
+  );
+
+  return response;
+}
 export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
