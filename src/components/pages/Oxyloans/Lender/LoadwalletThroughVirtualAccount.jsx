@@ -13,6 +13,7 @@ const LoadwalletThroughVirtualAccount = () => {
   useEffect(() => {
     const getUser = loadVirtualAccount();
     setUserid(getUser.userId);
+    return () => {};
   }, []);
 
   return (

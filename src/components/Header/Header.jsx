@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getUserDetails } from "../HttpRequest/afterlogin";
 import CountUp from "react-countup";
+
+import {
+  HandleWithFooter,
+  WarningAlert,
+} from "../pages/Base UI Elements/SweetAlert";
 import {
   logo,
   logosmall,
@@ -52,6 +57,22 @@ const Header = (profile) => {
     };
   }, []);
 
+  // const fetchData = getUserDetails();
+
+  // useMemo(() => {
+  //   fetchData.then((data) => {
+  //     if (data.request.status == 200) {
+  //       setdashboarddata({
+  //         ...dashboarddata,
+  //         profileData: data,
+  //       });
+  //       console.log("its rerenders again");
+  //     } else if (data.response.data.errorCode != "200") {
+  //       WarningAlert(data.response.data.errorMessage);
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
@@ -59,9 +80,12 @@ const Header = (profile) => {
           ...dashboarddata,
           profileData: data,
         });
+      } else if (data.response.data.errorCode != "200") {
+        WarningAlert(data.response.data.errorMessage);
       }
     });
   }, []);
+
   return (
     <>
       {/* Header */}
@@ -108,11 +132,11 @@ const Header = (profile) => {
         {/* Header Right Menu */}
 
         <ul className="nav user-menu">
-          <li className="nav-item dropdown language-drop me-2">
+          {/* <li className="nav-item dropdown language-drop me-2">
             <div>
               <CountUp start={60} end={0} duration={60} prefix=" 30 : " />
             </div>
-          </li>
+          </li> */}
           {/* Notifications */}
 
           <li className="nav-item dropdown noti-dropdown me-2">

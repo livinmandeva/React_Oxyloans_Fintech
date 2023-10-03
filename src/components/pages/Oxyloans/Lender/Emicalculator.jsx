@@ -1,61 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select2 from "react-select2-wrapper";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import { getEmiTableInformation } from "../../../HttpRequest/afterlogin";
 
 const Emicalculator = () => {
-  const [loatamount, setLoanAmount] = useState("");
-  const [inputTenure, setinputTenure] = useState("");
-  const [inputroi, setinputroi] = useState("");
-  const [emiType, setemiType] = useState("");
+  const [emicalculatorOption, setemicalculatorOption] = useState({
+    loanAmount: "",
+    inputTenure: "",
+    inputroi: "",
+    emiType: "",
+    isvalid: true,
+    apiData: [],
+  });
 
-  const [tenureDropdown, settenureDropdown] = useState([
-    { id: 1, text: "1" },
-    { id: 2, text: "2" },
-    { id: 3, text: "3" },
-    { id: 4, text: "4" },
-    { id: 5, text: "5" },
-    { id: 6, text: "6" },
-    { id: 7, text: "7" },
-    { id: 8, text: "8" },
-    { id: 9, text: "9" },
-    { id: 10, text: "10" },
-    { id: 11, text: "11" },
-    { id: 12, text: "12" },
-  ]);
-
-  const [roi, setroi] = useState([
-    { id: 10, text: "10" },
-    { id: 11, text: "11" },
-    { id: 12, text: "12" },
-    { id: 13, text: "13" },
-    { id: 14, text: "14" },
-    { id: 15, text: "15" },
-    { id: 16, text: "16" },
-    { id: 17, text: "17" },
-    { id: 18, text: "18" },
-    { id: 19, text: "19" },
-    { id: 20, text: "20" },
-    { id: 21, text: "21" },
-    { id: 22, text: "22" },
-    { id: 23, text: "23" },
-    { id: 24, text: "24" },
-    { id: 30, text: "30" },
-    { id: 36, text: "36" },
-    { id: 40, text: "40" },
-  ]);
-
-  const [options, setOptions] = useState([
-    { id: 1, text: "Flat" },
-    { id: 2, text: "Reduce" },
-  ]);
-
-  const executeSelectedOption = () => {
-    console.log(this);
+  const setInputValuesFun = (event) => {
+    const { name, value } = event.target;
+    setemicalculatorOption({
+      ...emicalculatorOption,
+      [name]: value,
+    });
   };
+
+  const submitTheEmiCalculator = () => {
+    const response = getEmiTableInformation(emicalculatorOption);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        if (data.data.flatCalculationEmi.length != 0) {
+          setemicalculatorOption({
+            ...emicalculatorOption,
+            apiData: data.data.flatCalculationEmi,
+          });
+        } else {
+          setemicalculatorOption({
+            ...emicalculatorOption,
+            apiData: data.data.reduceCalculationEmi,
+          });
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    const inputValid =
+      emicalculatorOption.emiType != "" &&
+      emicalculatorOption.inputTenure != "" &&
+      emicalculatorOption.inputroi != "" &&
+      emicalculatorOption.loanAmount != "";
+
+    if (inputValid) {
+      setemicalculatorOption({
+        ...emicalculatorOption,
+        isvalid: false,
+      });
+    } else {
+      setemicalculatorOption({
+        ...emicalculatorOption,
+        isvalid: true,
+      });
+    }
+
+    return () => {};
+  }, [
+    emicalculatorOption.emiType,
+    emicalculatorOption.inputTenure,
+    emicalculatorOption.inputroi,
+    emicalculatorOption.loanAmount,
+  ]);
+
   return (
     <>
       <div className="main-wrapper">
@@ -102,12 +117,10 @@ const Emicalculator = () => {
                             </label>
                             <input
                               type="text"
+                              name="loanAmount"
                               className="form-control"
                               placeholder="Loan Amount"
-                              value={loatamount}
-                              onChange={(event) =>
-                                setLoanAmount(event.target.value)
-                              }
+                              onChange={setInputValuesFun}
                             />
                           </div>
                         </div>
@@ -116,13 +129,32 @@ const Emicalculator = () => {
                             <label>
                               ROI <span className="login-danger">*</span>
                             </label>
-                            <Select2
-                              className="w-100 form-group local-forms form-control select"
-                              data={roi}
-                              options={{
-                                placeholder: "Enter ROI",
-                              }}
-                            />
+
+                            <select
+                              className="form-control form-select"
+                              name="inputroi"
+                              defaultValue={emicalculatorOption.inputroi}
+                              onChange={setInputValuesFun}
+                            >
+                              <option value="">Choose RoI</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="30">30</option>
+                              <option value="36">36</option>
+                            </select>
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -131,13 +163,26 @@ const Emicalculator = () => {
                               Tenure <span className="login-danger">*</span>
                             </label>
 
-                            <Select2
-                              className="w-100 form-group local-forms form-control select"
-                              data={tenureDropdown}
-                              options={{
-                                placeholder: "tenure",
-                              }}
-                            />
+                            <select
+                              className="form-control form-select"
+                              name="inputTenure"
+                              defaultValue={emicalculatorOption.inputTenure}
+                              onChange={setInputValuesFun}
+                            >
+                              <option value="">Choose Tenure</option>
+                              <option value="1">1M</option>
+                              <option value="2">2M</option>
+                              <option value="3">3M</option>
+                              <option value="4">4M</option>
+                              <option value="5">5M</option>
+                              <option value="6">6M</option>
+                              <option value="7">7M</option>
+                              <option value="8">8M</option>
+                              <option value="9">9M</option>
+                              <option value="10">10M</option>
+                              <option value="11">11M</option>
+                              <option value="12">12M</option>
+                            </select>
                           </div>
                         </div>
                         <div className="col-12 col-sm-4">
@@ -146,19 +191,28 @@ const Emicalculator = () => {
                               Emi Type
                               <span className="login-danger">*</span>
                             </label>
-                            <Select2
-                              className="w-100 form-group local-forms form-control select"
-                              data={options}
-                              options={{
-                                placeholder: "Emi Type",
-                              }}
-                            />
+
+                            <select
+                              className="form-control form-select"
+                              name="emiType"
+                              value={emicalculatorOption.emiType}
+                              onChange={setInputValuesFun}
+                            >
+                              <option value="">Choose Emi Type</option>
+                              <option value="REDUCE">Reduce</option>
+                              <option value="FLAT">Flat</option>
+                            </select>
                           </div>
                         </div>
 
                         <div className="col-12">
                           <div className="student-submit">
-                            <button type="button" className="btn btn-primary">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              disabled={emicalculatorOption.isvalid}
+                              onClick={submitTheEmiCalculator}
+                            >
                               Submit
                             </button>
                           </div>
@@ -186,27 +240,28 @@ const Emicalculator = () => {
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <td> 1</td>
-                                        <td>1725.48</td>
-                                        <td> 100</td>
-                                        <td>1625.48</td>
-                                        <td> 8374.52</td>
-                                      </tr>
-                                      <tr>
-                                        <td> 2</td>
-                                        <td>1725.48</td>
-                                        <td> 100</td>
-                                        <td>1625.48</td>
-                                        <td> 8374.52</td>
-                                      </tr>
-                                      <tr>
-                                        <td> 3</td>
-                                        <td>1725.48</td>
-                                        <td> 100</td>
-                                        <td>1625.48</td>
-                                        <td> 8374.52</td>
-                                      </tr>
+                                      {emicalculatorOption.apiData.length ==
+                                      0 ? (
+                                        <tr>
+                                          <td colSpan={8}>No Data found</td>
+                                        </tr>
+                                      ) : (
+                                        emicalculatorOption.apiData.map(
+                                          (item, index) => (
+                                            <tr key={index}>
+                                              <td> {item.emiNumber}</td>
+                                              <td>INR {item.emiAmount}</td>
+                                              <td>INR {item.interestAmount}</td>
+                                              <td>
+                                                INR {item.principalAmount}
+                                              </td>
+                                              <td>
+                                                INR {item.balanceAndOutstanding}
+                                              </td>
+                                            </tr>
+                                          )
+                                        )
+                                      )}
                                     </tbody>
                                   </table>
                                 </div>

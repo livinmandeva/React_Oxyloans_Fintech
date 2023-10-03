@@ -47,6 +47,7 @@ const WithdrawdealFounds = () => {
       participatedamount: currentAmount,
       withdrawalamount: requestedAmount,
     });
+    return () => {};
   }, []);
 
   return (

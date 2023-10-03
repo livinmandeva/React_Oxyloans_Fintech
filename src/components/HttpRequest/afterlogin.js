@@ -78,25 +78,7 @@ export const bulkinvitegmailLink = async () => {
   );
   return response;
 };
-export  const profileupadate =async (userProfile) =>{
 
-  
-  const token = getToken();
-  const userId = getUserId();    
-
-
-  
-console.log(userProfile)
-  const response = await handleApiRequestAfterLoginService(
-    API_BASE_URL,
-    `personal/${userId}`,
-    "PATCH",
-    token,
-    userProfile
-  );
-
-  return response;
-}
 export const getUserDetails = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -138,33 +120,11 @@ export const checkqrcodetransaction = async (qrid) => {
     "PATCH",
     token
   );
-
-  return response;
-};
-
-
-export const sendMoblieOtp=async(bankaccountprofile)=>{
-  const token = getToken();
-  const userId = getUserId();
-
-  const data = {
-      mobileNumber:bankaccountprofile.moblieNumber
-};
-
-console.log(data)
-  const response= await handleApiRequestAfterLoginService(
-
-    API_BASE_URL,
-    `sendMobileOtp `,
-    "POST",
-    token,
-    data
-    
-    
-  );
-  return response;
   
-}
+
+  return response;
+};
+
 export const Earning = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -657,6 +617,45 @@ export const getholdamountInfo = async () => {
     `${userId}/hold-amount-details`,
     "GET",
     token
+  );
+  return response;
+};
+
+export const myclosedDealsInfo = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    pageNo,
+    pageSize,
+    userId,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `closedDealsForUserBasedOnPagination`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getEmiTableInformation = async (params) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    loanAmount: params.loanAmount,
+    rateOfInterest: params.inputroi,
+    tenure: params.inputTenure,
+    calculationType: params.emiType,
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `borrowerEmiDetails`,
+    "POST",
+    token,
+    postdatastring
   );
   return response;
 };

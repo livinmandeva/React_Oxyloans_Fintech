@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import { Myreferal    ,downloadreferal} from "../../../HttpRequest/afterlogin";
+import { Myreferal, downloadreferal } from "../../../HttpRequest/afterlogin";
 import Footer from "../../../Footer/Footer";
 import { Button, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
@@ -15,15 +15,13 @@ const MyreferalStatus = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
-    datasource: [],nriinvite:false,
-    inviteborrowerlink:false,
-    invaitlenderlink:false,
-
-    
-   
+    datasource: [],
+    nriinvite: false,
+    inviteborrowerlink: false,
+    invaitlenderlink: false,
   });
   const [copySuccess, setCopySuccess] = useState(false);
-  const [ referlink,setrefer]=useState("")
+  const [referlink, setrefer] = useState("");
   const referdashboardPagination = (Pagination) => {
     console.log(Pagination);
     setreferaldata({
@@ -47,7 +45,8 @@ const MyreferalStatus = () => {
         });
       }
     });
-    downloadreferalstatus()
+    downloadreferalstatus();
+    return () => {};
   }, [referdata.pageNo, referdata.pageSize]);
 
   const datasource = [];
@@ -69,38 +68,32 @@ const MyreferalStatus = () => {
         })
       : "";
   }
-const downloadreferalstatus=async()=>{
-  const response =downloadreferal()
-  
-    response.then((data)=>{
-      if(data.request.status == 200){
-        setrefer(data.data.downloadUrl)
-        console.log(data.data)
+  const downloadreferalstatus = async () => {
+    const response = downloadreferal();
+
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setrefer(data.data.downloadUrl);
+        console.log(data.data);
       }
-    })
-}    
+    });
+  };
 
+  const Invitelender = async () => {
+    const userId = localStorage.getItem("userType");
+    const input = document.createElement("input");
+    input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
 
+    setreferaldata({
+      ...referdata,
+      invaitlenderlink: !referdata.invaitlenderlink,
+    });
+  };
 
-
-
-const Invitelender=async()=>{
-  const userId=localStorage.getItem("userType")
-  const input = document.createElement('input');
-  input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
-  document.body.appendChild(input);
-  input.select();
-  document.execCommand('copy');
-  document.body.removeChild(input);
-  
-  setreferaldata({
-    ...referdata,
-    invaitlenderlink:!referdata.invaitlenderlink
-  })
-  
-  }
-
- 
   const column = [
     {
       title: "User Name",
@@ -135,37 +128,32 @@ const Invitelender=async()=>{
     },
   ];
 
-
-const  handlenriinvite =()=>{
-
-
-  const userId=localStorage.getItem("userType")
-  const input = document.createElement('input');
-  input.value = `https://www.oxyloans.com/new/nrilenderregistration?ref=${userId}`;
-  document.body.appendChild(input);
-  input.select();
-  document.execCommand('copy');
-  document.body.removeChild(input);
-  setreferaldata({
-    ...referdata,
-    nriinvite:!referdata.nriinvite
-  })
-}
-  const Inviteborrower = () => {
-
-    const userId=localStorage.getItem("userType")
-    const input = document.createElement('input');
-    input.value = `https://www.oxyloans.com/new/register_borrower?ref=${userId}`;
+  const handlenriinvite = () => {
+    const userId = localStorage.getItem("userType");
+    const input = document.createElement("input");
+    input.value = `https://www.oxyloans.com/new/nrilenderregistration?ref=${userId}`;
     document.body.appendChild(input);
     input.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(input);
     setreferaldata({
       ...referdata,
-      inviteborrowerlink:!referdata.inviteborrowerlink
-    })
+      nriinvite: !referdata.nriinvite,
+    });
   };
-
+  const Inviteborrower = () => {
+    const userId = localStorage.getItem("userType");
+    const input = document.createElement("input");
+    input.value = `https://www.oxyloans.com/new/register_borrower?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
+    setreferaldata({
+      ...referdata,
+      inviteborrowerlink: !referdata.inviteborrowerlink,
+    });
+  };
 
   // const handleCopyClick = () => {
   //   const input = document.createElement('input');
@@ -176,7 +164,6 @@ const  handlenriinvite =()=>{
   //   document.body.removeChild(input);
   //   setCopySuccess(true);
   // };
-
 
   return (
     <>
@@ -216,24 +203,43 @@ const  handlenriinvite =()=>{
                           <h3 className="page-title"></h3>
                         </div>
                         <div className="col-auto text-end float-end ms-auto download-grp">
-                          <a href={referlink}   className="btn btn-danger me-2">
+                          <a href={referlink} className="btn btn-danger me-2">
                             Referal Status
                           </a>
-                          <Button 
-                          // to="addsalary"
-                          onClick={Inviteborrower}
-                           className="btn btn-warning me-2">
-                            {referdata.inviteborrowerlink ? <>copied</> : <>Invite Borrower</>}
+                          <Button
+                            // to="addsalary"
+                            onClick={Inviteborrower}
+                            className="btn btn-warning me-2"
+                          >
+                            {referdata.inviteborrowerlink ? (
+                              <>copied</>
+                            ) : (
+                              <>Invite Borrower</>
+                            )}
                           </Button>
-                          <Button  onClick={handlenriinvite} className="btn btn-info me-2">
-                          {referdata.nriinvite ? <> copyed</> :<>Invite an NRI</>}  
+                          <Button
+                            onClick={handlenriinvite}
+                            className="btn btn-info me-2"
+                          >
+                            {referdata.nriinvite ? (
+                              <> copyed</>
+                            ) : (
+                              <>Invite an NRI</>
+                            )}
                           </Button>
 
-                          <Button     onClick={Invitelender} className="btn btn-success me-2">
-        {/* {copySuccess ? 'Link Copied!' : 'Invite A lender'} */}
+                          <Button
+                            onClick={Invitelender}
+                            className="btn btn-success me-2"
+                          >
+                            {/* {copySuccess ? 'Link Copied!' : 'Invite A lender'} */}
 
-       {referdata.invaitlenderlink ? <> copyed</> :<>Invite an Lender</>} 
-      </Button>
+                            {referdata.invaitlenderlink ? (
+                              <> copyed</>
+                            ) : (
+                              <>Invite an Lender</>
+                            )}
+                          </Button>
                         </div>
                       </div>
                     </div>

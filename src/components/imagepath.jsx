@@ -118,3 +118,4 @@ export { default as allqueries } from "../assets/img/allqueries.png";
 export { default as cancelled } from "../assets/img/CANCELLED.png";
 export { default as resolved } from "../assets/img/resolved.png";
 export { default as pending } from "../assets/img/PENDING.png";
+export { default as registerImage } from "../assets/img/registerImage.png";

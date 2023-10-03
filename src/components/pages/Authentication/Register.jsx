@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { login } from "../../imagepath";
+import { login, registerImage } from "../../imagepath";
 import { Link } from "react-router-dom";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
@@ -25,7 +25,11 @@ const Register = () => {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img
+                  className="img-fluid h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">

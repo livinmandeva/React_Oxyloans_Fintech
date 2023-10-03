@@ -66,6 +66,7 @@ const AdminDashboard = () => {
         });
       }
     });
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -84,6 +85,7 @@ const AdminDashboard = () => {
         });
       }
     });
+    return () => {};
   }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
 
   const datasource = [];

@@ -54,6 +54,7 @@ const WalletToWallet = () => {
         isValid: true,
       });
     }
+    return () => {};
   }, [walletTowallet.amount, walletTowallet.receiverId]);
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const WalletToWallet = () => {
       ...walletTowallet,
       senderId: getUser.userId,
     });
+    return () => {};
   }, []);
 
   return (

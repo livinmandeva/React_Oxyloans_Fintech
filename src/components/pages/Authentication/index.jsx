@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
-import { login } from "../../imagepath";
+import { login, registerImage } from "../../imagepath";
 import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { useHistory } from "react-router-dom";
@@ -84,7 +84,11 @@ const Login = () => {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img
+                  className="img-fluid h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">
