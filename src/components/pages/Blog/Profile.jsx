@@ -6,13 +6,95 @@ import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
 
-import { getUserDetails } from "../../HttpRequest/afterlogin";
+import {profileupadate , getUserDetails, handleapicall ,sendMoblieOtp } from "../../HttpRequest/afterlogin";
+import { event } from "jquery";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {
   const [dashboarddata, setdashboarddata] = useState({
+    sendotpbtn:true,
+    verifyotp:false,
+    submitbankdeatail:false,
     profileData: null,
+    isValid:true,
+
   });
+  const[userProfile,setUserProfile]=useState({
+    address: "",
+    city: "",
+    dob: "",
+    facebookUrl: "",
+    fatherName : "",
+    firstName : "",
+    lastName : "",
+    linkedinUrl : "",
+    locality : "",
+    middleName: "",
+    panNumber: "",
+    permanentAddress : "",
+    pinCode: "",
+    state: "",
+    twitterUrl: "",
+    whatsAppNumber:"",
+    aadharNumber:""
+  })
+
+
+  const[bankaccountprofile ,setBankaccountProfile] =useState({
+    sendMobileOtp:"",
+    moblieNumber:"",
+    bankAccount:"",
+      
+    accountNumber: "",
+      bankAddress:"",
+      bankName: "",
+      branchName: "",
+      confirmAccountNumber: "",
+      ifscCode: "",
+      mobileOtp: "",
+      mobileOtpSession: "",
+      bankAccountError:"",
+      updateBankDetails: true,
+      userName: ""
+  })
+
+
+  useEffect(() => {
+    if (bankaccountprofile.accountNumber !== bankaccountprofile.confirmAccountNumber) {
+      setBankaccountProfile(prevProfile => ({
+        ...prevProfile,
+        bankAccountError: 'Confirm Account Number does not match Account Number'
+      }));
+    } else {
+      setBankaccountProfile(prevProfile => ({
+        ...prevProfile,
+        bankAccountError: ""
+      }));
+    }
+  }, [bankaccountprofile.confirmAccountNumber]);
+  
+  useEffect(() => {
+    if (
+      bankaccountprofile.bankName !== "" &&
+      bankaccountprofile.branchName !== "" &&
+      bankaccountprofile.ifscCode !== "" &&
+      bankaccountprofile.mobileNumber !== "" &&
+      bankaccountprofile.accountNumber !== "" &&
+      bankaccountprofile.confirmAccountNumber !== "" 
+      // bankaccountprofile. !== ""
+    ) {
+      setdashboarddata({
+        ...dashboarddata,
+        isValid: false
+      });
+    } else {
+      setdashboarddata({
+        ...dashboarddata,
+        isValid: true
+      });
+    }
+  }, [bankaccountprofile]);
+  
   useEffect(() => {
     getUserDetails().then((data) => {
       localStorage.setItem("userType", data.data.userDisplayId);
@@ -20,10 +102,81 @@ const Profile = () => {
         ...dashboarddata,
         profileData: data,
       });
+      setUserProfile({
+        ...userProfile,
+        address: data.data.address,
+        city: data.data.city,
+        dob: data.data.dob,
+        facebookUrl: data.data.urlsDto.faceBookUrl,
+        fatherName: data.data.fatherName,
+        firstName: data.data.firstName, // Use data.data.firstName here
+        lastName: data.data.lastName,
+        linkedinUrl: data.data.urlsDto.linkdinUrl,
+        locality: data.data.locality,
+        middleName: data.data.middleName,
+        panNumber: data.data.panNumber,
+        permanentAddress: data.data.permanentAddress,
+        pinCode: data.data.pinCode,
+        state: data.data.state,
+        twitterUrl: data.data.urlsDto.twitterUrl,
+        whatsAppNumber:data.data.whatappNumber,
+        aadharNumber:data.data.aadharNumber
+      })
     });
-    return () => {};
   }, []);
 
+  const handlechange = (event) => {
+    const { name, value } = event.target;
+    setUserProfile((prevUserProfile) => ({
+      ...prevUserProfile,
+      [name]: value,
+    }), () => {
+      console.log(userProfile); // Log the updated state here.
+    });
+  };
+  // const handlechange =(event)=>{
+  //   const {name , value}=event.target;
+
+  //   setUserProfile({
+  //     ...userProfile,
+  //     [name]:value
+  //   })
+
+  // }
+
+  
+const handleprofileUpdate=()=>{
+
+
+  // alert(userProfile)
+  console.log(userProfile)
+  const response =profileupadate(userProfile)
+  response.then((data)=>{
+
+      console.log(data)
+  })
+}
+
+
+const sendotp=async()=>{
+  
+
+    console.log(bankaccountprofile.moblieNumber)
+  const response = sendMoblieOtp(bankaccountprofile);
+  response.then((data)=>{
+     console.log(data);  
+  
+  })
+
+}  
+const handlebankchange=(event)=>{
+                     
+  const {value , name}=event.target;
+  setBankaccountProfile({
+    ...bankaccountprofile,
+     [name]:value,
+  })
+}
   return (
     <>
       <div className="main-wrapper">
@@ -280,7 +433,7 @@ const Profile = () => {
                         <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
-                            <form>
+              
                               <div className="row">
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -291,6 +444,8 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your Name"
+                                    name="userName"
+                                    onChange={handlebankchange}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -300,7 +455,7 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="number"
-                                    className="form-control"
+                                    className="form-control" name="accountNumber"  onChange={handlebankchange}
                                     placeholder=" Enter your Account Number"
                                   />
                                 </div>
@@ -312,19 +467,20 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="number"
-                                    className="form-control"
+                                    className="form-control"  name="confirmAccountNumber"  onChange={handlebankchange}
                                     placeholder=" Confirm Account Number"
                                   />
+                                   {bankaccountprofile.bankAccountError && <span className="login-danger">{bankaccountprofile.bankAccountError}</span>}
                                 </div>
-
+                               
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
                                     IFSC Code
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
-                                    className="form-control"
+                                    type="text"
+                                    className="form-control" name="ifscCode" onChange={handlebankchange}
                                     placeholder=" Enter your IFSC Code"
                                   />
                                 </div>
@@ -335,8 +491,8 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
-                                    className="form-control"
+                                    type="text"
+                                    className="form-control"  name="bankName"   onChange={handlebankchange}
                                     placeholder=" Enter your Bank Name"
                                   />
                                 </div>
@@ -347,9 +503,9 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder=" Enter your Branch"
+                                    type="text"
+                                    className="form-control"   name="branchName"
+                                    placeholder=" Enter your Branch"   onChange={handlebankchange}
                                   />
                                 </div>
 
@@ -359,8 +515,8 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="text"
-                                    className="form-control"
-                                    placeholder=" Enter your City"
+                                    className="form-control"   name="city"  
+                                    placeholder=" Enter your City"  onChange={handlebankchange}
                                   />
                                 </div>
 
@@ -371,8 +527,9 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="text"
-                                    className="form-control"
-                                    placeholder=" Enter your Mobile Number"
+                                    className="form-control"   name="moblieNumber"
+                                    placeholder=" Enter your Mobile Number" 
+                                    onChange={handlebankchange}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -381,33 +538,40 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="text"
-                                    className="form-control"
-                                    placeholder=" Enter your Mobile otp"
+                                    className="form-control" name="otp"
+                                    placeholder=" Enter your Mobile otp"     
+                                    onChange={handlebankchange}
                                   />
                                 </div>
 
                                 <div className="col-12 row">
-                                  <button
-                                    className="btn btn-info col-md-2 mx-2"
-                                    type="submit"
-                                  >
-                                    Send Otp
-                                  </button>
-                                  <button
+                                {dashboarddata.sendotpbtn && (
+                                    <button
+                                      className="btn btn-info col-md-2 mx-2"
+                                      type="submit"
+                                      // disabled={dashboarddata.isValid}
+                                      onClick={sendotp}
+                                    >
+                                      Send Otp
+                                    </button>
+                                  )}
+                                 {dashboarddata.verifyotp  &&  <button
                                     className="btn btn-primary col-md-2 mx-2"
                                     type="submit"
                                   >
                                     Verify
-                                  </button>
-                                  <button
+                                  </button>}
+                                 
+                                 {dashboarddata.submitbankdeatail  &&  <button
                                     className="btn btn-success col-md-2 mx-2"
                                     type="submit"
                                   >
                                     Save Details
-                                  </button>
+                                  </button>}
+                                 
                                 </div>
                               </div>
-                            </form>
+                         
                           </div>
                         </div>
                       </div>
@@ -538,7 +702,7 @@ const Profile = () => {
                         <h5 className="card-title">Personal Details</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                            <form>
+                          
                               <div className="row mt-3">
                                 <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
@@ -548,7 +712,9 @@ const Profile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Enter First Name"
+                                    placeholder="Enter First Name"  onChange={handlechange}
+                                    value={userProfile.firstName}
+                                    name="firstName"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -560,6 +726,10 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Last Name"
+                                    onChange={handlechange}
+                                    value={userProfile.lastName}
+                                    name="lastName"
+                                    
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -571,6 +741,10 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter PAN Number"
+                                    onChange={handlechange}
+                                    value={userProfile.panNumber}
+                                    name="panNumber"
+                             
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -582,6 +756,9 @@ const Profile = () => {
                                     type="number"
                                     className="form-control"
                                     placeholder="Enter Aadhar Number"
+                                    onChange={handlechange}
+                                    value={userProfile.aadharNumber}
+                                    name="aadharNumber"
                                   />
                                 </div>
 
@@ -593,6 +770,9 @@ const Profile = () => {
                                   <input
                                     type="date"
                                     className="form-control datetimepicker"
+                                    onChange={handlechange}
+                                    value={userProfile.dob}
+                                    name="dob"
                                   />
                                 </div>
 
@@ -605,6 +785,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Father Name"
+                                    onChange={handlechange}
+                                    value={userProfile.fatherName}
+                                    name="fatherName"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -617,6 +800,9 @@ const Profile = () => {
                                     maxLength={10}
                                     className="form-control"
                                     placeholder="Enter Mobile Name"
+                                    onChange={handlechange}
+                                    value={userProfile.mobileNumber}
+                                    name="mobileNumber"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -629,9 +815,12 @@ const Profile = () => {
                                     maxLength={10}
                                     className="form-control"
                                     placeholder="Enter WhatsApp Name"
+                                    onChange={handlechange}
+                                    value={userProfile.whatappNumber}
+                                    name="whatappNumber"
                                   />
                                 </div>
-                                <div className="form-group col-12 col-sm-4 local-forms">
+                                {/* <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
                                     Email ID
                                     <span className="login-danger">*</span>
@@ -640,8 +829,13 @@ const Profile = () => {
                                     type="email"
                                     className="form-control"
                                     placeholder="Enter Email Id"
+                                    onChange={handlechange}
+                                    value={userProfile.email}
+                                    name="email"
                                   />
-                                </div>
+                                </div> */}
+
+
                                 <div className="form-group col-12 col-sm-4 local-forms">
                                   <label>
                                     Residence Address
@@ -651,6 +845,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Residence Address"
+                                    onChange={handlechange}
+                                    value={userProfile.residenceAddress}
+                                    name="permanentAddress"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -662,6 +859,9 @@ const Profile = () => {
                                     type="number"
                                     className="form-control"
                                     placeholder="Enter Pincode"
+                                    onChange={handlechange}
+                                    value={userProfile.pinCode}
+                                    name="pinCode"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -673,6 +873,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Locality "
+                                    onChange={handlechange}
+                                    value={userProfile.address}
+                                    name="address"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -683,6 +886,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter City "
+                                    onChange={handlechange}
+                                    value={userProfile.city}
+                                    name="city"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -694,6 +900,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter State"
+                                    onChange={handlechange}
+                                    value={userProfile.state}
+                                    name="state"
                                   />
                                 </div>
                                 <div className="form-group col-12 col-sm-4 local-forms">
@@ -705,6 +914,10 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Facebook Url"
+                                    onChange={handlechange}
+                                    value={userProfile.facebookUrl}
+                                    name="facebookUrl"
+                                    
                                   />
                                 </div>
 
@@ -717,6 +930,9 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Twitter Url"
+                                    onChange={handlechange}
+                                    value={userProfile.twitterUrl}
+                                    name="twitterUrl"
                                   />
                                 </div>
 
@@ -729,18 +945,20 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Enter Linkedin  Url"
+                                    onChange={handlechange}
+                                    value={userProfile.linkedinUrl}
+                                    name="linkedinUrl"
                                   />
                                 </div>
                                 <div className="col-12 ">
                                   <button
                                     className="btn btn-primary col-md-4 col-12"
-                                    type="submit"
+                                    type="submit"  onClick={handleprofileUpdate}
                                   >
                                     Save Deatils
                                   </button>
                                 </div>
                               </div>
-                            </form>
                           </div>
                         </div>
                       </div>

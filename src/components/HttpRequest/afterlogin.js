@@ -111,6 +111,48 @@ export const LoadwalletThroughQrScan = async (amount) => {
   return response;
 };
 
+
+export const sendMoblieOtp=async(bankaccountprofile)=>{
+  const token = getToken();
+  const userId = getUserId();
+
+  const data = {
+      mobileNumber:bankaccountprofile.moblieNumber
+};
+
+console.log(data)
+  const response= await handleApiRequestAfterLoginService(
+
+    API_BASE_URL,
+    `sendMobileOtp `,
+    "POST",
+    token,
+    data
+    
+    
+  );
+  return response;
+  
+}  
+export  const profileupadate =async (userProfile) =>{
+
+  
+  const token = getToken();
+  const userId = getUserId();    
+
+
+  
+console.log(userProfile)
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `personal/${userId}`,
+    "PATCH",
+    token,
+    userProfile
+  );
+
+  return response;
+}
 export const checkqrcodetransaction = async (qrid) => {
   const token = getToken();
   const userId = getUserId();
@@ -122,7 +164,7 @@ export const checkqrcodetransaction = async (qrid) => {
   );
 
 
-  
+
 
 
   return response;
