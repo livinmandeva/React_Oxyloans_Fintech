@@ -559,7 +559,7 @@ const AdminDashboard = () => {
                       <li className="breadcrumb-item active">
                         <Link to="/admindashboard">Home</Link>
                       </li>
-                      <li className="breadcrumb-item">My Deals</li>
+                      <li className="breadcrumb-item">       <Link to="/dashboard">Dashboard</Link></li>
                     </ul>
                   </div>
                 </div>

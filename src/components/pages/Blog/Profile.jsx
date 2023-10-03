@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 
 import {profileupadate , getUserDetails,  updatebank, verifyBankAccountAndIfsc, handleapicall ,sendMoblieOtp } from "../../HttpRequest/afterlogin";
 import { event } from "jquery";
+import MyRichTextEditor from "../Oxyloans/Lender/MyRichTextEditor";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {

@@ -12,6 +12,7 @@ import Footer from "../../../Footer/Footer";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
 import { HandleClick } from "../../Base UI Elements/SweetAlert";
 import { Upload } from "feather-icons-react/build/IconComponents";
+import MyRichTextEditor from "./MyRichTextEditor";
 
 const Writetous = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -189,7 +190,8 @@ const Writetous = () => {
 
                     <div className="row col-12">
                       <div className="col-12 col-sm-6">
-                        <div className="form-group local-forms">
+                        <MyRichTextEditor  />
+                        {/* <div className="form-group local-forms">
                           <label>
                             Write A query
                             <span className="login-danger">*</span>
@@ -198,12 +200,12 @@ const Writetous = () => {
                             className="form-control"
                             name="queryfiledinput"
                             onChange={handleChange}
-                          ></textarea>
+                          ></textarea> */}
                           {/* <input type="textarea" className="form-control" /> */}
-                        </div>
+                        {/* </div> */}
                       </div>
                       <div className="col-12 col-sm-6 ">
-                        <div className="form-group local-forms pull-right">
+                        <div className="form-group local-forms pull-right" style={{marginLeft:'2.2rem',}}>
                           <div className="form-group service-upload">
                             <span>Upload Image</span>
                             <input
@@ -216,19 +218,18 @@ const Writetous = () => {
                           {/* <input type="text" className="form-control" /> */}
                         </div>
                       </div>
-                    </div>
+                    </div> 
+                    {/* <MyRichTextEditor  /> */}
                     {/* <p>Email: {userdata.profileData.data.email}</p>     <p>mobileNumber: {userdata.profileData.data.mobileNumber}</p> */}
-
-                    <div className="row col-12">
+                    <div className="row col-12" style={{marginTop:'2.9rem'}}>
                       <button
                         className="btn btn-primary col-md-3 mx-3"
                         onClick={handleWriteClick}
                       >
                         Submit
                       </button>
+                  </div></div> 
                     </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
