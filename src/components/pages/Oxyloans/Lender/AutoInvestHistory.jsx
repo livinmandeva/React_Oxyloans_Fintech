@@ -75,9 +75,9 @@ const AutoInvestHistory = () => {
                   <h3 className="page-title">Lender Auto Invest History</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">My Deals</li>
+                    <li className="breadcrumb-item active">autoInvestHistory</li>
                   </ul>
                 </div>
               </div>

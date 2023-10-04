@@ -77,9 +77,9 @@ const WithdrawalFromWallet = () => {
                   <h3 className="page-title">Lender Withdrawal Funds</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/department">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">withdrawal FromWallet</li>
                   </ul>
                 </div>
               </div>

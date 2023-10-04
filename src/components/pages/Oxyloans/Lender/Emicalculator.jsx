@@ -90,9 +90,9 @@ const Emicalculator = () => {
                   <h3 className="page-title">Emi Calculator</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/teacherslist">Write To Us</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Dashboard</li>
+                    <li className="breadcrumb-item active">emicalculator</li>
                   </ul>
                 </div>
               </div>

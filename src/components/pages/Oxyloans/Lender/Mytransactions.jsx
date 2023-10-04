@@ -98,9 +98,9 @@ const Mytransactions = () => {
                   <h3 className="page-title">My Transactions</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">my transactions</li>
                   </ul>
                 </div>
               </div>

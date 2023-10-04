@@ -126,9 +126,9 @@ const WithdrawdealfromDeal = () => {
                   <h3 className="page-title">Withdraw Funds from Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">withdrawdeal fromDeal</li>
                   </ul>
                 </div>
               </div>

@@ -98,9 +98,9 @@ const MembershipHistory = () => {
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">membership History</li>
                   </ul>
                 </div>
               </div>

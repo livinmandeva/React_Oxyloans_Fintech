@@ -21,9 +21,9 @@ const RegularRunningDeal = () => {
                   <h3 className="page-title">Running & Closed Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Invoice Grid</li>
+                    <li className="breadcrumb-item active">Running & Closed Deals </li>
                   </ul>
                 </div>
               </div>

@@ -444,9 +444,10 @@ const DashboardTransactions = () => {
                     <h3 className="page-title">My Transactions </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/students">DashBoard</Link>
+                        <Link to="/dashboard">DashBoard</Link>
                       </li>
-                      <li className="breadcrumb-item active">QR Code</li>
+                      <li className="breadcrumb-item active">My Transactions
+</li>
                     </ul>
                   </div>
                 </div>

@@ -184,9 +184,9 @@ const MyreferalStatus = () => {
                   <h3 className="page-title">Referral Infos</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">My Deals</li>
+                    <li className="breadcrumb-item active">myreferal Status</li>
                   </ul>
                 </div>
               </div>

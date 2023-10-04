@@ -94,9 +94,9 @@ const Writetous = () => {
                   <h3 className="page-title">Write To Us </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">ongoing Deals</li>
+                    <li className="breadcrumb-item active">writetous</li>
                   </ul>
                 </div>
               </div>

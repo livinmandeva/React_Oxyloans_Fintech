@@ -117,9 +117,9 @@ const MyclosedDeals = () => {
                     <h3 className="page-title">Participation Closed deals</h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/admindashboard">Dashboard</Link>
+                        <Link to="/dashboard">Dashboard</Link>
                       </li>
-                      <li className="breadcrumb-item active">Ongoing Deals</li>
+                      <li className="breadcrumb-item active">Closed deals</li>
                     </ul>
                   </div>
                 </div>

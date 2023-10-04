@@ -112,9 +112,9 @@ const EarningCertificate = () => {
                   <h3 className="page-title">Financial Reports</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">earning Certificate</li>
                   </ul>
                 </div>
               </div>

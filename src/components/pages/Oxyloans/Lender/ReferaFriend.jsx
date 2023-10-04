@@ -33,6 +33,9 @@ const ReferaFriend = () => {
     emailcontent: "",
     emailsubject: "",
     buttomemail: "",
+    invaitlenderlink:false,
+    invaitborrowerlink:false,
+    invaitNrilink:false,
   });
   const [url, seturl] = useState("");
 
@@ -105,7 +108,49 @@ const ReferaFriend = () => {
   };
 
   const emailcontentdata = emailres.emailcontent + emailres.buttomemail;
+ 
+  const Invitelender = async () => {
+    const userId = localStorage.getItem("userType");
+    const input = document.createElement("input");
+    input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
 
+    setEmailres({
+      ...emailres,
+      invaitlenderlink: !emailres.invaitlenderlink,
+    });
+  };
+  const invitenri = async () => {
+    const userId = localStorage.getItem("userType");
+    const input = document.createElement("input");
+    input.value = `https://www.oxyloans.com/new/nrilenderregistration?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
+
+    setEmailres({
+      ...emailres,
+      invaitNrilink: !emailres.invaitNrilink,
+    });
+  };
+  const Inviteborrower = async () => {
+    const userId = localStorage.getItem("userType");
+    const input = document.createElement("input");
+    input.value = `https://www.oxyloans.com/new/register_borrower?ref=${userId}`;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    document.body.removeChild(input);
+
+    setEmailres({
+      ...emailres,
+      invaitlenderlink: !emailres.invaitlenderlink,
+    });
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -123,9 +168,9 @@ const ReferaFriend = () => {
                   <h3 className="page-title">Refer a Friend & Earn INR 1000</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Profile</li>
+                    <li className="breadcrumb-item active">referaFriend</li>
                   </ul>
                 </div>
               </div>
@@ -170,15 +215,24 @@ const ReferaFriend = () => {
                     </ul>
 
                     <div className="row col-12">
-                      <button className="btn btn-xs btn-warning col-md-3 col-12 ">
-                        Invite a Friend
-                      </button>
-                      <button className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2">
-                        Invite an NRI
-                      </button>
-                      <button className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2">
-                        Invite a Borrower
-                      </button>
+                      {emailres.invaitlenderlink  ?  <><button className="btn btn-xs btn-warning col-md-3 col-12 " onClick={Invitelender}>
+                          copied
+                      </button></>  : <><button className="btn btn-xs btn-warning col-md-3 col-12 " onClick={Invitelender}>
+                      Invite a Friend
+                      </button></>}
+
+                      {emailres.invaitNrilink  ? <> <button className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"  onClick={invitenri}>
+                          copied
+                      </button></> : <> <button className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"  onClick={invitenri}>
+                      Invite an NRI
+                      </button></>}
+                     
+                      {emailres.invaitborrowerlink ? <><button className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"  onClick={Inviteborrower}>
+                        copied
+                      </button></> : <>  <button className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"  onClick={Inviteborrower}>
+                      Invite a Borrower
+                      </button></>}
+                    
                     </div>
                   </div>
                 </div>

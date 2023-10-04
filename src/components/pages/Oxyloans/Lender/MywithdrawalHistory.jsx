@@ -110,9 +110,9 @@ const MywithdrawalHistory = () => {
                   <h3 className="page-title">My Withdrawal Request Info</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">Mywithdrawal History</li>
                   </ul>
                 </div>
               </div>

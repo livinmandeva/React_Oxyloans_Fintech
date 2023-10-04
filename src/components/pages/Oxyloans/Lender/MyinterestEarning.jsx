@@ -88,9 +88,9 @@ const MyinterestEarning = () => {
                   <h3 className="page-title">My Interest Info</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">On going Deals</li>
+                    <li className="breadcrumb-item active">My interest Earning</li>
                   </ul>
                 </div>
               </div>

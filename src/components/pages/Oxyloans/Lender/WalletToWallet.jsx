@@ -88,9 +88,9 @@ const WalletToWallet = () => {
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/department">DashBoard</Link>
+                      <Link to="/dashboard">DashBoard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">Wallet To Wallet</li>
                   </ul>
                 </div>
               </div>

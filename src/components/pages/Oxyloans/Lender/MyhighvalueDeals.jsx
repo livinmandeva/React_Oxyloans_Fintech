@@ -103,9 +103,9 @@ const MyhighvalueDeals = () => {
                   <h3 className="page-title">High Value Deals Info</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Deals</li>
+                    <li className="breadcrumb-item active">highvalue Deals</li>
                   </ul>
                 </div>
               </div>

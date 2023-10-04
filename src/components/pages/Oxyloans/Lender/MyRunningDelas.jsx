@@ -23,9 +23,9 @@ const MyRunningDelas = () => {
                   <h3 className="page-title">Participated & Closed Deals </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">View deals</li>
+                    <li className="breadcrumb-item active">My running delas</li>
                   </ul>
                 </div>
               </div>
