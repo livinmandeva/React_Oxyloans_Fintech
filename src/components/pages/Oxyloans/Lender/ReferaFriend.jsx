@@ -33,9 +33,9 @@ const ReferaFriend = () => {
     emailcontent: "",
     emailsubject: "",
     buttomemail: "",
-    invaitlenderlink:false,
-    invaitborrowerlink:false,
-    invaitNrilink:false,
+    invaitlenderlink: false,
+    invaitborrowerlink: false,
+    invaitNrilink: false,
   });
   const [url, seturl] = useState("");
 
@@ -108,7 +108,7 @@ const ReferaFriend = () => {
   };
 
   const emailcontentdata = emailres.emailcontent + emailres.buttomemail;
- 
+
   const Invitelender = async () => {
     const userId = localStorage.getItem("userType");
     const input = document.createElement("input");
@@ -215,24 +215,68 @@ const ReferaFriend = () => {
                     </ul>
 
                     <div className="row col-12">
-                      {emailres.invaitlenderlink  ?  <><button className="btn btn-xs btn-warning col-md-3 col-12 " onClick={Invitelender}>
-                          copied
-                      </button></>  : <><button className="btn btn-xs btn-warning col-md-3 col-12 " onClick={Invitelender}>
-                      Invite a Friend
-                      </button></>}
+                      {emailres.invaitlenderlink ? (
+                        <>
+                          <button
+                            className="btn btn-xs btn-warning col-md-3 col-12 "
+                            onClick={Invitelender}
+                          >
+                            copied
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className="btn btn-xs btn-warning col-md-3 col-12 "
+                            onClick={Invitelender}
+                          >
+                            Invite a Friend
+                          </button>
+                        </>
+                      )}
 
-                      {emailres.invaitNrilink  ? <> <button className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"  onClick={invitenri}>
-                          copied
-                      </button></> : <> <button className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"  onClick={invitenri}>
-                      Invite an NRI
-                      </button></>}
-                     
-                      {emailres.invaitborrowerlink ? <><button className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"  onClick={Inviteborrower}>
-                        copied
-                      </button></> : <>  <button className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"  onClick={Inviteborrower}>
-                      Invite a Borrower
-                      </button></>}
-                    
+                      {emailres.invaitNrilink ? (
+                        <>
+                          {" "}
+                          <button
+                            className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"
+                            onClick={invitenri}
+                          >
+                            copied
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <button
+                            className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"
+                            onClick={invitenri}
+                          >
+                            Invite an NRI
+                          </button>
+                        </>
+                      )}
+
+                      {emailres.invaitborrowerlink ? (
+                        <>
+                          <button
+                            className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"
+                            onClick={Inviteborrower}
+                          >
+                            copied
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <button
+                            className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"
+                            onClick={Inviteborrower}
+                          >
+                            Invite a Borrower
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

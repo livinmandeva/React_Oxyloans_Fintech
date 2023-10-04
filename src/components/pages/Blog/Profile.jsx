@@ -12,16 +12,13 @@ import {
   handleapicall,
   sendMoblieOtp,
 } from "../../HttpRequest/afterlogin";
-import { event } from "jquery";
-import MyRichTextEditor from "../Oxyloans/Lender/MyRichTextEditor";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../Redux/Slice";
-// import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {
+  const reduxStoreData = useSelector((data) => data.counter.userProfile);
 
-  const reduxStoreData=useSelector((data)=>data.counter.userProfile)
-  
   const [dashboarddata, setdashboarddata] = useState({
     sendotpbtn: true,
     verifyotp: false,
@@ -53,7 +50,6 @@ const Profile = () => {
     sendMobileOtp: "",
     moblieNumber: "",
     bankAccount: "",
-
     accountNumber: "",
     bankAddress: "",
     bankName: "",
@@ -94,7 +90,6 @@ const Profile = () => {
       bankaccountprofile.mobileNumber !== "" &&
       bankaccountprofile.accountNumber !== "" &&
       bankaccountprofile.confirmAccountNumber !== ""
-      // bankaccountprofile. !== ""
     ) {
       setdashboarddata({
         ...dashboarddata,
@@ -111,7 +106,6 @@ const Profile = () => {
   }, [bankaccountprofile]);
 
   useEffect(() => {
-  
     getUserDetails().then((data) => {
       localStorage.setItem("userType", data.data.userDisplayId);
       setdashboarddata({
@@ -125,7 +119,7 @@ const Profile = () => {
         dob: data.data.dob,
         facebookUrl: data.data.urlsDto.faceBookUrl,
         fatherName: data.data.fatherName,
-        firstName: data.data.firstName, // Use data.data.firstName here
+        firstName: data.data.firstName,
         lastName: data.data.lastName,
         linkedinUrl: data.data.urlsDto.linkdinUrl,
         locality: data.data.locality,
@@ -149,35 +143,19 @@ const Profile = () => {
         [name]: value,
       }),
       () => {
-        console.log(userProfile); // Log the updated state here.
+        console.log(userProfile);
       }
     );
   };
-  // const handlechange =(event)=>{
-  //   const {name , value}=event.target;
-
-  //   setUserProfile({
-  //     ...userProfile,
-  //     [name]:value
-  //   })
-
-  // }
 
   const handleprofileUpdate = () => {
-    // alert(userProfile)
-    console.log(userProfile);
     const response = profileupadate(userProfile);
-    response.then((data) => {
-      console.log(data);
-    });
+    response.then((data) => {});
   };
 
   const sendotp = async () => {
-    console.log(bankaccountprofile.moblieNumber);
     const response = sendMoblieOtp(bankaccountprofile);
-    response.then((data) => {
-      console.log(data);
-    });
+    response.then((data) => {});
   };
   const handlebankchange = (event) => {
     const { value, name } = event.target;
@@ -230,22 +208,23 @@ const Profile = () => {
                     <div className="col ms-md-n2 profile-user-info">
                       <h4 className="user-name mb-0">
                         {console.log(reduxStoreData)}
-                        {
-                        
-                         reduxStoreData.length !=0 ? reduxStoreData.firstName :
-                        dashboarddata.profileData != null
+                        {reduxStoreData.length != 0
+                          ? reduxStoreData.firstName
+                          : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.firstName
                           : "Livin"}
                       </h4>
                       <h6 className="text-muted">
                         LR
-                        {reduxStoreData.length !=0  ? reduxStoreData.userId  : 
-                        dashboarddata.profileData != null
+                        {reduxStoreData.length != 0
+                          ? reduxStoreData.userId
+                          : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.userId
                           : "LR18"}
                         {`, ${
-                          reduxStoreData.length !=0 ? reduxStoreData.groupName  :
-                          dashboarddata.profileData != null
+                          reduxStoreData.length != 0
+                            ? reduxStoreData.groupName
+                            : dashboarddata.profileData != null
                             ? dashboarddata.profileData.data.groupName
                             : "NewLender"
                         }`}
@@ -257,9 +236,9 @@ const Profile = () => {
                           : ""}
                       </div>
                       <div className="about-text">
-                        {
-                        reduxStoreData.length !=0  ? reduxStoreData.address :
-                        dashboarddata.profileData != null
+                        {reduxStoreData.length != 0
+                          ? reduxStoreData.address
+                          : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.address
                           : ""}
                       </div>
@@ -354,7 +333,7 @@ const Profile = () => {
                                 {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.firstName
                                   : "Livin"} */}
-                                  {reduxStoreData.firstName}
+                                {reduxStoreData.firstName}
                               </p>
                             </div>
                             <div className="row">
@@ -365,7 +344,7 @@ const Profile = () => {
                                 {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.dob
                                   : "15/08/1997"} */}
-                                   {reduxStoreData.dob}
+                                {reduxStoreData.dob}
                               </p>
                             </div>
                             <div className="row">
@@ -376,7 +355,7 @@ const Profile = () => {
                                 {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.email
                                   : "test@123"} */}
-                                           {reduxStoreData.email}
+                                {reduxStoreData.email}
                               </p>
                             </div>
                             <div className="row">
