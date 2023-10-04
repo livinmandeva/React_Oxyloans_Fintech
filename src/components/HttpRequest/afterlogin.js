@@ -1,5 +1,6 @@
 import axios from "axios";
 import { data, error } from "jquery";
+import { async } from "q";
 const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
@@ -111,6 +112,28 @@ export const LoadwalletThroughQrScan = async (amount) => {
   return response;
 };
 
+
+export const myrunnig= async()=>{
+  const token = getToken();
+  const userId = getUserId();
+
+  const  data ={
+    pageNo: 1,
+		pageSize: 10,
+  };
+
+  const response= await  handleApiRequestAfterLoginService(
+
+    API_BASE_URL,
+    `${userId}/runningDealsInfoBasedOnPagination`,
+    "POST",
+
+    token,
+    data
+
+  )
+  return response;
+}
 export const sendMoblieOtp = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();

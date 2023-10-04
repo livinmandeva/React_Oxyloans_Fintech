@@ -14,9 +14,14 @@ import {
 } from "../../HttpRequest/afterlogin";
 import { event } from "jquery";
 import MyRichTextEditor from "../Oxyloans/Lender/MyRichTextEditor";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../Redux/Slice";
 // import FeatherIcon from 'feather-icons-react/build/FeatherIcon'
 
 const Profile = () => {
+
+  const reduxStoreData=useSelector((data)=>data.counter.userProfile)
+  
   const [dashboarddata, setdashboarddata] = useState({
     sendotpbtn: true,
     verifyotp: false,
@@ -106,6 +111,7 @@ const Profile = () => {
   }, [bankaccountprofile]);
 
   useEffect(() => {
+  
     getUserDetails().then((data) => {
       localStorage.setItem("userType", data.data.userDisplayId);
       setdashboarddata({
@@ -223,16 +229,22 @@ const Profile = () => {
                     </div>
                     <div className="col ms-md-n2 profile-user-info">
                       <h4 className="user-name mb-0">
-                        {dashboarddata.profileData != null
+                        {console.log(reduxStoreData)}
+                        {
+                        
+                         reduxStoreData.length !=0 ? reduxStoreData.firstName :
+                        dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.firstName
                           : "Livin"}
                       </h4>
                       <h6 className="text-muted">
                         LR
-                        {dashboarddata.profileData != null
+                        {reduxStoreData.length !=0  ? reduxStoreData.userId  : 
+                        dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.userId
                           : "LR18"}
                         {`, ${
+                          reduxStoreData.length !=0 ? reduxStoreData.groupName  :
                           dashboarddata.profileData != null
                             ? dashboarddata.profileData.data.groupName
                             : "NewLender"
@@ -245,7 +257,9 @@ const Profile = () => {
                           : ""}
                       </div>
                       <div className="about-text">
-                        {dashboarddata.profileData != null
+                        {
+                        reduxStoreData.length !=0  ? reduxStoreData.address :
+                        dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.address
                           : ""}
                       </div>
@@ -337,9 +351,10 @@ const Profile = () => {
                                 Name
                               </p>
                               <p className="col-sm-9">
-                                {dashboarddata.profileData != null
+                                {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.firstName
-                                  : "Livin"}
+                                  : "Livin"} */}
+                                  {reduxStoreData.firstName}
                               </p>
                             </div>
                             <div className="row">
@@ -347,9 +362,10 @@ const Profile = () => {
                                 Date of Birth
                               </p>
                               <p className="col-sm-9">
-                                {dashboarddata.profileData != null
+                                {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.dob
-                                  : "15/08/1997"}
+                                  : "15/08/1997"} */}
+                                   {reduxStoreData.dob}
                               </p>
                             </div>
                             <div className="row">
@@ -357,9 +373,10 @@ const Profile = () => {
                                 Email ID
                               </p>
                               <p className="col-sm-9">
-                                {dashboarddata.profileData != null
+                                {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.email
-                                  : "test@123"}
+                                  : "test@123"} */}
+                                           {reduxStoreData.email}
                               </p>
                             </div>
                             <div className="row">

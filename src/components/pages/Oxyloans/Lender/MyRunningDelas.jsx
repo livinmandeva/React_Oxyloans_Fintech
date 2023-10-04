@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import "./InvoiceGrid.css";
+import {myrunnig} from '../../../HttpRequest/afterlogin'
 
 const MyRunningDelas = () => {
+ 
+
+ const [runningdeals , setrunningdeals]=useState({
+   data:""
+ })
+
+
+ useEffect(()=>{
+
+
+  const response =myrunnig(runningdeals)
+  response.then((data)=>{
+   console.log(data)
+   setrunningdeals({
+     ...runningdeals,
+     data:data.data.lenderPaticipatedResponseDto
+   })
+   console.log(data.data.lenderPaticipatedResponseDto)
+  })
+ },[])
+ 
   return (
     <>
       <div className="main-wrapper">
@@ -31,6 +53,10 @@ const MyRunningDelas = () => {
               </div>
             </div>
 
+
+            {Array.isArray(runningdeals.data) ? (
+  runningdeals.data.map((data, index) => (
+    <div className="row" key={index}>
             <>
               <div className="card invoices-tabs-card border-0">
                 <div className="card-body card-body pt-0 pb-0">
@@ -45,23 +71,23 @@ const MyRunningDelas = () => {
                         to="/viewinvoice"
                         className="invoice-grid-link col-sm-12 col-lg-4"
                       >
-                        Deal Name: SD-4S-39L-01SEP23
+                        Deal Name: {data.dealName}
                       </Link>
 
                       <div className="col-sm-12 col-lg-2">RoI : 24 % PA</div>
                       <div className="col-sm-12 col-lg-3">
-                        Tenure : 4 Months
+                        Tenure : {data.dealDuration}
                       </div>
                       <div className="col-auto col-lg-3">
-                        Participated : 10000000
+                        Participated :  1000
                       </div>
                       {/* <div>Status : Open</div> */}
                     </div>
                     <div className="card-middle row">
                       <div className="col-sm-12 col-lg-6">
-                        <h6>Deal Type : Escrow</h6>
-                        <h6>First Interest : 14/09/2023</h6>
-                        <h6>Participated Date : 2022-09-24</h6>
+                        <h6>Deal Type : {data.dealType}</h6>
+                        <h6>First Interest : {data.firstInterestDate}</h6>
+                        <h6>Participated Date : {data.firstParticipationDate}</h6>
                       </div>
                       <div className="col-sm-12 col-lg-6">
                         <small>
@@ -76,15 +102,15 @@ const MyRunningDelas = () => {
                       <div className="row align-items-center">
                         <div className="col-sm-6 col-lg-2">
                           <span>Deal-ID </span>
-                          <h6 className="mb-0">245</h6>
+                          <h6 className="mb-0">{data.dealId}</h6>
                         </div>
                         <div className="col-sm-6 col-lg-2">
                           <span>Interest Earned</span>
-                          <h6 className="mb-0">INR 23467</h6>
+                          <h6 className="mb-0">{data.interestEarned}</h6>
                         </div>
                         <div className="col-sm-6 col-lg-2">
                           <span>Payout to </span>
-                          <h6 className="mb-0">BANKACCOUNT</h6>
+                          <h6 className="mb-0">{data.lederReturnType}</h6>
                         </div>
                         <div className="col-sm-6 col-lg-2">
                           <span>Is ATW</span>
@@ -92,12 +118,12 @@ const MyRunningDelas = () => {
                         </div>
                         <div className="col-sm-6 col-lg-2">
                           <span>ATW ROI</span>
-                          <h6 className="mb-0">1.2 % PM</h6>
+                          <h6 className="mb-0">{data.dealRateofinterest}  %</h6>
                         </div>
 
                         <div className="col-sm-6 col-lg-2">
                           <span>Deal Status</span>
-                          <h6 className="mb-0"> Achieved</h6>
+                          <h6 className="mb-0"> {data.participationStatus}</h6>
                         </div>
                       </div>
                     </div>
@@ -116,9 +142,9 @@ const MyRunningDelas = () => {
                         </div>
 
                         <div className="col-auto">
-                          <span className="badge bg-success">
+                          <a  href={data.groupLink} className="badge bg-success">
                             <i className="fa fa-whatsapp"></i> Join Deal
-                          </span>
+                          </a>
                         </div>
 
                         <div className="col-auto">
@@ -140,6 +166,13 @@ const MyRunningDelas = () => {
                 </div>
               </div>
             </>
+
+      {/* Your card component and content */}
+    </div>
+  ))
+) : (
+  <p>No data available</p>
+)}
           </div>
         </div>
         {/* /Page Wrapper */}

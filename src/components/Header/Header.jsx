@@ -65,7 +65,7 @@ const Header = (profile) => {
           profileData: data,
         });
       } else if (data.response.data.errorCode != "200") {
-        WarningAlert(data.response.data.errorMessage);
+        WarningAlert(data.response.data.errorMessage,"/login");
       }
     });
   }, []);

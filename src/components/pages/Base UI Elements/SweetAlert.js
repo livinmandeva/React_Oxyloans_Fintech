@@ -88,12 +88,15 @@ export const Info = () => {
     buttonsStyling: !1,
   });
 };
-export const WarningAlert = (errorMessage) => {
+export const WarningAlert = (errorMessage , redirectTo) => {
   Swal.fire({
     title: "Warning !",
     text: errorMessage,
     type: "warning",
-    confirmButtonClass: "btn btn-primary",
+    confirmButtonClass:(
+      <Link to={redirectTo} className="btn btn-primary">
+        Confirm
+      </Link> ),
     buttonsStyling: !1,
   });
 };
