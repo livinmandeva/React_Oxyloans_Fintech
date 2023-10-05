@@ -8,6 +8,7 @@ import { onShowSizeChange, itemRender } from "../../../Pagination";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { myclosedDealsInfo } from "../../../HttpRequest/afterlogin";
 
+
 const MyclosedDeals = () => {
   const [myclosedDeals, setmyclosedDeals] = useState({
     apiData: "",
@@ -108,6 +109,8 @@ const MyclosedDeals = () => {
           <Header />
           {/* Sidebar */}
           <SideBar />
+          
+         
           <div className="page-wrapper">
             <div className="content container-fluid">
               {/* Page Header */}
@@ -115,7 +118,7 @@ const MyclosedDeals = () => {
                 <div className="row align-items-center">
                   <div className="col">
                     <h3 className="page-title">Participation Closed deals</h3>
-                    <ul className="breadcrumb">
+                    <ul className="breadcrumb">     
                       <li className="breadcrumb-item">
                         <Link to="/dashboard">Dashboard</Link>
                       </li>
@@ -124,6 +127,7 @@ const MyclosedDeals = () => {
                   </div>
                 </div>
               </div>
+            
               {/* /Page Header */}
               <div className="row">
                 <div className="col-sm-12">

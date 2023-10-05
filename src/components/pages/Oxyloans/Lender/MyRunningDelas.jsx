@@ -4,15 +4,20 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import "./InvoiceGrid.css";
-import {myrunnig} from '../../../HttpRequest/afterlogin'
+import {myrunnig ,viewdealamountemi} from '../../../HttpRequest/afterlogin'
+import Modall from "./Modall";
+
 
 const MyRunningDelas = () => {
  
 
  const [runningdeals , setrunningdeals]=useState({
-   data:""
+   data:"",
+   modelopen:false,
+   dealID:'',
+   dealLevelLoanEmiCard:""
  })
-
+const [modelopen,setOpen]=useState(false)
 
  useEffect(()=>{
 
@@ -22,12 +27,28 @@ const MyRunningDelas = () => {
    console.log(data)
    setrunningdeals({
      ...runningdeals,
-     data:data.data.lenderPaticipatedResponseDto
+     data:data.data.lenderPaticipatedResponseDto,
    })
    console.log(data.data.lenderPaticipatedResponseDto)
+
+
   })
  },[])
  
+
+ const handlemodalopen = (dealId) => {
+  
+  const response = viewdealamountemi(dealId);
+  console.log(response);
+  response.then((data) => {
+    setrunningdeals({
+      ...runningdeals,
+      dealLevelLoanEmiCard: data,
+    });
+  });
+  setOpen(!modelopen)
+}
+
   return (
     <>
       <div className="main-wrapper">
@@ -48,6 +69,7 @@ const MyRunningDelas = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My running delas</li>
+                    {modelopen && <Modall data={runningdeals.dealLevelLoanEmiCard} open={modelopen}/>}
                   </ul>
                 </div>
               </div>
@@ -136,9 +158,12 @@ const MyRunningDelas = () => {
                         </div>
 
                         <div className="col-auto">
-                          <span className="badge bg-primary-dark">
+                        <button className="badge bg-primary-dark" onClick={() => handlemodalopen(data.dealId)}>
+
+                          {/* <button className="badge bg-primary-dark" onClick={ ()=>handlemodalopen(runningdeals.dealId)}> */}
                             View Statement
-                          </span>
+                          </button>     
+                          
                         </div>
 
                         <div className="col-auto">

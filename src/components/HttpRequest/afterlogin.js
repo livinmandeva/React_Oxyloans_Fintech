@@ -113,6 +113,20 @@ export const LoadwalletThroughQrScan = async (amount) => {
 };
 
 
+export const viewdealamountemi= async(dealId)=>{
+  const token = getToken();
+  const userId = getUserId();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/${dealId}/dealLevelLoanEmiCard`,
+    "GET",
+
+    token,
+  );
+  return  response;
+
+}
 export const myrunnig= async()=>{
   const token = getToken();
   const userId = getUserId();
@@ -131,9 +145,10 @@ export const myrunnig= async()=>{
     token,
     data
 
+
   )
-  return response;
-}
+  return response; 
+}   
 export const sendMoblieOtp = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();

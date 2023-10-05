@@ -26,8 +26,9 @@ const MyinterestEarning = () => {
           totalEarnigAmount: data.data.totalInterestEarned,
           loading: false,
           hasdata: data.data.listOfInterestDetails.length == 0 ? false : true,
-        });
-      }
+        });     
+        
+      }  
     });
     return () => {};
   }, []);

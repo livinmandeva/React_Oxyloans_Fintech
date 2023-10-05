@@ -43,10 +43,10 @@ const LoadwalletThroughVirtualAccount = () => {
                       Your Virtual Account with OxyLoans
                     </h3>
                     <ul className="breadcrumb">
-                    <li className="breadcrumb-item">
-                        <Link to="/dashboard">DashBoard</Link>
+                      <li className="breadcrumb-item">
+                        <Link to="/students">DashBoard</Link>
                       </li>
-                      <li className="breadcrumb-item active">Virtual Account</li>
+                      <li className="breadcrumb-item active">Scan-QR</li>
                     </ul>
                   </div>
                 </div>

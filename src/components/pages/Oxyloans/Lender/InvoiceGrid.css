@@ -147,3 +147,26 @@
 
 }
 
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+.intestdata{
+    display: flex;   position: relative;
+    right: 0 !important;
+    flex-direction: row;gap: 2rem;
+    margin: 10px 1px;
+}
+
