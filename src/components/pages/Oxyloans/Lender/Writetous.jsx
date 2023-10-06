@@ -33,8 +33,6 @@ const Writetous = () => {
     // alert(userdata)
   }, []);
 
-  console.log(userdata);
-
   const handleWriteClick = async () => {
     handleimageupload();
 
@@ -68,9 +66,7 @@ const Writetous = () => {
     response.then((data) => {
       console.log(data);
       if (data.request.status == 200) {
-        alert("success");
       } else {
-        alert("error");
       }
     });
   };
@@ -189,23 +185,14 @@ const Writetous = () => {
                     {/* /Page Header */}
 
                     <div className="row col-12">
-                      <div className="col-12 col-sm-6">
-                        <MyRichTextEditor  />
-                        {/* <div className="form-group local-forms">
-                          <label>
-                            Write A query
-                            <span className="login-danger">*</span>
-                          </label>
-                          <textarea
-                            className="form-control"
-                            name="queryfiledinput"
-                            onChange={handleChange}
-                          ></textarea> */}
-                          {/* <input type="textarea" className="form-control" /> */}
-                        {/* </div> */}
+                      <div className="col-12 col-sm-12">
+                        <MyRichTextEditor className="col-12" />
                       </div>
-                      <div className="col-12 col-sm-6 ">
-                        <div className="form-group local-forms pull-right" style={{marginLeft:'2.2rem',}}>
+                      <div
+                        className="col-12 col-sm-3"
+                        style={{ display: "none" }}
+                      >
+                        <div className="form-group local-forms pull-left">
                           <div className="form-group service-upload">
                             <span>Upload Image</span>
                             <input
@@ -214,22 +201,20 @@ const Writetous = () => {
                               onChange={imageSubmit}
                             />
                           </div>
-
-                          {/* <input type="text" className="form-control" /> */}
                         </div>
                       </div>
-                    </div> 
-                    {/* <MyRichTextEditor  /> */}
-                    {/* <p>Email: {userdata.profileData.data.email}</p>     <p>mobileNumber: {userdata.profileData.data.mobileNumber}</p> */}
-                    <div className="row col-12" style={{marginTop:'2.9rem'}}>
-                      <button
-                        className="btn btn-primary col-md-3 mx-3"
-                        onClick={handleWriteClick}
-                      >
-                        Submit
-                      </button>
-                  </div></div> 
+
+                      <div className="row col-12 my-4 p-0">
+                        <button
+                          className="btn btn-primary col-md-3 mx-3 my-5"
+                          onClick={handleWriteClick}
+                        >
+                          Submit
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

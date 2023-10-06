@@ -100,7 +100,9 @@ const MembershipHistory = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">membership History</li>
+                    <li className="breadcrumb-item active">
+                      membership History
+                    </li>
                   </ul>
                 </div>
               </div>

@@ -90,8 +90,8 @@ const TicketHistory = () => {
                       </div> */}
                       <div className="card-body">
                         <div className="table-responsive">
-                          <table className="table star-student table-hover table-center table-borderless table-striped ">
-                            <thead className="thead-light">
+                          <table className="table border-0 star-student  table-center mb-0">
+                            <thead>
                               <tr>
                                 <th className="text-center"> Ticket Id</th>
                                 <th className="text-center"> Received On</th>
@@ -102,7 +102,6 @@ const TicketHistory = () => {
                             </thead>
                             <tbody>
                               {apires.map((item, index) => (
-
                                 <tr key={index}>
                                   <td className="text-center">
                                     <div>{item.ticketId}</div>
@@ -138,10 +137,11 @@ const TicketHistory = () => {
                                       <div className="badge bg-warning  col-md-8 col-12">
                                         Inquiries Reply
                                       </div>
-                                      <Link className=" badge bg-info col-md-8 col-12" to="/writetous" >
-                                        <div className="">
-                                          Write Reply
-                                        </div>{" "}
+                                      <Link
+                                        className=" badge bg-info col-md-8 col-12"
+                                        to="/writetous"
+                                      >
+                                        <div className="">Write Reply</div>{" "}
                                       </Link>
                                       <div className=" badge bg-success-dark  col-md-8 col-12">
                                         Cancel
@@ -149,9 +149,7 @@ const TicketHistory = () => {
                                     </div>
                                   </td>
                                 </tr>
-
                               ))}
-                         
                             </tbody>
                           </table>
                         </div>

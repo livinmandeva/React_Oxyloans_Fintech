@@ -18,6 +18,9 @@ import { getProfile } from "../../Redux/Slice";
 
 const Profile = () => {
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
+  const reduxStoreDataDashboard = useSelector(
+    (data) => data.dashboard.fetchDashboard
+  );
 
   const [dashboarddata, setdashboarddata] = useState({
     sendotpbtn: true,
@@ -231,7 +234,9 @@ const Profile = () => {
                       </h6>
                       <div className="user-Location">
                         <i className="fas fa-map-marker-alt" />{" "}
-                        {dashboarddata.profileData != null
+                        {reduxStoreData.length != 0
+                          ? reduxStoreData.city
+                          : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.city
                           : ""}
                       </div>
@@ -244,7 +249,7 @@ const Profile = () => {
                       </div>
                       <div className="user-Location my-1">
                         <i className="fa-solid fa-calendar-days" /> Validity :
-                        29-08-2024
+                        {reduxStoreDataDashboard.validityDate}
                       </div>
                     </div>
                     <div className="col-auto profile-btn">
@@ -363,9 +368,10 @@ const Profile = () => {
                                 Mobile
                               </p>
                               <p className="col-sm-9">
-                                {dashboarddata.profileData != null
+                                {reduxStoreData.mobileNumber}
+                                {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.mobileNumber
-                                  : "7569084614"}
+                                  : "7569084614"} */}
                               </p>
                             </div>
                             <div className="row">
@@ -373,14 +379,18 @@ const Profile = () => {
                                 Address
                               </p>
                               <p className="col-sm-9 mb-0">
-                                {dashboarddata.profileData != null
+                                {reduxStoreData.address}
+                                <br />
+                                {/* {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.address
                                   : ""}
                                 <br />
                                 {dashboarddata.profileData != null
                                   ? dashboarddata.profileData.data.city
                                   : ""}
-                                <br />
+                                <br /> */}
+
+                                {reduxStoreData.city}
                               </p>
                             </div>
                           </div>

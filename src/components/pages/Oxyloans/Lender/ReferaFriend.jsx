@@ -87,8 +87,7 @@ const ReferaFriend = () => {
     response.then((data) => {
       console.log(data);
       if (data.request.status == 200) {
-        alert("success");
-        HandleWithFooter("lender invited successfully test");
+        HandleWithFooter("lender invited successfully ");
       } else {
         WarningAlert(data.response.data.errorMessage);
       }

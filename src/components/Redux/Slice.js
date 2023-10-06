@@ -20,9 +20,16 @@ const counterSlice = createSlice({
     getProfile: (state, action) => {},
   },
   extraReducers: (bulider) => {
-    bulider.addCase(fetchData.fulfilled, (state, action) => {
-      state.userProfile = action.payload;
-    });
+    bulider
+      .addCase(fetchData.pending, (state) => {
+        state.userProfile = [];
+      })
+      .addCase(fetchData.rejected, (state, action) => {
+        state.userProfile = [];
+      })
+      .addCase(fetchData.fulfilled, (state, action) => {
+        state.userProfile = action.payload;
+      });
   },
 });
 

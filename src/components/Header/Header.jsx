@@ -4,6 +4,7 @@ import { getUserDetails } from "../HttpRequest/afterlogin";
 import CountUp from "react-countup";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData } from "../Redux/Slice";
+import { fetchDatadashboard } from "../Redux/SliceDashboard";
 
 import {
   HandleWithFooter,
@@ -23,10 +24,10 @@ import {
 
 const Header = (profile) => {
   const dispatch = useDispatch();
-  const reduxStoreData = useSelector((data) => data.counter.userProfile);
 
+  const reduxStoreData = useSelector((data) => data.counter.userProfile);
   const [dashboarddata, setdashboarddata] = useState({
-    profileData: null,
+    profileData: [],
   });
 
   const handlesidebar = () => {
@@ -57,7 +58,6 @@ const Header = (profile) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchData());
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
         setdashboarddata({
@@ -65,9 +65,14 @@ const Header = (profile) => {
           profileData: data,
         });
       } else if (data.response.data.errorCode != "200") {
-        WarningAlert(data.response.data.errorMessage,"/login");
+        WarningAlert(data.response.data.errorMessage, "/login");
       }
     });
+  }, []);
+
+  useMemo(() => {
+    dispatch(fetchData());
+    dispatch(fetchDatadashboard());
   }, []);
 
   return (
@@ -275,12 +280,14 @@ const Header = (profile) => {
                 />
                 <div className="user-text text-wrap text-lowercase">
                   <h6>
-                    {reduxStoreData.length != 0
-                      ? reduxStoreData.firstName
-                      : dashboarddata.profileData != null ||
+                    {/* {reduxStoreData.length !== 0
+                      ? "livin"
+                      : dashboarddata.profileData.length != 0 ||
                         dashboarddata.profileData != undefined
-                      ? dashboarddata.profileData.data.firstName
-                      : ""}
+                      ? "sravya"
+                      : "mandeva"} */}
+                    {/* {console.log(reduxStoreData.length)} */}
+                    {reduxStoreData.length == 0 ? "" : reduxStoreData.fristName}
                   </h6>
                 </div>
               </span>
@@ -299,7 +306,7 @@ const Header = (profile) => {
                     LR {""}
                     {reduxStoreData.length != 0
                       ? reduxStoreData.userId
-                      : dashboarddata.profileData != null
+                      : dashboarddata.profileData != ""
                       ? dashboarddata.profileData.data.userId
                       : "01"}
                   </p>
@@ -307,7 +314,7 @@ const Header = (profile) => {
                   <p className="text-muted mb-0">
                     {reduxStoreData.length != 0
                       ? reduxStoreData.groupName
-                      : dashboarddata.profileData != null
+                      : dashboarddata.profileData != ""
                       ? dashboarddata.profileData.data.groupName
                       : "New Lender"}
                   </p>
@@ -317,7 +324,7 @@ const Header = (profile) => {
                       ? reduxStoreData.lenderWalletAmount -
                         reduxStoreData.holdAmountInDealParticipation -
                         reduxStoreData.equityAmount
-                      : dashboarddata.profileData != null
+                      : dashboarddata.profileData != ""
                       ? dashboarddata.profileData.data.lenderWalletAmount -
                         dashboarddata.profileData.data
                           .holdAmountInDealParticipation -

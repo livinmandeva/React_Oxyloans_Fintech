@@ -150,7 +150,7 @@ const LoadwaletThroughQr = () => {
                                 name="amount"
                                 onChange={handlechange}
                               />
-                              <div className="d-grid gap-2 d-md-block mt-2 button-qr">
+                              <div className="d-grid gap-2 d-md-block mt-2 button-qr text-center">
                                 <button
                                   className="btn btn-primary btn-primary-1"
                                   type="button"

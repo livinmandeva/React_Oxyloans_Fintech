@@ -229,7 +229,7 @@ const Emicalculator = () => {
                               </div>
                               <div className="card-body">
                                 <div className="table-responsive">
-                                  <table className="table mb-0 ">
+                                  <table className="table mb-0">
                                     <thead>
                                       <tr>
                                         <th>So</th>

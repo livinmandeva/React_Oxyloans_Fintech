@@ -32,10 +32,10 @@ const AdminDashboard = () => {
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
 
   const [dashboarddata, setdashboarddata] = useState({
-    profileData: null,
+    profileData: [],
   });
   const [membershipdata, setmembershipdata] = useState({
-    dashboardData: null,
+    dashboardData: [],
   });
 
   const [dashboardInvestment, setdashboardInvestment] = useState({
@@ -559,17 +559,17 @@ const AdminDashboard = () => {
                 <div className="col-sm-12">
                   <div className="page-sub-header">
                     <h3 className="page-title text-lowercase">
-                      Welcome{" "}
+                      Welcome
                       {getreducerprofiledata.length != 0
                         ? getreducerprofiledata.firstName
-                        : dashboarddata.profileData != null
+                        : dashboarddata.profileData.length != 0
                         ? dashboarddata.profileData.data.firstName
                         : ""}
                       !
                     </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item active">
-                        <Link to="/admindashboard">Home</Link>
+                        <Link to="/dashboard">Home</Link>
                       </li>
                       <li className="breadcrumb-item">
                         {" "}
@@ -595,7 +595,7 @@ const AdminDashboard = () => {
                             ? getreducerprofiledata.lenderWalletAmount -
                               getreducerprofiledata.holdAmountInDealParticipation -
                               getreducerprofiledata.equityAmount
-                            : dashboarddata.profileData != null
+                            : dashboarddata.profileData.length != 0
                             ? dashboarddata.profileData.data
                                 .lenderWalletAmount -
                               dashboarddata.profileData.data
@@ -623,9 +623,13 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Active Deals</h6>
                         <h3>
+                          {console.log(getdashboardData)}
+                          {console.log(getdashboardData.length)}
+                          {console.log(membershipdata.dashboardData)}
+
                           {getdashboardData.length != 0
                             ? getdashboardData.numberOfActiveDealsCount
-                            : membershipdata.dashboardData != null
+                            : membershipdata.dashboardData.length != 0
                             ? membershipdata.dashboardData.data
                                 .numberOfActiveDealsCount
                             : 0}
@@ -652,7 +656,7 @@ const AdminDashboard = () => {
                         <h3>
                           {getdashboardData.length != 0
                             ? getdashboardData.numberOfClosedDealsCount
-                            : membershipdata.dashboardData != null
+                            : membershipdata.dashboardData.length != 0
                             ? membershipdata.dashboardData.data
                                 .numberOfClosedDealsCount
                             : 0}
@@ -680,7 +684,7 @@ const AdminDashboard = () => {
                           {getdashboardData.length != 0
                             ? getdashboardData.numberOfClosedDealsCount +
                               getdashboardData.numberOfActiveDealsCount
-                            : membershipdata.dashboardData != null
+                            : membershipdata.dashboardData.length != 0
                             ? membershipdata.dashboardData.data
                                 .numberOfClosedDealsCount +
                               membershipdata.dashboardData.data

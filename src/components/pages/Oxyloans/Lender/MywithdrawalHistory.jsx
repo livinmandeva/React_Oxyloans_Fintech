@@ -112,7 +112,9 @@ const MywithdrawalHistory = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Mywithdrawal History</li>
+                    <li className="breadcrumb-item active">
+                      Mywithdrawal History
+                    </li>
                   </ul>
                 </div>
               </div>

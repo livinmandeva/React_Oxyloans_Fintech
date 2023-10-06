@@ -23,7 +23,9 @@ const RegularRunningDeal = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Running & Closed Deals </li>
+                    <li className="breadcrumb-item active">
+                      Running & Closed Deals{" "}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -46,7 +48,7 @@ const RegularRunningDeal = () => {
             <>
               <div className="row">
                 <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
-                  <div className="card invoices-grid-card w-100">
+                  <div className="card invoices-grid-card w-100 h-25">
                     <div className="card-header row">
                       <Link
                         to="/viewinvoice"

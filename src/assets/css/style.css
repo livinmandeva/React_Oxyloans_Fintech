@@ -6090,7 +6090,8 @@ table.table-inbox tbody tr.checked {
   padding: 30px 0;
   background-color: #fff;
   position: relative;
-  width: 330px;
+  width: 230px;
+  height: 27vh;
 }
 .service-upload span {
   font-size: 15px;
@@ -10161,5 +10162,3 @@ span.flagg {
   opacity: 0.2;
   background: white;
 }
-
-

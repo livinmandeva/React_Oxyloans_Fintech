@@ -94,7 +94,9 @@ const WalletToWalletHistory = React.memo((pros) => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">wallet To WalletHistory</li>
+                    <li className="breadcrumb-item active">
+                      wallet To WalletHistory
+                    </li>
                   </ul>
                 </div>
               </div>

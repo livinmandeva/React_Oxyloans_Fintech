@@ -23,9 +23,13 @@ const counterDashboardSlice = createSlice({
   },
 
   extraReducers: (bulider) => {
-    bulider.addCase(fetchDatadashboard.fulfilled, (state, action) => {
-      state.fetchDashboard = action.payload;
-    });
+    bulider
+      .addCase(fetchDatadashboard.fulfilled, (state, action) => {
+        state.fetchDashboard = action.payload;
+      })
+      .addCase(fetchDatadashboard.rejected, (state, action) => {
+        state.fetchDashboard = [];
+      });
   },
 });
 

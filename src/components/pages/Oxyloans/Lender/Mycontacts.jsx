@@ -141,7 +141,7 @@ const Mycontacts = () => {
                     {/* /Page Header */}
                     <div className="table-responsive">
                       <Table
-                        className="table border-0 star-student table-hover table-center mb-0 datatable table-striped dataTable no-footer"
+                        className="table border-0 star-student  table-center mb-0"
                         pagination={{
                           total: datasource.length,
                           defaultPageSize: 5,
