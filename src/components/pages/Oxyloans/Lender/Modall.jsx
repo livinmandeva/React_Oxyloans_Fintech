@@ -25,7 +25,7 @@ export default function Modall({ data, open: propOpen }) {
         open={open}
         title="Interest Statement"
         onOk={handleOk}
-        width={780}
+        width={840}
         style={{
           left: 80,
         }}
@@ -70,6 +70,7 @@ export default function Modall({ data, open: propOpen }) {
             <th>Participation Details</th>
           </tr>
 
+
           {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
             data.data.dealLevelLoanEmiCard.map((item) => (
               <tr key={item.sno}>
@@ -93,6 +94,40 @@ export default function Modall({ data, open: propOpen }) {
             <p>No data available</p>
           )}
         </table>
+
+         <table>
+  <tr>
+    <th>S no</th>
+    {/* <th></th> */}
+    <th>Actual Payment Date</th>
+    <th>	Interest Paid Date</th>
+    <th>	Interest Amount</th>
+    <th>	No of days</th>
+    <th>Participation Details</th>
+  </tr>
+
+  {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
+       data.data.dealLevelLoanEmiCard.map((item) => (
+         
+  <tr  key={item.sno}>
+    <td>{item.sno}</td>
+    <td>{item.date}</td>
+    <td>{item.interestPaidDate != null ? <>{item.interestPaidDate}</>:<>Yet to be paid</>}</td>
+    <td>{item.interestAmount}</td>
+    <td>{item.differenceInDaysForFirstParticipation}</td>
+    <td><Button type='primary'>Amount statement</Button></td>
+
+  </tr>
+
+  
+))
+) : (
+  <p>No data available</p>
+)}
+
+</table>
+
+
       </Modal>
     </div>
   );

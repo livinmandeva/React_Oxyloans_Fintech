@@ -4,41 +4,70 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import "./InvoiceGrid.css";
-import { myrunnig, viewdealamountemi } from "../../../HttpRequest/afterlogin";
+import {myrunnig ,  paticipationChanges1 ,viewdealamountemi} from '../../../HttpRequest/afterlogin'
 import Modall from "./Modall";
+import Modell from "./Modell";
+
 
 const MyRunningDelas = () => {
-  const [runningdeals, setrunningdeals] = useState({
-    data: "",
-    modelopen: false,
-    dealID: "",
-    dealLevelLoanEmiCard: "",
+ 
+
+ const [runningdeals , setrunningdeals]=useState({
+   data:"",
+   modelopen:false,
+   dealID:'',
+   dealLevelLoanEmiCard:""
+ })
+const [modelopen,setOpen]=useState(false)
+
+ useEffect(()=>{
+
+
+  const response =myrunnig(runningdeals)
+  response.then((data)=>{
+   console.log(data)
+   setrunningdeals({
+     ...runningdeals,
+     data:data.data.lenderPaticipatedResponseDto,
+   })
+   console.log(data.data.lenderPaticipatedResponseDto)
+
+
+  })
+ },[])
+ 
+
+ const handlemodalopen = (dealId) => {
+  
+  const response = viewdealamountemi(dealId);
+  console.log(response);
+  response.then((data) => {
+    setrunningdeals({
+      ...runningdeals,
+      dealLevelLoanEmiCard: data,
+    });
   });
-  const [modelopen, setOpen] = useState(false);
+  setOpen(!modelopen)
+}
 
-  useEffect(() => {
-    const response = myrunnig(runningdeals);
-    response.then((data) => {
-      console.log(data);
-      setrunningdeals({
-        ...runningdeals,
-        data: data.data.lenderPaticipatedResponseDto,
-      });
-      console.log(data.data.lenderPaticipatedResponseDto);
-    });
-  }, []);
-
-  const handlemodalopen = (dealId) => {
-    const response = viewdealamountemi(dealId);
-    console.log(response);
-    response.then((data) => {
-      setrunningdeals({
-        ...runningdeals,
-        dealLevelLoanEmiCard: data,
-      });
-    });
-    setOpen(!modelopen);
-  };
+const paticipationChanges=(dealId)=>{
+  const  response=paticipationChanges1(dealId)
+       
+  response.then((data)=>{
+    console.log(data.data)
+    
+    
+    setrunningdeals({
+      ...runningdeals,
+      paticipationChanges:data.data,
+      
+    })
+    setrunningdeals({
+      ...runningdeals,
+      model2:!runningdeals.model2,
+    })
+  })  
+}
 
   return (
     <>
@@ -60,12 +89,10 @@ const MyRunningDelas = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My running delas</li>
-                    {modelopen && (
-                      <Modall
-                        data={runningdeals.dealLevelLoanEmiCard}
-                        open={modelopen}
-                      />
-                    )}
+                    {/* {paticipationChanges  && <Modall />} */}
+                    {modelopen && <Modall data={runningdeals.dealLevelLoanEmiCard} open={modelopen}/>}
+                    {console.log(runningdeals.paticipationChanges)}
+                 {runningdeals.model2 && <Modell data={runningdeals.paticipationChanges}  open={runningdeals.model2}/>}
                   </ul>
                 </div>
               </div>
@@ -146,22 +173,19 @@ const MyRunningDelas = () => {
                                 </h6>
                               </div>
 
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Deal Status</span>
-                                <h6 className="mb-0">
-                                  {" "}
-                                  {data.participationStatus}
-                                </h6>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="card-footer">
-                            <div className="row align-items-center">
-                              <div className="col-auto">
-                                <span className="badge bg-success-dark">
-                                  Participation Details
-                                </span>
-                              </div>
+                        <div className="col-sm-6 col-lg-2">
+                          <span>Deal Status</span>
+                          <h6 className="mb-0"> {data.participationStatus}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card-footer">
+                      <div className="row align-items-center">
+                        <div className="col-auto">
+                          <span className="badge bg-success-dark">
+                            Participation Details
+                          </span>
+                        </div>
 
                               <div className="col-auto">
                                 <button

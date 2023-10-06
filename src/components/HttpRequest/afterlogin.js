@@ -196,6 +196,23 @@ export const checkqrcodetransaction = async (qrid) => {
 };
 
 
+
+export const paticipationChanges1=async (dealId)=>{
+  
+
+  
+  
+  const token = getToken();
+  const userId = getUserId();
+  const response   =  await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/${dealId}/paticipationChanges`,
+    "GET",
+    token
+  );
+
+       return response;
+}
 export const verifyBankAccountAndIfsc= async(bankaccountprofile)=>{
   const token = getToken();
   const userId = getUserId();
