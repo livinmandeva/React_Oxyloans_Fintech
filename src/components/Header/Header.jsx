@@ -27,7 +27,7 @@ const Header = (profile) => {
 
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
   const [dashboarddata, setdashboarddata] = useState({
-    profileData: [],
+    profileData: "",
   });
 
   const handlesidebar = () => {
@@ -58,6 +58,8 @@ const Header = (profile) => {
   }, []);
 
   useEffect(() => {
+    dispatch(fetchData());
+    dispatch(fetchDatadashboard());
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
         setdashboarddata({
@@ -70,10 +72,10 @@ const Header = (profile) => {
     });
   }, []);
 
-  useMemo(() => {
-    dispatch(fetchData());
-    dispatch(fetchDatadashboard());
-  }, []);
+  // useMemo(() => {
+  //   dispatch(fetchData());
+  //   dispatch(fetchDatadashboard());
+  // }, []);
 
   return (
     <>
@@ -280,14 +282,16 @@ const Header = (profile) => {
                 />
                 <div className="user-text text-wrap text-lowercase">
                   <h6>
-                    {/* {reduxStoreData.length !== 0
-                      ? "livin"
-                      : dashboarddata.profileData.length != 0 ||
+                    {reduxStoreData?.length !== 0
+                      ? reduxStoreData.firstName
+                      : ""}
+
+                    {/* {reduxStoreData.length !== 0 && reduxStoreData != undefined
+                      ? reduxStoreData.firstName
+                      : dashboarddata.profileData.length != 0 &&
                         dashboarddata.profileData != undefined
-                      ? "sravya"
-                      : "mandeva"} */}
-                    {/* {console.log(reduxStoreData.length)} */}
-                    {reduxStoreData.length == 0 ? "" : reduxStoreData.fristName}
+                      ? dashboarddata.profileData.data.firstName
+                      : "hlo"} */}
                   </h6>
                 </div>
               </span>
@@ -304,32 +308,44 @@ const Header = (profile) => {
                 <div className="user-text">
                   <p className="text-muted mb-0">
                     LR {""}
-                    {reduxStoreData.length != 0
+                    {reduxStoreData?.length !== 0 ? reduxStoreData.userId : ""}
+                    {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
                       ? reduxStoreData.userId
-                      : dashboarddata.profileData != ""
+                      : dashboarddata.profileData != "" &&
+                        dashboarddata.profileData != undefined
                       ? dashboarddata.profileData.data.userId
-                      : "01"}
+                      : "01"} */}
                   </p>
 
                   <p className="text-muted mb-0">
-                    {reduxStoreData.length != 0
+                    {reduxStoreData?.length !== 0
                       ? reduxStoreData.groupName
-                      : dashboarddata.profileData != ""
+                      : ""}
+                    {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
+                      ? reduxStoreData.groupName
+                      : dashboarddata.profileData != "" &&
+                        dashboarddata.profileData != undefined
                       ? dashboarddata.profileData.data.groupName
-                      : "New Lender"}
+                      : "New Lender"} */}
                   </p>
                   <p className="text-muted mb-0">
                     Wallet :
-                    {reduxStoreData.length != 0
+                    {reduxStoreData?.length !== 0
                       ? reduxStoreData.lenderWalletAmount -
                         reduxStoreData.holdAmountInDealParticipation -
                         reduxStoreData.equityAmount
-                      : dashboarddata.profileData != ""
+                      : ""}
+                    {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
+                      ? reduxStoreData.lenderWalletAmount -
+                        reduxStoreData.holdAmountInDealParticipation -
+                        reduxStoreData.equityAmount
+                      : dashboarddata.profileData != "" &&
+                        dashboarddata.profileData != undefined
                       ? dashboarddata.profileData.data.lenderWalletAmount -
                         dashboarddata.profileData.data
                           .holdAmountInDealParticipation -
                         dashboarddata.profileData.data.equityAmount
-                      : ""}
+                      : ""} */}
                   </p>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export const HandleClick = () => {
@@ -88,16 +88,20 @@ export const Info = () => {
     buttonsStyling: !1,
   });
 };
-export const WarningAlert = (errorMessage , redirectTo) => {
+export const WarningAlert = (errorMessage, redirectTo) => {
+  console.log("livin its error message");
   Swal.fire({
-    title: "Warning !",
+    title: "Warning!",
     text: errorMessage,
     type: "warning",
-    confirmButtonClass:(
-      <Link to={redirectTo} className="btn btn-primary">
-        Confirm
-      </Link> ),
-    buttonsStyling: !1,
+    showCancelButton: true,
+    confirmButtonText: "Login",
+    cancelButtonText: "Contine",
+  }).then((result) => {
+    console.log(result);
+    if (result.isConfirmed) {
+      window.location.href = `${redirectTo}`;
+    }
   });
 };
 export const Error = () => {

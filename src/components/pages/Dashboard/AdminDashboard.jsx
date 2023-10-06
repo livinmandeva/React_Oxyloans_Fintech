@@ -32,10 +32,10 @@ const AdminDashboard = () => {
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
 
   const [dashboarddata, setdashboarddata] = useState({
-    profileData: [],
+    profileData: "",
   });
   const [membershipdata, setmembershipdata] = useState({
-    dashboardData: [],
+    dashboardData: "",
   });
 
   const [dashboardInvestment, setdashboardInvestment] = useState({
@@ -559,12 +559,17 @@ const AdminDashboard = () => {
                 <div className="col-sm-12">
                   <div className="page-sub-header">
                     <h3 className="page-title text-lowercase">
-                      Welcome
-                      {getreducerprofiledata.length != 0
+                      Welcome {""}
+                      {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata.firstName
-                        : dashboarddata.profileData.length != 0
-                        ? dashboarddata.profileData.data.firstName
                         : ""}
+                      {/* {getreducerprofiledata.length != 0 &&
+                      getreducerprofiledata.length != undefined
+                        ? getreducerprofiledata.firstName
+                        : dashboarddata.profileData.length != 0 &&
+                          dashboarddata.profileData != undefined
+                        ? dashboarddata.profileData.data.firstName
+                        : ""} */}
                       !
                     </h3>
                     <ul className="breadcrumb">
@@ -591,7 +596,12 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Wallet </h6>
                         <h3>
-                          {getreducerprofiledata.length != 0
+                          {getreducerprofiledata?.length !== 0
+                            ? getreducerprofiledata.lenderWalletAmount -
+                              getreducerprofiledata.holdAmountInDealParticipation -
+                              getreducerprofiledata.equityAmount
+                            : ""}
+                          {/* {getreducerprofiledata.length != 0
                             ? getreducerprofiledata.lenderWalletAmount -
                               getreducerprofiledata.holdAmountInDealParticipation -
                               getreducerprofiledata.equityAmount
@@ -601,7 +611,7 @@ const AdminDashboard = () => {
                               dashboarddata.profileData.data
                                 .holdAmountInDealParticipation -
                               dashboarddata.profileData.data.equityAmount
-                            : "0"}
+                            : "0"} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -623,16 +633,17 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Active Deals</h6>
                         <h3>
-                          {console.log(getdashboardData)}
-                          {console.log(getdashboardData.length)}
-                          {console.log(membershipdata.dashboardData)}
-
-                          {getdashboardData.length != 0
+                          {getdashboardData?.length !== 0
                             ? getdashboardData.numberOfActiveDealsCount
-                            : membershipdata.dashboardData.length != 0
+                            : ""}
+                          {/* {getdashboardData != undefined ||
+                          getdashboardData.length != 0
+                            ? getdashboardData.numberOfActiveDealsCount
+                            : membershipdata.dashboardData.length != 0 ||
+                              membershipdata.dashboardData != undefined
                             ? membershipdata.dashboardData.data
                                 .numberOfActiveDealsCount
-                            : 0}
+                            : 0} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -654,12 +665,17 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Closed Deals</h6>
                         <h3>
-                          {getdashboardData.length != 0
+                          {getdashboardData?.length !== 0
                             ? getdashboardData.numberOfClosedDealsCount
-                            : membershipdata.dashboardData.length != 0
+                            : ""}
+                          {/* {getdashboardData.length != 0 ||
+                          getdashboardData != undefined
+                            ? getdashboardData.numberOfClosedDealsCount
+                            : membershipdata.dashboardData.length != 0 ||
+                              membershipdata.dashboardData != undefined
                             ? membershipdata.dashboardData.data
                                 .numberOfClosedDealsCount
-                            : 0}
+                            : 0} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -681,7 +697,12 @@ const AdminDashboard = () => {
                       <div className="db-info">
                         <h6>Disburse Deals</h6>
                         <h3>
-                          {getdashboardData.length != 0
+                          {getdashboardData?.length !== 0
+                            ? getdashboardData.numberOfClosedDealsCount +
+                              getdashboardData.numberOfActiveDealsCount
+                            : ""}
+                          {/* {getdashboardData.length != 0 &&
+                          getdashboardData != undefined
                             ? getdashboardData.numberOfClosedDealsCount +
                               getdashboardData.numberOfActiveDealsCount
                             : membershipdata.dashboardData.length != 0
@@ -689,7 +710,7 @@ const AdminDashboard = () => {
                                 .numberOfClosedDealsCount +
                               membershipdata.dashboardData.data
                                 .numberOfActiveDealsCount
-                            : 0}
+                            : 0} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -714,7 +735,7 @@ const AdminDashboard = () => {
                       <span className="text-bold text-success mx-lg-1">
                         Congratulation :
                       </span>
-                      {getreducerprofiledata.length != 0
+                      {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata.groupName == "NewLender"
                           ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
                           : `You are an ${
@@ -727,6 +748,21 @@ const AdminDashboard = () => {
                               getdashboardData.validityDate
                             }`
                         : ""}
+
+                      {/* {getreducerprofiledata.length != 0 &&
+                      getdashboardData != undefined
+                        ? getreducerprofiledata.groupName == "NewLender"
+                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
+                          : `You are an ${
+                              getreducerprofiledata.groupName == "OXYMARCH09" ||
+                              getreducerprofiledata.groupName ==
+                                "OxyPremiuimLenders"
+                                ? "Oxy Founding Lender"
+                                : "NewLender"
+                            } group member, and your validity is up to: ${
+                              getdashboardData.validityDate
+                            }`
+                        : ""} */}
 
                       {/* {dashboarddata.profileData != null
                         ? dashboarddata.profileData.data.groupName ==
