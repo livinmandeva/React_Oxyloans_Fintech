@@ -60,7 +60,7 @@ const MyclosedDeals = () => {
             DealClosed: data.dealClosedToLender,
             Statement: (
               <button type="submit" className="btn  w-70 btn-primary btn-xs">
-                Cancel Request
+                Statement
               </button>
             ),
           });
@@ -140,7 +140,7 @@ const MyclosedDeals = () => {
                               to="#"
                               className="btn btn-outline-primary me-2"
                             >
-                              <i className="fas fa-download" />
+                              <i className="fas fa-download" /> {""}
                               Download
                             </Link>
                           </div>

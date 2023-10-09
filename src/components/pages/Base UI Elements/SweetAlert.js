@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import { getNewSessionTime } from "../../HttpRequest/afterlogin";
 
 export const HandleClick = () => {
   Swal.fire({
@@ -89,18 +90,21 @@ export const Info = () => {
   });
 };
 export const WarningAlert = (errorMessage, redirectTo) => {
-  console.log("livin its error message");
   Swal.fire({
     title: "Warning!",
     text: errorMessage,
     type: "warning",
     showCancelButton: true,
+    showDenyButton: true,
     confirmButtonText: "Login",
-    cancelButtonText: "Contine",
+    denyButtonText: "Contine",
   }).then((result) => {
     console.log(result);
     if (result.isConfirmed) {
       window.location.href = `${redirectTo}`;
+    } else if (result.isDenied) {
+      getNewSessionTime();
+      Swal.fire("Token!", "Your session has Generated.", "success");
     }
   });
 };

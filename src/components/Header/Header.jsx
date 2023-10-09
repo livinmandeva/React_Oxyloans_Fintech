@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getUserDetails } from "../HttpRequest/afterlogin";
+import {
+  getUserDetails,
+  getSessionExpireTime,
+} from "../HttpRequest/afterlogin";
 import CountUp from "react-countup";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData } from "../Redux/Slice";
@@ -72,10 +75,16 @@ const Header = (profile) => {
     });
   }, []);
 
-  // useMemo(() => {
-  //   dispatch(fetchData());
-  //   dispatch(fetchDatadashboard());
-  // }, []);
+  useMemo(() => {
+    const sessionsExpire = getSessionExpireTime();
+    console.log(sessionsExpire);
+    if (sessionsExpire) {
+      WarningAlert(
+        "Your session has expired in 5 minutes continue",
+        "/dashboard"
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -83,10 +92,10 @@ const Header = (profile) => {
       <div className="header">
         {/* Logo */}
         <div className="header-left">
-          <Link to="/admindashboard" className="logo">
+          <Link to="/dashboard" className="logo">
             <img src={oxylogodashboard} alt="Logo" />
           </Link>
-          <Link to="/admindashboard" className="logo logo-small">
+          <Link to="/dashboard" className="logo logo-small">
             <img src={oxylogomobile} alt="Logo" width={30} height={30} />
           </Link>
         </div>
@@ -311,24 +320,12 @@ const Header = (profile) => {
                     {reduxStoreData?.length !== 0
                       ? reduxStoreData?.userId ?? 0
                       : ""}
-                    {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
-                      ? reduxStoreData.userId
-                      : dashboarddata.profileData != "" &&
-                        dashboarddata.profileData != undefined
-                      ? dashboarddata.profileData.data.userId
-                      : "01"} */}
                   </p>
 
                   <p className="text-muted mb-0">
                     {reduxStoreData?.length !== 0
                       ? reduxStoreData?.groupName ?? ""
                       : ""}
-                    {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
-                      ? reduxStoreData.groupName
-                      : dashboarddata.profileData != "" &&
-                        dashboarddata.profileData != undefined
-                      ? dashboarddata.profileData.data.groupName
-                      : "New Lender"} */}
                   </p>
                   <p className="text-muted mb-0">
                     Wallet :
@@ -337,17 +334,6 @@ const Header = (profile) => {
                         reduxStoreData?.holdAmountInDealParticipation -
                         reduxStoreData?.equityAmount
                       : ""}
-                    {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
-                      ? reduxStoreData.lenderWalletAmount -
-                        reduxStoreData.holdAmountInDealParticipation -
-                        reduxStoreData.equityAmount
-                      : dashboarddata.profileData != "" &&
-                        dashboarddata.profileData != undefined
-                      ? dashboarddata.profileData.data.lenderWalletAmount -
-                        dashboarddata.profileData.data
-                          .holdAmountInDealParticipation -
-                        dashboarddata.profileData.data.equityAmount
-                      : ""} */}
                   </p>
                 </div>
               </div>

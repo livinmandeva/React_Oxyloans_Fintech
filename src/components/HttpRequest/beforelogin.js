@@ -50,6 +50,7 @@ export const userloginSection = async (email, password) => {
     const accessTokenFromHeader = response.headers["accesstoken"];
     sessionStorage.setItem("accessToken", accessTokenFromHeader);
     sessionStorage.setItem("userId", response.data.id);
+    sessionStorage.setItem("tokenTime", response.data.tokenGeneratedTime);
     return response;
   } else {
     return response;

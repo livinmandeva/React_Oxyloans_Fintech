@@ -21,6 +21,10 @@ export const loadVirtualAccount = () => {
   };
 };
 
+export const getUserSessionTime = () => {
+  return sessionStorage.getItem("tokenTime");
+};
+
 const handleApiRequestAfterLoginService = async (
   baseurl,
   endpoint,
@@ -112,8 +116,7 @@ export const LoadwalletThroughQrScan = async (amount) => {
   return response;
 };
 
-
-export const viewdealamountemi= async(dealId)=>{
+export const viewdealamountemi = async (dealId) => {
   const token = getToken();
   const userId = getUserId();
 
@@ -122,24 +125,21 @@ export const viewdealamountemi= async(dealId)=>{
     `${userId}/${dealId}/dealLevelLoanEmiCard`,
     "GET",
 
-    token,
+    token
   );
-  return  response;
+  return response;
+};
 
-}
-
-
-export const principal_return_account_type= async()=>{
+export const principal_return_account_type = async () => {
   const token = getToken();
   const userId = getUserId();
 
-
-  const dealID=localStorage.getItem("dealID")
-  var data={
-    "userId":userId,
-    dealId:dealID,
-    "accountType":""
-  }
+  const dealID = localStorage.getItem("dealID");
+  var data = {
+    userId: userId,
+    dealId: dealID,
+    accountType: "",
+  };
 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -149,30 +149,27 @@ export const principal_return_account_type= async()=>{
     token,
     data
   );
-  return  response;
-}
-export const myrunnig= async()=>{
+  return response;
+};
+export const myrunnig = async () => {
   const token = getToken();
   const userId = getUserId();
 
-  const  data ={
+  const data = {
     pageNo: 1,
-		pageSize: 10,
+    pageSize: 10,
   };
 
-  const response= await  handleApiRequestAfterLoginService(
-
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/runningDealsInfoBasedOnPagination`,
     "POST",
 
     token,
     data
-
-
-  )
-  return response; 
-}   
+  );
+  return response;
+};
 export const sendMoblieOtp = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();
@@ -219,63 +216,54 @@ export const checkqrcodetransaction = async (qrid) => {
   return response;
 };
 
-
-
-export const paticipationChanges1=async (dealId)=>{
-  
-
-  
-  
+export const paticipationChanges1 = async (dealId) => {
   const token = getToken();
   const userId = getUserId();
-  const response   =  await handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/${dealId}/paticipationChanges`,
     "GET",
     token
   );
 
-       return response;
-}
+  return response;
+};
 
-
-
-export const regular_Api = async(dealType)=>{
+export const regular_Api = async (dealType) => {
   const token = getToken();
   const userId = getUserId();
-var data={
+  var data = {
     pageNo: 1,
     pageSize: 20,
-    dealType: dealType}
-  const  response = await handleApiRequestAfterLoginService(
+    dealType: dealType,
+  };
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/listOfDealsInformationToLender`,
-    
+
     "POST",
     token,
     data
-
   );
   return response;
-}
-export const verifyBankAccountAndIfsc= async(bankaccountprofile)=>{
+};
+export const verifyBankAccountAndIfsc = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();
-  const data={
-   bankAccount: bankaccountprofile.accountNumber,
-   ifscCode: bankaccountprofile.ifscCode
+  const data = {
+    bankAccount: bankaccountprofile.accountNumber,
+    ifscCode: bankaccountprofile.ifscCode,
   };
-  
-const  response = await handleApiRequestAfterLoginService(
+
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     "verifyBankAccountAndIfsc",
     "POST",
     token,
     data
-
   );
   return response;
-}
+};
 export const Earning = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -295,28 +283,25 @@ export const Earning = async () => {
   return response;
 };
 
-export const uploadkyc =async  ()=>{
-  
-}
-export const updatebank=async(bankaccountprofile)=>{
+export const uploadkyc = async () => {};
+export const updatebank = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();
-  const mobileOtpSession= localStorage.getItem("OtpSeesion")
-   const data={
+  const mobileOtpSession = localStorage.getItem("OtpSeesion");
+  const data = {
+    accountNumber: bankaccountprofile.accountNumber,
+    bankAddress: bankaccountprofile.bankAddress,
+    bankName: bankaccountprofile.bankName,
+    branchName: bankaccountprofile.branchName,
+    confirmAccountNumber: bankaccountprofile.confirmAccountNumber,
+    ifscCode: bankaccountprofile.ifscCode,
+    mobileOtp: bankaccountprofile.mobileOtp,
+    mobileOtpSession: mobileOtpSession,
+    updateBankDetails: true,
+    userName: "JOHN DOE",
+  };
 
-  accountNumber: bankaccountprofile.accountNumber,
-  bankAddress: bankaccountprofile.bankAddress,
-  bankName: bankaccountprofile.bankName,
-  branchName:bankaccountprofile.branchName,
-  confirmAccountNumber: bankaccountprofile.confirmAccountNumber,
-  ifscCode: bankaccountprofile.ifscCode,
-  mobileOtp: bankaccountprofile.mobileOtp,
-  mobileOtpSession: mobileOtpSession,
-  updateBankDetails: true,
-  userName: "JOHN DOE"
-   }
-
-   console.log(userProfile)
+  console.log(userProfile);
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `personal/${userId}`,
@@ -326,7 +311,7 @@ export const updatebank=async(bankaccountprofile)=>{
   );
 
   return response;
-}
+};
 export const Myreferal = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
@@ -841,5 +826,38 @@ export const getEmiTableInformation = async (params) => {
     token,
     postdatastring
   );
+  return response;
+};
+
+export const getSessionExpireTime = () => {
+  const tokenTimeStamp = getUserSessionTime();
+  var addingtime = 1500000;
+  var getTime = parseInt(tokenTimeStamp) + addingtime;
+  var date = new Date();
+  var milliseconds = date.getTime();
+  let isNearbySession = false;
+  if (milliseconds > getTime) {
+    isNearbySession = true;
+  }
+  return isNearbySession;
+};
+
+export const getNewSessionTime = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/USER/accessTokenGeneration`,
+    "GET",
+    token
+  );
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("tokenTime");
+  const accessTokenFromHeader = response.headers["accesstoken"];
+  sessionStorage.setItem("accessToken", accessTokenFromHeader);
+  sessionStorage.setItem("tokenTime", response.data.tokenGeneratedTime);
+  setTimeout(() => {
+    window.location.reload();
+  }, 1500);
   return response;
 };

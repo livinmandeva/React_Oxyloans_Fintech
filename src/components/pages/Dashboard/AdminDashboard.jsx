@@ -563,13 +563,6 @@ const AdminDashboard = () => {
                       {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata?.firstName ?? ""
                         : ""}
-                      {/* {getreducerprofiledata.length != 0 &&
-                      getreducerprofiledata.length != undefined
-                        ? getreducerprofiledata.firstName
-                        : dashboarddata.profileData.length != 0 &&
-                          dashboarddata.profileData != undefined
-                        ? dashboarddata.profileData.data.firstName
-                        : ""} */}
                       !
                     </h3>
                     <ul className="breadcrumb">
@@ -601,17 +594,6 @@ const AdminDashboard = () => {
                               getreducerprofiledata?.holdAmountInDealParticipation -
                               getreducerprofiledata?.equityAmount
                             : ""}
-                          {/* {getreducerprofiledata.length != 0
-                            ? getreducerprofiledata.lenderWalletAmount -
-                              getreducerprofiledata.holdAmountInDealParticipation -
-                              getreducerprofiledata.equityAmount
-                            : dashboarddata.profileData.length != 0
-                            ? dashboarddata.profileData.data
-                                .lenderWalletAmount -
-                              dashboarddata.profileData.data
-                                .holdAmountInDealParticipation -
-                              dashboarddata.profileData.data.equityAmount
-                            : "0"} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -636,14 +618,6 @@ const AdminDashboard = () => {
                           {getdashboardData?.length !== 0
                             ? getdashboardData?.numberOfActiveDealsCount ?? 0
                             : ""}
-                          {/* {getdashboardData != undefined ||
-                          getdashboardData.length != 0
-                            ? getdashboardData.numberOfActiveDealsCount
-                            : membershipdata.dashboardData.length != 0 ||
-                              membershipdata.dashboardData != undefined
-                            ? membershipdata.dashboardData.data
-                                .numberOfActiveDealsCount
-                            : 0} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -668,14 +642,6 @@ const AdminDashboard = () => {
                           {getdashboardData?.length !== 0
                             ? getdashboardData?.numberOfClosedDealsCount ?? 0
                             : ""}
-                          {/* {getdashboardData.length != 0 ||
-                          getdashboardData != undefined
-                            ? getdashboardData.numberOfClosedDealsCount
-                            : membershipdata.dashboardData.length != 0 ||
-                              membershipdata.dashboardData != undefined
-                            ? membershipdata.dashboardData.data
-                                .numberOfClosedDealsCount
-                            : 0} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -698,20 +664,9 @@ const AdminDashboard = () => {
                         <h6>Disburse Deals</h6>
                         <h3>
                           {getdashboardData?.length !== 0
-                            ? getdashboardData?.numberOfClosedDealsCount ??
-                              0 + getdashboardData?.numberOfActiveDealsCount ??
-                              0
+                            ? getdashboardData?.numberOfClosedDealsCount +
+                              getdashboardData?.numberOfActiveDealsCount
                             : ""}
-                          {/* {getdashboardData.length != 0 &&
-                          getdashboardData != undefined
-                            ? getdashboardData.numberOfClosedDealsCount +
-                              getdashboardData.numberOfActiveDealsCount
-                            : membershipdata.dashboardData.length != 0
-                            ? membershipdata.dashboardData.data
-                                .numberOfClosedDealsCount +
-                              membershipdata.dashboardData.data
-                                .numberOfActiveDealsCount
-                            : 0} */}
                         </h3>
                       </div>
                       <div className="db-icon">
@@ -749,37 +704,6 @@ const AdminDashboard = () => {
                               getdashboardData.validityDate
                             }`
                         : ""}
-
-                      {/* {getreducerprofiledata.length != 0 &&
-                      getdashboardData != undefined
-                        ? getreducerprofiledata.groupName == "NewLender"
-                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
-                          : `You are an ${
-                              getreducerprofiledata.groupName == "OXYMARCH09" ||
-                              getreducerprofiledata.groupName ==
-                                "OxyPremiuimLenders"
-                                ? "Oxy Founding Lender"
-                                : "NewLender"
-                            } group member, and your validity is up to: ${
-                              getdashboardData.validityDate
-                            }`
-                        : ""} */}
-
-                      {/* {dashboarddata.profileData != null
-                        ? dashboarddata.profileData.data.groupName ==
-                          "NewLender"
-                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
-                          : `You are an ${
-                              dashboarddata.profileData.data.groupName ==
-                                "OXYMARCH09" ||
-                              dashboarddata.profileData.data.groupName ==
-                                "OxyPremiuimLenders"
-                                ? "Oxy Founding Lender"
-                                : "NewLender"
-                            } group member, and your validity is up to: ${
-                              membershipdata.dashboardData.data.validityDate
-                            }`
-                        : ""} */}
                     </span>
                   </div>
                 </div>
