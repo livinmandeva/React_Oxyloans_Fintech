@@ -64,31 +64,6 @@ export default function Modell({ data, open: propOpen }) {
          {/* Interest Statement */}
          <p>If you've any queries please write to us <a href="">Click Here</a> </p>
 
-
-
-         {/* <table>
-  <tr>
-
-    <th>Amount</th>
-
-    <th>Date</th>
-
-  </tr>
-
-  {data && Array.isArray(data.lenderParticipationUpdatedInfo) ? (
-  data.lenderParticipationUpdatedInfo.map((item) => (
-    <tr key={item.sno}>
-      <td>{item.amount}</td>
-      <td>{item.upatedDate}</td>
-    </tr>
-  ))
-) : null}
-
-
-</table> */}
-
-<Table />
-
       </Modal>
     </div>
   )

@@ -2,16 +2,20 @@ import React from 'react';
 import { Space, Table, Tag } from 'antd';
 const columns = [
   {
-    title: 'Amount',
-    dataIndex: 'Amount',
-    key: 'Amount',
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
     render: (text) => <a>{text}</a>,
   },
-
   {
-    title: 'Date',
-    dataIndex: 'Date',
-    key: 'Date',
+    title: 'Age',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
   },
   {
     title: 'Tags',

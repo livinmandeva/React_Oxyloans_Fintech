@@ -127,6 +127,30 @@ export const viewdealamountemi= async(dealId)=>{
   return  response;
 
 }
+
+
+export const principal_return_account_type= async()=>{
+  const token = getToken();
+  const userId = getUserId();
+
+
+  const dealID=localStorage.getItem("dealID")
+  var data={
+    "userId":userId,
+    dealId:dealID,
+    "accountType":""
+  }
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `principal_return_account_type`,
+    "PATCH",
+
+    token,
+    data
+  );
+  return  response;
+}
 export const myrunnig= async()=>{
   const token = getToken();
   const userId = getUserId();
@@ -212,6 +236,27 @@ export const paticipationChanges1=async (dealId)=>{
   );
 
        return response;
+}
+
+
+
+export const regular_Api = async(dealType)=>{
+  const token = getToken();
+  const userId = getUserId();
+var data={
+    pageNo: 1,
+    pageSize: 20,
+    dealType: dealType}
+  const  response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/listOfDealsInformationToLender`,
+    
+    "POST",
+    token,
+    data
+
+  );
+  return response;
 }
 export const verifyBankAccountAndIfsc= async(bankaccountprofile)=>{
   const token = getToken();

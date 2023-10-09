@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import "../Lender/InvoiceGrid.css";
+import { Space, Table, Tag } from 'antd';
+
 
 export default function Modall({ data, open: propOpen }) {
   const [loading, setLoading] = useState(false);
@@ -19,6 +21,8 @@ export default function Modall({ data, open: propOpen }) {
   const handleCancel = () => {
     setOpen(false);
   };
+
+
   return (
     <div>
       <Modal
