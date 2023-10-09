@@ -561,7 +561,7 @@ const AdminDashboard = () => {
                     <h3 className="page-title text-lowercase">
                       Welcome {""}
                       {getreducerprofiledata?.length !== 0
-                        ? getreducerprofiledata.firstName
+                        ? getreducerprofiledata?.firstName ?? ""
                         : ""}
                       {/* {getreducerprofiledata.length != 0 &&
                       getreducerprofiledata.length != undefined
@@ -597,9 +597,9 @@ const AdminDashboard = () => {
                         <h6>Wallet </h6>
                         <h3>
                           {getreducerprofiledata?.length !== 0
-                            ? getreducerprofiledata.lenderWalletAmount -
-                              getreducerprofiledata.holdAmountInDealParticipation -
-                              getreducerprofiledata.equityAmount
+                            ? getreducerprofiledata?.lenderWalletAmount -
+                              getreducerprofiledata?.holdAmountInDealParticipation -
+                              getreducerprofiledata?.equityAmount
                             : ""}
                           {/* {getreducerprofiledata.length != 0
                             ? getreducerprofiledata.lenderWalletAmount -
@@ -634,7 +634,7 @@ const AdminDashboard = () => {
                         <h6>Active Deals</h6>
                         <h3>
                           {getdashboardData?.length !== 0
-                            ? getdashboardData.numberOfActiveDealsCount
+                            ? getdashboardData?.numberOfActiveDealsCount ?? 0
                             : ""}
                           {/* {getdashboardData != undefined ||
                           getdashboardData.length != 0
@@ -666,7 +666,7 @@ const AdminDashboard = () => {
                         <h6>Closed Deals</h6>
                         <h3>
                           {getdashboardData?.length !== 0
-                            ? getdashboardData.numberOfClosedDealsCount
+                            ? getdashboardData?.numberOfClosedDealsCount ?? 0
                             : ""}
                           {/* {getdashboardData.length != 0 ||
                           getdashboardData != undefined
@@ -698,8 +698,9 @@ const AdminDashboard = () => {
                         <h6>Disburse Deals</h6>
                         <h3>
                           {getdashboardData?.length !== 0
-                            ? getdashboardData.numberOfClosedDealsCount +
-                              getdashboardData.numberOfActiveDealsCount
+                            ? getdashboardData?.numberOfClosedDealsCount ??
+                              0 + getdashboardData?.numberOfActiveDealsCount ??
+                              0
                             : ""}
                           {/* {getdashboardData.length != 0 &&
                           getdashboardData != undefined
@@ -736,7 +737,7 @@ const AdminDashboard = () => {
                         Congratulation :
                       </span>
                       {getreducerprofiledata?.length !== 0
-                        ? getreducerprofiledata.groupName == "NewLender"
+                        ? getreducerprofiledata?.groupName == "NewLender"
                           ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
                           : `You are an ${
                               getreducerprofiledata.groupName == "OXYMARCH09" ||

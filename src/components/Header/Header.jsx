@@ -282,8 +282,8 @@ const Header = (profile) => {
                 />
                 <div className="user-text text-wrap text-lowercase">
                   <h6>
-                    {reduxStoreData?.length !== 0
-                      ? reduxStoreData.firstName
+                    {reduxStoreData?.length != 0
+                      ? reduxStoreData?.firstName ?? ""
                       : ""}
 
                     {/* {reduxStoreData.length !== 0 && reduxStoreData != undefined
@@ -308,7 +308,9 @@ const Header = (profile) => {
                 <div className="user-text">
                   <p className="text-muted mb-0">
                     LR {""}
-                    {reduxStoreData?.length !== 0 ? reduxStoreData.userId : ""}
+                    {reduxStoreData?.length !== 0
+                      ? reduxStoreData?.userId ?? 0
+                      : ""}
                     {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
                       ? reduxStoreData.userId
                       : dashboarddata.profileData != "" &&
@@ -319,7 +321,7 @@ const Header = (profile) => {
 
                   <p className="text-muted mb-0">
                     {reduxStoreData?.length !== 0
-                      ? reduxStoreData.groupName
+                      ? reduxStoreData?.groupName ?? ""
                       : ""}
                     {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
                       ? reduxStoreData.groupName
@@ -331,9 +333,9 @@ const Header = (profile) => {
                   <p className="text-muted mb-0">
                     Wallet :
                     {reduxStoreData?.length !== 0
-                      ? reduxStoreData.lenderWalletAmount -
-                        reduxStoreData.holdAmountInDealParticipation -
-                        reduxStoreData.equityAmount
+                      ? reduxStoreData?.lenderWalletAmount -
+                        reduxStoreData?.holdAmountInDealParticipation -
+                        reduxStoreData?.equityAmount
                       : ""}
                     {/* {reduxStoreData.length != 0 && reduxStoreData != undefined
                       ? reduxStoreData.lenderWalletAmount -
