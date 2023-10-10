@@ -6,7 +6,7 @@ import { principal_return_account_type } from '../../HttpRequest/afterlogin';
 function ModalComponet({data ,heading }) {
   const [show, setShow] = useState(true);
 
-  const handleClose = () => {
+  const handleClose = async() => {
     response = principal_return_account_type()
     response.then((data)=>{
       console.log(data)
