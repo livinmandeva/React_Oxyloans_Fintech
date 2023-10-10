@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import { Pagination } from "antd";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import { itemRender } from "../../../Pagination";
 import "./InvoiceGrid.css";
 import {
   myrunnig,
@@ -137,172 +139,185 @@ const MyRunningDelas = () => {
             </div>
 
             {Array.isArray(runningdeals.data) ? (
-              runningdeals.data.map((data, index) => (
-                <div className="row" key={index}>
-                  <>
-                    <div className="card invoices-tabs-card border-0">
-                      <div className="card-body card-body pt-0 pb-0">
-                        <div className="invoices-main-tabs border-0 pb-0"></div>
+              <>
+                <Pagination
+                  defaultCurrent={1}
+                  total={50}
+                  className="pull-right"
+                />
+                {runningdeals.data.map((data, index) => (
+                  <div className="row" key={index}>
+                    <>
+                      <div className="card invoices-tabs-card border-0">
+                        <div className="card-body card-body pt-0 pb-0">
+                          <div className="invoices-main-tabs border-0 pb-0"></div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
-                        <div className="card invoices-grid-card w-100">
-                          <div className="card-header row">
-                            <Link
-                              to="#"
-                              className="invoice-grid-link col-sm-12 col-lg-4"
-                            >
-                              Deal Name: {data.dealName}{" "}
-                              {localStorage.setItem("dealID", data.dealId)}
-                            </Link>
+                      <div className="row">
+                        <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
+                          <div className="card invoices-grid-card w-100">
+                            <div className="card-header row">
+                              <Link
+                                to="#"
+                                className="invoice-grid-link col-sm-12 col-lg-4"
+                              >
+                                Deal Name: {data.dealName}{" "}
+                                {localStorage.setItem("dealID", data.dealId)}
+                              </Link>
 
-                            <div className="col-sm-12 col-lg-2">
-                              RoI :{data.rateOfInterest} %
-                            </div>
-                            <div className="col-sm-12 col-lg-3">
-                              Tenure : {data.dealDuration} M
-                            </div>
-                            <div className="col-auto col-lg-3">
-                              Participated : INR {data.paticipatedAmount}
-                            </div>
-                            {/* <div>Status : Open</div> */}
-                          </div>
-                          <div className="card-middle row">
-                            <div className="col-sm-12 col-lg-6">
-                              <h6>Deal Type : {data.dealType}</h6>
-                              <h6>First Interest : {data.firstInterestDate}</h6>
-                              <h6>
-                                Participated Date :{" "}
-                                {data.firstParticipationDate}
-                              </h6>
-                            </div>
-                            <div className="col-sm-12 col-lg-6">
-                              <small>
-                                Comments : {data.messageSentToLenders}
-                              </small>
-                            </div>
-                          </div>
-                          <div className="card-body">
-                            <div className="row align-items-center">
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Deal-ID </span>
-                                <h6 className="mb-0">{data.dealId}</h6>
+                              <div className="col-sm-12 col-lg-2">
+                                RoI :{data.rateOfInterest} %
                               </div>
-                              {data.interestEarned != null ? (
+                              <div className="col-sm-12 col-lg-3">
+                                Tenure : {data.dealDuration} M
+                              </div>
+                              <div className="col-auto col-lg-3">
+                                Participated : INR {data.paticipatedAmount}
+                              </div>
+                              {/* <div>Status : Open</div> */}
+                            </div>
+                            <div className="card-middle row">
+                              <div className="col-sm-12 col-lg-6">
+                                <h6>Deal Type : {data.dealType}</h6>
+                                <h6>
+                                  First Interest : {data.firstInterestDate}
+                                </h6>
+                                <h6>
+                                  Participated Date :{" "}
+                                  {data.firstParticipationDate}
+                                </h6>
+                              </div>
+                              <div className="col-sm-12 col-lg-6">
+                                <small>
+                                  Comments : {data.messageSentToLenders}
+                                </small>
+                              </div>
+                            </div>
+                            <div className="card-body">
+                              <div className="row align-items-center">
                                 <div className="col-sm-6 col-lg-2">
-                                  <span>Interest Earned</span>
+                                  <span>Deal-ID </span>
+                                  <h6 className="mb-0">{data.dealId}</h6>
+                                </div>
+                                {data.interestEarned != null ? (
+                                  <div className="col-sm-6 col-lg-2">
+                                    <span>Interest Earned</span>
+                                    <h6 className="mb-0">
+                                      INR {data.interestEarned}
+                                    </h6>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+
+                                <div className="col-sm-6 col-lg-2">
+                                  <span>Payout Type </span>
                                   <h6 className="mb-0">
-                                    INR {data.interestEarned}
+                                    {data.lederReturnType}
                                   </h6>
                                 </div>
-                              ) : (
-                                ""
-                              )}
+                                <div className="col-sm-6 col-lg-2">
+                                  <span>Is ATW</span>
+                                  <h6 className="mb-0">
+                                    {data.withdrawStatus}
+                                  </h6>
+                                </div>
 
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Payout Type </span>
-                                <h6 className="mb-0">{data.lederReturnType}</h6>
-                              </div>
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Is ATW</span>
-                                <h6 className="mb-0">{data.withdrawStatus}</h6>
-                              </div>
-
-                              {/* <div className="col-sm-6 col-lg-2">
+                                {/* <div className="col-sm-6 col-lg-2">
                                 <span>ATW ROI</span>
                                 <h6 className="mb-0">
                                   {data.dealRateofinterest} %
                                 </h6>
                               </div> */}
 
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Deal Status</span>
-                                <h6 className="mb-0">
-                                  {" "}
-                                  {data.participationStatus}
-                                </h6>
-                              </div>
+                                <div className="col-sm-6 col-lg-2">
+                                  <span>Deal Status</span>
+                                  <h6 className="mb-0">
+                                    {" "}
+                                    {data.participationStatus}
+                                  </h6>
+                                </div>
 
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Principal Payout</span>
-                                <h6 className="mb-0">{data.accountType}</h6>
+                                <div className="col-sm-6 col-lg-2">
+                                  <span>Principal Payout</span>
+                                  <h6 className="mb-0">{data.accountType}</h6>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="card-footer">
-                            <div className="row align-items-center">
-                              <div className="col-auto">
-                                <span
-                                  className="badge bg-success-dark"
-                                  type="button"
-                                  onClick={() => {
-                                    paticipationChanges(data.dealId);
-                                  }}
-                                >
-                                  Participation Details
-                                </span>
-                              </div>
+                            <div className="card-footer">
+                              <div className="row align-items-center">
+                                <div className="col-auto">
+                                  <span
+                                    className="badge bg-success-dark"
+                                    type="button"
+                                    onClick={() => {
+                                      paticipationChanges(data.dealId);
+                                    }}
+                                  >
+                                    Participation Details
+                                  </span>
+                                </div>
 
-                              <div className="col-auto">
-                                <span
-                                  type="button"
-                                  className="badge bg-primary-dark"
-                                  onClick={() => handlemodalopen(data.dealId)}
-                                >
-                                  View Statement
-                                </span>
-                              </div>
+                                <div className="col-auto">
+                                  <span
+                                    type="button"
+                                    className="badge bg-primary-dark"
+                                    onClick={() => handlemodalopen(data.dealId)}
+                                  >
+                                    View Statement
+                                  </span>
+                                </div>
 
-                              <div className="col-auto">
-                                <a
-                                  href={data.groupLink}
-                                  target="_blank"
-                                  className="badge bg-success"
-                                >
-                                  <i className="fa fa-whatsapp"></i> Join Deal
-                                </a>
-                              </div>
+                                <div className="col-auto">
+                                  <a
+                                    href={data.groupLink}
+                                    target="_blank"
+                                    className="badge bg-success"
+                                  >
+                                    <i className="fa fa-whatsapp"></i> Join Deal
+                                  </a>
+                                </div>
 
-                              <div className="col-auto">
-                                <Link
-                                  className="badge bg-danger"
-                                  to={`/writetous?dealName=${data.dealName}&&dealId=${data.dealId}`}
-                                >
-                                  Raise A query
-                                </Link>
-                              </div>
+                                <div className="col-auto">
+                                  <Link
+                                    className="badge bg-danger"
+                                    to={`/writetous?dealName=${data.dealName}&&dealId=${data.dealId}`}
+                                  >
+                                    Raise A query
+                                  </Link>
+                                </div>
 
-                              <div className="col-auto">
-                                <span
-                                  type="button"
-                                  className="badge bg-info"
-                                  onClick={() =>
-                                    principal_return_account_type(
-                                      data.accountType,
-                                      data.dealId
-                                    )
-                                  }
-                                >
-                                  Edit PayOut
-                                </span>
-                              </div>
+                                <div className="col-auto">
+                                  <span
+                                    type="button"
+                                    className="badge bg-info"
+                                    onClick={() =>
+                                      principal_return_account_type(
+                                        data.accountType,
+                                        data.dealId
+                                      )
+                                    }
+                                  >
+                                    Edit PayOut
+                                  </span>
+                                </div>
 
-                              <div className="col-auto">
-                                <span className="badge bg-success-dark">
-                                  Participate
-                                </span>
+                                <div className="col-auto">
+                                  <span className="badge bg-success-dark">
+                                    Participate
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>
+                    </>
 
-                  {/* Your card component and content */}
-                </div>
-              ))
+                    {/* Your card component and content */}
+                  </div>
+                ))}
+              </>
             ) : (
               <p>No data available</p>
             )}
