@@ -229,17 +229,55 @@ export const paticipationChanges1 = async (dealId) => {
   return response;
 };
 
-export const regular_Api = async (dealType) => {
+
+
+export const handelapi=async(dealId)=>{
+
+
+  
   const token = getToken();
   const userId = getUserId();
-  var data = {
-    pageNo: 1,
-    pageSize: 20,
-    dealType: dealType,
-  };
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${userId}/listOfDealsInformationToLender`,
+    `${userId}/${dealId}/closedDealsInterest`,
+    "GET",
+    token
+
+  )
+  return response
+}
+export const regular_Api = async (dealType , urldealname) => {
+  const token = getToken();
+  const userId = getUserId();
+  console.log(urldealname)
+  if(urldealname == "regularEscrowDeals"){
+    var url="listOfDealsInformationForEquityDeals";
+    var data = {
+      pageNo: 1,
+      pageSize: 20,
+      dealName:"Escrow",
+      dealType: dealType,
+    };
+  }else if(urldealname == "regularPersonalDeal"){ 
+    var url="listOfDealsInformationForEquityDeals";
+    var data = {
+      pageNo: 1,
+      pageSize: 20,
+      dealName:"Personal",
+      dealType: dealType,
+    };
+  }else if(urldealname == "regularRunningDeal"){var url="listOfDealsInformationToLender";
+  
+    var data = {
+      pageNo: 1,
+      pageSize: 20,
+      dealType: dealType,
+    };
+  }
+ 
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/${url}`,
 
     "POST",
     token,

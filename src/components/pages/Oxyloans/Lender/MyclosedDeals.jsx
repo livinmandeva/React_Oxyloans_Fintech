@@ -6,7 +6,8 @@ import { pagination, Table } from "antd";
 import { Link } from "react-router-dom";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import { myclosedDealsInfo } from "../../../HttpRequest/afterlogin";
+import {  handelapi, myclosedDealsInfo } from "../../../HttpRequest/afterlogin";
+import Modaldata from "./Modaldata";
 
 const MyclosedDeals = () => {
   const [myclosedDeals, setmyclosedDeals] = useState({
@@ -16,6 +17,8 @@ const MyclosedDeals = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
+    statement:"",
+    model:false
   });
 
   const myclosedDealsPagination = (Pagination) => {
@@ -27,6 +30,18 @@ const MyclosedDeals = () => {
     });
   };
 
+
+
+  const handelSatement=async(dealId)=>{
+   const response = handelapi(dealId);
+    response.then((data)=>{
+  console.log(data)
+  setmyclosedDeals({
+    ...myclosedDeals,
+    statement:data.data
+  })
+})
+  }
   useEffect(() => {
     const response = myclosedDealsInfo(
       myclosedDeals.pageNo,
@@ -59,7 +74,7 @@ const MyclosedDeals = () => {
             Dealstart: data.fundsAcceptanceStartDate,
             DealClosed: data.dealClosedToLender,
             Statement: (
-              <button type="submit" className="btn  w-70 btn-primary btn-xs">
+              <button type="submit" className="btn  w-70 btn-primary btn-xs" onClick={()=>handelSatement(data.dealId)}>
                 Statement
               </button>
             ),
@@ -143,6 +158,8 @@ const MyclosedDeals = () => {
                               <i className="fas fa-download" /> {""}
                               Download
                             </Link>
+
+                            {myclosedDeals.statement  && <><Modaldata data={myclosedDeals.statement} open={true}/>  {console.log(myclosedDeals.statement)}</>}
                           </div>
                         </div>
                       </div>

@@ -11,23 +11,31 @@ const RegularRunningDeal = () => {
    dealtype:"HAPPENING"
   })
 
+
+
+
+  useEffect(() => {
+
+    const urlparams = window.location.pathname
+    const urldealname = urlparams.slice(1);
+    console.log(urldealname);
+    const handleRegular = () => {
+      const response = regular_Api(regular_runningDeal.dealtype, urldealname);
   
-useEffect(()=>{
-  const handelreguar=()=>{
-    const response= regular_Api(regular_runningDeal.dealtype);
+      response.then((data) => {
+        console.log(data.data);
   
-  response.then((data)=>{
-  console.log(data.data.listOfDealsInformationToLender);
+        setRegularRunningDeal({
+          ...regular_runningDeal,
+          apidata: data.data,
+        });
+      });
+    }
   
-  setRegularRunningDeal({
-    ...regular_runningDeal,
-    apidata:data.data.listOfDealsInformationToLender,
-  })
-  })
-  }
+   
+    handleRegular();
+  }, []); // Include urldealname as a dependency
   
-  handelreguar()
-},[])
   return (
     <>
       <div className="main-wrapper">
@@ -60,21 +68,20 @@ useEffect(()=>{
             <div className="card report-card">
               <div className="card-body h-10">
                 <div className="row">
-                  <button className="btn btn-warning col-lg-3 col-sm-6">
+                  <Link to="/myclosedDeals" className="btn btn-warning col-lg-3 col-sm-6">
                     Regular Closed Delas
-                  </button>
-                  <button className="btn btn-success col-lg-3 col-sm-6  mx-lg-2">
+                  </Link>
+                  <Link to="/myRunningDelas" className="btn btn-success col-lg-3 col-sm-6  mx-lg-2">
                     My Participated Delas
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
-
-            <>
+            {regular_runningDeal.apidata.listOfDealsInformationToLender  &&     <>
     {  console.log(regular_runningDeal.apidata)}
-
-    {regular_runningDeal.apidata !== "" ? (
-  regular_runningDeal.apidata.map((data, index) => (
+   
+    {regular_runningDeal.apidata.listOfDealsInformationToLender !== "" ? (
+  regular_runningDeal.apidata.listOfDealsInformationToLender.map((data, index) => (
 
     <div className="row"  key={index}>
     <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
@@ -152,9 +159,9 @@ useEffect(()=>{
             </div>
 
             <div className="col-auto">
-              <span className="badge bg-primary-dark">
+              <a href={data.dealLink} className="badge bg-primary-dark" target="_blank">
                 View Borrower Documents
-              </span>
+              </a>
             </div>
           </div>
         </div>
@@ -176,7 +183,9 @@ useEffect(()=>{
 ) : null}
 
             
-            </>
+            </>}
+        
+        {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto  &&  <>{console.log(regular_runningDeal.apidata.listOfBorrowersDealsResponseDto)} </>}
           </div>
         </div>
         {/* /Page Wrapper */}
