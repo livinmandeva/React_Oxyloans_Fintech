@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Table1 from './Table1';
+import { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Table1 from "./Table1";
 
-function Modaldata({data , open: propOpen}) {
-
+function Modaldata({ data, open: propOpen }) {
   const [lgShow, setLgShow] = useState(propOpen);
-
-
 
   return (
     <>
-   
       <Modal
         size="lg"
         show={lgShow}
@@ -20,17 +16,11 @@ function Modaldata({data , open: propOpen}) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
-          Download statement
+            Download statement
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
-            <Table1  data={data}/>
-            {/* {data.lenderReturns.map((data,index)=>(
-                <div key={index}>
-                    <h6>{data.status}</h6>
-                </div>
-            ))}    */}
+          <Table1 data={data} />
         </Modal.Body>
       </Modal>
     </>

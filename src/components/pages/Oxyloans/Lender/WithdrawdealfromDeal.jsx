@@ -128,7 +128,9 @@ const WithdrawdealfromDeal = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">withdrawdeal fromDeal</li>
+                    <li className="breadcrumb-item active">
+                      withdrawdeal from Deal
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -142,9 +144,6 @@ const WithdrawdealfromDeal = () => {
                     <div className="row col-12">
                       <button className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2">
                         Withdraw From Escrow
-                      </button>
-                      <button className="btn btn-xs btn-success col-md-2 col-xs-6 col-lg-3 ">
-                        Withdraw From Normal
                       </button>
                     </div>
                   </div>

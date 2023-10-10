@@ -253,9 +253,7 @@ const Profile = () => {
                       </div>
                     </div>
                     <div className="col-auto profile-btn">
-                      <Link to="#" className="btn btn-primary">
-                        Edit
-                      </Link>
+                      <Link className="btn btn-primary">Edit </Link>
                     </div>
                   </div>
                 </div>

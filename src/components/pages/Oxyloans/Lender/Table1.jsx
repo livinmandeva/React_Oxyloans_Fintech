@@ -1,13 +1,14 @@
-import React from 'react';
-import { Table } from 'antd';
+import React from "react";
+import { Table } from "antd";
 
-const Table1 = ({ data }) => { // Change the parameter name to data1
+const Table1 = ({ data }) => {
+  // Change the parameter name to data1
   // Initialize newData as an empty array
   const newData = [];
 
   if (data !== "") {
-    console.log(data)
-    data.lenderReturns.map((dataItem , index) => {
+    console.log(data);
+    data.lenderReturns.map((dataItem, index) => {
       newData.push({
         no: index,
         date: dataItem.returnedDate,
@@ -19,17 +20,17 @@ const Table1 = ({ data }) => { // Change the parameter name to data1
 
   const columns = [
     {
-      title: 'No',
-      dataIndex: 'no',
+      title: "No",
+      dataIndex: "no",
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
+      title: "Date",
+      dataIndex: "date",
       sorter: (a, b) => a.date.localeCompare(b.date),
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
+      title: "Amount",
+      dataIndex: "amount",
     },
   ];
 

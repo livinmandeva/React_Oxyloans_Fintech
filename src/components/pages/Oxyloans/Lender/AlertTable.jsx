@@ -1,57 +1,66 @@
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';import './InvoiceGrid.css'
-import { Space, Table, Tag } from 'antd';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import "./InvoiceGrid.css";
+import { Space, Table, Tag } from "antd";
+import { Link } from "react-router-dom";
 const { Column, ColumnGroup } = Table;
 
-function AlertTable({data , open: propOpen}) {
+function AlertTable({ data, open: propOpen, sendRunningDealStatement }) {
   const [show, setShow] = useState(propOpen);
 
-  const tableapi = [];  
-  {data.lenderParticipationUpdatedInfo !== "" ? (
-    data.lenderParticipationUpdatedInfo.map((api) => {
-      tableapi.push({
-        key: Math.random(),
-        upatedDate: api.upatedDate,
-        amount: api.amount,
-      });
-    })
-  ) : (
-    <p>ppp</p>
-  )}
-  
+  const handleClose = async () => {
+    setShow(false);
+    sendRunningDealStatement();
+    // response = principal_return_account_type();
+    // response.then((data) => {
+    //   console.log(data);
+    // });
+  };
+
+  const tableapi = [];
+  {
+    data.lenderParticipationUpdatedInfo !== "" ? (
+      data.lenderParticipationUpdatedInfo.map((api, index) => {
+        tableapi.push({
+          key: index + 1,
+          upatedDate: api.upatedDate,
+          amount: api.amount,
+        });
+      })
+    ) : (
+      <p>No data found</p>
+    );
+  }
 
   return (
     <>
       <Modal
         show={show}
-        onHide={() => setShow(false)}
+        onHide={handleClose}
         dialogClassName="modal-90w lg-down"
         aria-labelledby="example-custom-modal-styling-title"
+        centered
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            {/* {console.log(data.lenderParticipationUpdatedInfo)} */}
-     
             Added participation Amount info
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        {/* {data.lenderParticipationUpdatedInfo != ""  ?
-            data.lenderParticipationUpdatedInfo.map((api ,index)=>{
-                <div  key={index}>
-                <p  style={{zIndex:10}}>{api.amount}</p>
-                {console.log(api.amount)}
-                </div>
-            }) : "pppp"} */}
-   <p>If you've any queries please write to us <Link to="/writetous">Click Here</Link> </p>
-<Table dataSource={tableapi}>
-<Column title="upatedDate" dataIndex="upatedDate" key="upatedDate" />
+          <p>
+            If you've any queries please write to us{" "}
+            <Link to="/writetous">Click Here</Link>{" "}
+          </p>
+          <Table dataSource={tableapi} pagination={false}>
+            <Column
+              title="upatedDate"
+              dataIndex="upatedDate"
+              key="upatedDate"
+            />
 
-     
-<Column title="amount" dataIndex="amount" key="amount" /></Table>
-            
+            <Column title="amount" dataIndex="amount" key="amount" />
+          </Table>
         </Modal.Body>
       </Modal>
     </>
