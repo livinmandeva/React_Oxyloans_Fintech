@@ -130,22 +130,20 @@ export const viewdealamountemi = async (dealId) => {
   return response;
 };
 
-export const principal_return_account_type = async () => {
+export const principal_return_account_type = async (dealId, transfermethod) => {
   const token = getToken();
   const userId = getUserId();
 
-  const dealID = localStorage.getItem("dealID");
   var data = {
     userId: userId,
-    dealId: dealID,
-    accountType: "",
+    dealId: dealId,
+    accountType: transfermethod,
   };
 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `principal_return_account_type`,
     "PATCH",
-
     token,
     data
   );

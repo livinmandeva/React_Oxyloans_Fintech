@@ -1,19 +1,38 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { PrincipalTransfer } from "../Base UI Elements/SweetAlert";
 import { principal_return_account_type } from "../../HttpRequest/afterlogin";
 
-function ModalComponet({ data, heading, sendDataToParent }) {
+function ModalComponet({
+  data,
+  heading,
+  sendDataToParent,
+  dealIdInfo,
+  trasferMethod,
+}) {
   const [show, setShow] = useState(true);
 
+  console.log(dealIdInfo);
   const handleClose = async () => {
     sendDataToParent();
-    // response = principal_return_account_type();
-    // response.then((data) => {
-    //   console.log(data);
-    // });
   };
   const handleShow = () => setShow(true);
+
+  const confirmTrasferPrincipal = () => {
+    sendDataToParent();
+    const response = principal_return_account_type(dealIdInfo, trasferMethod);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        PrincipalTransfer(
+          "success",
+          "You have successfully updated the payout option."
+        );
+      } else if (data.response.data.errorCode != "200") {
+        PrincipalTransfer("warning", data.response.data.errorMessage, "");
+      }
+    });
+  };
 
   return (
     <>
@@ -32,10 +51,10 @@ function ModalComponet({ data, heading, sendDataToParent }) {
         </Modal.Header>
         <Modal.Body>{data}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => {}}>
+          <Button variant="secondary" onClick={handleClose}>
             No
           </Button>
-          <Button variant="primary" onClick={() => {}}>
+          <Button variant="primary" onClick={confirmTrasferPrincipal}>
             Yes
           </Button>
         </Modal.Footer>

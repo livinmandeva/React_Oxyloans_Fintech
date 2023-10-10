@@ -108,6 +108,14 @@ export const WarningAlert = (errorMessage, redirectTo) => {
     }
   });
 };
+
+export const PrincipalTransfer = (warningType, errormessage) => {
+  Swal.fire("Principal Payout!", errormessage, warningType);
+  setTimeout(() => {
+    window.location.reload();
+  }, 3000);
+};
+
 export const Error = () => {
   Swal.fire({
     title: "Error!",

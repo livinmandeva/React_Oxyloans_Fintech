@@ -40,12 +40,12 @@ const MyRunningDelas = () => {
     setOpen(!modelopen);
   };
 
-  const principal_return_account_type = (type) => {
-    console.log(type);
+  const principal_return_account_type = (type, dealId) => {
     setrunningdeals({
       ...runningdeals,
       principalPayout: type == "BANKACCOUNT" ? "WALLET" : "BANKACCOUNT",
       isModalVisible: !runningdeals.isModalVisible,
+      dealID: dealId,
     });
   };
 
@@ -127,6 +127,8 @@ const MyRunningDelas = () => {
                         data={`Are You Sure, you want to move the principal amount to ${runningdeals.principalPayout.toLowerCase()}`}
                         heading={"Payout conformation !"}
                         sendDataToParent={handleDataFromChild}
+                        dealIdInfo={runningdeals.dealID}
+                        trasferMethod={runningdeals.principalPayout}
                       />
                     )}
                   </ul>
@@ -277,7 +279,8 @@ const MyRunningDelas = () => {
                                   className="badge bg-info"
                                   onClick={() =>
                                     principal_return_account_type(
-                                      data.accountType
+                                      data.accountType,
+                                      data.dealId
                                     )
                                   }
                                 >
