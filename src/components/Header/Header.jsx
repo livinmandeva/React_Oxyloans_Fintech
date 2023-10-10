@@ -79,10 +79,7 @@ const Header = (profile) => {
     const sessionsExpire = getSessionExpireTime();
     console.log(sessionsExpire);
     if (sessionsExpire) {
-      WarningAlert(
-        "Your session has expired in 5 minutes continue",
-        "/dashboard"
-      );
+      WarningAlert("Your session is expiring in 5 minutes.", "/dashboard");
     }
   }, []);
 

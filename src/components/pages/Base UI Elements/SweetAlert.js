@@ -91,13 +91,13 @@ export const Info = () => {
 };
 export const WarningAlert = (errorMessage, redirectTo) => {
   Swal.fire({
-    title: "Warning!",
+    title: "session Expiring",
     text: errorMessage,
-    type: "warning",
-    showCancelButton: true,
+    icon: "warning",
     showDenyButton: true,
     confirmButtonText: "Login",
     denyButtonText: "Contine",
+    denyButtonColor: "#5c9b45",
   }).then((result) => {
     console.log(result);
     if (result.isConfirmed) {

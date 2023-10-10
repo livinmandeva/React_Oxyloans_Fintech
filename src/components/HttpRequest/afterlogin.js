@@ -858,6 +858,6 @@ export const getNewSessionTime = async () => {
   sessionStorage.setItem("tokenTime", response.data.tokenGeneratedTime);
   setTimeout(() => {
     window.location.reload();
-  }, 1500);
+  }, 2500);
   return response;
 };
