@@ -140,11 +140,13 @@ const MyRunningDelas = () => {
 
             {Array.isArray(runningdeals.data) ? (
               <>
+              <div className="pangnation">
                 <Pagination
                   defaultCurrent={1}
                   total={50}
                   className="pull-right"
                 />
+                </div>
                 {runningdeals.data.map((data, index) => (
                   <div className="row" key={index}>
                     <>

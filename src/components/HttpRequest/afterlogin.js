@@ -20,7 +20,19 @@ export const loadVirtualAccount = () => {
     userId,
   };
 };
+export const handledetail =async(dealId)=>{
+  
 
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/${dealId}/singleDeal`,
+    "GET",
+    token
+  );
+  return response;
+}
 export const getUserSessionTime = () => {
   return sessionStorage.getItem("tokenTime");
 };
@@ -115,6 +127,7 @@ export const LoadwalletThroughQrScan = async (amount) => {
 
   return response;
 };
+
 export const viewdealamountemi = async (dealId) => {
   const token = getToken();
   const userId = getUserId();

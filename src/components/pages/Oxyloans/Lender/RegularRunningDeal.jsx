@@ -3,12 +3,56 @@ import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import { Table } from "antd";
 
 const RegularRunningDeal = () => {
   const [regular_runningDeal, setRegularRunningDeal] = useState({
     apidata: "",
     dealtype: "HAPPENING",
   });
+
+  const dataSource = [];
+
+  regular_runningDeal.apidata !="" ? 
+dataSource.push({
+    name: regular_runningDeal.apidata.dealName,
+    loanamount:regular_runningDeal.apidata.dealAmount,
+    availablelimit:regular_runningDeal.apidata.remainingAmountInDeal,
+    tenureinmonths: regular_runningDeal.apidata.duration,
+    funding:regular_runningDeal.apidata.fundStartDate,
+    fundingdate:regular_runningDeal.apidata.fundEndDate,
+    minimumparticipation:regular_runningDeal.apidata.minimumPaticipationAmount,
+    maximumparticipation:regular_runningDeal.apidata.lenderParticiptionLimit,
+
+}) : null
+const columns = [
+  {
+    title: 'Deal Info',
+    dataIndex: 'Deal Info',
+    key: 'deal',
+  },
+  {
+    title: 'Participation Details',
+    dataIndex: 'loanamount',
+    key: 'loanamount',
+  },
+  {
+    title: 'Duration & Time Limits',
+    dataIndex: 'availablelimit',
+    key: 'availablelimit',
+  },
+  {
+    title: 'ROI & Withdrawal Details',
+    dataIndex: 'tenureinmonths',
+    key: 'tenureinmonths',
+  },
+  {
+    title: 'Participate',
+    dataIndex: 'funding',
+    key: 'funding',
+  },
+];
+
 
   useEffect(() => {
     const urlparams = window.location.pathname;
@@ -169,24 +213,19 @@ const RegularRunningDeal = () => {
                                     </h6>
                                   </div>
 
-                                  <div className="col-sm-6 col-lg-2">
-                                    <span>Deal Status</span>
-                                    <h6 className="mb-0">
-                                      {data.fundingStatus}
-                                    </h6>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="card-footer">
-                                <div className="row align-items-center">
-                                  <div className="col-auto">
-                                    <a
-                                      href={data.dealLink}
-                                      className="badge bg-success-dark"
-                                    >
-                                      Participate
-                                    </a>
-                                  </div>
+            <div className="col-sm-6 col-lg-2">
+              <span>Deal Status</span>
+              <h6 className="mb-0">{data.fundingStatus}</h6>
+            </div>
+          </div>
+        </div>
+        <div className="card-footer">
+          <div className="row align-items-center">
+            <div className="col-auto">
+              <Link to={`participatedeal?dealId=${data.dealId}`} className="badge bg-success-dark">
+                Participate
+              </Link>
+            </div>
 
                                   <div className="col-auto">
                                     <a
@@ -219,9 +258,13 @@ const RegularRunningDeal = () => {
 
             {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
+              <div className="card">
+              <Table dataSource={dataSource} columns={columns} />
+              </div>
                 {console.log(
                   regular_runningDeal.apidata.listOfBorrowersDealsResponseDto
-                )}{" "}
+                )
+                }{" "}
               </>
             )}
           </div>
