@@ -24,6 +24,11 @@ const MywithdrawalHistory = () => {
     });
   };
 
+  const confirmcancelrequest = (fromrequest, id) => {
+    console.log(fromrequest);
+    console.log(id);
+  };
+
   useEffect(() => {
     const response = getMyWithdrawalHistory(
       mywithdrawalHistory.pageNo,
@@ -42,6 +47,8 @@ const MywithdrawalHistory = () => {
     return () => {};
   }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
 
+  console.log(mywithdrawalHistory);
+
   const datasource = [];
   {
     mywithdrawalHistory.apiData != ""
@@ -54,7 +61,13 @@ const MywithdrawalHistory = () => {
             requestedFrom: data.requestFrom,
             status: data.status,
             action: (
-              <button type="submit" className="btn  w-70 btn-primary btn-xs">
+              <button
+                type="submit"
+                className="btn  w-70 btn-primary btn-xs"
+                onClick={() => {
+                  confirmcancelrequest(data.requestFrom, data.id);
+                }}
+              >
                 Cancel Request
               </button>
             ),

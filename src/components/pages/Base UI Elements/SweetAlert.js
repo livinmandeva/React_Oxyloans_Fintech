@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getNewSessionTime } from "../../HttpRequest/afterlogin";
+import {
+  getNewSessionTime,
+  getFinancialReportDownload,
+} from "../../HttpRequest/afterlogin";
 
 export const HandleClick = () => {
   Swal.fire({
@@ -233,5 +236,46 @@ export const confirmColor = () => {
           type: "error",
           confirmButtonClass: "btn btn-success",
         });
+  });
+};
+
+export const confirmationAlertFyYear = (startdate, enddate, downloadType) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: `You want to ${
+      downloadType == "DOWNLOAD"
+        ? "Download the FY Statement"
+        : "Get FY Email Statement"
+    } `,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes !",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const response = getFinancialReportDownload(
+        startdate,
+        enddate,
+        downloadType
+      );
+      response.then((data) => {
+        console.log(data);
+        if (data.request.status == 200) {
+          if (downloadType == "DOWNLOAD") {
+            window.location.href = data.data.lenderProfit;
+          }
+          Swal.fire(
+            "Success!",
+            `${
+              downloadType == "DOWNLOAD"
+                ? "Your file has been downloaded."
+                : "We have sent FY Statement  to your Email"
+            }`,
+            "success"
+          );
+        }
+      });
+    }
   });
 };

@@ -13,46 +13,48 @@ const RegularRunningDeal = () => {
 
   const dataSource = [];
 
-  regular_runningDeal.apidata !="" ? 
-dataSource.push({
-    name: regular_runningDeal.apidata.dealName,
-    loanamount:regular_runningDeal.apidata.dealAmount,
-    availablelimit:regular_runningDeal.apidata.remainingAmountInDeal,
-    tenureinmonths: regular_runningDeal.apidata.duration,
-    funding:regular_runningDeal.apidata.fundStartDate,
-    fundingdate:regular_runningDeal.apidata.fundEndDate,
-    minimumparticipation:regular_runningDeal.apidata.minimumPaticipationAmount,
-    maximumparticipation:regular_runningDeal.apidata.lenderParticiptionLimit,
-
-}) : null
-const columns = [
-  {
-    title: 'Deal Info',
-    dataIndex: 'Deal Info',
-    key: 'deal',
-  },
-  {
-    title: 'Participation Details',
-    dataIndex: 'loanamount',
-    key: 'loanamount',
-  },
-  {
-    title: 'Duration & Time Limits',
-    dataIndex: 'availablelimit',
-    key: 'availablelimit',
-  },
-  {
-    title: 'ROI & Withdrawal Details',
-    dataIndex: 'tenureinmonths',
-    key: 'tenureinmonths',
-  },
-  {
-    title: 'Participate',
-    dataIndex: 'funding',
-    key: 'funding',
-  },
-];
-
+  regular_runningDeal.apidata != ""
+    ? dataSource.push({
+        key: Math.random(),
+        name: regular_runningDeal.apidata.dealName,
+        loanamount: regular_runningDeal.apidata.dealAmount,
+        availablelimit: regular_runningDeal.apidata.remainingAmountInDeal,
+        tenureinmonths: regular_runningDeal.apidata.duration,
+        funding: regular_runningDeal.apidata.fundStartDate,
+        fundingdate: regular_runningDeal.apidata.fundEndDate,
+        minimumparticipation:
+          regular_runningDeal.apidata.minimumPaticipationAmount,
+        maximumparticipation:
+          regular_runningDeal.apidata.lenderParticiptionLimit,
+      })
+    : null;
+  const columns = [
+    {
+      title: "Deal Info",
+      dataIndex: "Deal Info",
+      key: "deal",
+    },
+    {
+      title: "Participation Details",
+      dataIndex: "loanamount",
+      key: "loanamount",
+    },
+    {
+      title: "Duration & Time Limits",
+      dataIndex: "availablelimit",
+      key: "availablelimit",
+    },
+    {
+      title: "ROI & Withdrawal Details",
+      dataIndex: "tenureinmonths",
+      key: "tenureinmonths",
+    },
+    {
+      title: "Participate",
+      dataIndex: "funding",
+      key: "funding",
+    },
+  ];
 
   useEffect(() => {
     const urlparams = window.location.pathname;
@@ -88,14 +90,12 @@ const columns = [
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Running & Closed Deals</h3>
+                  <h3 className="page-title">Running Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                      Running & Closed Deals{" "}
-                    </li>
+                    <li className="breadcrumb-item active">Running Deals </li>
                   </ul>
                 </div>
               </div>
@@ -213,19 +213,24 @@ const columns = [
                                     </h6>
                                   </div>
 
-            <div className="col-sm-6 col-lg-2">
-              <span>Deal Status</span>
-              <h6 className="mb-0">{data.fundingStatus}</h6>
-            </div>
-          </div>
-        </div>
-        <div className="card-footer">
-          <div className="row align-items-center">
-            <div className="col-auto">
-              <Link to={`participatedeal?dealId=${data.dealId}`} className="badge bg-success-dark">
-                Participate
-              </Link>
-            </div>
+                                  <div className="col-sm-6 col-lg-2">
+                                    <span>Deal Status</span>
+                                    <h6 className="mb-0">
+                                      {data.fundingStatus}
+                                    </h6>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="card-footer">
+                                <div className="row align-items-center">
+                                  <div className="col-auto">
+                                    <Link
+                                      to={`participatedeal?dealId=${data.dealId}`}
+                                      className="badge bg-success-dark"
+                                    >
+                                      Participate
+                                    </Link>
+                                  </div>
 
                                   <div className="col-auto">
                                     <a
@@ -240,15 +245,6 @@ const columns = [
                               </div>
                             </div>
                           </div>
-
-                          {/* 
-    <div className="col-lg-12">
-      <div className="invoice-load-btn">
-        <Link to="#" className="btn">
-          <span className="spinner-border text-primary" /> Load more
-        </Link>
-      </div>
-    </div> */}
                         </div>
                       )
                     )
@@ -258,13 +254,18 @@ const columns = [
 
             {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
-              <div className="card">
-              <Table dataSource={dataSource} columns={columns} />
-              </div>
-                {console.log(
-                  regular_runningDeal.apidata.listOfBorrowersDealsResponseDto
-                )
-                }{" "}
+                {console.log(dataSource.length)}
+                <div className="card">
+                  <Table
+                    columns={columns}
+                    dataSource={
+                      regular_runningDeal.apidata
+                        .listOfBorrowersDealsResponseDto.length !== 0
+                        ? dataSource
+                        : []
+                    }
+                  />
+                </div>
               </>
             )}
           </div>

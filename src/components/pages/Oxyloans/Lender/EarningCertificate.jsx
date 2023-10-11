@@ -5,6 +5,7 @@ import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { getMyfinancialEarnings } from "../../../HttpRequest/afterlogin";
+import { confirmationAlertFyYear } from "../../Base UI Elements/SweetAlert";
 
 const EarningCertificate = () => {
   const [myfyearnings, setmyfyearnings] = useState({
@@ -13,7 +14,9 @@ const EarningCertificate = () => {
     loading: true,
   });
 
-  const profitearnedCertificate = (pa, er, ey) => {};
+  const profitearnedCertificate = (startdate, enddate, downloadType) => {
+    confirmationAlertFyYear(startdate, enddate, downloadType);
+  };
 
   useEffect(() => {
     const response = getMyfinancialEarnings();
@@ -42,11 +45,14 @@ const EarningCertificate = () => {
             DOWNLOADFYREPORT: (
               <span
                 className="badge bg-success"
-                onClick={profitearnedCertificate(
-                  data.startDate,
-                  data.endDate,
-                  "DOWNLOAD"
-                )}
+                type="button"
+                onClick={() => {
+                  profitearnedCertificate(
+                    data.startDate,
+                    data.endDate,
+                    "DOWNLOAD"
+                  );
+                }}
               >
                 Download FY Report
               </span>
@@ -54,11 +60,14 @@ const EarningCertificate = () => {
             EMAILFYREPORT: (
               <span
                 className="badge bg-info"
-                onClick={profitearnedCertificate(
-                  data.startDate,
-                  data.endDate,
-                  "EMAIL"
-                )}
+                type="button"
+                onClick={() => {
+                  profitearnedCertificate(
+                    data.startDate,
+                    data.endDate,
+                    "EMAIL"
+                  );
+                }}
               >
                 Get FY Email Report
               </span>
@@ -114,7 +123,9 @@ const EarningCertificate = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">earning Certificate</li>
+                    <li className="breadcrumb-item active">
+                      Earning Certificate
+                    </li>
                   </ul>
                 </div>
               </div>

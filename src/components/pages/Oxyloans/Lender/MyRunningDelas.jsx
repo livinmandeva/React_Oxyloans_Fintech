@@ -27,6 +27,9 @@ const MyRunningDelas = () => {
     dealLevelLoanEmiCard: "",
     model2: false,
     principalPayout: true,
+    paginationCount: 0,
+    pageNo: 1,
+    pageSize: 10,
   });
   const [modelopen, setOpen] = useState(false);
 
@@ -79,16 +82,24 @@ const MyRunningDelas = () => {
     });
   };
 
+  const changepagination = (pros) => {
+    setrunningdeals({
+      ...runningdeals,
+      pageNo: pros,
+    });
+  };
+
   useEffect(() => {
     const response = myrunnig(runningdeals);
     response.then((data) => {
-      console.log(data);
       setrunningdeals({
         ...runningdeals,
         data: data.data.lenderPaticipatedResponseDto,
+        paginationCount: data.data.count,
       });
     });
-  }, []);
+  }, [runningdeals.pageNo]);
+
   return (
     <>
       <div className="main-wrapper">
@@ -103,7 +114,7 @@ const MyRunningDelas = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Participated & Closed Deals </h3>
+                  <h3 className="page-title">Participated Deals </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
@@ -140,12 +151,13 @@ const MyRunningDelas = () => {
 
             {Array.isArray(runningdeals.data) ? (
               <>
-              <div className="pangnation">
-                <Pagination
-                  defaultCurrent={1}
-                  total={50}
-                  className="pull-right"
-                />
+                <div className="pangnation">
+                  <Pagination
+                    defaultCurrent={1}
+                    total={runningdeals.paginationCount}
+                    className="pull-right"
+                    onChange={changepagination}
+                  />
                 </div>
                 {runningdeals.data.map((data, index) => (
                   <div className="row" key={index}>
@@ -304,11 +316,15 @@ const MyRunningDelas = () => {
                                   </span>
                                 </div>
 
-                                <div className="col-auto">
-                                  <span className="badge bg-success-dark">
-                                    Participate
-                                  </span>
-                                </div>
+                                {data.participationStatus != "ACHIEVED" ? (
+                                  <div className="col-auto">
+                                    <span className="badge bg-success-dark">
+                                      Participate
+                                    </span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
                           </div>

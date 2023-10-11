@@ -20,9 +20,7 @@ export const loadVirtualAccount = () => {
     userId,
   };
 };
-export const handledetail =async(dealId)=>{
-  
-
+export const handledetail = async (dealId) => {
   const token = getToken();
   const userId = getUserId();
   const response = await handleApiRequestAfterLoginService(
@@ -32,7 +30,7 @@ export const handledetail =async(dealId)=>{
     token
   );
   return response;
-}
+};
 export const getUserSessionTime = () => {
   return sessionStorage.getItem("tokenTime");
 };
@@ -143,7 +141,6 @@ export const viewdealamountemi = async (dealId) => {
 };
 
 export const principal_return_account_type = async (dealId, transfermethod) => {
-
   const token = getToken();
   const userId = getUserId();
 
@@ -162,12 +159,13 @@ export const principal_return_account_type = async (dealId, transfermethod) => {
   );
   return response;
 };
-export const myrunnig = async () => {
+export const myrunnig = async (props) => {
   const token = getToken();
   const userId = getUserId();
 
+  console.log(props);
   const data = {
-    pageNo: 1,
+    pageNo: props.pageNo,
     pageSize: 10,
   };
 
@@ -175,7 +173,6 @@ export const myrunnig = async () => {
     API_BASE_URL,
     `${userId}/runningDealsInfoBasedOnPagination`,
     "POST",
-
     token,
     data
   );
@@ -901,5 +898,48 @@ export const getNewSessionTime = async () => {
   setTimeout(() => {
     window.location.reload();
   }, 2500);
+  return response;
+};
+
+export const cancelWithdrawalRequest = async (fromrequest, requestId) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  var postdata = JSON.stringify({
+    id: requestId,
+    userId: userId,
+    requestFrom: fromrequest,
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `to-cancel-withdrawal-request`,
+    "PATCH",
+    token,
+    postdata
+  );
+  return response;
+};
+
+export const getFinancialReportDownload = async (
+  startDate,
+  endDate,
+  requestTypefromBtn
+) => {
+  const token = getToken();
+  const userId = getUserId();
+  var postdata = JSON.stringify({
+    startDate,
+    endDate,
+    inputType: requestTypefromBtn,
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lender-income`,
+    "POST",
+    token,
+    postdata
+  );
   return response;
 };
