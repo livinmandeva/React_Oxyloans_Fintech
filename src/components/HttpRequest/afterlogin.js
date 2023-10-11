@@ -115,7 +115,6 @@ export const LoadwalletThroughQrScan = async (amount) => {
 
   return response;
 };
-
 export const viewdealamountemi = async (dealId) => {
   const token = getToken();
   const userId = getUserId();
@@ -131,6 +130,7 @@ export const viewdealamountemi = async (dealId) => {
 };
 
 export const principal_return_account_type = async (dealId, transfermethod) => {
+
   const token = getToken();
   const userId = getUserId();
 

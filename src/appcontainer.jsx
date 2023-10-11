@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch } from "react-router-dom";
+import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
 
 const Login = React.lazy(() => import("./components/pages/Authentication"));
 const Register = React.lazy(() =>
@@ -206,6 +207,7 @@ const appcontainer = () => {
           <Route path="/emicalculator" component={Emicalculator} />
           <Route path="/configautoInvest" component={ConfigautoInvest} />
           <Route path="/viewAutoHistory" component={ViewAutoHistory} />
+          <Route path="/participatedeal" component={Participatedeal} />
           <Route path="/regularRunningDeal" component={RegularRunningDeal} />
           <Route path="/regularEscrowDeals" component={RegularEscrowDeals} />
           <Route path="/regularPersonalDeal" component={RegularPersonalDeal} />
