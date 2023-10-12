@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Modal } from 'antd';import '../Lender/InvoiceGrid.css'
-import { title } from 'process';
-import Table from './Table';
-
-
+import React, { useEffect, useState } from "react";
+import { Button, Modal } from "antd";
+import "../Lender/InvoiceGrid.css";
+import { title } from "process";
+import Table from "./Table";
 
 export default function Modell({ data, open: propOpen }) {
+  const [loading, setLoading] = useState(false);
 
-    const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState("Added participation Amount info");
+  const [open, setOpen] = useState(propOpen);
 
-    const  [title ,setTitle]=useState("Added participation Amount info");
-    const [open, setOpen] = useState(propOpen);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(false);
+    }, 3000);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
-
-    const showModal = () => {
-        setOpen(true);
-      };
-      const handleOk = () => {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-          setOpen(false);
-        }, 3000);
-      };
-      const handleCancel = () => {
-        setOpen(false);
-      };
-
-      
   return (
-    
     <div>
- 
-
       <Modal
         open={open}
         title={title}
@@ -42,29 +35,32 @@ export default function Modell({ data, open: propOpen }) {
           left: 80,
         }}
         onCancel={handleCancel}
-        footer={[
-          // <Button key="back" onClick={handleCancel}>
-          //   Return
-          // </Button>,
-          // <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-          //   Submit
-          // </Button>,
-          // <Button
-          //   key="link"
-          //   href="https://google.com"
-          //   type="primary"
-          //   loading={loading}
-          //   onClick={handleOk}
-          // >
-          //   Search on Google
-          // </Button>,
-        ]}
+        footer={
+          [
+            // <Button key="back" onClick={handleCancel}>
+            //   Return
+            // </Button>,
+            // <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+            //   Submit
+            // </Button>,
+            // <Button
+            //   key="link"
+            //   href="https://google.com"
+            //   type="primary"
+            //   loading={loading}
+            //   onClick={handleOk}
+            // >
+            //   Search on Google
+            // </Button>,
+          ]
+        }
       >
-         {console.log(data.lenderParticipationUpdatedInfo)}    
-         {/* Interest Statement */}
-         <p>If you've any queries please write to us <a href="">Click Here</a> </p>
-
+        {console.log(data.lenderParticipationUpdatedInfo)}
+        {/* Interest Statement */}
+        <p>
+          If you've any queries please write to us <a href="">Click Here</a>{" "}
+        </p>
       </Modal>
     </div>
-  )
+  );
 }

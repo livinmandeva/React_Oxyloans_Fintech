@@ -1,6 +1,4 @@
 import axios from "axios";
-import { data, error } from "jquery";
-import { async } from "q";
 const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
@@ -14,47 +12,17 @@ export const getUserId = () => {
   return sessionStorage.getItem("userId");
 };
 
+export const getUserSessionTime = () => {
+  return sessionStorage.getItem("tokenTime");
+};
+
 export const loadVirtualAccount = () => {
   const userId = getUserId();
   return {
     userId,
   };
 };
-export const handledetail = async (dealId) => {
-  const token = getToken();
-  const userId = getUserId();
-  const response = await handleApiRequestAfterLoginService(
-    API_BASE_URL,
-    `${userId}/${dealId}/singleDeal`,
-    "GET",
-    token
-  );
-  return response;
-};
-export const getUserSessionTime = () => {
-  return sessionStorage.getItem("tokenTime");
-};
 
-export const sendInvait = async (email, mailContent, mailSubject) => {
-  const token = getToken();
-  const userId = getUserId();
-  const data = {
-    email: email,
-    referrerId: userId,
-    mailContent: mailContent,
-    mailSubject: mailSubject,
-    inviteType: "BulkInvite",
-  };
-  const response = await handleApiRequestAfterLoginService(
-    API_BASE_URL,
-    `lenderReferring`,
-    "POST",
-    token,
-    data
-  );
-
-  return response;
-};
 const handleApiRequestAfterLoginService = async (
   baseurl,
   endpoint,
@@ -81,6 +49,39 @@ const handleApiRequestAfterLoginService = async (
   } catch (error) {
     return error;
   }
+};
+
+export const handledetail = async (dealId) => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/${dealId}/singleDeal`,
+    "GET",
+    token
+  );
+  return response;
+};
+
+export const sendInvait = async (email, mailContent, mailSubject) => {
+  const token = getToken();
+  const userId = getUserId();
+  const data = {
+    email: email,
+    referrerId: userId,
+    mailContent: mailContent,
+    mailSubject: mailSubject,
+    inviteType: "BulkInvite",
+  };
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lenderReferring`,
+    "POST",
+    token,
+    data
+  );
+
+  return response;
 };
 
 export const getuserMembershipValidity = async () => {
@@ -961,5 +962,18 @@ export const getFinancialReportDownload = async (
     token,
     postdata
   );
+  return response;
+};
+
+export const downloadClosedLoanStatement = async (typeoffile = "RUNNING") => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/${typeoffile}/excel-sheet-download`,
+    "GET",
+    token
+  );
+
   return response;
 };

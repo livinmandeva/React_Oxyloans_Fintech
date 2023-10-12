@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import {
   getNewSessionTime,
   getFinancialReportDownload,
+  downloadClosedLoanStatement,
 } from "../../HttpRequest/afterlogin";
 
 export const HandleClick = () => {
@@ -273,6 +274,35 @@ export const confirmationAlertFyYear = (startdate, enddate, downloadType) => {
                 : "We have sent FY Statement  to your Email"
             }`,
             "success"
+          );
+        }
+      });
+    }
+  });
+};
+
+export const downloadClosedLoanStatementAlert = (type) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: `You want to download All  Closed Loan Information  `,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes !",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const response = downloadClosedLoanStatement(type);
+      response.then((data) => {
+        console.log(data);
+        if (data.request.status == 200) {
+          window.open(data.data.closedDealsDownloadUrl, "_blank");
+          Swal.fire("Success!", `Downloaded Successfully`, "success");
+        } else if (data.response.data.errorCode != "200") {
+          Swal.fire(
+            "warning!",
+            `${data.response.data.errorMessage}`,
+            "warning"
           );
         }
       });
