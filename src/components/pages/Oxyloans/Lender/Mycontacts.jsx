@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getcontactdeatils,sendInvait , getemailcontent} from "../../../HttpRequest/afterlogin";
+import {
+  getcontactdeatils,
+  sendInvait,
+  getemailcontent,
+} from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
@@ -15,15 +19,14 @@ const Mycontacts = () => {
     pageNo: 1,
     pageSize: 5,
     selectAll: false,
-  
   });
 
-  const [message ,setmesage]=useState({
-    email:"",
-    emailcontent:"",
-    emailsubject:"",
-    buttomemail:""
-  })
+  const [message, setmesage] = useState({
+    email: "",
+    emailcontent: "",
+    emailsubject: "",
+    buttomemail: "",
+  });
 
   useEffect(() => {
     const getemailcontact = async () => {
@@ -40,7 +43,7 @@ const Mycontacts = () => {
       });
     };
     getemailcontact();
-    
+
     const getemail = async () => {
       try {
         const response = await getemailcontent(); // Assuming getemailcontent is an async function
@@ -61,8 +64,6 @@ const Mycontacts = () => {
 
     getemail();
     return () => {};
-
-   
   }, []);
 
   const datasource = contactdata.apidata.map((apidata, index) => ({
@@ -72,20 +73,28 @@ const Mycontacts = () => {
     Invite: contactdata.selectAll ? (
       <input type="checkbox" checked />
     ) : (
-      <input type="checkbox" onClick={() => handleCheckboxClick(index + 1 ,apidata.contactName,apidata.emailAddress)} />
+      <input
+        type="checkbox"
+        onClick={() =>
+          handleCheckboxClick(
+            index + 1,
+            apidata.contactName,
+            apidata.emailAddress
+          )
+        }
+      />
     ),
 
     // ),
   }));
 
   const handleCheckboxClick = (id, name, email) => {
-    const combined = `${name ? name + '-' : ''}${email}`;
+    const combined = `${name ? name + "-" : ""}${email}`;
     setmesage({
       ...message,
-      email:combined
+      email: combined,
     });
   };
-  
 
   const column = [
     {
@@ -107,49 +116,45 @@ const Mycontacts = () => {
     ,
   ];
 
-
-
   useEffect(() => {
     return () => {};
   }, [contactdata.selectAll]);
   const handleSelectClick = () => {
     // Update selectAll in contactData
-    setcontactData(prevContactData => ({
+    setcontactData((prevContactData) => ({
       ...prevContactData,
       selectAll: !prevContactData.selectAll,
     }));
 
-    // Map over apidata and set email in message
-// Create an array to store the email addresses
-const emailAddresses = contactdata.apidata.map(data => data.emailAddress);
-const contactNames = contactdata.apidata.map(data => data.contactName);
+    const emailAddresses = contactdata.apidata.map((data) => data.emailAddress);
+    const contactNames = contactdata.apidata.map((data) => data.contactName);
 
-// Combine email addresses and contact names
-const combinedData = emailAddresses.map((email, index) => {
-  const name = contactNames[index];
-  return `${name ? name + '-' : '-'}${email}`;
-});
+    const combinedData = emailAddresses.map((email, index) => {
+      const name = contactNames[index];
+      return `${name ? name + "-" : "-"}${email}`;
+    });
 
-// Join the combined data with commas
-const combinedEmails = combinedData.join(',');
+    // Join the combined data with commas
+    const combinedEmails = combinedData.join(",");
 
-setmesage({
-  ...message,
-  email: combinedEmails,
-});
+    setmesage({
+      ...message,
+      email: combinedEmails,
+    });
 
-console.log(combinedEmails)
+    console.log(combinedEmails);
   };
 
-
-  const handlesendInvaite=()=>{
-    const response =sendInvait(message.email,message.emailcontent,message.emailsubject)
-    response.then((data)=>{
-
-      console.log(data)
-    })
-        }
-   
+  const handlesendInvaite = () => {
+    const response = sendInvait(
+      message.email,
+      message.emailcontent,
+      message.emailsubject
+    );
+    response.then((data) => {
+      console.log(data);
+    });
+  };
 
   return (
     <>
@@ -189,18 +194,20 @@ console.log(combinedEmails)
                           <h3 className="page-title"></h3>
                         </div>
                         <div className="col-auto text-end float-end ms-auto download-grp">
-                          <Link to="#" className="btn btn-outline-primary me-2" onClick={handlesendInvaite}>
+                          <Link
+                            to="#"
+                            className="btn btn-outline-primary me-2"
+                            onClick={handlesendInvaite}
+                          >
                             Send Invite
                           </Link>
-                          {/* <Link className="btn btn-warning"  onClick={HandleselectClick}>
-                            Invite All
-                          </Link> */}
+
                           <Button
                             className="btn btn-warning"
                             onClick={handleSelectClick}
                           >
                             {contactdata.selectAll ? (
-                              <>Deselect All</>
+                              <>De select All</>
                             ) : (
                               <>Invite All</>
                             )}

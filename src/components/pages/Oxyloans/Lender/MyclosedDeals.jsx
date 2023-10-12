@@ -166,8 +166,7 @@ const MyclosedDeals = () => {
                                 <Modaldata
                                   data={myclosedDeals.statement}
                                   open={true}
-                                />{" "}
-                                {console.log(myclosedDeals.statement)}
+                                />
                               </>
                             )}
                           </div>
@@ -192,9 +191,6 @@ const MyclosedDeals = () => {
                           expandable={true}
                           loading={myclosedDeals.loading}
                           onChange={myclosedDealsPagination}
-
-                          // rowSelection={rowSelection}
-                          //     rowKey={(record) => record.ID}
                         />
                       </div>
                     </div>

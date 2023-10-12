@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getcontactdeatils, sendInvait, getemailcontent } from "../../../HttpRequest/afterlogin";
+import {
+  getcontactdeatils,
+  sendInvait,
+  getemailcontent,
+} from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
@@ -15,13 +19,11 @@ const Mycontacts = () => {
     pageNo: 1,
     pageSize: 5,
     selectAll: false,
-    email:"",
-    emailcontent:"",
-    emailsubject:"",
-    buttomemail:""
-
+    email: "",
+    emailcontent: "",
+    emailsubject: "",
+    buttomemail: "",
   });
-
 
   useEffect(() => {
     const getemailcontact = async () => {
@@ -53,7 +55,6 @@ const Mycontacts = () => {
 
     // ),
   }));
-
 
   useEffect(() => {
     const getemail = async () => {
@@ -102,32 +103,31 @@ const Mycontacts = () => {
   useEffect(() => {
     return () => {};
   }, [contactdata.selectAll]);
-  
+
   const HandleselectClick = () => {
     setcontactData({
       ...contactdata,
       selectAll: !contactdata.selectAll,
-      
     });
-    console.log("HandleselectClick")
-// handlapplyemail()
+    console.log("HandleselectClick");
+    // handlapplyemail()
   };
-const handlapplyemail=()=>{
-  contactdata.apidata.map((data)=>{
-    setcontactData({
-      ...contactdata,
-      email:data.emailAddress,
+  const handlapplyemail = () => {
+    contactdata.apidata.map((data) => {
+      setcontactData({
+        ...contactdata,
+        email: data.emailAddress,
+      });
+      console.log("handlapplyemail");
     });
-    console.log("handlapplyemail")
-  })
-}
+  };
 
-// const handlesendInvaite=()=>{
-//   const response =sendInvait(contactdata.email,contactdata.emailcontent,contactdata.emailsubject)
-//   response.then((data)=>{
-//     console.log(data)
-//   })
-//       }
+  // const handlesendInvaite=()=>{
+  //   const response =sendInvait(contactdata.email,contactdata.emailcontent,contactdata.emailsubject)
+  //   response.then((data)=>{
+  //     console.log(data)
+  //   })
+  //       }
 
   return (
     <>
@@ -200,9 +200,7 @@ const handlapplyemail=()=>{
                         }}
                         columns={column}
                         dataSource={datasource}
-                      
                       />
-                   
                     </div>
                   </div>
                 </div>
