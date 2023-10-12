@@ -72,15 +72,21 @@ const Mycontacts = () => {
     Invite: contactdata.selectAll ? (
       <input type="checkbox" checked />
     ) : (
-      <input type="checkbox" onClick={() => handleCheckboxClick(index + 1)} />
+      <input type="checkbox" onClick={() => handleCheckboxClick(index + 1 ,apidata.contactName,apidata.emailAddress)} />
     ),
 
     // ),
   }));
 
-  const handleCheckboxClick = (id) => {
-    console.log(id);
+  const handleCheckboxClick = (id, name, email) => {
+    const combined = `${name ? name + '-' : ''}${email}`;
+    setmesage({
+      ...message,
+      email:combined
+    });
   };
+  
+
   const column = [
     {
       title: "Email",
