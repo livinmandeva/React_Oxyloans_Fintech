@@ -35,6 +35,26 @@ export const getUserSessionTime = () => {
   return sessionStorage.getItem("tokenTime");
 };
 
+export const sendInvait=async(email,mailContent,mailSubject)=>{
+  const token = getToken();
+  const userId = getUserId();
+  const data={
+      email: email,
+      referrerId:userId,
+      mailContent: mailContent,
+      mailSubject: mailSubject,
+      inviteType: "BulkInvite"
+  }
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lenderReferring`,
+    "POST",
+    token,
+    data
+  );
+
+  return response;
+}
 const handleApiRequestAfterLoginService = async (
   baseurl,
   endpoint,

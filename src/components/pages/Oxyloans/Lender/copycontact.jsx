@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getcontactdeatils,sendInvait , getemailcontent} from "../../../HttpRequest/afterlogin";
+import { getcontactdeatils, sendInvait, getemailcontent } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
@@ -15,15 +15,13 @@ const Mycontacts = () => {
     pageNo: 1,
     pageSize: 5,
     selectAll: false,
-  
-  });
-
-  const [message ,setmesage]=useState({
     email:"",
     emailcontent:"",
     emailsubject:"",
     buttomemail:""
-  })
+
+  });
+
 
   useEffect(() => {
     const getemailcontact = async () => {
@@ -40,29 +38,7 @@ const Mycontacts = () => {
       });
     };
     getemailcontact();
-    
-    const getemail = async () => {
-      try {
-        const response = await getemailcontent(); // Assuming getemailcontent is an async function
-        setmesage({
-          ...message,
-          emailcontent: response.data.mailContent,
-          emailsubject: response.data.mailSubject,
-          buttomemail: response.data.bottomOfTheMail,
-        });
-
-        if (response.status === 200) {
-        } else {
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    getemail();
     return () => {};
-
-   
   }, []);
 
   const datasource = contactdata.apidata.map((apidata, index) => ({
@@ -78,6 +54,28 @@ const Mycontacts = () => {
     // ),
   }));
 
+
+  useEffect(() => {
+    const getemail = async () => {
+      try {
+        const response = await getemailcontent(); // Assuming getemailcontent is an async function
+        setcontactData({
+          ...contactdata,
+          emailcontent: response.data.mailContent,
+          emailsubject: response.data.mailSubject,
+          buttomemail: response.data.bottomOfTheMail,
+        });
+
+        if (response.status === 200) {
+        } else {
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    getemail();
+  }, []);
   const handleCheckboxClick = (id) => {
     console.log(id);
   };
@@ -101,49 +99,35 @@ const Mycontacts = () => {
     ,
   ];
 
-
-
   useEffect(() => {
     return () => {};
   }, [contactdata.selectAll]);
-  const handleSelectClick = () => {
-    // Update selectAll in contactData
-    setcontactData(prevContactData => ({
-      ...prevContactData,
-      selectAll: !prevContactData.selectAll,
-    }));
-
-    // Map over apidata and set email in message
-// Create an array to store the email addresses
-const emailAddresses = contactdata.apidata.map(data => data.emailAddress);
-const contactNames = contactdata.apidata.map(data => data.contactName);
-
-// Combine email addresses and contact names
-const combinedData = emailAddresses.map((email, index) => {
-  const name = contactNames[index];
-  return `${name ? name + '-' : '-'}${email}`;
-});
-
-// Join the combined data with commas
-const combinedEmails = combinedData.join(',');
-
-setmesage({
-  ...message,
-  email: combinedEmails,
-});
-
-console.log(combinedEmails)
+  
+  const HandleselectClick = () => {
+    setcontactData({
+      ...contactdata,
+      selectAll: !contactdata.selectAll,
+      
+    });
+    console.log("HandleselectClick")
+// handlapplyemail()
   };
+const handlapplyemail=()=>{
+  contactdata.apidata.map((data)=>{
+    setcontactData({
+      ...contactdata,
+      email:data.emailAddress,
+    });
+    console.log("handlapplyemail")
+  })
+}
 
-
-  const handlesendInvaite=()=>{
-    const response =sendInvait(message.email,message.emailcontent,message.emailsubject)
-    response.then((data)=>{
-
-      console.log(data)
-    })
-        }
-   
+// const handlesendInvaite=()=>{
+//   const response =sendInvait(contactdata.email,contactdata.emailcontent,contactdata.emailsubject)
+//   response.then((data)=>{
+//     console.log(data)
+//   })
+//       }
 
   return (
     <>
@@ -183,15 +167,15 @@ console.log(combinedEmails)
                           <h3 className="page-title"></h3>
                         </div>
                         <div className="col-auto text-end float-end ms-auto download-grp">
-                          <Link to="#" className="btn btn-outline-primary me-2" onClick={handlesendInvaite}>
+                          <button className="btn btn-outline-primary me-2">
                             Send Invite
-                          </Link>
+                          </button>
                           {/* <Link className="btn btn-warning"  onClick={HandleselectClick}>
                             Invite All
                           </Link> */}
                           <Button
                             className="btn btn-warning"
-                            onClick={handleSelectClick}
+                            onClick={HandleselectClick}
                           >
                             {contactdata.selectAll ? (
                               <>Deselect All</>
@@ -205,7 +189,7 @@ console.log(combinedEmails)
                     {/* /Page Header */}
                     <div className="table-responsive">
                       <Table
-                        className="table border-0 star-student table-hover table-center mb-0 datatable table-striped dataTable no-footer"
+                        className="table border-0 star-student  table-center mb-0"
                         pagination={{
                           total: datasource.length,
                           defaultPageSize: 5,
@@ -216,7 +200,9 @@ console.log(combinedEmails)
                         }}
                         columns={column}
                         dataSource={datasource}
+                      
                       />
+                   
                     </div>
                   </div>
                 </div>
