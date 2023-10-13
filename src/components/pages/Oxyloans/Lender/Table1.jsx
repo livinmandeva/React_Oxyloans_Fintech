@@ -2,8 +2,6 @@ import React from "react";
 import { Table } from "antd";
 
 const Table1 = ({ data }) => {
-  // Change the parameter name to data1
-  // Initialize newData as an empty array
   const newData = [];
 
   if (data !== "") {
@@ -34,7 +32,7 @@ const Table1 = ({ data }) => {
     },
   ];
 
-  return <Table columns={columns} dataSource={newData} />; // Use newData here
+  return <Table columns={columns} dataSource={newData} pagination={false} />;
 };
 
 export default Table1;

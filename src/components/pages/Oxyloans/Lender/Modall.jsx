@@ -4,6 +4,7 @@ import "../Lender/InvoiceGrid.css";
 import { Space, Table, Tag } from 'antd';import './table.css'
 
 
+
 export default function Modall({ data, open: propOpen }) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(propOpen);
@@ -21,7 +22,6 @@ export default function Modall({ data, open: propOpen }) {
   const handleCancel = () => {
     setOpen(false);
   };
-
 
   return (
     <div>
@@ -74,7 +74,6 @@ export default function Modall({ data, open: propOpen }) {
             <th>Participation Details</th>
           </tr>
 
-
           {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
             data.data.dealLevelLoanEmiCard.map((item) => (
               <tr className="tablerow" key={item.sno}>
@@ -98,6 +97,7 @@ export default function Modall({ data, open: propOpen }) {
             <p>No data available</p>
           )}
         </table>
+
 
          <table>
   <tr className="tablerow">
@@ -132,6 +132,41 @@ export default function Modall({ data, open: propOpen }) {
 </table>
 
 
+        {/* <table>
+          <tr>
+            <th>S no</th>
+           
+            <th>Actual Payment Date</th>
+            <th> Interest Paid Date</th>
+            <th> Interest Amount</th>
+            <th> No of days</th>
+            <th>Participation Details</th>
+          </tr>
+
+
+          {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
+            data.data.dealLevelLoanEmiCard.map((item) => (
+              <tr key={item.sno}>
+                <td>{item.sno}</td>
+                <td>{item.date}</td>
+                <td>
+                  {item.interestPaidDate != null ? (
+                    <>{item.interestPaidDate}</>
+                  ) : (
+                    <>Yet to be paid</>
+                  )}
+                </td>
+                <td>{item.interestAmount}</td>
+                <td>{item.differenceInDaysForFirstParticipation}</td>
+                <td>
+                  <Button type="primary">Amount statement</Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <p>No data available</p>
+          )}
+        </table> */}
       </Modal>
     </div>
   );

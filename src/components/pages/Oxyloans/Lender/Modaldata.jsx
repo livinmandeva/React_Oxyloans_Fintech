@@ -3,15 +3,20 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Table1 from "./Table1";
 
-function Modaldata({ data, open: propOpen }) {
-  const [lgShow, setLgShow] = useState(propOpen);
+function Modaldata({ data, open, hidingStatement }) {
+  const [lgShow, setLgShow] = useState(open);
+
+  const hidingStatementModal = () => {
+    setLgShow(!lgShow);
+    hidingStatement();
+  };
 
   return (
     <>
       <Modal
         size="lg"
         show={lgShow}
-        onHide={() => setLgShow(false)}
+        onHide={hidingStatementModal}
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>

@@ -56,7 +56,7 @@ const Participatedeal = () => {
       key: "deal",
     },
     {
-      title: "Loan Amount",
+      title: "Deal Value",
       dataIndex: "loanamount",
       key: "loanamount",
     },
@@ -71,22 +71,22 @@ const Participatedeal = () => {
       key: "tenureinmonths",
     },
     {
-      title: "Funding Start Date",
+      title: "Funding Start ",
       dataIndex: "funding",
       key: "funding",
     },
     {
-      title: "Funding End Date",
+      title: "Funding End ",
       dataIndex: "fundingdate",
       key: "fundingdate",
     },
     {
-      title: "Minimum Participation",
+      title: "Minimum Amount",
       dataIndex: "minimumparticipation",
       key: "minimumparticipation",
     },
     {
-      title: "Maximum Participation",
+      title: "Maximum Amount",
       dataIndex: "maximumparticipation",
       key: "maximumparticipation",
     },

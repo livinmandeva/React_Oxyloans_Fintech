@@ -8,6 +8,7 @@ import { onShowSizeChange, itemRender } from "../../../Pagination";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { handelapi, myclosedDealsInfo } from "../../../HttpRequest/afterlogin";
 import Modaldata from "./Modaldata";
+import { downloadClosedLoanStatementAlert } from "../../Base UI Elements/SweetAlert";
 
 const MyclosedDeals = () => {
   const [myclosedDeals, setmyclosedDeals] = useState({
@@ -19,6 +20,7 @@ const MyclosedDeals = () => {
     defaultPageSize: 5,
     statement: "",
     model: false,
+    modelStatement: false,
   });
 
   const myclosedDealsPagination = (Pagination) => {
@@ -33,10 +35,10 @@ const MyclosedDeals = () => {
   const handelSatement = async (dealId) => {
     const response = handelapi(dealId);
     response.then((data) => {
-      console.log(data);
       setmyclosedDeals({
         ...myclosedDeals,
         statement: data.data,
+        modelStatement: true,
       });
     });
   };
@@ -84,6 +86,13 @@ const MyclosedDeals = () => {
         })
       : "";
   }
+
+  const hidingStatement = () => {
+    setmyclosedDeals({
+      ...myclosedDeals,
+      modelStatement: false,
+    });
+  };
 
   const column = [
     {
@@ -156,18 +165,21 @@ const MyclosedDeals = () => {
                             <Link
                               to="#"
                               className="btn btn-outline-primary me-2"
+                              onClick={() => {
+                                downloadClosedLoanStatementAlert("CLOSED");
+                              }}
                             >
                               <i className="fas fa-download" /> {""}
                               Download
                             </Link>
 
-                            {myclosedDeals.statement && (
+                            {myclosedDeals.modelStatement && (
                               <>
                                 <Modaldata
                                   data={myclosedDeals.statement}
-                                  open={true}
-                                />{" "}
-                                {console.log(myclosedDeals.statement)}
+                                  open={myclosedDeals.modelStatement}
+                                  hidingStatement={hidingStatement}
+                                />
                               </>
                             )}
                           </div>
@@ -192,9 +204,6 @@ const MyclosedDeals = () => {
                           expandable={true}
                           loading={myclosedDeals.loading}
                           onChange={myclosedDealsPagination}
-
-                          // rowSelection={rowSelection}
-                          //     rowKey={(record) => record.ID}
                         />
                       </div>
                     </div>

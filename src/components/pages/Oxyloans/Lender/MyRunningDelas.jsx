@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { Pagination } from "antd";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import { itemRender } from "../../../Pagination";
+
 import "./InvoiceGrid.css";
 import {
   myrunnig,
   paticipationChanges1,
   viewdealamountemi,
 } from "../../../HttpRequest/afterlogin";
-import Modall from "./Modall";
-import Modell from "./Modell";
 import AlertTable from "./AlertTable";
 import ModalComponet from "../../Base UI/ModalComponet";
+import MyParticipatedStatement from "../Utills/Modals/MyParticipatedStatement";
 
 const MyRunningDelas = () => {
   const [runningdeals, setrunningdeals] = useState({
@@ -70,7 +68,6 @@ const MyRunningDelas = () => {
         ...runningdeals,
         paticipationChanges: data.data,
         model2: !runningdeals.model2,
-        // model2: !runningdeals.model2,
       });
     });
   };
@@ -87,6 +84,10 @@ const MyRunningDelas = () => {
       ...runningdeals,
       pageNo: pros,
     });
+  };
+
+  const statementHideProps = () => {
+    setOpen(!modelopen);
   };
 
   useEffect(() => {
@@ -122,9 +123,10 @@ const MyRunningDelas = () => {
                     <li className="breadcrumb-item active">My running delas</li>
 
                     {modelopen && (
-                      <Modall
+                      <MyParticipatedStatement
                         data={runningdeals.dealLevelLoanEmiCard}
                         open={modelopen}
+                        hidefun={statementHideProps}
                       />
                     )}
 
@@ -237,17 +239,18 @@ const MyRunningDelas = () => {
                                   </h6>
                                 </div>
 
-                                {/* <div className="col-sm-6 col-lg-2">
-                                <span>ATW ROI</span>
-                                <h6 className="mb-0">
-                                  {data.dealRateofinterest} %
-                                </h6>
-                              </div> */}
+                                {data.withdrawStatus == "YES" && (
+                                  <div className="col-sm-6 col-lg-2">
+                                    <span>ATW ROI</span>
+                                    <h6 className="mb-0">
+                                      {data.dealRateofinterest} %
+                                    </h6>
+                                  </div>
+                                )}
 
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Deal Status</span>
                                   <h6 className="mb-0">
-                                    {" "}
                                     {data.participationStatus}
                                   </h6>
                                 </div>

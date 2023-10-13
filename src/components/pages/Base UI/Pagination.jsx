@@ -12,7 +12,7 @@ const Pagination = () => {
 
         {/* Sidebar */}
         <SideBar />
-        
+
         {/* Page Wrapper */}
 
         <div class="page-wrapper">

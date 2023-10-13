@@ -9,7 +9,6 @@ export function itemRender(current, type, originalElement) {
     return <Link to="#">→</Link>;
   }
 
-  console.log(current, type, originalElement);
   return originalElement;
 }
 
