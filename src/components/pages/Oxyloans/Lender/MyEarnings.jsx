@@ -121,23 +121,43 @@ const MyEarnings = () => {
   const EarningStatementlink = async () => {
     const response = Earning();
     response.then((data) => {
-      //  if (data.request.status == 200) {
-      console.log(data);
+
+      console.log(data.data.downloadLink);
 
       setreferalMyearnigs({
         ...referalMyearnigs,
-        earninglink: data.downloadLink,
+        earninglink: data.data.downloadLink,
       });
-      // }
+
+
     });
+
+
+      const downloadLink = referalMyearnigs.earninglink;
+
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.style.display = 'none';
+      downloadAnchor.href = downloadLink;
+      downloadAnchor.download = 'EarningStatement.pdf'; // You can set a default filename for the downloaded file
+      
+      // Add the anchor element to the document
+      document.body.appendChild(downloadAnchor);
+      
+      // Simulate a click event on the anchor element to trigger the download
+      downloadAnchor.click();
+
+      document.body.removeChild(downloadAnchor);
+
+
   };
 
 
 
-  useEffect(() => {
-    EarningStatementlink();
-    return () => {};
-  }, []);
+
+  // useEffect(() => {
+  //   EarningStatementlink();
+
+  // }, []);
   const column = [
     {
       title: "Referee Name",
@@ -252,9 +272,12 @@ const MyEarnings = () => {
                         <>copied</>
                       )}
                     </button>
-                    <button className="btn btn-xs col-md-3 btn-danger col-12 "  >
-                      Earning Statement
-                    </button>
+                    <button
+  className="btn btn-xs col-md-3 btn-danger col-12"
+  onClick={()=>EarningStatementlink()}>
+  Earning Statement
+</button>
+
                   </div>
                   <div className="card-body">
                     {/* Page Header */}
