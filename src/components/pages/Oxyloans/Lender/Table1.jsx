@@ -20,6 +20,7 @@ const Table1 = ({ data }) => {
     {
       title: "No",
       dataIndex: "no",
+      sorter: (a, b) => a.no.length - b.no.length,
     },
     {
       title: "Date",
@@ -29,6 +30,7 @@ const Table1 = ({ data }) => {
     {
       title: "Amount",
       dataIndex: "amount",
+      sorter: (a, b) => a.amount.length - b.amount.length,
     },
   ];
 

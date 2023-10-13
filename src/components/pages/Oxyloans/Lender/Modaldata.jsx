@@ -21,14 +21,14 @@ function Modaldata({ data, open, hidingStatement }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
-            Download statement
+            Download Statement
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table1 data={data} />
         </Modal.Body>
       </Modal>
-    </>   
+    </>
   );
 }
 
