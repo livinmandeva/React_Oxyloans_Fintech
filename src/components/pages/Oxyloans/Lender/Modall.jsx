@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import "../Lender/InvoiceGrid.css";
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Tag } from 'antd';import './table.css'
 
 
 export default function Modall({ data, open: propOpen }) {
@@ -64,7 +64,7 @@ export default function Modall({ data, open: propOpen }) {
         </div>
 
         <table>
-          <tr>
+          <tr className="tablerow">
             <th>S no</th>
             {/* <th></th> */}
             <th>Actual Payment Date</th>
@@ -77,7 +77,7 @@ export default function Modall({ data, open: propOpen }) {
 
           {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
             data.data.dealLevelLoanEmiCard.map((item) => (
-              <tr key={item.sno}>
+              <tr className="tablerow" key={item.sno}>
                 <td>{item.sno}</td>
                 <td>{item.date}</td>
                 <td>
@@ -100,7 +100,7 @@ export default function Modall({ data, open: propOpen }) {
         </table>
 
          <table>
-  <tr>
+  <tr className="tablerow">
     <th>S no</th>
     {/* <th></th> */}
     <th>Actual Payment Date</th>
@@ -113,7 +113,7 @@ export default function Modall({ data, open: propOpen }) {
   {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
        data.data.dealLevelLoanEmiCard.map((item) => (
          
-  <tr  key={item.sno}>
+  <tr className="tablerow" key={item.sno}>
     <td>{item.sno}</td>
     <td>{item.date}</td>
     <td>{item.interestPaidDate != null ? <>{item.interestPaidDate}</>:<>Yet to be paid</>}</td>

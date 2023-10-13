@@ -10,7 +10,7 @@ const Table1 = ({ data }) => {
     console.log(data);
     data.lenderReturns.map((dataItem, index) => {
       newData.push({
-        no: index,
+        no: index + 1,
         date: dataItem.returnedDate,
         amount: dataItem.amountReturned,
       });

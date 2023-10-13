@@ -6,6 +6,7 @@ import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import { Button, Table } from "antd";
 import { data, event } from "jquery";
+import Result1 from "./Result1";
 
 const Mycontacts = () => {
   const [contactdata, setcontactData] = useState({
@@ -15,6 +16,7 @@ const Mycontacts = () => {
     pageNo: 1,
     pageSize: 5,
     selectAll: false,
+    setsuccessMessage:''
   
   });
 
@@ -79,7 +81,7 @@ const Mycontacts = () => {
   }));
 
   const handleCheckboxClick = (id, name, email) => {
-    const combined = `${name ? name + '-' : ''}${email}`;
+    const combined = `${name ? name + '-' : '-'}${email}`;
     setmesage({
       ...message,
       email:combined
@@ -147,6 +149,10 @@ console.log(combinedEmails)
     response.then((data)=>{
 
       console.log(data)
+    setcontactData({
+      ...contactdata,
+      setsuccessMessage:data.data.status
+    })
     })
         }
    
@@ -210,6 +216,7 @@ console.log(combinedEmails)
                     </div>
                     {/* /Page Header */}
                     <div className="table-responsive">
+                      {contactdata.setsuccessMessage   && <Result1  message={contactdata.setsuccessMessage} />}
                       <Table
                         className="table border-0 star-student table-hover table-center mb-0 datatable table-striped dataTable no-footer"
                         pagination={{

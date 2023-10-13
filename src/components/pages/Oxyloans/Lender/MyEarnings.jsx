@@ -131,6 +131,9 @@ const MyEarnings = () => {
       // }
     });
   };
+
+
+
   useEffect(() => {
     EarningStatementlink();
     return () => {};
@@ -163,6 +166,7 @@ const MyEarnings = () => {
       sorter: (a, b) => a.Remarks.length - b.Remarks.length,
     },
   ];
+
   return (
     <>
       <div className="main-wrapper">
@@ -248,7 +252,7 @@ const MyEarnings = () => {
                         <>copied</>
                       )}
                     </button>
-                    <button className="btn btn-xs col-md-3 btn-danger col-12 ">
+                    <button className="btn btn-xs col-md-3 btn-danger col-12 "  >
                       Earning Statement
                     </button>
                   </div>

@@ -65,7 +65,15 @@ const Profile = () => {
     updateBankDetails: true,
     userName: "",
   });
+const [kyc ,setKyc]=useState({
+  aadhar:"",
+  Passport:'',
+  PanCard:"",
+  cheque:"",
+  license:"",
+  Voter:"",
 
+})
   useEffect(() => {
     if (
       bankaccountprofile.accountNumber !==
@@ -167,6 +175,10 @@ const Profile = () => {
       [name]: value,
     });
   };
+
+  useEffect(()=>{
+
+  },[])
   return (
     <>
       <div className="main-wrapper">
@@ -1018,12 +1030,14 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
+                                  
                                   {/* <h6 className="settings-size">
                                     <span>
                                       Image Uploaded
                                       <i className="fa fa-chek text-bg-dark"></i>
                                     </span>
                                   </h6> */}
+                                  <p>lll</p>
                                 </div>
 
                                 <div className="form-group col-12 col-md-6">
