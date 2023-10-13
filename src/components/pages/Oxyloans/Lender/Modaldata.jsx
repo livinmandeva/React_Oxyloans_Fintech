@@ -23,7 +23,7 @@ function Modaldata({ data, open: propOpen }) {
           <Table1 data={data} />
         </Modal.Body>
       </Modal>
-    </>
+    </>   
   );
 }
 
