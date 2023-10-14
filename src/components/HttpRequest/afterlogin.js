@@ -147,6 +147,29 @@ export const LoadwalletThroughQrScan = async (amount) => {
   return response;
 };
 
+
+
+export const handlecashapi=async(groupId , amount)=>{
+  const token = getToken();
+  const userId = getUserId();
+
+   const data={
+    amount: amount,
+    dealId: groupId
+   }
+
+
+   console.log(data)
+   const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/cashfree`,
+    "POST",
+
+    token,
+    data
+  );
+  return response;
+}
 export const viewdealamountemi = async (dealId) => {
   const token = getToken();
   const userId = getUserId();

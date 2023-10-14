@@ -14,6 +14,7 @@ const Mytransactions = () => {
     pageNo: 1,
     pageSize: 6,
     defaultPageSize: 6,
+    donloadlink:"",
   });
 
   const mytransactionpagination = (dats) => {
@@ -83,6 +84,25 @@ const Mytransactions = () => {
     },
   ];
 
+
+
+  const handeltranscation =()=>{
+    response= handlestaemnt();
+    response.then((data)=>{
+      // console.log(data.downloadUrl)
+      console.log(data.downloadUrl);
+      
+      setmytransactions({
+        ...transactionDate,
+        donloadlink:data.downloadUrl
+      })
+
+    })
+  }
+
+  useEffect(()=>{
+   
+  },[])
   return (
     <>
       <div className="main-wrapper">
@@ -111,7 +131,7 @@ const Mytransactions = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-header">
-                    <button className="btn btn-xs col-12 col-md-2 btn-success pull-right">
+                    <button className="btn btn-xs col-12 col-md-2 btn-success pull-right"  onClick={handeltranscation}>
                       <i className="fa fa-download"></i> Download
                     </button>
                   </div>

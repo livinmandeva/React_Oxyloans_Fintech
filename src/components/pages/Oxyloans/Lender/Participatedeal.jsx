@@ -6,14 +6,28 @@ import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import "./InvoiceGrid.css";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
-import { handledetail } from "../../../HttpRequest/afterlogin";
+import { handledetail   , handlecashapi} from "../../../HttpRequest/afterlogin";
 import MyRichTextEditor from "./MyRichTextEditor";
 import { Card, Table } from "antd";
+import { useHistory } from "react-router-dom";
 
 const Participatedeal = () => {
+
+  const history =useHistory()
   const [deal, setDeal] = useState({
     apidata: "",
+    transactionNumber:'',
+    accountType:'',
+    lenderFeeId:'',
+    lenderReturnType:'',
+    lenderFeeId:'',
+    participatedAmount:'',
+    bank:'',
+    wallet:''
+
   });
+
+  
 
   useEffect(() => {
     const handledealinfo = async (dealId) => {
@@ -28,7 +42,15 @@ const Participatedeal = () => {
         setDeal({
           ...deal,
           apidata: data.data,
+          
         });
+        if(data.data.yearlyInterest != 0){
+          setDeal({
+            ...deal,
+            lenderReturnType: "YEARLY",
+            
+          });
+        }
       });
     };
 
@@ -91,6 +113,39 @@ const Participatedeal = () => {
       key: "maximumparticipation",
     },
   ];
+  // action="https://test.cashfree.com/billpay/checkout/post/submit"
+  const handlecashfree = () => {
+    console.log(deal.wallet, deal.bank)
+
+    const response = handlecashapi(deal.apidata.groupId, deal.participatedAmount);
+  
+    
+    
+    response.then((data) => {
+      console.log(data);
+      history.push("https://test.cashfree.com/billpay/checkout/post/submit")
+    });
+  }
+  
+  const  freeParticipation =()=>{
+    const response =freeParticipationapi(deal.apidata.groupId ,deal.apidata.dealId, deal.accountType , deal.lenderReturnType)
+    response.then((data)=>{
+      console.log(data)
+    })
+  }
+
+//   updatingLenderDeal
+
+//   {
+//     "userId": "16",
+//     "groupId": "7",
+//     "dealId": "248",
+//     "participatedAmount": 5000,
+//     "lenderReturnType": "YEARLY",
+//     "processingFee": 0,
+//     "lenderFeeId": "0",
+//     "accountType": "WALLET"
+// }
   return (
     <>
       <div className="main-wrapper">
@@ -136,6 +191,13 @@ const Participatedeal = () => {
                   className="form-control-lg form-control-lg1"
                   type="text"
                   placeholder="Enter amount here..."
+                  
+
+
+                  onChange={(event)=>{setDeal({
+                    ...deal,
+                    participatedAmount:event.target.value
+                  })}}
                 />
               </div>
               <h4 style={{ marginTop: "2rem" }}>
@@ -145,8 +207,12 @@ const Participatedeal = () => {
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="flexRadioDisabled"
-                  id="flexRadioDisabled"
+                  name="Wallet"
+                  id="Wallet"   
+                  onChange={(event)=>{setDeal({
+                    ...deal,
+                    wallet:event.target.value
+                  })}}
                 />
                 <label class="form-check-label" for="flexRadioDisabled">
                   Move Principal to wallet
@@ -156,9 +222,13 @@ const Participatedeal = () => {
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="flexRadioDisabled"
-                  id="flexRadioCheckedDisabled"
-                  checked
+                  name="Bank"
+                  id="Bank"
+                  
+                  onChange={(event)=>{setDeal({
+                    ...deal,
+                    bank:event.target.value,
+                  })}}
                 />
                 <label class="form-check-label" for="flexRadioCheckedDisabled">
                   Move Principal to Bank
@@ -183,16 +253,27 @@ const Participatedeal = () => {
                       id="flexRadioDisabled"
                     />
                     <label class="form-check-label" for="flexRadioDisabled">
-                      Monthly Interest pay-out 1.7% P.M
+                      {/* Monthly Interest pay-out 1.7% P.M */}
+                   {deal.apidata  && <>{console.log(deal.apidata)}
+                      {deal.apidata.monthlyInterest      != 0 ? <div>monthlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}</>}
+                      {deal.apidata.yearlyInterest != 0 ? <div>yearlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}
+                      {deal.apidata.quartlyInterest != 0 ? <div>quartlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}   
+                      {deal.apidata.halfInterest != 0 ? <div>halfInterest pay-out {deal.apidata.monthlyInterest} % P.M</div>  :<></>}   
+                      
                     </label>
                   </div>
 
-                  <button className="btn btn-primary" type="submit">
-                    Participate Now
-                  </button>
-                </Card>
 
-                <Card
+
+                  {deal.apidata.lifeTimeWaiver ? <>  <button className="btn btn-primary" type="submit">
+                    Participate Now
+                  </button></> : <a  href="https://test.cashfree.com/billpay/checkout/post/submit" className="btn btn-primary" onClick={handlecashfree}>Participate Now</a>}
+                
+                </Card>
+                    {console.log(deal.apidata.feeStatusToParticipate)}
+                {deal.apidata.feeStatusToParticipate =="MANDATORY"  ?
+                 <>  
+                 <Card
                   size="meddam"
                   title="NO Fee To Participate"
                   headStyle={{ backgroundColor: "#3d5ee1", color: "white" }}
@@ -206,14 +287,24 @@ const Participatedeal = () => {
                       name="flexRadioDisabled"
                       id="flexRadioDisabled"
                     />
-                    <label class="form-check-label" for="flexRadioDisabled">
+                    {/* <label class="form-check-label" for="flexRadioDisabled">
                       Monthly Interest pay-out 1.7% P.M
-                    </label>
-                  </div>
-                  <button className="btn btn-primary" type="submit">
+                    </label> */}
+   <label class="form-check-label" for="flexRadioDisabled">
+
+                  
+   {deal.apidata  && <>{console.log(deal.apidata)}
+                      {deal.apidata.monthlyInterest      != 0 ? <div>monthlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}</>}
+                      {deal.apidata.yearlyInterest != 0 ? <div>yearlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}
+                      {deal.apidata.quartlyInterest != 0 ? <div>quartlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}   
+                      {deal.apidata.halfInterest != 0 ? <div>halfInterest pay-out {deal.apidata.monthlyInterest} % P.M</div>  :<></>}   
+                           </label></div>
+                           
+                  <button className="btn btn-primary" type="submit"   onClick={freeParticipation}>
                     Participate Now
                   </button>
-                </Card>
+                </Card></> :<></>}
+               
               </div>{" "}
             </div>
           </div>
