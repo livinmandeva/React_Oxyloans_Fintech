@@ -29,6 +29,7 @@ const Participatedeal = () => {
 
   
 
+
   useEffect(() => {
     const handledealinfo = async (dealId) => {
       const urlparam = new URLSearchParams(window.location.search);
