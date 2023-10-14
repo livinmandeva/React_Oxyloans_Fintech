@@ -6,29 +6,24 @@ import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import "./InvoiceGrid.css";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
-import { handledetail   , handlecashapi} from "../../../HttpRequest/afterlogin";
+import { handledetail, handlecashapi } from "../../../HttpRequest/afterlogin";
 import MyRichTextEditor from "./MyRichTextEditor";
 import { Card, Table } from "antd";
 import { useHistory } from "react-router-dom";
 
 const Participatedeal = () => {
-
-  const history =useHistory()
+  const history = useHistory();
   const [deal, setDeal] = useState({
     apidata: "",
-    transactionNumber:'',
-    accountType:'',
-    lenderFeeId:'',
-    lenderReturnType:'',
-    lenderFeeId:'',
-    participatedAmount:'',
-    bank:'',
-    wallet:''
-
+    transactionNumber: "",
+    accountType: "",
+    lenderFeeId: "",
+    lenderReturnType: "",
+    lenderFeeId: "",
+    participatedAmount: "",
+    bank: "",
+    wallet: "",
   });
-
-  
-
 
   useEffect(() => {
     const handledealinfo = async (dealId) => {
@@ -43,13 +38,11 @@ const Participatedeal = () => {
         setDeal({
           ...deal,
           apidata: data.data,
-          
         });
-        if(data.data.yearlyInterest != 0){
+        if (data.data.yearlyInterest != 0) {
           setDeal({
             ...deal,
             lenderReturnType: "YEARLY",
-            
           });
         }
       });
@@ -116,37 +109,43 @@ const Participatedeal = () => {
   ];
   // action="https://test.cashfree.com/billpay/checkout/post/submit"
   const handlecashfree = () => {
-    console.log(deal.wallet, deal.bank)
+    console.log(deal.wallet, deal.bank);
 
-    const response = handlecashapi(deal.apidata.groupId, deal.participatedAmount);
-  
-    
-    
+    const response = handlecashapi(
+      deal.apidata.groupId,
+      deal.participatedAmount
+    );
+
     response.then((data) => {
       console.log(data);
-      history.push("https://test.cashfree.com/billpay/checkout/post/submit")
+      history.push("https://test.cashfree.com/billpay/checkout/post/submit");
     });
-  }
-  
-  const  freeParticipation =()=>{
-    const response =freeParticipationapi(deal.apidata.groupId ,deal.apidata.dealId, deal.accountType , deal.lenderReturnType)
-    response.then((data)=>{
-      console.log(data)
-    })
-  }
+  };
 
-//   updatingLenderDeal
+  const freeParticipation = () => {
+    const response = freeParticipationapi(
+      deal.apidata.groupId,
+      deal.apidata.dealId,
+      deal.accountType,
+      deal.lenderReturnType
+    );
+    response.then((data) => {
+      console.log(data);
+    });
+  };
 
-//   {
-//     "userId": "16",
-//     "groupId": "7",
-//     "dealId": "248",
-//     "participatedAmount": 5000,
-//     "lenderReturnType": "YEARLY",
-//     "processingFee": 0,
-//     "lenderFeeId": "0",
-//     "accountType": "WALLET"
-// }
+  //   updatingLenderDeal
+
+  //   {
+  //     "userId": "16",
+  //     "groupId": "7",
+  //     "dealId": "248",
+  //     "participatedAmount": 5000,
+  //     "lenderReturnType": "YEARLY",
+  //     "processingFee": 0,
+  //     "lenderFeeId": "0",
+  //     "accountType": "WALLET"
+  // }
   return (
     <>
       <div className="main-wrapper">
@@ -182,23 +181,22 @@ const Participatedeal = () => {
               <Table
                 dataSource={dataSource}
                 columns={columns}
-                pagination={{}}
+                pagination={false}
               />
             </div>
-            <div className="centerdiv">
+            <div className="centerdiv mt-5">
               <h4>Your participation to this deal is</h4>
               <div className="form-group">
                 <input
                   className="form-control-lg form-control-lg1"
                   type="text"
                   placeholder="Enter amount here..."
-                  
-
-
-                  onChange={(event)=>{setDeal({
-                    ...deal,
-                    participatedAmount:event.target.value
-                  })}}
+                  onChange={(event) => {
+                    setDeal({
+                      ...deal,
+                      participatedAmount: event.target.value,
+                    });
+                  }}
                 />
               </div>
               <h4 style={{ marginTop: "2rem" }}>
@@ -209,11 +207,13 @@ const Participatedeal = () => {
                   class="form-check-input"
                   type="radio"
                   name="Wallet"
-                  id="Wallet"   
-                  onChange={(event)=>{setDeal({
-                    ...deal,
-                    wallet:event.target.value
-                  })}}
+                  id="Wallet"
+                  onChange={(event) => {
+                    setDeal({
+                      ...deal,
+                      wallet: event.target.value,
+                    });
+                  }}
                 />
                 <label class="form-check-label" for="flexRadioDisabled">
                   Move Principal to wallet
@@ -225,11 +225,12 @@ const Participatedeal = () => {
                   type="radio"
                   name="Bank"
                   id="Bank"
-                  
-                  onChange={(event)=>{setDeal({
-                    ...deal,
-                    bank:event.target.value,
-                  })}}
+                  onChange={(event) => {
+                    setDeal({
+                      ...deal,
+                      bank: event.target.value,
+                    });
+                  }}
                 />
                 <label class="form-check-label" for="flexRadioCheckedDisabled">
                   Move Principal to Bank
@@ -255,57 +256,136 @@ const Participatedeal = () => {
                     />
                     <label class="form-check-label" for="flexRadioDisabled">
                       {/* Monthly Interest pay-out 1.7% P.M */}
-                   {deal.apidata  && <>{console.log(deal.apidata)}
-                      {deal.apidata.monthlyInterest      != 0 ? <div>monthlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}</>}
-                      {deal.apidata.yearlyInterest != 0 ? <div>yearlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}
-                      {deal.apidata.quartlyInterest != 0 ? <div>quartlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}   
-                      {deal.apidata.halfInterest != 0 ? <div>halfInterest pay-out {deal.apidata.monthlyInterest} % P.M</div>  :<></>}   
-                      
+                      {deal.apidata && (
+                        <>
+                          {console.log(deal.apidata)}
+                          {deal.apidata.monthlyInterest != 0 ? (
+                            <div>
+                              monthlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      )}
+                      {deal.apidata.yearlyInterest != 0 ? (
+                        <div>
+                          yearlyInterest pay-out {deal.apidata.monthlyInterest}{" "}
+                          % P.M
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                      {deal.apidata.quartlyInterest != 0 ? (
+                        <div>
+                          quartlyInterest pay-out {deal.apidata.monthlyInterest}{" "}
+                          % P.M
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                      {deal.apidata.halfInterest != 0 ? (
+                        <div>
+                          halfInterest pay-out {deal.apidata.monthlyInterest} %
+                          P.M
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </label>
                   </div>
 
-
-
-                  {deal.apidata.lifeTimeWaiver ? <>  <button className="btn btn-primary" type="submit">
-                    Participate Now
-                  </button></> : <a  href="https://test.cashfree.com/billpay/checkout/post/submit" className="btn btn-primary" onClick={handlecashfree}>Participate Now</a>}
-                
+                  {deal.apidata.lifeTimeWaiver ? (
+                    <>
+                      {" "}
+                      <button className="btn btn-primary" type="submit">
+                        Participate Now
+                      </button>
+                    </>
+                  ) : (
+                    <a
+                      href="https://test.cashfree.com/billpay/checkout/post/submit"
+                      className="btn btn-primary"
+                      onClick={handlecashfree}
+                    >
+                      Participate Now
+                    </a>
+                  )}
                 </Card>
-                    {console.log(deal.apidata.feeStatusToParticipate)}
-                {deal.apidata.feeStatusToParticipate =="MANDATORY"  ?
-                 <>  
-                 <Card
-                  size="meddam"
-                  title="NO Fee To Participate"
-                  headStyle={{ backgroundColor: "#3d5ee1", color: "white" }}
-                  bodyStyle={{ width: 300, textAlign: "center" }}
-                >
-                  <p size="meddam">Choose Your Interest Payout Method</p>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDisabled"
-                      id="flexRadioDisabled"
-                    />
-                    {/* <label class="form-check-label" for="flexRadioDisabled">
+                {console.log(deal.apidata.feeStatusToParticipate)}
+                {deal.apidata.feeStatusToParticipate == "MANDATORY" ? (
+                  <>
+                    <Card
+                      size="meddam"
+                      title="NO Fee To Participate"
+                      headStyle={{ backgroundColor: "#3d5ee1", color: "white" }}
+                      bodyStyle={{ width: 300, textAlign: "center" }}
+                    >
+                      <p size="meddam">Choose Your Interest Payout Method</p>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDisabled"
+                          id="flexRadioDisabled"
+                        />
+                        {/* <label class="form-check-label" for="flexRadioDisabled">
                       Monthly Interest pay-out 1.7% P.M
                     </label> */}
-   <label class="form-check-label" for="flexRadioDisabled">
+                        <label class="form-check-label" for="flexRadioDisabled">
+                          {deal.apidata && (
+                            <>
+                              {console.log(deal.apidata)}
+                              {deal.apidata.monthlyInterest != 0 ? (
+                                <div>
+                                  monthlyInterest pay-out{" "}
+                                  {deal.apidata.monthlyInterest} % P.M
+                                </div>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                          {deal.apidata.yearlyInterest != 0 ? (
+                            <div>
+                              yearlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                          {deal.apidata.quartlyInterest != 0 ? (
+                            <div>
+                              quartlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                          {deal.apidata.halfInterest != 0 ? (
+                            <div>
+                              halfInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </label>
+                      </div>
 
-                  
-   {deal.apidata  && <>{console.log(deal.apidata)}
-                      {deal.apidata.monthlyInterest      != 0 ? <div>monthlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}</>}
-                      {deal.apidata.yearlyInterest != 0 ? <div>yearlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}
-                      {deal.apidata.quartlyInterest != 0 ? <div>quartlyInterest pay-out {deal.apidata.monthlyInterest} % P.M</div> : <></>}   
-                      {deal.apidata.halfInterest != 0 ? <div>halfInterest pay-out {deal.apidata.monthlyInterest} % P.M</div>  :<></>}   
-                           </label></div>
-                           
-                  <button className="btn btn-primary" type="submit"   onClick={freeParticipation}>
-                    Participate Now
-                  </button>
-                </Card></> :<></>}
-               
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                        onClick={freeParticipation}
+                      >
+                        Participate Now
+                      </button>
+                    </Card>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>{" "}
             </div>
           </div>

@@ -147,20 +147,17 @@ export const LoadwalletThroughQrScan = async (amount) => {
   return response;
 };
 
-
-
-export const handlecashapi=async(groupId , amount)=>{
+export const handlecashapi = async (groupId, amount) => {
   const token = getToken();
   const userId = getUserId();
 
-   const data={
+  const data = {
     amount: amount,
-    dealId: groupId
-   }
+    dealId: groupId,
+  };
 
-
-   console.log(data)
-   const response = await handleApiRequestAfterLoginService(
+  console.log(data);
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/cashfree`,
     "POST",
@@ -169,7 +166,7 @@ export const handlecashapi=async(groupId , amount)=>{
     data
   );
   return response;
-}
+};
 export const viewdealamountemi = async (dealId) => {
   const token = getToken();
   const userId = getUserId();
@@ -296,20 +293,20 @@ export const regular_Api = async (dealType, urldealname) => {
   const token = getToken();
   const userId = getUserId();
 
-  if (urldealname == "regularEscrowDeals") {
+  if (urldealname == "ESCROW") {
     var url = "listOfDealsInformationForEquityDeals";
     var data = {
       pageNo: 1,
       pageSize: 20,
-      dealName: "Escrow",
+      dealName: "ESCROW",
       dealType: dealType,
     };
-  } else if (urldealname == "regularPersonalDeal") {
+  } else if (urldealname == "PERSONAL") {
     var url = "listOfDealsInformationForEquityDeals";
     var data = {
       pageNo: 1,
       pageSize: 20,
-      dealName: "Personal",
+      dealName: "PERSONAL",
       dealType: dealType,
     };
   } else if (urldealname == "regularRunningDeal") {

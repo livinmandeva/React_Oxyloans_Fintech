@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import { Table } from "antd";
+import { Table, Pagination } from "antd";
 
 const RegularRunningDeal = () => {
   const [regular_runningDeal, setRegularRunningDeal] = useState({
     apidata: "",
     dealtype: "HAPPENING",
+    paginationCount: 1,
+    pageno: 1,
   });
 
   const dataSource = [];
@@ -56,6 +58,13 @@ const RegularRunningDeal = () => {
     },
   ];
 
+  const changepagination = (pros) => {
+    setRegularRunningDeal({
+      ...regular_runningDeal,
+      pageno: pros,
+    });
+  };
+
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
@@ -64,17 +73,16 @@ const RegularRunningDeal = () => {
       const response = regular_Api(regular_runningDeal.dealtype, urldealname);
 
       response.then((data) => {
-        console.log(data.data);
-
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidata: data.data,
+          paginationCount: data.data.totalCount,
         });
       });
     };
 
     handleRegular();
-  }, []); // Include urldealname as a dependency
+  }, [regular_runningDeal.pageno]);
 
   return (
     <>
@@ -107,12 +115,6 @@ const RegularRunningDeal = () => {
               <div className="card-body h-10">
                 <div className="row">
                   <Link
-                    to="/myclosedDeals"
-                    className="btn btn-warning col-lg-3 col-sm-6"
-                  >
-                    Regular Closed Delas
-                  </Link>
-                  <Link
                     to="/myRunningDelas"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
@@ -121,10 +123,16 @@ const RegularRunningDeal = () => {
                 </div>
               </div>
             </div>
+            <div className="pangnation">
+              <Pagination
+                defaultCurrent={1}
+                total={regular_runningDeal.paginationCount}
+                className="pull-right"
+                onChange={changepagination}
+              />
+            </div>
             {regular_runningDeal.apidata.listOfDealsInformationToLender && (
               <>
-                {console.log(regular_runningDeal.apidata)}
-
                 {regular_runningDeal.apidata.listOfDealsInformationToLender !==
                 ""
                   ? regular_runningDeal.apidata.listOfDealsInformationToLender.map(
@@ -172,13 +180,7 @@ const RegularRunningDeal = () => {
                                 </div>
                                 <div className="col-sm-12 col-lg-6">
                                   <small>
-                                    Comments : ATW - Any Time Withdraw We
-                                    understand lenders wish to withdraw funds in
-                                    between the deal tenure, So if you want to
-                                    withdraw funds anytime Monthly RoI will be
-                                    reduced to 1.2% from the day 1 of deal
-                                    participation. We take 30 days to release
-                                    the funds.
+                                    Comments : {data.messageSentToLenders}
                                   </small>
                                 </div>
                               </div>
@@ -186,7 +188,9 @@ const RegularRunningDeal = () => {
                                 <div className="row align-items-center">
                                   <div className="col-sm-6 col-lg-2">
                                     <span>Available Limit</span>
-                                    <h6 className="mb-0">500000</h6>
+                                    <h6 className="mb-0">
+                                      {data.remainingAmountToPaticipateInDeal}
+                                    </h6>
                                   </div>
                                   <div className="col-sm-6 col-lg-2">
                                     <span>Min Amount</span>
@@ -206,14 +210,17 @@ const RegularRunningDeal = () => {
                                       {data.withdrawStatus}
                                     </h6>
                                   </div>
-                                  <div className="col-sm-6 col-lg-2">
-                                    <span>ATW ROI</span>
-                                    <h6 className="mb-0">
-                                      {data.roiForWithdraw} %
-                                    </h6>
-                                  </div>
 
-                                  <div className="col-sm-6 col-lg-2">
+                                  {data.withdrawStatus == "YES" && (
+                                    <div className="col-sm-6 col-lg-2">
+                                      <span>ATW ROI</span>
+                                      <h6 className="mb-0">
+                                        {data.roiForWithdraw} %
+                                      </h6>
+                                    </div>
+                                  )}
+
+                                  <div className="col-sm-6 col-lg-3">
                                     <span>Deal Status</span>
                                     <h6 className="mb-0">
                                       {data.fundingStatus}
@@ -254,7 +261,6 @@ const RegularRunningDeal = () => {
 
             {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
-                {console.log(dataSource.length)}
                 <div className="card">
                   <Table
                     columns={columns}

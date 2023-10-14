@@ -244,7 +244,7 @@ const Sidebar = (props) => {
                             "/regularPersonalDeal" === pathName ? "active" : ""
                           }`}
                         >
-                          Personal Loans Delas
+                          Personal Delas
                         </Link>
                       </li>
                     </ul>
