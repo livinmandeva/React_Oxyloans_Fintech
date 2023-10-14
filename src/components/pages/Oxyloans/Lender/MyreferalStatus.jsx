@@ -62,7 +62,9 @@ const MyreferalStatus = () => {
             Status: data.status,
             ReferredOn: data.referredOn,
             ViewReferee: (
-              <span className="badge badge-danger">View Referee</span>
+              <span className="badge badge-danger" type="button">
+                View Referee
+              </span>
             ),
           });
         })
@@ -155,16 +157,6 @@ const MyreferalStatus = () => {
     });
   };
 
-  // const handleCopyClick = () => {
-  //   const input = document.createElement('input');
-  //   input.value = link;
-  //   document.body.appendChild(input);
-  //   input.select();
-  //   document.execCommand('copy');
-  //   document.body.removeChild(input);
-  //   setCopySuccess(true);
-  // };
-
   return (
     <>
       <div className="main-wrapper">
@@ -203,13 +195,16 @@ const MyreferalStatus = () => {
                           <h3 className="page-title"></h3>
                         </div>
                         <div className="col-auto text-end float-end ms-auto download-grp">
-                          <a href={referlink} className="btn btn-danger me-2">
+                          <a
+                            href={referlink}
+                            className="btn btn-danger me-2 text-white"
+                          >
                             Referal Status
                           </a>
                           <Button
                             // to="addsalary"
                             onClick={Inviteborrower}
-                            className="btn btn-warning me-2"
+                            className="btn btn-warning me-2 text-white"
                           >
                             {referdata.inviteborrowerlink ? (
                               <>copied</>
@@ -219,10 +214,10 @@ const MyreferalStatus = () => {
                           </Button>
                           <Button
                             onClick={handlenriinvite}
-                            className="btn btn-info me-2"
+                            className="btn btn-info me-2 text-white"
                           >
                             {referdata.nriinvite ? (
-                              <> copyed</>
+                              <> copied</>
                             ) : (
                               <>Invite an NRI</>
                             )}
@@ -230,12 +225,12 @@ const MyreferalStatus = () => {
 
                           <Button
                             onClick={Invitelender}
-                            className="btn btn-success me-2"
+                            className="btn btn-success me-2 text-white"
                           >
                             {/* {copySuccess ? 'Link Copied!' : 'Invite A lender'} */}
 
                             {referdata.invaitlenderlink ? (
-                              <> copyed</>
+                              <> copied</>
                             ) : (
                               <>Invite an Lender</>
                             )}

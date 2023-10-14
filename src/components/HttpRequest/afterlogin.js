@@ -1000,3 +1000,16 @@ export const downloadClosedLoanStatement = async (typeoffile = "RUNNING") => {
 
   return response;
 };
+
+export const downloadTranactionStatement = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderHistoryPdf`,
+    "GET",
+    token
+  );
+
+  return response;
+};

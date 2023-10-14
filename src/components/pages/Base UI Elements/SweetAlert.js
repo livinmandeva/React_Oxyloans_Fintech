@@ -5,6 +5,7 @@ import {
   getNewSessionTime,
   getFinancialReportDownload,
   downloadClosedLoanStatement,
+  downloadTranactionStatement,
 } from "../../HttpRequest/afterlogin";
 
 export const HandleClick = () => {
@@ -297,6 +298,35 @@ export const downloadClosedLoanStatementAlert = (type) => {
         console.log(data);
         if (data.request.status == 200) {
           window.open(data.data.closedDealsDownloadUrl, "_blank");
+          Swal.fire("Success!", `Downloaded Successfully`, "success");
+        } else if (data.response.data.errorCode != "200") {
+          Swal.fire(
+            "warning!",
+            `${data.response.data.errorMessage}`,
+            "warning"
+          );
+        }
+      });
+    }
+  });
+};
+
+export const downloadMytransactionAlert = () => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: `You want to download Transaction Information  `,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes !",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const response = downloadTranactionStatement();
+      response.then((data) => {
+        console.log(data);
+        if (data.request.status == 200) {
+          window.open(data.data.downloadUrl, "_blank");
           Swal.fire("Success!", `Downloaded Successfully`, "success");
         } else if (data.response.data.errorCode != "200") {
           Swal.fire(

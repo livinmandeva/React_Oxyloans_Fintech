@@ -5,6 +5,7 @@ import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { getMyTransactions } from "../../../HttpRequest/afterlogin";
+import { downloadMytransactionAlert } from "../../Base UI Elements/SweetAlert";
 
 const Mytransactions = () => {
   const [mytransactions, setmytransactions] = useState({
@@ -14,7 +15,7 @@ const Mytransactions = () => {
     pageNo: 1,
     pageSize: 6,
     defaultPageSize: 6,
-    donloadlink:"",
+    donloadlink: "",
   });
 
   const mytransactionpagination = (dats) => {
@@ -84,25 +85,20 @@ const Mytransactions = () => {
     },
   ];
 
-
-
-  const handeltranscation =()=>{
-    response= handlestaemnt();
-    response.then((data)=>{
+  const handeltranscation = () => {
+    response = handlestaemnt();
+    response.then((data) => {
       // console.log(data.downloadUrl)
       console.log(data.downloadUrl);
-      
+
       setmytransactions({
         ...transactionDate,
-        donloadlink:data.downloadUrl
-      })
+        donloadlink: data.downloadUrl,
+      });
+    });
+  };
 
-    })
-  }
-
-  useEffect(()=>{
-   
-  },[])
+  useEffect(() => {}, []);
   return (
     <>
       <div className="main-wrapper">
@@ -131,7 +127,7 @@ const Mytransactions = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-header">
-                    <button className="btn btn-xs col-12 col-md-2 btn-success pull-right"  onClick={handeltranscation}>
+                    <button className="btn btn-xs col-12 col-md-2 btn-success pull-right">
                       <i className="fa fa-download"></i> Download
                     </button>
                   </div>
