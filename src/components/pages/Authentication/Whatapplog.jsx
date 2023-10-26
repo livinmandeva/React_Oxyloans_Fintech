@@ -12,6 +12,7 @@ import FeatherIcon from "feather-icons-react";
 import "./login.css";
 import { useHistory } from "react-router-dom";
 import OtpInput from "./OtpInput";
+import { sendwhatappotp, verifywhatappotp } from "../../HttpRequest/beforelogin";
 
 const Whatapplog = () => {
   let inputRef = useRef();
@@ -31,6 +32,12 @@ const Whatapplog = () => {
   const [dataIpv6, setdataIpv6] = useState({});
   const [dataIpv4, setdataIpv4] = useState("");
 
+  const [whatappotp , setwhatappotp]=useState({
+    successMessage:"",
+    otp:'',
+    // otpdata:''
+    otpdata:''
+  })
   const handleipv6 = () => {
     axios({
       method: "get",
@@ -61,6 +68,43 @@ const Whatapplog = () => {
     handleip4();
   }, []);
 
+ const verifyotp=async()=>{
+  const response =verifywhatappotp( whatappotp.otpdata )
+  
+  response.then((data)=>{
+    
+  })
+ }
+  const sethandlewhatappclick =async()=>{
+    
+    const response = sendwhatappotp(value);
+    try{
+      response.then((data)=>{
+        sethandlewhatapp(!handlewhatapp)
+        if(data.request.status == 200){
+          setwhatappotp({
+            ...whatappotp,
+            successMessage:data.response.data.message
+          })
+          setwhatappotp({
+            ...whatappotp,
+            otpdata:data.response
+          })
+      
+        }else{
+        
+        console.log(data.response.data.errorMessage)  
+      }
+
+        // console.log(data)
+      })
+    }
+    catch{
+  console.log(error.response.data.errorMessage)
+    }
+   
+  
+  }
   return (
     <>
       <div className="main-wrapper login-body">
@@ -98,7 +142,7 @@ const Whatapplog = () => {
                         <button
                           className="btn btn-primary btn-block"
                           type="submit"
-                          onClick={() => sethandlewhatapp(false)}
+                          onClick={sethandlewhatappclick}
                         >
                           Send OTP
                         </button>
@@ -142,7 +186,7 @@ const Whatapplog = () => {
                         <button
                           className="btn btn-primary btn-block mt-4"
                           type="submit"
-                          onClick={() => sethandlewhatapp(false)}
+                          onClick={verifyotp}
                         >
                           Submit
                         </button>
