@@ -8,7 +8,7 @@ const Table1 = ({ data }) => {
     console.log(data);
     data.lenderReturns.map((dataItem, index) => {
       newData.push({
-        no: index + 1,
+        so: index + 1,
         date: dataItem.returnedDate,
         amount: dataItem.amountReturned,
       });
@@ -18,8 +18,8 @@ const Table1 = ({ data }) => {
 
   const columns = [
     {
-      title: "No",
-      dataIndex: "no",
+      title: "s#",
+      dataIndex: "so",
       sorter: (a, b) => a.no.length - b.no.length,
     },
     {
