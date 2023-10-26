@@ -70,7 +70,11 @@ const RegularEscrowDeals = () => {
     const urldealname = urlparams.slice(1);
     console.log(urldealname);
     const handleRegular = () => {
-      const response = regular_Api(escrow_runningDeal.dealtype, "ESCROW");
+      const response = regular_Api(
+        escrow_runningDeal.dealtype,
+        "ESCROW",
+        escrow_runningDeal.pageno
+      );
 
       response.then((data) => {
         setRegularRunningDeal({

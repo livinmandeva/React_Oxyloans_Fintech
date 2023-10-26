@@ -14,7 +14,9 @@ const AutoInvestHistory = () => {
       DealType: "ESCROW",
       status: "Enabled",
       ViewReferee: (
-        <span className="badge badge-danger">Enable Auto Invest </span>
+        <span className="badge badge-danger" type="button">
+          Enable Auto Invest
+        </span>
       ),
     },
     {
@@ -24,7 +26,9 @@ const AutoInvestHistory = () => {
       DealType: "PERSONAL",
       status: "Disable",
       ViewReferee: (
-        <span className="badge badge-success">Disable Auto Invest</span>
+        <span className="badge badge-success" type="button">
+          Disable Auto Invest
+        </span>
       ),
     },
   ];
@@ -77,7 +81,9 @@ const AutoInvestHistory = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">autoInvestHistory</li>
+                    <li className="breadcrumb-item active">
+                      autoInvestHistory
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -96,6 +102,7 @@ const AutoInvestHistory = () => {
                           total: datasource.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
                         }}
                         columns={column}
                         dataSource={datasource}
@@ -110,7 +117,7 @@ const AutoInvestHistory = () => {
           </div>
 
           {/* Footer */}
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
       {/* /Main Wrapper */}

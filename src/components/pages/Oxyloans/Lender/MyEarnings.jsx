@@ -7,6 +7,7 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import { Earning, referralEarningsInfo } from "../../../HttpRequest/afterlogin";
+import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
 
 const MyEarnings = () => {
   const [referalMyearnigs, setreferalMyearnigs] = useState({
@@ -119,40 +120,37 @@ const MyEarnings = () => {
   };
 
   const EarningStatementlink = async () => {
-    const response = Earning();
+    const response = Earning("");
     response.then((data) => {
+      console.log(data);
+      // if (data.request.status == 200) {
+      //   Success("success", "File Sucessfully Submitted");
+      // } else if (data.response.data.errorCode != "200") {
+      //   WarningBackendApi("warning", `${data.response.data.errorMessage}`);
+      // }
 
-      console.log(data.data.downloadLink);
-
-      setreferalMyearnigs({
-        ...referalMyearnigs,
-        earninglink: data.data.downloadLink,
-      });
-
-
+      // console.log(data.data.downloadLink);
+      // setreferalMyearnigs({
+      //   ...referalMyearnigs,
+      //   earninglink: data.data.downloadLink,
+      // });
     });
 
+    const downloadLink = referalMyearnigs.earninglink;
 
-      const downloadLink = referalMyearnigs.earninglink;
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.style.display = "none";
+    downloadAnchor.href = downloadLink;
+    downloadAnchor.download = "EarningStatement.pdf"; // You can set a default filename for the downloaded file
 
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.style.display = 'none';
-      downloadAnchor.href = downloadLink;
-      downloadAnchor.download = 'EarningStatement.pdf'; // You can set a default filename for the downloaded file
-      
-      // Add the anchor element to the document
-      document.body.appendChild(downloadAnchor);
-      
-      // Simulate a click event on the anchor element to trigger the download
-      downloadAnchor.click();
+    // Add the anchor element to the document
+    document.body.appendChild(downloadAnchor);
 
-      document.body.removeChild(downloadAnchor);
+    // Simulate a click event on the anchor element to trigger the download
+    downloadAnchor.click();
 
-
+    document.body.removeChild(downloadAnchor);
   };
-
-
-
 
   // useEffect(() => {
   //   EarningStatementlink();
@@ -273,11 +271,11 @@ const MyEarnings = () => {
                       )}
                     </button>
                     <button
-  className="btn btn-xs col-md-3 btn-danger col-12"
-  onClick={()=>EarningStatementlink()}>
-  Earning Statement
-</button>
-
+                      className="btn btn-xs col-md-3 btn-danger col-12"
+                      onClick={() => EarningStatementlink()}
+                    >
+                      Earning Statement
+                    </button>
                   </div>
                   <div className="card-body">
                     {/* Page Header */}

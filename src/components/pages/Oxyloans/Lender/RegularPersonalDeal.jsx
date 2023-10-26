@@ -70,7 +70,11 @@ const RegularPersonalDeal = () => {
     const urldealname = urlparams.slice(1);
     console.log(urldealname);
     const handleRegular = () => {
-      const response = regular_Api(personal_runningDeal.dealtype, "PERSONAL");
+      const response = regular_Api(
+        personal_runningDeal.dealtype,
+        "PERSONAL",
+        personal_runningDeal.pageno
+      );
 
       response.then((data) => {
         setRegularRunningDeal({

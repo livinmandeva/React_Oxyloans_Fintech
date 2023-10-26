@@ -76,15 +76,7 @@ export const bottomEnd = () => {
     buttonsStyling: !1,
   });
 };
-export const Success = () => {
-  Swal.fire({
-    title: "Good job!",
-    text: "You clicked the button!",
-    type: "success",
-    confirmButtonClass: "btn btn-primary",
-    buttonsStyling: !1,
-  });
-};
+
 export const Info = () => {
   Swal.fire({
     title: "Info!",
@@ -265,7 +257,8 @@ export const confirmationAlertFyYear = (startdate, enddate, downloadType) => {
         console.log(data);
         if (data.request.status == 200) {
           if (downloadType == "DOWNLOAD") {
-            window.location.href = data.data.lenderProfit;
+            // window.location.href = data.data.lenderProfit;
+            window.open(data.data.lenderProfit, "_blank");
           }
           Swal.fire(
             "Success!",
@@ -338,4 +331,12 @@ export const downloadMytransactionAlert = () => {
       });
     }
   });
+};
+
+export const Success = (tittle, message) => {
+  Swal.fire(`${tittle}`, `${message}`, "success");
+};
+
+export const WarningBackendApi = (tittle, message) => {
+  Swal.fire(`${tittle}`, `${message}`, "warning");
 };

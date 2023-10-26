@@ -6,7 +6,10 @@ import { onShowSizeChange, itemRender } from "../../../Pagination";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { getMyToatlInterestEarnings } from "../../../HttpRequest/afterlogin";
+import {
+  getMyToatlInterestEarnings,
+  getMyinterestEarningSearch,
+} from "../../../HttpRequest/afterlogin";
 
 const MyinterestEarning = () => {
   const [myinterestEarnigs, setmyinterestEarnigs] = useState({
@@ -14,7 +17,52 @@ const MyinterestEarning = () => {
     hasdata: false,
     loading: true,
     totalEarnigAmount: 0,
+    searchStartdate: null,
+    searchEndDate: null,
+    sortbased: null,
+    btnvalid: true,
   });
+
+  const searchOnchange = (pros) => {
+    const { name, value } = pros.target;
+    setmyinterestEarnigs({
+      ...myinterestEarnigs,
+      [name]: value,
+    });
+  };
+
+  const searchMyinterestEarning = () => {
+    const response = getMyinterestEarningSearch(myinterestEarnigs);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setmyinterestEarnigs({
+          ...myinterestEarnigs,
+          apiData: data.data,
+          totalEarnigAmount: data.data.totalInterestEarned,
+          loading: false,
+          hasdata: data.data.listOfInterestDetails.length == 0 ? false : true,
+        });
+      }
+    });
+  };
+
+  useEffect(() => {
+    const isvalidValues =
+      myinterestEarnigs.searchStartdate != null &&
+      myinterestEarnigs.searchEndDate != null &&
+      myinterestEarnigs.sortbased != null;
+
+    if (isvalidValues) {
+      setmyinterestEarnigs({
+        ...myinterestEarnigs,
+        btnvalid: false,
+      });
+    }
+  }, [
+    myinterestEarnigs.searchStartdate,
+    myinterestEarnigs.searchEndDate,
+    myinterestEarnigs.sortbased,
+  ]);
 
   useEffect(() => {
     const response = getMyToatlInterestEarnings();
@@ -26,14 +74,11 @@ const MyinterestEarning = () => {
           totalEarnigAmount: data.data.totalInterestEarned,
           loading: false,
           hasdata: data.data.listOfInterestDetails.length == 0 ? false : true,
-        });     
-        
-      }  
+        });
+      }
     });
     return () => {};
   }, []);
-
-  console.log(myinterestEarnigs);
 
   const datasource = [];
   {
@@ -91,7 +136,9 @@ const MyinterestEarning = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">My interest Earning</li>
+                    <li className="breadcrumb-item active">
+                      My interest Earning
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -105,6 +152,8 @@ const MyinterestEarning = () => {
                       type="date"
                       className="form-control"
                       placeholder="Search by Start Date ..."
+                      onChange={searchOnchange}
+                      name="searchStartdate"
                     />
                   </div>
                 </div>
@@ -113,14 +162,21 @@ const MyinterestEarning = () => {
                     <input
                       type="date"
                       className="form-control"
+                      name="searchEndDate"
                       placeholder="Search by End Date..."
+                      onChange={searchOnchange}
                     />
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6">
                   <div className="form-group">
-                    <select className="form-control">
-                      <option value="">-- Sort Based On --</option>
+                    <select
+                      className="form-control"
+                      name="sortbased"
+                      onChange={searchOnchange}
+                    >
+                      ""
+                      <option value="null">-- Sort Based On --</option>
                       <option value="PaidDate">Paid Date</option>
                       <option value="Amount">Amount</option>
                       <option value="DealName">Deal Name</option>
@@ -129,7 +185,12 @@ const MyinterestEarning = () => {
                 </div>
                 <div className="col-lg-2">
                   <div className="search-student-btn">
-                    <button type="btn" className="btn btn-primary">
+                    <button
+                      type="btn"
+                      className="btn btn-primary"
+                      onClick={searchMyinterestEarning}
+                      disabled={myinterestEarnigs.btnvalid}
+                    >
                       Search
                     </button>
                   </div>

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
 import {
   getUserDetails,
   writequery,
@@ -13,64 +13,47 @@ import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
 import { HandleClick } from "../../Base UI Elements/SweetAlert";
 import { Upload } from "feather-icons-react/build/IconComponents";
 import MyRichTextEditor from "./MyRichTextEditor";
+import { useSelector, useDispatch } from "react-redux";
 
 const Writetous = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [userdata, setuserdata] = useState({
-    profileData: {},
+  const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
+
+  const [writetous, setWriteTous] = useState({
+    query: "",
+    documentId: "",
+    email: "",
+    mobileNumber: "",
+    id: "",
+    respondedBy: "USER",
+    profiledata: [],
   });
-  const [files, setfile] = useState(null);
-  const [queryfiledinput, setqueryfiledinput] = useState("");
 
-  useEffect(() => {
-    getUserDetails().then((data) => {
-      setuserdata({
-        ...userdata,
-        profileData: data,
-      });
+  const setDataFun = (query) => {
+    console.log(query);
+    setWriteTous({
+      ...writetous,
+      query: query,
     });
-    return () => {};
-    // alert(userdata)
-  }, []);
+  };
 
-  const handleWriteClick = async () => {
-    handleimageupload();
+  useMemo(() => {
+    setWriteTous({
+      ...writetous,
+      profiledata: getreducerprofiledata,
+    });
+  }, [getreducerprofiledata]);
 
-    const response = writequery(userdata, queryfiledinput);
+  const querySubmission = () => {
+    const response = writequery(writetous);
     response.then((data) => {
       console.log(data);
       if (data.request.status == 200) {
-        alert(data.status);
-      } else {
-        alert("error");
+        Success("success", "You have sucessfully submitted the query");
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", `${data.response.data.errorMessage}`);
       }
     });
   };
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setqueryfiledinput({
-      ...queryfiledinput,
-      [name]: value,
-    });
-  };
-
-  const imageSubmit = (event) => {
-    const file = event.target.files[0];
-    setfile(file);
-  };
-
-  const handleimageupload = async () => {
-    const response = fileuploads(files);
-
-    console.log("file", files);
-    response.then((data) => {
-      console.log(data);
-      if (data.request.status == 200) {
-      } else {
-      }
-    });
-  };
-
   return (
     <>
       <div className="main-wrapper">
@@ -186,28 +169,16 @@ const Writetous = () => {
 
                     <div className="row col-12">
                       <div className="col-12 col-sm-12">
-                        <MyRichTextEditor className="col-12" />
-                      </div>
-                      <div
-                        className="col-12 col-sm-3"
-                        style={{ display: "none" }}
-                      >
-                        <div className="form-group local-forms pull-left">
-                          <div className="form-group service-upload">
-                            <span>Upload Image</span>
-                            <input
-                              type="file"
-                              multiple=""
-                              onChange={imageSubmit}
-                            />
-                          </div>
-                        </div>
+                        <MyRichTextEditor
+                          data={writetous}
+                          setdata={setDataFun}
+                        />
                       </div>
 
                       <div className="row col-12 my-4 p-0">
                         <button
                           className="btn btn-primary col-md-3 mx-3 my-5"
-                          onClick={handleWriteClick}
+                          onClick={querySubmission}
                         >
                           Submit
                         </button>

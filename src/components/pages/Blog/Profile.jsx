@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
+import { Success, WarningBackendApi } from "../Base UI Elements/SweetAlert";
 
 import {
   profileupadate,
   getUserDetails,
   handleapicall,
   sendMoblieOtp,
+  loadlendernomineeDetails,
+  savenomineeDeatailsApi,
 } from "../../HttpRequest/afterlogin";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -65,86 +68,28 @@ const Profile = () => {
     updateBankDetails: true,
     userName: "",
   });
-const [kyc ,setKyc]=useState({
-  aadhar:"",
-  Passport:'',
-  PanCard:"",
-  cheque:"",
-  license:"",
-  Voter:"",
 
-})
-  useEffect(() => {
-    if (
-      bankaccountprofile.accountNumber !==
-      bankaccountprofile.confirmAccountNumber
-    ) {
-      setBankaccountProfile((prevProfile) => ({
-        ...prevProfile,
-        bankAccountError:
-          "Confirm Account Number does not match Account Number",
-      }));
-    } else {
-      setBankaccountProfile((prevProfile) => ({
-        ...prevProfile,
-        bankAccountError: "",
-      }));
-    }
-    return () => {};
-  }, [bankaccountprofile.confirmAccountNumber]);
+  const [nomineeDetails, setnomineeDetails] = useState({
+    nomineeName: "",
+    relation: "",
+    nomineeEmail: "",
+    nomineeMobile: "",
+    accountNo: "",
+    nomineeIfsc: "",
+    bank: "",
+    branch: "",
+    nomineecity: "",
+  });
 
-  useEffect(() => {
-    if (
-      bankaccountprofile.bankName !== "" &&
-      bankaccountprofile.branchName !== "" &&
-      bankaccountprofile.ifscCode !== "" &&
-      bankaccountprofile.mobileNumber !== "" &&
-      bankaccountprofile.accountNumber !== "" &&
-      bankaccountprofile.confirmAccountNumber !== ""
-    ) {
-      setdashboarddata({
-        ...dashboarddata,
-        isValid: false,
-      });
-    } else {
-      setdashboarddata({
-        ...dashboarddata,
-        isValid: true,
-      });
-    }
+  const [kyc, setKyc] = useState({
+    aadhar: "",
+    Passport: "",
+    PanCard: "",
+    cheque: "",
+    license: "",
+    Voter: "",
+  });
 
-    return () => {};
-  }, [bankaccountprofile]);
-
-  useEffect(() => {
-    getUserDetails().then((data) => {
-      localStorage.setItem("userType", data.data.userDisplayId);
-      setdashboarddata({
-        ...dashboarddata,
-        profileData: data,
-      });
-      setUserProfile({
-        ...userProfile,
-        address: data.data.address,
-        city: data.data.city,
-        dob: data.data.dob,
-        facebookUrl: data.data.urlsDto.faceBookUrl,
-        fatherName: data.data.fatherName,
-        firstName: data.data.firstName,
-        lastName: data.data.lastName,
-        linkedinUrl: data.data.urlsDto.linkdinUrl,
-        locality: data.data.locality,
-        middleName: data.data.middleName,
-        panNumber: data.data.panNumber,
-        permanentAddress: data.data.permanentAddress,
-        pinCode: data.data.pinCode,
-        state: data.data.state,
-        twitterUrl: data.data.urlsDto.twitterUrl,
-        whatsAppNumber: data.data.whatappNumber,
-        aadharNumber: data.data.aadharNumber,
-      });
-    });
-  }, []);
   const handlefileupload = (event) => {};
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -176,9 +121,161 @@ const [kyc ,setKyc]=useState({
     });
   };
 
-  useEffect(()=>{
+  const handlerNominee = (event) => {
+    const { value, name } = event.target;
+    setnomineeDetails({
+      ...nomineeDetails,
+      [name]: value,
+    });
+  };
 
-  },[])
+  const submitNomineeDetails = (event) => {
+    event.preventDefault();
+    const response = savenomineeDeatailsApi(nomineeDetails);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        Success("success", "Nominee Details Save Successfully");
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
+
+    // if (response.request.status == 200) {
+    //   setdashboarddata({
+    //     ...dashboarddata,
+    //     profileData: data,
+    //   });
+    // } else if (response.response.data.errorCode != "200") {
+    //   WarningAlert(data.response.data.errorMessage, "/login");
+    // }
+  };
+
+  const openTheActiveTabs = (type) => {
+    var i, j;
+    let tablinks = document.getElementsByClassName("nav-link");
+    let tapPan = document.getElementsByClassName("tab-pane");
+
+    for (i = 0; i < tablinks.length; i++) {
+      if (tablinks[i].classList.contains(type)) {
+        tablinks[i].classList.add("active");
+      } else {
+        tablinks[i].classList.remove("active");
+      }
+    }
+
+    for (j = 0; j < tapPan.length; j++) {
+      if (tapPan[j].classList.contains(type)) {
+        tapPan[j].classList.add("active");
+        tapPan[j].classList.add("show");
+      } else {
+        tapPan[j].classList.remove("active");
+        tapPan[j].classList.remove("show");
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (
+  //     bankaccountprofile.accountNumber !==
+  //     bankaccountprofile.confirmAccountNumber
+  //   ) {
+  //     setBankaccountProfile((prevProfile) => ({
+  //       ...prevProfile,
+  //       bankAccountError:
+  //         "Confirm Account Number does not match Account Number",
+  //     }));
+  //   } else {
+  //     setBankaccountProfile((prevProfile) => ({
+  //       ...prevProfile,
+  //       bankAccountError: "",
+  //     }));
+  //   }
+  //   return () => {};
+  // }, [bankaccountprofile.confirmAccountNumber]);
+
+  // useEffect(() => {
+  //   if (
+  //     bankaccountprofile.bankName !== "" &&
+  //     bankaccountprofile.branchName !== "" &&
+  //     bankaccountprofile.ifscCode !== "" &&
+  //     bankaccountprofile.mobileNumber !== "" &&
+  //     bankaccountprofile.accountNumber !== "" &&
+  //     bankaccountprofile.confirmAccountNumber !== ""
+  //   ) {
+  //     setdashboarddata({
+  //       ...dashboarddata,
+  //       isValid: false,
+  //     });
+  //   } else {
+  //     setdashboarddata({
+  //       ...dashboarddata,
+  //       isValid: true,
+  //     });
+  //   }
+
+  //   return () => {};
+  // }, [bankaccountprofile]);
+
+  useEffect(() => {
+    const nomineresponse = loadlendernomineeDetails();
+    nomineresponse.then((data) => {
+      if (data.request.status == 200) {
+        setnomineeDetails({
+          ...nomineeDetails,
+          nomineeName: data.data.name == null ? "" : data.data.name,
+          relation: data.data.relation == null ? "" : data.data.relation,
+          nomineeEmail: data.data.emial == null ? "" : data.data.emial,
+          nomineeMobile:
+            data.data.mobileNumber == null ? "" : data.data.mobileNumber,
+          accountNo:
+            data.data.accountNumber == null ? "" : data.data.accountNumber,
+          nomineeIfsc: data.data.ifscCode == null ? "" : data.data.ifscCode,
+          bank: data.data.bankName == null ? "" : data.data.bankName,
+          branch: data.data.branchName == null ? "" : data.data.branchName,
+          nomineecity: data.data.city == null ? "" : data.data.city,
+        });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    getUserDetails().then((data) => {
+      localStorage.setItem("userType", data.data.userDisplayId);
+      setdashboarddata({
+        ...dashboarddata,
+        profileData: data,
+      });
+      setUserProfile({
+        ...userProfile,
+        address: data.data.address,
+        city: data.data.city,
+        dob: data.data.dob,
+        facebookUrl: data.data.urlsDto.faceBookUrl,
+        fatherName: data.data.fatherName,
+        firstName: data.data.firstName,
+        lastName: data.data.lastName,
+        linkedinUrl: data.data.urlsDto.linkdinUrl,
+        locality: data.data.locality,
+        middleName: data.data.middleName,
+        panNumber: data.data.panNumber,
+        permanentAddress: data.data.permanentAddress,
+        pinCode: data.data.pinCode,
+        state: data.data.state,
+        twitterUrl: data.data.urlsDto.twitterUrl,
+        whatsAppNumber: data.data.whatappNumber,
+        aadharNumber: data.data.aadharNumber,
+      });
+      setBankaccountProfile({
+        ...bankaccountprofile,
+        accountNumber: data.data.accountNumber,
+        bankAddress: data.data.bankAddress,
+        bankName: data.data.bankName,
+        branchName: data.data.branchName,
+        confirmAccountNumber: data.data.ifscCode,
+        ifscCode: data.data.ifscCode,
+      });
+    });
+  }, []);
   return (
     <>
       <div className="main-wrapper">
@@ -222,7 +319,6 @@ const [kyc ,setKyc]=useState({
                     </div>
                     <div className="col ms-md-n2 profile-user-info">
                       <h4 className="user-name mb-0">
-                        {console.log(reduxStoreData)}
                         {reduxStoreData.length != 0
                           ? reduxStoreData.firstName
                           : dashboarddata.profileData != null
@@ -265,7 +361,15 @@ const [kyc ,setKyc]=useState({
                       </div>
                     </div>
                     <div className="col-auto profile-btn">
-                      <Link className="btn btn-primary">Edit </Link>
+                      <Link
+                        className="btn btn-primary"
+                        to="#"
+                        onClick={(e) => {
+                          openTheActiveTabs("Personal");
+                        }}
+                      >
+                        Edit
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -273,7 +377,7 @@ const [kyc ,setKyc]=useState({
                   <ul className="nav nav-tabs nav-tabs-solid">
                     <li className="nav-item">
                       <Link
-                        className="nav-link active"
+                        className="nav-link About active"
                         data-bs-toggle="tab"
                         to="#per_details_tab"
                       >
@@ -283,7 +387,7 @@ const [kyc ,setKyc]=useState({
 
                     <li className="nav-item">
                       <Link
-                        className="nav-link"
+                        className="nav-link Personal"
                         data-bs-toggle="tab"
                         to="#profile_tab"
                       >
@@ -292,7 +396,7 @@ const [kyc ,setKyc]=useState({
                     </li>
                     <li className="nav-item">
                       <Link
-                        className="nav-link"
+                        className="nav-link Bank"
                         data-bs-toggle="tab"
                         to="#bankAccount_tab"
                       >
@@ -302,7 +406,7 @@ const [kyc ,setKyc]=useState({
 
                     <li className="nav-item">
                       <Link
-                        className="nav-link"
+                        className="nav-link Nominee"
                         data-bs-toggle="tab"
                         to="#nominee_tab"
                       >
@@ -312,7 +416,7 @@ const [kyc ,setKyc]=useState({
 
                     <li className="nav-item">
                       <Link
-                        className="nav-link"
+                        className="nav-link Kyc"
                         data-bs-toggle="tab"
                         to="#uploadKyc_tab"
                       >
@@ -335,7 +439,13 @@ const [kyc ,setKyc]=useState({
                             <h5 className="card-title d-flex justify-content-between">
                               <span>Personal Details</span>
 
-                              <Link className="edit-link" to="#bankAccount_tab">
+                              <Link
+                                className="edit-link"
+                                to="#"
+                                onClick={(e) => {
+                                  openTheActiveTabs("Personal");
+                                }}
+                              >
                                 <i className="far fa-edit me-1" />
                                 Edit
                               </Link>
@@ -345,9 +455,6 @@ const [kyc ,setKyc]=useState({
                                 Name
                               </p>
                               <p className="col-sm-9">
-                                {/* {dashboarddata.profileData != null
-                                  ? dashboarddata.profileData.data.firstName
-                                  : "Livin"} */}
                                 {reduxStoreData.firstName}
                               </p>
                             </div>
@@ -355,23 +462,13 @@ const [kyc ,setKyc]=useState({
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
                                 Date of Birth
                               </p>
-                              <p className="col-sm-9">
-                                {/* {dashboarddata.profileData != null
-                                  ? dashboarddata.profileData.data.dob
-                                  : "15/08/1997"} */}
-                                {reduxStoreData.dob}
-                              </p>
+                              <p className="col-sm-9">{reduxStoreData.dob}</p>
                             </div>
                             <div className="row">
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
                                 Email ID
                               </p>
-                              <p className="col-sm-9">
-                                {/* {dashboarddata.profileData != null
-                                  ? dashboarddata.profileData.data.email
-                                  : "test@123"} */}
-                                {reduxStoreData.email}
-                              </p>
+                              <p className="col-sm-9">{reduxStoreData.email}</p>
                             </div>
                             <div className="row">
                               <p className="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">
@@ -379,9 +476,6 @@ const [kyc ,setKyc]=useState({
                               </p>
                               <p className="col-sm-9">
                                 {reduxStoreData.mobileNumber}
-                                {/* {dashboarddata.profileData != null
-                                  ? dashboarddata.profileData.data.mobileNumber
-                                  : "7569084614"} */}
                               </p>
                             </div>
                             <div className="row">
@@ -391,14 +485,6 @@ const [kyc ,setKyc]=useState({
                               <p className="col-sm-9 mb-0">
                                 {reduxStoreData.address}
                                 <br />
-                                {/* {dashboarddata.profileData != null
-                                  ? dashboarddata.profileData.data.address
-                                  : ""}
-                                <br />
-                                {dashboarddata.profileData != null
-                                  ? dashboarddata.profileData.data.city
-                                  : ""}
-                                <br /> */}
 
                                 {reduxStoreData.city}
                               </p>
@@ -412,7 +498,13 @@ const [kyc ,setKyc]=useState({
                           <div className="card-body profile-blog">
                             <h5 className="card-title d-flex justify-content-between">
                               <span>Bank Account</span>
-                              <Link className="edit-link" to="#">
+                              <Link
+                                className="edit-link"
+                                to="#"
+                                onClick={(e) => {
+                                  openTheActiveTabs("Bank");
+                                }}
+                              >
                                 <i className="far fa-edit me-1" /> Edit
                               </Link>
                             </h5>
@@ -424,8 +516,15 @@ const [kyc ,setKyc]=useState({
                           <div className="card-body">
                             <h5 className="card-title d-flex justify-content-between">
                               <span>Kyc </span>
-                              <Link className="edit-link" to="#">
-                                <i className="far fa-edit me-1" /> Edit
+                              <Link
+                                className="edit-link"
+                                to="#"
+                                onClick={(e) => {
+                                  openTheActiveTabs("Kyc");
+                                }}
+                              >
+                                <i className="far fa-edit me-1" />
+                                KYC
                               </Link>
                             </h5>
                             <div className="skill-tags">
@@ -445,7 +544,7 @@ const [kyc ,setKyc]=useState({
                   </div>
                   {/* /Personal Details Tab */}
                   {/* Change Password Tab */}
-                  <div id="bankAccount_tab" className="tab-pane fade">
+                  <div id="bankAccount_tab" className="tab-pane fade Bank">
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Bank Account Details</h5>
@@ -617,14 +716,14 @@ const [kyc ,setKyc]=useState({
                   </div>
                   {/* /Change Password Tab */}
                   {/* Change Nominee Tab */}
-                  <div id="nominee_tab" className="tab-pane fade">
+                  <div id="nominee_tab" className="tab-pane fade Nominee">
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Nominee Details</h5>
                         <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
-                            <form>
+                            <form action="#" onSubmit={submitNomineeDetails}>
                               <div className="row">
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -635,6 +734,9 @@ const [kyc ,setKyc]=useState({
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your Nominee Name"
+                                    value={nomineeDetails.nomineeName}
+                                    name="nomineeName"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -646,6 +748,9 @@ const [kyc ,setKyc]=useState({
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your  Relation"
+                                    value={nomineeDetails.relation}
+                                    name="relation"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -657,6 +762,9 @@ const [kyc ,setKyc]=useState({
                                     type="email"
                                     className="form-control"
                                     placeholder=" Enter  Nominee Email"
+                                    value={nomineeDetails.nomineeEmail}
+                                    name="nomineeEmail"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -669,6 +777,9 @@ const [kyc ,setKyc]=useState({
                                     minLength={10}
                                     className="form-control"
                                     placeholder=" Enter  Nominee mobile no "
+                                    value={nomineeDetails.nomineeMobile}
+                                    name="nomineeMobile"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
 
@@ -681,6 +792,9 @@ const [kyc ,setKyc]=useState({
                                     type="number"
                                     className="form-control"
                                     placeholder="  Nominee Name Account No"
+                                    value={nomineeDetails.accountNo}
+                                    name="accountNo"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -689,9 +803,12 @@ const [kyc ,setKyc]=useState({
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
                                     placeholder="Nominee IFSC Code"
+                                    value={nomineeDetails.nomineeIfsc}
+                                    name="nomineeIfsc"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -703,6 +820,24 @@ const [kyc ,setKyc]=useState({
                                     type="text"
                                     className="form-control"
                                     placeholder=" Nominee Bank Name"
+                                    value={nomineeDetails.bank}
+                                    name="bank"
+                                    onChange={handlerNominee}
+                                  />
+                                </div>
+
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Nominee City
+                                    <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder=" Nominee City Name"
+                                    value={nomineeDetails.nomineecity}
+                                    name="nomineecity"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -714,6 +849,9 @@ const [kyc ,setKyc]=useState({
                                     type="text"
                                     className="form-control"
                                     placeholder="Nominee Branch"
+                                    value={nomineeDetails.branch}
+                                    name="branch"
+                                    onChange={handlerNominee}
                                   />
                                 </div>
 
@@ -722,7 +860,7 @@ const [kyc ,setKyc]=useState({
                                     className="btn btn-success col-12 col-md-4"
                                     type="submit"
                                   >
-                                    Save Details
+                                    Save Nominee Details
                                   </button>
                                 </div>
                               </div>
@@ -734,7 +872,7 @@ const [kyc ,setKyc]=useState({
                   </div>
                   {/* Change Nominee Tab */}
                   {/* ///profile Tab */}
-                  <div id="profile_tab" className="tab-pane fade">
+                  <div id="profile_tab" className="tab-pane fade Personal">
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Personal Details</h5>
@@ -832,7 +970,7 @@ const [kyc ,setKyc]=useState({
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="number"
+                                  type="text"
                                   maxLength={10}
                                   className="form-control"
                                   placeholder="Enter Mobile Name"
@@ -847,7 +985,7 @@ const [kyc ,setKyc]=useState({
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="number"
+                                  type="text"
                                   maxLength={10}
                                   className="form-control"
                                   placeholder="Enter WhatsApp Name"
@@ -1003,7 +1141,7 @@ const [kyc ,setKyc]=useState({
 
                   {/* KycTab */}
 
-                  <div id="uploadKyc_tab" className="tab-pane fade">
+                  <div id="uploadKyc_tab" className="tab-pane fade Kyc">
                     <div className="card">
                       <div className="card-body">
                         <h5 className="card-title">Upload Kyc</h5>
@@ -1021,7 +1159,7 @@ const [kyc ,setKyc]=useState({
                                       accept="image/*"
                                       name="image"
                                       id="file"
-                                      className="hide-input"
+                                      className="hide-input custom-file-input"
                                       onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
@@ -1030,19 +1168,19 @@ const [kyc ,setKyc]=useState({
                                       </i>
                                     </label>
                                   </div>
-                                  
+
                                   {/* <h6 className="settings-size">
                                     <span>
                                       Image Uploaded
                                       <i className="fa fa-chek text-bg-dark"></i>
                                     </span>
                                   </h6> */}
-                                  <p>lll</p>
+                                  {/* <p>lll</p> */}
                                 </div>
 
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
-                                    cheque leaf
+                                    Cheque Leaf
                                     <span className="star-red">*</span>
                                   </p>
                                   <div className="settings-btn">
@@ -1084,7 +1222,7 @@ const [kyc ,setKyc]=useState({
                                 </div>
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
-                                    Driving license
+                                    Driving License
                                     <span className="star-red">*</span>
                                   </p>
                                   <div className="settings-btn">

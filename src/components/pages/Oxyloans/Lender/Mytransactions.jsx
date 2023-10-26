@@ -85,20 +85,17 @@ const Mytransactions = () => {
     },
   ];
 
-  const handeltranscation = () => {
-    response = handlestaemnt();
-    response.then((data) => {
-      // console.log(data.downloadUrl)
-      console.log(data.downloadUrl);
-
-      setmytransactions({
-        ...transactionDate,
-        donloadlink: data.downloadUrl,
-      });
-    });
+  const handeltranscationAlert = () => {
+    downloadMytransactionAlert();
+    // response = handlestaemnt();
+    // response.then((data) => {
+    //   setmytransactions({
+    //     ...transactionDate,
+    //     donloadlink: data.downloadUrl,
+    //   });
+    // });
   };
 
-  useEffect(() => {}, []);
   return (
     <>
       <div className="main-wrapper">
@@ -127,7 +124,10 @@ const Mytransactions = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-header">
-                    <button className="btn btn-xs col-12 col-md-2 btn-success pull-right">
+                    <button
+                      className="btn btn-xs col-12 col-md-2 btn-success pull-right"
+                      onClick={handeltranscationAlert}
+                    >
                       <i className="fa fa-download"></i> Download
                     </button>
                   </div>

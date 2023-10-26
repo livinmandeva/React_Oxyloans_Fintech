@@ -127,6 +127,17 @@ export const getUserDetails = async () => {
   return response;
 };
 
+export const loadlendernomineeDetails = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `nominee/${userId}`,
+    "GET",
+    token
+  );
+  return response;
+};
 export const LoadwalletThroughQrScan = async (amount) => {
   const token = getToken();
   const userId = getUserId();
@@ -289,31 +300,31 @@ export const handelapi = async (dealId) => {
   );
   return response;
 };
-export const regular_Api = async (dealType, urldealname) => {
+export const regular_Api = async (dealType, urldealname, pageNo = 1) => {
   const token = getToken();
   const userId = getUserId();
 
   if (urldealname == "ESCROW") {
     var url = "listOfDealsInformationForEquityDeals";
     var data = {
-      pageNo: 1,
-      pageSize: 20,
+      pageNo: pageNo,
+      pageSize: 10,
       dealName: "ESCROW",
       dealType: dealType,
     };
   } else if (urldealname == "PERSONAL") {
     var url = "listOfDealsInformationForEquityDeals";
     var data = {
-      pageNo: 1,
-      pageSize: 20,
+      pageNo: pageNo,
+      pageSize: 10,
       dealName: "PERSONAL",
       dealType: dealType,
     };
   } else if (urldealname == "regularRunningDeal") {
     var url = "listOfDealsInformationToLender";
     var data = {
-      pageNo: 1,
-      pageSize: 20,
+      pageNo: pageNo,
+      pageSize: 10,
       dealType: dealType,
     };
   }
@@ -344,14 +355,13 @@ export const verifyBankAccountAndIfsc = async (bankaccountprofile) => {
   );
   return response;
 };
-export const Earning = async () => {
+export const Earning = async (status) => {
   const token = getToken();
   const userId = getUserId();
-
-  const data = {
+  const data = JSON.stringify({
     userId: userId,
     paymentStatus: "",
-  };
+  });
 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -457,16 +467,16 @@ export const handleapicall = async (data) => {
   );
   return response;
 };
-export const writequery = async (userdata, queryfiledinput) => {
+export const writequery = async (userdata) => {
+  console.log(userdata);
   const token = getToken();
   const userId = getUserId();
   console.log("User Data:", userdata);
   const postwritequerydata = {
-    query: "ui",
+    query: userdata.query,
     documentId: 0,
-    email: userdata.profileData.data.email,
-    mobileNumber: userdata.profileData.data.mobileNumber,
-    id: userId,
+    email: userdata.profiledata.email,
+    mobileNumber: userdata.profiledata.mobileNumber,
   };
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -1008,5 +1018,53 @@ export const downloadTranactionStatement = async () => {
     token
   );
 
+  return response;
+};
+
+export const getMyinterestEarningSearch = async (data) => {
+  const token = getToken();
+  const userId = getUserId();
+  var postdata = JSON.stringify({
+    userId: userId,
+    startDate: data.searchStartdate,
+    endDate: data.searchEndDate,
+    sortBasedOn: data.sortbased,
+    sortingType: "Asc",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `monthly_interest_earnings`,
+    "POST",
+    token,
+    postdata
+  );
+  return response;
+};
+
+export const savenomineeDeatailsApi = async (nominee) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const data = {
+    userId: userId,
+    relation: nominee.relation,
+    name: nominee.nomineeName,
+    mobileNumber: nominee.nomineeMobile,
+    email: nominee.nomineeEmail,
+    accountNumber: nominee.accountNo,
+    ifscCode: nominee.nomineeIfsc,
+    bankName: nominee.bank,
+    branchName: nominee.branch,
+    city: nominee.nomineecity,
+  };
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    "nominee",
+    "POST",
+    token,
+    data
+  );
   return response;
 };

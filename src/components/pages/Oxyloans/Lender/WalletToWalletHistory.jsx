@@ -66,7 +66,7 @@ const WalletToWalletHistory = React.memo((pros) => {
       sorter: (a, b) => a.ReceiverName.length - b.ReceiverName.length,
     },
     {
-      title: "TransformedDate",
+      title: "Approved Date",
       dataIndex: "TransformedDate",
       sorter: (a, b) => a.TransformedDate - b.TransformedDate,
     },

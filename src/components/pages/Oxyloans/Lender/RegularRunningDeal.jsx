@@ -70,7 +70,11 @@ const RegularRunningDeal = () => {
     const urldealname = urlparams.slice(1);
     console.log(urldealname);
     const handleRegular = () => {
-      const response = regular_Api(regular_runningDeal.dealtype, urldealname);
+      const response = regular_Api(
+        regular_runningDeal.dealtype,
+        urldealname,
+        regular_runningDeal.pageno
+      );
 
       response.then((data) => {
         setRegularRunningDeal({
@@ -172,10 +176,6 @@ const RegularRunningDeal = () => {
                                   <h6>
                                     First Participation :{" "}
                                     {data.firstParticipationDate}
-                                  </h6>
-                                  <h6>
-                                    Last Participation :{" "}
-                                    {data.lastParticipationDate}
                                   </h6>
                                 </div>
                                 <div className="col-sm-12 col-lg-6">

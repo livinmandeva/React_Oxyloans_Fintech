@@ -352,7 +352,7 @@ table.table td h2 span {
   padding-top: 0;
   line-height: 10px;
   width: 100%;
-  opacity: 0;
+  opacity: 0.3;
 }
 .settings-btn .upload {
   position: absolute;
