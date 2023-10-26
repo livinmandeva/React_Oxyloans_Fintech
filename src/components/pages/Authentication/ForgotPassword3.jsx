@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { login } from "../../imagepath";
 import * as api from "./api";
+import { sendotpemail } from "../../HttpRequest/beforelogin";
 
 const ForgotPassword3 = () => {
   const [email, setemail] = useState({
@@ -27,7 +28,7 @@ const ForgotPassword3 = () => {
       return;
     }
     try {
-      const sendOtpEmail = await api.sendotpemail(email.emailid);
+      const sendOtpEmail =  sendotpemail(email.emailid);
       setemailisvaild(!emailisvaild);
       setEmail({
         ...email,
@@ -82,13 +83,13 @@ const ForgotPassword3 = () => {
                     </button>
                   </div>
                   <div className="form-group mb-0">
-                    <button
+                    {/* <button
                       className="btn btn-primary primary-reset btn-block"
                       type="submit"
                       onClick="./admindashboard"
                     >
                       Login
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

@@ -36,8 +36,11 @@ const Whatapplog = () => {
     successMessage:"",
     otp:'',
     // otpdata:''
+    errorMessage:'',
     otpdata:''
   })
+
+  const  history =useHistory()
   const handleipv6 = () => {
     axios({
       method: "get",
@@ -69,42 +72,63 @@ const Whatapplog = () => {
   }, []);
 
  const verifyotp=async()=>{
-  const response =verifywhatappotp( whatappotp.otpdata )
+  const response =verifywhatappotp(whatappotp.otpdata)
   
   response.then((data)=>{
-    
-  })
- }
-  const sethandlewhatappclick =async()=>{
-    
-    const response = sendwhatappotp(value);
-    try{
-      response.then((data)=>{
-        sethandlewhatapp(!handlewhatapp)
-        if(data.request.status == 200){
-          setwhatappotp({
-            ...whatappotp,
-            successMessage:data.response.data.message
-          })
-          setwhatappotp({
-            ...whatappotp,
-            otpdata:data.response
-          })
-      
-        }else{
-        
-        console.log(data.response.data.errorMessage)  
-      }
+    console.log(data)
+    const accessToken = data.data.accessToken;
+console.log("Access Token: " + accessToken);
+    if (data) {
+         setwhatappotp({
+          ...whatappotp,
+          responsedata:data
+         })
+         sessionStorage.setItem("accessToken", accessToken);
+         sessionStorage.setItem("userId", data.data.id);
+         sessionStorage.setItem("tokenTime",  data.data.tokenGeneratedTime);
+         if(accessToken != null){
+          history.push("/dashboard")
+         }
 
-        // console.log(data)
-      })
     }
-    catch{
-  console.log(error.response.data.errorMessage)
+    else if (data.response.status === 400) {
+      const errorMessage = data.response.data.errorMessage;
+      console.log("Error Message: " + errorMessage);
+      setwhatappotp({
+        ...whatappotp,
+        errorMessage: data.response.data.errorMessage
+       })
     }
-   
-  
-  }
+  })
+
+ }
+ const sethandlewhatappclick = async () => {
+  // Call the async function
+  const response = sendwhatappotp(value);
+
+  // Set handlewhatapp to true initially
+  sethandlewhatapp(true);
+
+  response
+    .then((data) => {
+      console.log(data)
+      if (data.request.status === 200) {
+        console.log(data.data)
+        setwhatappotp({
+          ...whatappotp,
+          successMessage: "Otp Sent successfully",
+          otpdata: data.data,
+        });
+      } else {
+        console.log(data.response.data.errorMessage);
+      }
+    })
+    .finally(() => {
+      // Set handlewhatapp to false when the promise is resolved (success or error)
+      sethandlewhatapp(false);
+    });
+};
+
   return (
     <>
       <div className="main-wrapper login-body">
@@ -182,6 +206,8 @@ const Whatapplog = () => {
                       <div className="texts">
                         <OtpInput />
                       </div>
+                      {whatappotp.successMessage && <div className="errorMessage">{whatappotp.successMessage} </div>}
+                      {whatappotp.errorMessage && <div className="errorMessage">{whatappotp.errorMessage} </div>}
                       <div className="form-group">
                         <button
                           className="btn btn-primary btn-block mt-4"

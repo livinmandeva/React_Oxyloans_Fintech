@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { login } from "../../imagepath";import * as api from './api'
+import { passwordupdated } from "../../HttpRequest/beforelogin";
 
 const ForgotPassword = () => {
   const [email,setemail]=useState({
@@ -10,6 +11,7 @@ const ForgotPassword = () => {
     emailToken:'',
     email:'',
     password:'',
+    passworderror:'',
     confirmpassword:''
   })
     const [emailisvaild, setemailisvaild]=useState(true)
@@ -62,6 +64,32 @@ const ForgotPassword = () => {
   });
   
   },[emailisvaild])
+
+  const handlepassword = async () => {
+    if (email.password !== email.confirmpassword) {
+      setemail({
+        ...email,
+        passworderror: "password and confirm password must be the same",
+      });
+    } else {
+
+      try {
+        const response = await passwordupdated(
+          email.emailToken,
+          email.email,
+          email.password,
+          email.confirmpassword
+        );
+  
+
+        console.log(response);
+      } catch (error) {
+       
+        console.error(error);
+      }
+    }
+  };
+  
   return (
     <>
       {/* Main Wrapper */}
@@ -113,10 +141,11 @@ const ForgotPassword = () => {
                       </span>
                     </div>
                     {email.error && <div  className="errormessage">{email.error}</div>}
+                    {email.passworderror && <div  className="errormessage">{email.passworderror}</div>}
                     <div className="form-group">
                       <button
                         className="btn btn-primary btn-block"
-                        type="submit"   onClick={()=>setemailisvaild(true)}
+                        type="submit"   onClick={handlepassword}
                       >
                         Reset My Password
                       </button>
