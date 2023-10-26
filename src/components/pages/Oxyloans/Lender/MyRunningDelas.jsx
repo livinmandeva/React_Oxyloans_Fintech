@@ -281,7 +281,7 @@ const MyRunningDelas = () => {
                                     className="badge bg-primary-dark"
                                     onClick={() => handlemodalopen(data.dealId)}
                                   >
-                                    View Statement
+                                    Interest Statement
                                   </span>
                                 </div>
 

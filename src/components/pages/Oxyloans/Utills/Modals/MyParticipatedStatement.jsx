@@ -19,7 +19,7 @@ const MyParticipatedStatement = ({ data, open, hidefun }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="example-modal-sizes-title-lg">
-          Download statement
+          Interest Info
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
