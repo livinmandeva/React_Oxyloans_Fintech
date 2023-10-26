@@ -1034,7 +1034,7 @@ export const downloadClosedLoanStatement = async (typeoffile = "RUNNING") => {
   const userId = getUserId();
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${userId}/${typeoffile}/excel-sheet-download`,
+    `${userId}/closedDealsDownloadForUser`,
     "GET",
     token
   );
