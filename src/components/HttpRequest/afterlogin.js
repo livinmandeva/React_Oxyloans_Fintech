@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -990,7 +990,6 @@ export const getNewSessionTime = async () => {
 export const cancelWithdrawalRequest = async (fromrequest, requestId) => {
   const token = getToken();
   const userId = getUserId();
-
   var postdata = JSON.stringify({
     id: requestId,
     userId: userId,

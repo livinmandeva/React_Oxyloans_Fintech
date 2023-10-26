@@ -6,6 +6,7 @@ import {
   getFinancialReportDownload,
   downloadClosedLoanStatement,
   downloadTranactionStatement,
+  cancelWithdrawalRequest,
 } from "../../HttpRequest/afterlogin";
 
 export const HandleClick = () => {
@@ -321,6 +322,34 @@ export const downloadMytransactionAlert = () => {
         if (data.request.status == 200) {
           window.open(data.data.downloadUrl, "_blank");
           Swal.fire("Success!", `Downloaded Successfully`, "success");
+        } else if (data.response.data.errorCode != "200") {
+          Swal.fire(
+            "warning!",
+            `${data.response.data.errorMessage}`,
+            "warning"
+          );
+        }
+      });
+    }
+  });
+};
+
+export const cancelwithdrawalRequestInformation = (fromrequest, id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: `You want to Cancel The Withdrawal Request`,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes !",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const response = cancelWithdrawalRequest(fromrequest, id);
+      response.then((data) => {
+        console.log(data);
+        if (data.request.status == 200) {
+          Swal.fire("Success!", `Sucessfully Cancel The Request`, "success");
         } else if (data.response.data.errorCode != "200") {
           Swal.fire(
             "warning!",

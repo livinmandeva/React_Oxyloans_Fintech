@@ -75,11 +75,7 @@ const WithdrawdealfromDeal = () => {
       dataIndex: "DealName",
       sorter: (a, b) => a.DealName.length - b.DealName.length,
     },
-    {
-      title: "Deal Type",
-      dataIndex: "DealType",
-      sorter: (a, b) => a.DealType.length - b.DealType.length,
-    },
+
     {
       title: "Participated",
       dataIndex: "ParticipatedAmount",

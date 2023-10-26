@@ -1105,12 +1105,12 @@ const Profile = () => {
                                 </label>
                                 <input
                                   type="text"
-                                  maxLength={10}
+                                  maxLength={14}
                                   className="form-control"
                                   placeholder="Enter WhatsApp Name"
                                   onChange={handlechange}
                                   value={userProfile.whatsAppNumber}
-                                  name="whatappNumber"
+                                  name="whatsAppNumber"
                                 />
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">

@@ -1,7 +1,7 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 let API_BASE_URL =
-  userisIn == "local1"
+  userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
     : "https://fintech.oxyloans.com/oxyloans/v1/user/";
 
@@ -29,20 +29,19 @@ const handleApiRequestBeforeLogin = async (
   }
 };
 
-export  const sendotpemail   =  async(email)=>{
-  const data={
-    email:email
-  }
+export const sendotpemail = async (email) => {
+  const data = {
+    email: email,
+  };
 
-
-  const response= handleApiRequestBeforeLogin(
+  const response = handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,
     "resetpassword",
     data
-  )
-  return response
-}
+  );
+  return response;
+};
 export const userloginSection = async (email, password) => {
   const checkLoginMode = email.includes("@") == true ? true : false;
   const postdata =
@@ -70,40 +69,38 @@ export const userloginSection = async (email, password) => {
     return response;
   }
 };
-export const  sendwhatappotp=async(value1)=>{
-  const value= value1.replace("+","");
-  const data={
-
-
-      whatsappNumber: value
-  }
-const response =await handleApiRequestBeforeLogin(
+export const sendwhatappotp = async (value1) => {
+  const value = value1.replace("+", "");
+  const data = {
+    whatsappNumber: value,
+  };
+  const response = await handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,
     "whatsapp-login-otp",
     data
-  )
-  return response
-}
-export const verifywhatappotp=async(api)=>{
-  console.log(api)
-  const value1=localStorage.getItem("otp");
+  );
+  return response;
+};
+export const verifywhatappotp = async (api) => {
+  console.log(api);
+  const value1 = localStorage.getItem("otp");
   const otp = value1.replace(/,/g, "");
-  const data={
-      whatsappNumber: api.whatsappNumber,
-      session: api.session,
-      otp: otp,
-      id: api.id,
-      otpGeneratedTime: api.otpGeneratedTime
-  }
-const response =await handleApiRequestBeforeLogin(
+  const data = {
+    whatsappNumber: api.whatsappNumber,
+    session: api.session,
+    otp: otp,
+    id: api.id,
+    otpGeneratedTime: api.otpGeneratedTime,
+  };
+  const response = await handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,
     "whatsapp-login-otp-verification",
     data
-  )
-  return response
-}
+  );
+  return response;
+};
 
 // export const handleip4 = () => {
 //   return handleApiRequestBeforeLogin(
@@ -116,21 +113,22 @@ const response =await handleApiRequestBeforeLogin(
 //   return handleApiRequestBeforeLogin("get", "https://ipapi.co/json/");
 // };
 
+export const passwordupdated = async (
+  email,
+  emailToken,
+  password,
+  confirmPassword
+) => {
+  const data = {
+    password: password,
+    confirmPassword: confirmPassword,
+  };
+  const response = handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    `resetpassword/${emailToken}`,
+    data
+  );
 
-
-export const passwordupdated= async(email, emailToken, password ,confirmPassword)=>{
-  const data={
-
-      password: password,
-      confirmPassword:confirmPassword 
-}
-const response= handleApiRequestBeforeLogin(
-  "POST",
-  API_BASE_URL,
-  `resetpassword/${emailToken}`,
-  data
-)
-
-return response
-
-}
+  return response;
+};

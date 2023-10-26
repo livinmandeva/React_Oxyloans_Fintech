@@ -123,39 +123,19 @@ const MyEarnings = () => {
     const response = Earning("");
     response.then((data) => {
       console.log(data);
-      // if (data.request.status == 200) {
-      //   Success("success", "File Sucessfully Submitted");
-      // } else if (data.response.data.errorCode != "200") {
-      //   WarningBackendApi("warning", `${data.response.data.errorMessage}`);
-      // }
-
-      // console.log(data.data.downloadLink);
-      // setreferalMyearnigs({
-      //   ...referalMyearnigs,
-      //   earninglink: data.data.downloadLink,
-      // });
+      if (data.request.status == 200) {
+        setreferalMyearnigs({
+          ...referalMyearnigs,
+          earninglink: data.data.downloadLink,
+        });
+        Success("success", "File Sucessfully Downloaded");
+        window.open(data.data.downloadLink, "_blank");
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", `${data.response.data.errorMessage}`);
+      }
     });
-
-    const downloadLink = referalMyearnigs.earninglink;
-
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.style.display = "none";
-    downloadAnchor.href = downloadLink;
-    downloadAnchor.download = "EarningStatement.pdf"; // You can set a default filename for the downloaded file
-
-    // Add the anchor element to the document
-    document.body.appendChild(downloadAnchor);
-
-    // Simulate a click event on the anchor element to trigger the download
-    downloadAnchor.click();
-
-    document.body.removeChild(downloadAnchor);
   };
 
-  // useEffect(() => {
-  //   EarningStatementlink();
-
-  // }, []);
   const column = [
     {
       title: "Referee Name",

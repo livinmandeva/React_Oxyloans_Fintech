@@ -6,6 +6,7 @@ import { Myreferal, downloadreferal } from "../../../HttpRequest/afterlogin";
 import Footer from "../../../Footer/Footer";
 import { Button, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
 
 const MyreferalStatus = () => {
   const [referdata, setreferaldata] = useState({
@@ -22,6 +23,12 @@ const MyreferalStatus = () => {
   });
   const [copySuccess, setCopySuccess] = useState(false);
   const [referlink, setrefer] = useState("");
+
+  const downloadReferalStatusFileInfo = () => {
+    Success("success", "Referal Status File Download");
+    window.open(referlink, "_blank");
+  };
+
   const referdashboardPagination = (Pagination) => {
     console.log(Pagination);
     setreferaldata({
@@ -123,11 +130,11 @@ const MyreferalStatus = () => {
       dataIndex: "ReferredOn",
       sorter: (a, b) => a.ReferredOn - b.ReferredOn,
     },
-    {
-      title: "View Referee",
-      dataIndex: "ViewReferee",
-      sorter: (a, b) => a.ViewReferee - b.ViewReferee,
-    },
+    // {
+    //   title: "View Referee",
+    //   dataIndex: "ViewReferee",
+    //   sorter: (a, b) => a.ViewReferee - b.ViewReferee,
+    // },
   ];
 
   const handlenriinvite = () => {
@@ -196,7 +203,8 @@ const MyreferalStatus = () => {
                         </div>
                         <div className="col-auto text-end float-end ms-auto download-grp">
                           <a
-                            href={referlink}
+                            href="#"
+                            onClick={downloadReferalStatusFileInfo}
                             className="btn btn-danger me-2 text-white"
                           >
                             Referal Status

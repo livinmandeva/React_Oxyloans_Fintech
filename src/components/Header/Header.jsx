@@ -321,8 +321,12 @@ const Header = (profile) => {
 
                   <p className="text-muted mb-0">
                     {reduxStoreData?.length !== 0
-                      ? reduxStoreData?.groupName ?? ""
-                      : ""}
+                      ? reduxStoreData?.groupName == "OXYMARCH09" ||
+                        reduxStoreData?.groupName == "OxyPremiuimLenders"
+                        ? "Oxy Founding"
+                        : "NewLender"
+                      : // reduxStoreData?.groupName ?? ""
+                        ""}
                   </p>
                   <p className="text-muted mb-0">
                     Wallet :

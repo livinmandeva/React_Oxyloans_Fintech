@@ -5,6 +5,7 @@ import SideBar from "../../../SideBar/SideBar";
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
+import { cancelwithdrawalRequestInformation } from "../../Base UI Elements/SweetAlert";
 
 const MywithdrawalHistory = () => {
   const [mywithdrawalHistory, setmywithdrawalHistory] = useState({
@@ -12,8 +13,8 @@ const MywithdrawalHistory = () => {
     hasdata: false,
     loading: true,
     pageNo: 1,
-    pageSize: 5,
-    defaultPageSize: 5,
+    pageSize: 10,
+    defaultPageSize: 10,
   });
   const mywithdrawalPagination = (Pagination) => {
     setmywithdrawalHistory({
@@ -25,8 +26,9 @@ const MywithdrawalHistory = () => {
   };
 
   const confirmcancelrequest = (fromrequest, id) => {
-    console.log(fromrequest);
-    console.log(id);
+    cancelwithdrawalRequestInformation(fromrequest, id);
+    // console.log(fromrequest);
+    // console.log(id);
   };
 
   useEffect(() => {
@@ -47,8 +49,6 @@ const MywithdrawalHistory = () => {
     return () => {};
   }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
 
-  console.log(mywithdrawalHistory);
-
   const datasource = [];
   {
     mywithdrawalHistory.apiData != ""
@@ -64,6 +64,11 @@ const MywithdrawalHistory = () => {
               <button
                 type="submit"
                 className="btn  w-70 btn-primary btn-xs"
+                disabled={
+                  data.status == "APPROVED" || data.status == "REJECTED"
+                    ? true
+                    : false
+                }
                 onClick={() => {
                   confirmcancelrequest(data.requestFrom, data.id);
                 }}

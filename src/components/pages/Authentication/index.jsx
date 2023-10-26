@@ -169,18 +169,18 @@ const Login = () => {
                   </div>
 
                   <div className="social-login">
-                    <Link to="#">
+                    {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
-                    </Link>
-                    <Link to="/whatapplogin">
+                    </Link> */}
+                    <Link to="/whatapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
                     </Link>
-                    <Link onClick={() => {}} to="#">
+                    {/* <Link onClick={() => {}} to="#">
                       <i className="fab fa-facebook-f" />
                     </Link>
                     <Link to="#">
                       <i className="fab fa-twitter" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
