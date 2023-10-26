@@ -271,6 +271,7 @@ const RegularPersonalDeal = () => {
                       ? dataSource
                       : []
                   }
+                  pagination={false}
                 />
               </div>
             </>

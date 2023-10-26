@@ -6,6 +6,7 @@ import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
 import { Success, WarningBackendApi } from "../Base UI Elements/SweetAlert";
+import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 
 import {
   profileupadate,
@@ -14,6 +15,16 @@ import {
   sendMoblieOtp,
   loadlendernomineeDetails,
   savenomineeDeatailsApi,
+  verifyBankAccountAndIfsc,
+  updatebankDetails,
+  uploadkyc,
+  getAllUploadedDocs,
+  getPanDoc,
+  getdataPassport,
+  getdatachequeLeaf,
+  getdataDrivingLicence,
+  getdataVoterId,
+  getdataAadhar,
 } from "../../HttpRequest/afterlogin";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -27,10 +38,13 @@ const Profile = () => {
 
   const [dashboarddata, setdashboarddata] = useState({
     sendotpbtn: true,
+    sendotpbtnText: "Send Otp",
+    sendOtpsession: "",
     verifyotp: false,
+    verifyotpText: "Verify",
     submitbankdeatail: false,
     profileData: null,
-    isValid: true,
+    isValid: false,
   });
   const [userProfile, setUserProfile] = useState({
     address: "",
@@ -50,6 +64,8 @@ const Profile = () => {
     twitterUrl: "",
     whatsAppNumber: "",
     aadharNumber: "",
+    mobileNumber: "",
+    email: "",
   });
 
   const [bankaccountprofile, setBankaccountProfile] = useState({
@@ -66,7 +82,8 @@ const Profile = () => {
     mobileOtpSession: "",
     bankAccountError: "",
     updateBankDetails: true,
-    userName: "",
+    nameAtBank: "",
+    bankCity: "",
   });
 
   const [nomineeDetails, setnomineeDetails] = useState({
@@ -88,31 +105,9 @@ const Profile = () => {
     cheque: "",
     license: "",
     Voter: "",
+    isValid: true,
   });
 
-  const handlefileupload = (event) => {};
-  const handlechange = (event) => {
-    const { name, value } = event.target;
-    setUserProfile(
-      (prevUserProfile) => ({
-        ...prevUserProfile,
-        [name]: value,
-      }),
-      () => {
-        console.log(userProfile);
-      }
-    );
-  };
-
-  const handleprofileUpdate = () => {
-    const response = profileupadate(userProfile);
-    response.then((data) => {});
-  };
-
-  const sendotp = async () => {
-    const response = sendMoblieOtp(bankaccountprofile);
-    response.then((data) => {});
-  };
   const handlebankchange = (event) => {
     const { value, name } = event.target;
     setBankaccountProfile({
@@ -129,6 +124,17 @@ const Profile = () => {
     });
   };
 
+  const savebankdetailsProfile = () => {
+    const response = updatebankDetails(bankaccountprofile);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        Success("success", "Bank Details Saved Successfully");
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
+  };
+
   const submitNomineeDetails = (event) => {
     event.preventDefault();
     const response = savenomineeDeatailsApi(nomineeDetails);
@@ -139,15 +145,98 @@ const Profile = () => {
         WarningBackendApi("warning", data.response.data.errorMessage);
       }
     });
+  };
 
-    // if (response.request.status == 200) {
-    //   setdashboarddata({
-    //     ...dashboarddata,
-    //     profileData: data,
-    //   });
-    // } else if (response.response.data.errorCode != "200") {
-    //   WarningAlert(data.response.data.errorMessage, "/login");
-    // }
+  const verifybankAccountCashfree = () => {
+    const response = verifyBankAccountAndIfsc(bankaccountprofile);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+
+        if (data.data.status == "SUCCESS") {
+          setdashboarddata({
+            ...dashboarddata,
+            verifyotpText: "Verifed",
+            submitbankdeatail: true,
+          });
+
+          setBankaccountProfile({
+            ...bankaccountprofile,
+            nameAtBank: data.data.data.nameAtBank,
+            bankName: data.data.data.bankName,
+            bankCity: data.data.data.city,
+            branchName: data.data.data.branch,
+          });
+          toastrSuccess("Sucessfully Verified!", "top-right");
+        } else {
+          WarningBackendApi("warning", data.data.message);
+        }
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
+  };
+
+  const handlefileupload = (event) => {
+    const response = uploadkyc(event);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setKyc({
+          ...kyc,
+          isValid: !kyc.isValid,
+        });
+        Success("success", `${event.target.name} Uploaded Sucessfully`);
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
+  };
+
+  const handlechange = (event) => {
+    const { name, value } = event.target;
+    setUserProfile(
+      (prevUserProfile) => ({
+        ...prevUserProfile,
+        [name]: value,
+      }),
+      () => {}
+    );
+  };
+
+  const handleprofileUpdate = () => {
+    const response = profileupadate(userProfile);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        Success("success", "Personal Details Save Successfully");
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
+  };
+
+  const sendotp = async () => {
+    const response = sendMoblieOtp(bankaccountprofile);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        setdashboarddata({
+          ...dashboarddata,
+          sendotpbtn: true,
+          verifyotp: true,
+          sendotpbtnText: "ReSend Otp",
+          sendOtpsession: data.data.mobileOtpSession,
+          isValid: true,
+        });
+
+        setBankaccountProfile({
+          ...bankaccountprofile,
+          mobileOtpSession: data.data.mobileOtpSession,
+        });
+
+        toastrSuccess("Otp Sent Sucessfully!", "top-right");
+      } else if (data.response.data.errorCode != "200") {
+        toastrWarning(data.response.data.errorMessage);
+      }
+    });
   };
 
   const openTheActiveTabs = (type) => {
@@ -174,52 +263,11 @@ const Profile = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (
-  //     bankaccountprofile.accountNumber !==
-  //     bankaccountprofile.confirmAccountNumber
-  //   ) {
-  //     setBankaccountProfile((prevProfile) => ({
-  //       ...prevProfile,
-  //       bankAccountError:
-  //         "Confirm Account Number does not match Account Number",
-  //     }));
-  //   } else {
-  //     setBankaccountProfile((prevProfile) => ({
-  //       ...prevProfile,
-  //       bankAccountError: "",
-  //     }));
-  //   }
-  //   return () => {};
-  // }, [bankaccountprofile.confirmAccountNumber]);
-
-  // useEffect(() => {
-  //   if (
-  //     bankaccountprofile.bankName !== "" &&
-  //     bankaccountprofile.branchName !== "" &&
-  //     bankaccountprofile.ifscCode !== "" &&
-  //     bankaccountprofile.mobileNumber !== "" &&
-  //     bankaccountprofile.accountNumber !== "" &&
-  //     bankaccountprofile.confirmAccountNumber !== ""
-  //   ) {
-  //     setdashboarddata({
-  //       ...dashboarddata,
-  //       isValid: false,
-  //     });
-  //   } else {
-  //     setdashboarddata({
-  //       ...dashboarddata,
-  //       isValid: true,
-  //     });
-  //   }
-
-  //   return () => {};
-  // }, [bankaccountprofile]);
-
   useEffect(() => {
     const nomineresponse = loadlendernomineeDetails();
     nomineresponse.then((data) => {
       if (data.request.status == 200) {
+        console.log(data);
         setnomineeDetails({
           ...nomineeDetails,
           nomineeName: data.data.name == null ? "" : data.data.name,
@@ -240,6 +288,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserDetails().then((data) => {
+      console.log(data.data);
       localStorage.setItem("userType", data.data.userDisplayId);
       setdashboarddata({
         ...dashboarddata,
@@ -262,8 +311,10 @@ const Profile = () => {
         pinCode: data.data.pinCode,
         state: data.data.state,
         twitterUrl: data.data.urlsDto.twitterUrl,
-        whatsAppNumber: data.data.whatappNumber,
+        whatsAppNumber: data.data.whatsAppNumber,
         aadharNumber: data.data.aadharNumber,
+        mobileNumber: data.data.mobileNumber,
+        email: data.data.email,
       });
       setBankaccountProfile({
         ...bankaccountprofile,
@@ -271,11 +322,60 @@ const Profile = () => {
         bankAddress: data.data.bankAddress,
         bankName: data.data.bankName,
         branchName: data.data.branchName,
-        confirmAccountNumber: data.data.ifscCode,
+        confirmAccountNumber: data.data.accountNumber,
         ifscCode: data.data.ifscCode,
+        nameAtBank: data.data.userName,
+        bankCity: data.data.bankAddress,
+        moblieNumber: data.data.mobileNumber,
       });
     });
   }, []);
+
+  useEffect(() => {
+    const fetchApiData1 = () => {
+      return getPanDoc();
+    };
+    const fetchApiData2 = () => {
+      return getdataPassport();
+    };
+    const fetchApiData3 = () => {
+      return getdatachequeLeaf();
+    };
+    const fetchApiData4 = () => {
+      return getdataDrivingLicence();
+    };
+    const fetchApiData5 = () => {
+      return getdataVoterId();
+    };
+    const fetchApiData6 = () => {
+      return getdataAadhar();
+    };
+
+    Promise.all([
+      fetchApiData1(),
+      fetchApiData2(),
+      fetchApiData3(),
+      fetchApiData4(),
+      fetchApiData5(),
+      fetchApiData6(),
+    ])
+      .then((responses) => {
+        setKyc({
+          ...kyc,
+          PanCard: responses[0].data,
+          Passport: responses[1].data,
+          cheque: responses[2].data,
+          license: responses[3].data,
+          Voter: responses[4].data,
+          aadhar: responses[5].data,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [kyc.isValid]);
+
+  console.log(kyc);
   return (
     <>
       <div className="main-wrapper">
@@ -355,10 +455,13 @@ const Profile = () => {
                           ? dashboarddata.profileData.data.address
                           : ""}
                       </div>
-                      <div className="user-Location my-1">
-                        <i className="fa-solid fa-calendar-days" /> Validity :
-                        {reduxStoreDataDashboard.validityDate}
-                      </div>
+
+                      {reduxStoreData.groupName != "NewLender" && (
+                        <div className="user-Location my-1">
+                          <i className="fa-solid fa-calendar-days" /> Validity :
+                          {reduxStoreDataDashboard.validityDate}
+                        </div>
+                      )}
                     </div>
                     <div className="col-auto profile-btn">
                       <Link
@@ -561,8 +664,9 @@ const Profile = () => {
                                   type="text"
                                   className="form-control"
                                   placeholder=" Enter your Name"
-                                  name="userName"
+                                  name="nameAtBank"
                                   onChange={handlebankchange}
+                                  value={bankaccountprofile.nameAtBank}
                                 />
                               </div>
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -576,6 +680,7 @@ const Profile = () => {
                                   name="accountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your Account Number"
+                                  value={bankaccountprofile.accountNumber}
                                 />
                               </div>
 
@@ -590,6 +695,9 @@ const Profile = () => {
                                   name="confirmAccountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Confirm Account Number"
+                                  value={
+                                    bankaccountprofile.confirmAccountNumber
+                                  }
                                 />
                                 {bankaccountprofile.bankAccountError && (
                                   <span className="login-danger">
@@ -609,6 +717,7 @@ const Profile = () => {
                                   name="ifscCode"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your IFSC Code"
+                                  value={bankaccountprofile.ifscCode}
                                 />
                               </div>
 
@@ -623,6 +732,7 @@ const Profile = () => {
                                   name="bankName"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your Bank Name"
+                                  value={bankaccountprofile.bankName}
                                 />
                               </div>
 
@@ -637,19 +747,22 @@ const Profile = () => {
                                   name="branchName"
                                   placeholder=" Enter your Branch"
                                   onChange={handlebankchange}
+                                  value={bankaccountprofile.branchName}
                                 />
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
                                 <label>
-                                  city <span className="login-danger">*</span>
+                                  Bank city{" "}
+                                  <span className="login-danger">*</span>
                                 </label>
                                 <input
                                   type="text"
                                   className="form-control"
-                                  name="city"
-                                  placeholder=" Enter your City"
+                                  name="bankCity"
+                                  placeholder=" Enter your Bank City"
                                   onChange={handlebankchange}
+                                  value={bankaccountprofile.bankCity}
                                 />
                               </div>
 
@@ -664,38 +777,43 @@ const Profile = () => {
                                   name="moblieNumber"
                                   placeholder=" Enter your Mobile Number"
                                   onChange={handlebankchange}
+                                  value={bankaccountprofile.moblieNumber}
                                 />
                               </div>
-                              <div className="form-group col-12 col-md-4 local-forms">
-                                <label>
-                                  Otp <span className="login-danger">*</span>
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  name="otp"
-                                  placeholder=" Enter your Mobile otp"
-                                  onChange={handlebankchange}
-                                />
-                              </div>
+
+                              {dashboarddata.isValid && (
+                                <div className="form-group col-12 col-md-4 local-forms">
+                                  <label>
+                                    Otp <span className="login-danger">*</span>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    name="mobileOtp"
+                                    placeholder=" Enter your Mobile otp"
+                                    onChange={handlebankchange}
+                                    value={bankaccountprofile.mobileOtp}
+                                  />
+                                </div>
+                              )}
 
                               <div className="col-12 row">
                                 {dashboarddata.sendotpbtn && (
                                   <button
-                                    className="btn btn-info col-md-2 mx-2"
+                                    className="btn btn-secondary col-md-2 mx-2"
                                     type="submit"
-                                    // disabled={dashboarddata.isValid}
                                     onClick={sendotp}
                                   >
-                                    Send Otp
+                                    {dashboarddata.sendotpbtnText}
                                   </button>
                                 )}
                                 {dashboarddata.verifyotp && (
                                   <button
-                                    className="btn btn-primary col-md-2 mx-2"
+                                    className="btn btn-warning col-md-2 mx-2"
                                     type="submit"
+                                    onClick={verifybankAccountCashfree}
                                   >
-                                    Verify
+                                    {dashboarddata.verifyotpText}
                                   </button>
                                 )}
 
@@ -703,6 +821,7 @@ const Profile = () => {
                                   <button
                                     className="btn btn-success col-md-2 mx-2"
                                     type="submit"
+                                    onClick={savebankdetailsProfile}
                                   >
                                     Save Details
                                   </button>
@@ -990,24 +1109,24 @@ const Profile = () => {
                                   className="form-control"
                                   placeholder="Enter WhatsApp Name"
                                   onChange={handlechange}
-                                  value={userProfile.whatappNumber}
+                                  value={userProfile.whatsAppNumber}
                                   name="whatappNumber"
                                 />
                               </div>
-                              {/* <div className="form-group col-12 col-sm-4 local-forms">
-                                  <label>
-                                    Email ID
-                                    <span className="login-danger">*</span>
-                                  </label>
-                                  <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Enter Email Id"
-                                    onChange={handlechange}
-                                    value={userProfile.email}
-                                    name="email"
-                                  />
-                                </div> */}
+                              <div className="form-group col-12 col-sm-4 local-forms">
+                                <label>
+                                  Email ID
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  placeholder="Enter Email Id"
+                                  onChange={handlechange}
+                                  value={userProfile.email}
+                                  name="email"
+                                />
+                              </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1019,7 +1138,7 @@ const Profile = () => {
                                   className="form-control"
                                   placeholder="Enter Residence Address"
                                   onChange={handlechange}
-                                  value={userProfile.residenceAddress}
+                                  value={userProfile.permanentAddress}
                                   name="permanentAddress"
                                 />
                               </div>
@@ -1157,7 +1276,7 @@ const Profile = () => {
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="PAN"
                                       id="file"
                                       className="hide-input custom-file-input"
                                       onChange={handlefileupload}
@@ -1169,13 +1288,17 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {/* <h6 className="settings-size">
-                                    <span>
-                                      Image Uploaded
-                                      <i className="fa fa-chek text-bg-dark"></i>
-                                    </span>
-                                  </h6> */}
-                                  {/* <p>lll</p> */}
+                                  {kyc.PanCard != "" ? (
+                                    <h6 className="settings-size text-success">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>{kyc.PanCard.fileName}</small>
+                                    </h6>
+                                  ) : (
+                                    <h6 className="settings-size text-warning">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>Upload Pan</small>
+                                    </h6>
+                                  )}
                                 </div>
 
                                 <div className="form-group col-12 col-md-6">
@@ -1187,7 +1310,7 @@ const Profile = () => {
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="CHEQUELEAF"
                                       id="file"
                                       className="hide-input"
                                       onChange={handlefileupload}
@@ -1198,6 +1321,17 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
+                                  {kyc.cheque != "" ? (
+                                    <h6 className="settings-size text-success">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>{kyc.cheque.fileName}</small>
+                                    </h6>
+                                  ) : (
+                                    <h6 className="settings-size text-warning">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>Upload Cheque</small>
+                                    </h6>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
@@ -1208,7 +1342,7 @@ const Profile = () => {
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="AADHAR"
                                       id="file"
                                       className="hide-input"
                                       onChange={handlefileupload}
@@ -1219,17 +1353,29 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
+
+                                  {kyc.aadhar != "" ? (
+                                    <h6 className="settings-size text-success">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>{kyc.aadhar.fileName}</small>
+                                    </h6>
+                                  ) : (
+                                    <h6 className="settings-size text-warning">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>Upload Aadhar</small>
+                                    </h6>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
                                     Driving License
-                                    <span className="star-red">*</span>
+                                    {/* <span className="star-red">*</span> */}
                                   </p>
                                   <div className="settings-btn">
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="DRIVINGLICENCE"
                                       id="file"
                                       className="hide-input"
                                       onChange={handlefileupload}
@@ -1240,17 +1386,29 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
+
+                                  {kyc.license != "" ? (
+                                    <h6 className="settings-size text-success">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>{kyc.license.fileName}</small>
+                                    </h6>
+                                  ) : (
+                                    <h6 className="settings-size text-warning">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>Upload License</small>
+                                    </h6>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
                                     Voter ID
-                                    <span className="star-red">*</span>
+                                    {/* <span className="star-red">*</span> */}
                                   </p>
                                   <div className="settings-btn">
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="VOTERID"
                                       onChange={handlefileupload}
                                       id="file"
                                       className="hide-input"
@@ -1261,17 +1419,29 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
+
+                                  {kyc.Voter != "" ? (
+                                    <h6 className="settings-size text-success">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>{kyc.Voter.fileName}</small>
+                                    </h6>
+                                  ) : (
+                                    <h6 className="settings-size text-warning">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>Upload Voter Id</small>
+                                    </h6>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
                                     Passport
-                                    <span className="star-red">*</span>
+                                    {/* <span className="star-red">*</span> */}
                                   </p>
                                   <div className="settings-btn">
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="image"
+                                      name="PASSPORT"
                                       onChange={handlefileupload}
                                       id="file"
                                       className="hide-input"
@@ -1282,6 +1452,18 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
+
+                                  {kyc.Passport != "" ? (
+                                    <h6 className="settings-size text-success">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>{kyc.Passport.fileName}</small>
+                                    </h6>
+                                  ) : (
+                                    <h6 className="settings-size text-warning">
+                                      <i className="fa-solid fa-check mx-lg-1 "></i>
+                                      <small>Upload Passport</small>
+                                    </h6>
+                                  )}
                                 </div>
                               </div>
                             </form>

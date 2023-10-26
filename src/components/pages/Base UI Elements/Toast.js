@@ -5,8 +5,8 @@ import alertify from "alertifyjs";
 import "../../../../node_modules/alertifyjs/build/css/alertify.css";
 import "../../../../node_modules/alertifyjs/build/css/themes/semantic.css";
 
-export const toastrSuccess = (message) => {
-  alertify.set("notifier", "position", "bottom-center");
+export const toastrSuccess = (message, position = "bottom-center") => {
+  alertify.set("notifier", "position", position);
   alertify.success(message);
 };
 export const toastrInfo = () => {

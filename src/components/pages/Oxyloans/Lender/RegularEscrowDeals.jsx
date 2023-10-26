@@ -275,6 +275,7 @@ const RegularEscrowDeals = () => {
                         ? dataSource
                         : []
                     }
+                    pagination={false}
                   />
                 </div>
               </>

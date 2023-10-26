@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -22,6 +22,8 @@ export const loadVirtualAccount = () => {
     userId,
   };
 };
+const getuserLoginId = getUserId();
+const getUserLoginToken = getToken();
 
 const handleApiRequestAfterLoginService = async (
   baseurl,
@@ -150,7 +152,6 @@ export const LoadwalletThroughQrScan = async (amount) => {
     API_BASE_URL,
     `QRTransactionInitiation`,
     "POST",
-
     token,
     data
   );
@@ -172,7 +173,6 @@ export const handlecashapi = async (groupId, amount) => {
     API_BASE_URL,
     `${userId}/cashfree`,
     "POST",
-
     token,
     data
   );
@@ -186,7 +186,6 @@ export const viewdealamountemi = async (dealId) => {
     API_BASE_URL,
     `${userId}/${dealId}/dealLevelLoanEmiCard`,
     "GET",
-
     token
   );
   return response;
@@ -233,12 +232,10 @@ export const myrunnig = async (props) => {
 export const sendMoblieOtp = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();
-
   const data = {
     mobileNumber: bankaccountprofile.moblieNumber,
   };
 
-  console.log(data);
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `sendMobileOtp `,
@@ -252,13 +249,36 @@ export const profileupadate = async (userProfile) => {
   const token = getToken();
   const userId = getUserId();
 
-  console.log(userProfile);
+  var dateComponents = userProfile.dob.split("-");
+  var formattedDate =
+    dateComponents[2] + "/" + dateComponents[1] + "/" + dateComponents[0];
+
+  const data = JSON.stringify({
+    firstName: userProfile.firstName,
+    lastName: userProfile.lastName,
+    middleName: userProfile.middleName,
+    fatherName: userProfile.fatherName,
+    dob: formattedDate,
+    panNumber: userProfile.panNumber,
+    address: userProfile.city,
+    permanentAddress: userProfile.permanentAddress,
+    pinCode: userProfile.pinCode,
+    city: userProfile.city,
+    state: userProfile.state,
+    locality: userProfile.locality,
+    facebookUrl: userProfile.facebookUrl,
+    linkedinUrl: userProfile.linkedinUrl,
+    twitterUrl: userProfile.twitterUrl,
+    whatsAppNumber: userProfile.whatsAppNumber,
+    aadharNumber: userProfile.aadharNumber,
+  });
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `personal/${userId}`,
     "PATCH",
     token,
-    userProfile
+    data
   );
 
   return response;
@@ -345,7 +365,6 @@ export const verifyBankAccountAndIfsc = async (bankaccountprofile) => {
     bankAccount: bankaccountprofile.accountNumber,
     ifscCode: bankaccountprofile.ifscCode,
   };
-
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     "verifyBankAccountAndIfsc",
@@ -366,32 +385,49 @@ export const Earning = async (status) => {
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `downLoadLinkForBonusAmount`,
-    data,
     "POST",
-    token
+    token,
+    data
   );
   return response;
 };
 
-export const uploadkyc = async () => {};
-export const updatebank = async (bankaccountprofile) => {
+export const uploadkyc = async (event) => {
+  const token = getToken();
+  const userId = getUserId();
+  var fd = new FormData();
+  var files = event.target.files[0];
+  fd.append(event.target.name, files);
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/upload/kyc`,
+    "POST",
+    token,
+    fd,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+  );
+  return response;
+};
+
+export const updatebankDetails = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();
   const mobileOtpSession = localStorage.getItem("OtpSeesion");
   const data = {
     accountNumber: bankaccountprofile.accountNumber,
-    bankAddress: bankaccountprofile.bankAddress,
+    bankAddress: bankaccountprofile.bankCity,
     bankName: bankaccountprofile.bankName,
     branchName: bankaccountprofile.branchName,
     confirmAccountNumber: bankaccountprofile.confirmAccountNumber,
     ifscCode: bankaccountprofile.ifscCode,
     mobileOtp: bankaccountprofile.mobileOtp,
-    mobileOtpSession: mobileOtpSession,
+    mobileOtpSession: bankaccountprofile.mobileOtpSession,
+    userName: bankaccountprofile.nameAtBank,
     updateBankDetails: true,
-    userName: "JOHN DOE",
   };
 
-  console.log(userProfile);
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `personal/${userId}`,
@@ -461,9 +497,9 @@ export const handleapicall = async (data) => {
     API_BASE_URL,
     // user/getLenderStoredEmailContacts/${suserId}
     `withdrawalFundsFromDeals`,
-    data1,
     "POST",
-    token
+    token,
+    data1
   );
   return response;
 };
@@ -493,7 +529,6 @@ export const fileuploads = async (files) => {
   const userId = getUserId();
   const formData = new FormData();
   formData.append("USERQUERYSCREENSHOT", files);
-
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/userQueryScreenshot`,
@@ -1067,4 +1102,64 @@ export const savenomineeDeatailsApi = async (nominee) => {
     data
   );
   return response;
+};
+
+export const getPanDoc = () => {
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${getuserLoginId}/download/PAN`,
+    "GET",
+    getUserLoginToken
+  );
+  return res;
+};
+
+export const getdataPassport = () => {
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${getuserLoginId}/download/PASSPORT`,
+    "GET",
+    getUserLoginToken
+  );
+  return res;
+};
+
+export const getdataAadhar = () => {
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${getuserLoginId}/download/AADHAR`,
+    "GET",
+    getUserLoginToken
+  );
+  return res;
+};
+
+export const getdataVoterId = () => {
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${getuserLoginId}/download/VOTERID`,
+    "GET",
+    getUserLoginToken
+  );
+  return res;
+};
+
+export const getdataDrivingLicence = () => {
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${getuserLoginId}/download/DRIVINGLICENCE`,
+    "GET",
+    getUserLoginToken
+  );
+  return res;
+};
+
+export const getdatachequeLeaf = () => {
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${getuserLoginId}/download/CHEQUELEAF`,
+    "GET",
+    getUserLoginToken
+  );
+  return res;
 };

@@ -575,6 +575,7 @@ const Sidebar = (props) => {
                 >
                   <Link
                     to="#"
+                    style={{ display: "none" }}
                     className={isSideMenu == "AutoInvest" ? "subdrop" : ""}
                     onClick={() =>
                       toggleSidebar(
@@ -620,9 +621,9 @@ const Sidebar = (props) => {
               {/* /Main Menu*/}
               {/* Management */}
               <ul>
-                <li className="menu-title">
+                {/* <li className="menu-title">
                   <span>Refer A Friend</span>
-                </li>
+                </li> */}
                 <li
                   className={`${
                     "/referaFriend" === pathName ||
