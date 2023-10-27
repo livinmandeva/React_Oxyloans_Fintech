@@ -1288,7 +1288,7 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.PanCard != "" ? (
+                                  {kyc.PanCard != undefined && kyc.PanCard   != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.PanCard.fileName}</small>
@@ -1321,7 +1321,7 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
-                                  {kyc.cheque != "" ? (
+                                  {kyc.cheque != undefined && kyc.cheque != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.cheque.fileName}</small>
@@ -1354,7 +1354,7 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.aadhar != "" ? (
+                                  {kyc.aadhar != undefined &&  kyc.aadhar != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.aadhar.fileName}</small>
@@ -1387,7 +1387,7 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.license != "" ? (
+                                  {kyc.license != undefined && kyc.license != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.license.fileName}</small>
@@ -1420,7 +1420,7 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.Voter != "" ? (
+                                  {kyc.Voter != undefined && kyc.Voter != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.Voter.fileName}</small>
@@ -1453,7 +1453,7 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.Passport != "" ? (
+                                  {kyc.Passport != undefined && kyc.Passport != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.Passport.fileName}</small>

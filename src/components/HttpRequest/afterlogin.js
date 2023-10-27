@@ -620,7 +620,21 @@ export const TicketHistoryapi = async () => {
 
   return response;
 };
+export const ticketcommentapi=async(id)=>{
+  const token = getToken();
+  const userId = getUserId();
+   // const data={
+    
+  // }     
+  const response =    handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${id}/pendingQueriesBasedOnId`,
+    "GET",
+    token
+  )
 
+  return  response
+}
 export const getemailcontent = async () => {
   const token = getToken();
   const userId = getUserId();

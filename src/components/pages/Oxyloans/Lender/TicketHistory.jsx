@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { TicketHistoryapi } from "../../../HttpRequest/afterlogin";
+import { TicketHistoryapi, ticketcommentapi } from "../../../HttpRequest/afterlogin";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import ViewTicketHistory from "./ViewTicketHistory";
 import "./InvoiceGrid.css";
@@ -11,7 +11,7 @@ import Comment from "../Utills/Modals/Comment";
 
 const TicketHistory = () => {
   const [ticket, setticketdata] = useState({});
-  const [apires, setapires] = useState([]);
+  const [apires, setapires] = useState([]);const  [dataapi ,setdataapi]    =useState()
   const [ticketcomment ,  setticketcommit]=useState(false)
 
   useEffect(() => {
@@ -50,6 +50,16 @@ const TicketHistory = () => {
   useEffect(()=>{
 
   },[ticketcomment])
+
+
+  const handeticketcomment= async(id)=>{
+const response =  ticketcommentapi(id)
+     setticketcommit(!ticketcomment)
+      response.then((data)=>{
+        console.log(data) 
+        setdataapi(data)
+      }) 
+  }
   // console.log("api" + apires)
   return (
     <>
@@ -94,7 +104,7 @@ const TicketHistory = () => {
                           </li>
                         </ul>
                       </div> */}
-                    {ticketcomment && (<Comment    />)}
+                    {ticketcomment && (<Comment   data={dataapi} />)}
                       <div className="card-body">
                         <div className="table-responsive">
                           <table className="table border-0 star-student  table-center mb-0">
@@ -139,7 +149,7 @@ const TicketHistory = () => {
                                   <td className="text-center">
                                     <div className="buttn">
                                       <div  className="badgedat">
-                                      <div className="badge bg-success "onClick={()=>setticketcommit((ticketcomment)=> !ticketcomment)} >
+                                      <div className="badge bg-success" onClick={()=>handeticketcomment(item.id)} >
                                         View Comments
                                       </div>
                                       <div className="badge bg-warning  ">
