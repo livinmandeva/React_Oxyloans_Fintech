@@ -1443,7 +1443,7 @@ const Profile = () => {
                                       accept="image/*"
                                       name="PASSPORT"
                                       onChange={handlefileupload}
-                                      id="file"
+                                      id="file"   
                                       className="hide-input"
                                     />
                                     <label htmlFor="file" className="upload">
@@ -1456,7 +1456,7 @@ const Profile = () => {
                                   {kyc.Passport != undefined && kyc.Passport != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.Passport.fileName}</small>
+                                      <small>{kyc.Passport.fileName}</small>   
                                     </h6>
                                   ) : (
                                     <h6 className="settings-size text-warning">
