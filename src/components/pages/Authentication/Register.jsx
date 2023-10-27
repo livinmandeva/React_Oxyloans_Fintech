@@ -33,7 +33,7 @@ const Register = () => {
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">
-                  <h1>Sign Up</h1>
+                  <h1>Sign Up as A Lender</h1>
                   <p className="account-subtitle">
                     Enter details to create your account
                   </p>
@@ -71,16 +71,12 @@ const Register = () => {
                         showIcon={showIcon}
                         hideIcon={hideIcon}
                       />
-                      {/* <input className="form-control pass-input" type="text" />
-                                            <span className="profile-views feather-eye toggle-password">
-                                                <FeatherIcon icon="eye" />
-                                            </span> */}
                     </div>
                     <div className="form-group">
                       <label>
                         Phone Number <span className="login-danger">*</span>
                       </label>
-                      {/* <input className="form-control pass-confirm" type="text" /> */}
+
                       <input
                         ref={inputRef2}
                         className="form-control pass-confirm"
@@ -110,7 +106,7 @@ const Register = () => {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
-                    <Link to="/whatapplogin">
+                    <Link to="/whatapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp  " />
                     </Link>
                     {/* <Link to="#">
