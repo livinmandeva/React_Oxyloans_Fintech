@@ -7,10 +7,12 @@ import { TicketHistoryapi } from "../../../HttpRequest/afterlogin";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import ViewTicketHistory from "./ViewTicketHistory";
 import "./InvoiceGrid.css";
+import Comment from "../Utills/Modals/Comment";
 
 const TicketHistory = () => {
   const [ticket, setticketdata] = useState({});
   const [apires, setapires] = useState([]);
+  const [ticketcomment ,  setticketcommit]=useState(false)
 
   useEffect(() => {
     handleWriteClick();
@@ -44,6 +46,10 @@ const TicketHistory = () => {
       }
     });
   };
+
+  useEffect(()=>{
+
+  },[ticketcomment])
   // console.log("api" + apires)
   return (
     <>
@@ -88,6 +94,7 @@ const TicketHistory = () => {
                           </li>
                         </ul>
                       </div> */}
+                    {ticketcomment && (<Comment    />)}
                       <div className="card-body">
                         <div className="table-responsive">
                           <table className="table border-0 star-student  table-center mb-0">
@@ -102,7 +109,7 @@ const TicketHistory = () => {
                             </thead>
                             <tbody>
                               {apires.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={index} className={`tablerow${index % 2 === 0 ? 'event' : 'odd'}`}>
                                   <td className="text-center">
                                     <div>{item.ticketId}</div>
                                   </td>
@@ -131,20 +138,24 @@ const TicketHistory = () => {
                                   </td>
                                   <td className="text-center">
                                     <div className="buttn">
-                                      <div className="badge bg-success col-md-8 col-12">
+                                      <div  className="badgedat">
+                                      <div className="badge bg-success "onClick={()=>setticketcommit((ticketcomment)=> !ticketcomment)} >
                                         View Comments
                                       </div>
-                                      <div className="badge bg-warning  col-md-8 col-12">
+                                      <div className="badge bg-warning  ">
                                         Inquiries Reply
                                       </div>
+                                      </div>
+                                      <div  className="badgedat">
                                       <Link
-                                        className=" badge bg-info col-md-8 col-12"
+                                        className=" badge bg-info col-md-9 col-12"
                                         to="/writetous"
                                       >
                                         <div className="">Write Reply</div>{" "}
                                       </Link>
                                       <div className=" badge bg-success-dark  col-md-8 col-12">
                                         Cancel
+                                      </div>
                                       </div>
                                     </div>
                                   </td>
@@ -154,7 +165,7 @@ const TicketHistory = () => {
                           </table>
                         </div>
                       </div>
-                    </div>
+                    </div>  
                     {/* /Star Students */}
                   </div>
                 </div>

@@ -150,6 +150,7 @@ const ReferaFriend = () => {
       invaitlenderlink: !emailres.invaitlenderlink,
     });
   };
+
   return (
     <>
       <div className="main-wrapper">
@@ -340,10 +341,13 @@ const ReferaFriend = () => {
                                   Browse From Computer
                                   {/* </button> */}{" "}
                                 </a>
-
-                                <button className="btn btn-outline-warning my-lg-3 border-2 ">
+                                 
+                                                   {/* <button */}    
+                                                   <a  href={url}
+                                 className="btn btn-outline-warning my-lg-3 border-2 ">
                                   Invite Through Gmail
-                                </button>
+                                {/* </button> */}
+                                </a>
                               </div>
                             </form>
                           </div>
