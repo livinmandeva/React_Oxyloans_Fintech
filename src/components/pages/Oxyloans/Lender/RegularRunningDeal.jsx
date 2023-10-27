@@ -122,7 +122,7 @@ const RegularRunningDeal = () => {
                     to="/myRunningDelas"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    My Participated Delas
+                    <i className="fa fa-user mx-1"></i> My Participated Delas
                   </Link>
                 </div>
               </div>
@@ -235,6 +235,7 @@ const RegularRunningDeal = () => {
                                       to={`participatedeal?dealId=${data.dealId}`}
                                       className="badge bg-success-dark"
                                     >
+                                      <i className="fa fa-forward mx-1"></i>
                                       Participate
                                     </Link>
                                   </div>
@@ -245,7 +246,8 @@ const RegularRunningDeal = () => {
                                       className="badge bg-primary-dark"
                                       target="_blank"
                                     >
-                                      View Borrower Documents
+                                      <i className="fa fa-eye"></i> View
+                                      Borrower Documents
                                     </a>
                                   </div>
                                 </div>

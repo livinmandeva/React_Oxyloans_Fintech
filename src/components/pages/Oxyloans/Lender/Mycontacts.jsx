@@ -202,7 +202,7 @@ const Mycontacts = () => {
                             className="btn btn-outline-primary me-2"
                             onClick={handlesendInvaite}
                           >
-                            Send Invite
+                            <i class="fa-solid fa-share mx-1"></i> Send Invite
                           </Link>
 
                           <Button
@@ -212,7 +212,10 @@ const Mycontacts = () => {
                             {contactdata.selectAll ? (
                               <>De select All</>
                             ) : (
-                              <>Invite All</>
+                              <>
+                                <i class="fa-solid fa-share mx-1"></i> Invite
+                                All
+                              </>
                             )}
                           </Button>
                         </div>

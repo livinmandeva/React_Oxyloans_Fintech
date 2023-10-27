@@ -271,7 +271,8 @@ const MyRunningDelas = () => {
                                       paticipationChanges(data.dealId);
                                     }}
                                   >
-                                    Participation Details
+                                    <i className="fa fa-forward"></i>
+                                    Participation Info
                                   </span>
                                 </div>
 
@@ -281,7 +282,8 @@ const MyRunningDelas = () => {
                                     className="badge bg-primary-dark"
                                     onClick={() => handlemodalopen(data.dealId)}
                                   >
-                                    Interest Statement
+                                    <i className="fa fa-eye"></i> Interest
+                                    Statement
                                   </span>
                                 </div>
 
@@ -300,7 +302,7 @@ const MyRunningDelas = () => {
                                     className="badge bg-danger"
                                     to={`/writetous?dealName=${data.dealName}&&dealId=${data.dealId}`}
                                   >
-                                    Raise A query
+                                    <i className="fa fa-edit"></i> Raise A query
                                   </Link>
                                 </div>
 

@@ -122,7 +122,7 @@ const RegularEscrowDeals = () => {
                     to="/myRunningDelas"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    My Participated Delas
+                    <i className="fa fa-user mx-1"></i> My Participated Delas
                   </Link>
                 </div>
               </div>

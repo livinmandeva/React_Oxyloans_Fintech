@@ -230,7 +230,7 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-warning col-md-3 col-12 "
                             onClick={Invitelender}
                           >
-                            Invite a Friend
+                            <i class="fa-solid fa-user"></i> Invite a Friend
                           </button>
                         </>
                       )}
@@ -252,6 +252,7 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"
                             onClick={invitenri}
                           >
+                            <i class="fa-solid fa-plane-departure mx-1"></i>{" "}
                             Invite an NRI
                           </button>
                         </>
@@ -273,7 +274,7 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"
                             onClick={Inviteborrower}
                           >
-                            Invite a Borrower
+                            <i class="fa-solid fa-user"></i> Invite a Borrower
                           </button>
                         </>
                       )}

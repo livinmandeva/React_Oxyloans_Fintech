@@ -79,7 +79,7 @@ const MyclosedDeals = () => {
                 className="btn  w-70 btn-primary btn-xs"
                 onClick={() => handelSatement(data.dealId)}
               >
-                Statement
+                <i class="fa-regular fa-eye"></i> Statement
               </button>
             ),
           });

@@ -54,7 +54,7 @@ const EarningCertificate = () => {
                   );
                 }}
               >
-                Download FY Report
+                <i class="fa-solid fa-download"></i> Download FY Report
               </span>
             ),
             EMAILFYREPORT: (
@@ -69,7 +69,7 @@ const EarningCertificate = () => {
                   );
                 }}
               >
-                Get FY Email Report
+                <i class="fa-solid fa-envelope"></i> Get FY Email Report
               </span>
             ),
           });

@@ -168,7 +168,7 @@ const WithdrawdealfromDeal = () => {
 
                       <button
                         onClick={handleWithdrawFromNormal}
-                        className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2"
+                        className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2"
                       >
                         Withdraw from a Normal deal
                       </button>

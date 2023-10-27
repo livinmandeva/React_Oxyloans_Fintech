@@ -207,7 +207,8 @@ const MyreferalStatus = () => {
                             onClick={downloadReferalStatusFileInfo}
                             className="btn btn-danger me-2 text-white"
                           >
-                            Referal Status
+                            <i class="fa-solid fa-download mx-1"></i> Referal
+                            Status
                           </a>
                           <Button
                             // to="addsalary"
@@ -217,7 +218,10 @@ const MyreferalStatus = () => {
                             {referdata.inviteborrowerlink ? (
                               <>copied</>
                             ) : (
-                              <>Invite Borrower</>
+                              <>
+                                <i class="fa-solid fa-user mx-1"></i>Invite
+                                Borrower
+                              </>
                             )}
                           </Button>
                           <Button
@@ -227,7 +231,10 @@ const MyreferalStatus = () => {
                             {referdata.nriinvite ? (
                               <> copied</>
                             ) : (
-                              <>Invite an NRI</>
+                              <>
+                                <i class="fa-solid fa-plane-departure mx-1"></i>
+                                Invite an NRI
+                              </>
                             )}
                           </Button>
 
@@ -240,7 +247,10 @@ const MyreferalStatus = () => {
                             {referdata.invaitlenderlink ? (
                               <> copied</>
                             ) : (
-                              <>Invite an Lender</>
+                              <>
+                                <i class="fa-solid fa-user mx-1"></i> Invite an
+                                Lender
+                              </>
                             )}
                           </Button>
                         </div>
