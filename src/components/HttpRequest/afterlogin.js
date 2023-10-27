@@ -756,7 +756,11 @@ export const getMyTransactions = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
-export const getWithdrawaFromDeal = async (pageNo = 1, pageSize = 10 , dealtype) => {
+export const getWithdrawaFromDeal = async (
+  pageNo = 1,
+  pageSize = 10,
+  dealtype
+) => {
   const token = getToken();
   const userId = getUserId();
 

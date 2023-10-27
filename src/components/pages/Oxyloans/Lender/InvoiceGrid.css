@@ -65,8 +65,7 @@
   padding: 2px !important;
 }
 
-
-.badgedat{
+.badgedat {
   display: flex;
   flex-direction: row !important;
   justify-content: flex-start;
