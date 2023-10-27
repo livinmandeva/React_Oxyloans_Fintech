@@ -3,6 +3,7 @@ import { Upload } from 'feather-icons-react/build/IconComponents';
 import { useEffect, useState } from 'react';
 // import '../file.css'
 import Modal from 'react-bootstrap/Modal';
+import { uploadapicall } from '../../../../HttpRequest/afterlogin';
 
 
 export default function Invaitemodel() {
@@ -11,19 +12,39 @@ export default function Invaitemodel() {
     const [UploadFile ,setUploadFile]=useState("")
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0]; // Get the first selected file
-        setUploadFile(file);
+              const response  = uploadapicall(event)
+              response.then((data)=>{
+                  console.log(data)
+              })
+       
       };
 
+//         const form=new FormData();
+//   const content =""
+//   form.append("BULKINVITE",file)
+//   form.append("content",content);
+//         const response  = uploadapicall(form)
+//         response.then((data)=>{
+//             console.log(data)
+//         })
+
+     
       
  
- useEffect(()=>{
-       const form=new FormData();
-       const file=UploadFile[0]
-       form.append("BULKINVITE",file)
-       form.append("content",content)
+//  useEffect(()=>{
+
+
+    // const uploadfileapi=async()=>{
+    //     alert("")
+    //     const response  = uploadapicall(UploadFile)
+    //     response.then((data)=>{
+    //         console.log(data)
+    //     })
+    // }
+      
+
        
- },[])
+//  },[UploadFile])
       return (
     <div> <Modal
     size="md"
