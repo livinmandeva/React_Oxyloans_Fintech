@@ -484,7 +484,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#per_details_tab"
                       >
-                        About
+                        <i class="fa-regular fa-address-card"></i> About
                       </Link>
                     </li>
 
@@ -494,7 +494,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#profile_tab"
                       >
-                        Profile Details
+                        <i class="fa-regular fa-user"></i> Profile Details
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -503,7 +503,8 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#bankAccount_tab"
                       >
-                        Bank Account Details
+                        <i class="fa-solid fa-building-columns"></i> Bank
+                        Account Details
                       </Link>
                     </li>
 
@@ -513,7 +514,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#nominee_tab"
                       >
-                        Nominee
+                        <i class="fa-solid fa-user-plus"></i> Nominee
                       </Link>
                     </li>
 
@@ -523,7 +524,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#uploadKyc_tab"
                       >
-                        Upload KYC
+                        <i class="fa-solid fa-upload"></i> Upload KYC
                       </Link>
                     </li>
                   </ul>
@@ -1288,7 +1289,8 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.PanCard != undefined && kyc.PanCard   != "" ? (
+                                  {kyc.PanCard != undefined &&
+                                  kyc.PanCard != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.PanCard.fileName}</small>
@@ -1321,7 +1323,8 @@ const Profile = () => {
                                       </i>
                                     </label>
                                   </div>
-                                  {kyc.cheque != undefined && kyc.cheque != "" ? (
+                                  {kyc.cheque != undefined &&
+                                  kyc.cheque != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.cheque.fileName}</small>
@@ -1354,7 +1357,8 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.aadhar != undefined &&  kyc.aadhar != "" ? (
+                                  {kyc.aadhar != undefined &&
+                                  kyc.aadhar != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.aadhar.fileName}</small>
@@ -1387,7 +1391,8 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.license != undefined && kyc.license != "" ? (
+                                  {kyc.license != undefined &&
+                                  kyc.license != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
                                       <small>{kyc.license.fileName}</small>
@@ -1443,7 +1448,7 @@ const Profile = () => {
                                       accept="image/*"
                                       name="PASSPORT"
                                       onChange={handlefileupload}
-                                      id="file"   
+                                      id="file"
                                       className="hide-input"
                                     />
                                     <label htmlFor="file" className="upload">
@@ -1453,10 +1458,11 @@ const Profile = () => {
                                     </label>
                                   </div>
 
-                                  {kyc.Passport != undefined && kyc.Passport != "" ? (
+                                  {kyc.Passport != undefined &&
+                                  kyc.Passport != "" ? (
                                     <h6 className="settings-size text-success">
                                       <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.Passport.fileName}</small>   
+                                      <small>{kyc.Passport.fileName}</small>
                                     </h6>
                                   ) : (
                                     <h6 className="settings-size text-warning">
