@@ -14,7 +14,7 @@ const WithdrawdealfromDeal = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
-    dealtype: "NORMAL",
+    dealtype:"NORMAL"
   });
 
   const withdrawalFromDealPagination = (Pagination) => {
@@ -44,23 +44,23 @@ const WithdrawdealfromDeal = () => {
     });
 
     return () => {};
-  }, [
-    participatedDeals.pageNo,
-    participatedDeals.pageSize,
-    participatedDeals.dealtype,
-  ]);
+  }, [participatedDeals.pageNo, participatedDeals.pageSize , participatedDeals.dealtype]);
 
   const handleWithdrawFromEscrow = () => {
+
     setparticipatedDeals({
       ...participatedDeals,
-      dealtype: "ESCROW",
+      dealtype: 'ESCROW',
     });
+    
   };
   const handleWithdrawFromNormal = () => {
+
     setparticipatedDeals({
       ...participatedDeals,
-      dealtype: "NORMAL",
+      dealtype: 'NORMAL',
     });
+    
   };
   const datasource = [];
 
@@ -80,7 +80,7 @@ const WithdrawdealfromDeal = () => {
         action: (
           <Link to={nextPageUrl}>
             <button type="submit" className="btn w-100 btn-primary btn-xs">
-              Withdraw
+            <i class="fa-solid fa-forward"></i>  Withdraw
             </button>
           </Link>
         ),
@@ -138,9 +138,7 @@ const WithdrawdealfromDeal = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">
-                    Withdraw Funds from {participatedDeals.dealtype} Deal
-                  </h3>
+                  <h3 className="page-title"  >Withdraw Funds from {participatedDeals.dealtype} Deal</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
@@ -159,19 +157,13 @@ const WithdrawdealfromDeal = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="row col-12">
-                      <button
-                        className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2"
-                        onClick={handleWithdrawFromEscrow}
-                      >
-                        Withdraw From Escrow
+                      <button className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2"  onClick={handleWithdrawFromEscrow}>
+                      <i class="fa-solid fa-piggy-bank"></i>      Withdraw From Escrow
                       </button>
 
-                      <button
-                        onClick={handleWithdrawFromNormal}
-                        className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2"
-                      >
-                        Withdraw from a Normal deal
-                      </button>
+                      <button  onClick={handleWithdrawFromNormal} className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2">
+                     <i class="fa-solid fa-piggy-bank"></i>   Withdraw from a Normal deal
+                       </button>
                     </div>
                   </div>
                   <div className="card-body">
