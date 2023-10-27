@@ -4,7 +4,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
-import { login } from "../../imagepath";
+import { login, registerImage } from "../../imagepath";
 import { loginapi } from "./api";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -136,7 +136,11 @@ const Whatapplog = () => {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img
+                  className="img-fluid  h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 {handlewhatapp ? (
@@ -180,18 +184,18 @@ const Whatapplog = () => {
                       </div>
                       {/* Social Login */}
                       <div className="social-login">
-                        <Link to="#">
+                        {/* <Link to="#">
                           <i className="fab fa-google-plus-g" />
-                        </Link>
+                        </Link> */}
                         <Link to="/whatapplogin">
-                          <i className="fa fa-whatsapp  " />
+                          <i className="fa fa-whatsapp" />
                         </Link>
-                        <Link to="#">
+                        {/* <Link to="#">
                           <i className="fab fa-facebook-f" />
                         </Link>
                         <Link to="#">
                           <i className="fab fa-twitter" />
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
                   </>

@@ -8,8 +8,6 @@ function OtpInput() {
       const updatedOtpValues = [...otpValues];
       updatedOtpValues[index] = value;
       setOtpValues(updatedOtpValues);
-
-      // Automatically move to the next input field on digit input
       if (value !== "" && index < 5) {
         inputRefs[index + 1].focus();
       }

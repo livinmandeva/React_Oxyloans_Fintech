@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { login } from "../../imagepath";
+import { login, registerImage } from "../../imagepath";
 import * as api from "./api";
 import { passwordupdated } from "../../HttpRequest/beforelogin";
 
@@ -24,30 +24,6 @@ const ForgotPassword = () => {
     });
   };
 
-  //   const handleresetpassword = async()=>{
-
-  //     const vaildatebu=api.vaildateemail(email.emailid);
-  //     if (vaildatebu){
-
-  //       setemail({
-  //         ...email,
-  //         error: vaildatebu,
-  //       });
-  //       return;
-  //     }try{
-  //       const sendOtpEmail= await api.sendotpemail(email.emailid);
-  //       setemailisvaild(!emailisvaild)
-  //       setEmail({
-  //         ...email,
-  //         data: sendOtpEmail,
-  //       });
-  //     }catch(error){
-  //       setEmail({
-  //         ...email,
-  //         error: error,
-  //       });
-  //     }
-  //   }  ;
   useEffect(() => {
     const urlemail = new URLSearchParams(window.location.search);
     const email = urlemail.get("email");
@@ -92,7 +68,11 @@ const ForgotPassword = () => {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img
+                  className="img-fluid  h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">

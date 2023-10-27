@@ -11,7 +11,7 @@ const Sidebar = (props) => {
 
   const toggleSidebar = (value) => {
     console.log(value);
-    setSideMenu(value);   
+    setSideMenu(value);
   };
   const toggleSidebar1 = (value) => {
     console.log(value);
@@ -260,7 +260,8 @@ const Sidebar = (props) => {
                     "/myRunningDelas" === pathName ||
                     "/myholdamount" === pathName ||
                     "/earningCertificate" === pathName ||
-                    "/loansStatement" === pathName
+                    "/loansStatement" === pathName ||
+                    "/myclosedDeals" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -507,8 +508,7 @@ const Sidebar = (props) => {
                   className={`${
                     "/writetous" === pathName ||
                     "/emicalculator" === pathName ||
-                    "/addteacher" === pathName ||
-                    "/editteacher" === pathName
+                    "/ticketHistory" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
