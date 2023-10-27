@@ -14,6 +14,7 @@ const WithdrawdealfromDeal = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
+    dealtype:"NORMAL"
   });
 
   const withdrawalFromDealPagination = (Pagination) => {
@@ -28,7 +29,8 @@ const WithdrawdealfromDeal = () => {
   useEffect(() => {
     const response = getWithdrawaFromDeal(
       participatedDeals.pageNo,
-      participatedDeals.pageSize
+      participatedDeals.pageSize,
+      participatedDeals.dealtype
     );
     response.then((data) => {
       if (data.request.status == 200) {
@@ -40,9 +42,26 @@ const WithdrawdealfromDeal = () => {
         });
       }
     });
-    return () => {};
-  }, [participatedDeals.pageNo, participatedDeals.pageSize]);
 
+    return () => {};
+  }, [participatedDeals.pageNo, participatedDeals.pageSize , participatedDeals.dealtype]);
+
+  const handleWithdrawFromEscrow = () => {
+
+    setparticipatedDeals({
+      ...participatedDeals,
+      dealtype: 'ESCROW',
+    });
+    
+  };
+  const handleWithdrawFromNormal = () => {
+
+    setparticipatedDeals({
+      ...participatedDeals,
+      dealtype: 'NORMAL',
+    });
+    
+  };
   const datasource = [];
 
   if (participatedDeals.apiData !== "") {
@@ -119,7 +138,7 @@ const WithdrawdealfromDeal = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Withdraw Funds from Deals</h3>
+                  <h3 className="page-title"  >Withdraw Funds from {participatedDeals.dealtype} Deal</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
@@ -138,8 +157,12 @@ const WithdrawdealfromDeal = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="row col-12">
-                      <button className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2">
+                      <button className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2"  onClick={handleWithdrawFromEscrow}>
                         Withdraw From Escrow
+                      </button>
+
+                      <button  onClick={handleWithdrawFromNormal} className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2">
+                       Withdraw from a Normal deal
                       </button>
                     </div>
                   </div>
