@@ -28,7 +28,7 @@ const ForgotPassword3 = () => {
       return;
     }
     try {
-      const sendOtpEmail =  sendotpemail(email.emailid);
+      const sendOtpEmail = sendotpemail(email.emailid);
       setemailisvaild(!emailisvaild);
       setEmail({
         ...email,

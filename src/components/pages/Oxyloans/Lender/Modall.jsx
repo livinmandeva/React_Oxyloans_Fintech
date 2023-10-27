@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import "../Lender/InvoiceGrid.css";
-import { Space, Table, Tag } from 'antd';import './table.css'
-
-
+import { Space, Table, Tag } from "antd";
+import "./table.css";
 
 export default function Modall({ data, open: propOpen }) {
   const [loading, setLoading] = useState(false);
@@ -98,39 +97,40 @@ export default function Modall({ data, open: propOpen }) {
           )}
         </table>
 
+        <table>
+          <tr className="tablerow">
+            <th>S no</th>
+            {/* <th></th> */}
+            <th>Actual Payment Date</th>
+            <th> Interest Paid Date</th>
+            <th> Interest Amount</th>
+            <th> No of days</th>
+            <th>Participation Details</th>
+          </tr>
 
-         <table>
-  <tr className="tablerow">
-    <th>S no</th>
-    {/* <th></th> */}
-    <th>Actual Payment Date</th>
-    <th>	Interest Paid Date</th>
-    <th>	Interest Amount</th>
-    <th>	No of days</th>
-    <th>Participation Details</th>
-  </tr>
-
-  {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
-       data.data.dealLevelLoanEmiCard.map((item) => (
-         
-  <tr className="tablerow" key={item.sno}>
-    <td>{item.sno}</td>
-    <td>{item.date}</td>
-    <td>{item.interestPaidDate != null ? <>{item.interestPaidDate}</>:<>Yet to be paid</>}</td>
-    <td>{item.interestAmount}</td>
-    <td>{item.differenceInDaysForFirstParticipation}</td>
-    <td><Button type='primary'>Amount statement</Button></td>
-
-  </tr>
-
-  
-))
-) : (
-  <p>No data available</p>
-)}
-
-</table>
-
+          {data.data && Array.isArray(data.data.dealLevelLoanEmiCard) ? (
+            data.data.dealLevelLoanEmiCard.map((item) => (
+              <tr className="tablerow" key={item.sno}>
+                <td>{item.sno}</td>
+                <td>{item.date}</td>
+                <td>
+                  {item.interestPaidDate != null ? (
+                    <>{item.interestPaidDate}</>
+                  ) : (
+                    <>Yet to be paid</>
+                  )}
+                </td>
+                <td>{item.interestAmount}</td>
+                <td>{item.differenceInDaysForFirstParticipation}</td>
+                <td>
+                  <Button type="primary">Amount statement</Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <p>No data available</p>
+          )}
+        </table>
 
         {/* <table>
           <tr>

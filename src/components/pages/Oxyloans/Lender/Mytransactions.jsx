@@ -87,13 +87,6 @@ const Mytransactions = () => {
 
   const handeltranscationAlert = () => {
     downloadMytransactionAlert();
-    // response = handlestaemnt();
-    // response.then((data) => {
-    //   setmytransactions({
-    //     ...transactionDate,
-    //     donloadlink: data.downloadUrl,
-    //   });
-    // });
   };
 
   return (

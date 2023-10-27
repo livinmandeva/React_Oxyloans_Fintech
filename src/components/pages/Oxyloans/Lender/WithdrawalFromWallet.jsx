@@ -79,7 +79,9 @@ const WithdrawalFromWallet = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">withdrawal FromWallet</li>
+                    <li className="breadcrumb-item active">
+                      withdrawal FromWallet
+                    </li>
                   </ul>
                 </div>
               </div>

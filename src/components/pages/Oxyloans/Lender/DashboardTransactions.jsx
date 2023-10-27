@@ -446,8 +446,9 @@ const DashboardTransactions = () => {
                       <li className="breadcrumb-item">
                         <Link to="/dashboard">DashBoard</Link>
                       </li>
-                      <li className="breadcrumb-item active">My Transactions
-</li>
+                      <li className="breadcrumb-item active">
+                        My Transactions
+                      </li>
                     </ul>
                   </div>
                 </div>

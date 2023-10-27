@@ -12,10 +12,6 @@ function AlertTable({ data, open: propOpen, sendRunningDealStatement }) {
   const handleClose = async () => {
     setShow(false);
     sendRunningDealStatement();
-    // response = principal_return_account_type();
-    // response.then((data) => {
-    //   console.log(data);
-    // });
   };
 
   const tableapi = [];

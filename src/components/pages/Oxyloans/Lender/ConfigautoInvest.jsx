@@ -28,7 +28,9 @@ const ConfigautoInvest = () => {
                       <li className="breadcrumb-item">
                         <Link to="/dashboard">DashBoard</Link>
                       </li>
-                      <li className="breadcrumb-item active">configauto Invest</li>
+                      <li className="breadcrumb-item active">
+                        configauto Invest
+                      </li>
                     </ul>
                   </div>
                 </div>

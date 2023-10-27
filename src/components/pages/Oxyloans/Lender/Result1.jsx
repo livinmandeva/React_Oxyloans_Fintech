@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, Result } from 'antd';
-const Result1 = ({message}) => (
+import React from "react";
+import { Button, Result } from "antd";
+const Result1 = ({ message }) => (
   <Result
     status="success"
     title={message}

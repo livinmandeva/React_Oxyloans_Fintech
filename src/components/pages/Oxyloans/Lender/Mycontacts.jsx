@@ -20,7 +20,7 @@ const Mycontacts = () => {
     pageNo: 1,
     pageSize: 5,
     selectAll: false,
-    setsuccessMessage:''
+    setsuccessMessage: "",
   });
 
   const [message, setmesage] = useState({
@@ -91,7 +91,6 @@ const Mycontacts = () => {
   }));
 
   const handleCheckboxClick = (id, name, email) => {
-
     const combined = `${name ? name + "-" : "-"}${email}`;
 
     setmesage({
@@ -149,7 +148,6 @@ const Mycontacts = () => {
     console.log(combinedEmails);
   };
 
-
   const handlesendInvaite = () => {
     const response = sendInvait(
       message.email,
@@ -160,7 +158,6 @@ const Mycontacts = () => {
       console.log(data);
     });
   };
-
 
   return (
     <>
@@ -223,7 +220,9 @@ const Mycontacts = () => {
                     </div>
                     {/* /Page Header */}
                     <div className="table-responsive">
-                      {contactdata.setsuccessMessage   && <Result1  message={contactdata.setsuccessMessage} />}
+                      {contactdata.setsuccessMessage && (
+                        <Result1 message={contactdata.setsuccessMessage} />
+                      )}
                       <Table
                         className="table border-0 star-student table-hover table-center mb-0 datatable table-striped dataTable no-footer"
                         pagination={{
