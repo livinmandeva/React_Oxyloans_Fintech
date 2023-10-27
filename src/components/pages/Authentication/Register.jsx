@@ -110,7 +110,10 @@ const Register = () => {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
-                    <Link to="#">
+                    <Link to="/whatapplogin">
+                      <i className="fa fa-whatsapp  " />
+                    </Link>
+                    {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link>
                     <Link to="#">
@@ -121,7 +124,7 @@ const Register = () => {
                     </Link>
                     <Link to="#">
                       <i className="fab fa-linkedin-in" />
-                    </Link>
+                    </Link> */}
                   </div>
                   {/* /Social Login */}
                 </div>
