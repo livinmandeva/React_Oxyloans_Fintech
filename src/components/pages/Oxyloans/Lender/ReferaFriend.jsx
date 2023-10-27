@@ -14,6 +14,7 @@ import {
   HandleWithFooter,
   WarningAlert,
 } from "../../Base UI Elements/SweetAlert";
+import Invaitemodel from "../Utills/Modals/Invaitemodel";
 
 const ReferaFriend = () => {
   const [profile, setprofile] = useState({
@@ -33,6 +34,7 @@ const ReferaFriend = () => {
     emailcontent: "",
     emailsubject: "",
     buttomemail: "",
+    invaitemodel:false,
     invaitlenderlink: false,
     invaitborrowerlink: false,
     invaitNrilink: false,
@@ -151,6 +153,14 @@ const ReferaFriend = () => {
     });
   };
 
+
+  
+  const handleinvaite=()=>{
+    setEmailres({
+      ...emailres,
+      invaitemodel:!emailres.invaitemodel,
+    })
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -174,7 +184,9 @@ const ReferaFriend = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div>   {emailres.invaitemodel && (
+              <Invaitemodel />
+            )}
             {/* /Page Header */}
             <div className="row">
               <div className="col-md-12">
@@ -333,11 +345,11 @@ const ReferaFriend = () => {
                             <form>
                               <div className="row">
                                 <a
-                                  href={url}
+                                 
                                   //  <button
 
                                   className="btn btn-outline-primary my-lg-3 border-2 "
-                                  type="button"
+                                  type="button"      onClick={handleinvaite}
                                 >
                                   Browse From Computer
                                   {/* </button> */}{" "}

@@ -254,7 +254,7 @@ const MyEarnings = () => {
                       className="btn btn-xs col-md-3 btn-danger col-12"
                       onClick={() => EarningStatementlink()}
                     >
-                      Earning Statement
+                       <i class="fa-solid fa-download"></i> Earning Statement
                     </button>
                   </div>
                   <div className="card-body">
