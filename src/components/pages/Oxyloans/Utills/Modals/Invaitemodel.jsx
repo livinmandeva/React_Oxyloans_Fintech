@@ -58,9 +58,10 @@ export default function Invaitemodel() {
       </Modal.Title>
     </Modal.Header>
     <Modal.Body>
+      <div  style={{display:'flex',flexDirection: 'row',justifyContent: 'center',}}>
     <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
-                                    Passport
+                    
                                     {/* <span className="star-red">*</span> */}
                                   </p>
                                   <div className="settings-btn">
@@ -80,7 +81,7 @@ export default function Invaitemodel() {
 
 {UploadFile && UploadFile.name}
 
-                                </div>
+                                </div></div>
         </Modal.Body>
   </Modal></div>
   )
