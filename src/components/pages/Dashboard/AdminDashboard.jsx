@@ -4,8 +4,9 @@ import Header from "../../Header/Header";
 import SideBar from "../../SideBar/SideBar";
 import ProgressBar from "react-customizable-progressbar";
 import { Link } from "react-router-dom";
+import '../Oxyloans/Lender/table.css'
 import { Chart as GoogleChart } from "react-google-charts";
-import { getDashboardInvestment } from "../../HttpRequest/afterlogin";
+import { getDashboardInvestment, regular_Api } from "../../HttpRequest/afterlogin";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../Pagination";
 import { fetchData } from "../../Redux/Slice";
@@ -38,6 +39,13 @@ const AdminDashboard = () => {
     dashboardData: "",
   });
 
+  const [regular_runningDeal, setRegularRunningDeal] = useState({
+    apidata: "",
+    dealtype: "HAPPENING",
+    paginationCount: 1,
+    pageno: 1,
+    apidataESCROW:""
+  });
   const [dashboardInvestment, setdashboardInvestment] = useState({
     apiData: "",
     hasdata: false,
@@ -500,6 +508,52 @@ const AdminDashboard = () => {
     },
   ];
 
+
+  useEffect(() => {
+    const urlparams = window.location.pathname;
+    const urldealname = "regularRunningDeal"
+    console.log(urldealname);
+    const handleRegular = () => {
+      const response = regular_Api(
+        regular_runningDeal.dealtype,
+        urldealname,
+        regular_runningDeal.pageno
+      );
+
+      response.then((data) => {
+        console.log(data)
+        setRegularRunningDeal({
+          ...regular_runningDeal,
+          apidata: data.data,
+        });
+      });
+    };
+
+    handleRegular();
+  }, [regular_runningDeal.pageno]);  
+
+  useEffect(() => {
+    const urlparams = window.location.pathname;
+    const urldealname = "ESCROW"
+    console.log(urldealname);
+    const handleRegular = () => {
+      const response = regular_Api(
+        regular_runningDeal.dealtype,
+        urldealname,
+        regular_runningDeal.pageno
+      );
+
+      response.then((data) => {
+        console.log(data)
+        setRegularRunningDeal({
+          ...regular_runningDeal,
+          apidataESCROW: data.data.listOfBorrowersDealsResponseDto,
+        });
+      });
+    };
+
+    handleRegular();
+  }, [regular_runningDeal.pageno]);
   useEffect(() => {
     dispatch(fetchDatadashboard());
     dispatch(fetchData());
@@ -983,7 +1037,7 @@ const AdminDashboard = () => {
                   </div>
                   <div className="card-body">
                     <div className="activity-groups">
-                      <div className="activity-awards">
+                      {/* <div className="activity-awards">
                         <div className="award-boxs">
                           <img src={awardicon01} alt="Award" />
                         </div>
@@ -994,8 +1048,8 @@ const AdminDashboard = () => {
                         <div className="award-time-list">
                           <span>Participate</span>
                         </div>
-                      </div>
-                      <div className="activity-awards">
+                      </div> */}
+                      {/* <div className="activity-awards">
                         <div className="award-boxs">
                           <img src={awardicon01} alt="Award" />
                         </div>
@@ -1042,7 +1096,48 @@ const AdminDashboard = () => {
                         <div className="award-time-list">
                           <span>Participate</span>
                         </div>
-                      </div>
+                      </div> */}
+{regular_runningDeal.apidata.listOfDealsInformationToLender && Array.isArray(regular_runningDeal.apidata.listOfDealsInformationToLender) ? (
+  regular_runningDeal.apidataESCROW ? (
+    regular_runningDeal.apidata.listOfDealsInformationToLender.map((data, index) => (
+      <div key={`listOfDealsInfo-${index}`} className="activity-awards">
+        <div className="award-boxs">
+          <img src={awardicon01} alt="Award" />
+        </div>
+        <div className="award-list-outs">
+          <h4>Student Deal: {data.dealName}</h4>
+          <h5>Min: {data.minimumAmountInDeal}, Max: {data.lenderPaticipationLimit}, RoI: {data.rateOfInterest}% {data.repaymentType}</h5>
+        </div>
+        <div className="award-time-list">
+          <Link to={`participatedeal?dealId=${data.dealId}`}>
+            <span>Participate</span>
+          </Link>
+        </div>
+      </div>
+    ))
+  ) : (
+    regular_runningDeal.apidata.listOfDealsInformationToLender.map((data, index) => (
+      <div key={`listOfDealsInfo-${index}`} className="activity-awards">
+        <div className="award-boxs">
+          <img src={awardicon01} alt="Award" />
+        </div>
+        <div className="award-list-outs">
+          <h4 style={{fontWeight:'420',  inlineSize: '18rem'}} className="textwrap">Student Deal: {data.dealName}</h4>
+          <h5>Min: {data.minimumAmountInDeal}, Max: {data.lenderPaticipationLimit}, RoI: {data.rateOfInterest}% {data.repaymentType}</h5>
+        </div>
+        <div className="award-time-list">
+          <Link to={`participatedeal?dealId=${data.dealId}`}>
+            <span>Participate</span>
+          </Link>
+        </div>
+      </div>
+    ))
+  )
+) : null}
+
+
+
+
 
                       <div className="activity-awards">
                         <div className="award-boxs">
