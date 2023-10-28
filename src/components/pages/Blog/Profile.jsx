@@ -471,7 +471,7 @@ const Profile = () => {
                           openTheActiveTabs("Personal");
                         }}
                       >
-                        Edit
+                        <i className="far fa-edit me-1" /> Edit
                       </Link>
                     </div>
                   </div>
