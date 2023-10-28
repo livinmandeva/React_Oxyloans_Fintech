@@ -1116,7 +1116,7 @@ const AdminDashboard = () => {
       </div>
     ))
   ) : (
-    regular_runningDeal.apidata.listOfDealsInformationToLender.map((data, index) => (
+    regular_runningDeal.apidata.listOfDealsInformationToLender.slice(0 ,6).map((data, index) => (
       <div key={`listOfDealsInfo-${index}`} className="activity-awards">
         <div className="award-boxs">
           <img src={awardicon01} alt="Award" />
@@ -1139,7 +1139,7 @@ const AdminDashboard = () => {
 
 
 
-                      <div className="activity-awards">
+                      {/* <div className="activity-awards">
                         <div className="award-boxs">
                           <img src={awardicon04} alt="Award" />
                         </div>
@@ -1150,7 +1150,7 @@ const AdminDashboard = () => {
                         <div className="award-time-list">
                           <span>Participate</span>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
