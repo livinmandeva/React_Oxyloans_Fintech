@@ -1134,7 +1134,7 @@ const AdminDashboard = () => {
                               )
                             )
                           : regular_runningDeal.apidata.listOfDealsInformationToLender
-                              .slice(0, 6)
+                              .slice(0, 4)
                               .map((data, index) => (
                                 <div
                                   key={`listOfDealsInfo-${index}`}
