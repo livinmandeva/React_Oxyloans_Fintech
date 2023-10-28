@@ -484,7 +484,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#per_details_tab"
                       >
-                        <i class="fa-regular fa-address-card"></i> About
+                        <i className="fa-regular fa-address-card"></i> About
                       </Link>
                     </li>
 
@@ -494,7 +494,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#profile_tab"
                       >
-                        <i class="fa-regular fa-user"></i> Profile Details
+                        <i className="fa-regular fa-user"></i> Profile Details
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -514,7 +514,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#nominee_tab"
                       >
-                        <i class="fa-solid fa-user-plus"></i> Nominee
+                        <i className="fa-solid fa-user-plus"></i> Nominee
                       </Link>
                     </li>
 
@@ -524,7 +524,7 @@ const Profile = () => {
                         data-bs-toggle="tab"
                         to="#uploadKyc_tab"
                       >
-                        <i class="fa-solid fa-upload"></i> Upload KYC
+                        <i className="fa-solid fa-upload"></i> Upload KYC
                       </Link>
                     </li>
                   </ul>

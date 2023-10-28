@@ -34,7 +34,7 @@ const ReferaFriend = () => {
     emailcontent: "",
     emailsubject: "",
     buttomemail: "",
-    invaitemodel:false,
+    invaitemodel: false,
     invaitlenderlink: false,
     invaitborrowerlink: false,
     invaitNrilink: false,
@@ -153,14 +153,12 @@ const ReferaFriend = () => {
     });
   };
 
-
-  
-  const handleinvaite=()=>{
+  const handleinvaite = () => {
     setEmailres({
       ...emailres,
-      invaitemodel:!emailres.invaitemodel,
-    })
-  }
+      invaitemodel: !emailres.invaitemodel,
+    });
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -184,9 +182,8 @@ const ReferaFriend = () => {
                   </ul>
                 </div>
               </div>
-            </div>   {emailres.invaitemodel && (
-              <Invaitemodel />
-            )}
+            </div>{" "}
+            {emailres.invaitemodel && <Invaitemodel />}
             {/* /Page Header */}
             <div className="row">
               <div className="col-md-12">
@@ -345,11 +342,11 @@ const ReferaFriend = () => {
                             <form>
                               <div className="row">
                                 <a
-                                 
                                   //  <button
 
                                   className="btn btn-outline-primary my-lg-3 border-2 "
-                                  type="button"      onClick={handleinvaite}
+                                  type="button"
+                                  onClick={handleinvaite}
                                 >
                                   Browse From Computer
                                   {/* </button> */}{" "}
