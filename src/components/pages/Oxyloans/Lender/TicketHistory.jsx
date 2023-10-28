@@ -56,7 +56,7 @@ const TicketHistory = () => {
 const response =  ticketcommentapi(id)
      setticketcommit(!ticketcomment)
       response.then((data)=>{
-        console.log(data) 
+        console.log(data)   
         setdataapi(data)
       }) 
   }
