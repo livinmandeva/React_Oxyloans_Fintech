@@ -1152,61 +1152,73 @@ export const savenomineeDeatailsApi = async (nominee) => {
 };
 
 export const getPanDoc = () => {
+  const token = getToken();
+  const userId = getUserId();
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${getuserLoginId}/download/PAN`,
+    `${userId}/download/PAN`,
     "GET",
-    getUserLoginToken
+    token
   );
   return res;
 };
 
 export const getdataPassport = () => {
+  const token = getToken();
+  const userId = getUserId();
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${getuserLoginId}/download/PASSPORT`,
+    `${userId}/download/PASSPORT`,
     "GET",
-    getUserLoginToken
+    token
   );
   return res;
 };
 
 export const getdataAadhar = () => {
+  const token = getToken();
+  const userId = getUserId();
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${getuserLoginId}/download/AADHAR`,
+    `${userId}/download/AADHAR`,
     "GET",
-    getUserLoginToken
+    token
   );
   return res;
 };
 
 export const getdataVoterId = () => {
+  const token = getToken();
+  const userId = getUserId();
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${getuserLoginId}/download/VOTERID`,
+    `${userId}/download/VOTERID`,
     "GET",
-    getUserLoginToken
+    token
   );
   return res;
 };
 
 export const getdataDrivingLicence = () => {
+  const token = getToken();
+  const userId = getUserId();
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${getuserLoginId}/download/DRIVINGLICENCE`,
+    `${userId}/download/DRIVINGLICENCE`,
     "GET",
-    getUserLoginToken
+    token
   );
   return res;
 };
 
 export const getdatachequeLeaf = () => {
+  const token = getToken();
+  const userId = getUserId();
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${getuserLoginId}/download/CHEQUELEAF`,
+    `${userId}/download/CHEQUELEAF`,
     "GET",
-    getUserLoginToken
+    token
   );
   return res;
 };

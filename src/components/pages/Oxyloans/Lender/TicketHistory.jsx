@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { TicketHistoryapi, ticketcommentapi } from "../../../HttpRequest/afterlogin";
+import {
+  TicketHistoryapi,
+  ticketcommentapi,
+} from "../../../HttpRequest/afterlogin";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import ViewTicketHistory from "./ViewTicketHistory";
 import "./InvoiceGrid.css";
@@ -11,8 +14,9 @@ import Comment from "../Utills/Modals/Comment";
 
 const TicketHistory = () => {
   const [ticket, setticketdata] = useState({});
-  const [apires, setapires] = useState([]);const  [dataapi ,setdataapi]    =useState()
-  const [ticketcomment ,  setticketcommit]=useState(false)
+  const [apires, setapires] = useState([]);
+  const [dataapi, setdataapi] = useState();
+  const [ticketcomment, setticketcommit] = useState(false);
 
   useEffect(() => {
     handleWriteClick();
@@ -47,19 +51,18 @@ const TicketHistory = () => {
     });
   };
 
-  useEffect(()=>{
-
-  },[ticketcomment])
+  useEffect(() => {}, [ticketcomment]);
 
 
-  const handeticketcomment= async(id)=>{
-const response =  ticketcommentapi(id)
-     setticketcommit(!ticketcomment)
-      response.then((data)=>{
-        console.log(data)   
-        setdataapi(data)
-      }) 
-  }
+  const handeticketcomment = async (id) => {
+    const response = ticketcommentapi(id);
+    setticketcommit(!ticketcomment);
+    response.then((data) => {
+      console.log(data);
+      setdataapi(data);
+    });
+  };
+
   // console.log("api" + apires)
   return (
     <>
@@ -104,7 +107,7 @@ const response =  ticketcommentapi(id)
                           </li>
                         </ul>
                       </div> */}
-                    {ticketcomment && (<Comment   data={dataapi} />)}
+                      {ticketcomment && <Comment data={dataapi} />}
                       <div className="card-body">
                         <div className="table-responsive">
                           <table className="table border-0 star-student  table-center mb-0">
@@ -119,7 +122,12 @@ const response =  ticketcommentapi(id)
                             </thead>
                             <tbody>
                               {apires.map((item, index) => (
-                                <tr key={index} className={`tablerow${index % 2 === 0 ? 'event' : 'odd'}`}>
+                                <tr
+                                  key={index}
+                                  className={`tablerow${
+                                    index % 2 === 0 ? "event" : "odd"
+                                  }`}
+                                >
                                   <td className="text-center">
                                     <div>{item.ticketId}</div>
                                   </td>
@@ -148,24 +156,33 @@ const response =  ticketcommentapi(id)
                                   </td>
                                   <td className="text-center">
                                     <div className="buttn">
-                                      <div  className="badgedat">
-                                      <div className="badge bg-success" onClick={()=>handeticketcomment(item.id)} >
-                                        View Comments
+                                      <div className="badgedat">
+                                        <div
+                                          className="badge bg-success"
+                                          typeof="button"
+                                          onClick={() =>
+                                            handeticketcomment(item.id)
+                                          }
+                                        >
+                                          View Comments
+                                        </div>
+                                        <div
+                                          className="badge bg-warning"
+                                          typeof="button"
+                                        >
+                                          Inquiries Reply
+                                        </div>
                                       </div>
-                                      <div className="badge bg-warning  ">
-                                        Inquiries Reply
-                                      </div>
-                                      </div>
-                                      <div  className="badgedat">
-                                      <Link
-                                        className=" badge bg-info col-md-9 col-12"
-                                        to="/writetous"
-                                      >
-                                        <div className="">Write Reply</div>{" "}
-                                      </Link>
-                                      <div className=" badge bg-success-dark  col-md-8 col-12">
-                                        Cancel
-                                      </div>
+                                      <div className="badgedat">
+                                        <Link
+                                          className="badge bg-info col-md-9 col-12"
+                                          to="/writetous"
+                                        >
+                                          <div className="">Write Reply</div>
+                                        </Link>
+                                        <div className=" badge bg-success-dark  col-md-8 col-12">
+                                          Cancel
+                                        </div>
                                       </div>
                                     </div>
                                   </td>
@@ -175,7 +192,7 @@ const response =  ticketcommentapi(id)
                           </table>
                         </div>
                       </div>
-                    </div>  
+                    </div>
                     {/* /Star Students */}
                   </div>
                 </div>

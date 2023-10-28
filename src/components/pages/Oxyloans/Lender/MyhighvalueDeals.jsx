@@ -81,11 +81,11 @@ const MyhighvalueDeals = () => {
       dataIndex: "DealClosedDate",
       sorter: (a, b) => a.DealClosedDate - b.DealClosedDate,
     },
-    {
-      title: "Participated Lenders",
-      dataIndex: "NoofParticipatedLenders",
-      sorter: (a, b) => a.NoofParticipatedLenders - b.NoofParticipatedLenders,
-    },
+    // {
+    //   title: "Participated Lenders",
+    //   dataIndex: "NoofParticipatedLenders",
+    //   sorter: (a, b) => a.NoofParticipatedLenders - b.NoofParticipatedLenders,
+    // },
   ];
 
   return (
