@@ -622,32 +622,29 @@ export const TicketHistoryapi = async () => {
   return response;
 };
 
+export const uploadapicall = async (event) => {
+  console.log(event);
 
-export const uploadapicall=async(event)=>{
+  const token = getToken();
+  const userId = getUserId();
+  var fd = new FormData();
 
-console.log(event)
-  
-const token = getToken();
-const userId = getUserId();
-var fd = new FormData();
+  var files = event.target.files[0];
+  fd.append("BULKINVITE", event.target.name, files);
+  fd.append("content", "");
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `sendBulkInviteThroughExcel/${userId}`,
+    "POST",
+    token,
+    fd,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+  );
 
-var files = event.target.files[0];
-fd.append("BULKINVITE" ,event.target.name, files);
-fd.append("content" , "");
-const response = await handleApiRequestAfterLoginService(
-  API_BASE_URL,
-  `sendBulkInviteThroughExcel/${userId}`,
-  "POST",
-  token,
-  fd,
-  {
-    "Content-Type": "multipart/form-data",
-  }
-);
-  
-  return response
-
-}
+  return response;
+};
 export const ticketcommentapi = async (id) => {
   const token = getToken();
   const userId = getUserId();

@@ -323,9 +323,13 @@ const MyRunningDelas = () => {
 
                                 {data.participationStatus != "ACHIEVED" ? (
                                   <div className="col-auto">
-                                    <span className="badge bg-success-dark">
-                                      Participate
-                                    </span>
+                                    <Link
+                                      to={`participatedeal?dealId=${data.dealId}`}
+                                    >
+                                      <span className="badge bg-success-dark">
+                                        Participate
+                                      </span>
+                                    </Link>
                                   </div>
                                 ) : (
                                   ""

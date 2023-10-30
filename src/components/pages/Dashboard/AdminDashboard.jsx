@@ -1039,66 +1039,6 @@ const AdminDashboard = () => {
                   </div>
                   <div className="card-body">
                     <div className="activity-groups">
-                      {/* <div className="activity-awards">
-                        <div className="award-boxs">
-                          <img src={awardicon01} alt="Award" />
-                        </div>
-                        <div className="award-list-outs">
-                          <h4>Student Deal : SD 3S 30L - 13APR23</h4>
-                          <h5> Min : 5000, max : 100000, RoI : 2.2% PM</h5>
-                        </div>
-                        <div className="award-time-list">
-                          <span>Participate</span>
-                        </div>
-                      </div> */}
-                      {/* <div className="activity-awards">
-                        <div className="award-boxs">
-                          <img src={awardicon01} alt="Award" />
-                        </div>
-                        <div className="award-list-outs">
-                          <h4>Student Deal : 20 SD Ameena 10L</h4>
-                          <h5> Min : 5000, max : 100000, RoI : 1.2% PM</h5>
-                        </div>
-                        <div className="award-time-list">
-                          <span>Participate</span>
-                        </div>
-                      </div>
-                      <div className="activity-awards">
-                        <div className="award-boxs">
-                          <img src={awardicon01} alt="Award" />
-                        </div>
-                        <div className="award-list-outs">
-                          <h4>Student Deal : SD 4S 40L - 15APR23</h4>
-                          <h5> Min : 5000, max : 100000, RoI : 1.5% PM</h5>
-                        </div>
-                        <div className="award-time-list">
-                          <span>Participate</span>
-                        </div>
-                      </div>
-                      <div className="activity-awards">
-                        <div className="award-boxs">
-                          <img src={awardicon04} alt="Award" />
-                        </div>
-                        <div className="award-list-outs">
-                          <h4>Escrow Deal : SD 2S 20L - 04JAN22</h4>
-                          <h5> Min : 5000, max : 1000000, ROI : 1.75% PM</h5>
-                        </div>
-                        <div className="award-time-list">
-                          <span>Participate</span>
-                        </div>
-                      </div>
-                      <div className="activity-awards">
-                        <div className="award-boxs">
-                          <img src={awardicon04} alt="Award" />
-                        </div>
-                        <div className="award-list-outs">
-                          <h4>Escrow Deal : SD 2S 20L - 04JAN22</h4>
-                          <h5> Min : 5000, max : 1000000, ROI : 1.75% PM</h5>
-                        </div>
-                        <div className="award-time-list">
-                          <span>Participate</span>
-                        </div>
-                      </div> */}
                       {regular_runningDeal.apidata
                         .listOfDealsInformationToLender &&
                       Array.isArray(
