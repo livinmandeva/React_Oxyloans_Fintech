@@ -65,13 +65,15 @@
   justify-content: center;
 }
 .circle {
-  height: 3.6rem;
-  width: 3.6rem;
+  height: 4.6rem;
+  width: 4.6rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
+  color: white;
   align-items: center;
-  background-color: azure;
+  background-color: #3d5ee1b5;
+  font-size: 24px;
 }
 
 .maincircle {

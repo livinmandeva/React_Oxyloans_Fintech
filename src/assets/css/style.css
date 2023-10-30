@@ -2694,7 +2694,7 @@ footer p {
   align-items: center;
   background: #18aefa;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   width: 400px;
   display: flex;
   background-blend-mode: multiply;

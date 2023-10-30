@@ -6,7 +6,7 @@ import { handleapicall } from "../../../HttpRequest/afterlogin";
 const WithdrawdealFounds = () => {
   const [data, setdata] = useState({
     resdata: "",
-    dealname: "",
+    dealname: "", 
     dealID: "",
     roi: "",
     participatedamount: "",
@@ -50,6 +50,10 @@ const WithdrawdealFounds = () => {
     return () => {};
   }, []);
 
+  const isFormValid = Object.values(data).every(value => value !== "");
+  // useEffect(()=>{
+  //  if(data.withdrawalamount) 
+  // },[data.withdrawalamount])
   return (
     <>
       <div className="main-wrapper">
@@ -163,6 +167,8 @@ const WithdrawdealFounds = () => {
                               type="submit"
                               className="btn btn-primary"
                               onClick={handlewith}
+
+                              disabled={!isFormValid}
                             >
                               Submit
                             </button>

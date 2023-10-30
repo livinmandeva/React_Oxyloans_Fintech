@@ -616,9 +616,6 @@ export const TicketHistoryapi = async () => {
     "POST",
     token,
     data,
-    {
-      "Content-Type": "multipart/form-data",
-    }
   );
 
   return response;
