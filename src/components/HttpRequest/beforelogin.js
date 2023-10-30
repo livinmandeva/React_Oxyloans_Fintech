@@ -42,6 +42,25 @@ export const sendotpemail = async (email) => {
   );
   return response;
 };
+
+export const Admlog =async(email , password) =>{
+
+
+  const data={
+    id: email,
+    primaryType: "SUPERADMIN"
+  }
+
+  const  response= await handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    "login?grantType=PWD",
+    data
+  )
+
+  
+  return  response
+}
 export const userloginSection = async (email, password) => {
   const checkLoginMode = email.includes("@") == true ? true : false;
   const postdata =

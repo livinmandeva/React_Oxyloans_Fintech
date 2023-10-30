@@ -505,11 +505,12 @@ export const handleapicall = async (data) => {
 };
 export const writequery = async (userdata) => {
   console.log(userdata);
+  
   const token = getToken();
   const userId = getUserId();
   console.log("User Data:", userdata);
   const postwritequerydata = {
-    query: userdata.query,
+    query: userdata.query + userdata.urlquery,
     documentId: 0,
     email: userdata.profiledata.email,
     mobileNumber: userdata.profiledata.mobileNumber,

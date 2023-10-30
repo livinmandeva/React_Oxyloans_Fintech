@@ -26,6 +26,9 @@ const Writetous = () => {
     id: "",
     respondedBy: "USER",
     profiledata: [],
+    urlquery:"",
+    isval:false,
+    isVaild:true
   });
 
   const setDataFun = (query) => {
@@ -43,6 +46,37 @@ const Writetous = () => {
     });
   }, [getreducerprofiledata]);
 
+ 
+
+  useEffect(()=>{
+
+
+
+    
+    const url = new URLSearchParams(window.location.search);
+    const dealName = url.get('dealName');
+    const dealId = url.get('dealId');
+     
+    console.log(dealName +"/" + dealId)
+    
+    setWriteTous({
+      ...writetous,
+      urlquery:dealName +"/" + dealId
+    })
+  },[])
+  useEffect(()=>{
+if(writetous.query  !== ""){
+  setWriteTous({
+    ...writetous,
+    isVaild:false 
+  })
+}else{
+  setWriteTous({
+    ...writetous,
+    isVaild:true
+  })
+}
+  },[writetous.query])
   const querySubmission = () => {
     const response = writequery(writetous);
     response.then((data) => {
@@ -179,6 +213,7 @@ const Writetous = () => {
                         <button
                           className="btn btn-primary col-md-3 mx-3 my-5"
                           onClick={querySubmission}
+                          disabled={writetous.isVaild}
                         >
                           Submit
                         </button>

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[9739],{79739:function(e,a,l){l.r(a);l(29867);var n=l(92834);a.default=function(){return(0,n.jsx)("div",{children:"MypartiallClosedDeal"})}}}]);
+//# sourceMappingURL=9739.19b690d2.chunk.js.map

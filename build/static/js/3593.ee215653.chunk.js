@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[3593],{73593:function(e,a,n){n.r(a);n(29867);var r=n(92834);a.default=function(){return(0,r.jsx)("div",{children:"Withdrawdealfromwallet"})}}}]);
+//# sourceMappingURL=3593.ee215653.chunk.js.map
