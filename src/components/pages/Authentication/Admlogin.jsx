@@ -27,6 +27,7 @@ const Admlogin = () => {
     error: null,
     errormessage: "",
     isvalid: true,
+    userid: "",
   });
 
   let inputRef = useRef();
@@ -50,7 +51,7 @@ const Admlogin = () => {
   };
 
   useEffect(() => {
-    if ((userLogInInfo.email != "") & (userLogInInfo.password != "")) {
+    if ((userLogInInfo.userid != "") & (userLogInInfo.password != "")) {
       setUserLoginInfo({
         ...userLogInInfo,
         isvalid: false,
@@ -61,17 +62,14 @@ const Admlogin = () => {
         isvalid: true,
       });
     }
-  }, [userLogInInfo.email, userLogInInfo.password]);
+  }, [userLogInInfo.userid, userLogInInfo.password]);
 
   const loginhandler = async () => {
-    let { email, password } = userLogInInfo;
-    const numberOnly = email.replace(/\D/g, '');
-    console.log(numberOnly)
-    const retriveresponse = await Admlog(numberOnly, password);
-
+    let { userid, password } = userLogInInfo;
+    const retriveresponse = await Admlog(userid.substring(2), password);
     if (retriveresponse.request.status == 200) {
+      console.log(retriveresponse);
       toastrSuccess("Login Suceess !");
-      // dispatch(getProfile({ res: retriveresponse.data }));
       history.push("/dashboard");
     } else {
       toastrWarning(retriveresponse.response.data.errorMessage);
@@ -102,16 +100,17 @@ const Admlogin = () => {
 
                   <form className="needs-validation" noValidate>
                     <div className="form-group">
-                      <label htmlFor="userloginusername">
-                      Enter The Lender/Borrower ID <span className="login-danger">*</span>
+                      <label htmlFor="userid">
+                        Enter The Lender/Borrower ID
+                        <span className="login-danger">*</span>
                       </label>
                       <input
                         className="form-control"
                         type="text"
-                        value={userLogInInfo.email}
-                        name="email"
+                        value={userLogInInfo.userid}
+                        name="userid"
                         onChange={handlechange}
-                        id="userloginusername"
+                        id="userid"
                         required
                       />
                       <span className="profile-views">
