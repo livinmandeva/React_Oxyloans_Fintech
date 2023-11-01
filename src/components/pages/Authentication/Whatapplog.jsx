@@ -16,6 +16,7 @@ import {
   sendwhatappotp,
   verifywhatappotp,
 } from "../../HttpRequest/beforelogin";
+import { toastrError } from "../Base UI Elements/Toast";
 
 const Whatapplog = () => {
   let inputRef = useRef();
@@ -107,26 +108,33 @@ const Whatapplog = () => {
     const response = sendwhatappotp(value);
 
     // Set handlewhatapp to true initially
-    sethandlewhatapp(true);
+
 
     response
       .then((data) => {
         console.log(data);
         if (data.request.status === 200) {
+          alert("")
           console.log(data.data);
+          sethandlewhatapp(false);
           setwhatappotp({
             ...whatappotp,
             successMessage: "Otp Sent successfully",
             otpdata: data.data,
           });
         } else {
+            setwhatappotp({
+              ...whatappotp,
+              errorMessage:data.response.data.errorMessage
+            })
+            toastrError(data.response.data.errorMessage)
           console.log(data.response.data.errorMessage);
         }
       })
-      .finally(() => {
-        // Set handlewhatapp to false when the promise is resolved (success or error)
-        sethandlewhatapp(false);
-      });
+      // .finally(() => {
+      //   // Set handlewhatapp to false when the promise is resolved (success or error)
+      //   sethandlewhatapp(false);
+      // });
   };
 
   return (

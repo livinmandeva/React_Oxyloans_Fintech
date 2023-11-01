@@ -76,6 +76,7 @@
   font-size: 24px;
 }
 
+
 .maincircle {
   display: flex;
   justify-content: center;
@@ -92,4 +93,9 @@
 }
 .textcent {
   text-align: center;
+}
+
+
+.PhoneInputInput{
+      background: transparent;
 }

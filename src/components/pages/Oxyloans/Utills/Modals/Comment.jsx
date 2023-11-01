@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../file.css";
 import Modal from "react-bootstrap/Modal";
 
-function Comment({}) {
+function Comment(dataapi) {
   const [lgShow, setLgShow] = useState(true);
+  const [data1,setdata]=useState(dataapi)
+
+  
+
+  
+  console.log(data1.data?.data);
+
 
   return (
     <>
@@ -18,7 +25,9 @@ function Comment({}) {
             View Comment
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body>     
+        {data1.data?.data  ? <>
+        <p>No data</p></> : <>no
           <table>
             <tr>
               <th>Company</th>
@@ -56,6 +65,7 @@ function Comment({}) {
               <td>Italy</td>
             </tr>
           </table>
+          </>}
         </Modal.Body>
       </Modal>
     </>

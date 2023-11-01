@@ -9,12 +9,13 @@ const WithdrawdealFounds = () => {
     dealname: "", 
     dealID: "",
     roi: "",
+    isValid:true,
     participatedamount: "",
-    withdrawalamount: "",
+    withdrawalamount: "",  
   });
 
   const handlechange = (event) => {
-    const [name, value] = event.target;
+    const { name, value } = event.target;
     setdata({
       ...data,
       [name]: value,
@@ -45,12 +46,22 @@ const WithdrawdealFounds = () => {
       dealID: dealId,
       roi: roi,
       participatedamount: currentAmount,
-      withdrawalamount: requestedAmount,
+
     });
     return () => {};
   }, []);
 
-  const isFormValid = Object.values(data).every(value => value !== "");
+  useEffect(() => {
+    if (data.withdrawalamount !== "") {
+      setdata(prevData => ({
+        ...prevData,
+        isValid: false
+      }));
+
+    }
+  }, [data.withdrawalamount]);
+  
+  // const isFormValid = Object.values(data).every(value => value !== "");
   // useEffect(()=>{
   //  if(data.withdrawalamount) 
   // },[data.withdrawalamount])
@@ -168,7 +179,7 @@ const WithdrawdealFounds = () => {
                               className="btn btn-primary"
                               onClick={handlewith}
 
-                              disabled={!isFormValid}
+                              disabled={data.isValid}
                             >
                               Submit
                             </button>

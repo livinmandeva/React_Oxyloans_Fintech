@@ -18,6 +18,7 @@ const Participatedeal = () => {
     lenderFeeId: "",
     lenderReturnType: "",
     lenderFeeId: "",
+    transferPrincipal:"",
     participatedAmount: "",
     bank: "",
     wallet: "",
@@ -48,7 +49,7 @@ const Participatedeal = () => {
 
   const dataSource = [];
 
-  deal.apidata != ""
+  deal.apidata  && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
         loanamount: deal.apidata.dealAmount,
@@ -126,7 +127,21 @@ const Participatedeal = () => {
       console.log(data);
     });
   };
+  const nofreeParticipation = () => {
+    const response = freeParticipationapi(
+      deal.apidata.groupId,
+      deal.apidata.dealId,
+      deal.accountType,
+      deal.lenderReturnType
+    );
+    response.then((data) => {
+      console.log(data);
+    });
+  };
+  useEffect(()=>{
+    {console.log(deal.bank)}
 
+  },[deal.bank])
   return (
     <>
       <div className="main-wrapper">
@@ -157,7 +172,7 @@ const Participatedeal = () => {
               </div>
             </div>
             {/* /Page Header */}
-            <p>Welcome to {deal.apidata.dealName}</p>
+            <p>Welcome to {deal.apidata && deal.apidata.dealName}</p>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Table
                 dataSource={dataSource}
@@ -192,7 +207,7 @@ const Participatedeal = () => {
                   onChange={(event) => {
                     setDeal({
                       ...deal,
-                      wallet: event.target.value,
+                      bank: event.target.value,
                     });
                   }}
                 />
@@ -213,6 +228,7 @@ const Participatedeal = () => {
                     });
                   }}
                 />
+              
                 <label class="form-check-label" for="flexRadioCheckedDisabled">
                   Move Principal to Bank
                 </label>
@@ -221,7 +237,7 @@ const Participatedeal = () => {
                 Choose your pay out method
               </h3>
 
-              <div className="card-group col-12">
+              {/* <div className="card-group col-12">
                 <div className="card col-md-3 col-lg-3 mx-3 col-sm-12 h-30">
                   <div className="card-header  text-center bg-dark text-white">
                     NEW LENDER
@@ -261,10 +277,10 @@ const Participatedeal = () => {
                     <button className="btn btn-primary col-md-4">Submit</button>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              {/* <div className="datarender" style={{ marginTop: "3%" }}>
-                <Card
+              <div className="datarender" style={{ marginTop: "3%" }}>
+                {/* <Card
                   size="meddam"
                   headStyle={{
                     backgroundColor: "#3d5ee1",
@@ -283,19 +299,17 @@ const Participatedeal = () => {
                       id="flexRadioDisabled"
                     />
                     <label class="form-check-label" for="flexRadioDisabled">
-                      {deal.apidata && (
-                        <>
-                          {console.log(deal.apidata)}
-                          {deal.apidata.monthlyInterest != 0 ? (
-                            <div>
-                              monthlyInterest pay-out
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </>
-                      )}
+                    {deal.apidata && (
+  <>
+    {console.log(deal.apidata)}
+    {deal.apidata.monthlyInterest !== undefined && deal.apidata.monthlyInterest !== 0 ? (
+      <div>
+        monthlyInterest pay-out {deal.apidata.monthlyInterest} % P.M
+      </div>
+    ) : null}
+  </>
+)}
+
                       {deal.apidata.yearlyInterest != 0 ? (
                         <div>
                           yearlyInterest pay-out {deal.apidata.monthlyInterest}{" "}
@@ -338,9 +352,94 @@ const Participatedeal = () => {
                       Participate Now
                     </a>
                   )}
-                </Card>
+                </Card> */}
 
                 {deal.apidata.feeStatusToParticipate == "MANDATORY" ? (
+                  <>
+                    <Card
+                      size="meddam"
+                      title={deal.apidata.groupName ==="OXYMARCH09" ? <>OXY FOUNDING LENDER</>: <>New Lender</>}
+                      headStyle={{
+                        backgroundColor: "#3d5ee1",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                      bodyStyle={{ width: 300 }}
+                    >
+                      <p size="meddam">Choose Your Interest Payout Method</p>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDisabled"
+                          id="flexRadioDisabled"
+                        />
+                        <label class="form-check-label" for="flexRadioDisabled">
+                          {deal.apidata && (
+                            <>
+                              {deal.apidata.monthlyInterest != 0 ? (
+                                <div>
+                                  monthlyInterest pay-out
+                                  {deal.apidata.monthlyInterest} % P.M
+                                </div>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                          {deal.apidata.yearlyInterest != 0 ? (
+                            <div>
+                              yearlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                          {deal.apidata.quartlyInterest != 0 ? (
+                            <div>
+                              quartlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                          {deal.apidata.halfInterest != 0 ? (
+                            <div>
+                              halfInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </label>
+                      </div>
+
+                {deal.apidata.validityStatus ? <>  
+                {/* pay the free */}
+                  <button
+                        className="btn btn-primary"
+                        type="submit"
+                        onClick={freeParticipation}
+                      >
+                        Participate Now
+                      </button></> : <>
+                      {/* no free */}
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                        onClick={nofreeParticipation}
+                      >
+                        Participate Now
+                      </button>
+                      </>}
+                  
+                    </Card>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+{deal.apidata.feeStatusToParticipate == "OPTIONAL" ? (
                   <>
                     <Card
                       size="meddam"
@@ -412,7 +511,7 @@ const Participatedeal = () => {
                 ) : (
                   <></>
                 )}
-              </div> */}
+              </div>
             </div>
           </div>
           <Footer />

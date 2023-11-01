@@ -5,6 +5,7 @@ import Table1 from "./Table1";
 
 function Modaldata({ data, open, hidingStatement }) {
   const [lgShow, setLgShow] = useState(open);
+  const [donloadlink , setdownloadlink]=useState(data.downloadStatement)
 
   const hidingStatementModal = () => {
     setLgShow(!lgShow);
@@ -21,7 +22,7 @@ function Modaldata({ data, open, hidingStatement }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
-            Download Statement
+        <a href={donloadlink}  > <i class="fa-solid fa-download"  typeof="download" ></i> </a>   Download Statement
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
