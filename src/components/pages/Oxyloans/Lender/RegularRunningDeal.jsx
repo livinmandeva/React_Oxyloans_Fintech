@@ -229,7 +229,7 @@ const RegularRunningDeal = () => {
                                 </div>
                               </div>
                               <div className="card-footer">
-                                <div className="row align-items-center">
+                                <div className="row align-items-center align-items-center1">
                                   <div className="col-auto">
                                     <Link
                                       to={`participatedeal?dealId=${data.dealId}`}

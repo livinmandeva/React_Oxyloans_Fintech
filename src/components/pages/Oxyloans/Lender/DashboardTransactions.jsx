@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
+import './Dashboardtable.css'
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
@@ -455,7 +456,7 @@ const DashboardTransactions = () => {
               </div>
             </div>
             <div className="card">
-              <div className="card-body">
+              <div className="card-body card-bodytable">
                 <div className="row col-12">
                   <div className="col-xl-12 d-flex">
                     {/* Star Students */}
@@ -470,7 +471,7 @@ const DashboardTransactions = () => {
                           </li>
                         </ul>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body card-bodytable">
                         <div>
                           <Table
                             className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -514,7 +515,7 @@ const DashboardTransactions = () => {
                           </li>
                         </ul>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body card-bodytable">
                         <div>
                           <Table
                             className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -561,7 +562,7 @@ const DashboardTransactions = () => {
                           </li>
                         </ul>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body card-bodytable">
                         <div>
                           <Table
                             className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -608,7 +609,7 @@ const DashboardTransactions = () => {
                           </li>
                         </ul>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body card-bodytable">
                         <div>
                           <Table
                             className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -655,7 +656,7 @@ const DashboardTransactions = () => {
                           </li>
                         </ul>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body card-bodytable">
                         <div>
                           <Table
                             className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

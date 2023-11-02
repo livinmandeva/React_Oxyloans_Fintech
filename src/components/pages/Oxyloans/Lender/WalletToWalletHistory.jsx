@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import './Dashboardtable.css'
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { getMyWalletTowalletHistory } from "../../../HttpRequest/afterlogin";

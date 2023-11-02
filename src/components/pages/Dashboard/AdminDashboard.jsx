@@ -905,7 +905,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                   <div className="dash-widget d-flex justify-content-center align-items-center">
-                    <div className="w-100">
+                    <div className="w-100 scrolling">
                       <GoogleChart
                         chartType="Calendar"
                         loader={<div>Loading Chart</div>}

@@ -12,6 +12,15 @@
   text-align: left;
   padding: 8px;
 }
+
+@media screen and (max-width: 890px) {
+  .scrolling {
+    display: flex;
+    overflow-x: scroll;
+  }
+}
+
+
 /* tr:nth-child(even) {
     background-color: #f0f0f0;
   } */

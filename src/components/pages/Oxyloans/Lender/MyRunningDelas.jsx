@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
+import "./InvoiceGrid.css";
 import SideBar from "../../../SideBar/SideBar";
 import { Pagination } from "antd";
 
