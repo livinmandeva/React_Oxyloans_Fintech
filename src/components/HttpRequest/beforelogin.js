@@ -43,32 +43,20 @@ export const sendotpemail = async (email) => {
   return response;
 };
 
-export const Admlog =async(email , password) =>{
-
-
-  const data={
-    id: email,
-    primaryType: "SUPERADMIN"
-  }
-
-  const  response= await handleApiRequestBeforeLogin(
+export const Admlog = async (userid, password) => {
+  const data = {
+    id: userid,
+    primaryType: "SUPERADMIN",
+  };
+  const response = await handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,
     "login?grantType=PWD",
     data
-  )
-  if (response.status == 200) {
-    const accessTokenFromHeader = response.headers["accesstoken"];
-    sessionStorage.setItem("accessToken", accessTokenFromHeader);
-    sessionStorage.setItem("userId", response.data.id);
-    sessionStorage.setItem("tokenTime", response.data.tokenGeneratedTime);
-    return response;
-  } else {
-    return response;
-  }
-  
-  // return  response
-}
+  );
+
+  return response;
+};
 export const userloginSection = async (email, password) => {
   const checkLoginMode = email.includes("@") == true ? true : false;
   const postdata =
@@ -135,7 +123,6 @@ export const verifywhatappotp = async (api) => {
 //     "https://api.ipify.org/?format=json"
 //   );
 // };
-
 // export const handleipv6 = () => {
 //   return handleApiRequestBeforeLogin("get", "https://ipapi.co/json/");
 // };
@@ -156,6 +143,5 @@ export const passwordupdated = async (
     `resetpassword/${emailToken}`,
     data
   );
-
   return response;
 };

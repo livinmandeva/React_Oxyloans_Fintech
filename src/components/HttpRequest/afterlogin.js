@@ -505,7 +505,7 @@ export const handleapicall = async (data) => {
 };
 export const writequery = async (userdata) => {
   console.log(userdata);
-  
+
   const token = getToken();
   const userId = getUserId();
   console.log("User Data:", userdata);
@@ -616,7 +616,7 @@ export const TicketHistoryapi = async () => {
     `queryDetailsBasedOnUserId`,
     "POST",
     token,
-    data,
+    data
   );
 
   return response;
