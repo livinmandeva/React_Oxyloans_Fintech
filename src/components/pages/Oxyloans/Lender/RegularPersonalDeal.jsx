@@ -76,6 +76,7 @@ const RegularPersonalDeal = () => {
         personal_runningDeal.pageno
       );
 
+      
       response.then((data) => {
         setRegularRunningDeal({
           ...personal_runningDeal,
