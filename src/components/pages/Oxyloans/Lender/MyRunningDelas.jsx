@@ -263,7 +263,7 @@ const MyRunningDelas = () => {
                               </div>
                             </div>
                             <div className="card-footer">
-                              <div className="row align-items-center">
+                              <div className="row align-items-center align-items-center1">
                                 <div className="col-auto">
                                   <span
                                     className="badge bg-success-dark"

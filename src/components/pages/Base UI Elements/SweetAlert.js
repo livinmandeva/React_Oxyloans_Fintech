@@ -107,6 +107,109 @@ export const WarningAlert = (errorMessage, redirectTo) => {
   });
 };
 
+
+// export const membership = (warningType, errormessage) => {
+//   Swal.fire({
+//     title: 'Your validity has expired!',
+//     input: 'radio',
+//     inputOptions: {
+//       'option1': 'One Month',
+//       'option2': 'Quarterly',
+//       'option3': 'Half-Yearly',
+//       'option4': 'One Year',
+//       'option5': 'Five Years',
+//       'option6': 'Ten Years',
+//       'option7': 'life Time',
+//     },
+//     inputValidator: (result) => {
+//       if (!result) {
+//         return 'You must select an option';
+//       }
+//     },
+//     text: warningType, // Display the warning message here
+//     icon: 'error',
+//     confirmButtonText: 'OK',
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       Swal.fire({
+//         title: 'You selected:',
+//         text: result.value,
+//         icon: 'info',
+//         inputOptions:`${inputOptions}`,
+//         confirmButtonText: 'OK',
+//       });
+//     }
+//   });
+// };
+
+
+
+// Define the tenure object
+const tenure = {
+  monthly: 1000,
+  quarterly: 2900,
+  halfyearly: 5600,
+  peryear: 9800,
+  lifetime: 100000,
+  fiveyears: 50000,
+  tenyears: 90000,
+};
+
+// Define the membership function
+export const membership = () => {
+  Swal.fire({
+    title: 'Select Membership Duration',
+    width: '600px',
+    html: `
+      <style>
+        .radiobutton {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      </style>
+      <div class="radiobutton">
+        <input type="radio" name="membershipOption" value="monthly" id="option1">
+        <label for="option1">One Month</label>
+        <!-- Add the rest of the radio buttons and labels here -->
+      </div>`,
+    showCancelButton: true,
+    confirmButtonText: 'Pay & Participate',
+    cancelButtonText: 'Cancel',
+    input: 'radio',
+    inputOptions: {
+      'monthly': 'One Month',
+      'quarterly': 'Quarterly',
+      'halfyearly': 'Half-Yearly',
+      'peryear': 'One Year',
+      'lifetime': 'Five Years',
+      'fiveyears': 'Ten Years',
+      'tenyears': 'Life Time',
+    },
+    inputValidator: (result) => {
+      if (!result) {
+        return 'You must select an option';
+      }
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const selectedOption = result.value;
+      const amount = tenure[selectedOption];
+      const calculate = (amount * 118) / 100;
+      Swal.fire({
+        title: 'pay amount',
+        text: selectedOption,
+        html: `<br>Your membership amount is  ${calculate}`,
+        icon: 'info',
+        confirmButtonText: 'Pay Amount',
+      });
+    }
+  });
+};
+
+
+
+
 export const PrincipalTransfer = (warningType, errormessage) => {
   Swal.fire("Principal Payout!", errormessage, warningType);
   setTimeout(() => {
@@ -122,7 +225,7 @@ export const Error = () => {
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
   });
-};
+};       
 export const autoClose = () => {
   var t;
   Swal.fire({
@@ -203,7 +306,7 @@ export const confirmText = () => {
         confirmButtonClass: "btn btn-success",
       });
   });
-};
+};        
 export const confirmColor = () => {
   Swal.fire({
     title: "Are you sure?",

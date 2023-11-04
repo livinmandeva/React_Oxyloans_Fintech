@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 let API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -46,7 +46,7 @@ export const sendotpemail = async (email) => {
 export const Admlog = async (userid, password) => {
   const data = {
     id: userid,
-    primaryType: "SUPERADMIN",
+    primaryType: password,
   };
   const response = await handleApiRequestBeforeLogin(
     "POST",
@@ -55,7 +55,15 @@ export const Admlog = async (userid, password) => {
     data
   );
 
-  return response;
+  if (response.status == 200) {
+    const accessTokenFromHeader = response.headers["accesstoken"];
+    sessionStorage.setItem("accessToken", accessTokenFromHeader);
+    sessionStorage.setItem("userId", response.data.id);
+    sessionStorage.setItem("tokenTime", response.data.tokenGeneratedTime);
+    return response;
+  } else {
+    return response;
+  }
 };
 export const userloginSection = async (email, password) => {
   const checkLoginMode = email.includes("@") == true ? true : false;

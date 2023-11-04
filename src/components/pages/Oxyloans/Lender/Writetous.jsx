@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
@@ -8,6 +9,7 @@ import {
   writequery,
   fileuploads,
 } from "../../../HttpRequest/afterlogin";
+import './InvoiceGrid.css'
 import Footer from "../../../Footer/Footer";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
 import { HandleClick } from "../../Base UI Elements/SweetAlert";
@@ -90,6 +92,7 @@ if(writetous.query  !== ""){
   };
   return (
     <>
+    
       <div className="main-wrapper">
         {/* Header */}
         <Header />
@@ -211,7 +214,7 @@ if(writetous.query  !== ""){
 
                       <div className="row col-12 my-4 p-0">
                         <button
-                          className="btn btn-primary col-md-3 mx-3 my-5"
+                          className="btn btn-primary col-md-3 mx-3 my-5 querybtn"
                           onClick={querySubmission}
                           disabled={writetous.isVaild}
                         >

@@ -4,9 +4,11 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import "./InvoiceGrid.css";
-import { handledetail, handlecashapi } from "../../../HttpRequest/afterlogin";
-import { Card, Table } from "antd";
+import { handledetail, handlecashapi, nofreeParticipationapi } from "../../../HttpRequest/afterlogin";
+import { Card, Switch, Table } from "antd";
 import { useHistory } from "react-router-dom";
+import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
+import { membership } from "../../Base UI Elements/SweetAlert";
 
 const Participatedeal = () => {
   const history = useHistory();
@@ -14,6 +16,7 @@ const Participatedeal = () => {
   const [deal, setDeal] = useState({
     apidata: "",
     transactionNumber: "",
+    checked:true,
     accountType: "",
     lenderFeeId: "",
     lenderReturnType: "",
@@ -21,7 +24,7 @@ const Participatedeal = () => {
     transferPrincipal:"",
     participatedAmount: "",
     bank: "",
-    wallet: "",
+    wallet: "",urldealId:""
   });
 
   useEffect(() => {
@@ -34,6 +37,7 @@ const Participatedeal = () => {
         setDeal({
           ...deal,
           apidata: data.data,
+          urldealId:dealId
         });
         if (data.data.yearlyInterest != 0) {
           setDeal({
@@ -116,32 +120,98 @@ const Participatedeal = () => {
     });
   };
 
-  const freeParticipation = () => {
-    const response = freeParticipationapi(
-      deal.apidata.groupId,
-      deal.apidata.dealId,
-      deal.accountType,
-      deal.lenderReturnType
-    );
-    response.then((data) => {
-      console.log(data);
-    });
+  const freeParticipation = (dealdata, participatedAmount, lenderParticipationLimit) => {
+    console.log(lenderParticipationLimit);
+    console.log(participatedAmount);
+    console.log(dealdata.participatedAmount); // Assuming dealdata has a participatedAmount property
+    console.log(dealdata.apidata.validityStatus);
+  
+    if (dealdata.bank !== "") {
+      if (dealdata.apidata.validityStatus === true) {
+        toastrSuccess("valid");
+        if (dealdata.participatedAmount >= participatedAmount && dealdata.participatedAmount <= lenderParticipationLimit) {
+          alert("correct");
+          console.log("Condition met: The deal's participation amount is within the specified range.");
+          const response = freeParticipationapi(
+            dealdata.apidata.groupId,
+            dealdata.apidata.dealId,
+            deal.bank,
+            dealdata.lenderReturnType
+          );
+  
+          response
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("An error occurred:", error);
+              // Handle the error, e.g., display an error message.
+            });
+        } else {
+          alert("not correct");
+          toastrError("Condition not met: The deal's participation amount is outside the specified range.");
+        }
+      } else {
+        membership("Your validity has expired. Now you have to choose the membership and participate in the deal." , " has    ")
+        // toastrError("Your validity has expired. Now you have to choose the membership and participate in the deal.");
+      }
+    } else {
+      toastrError("Please Select Transfer principal payment method");
+    };
   };
-  const nofreeParticipation = () => {
-    const response = freeParticipationapi(
-      deal.apidata.groupId,
-      deal.apidata.dealId,
-      deal.accountType,
-      deal.lenderReturnType
-    );
-    response.then((data) => {
-      console.log(data);
+  
+  const handleSwitchChange = (checked) => {
+    // Handle the switch change and update the state accordingly
+    setDeal({
+      ...deal,
+      checked:checked
     });
+    console.log(deal.checked)
+
   };
+  const nofreeParticipation = (dealdata, participatedAmount, lenderParticipationLimit) => {
+    console.log(lenderParticipationLimit)
+    console.log(participatedAmount)
+    console.log(deal.participatedAmount)
+    console.log(dealdata.validityStatus)
+
+    if(deal.bank !==""){
+
+        if (deal.participatedAmount >= participatedAmount && deal.participatedAmount <= lenderParticipationLimit) {
+          alert("correct");
+          console.log("Condition met: The deal's participation amount is within the specified range.");
+          const response = nofreeParticipationapi(
+            deal.apidata,
+            dealdata.apidata.groupId,
+            deal.urldealId,
+            deal.bank,
+            dealdata.lenderReturnType,
+            deal
+            
+          );
+        
+          response.then((data) => {
+            console.log(data);
+          });
+        } else {
+          alert("not correct");
+          toastrError("Condition not met: The deal's participation amount is outside the specified range.");
+        }
+    }else{
+      
+      toastrError("Please Select Transfer principal payment method")
+    }
+ 
+  
+   
+  };
+  
   useEffect(()=>{
     {console.log(deal.bank)}
 
   },[deal.bank])
+
+
   return (
     <>
       <div className="main-wrapper">
@@ -195,7 +265,33 @@ const Participatedeal = () => {
                   }}
                 />
               </div>
-              <h4 style={{ marginTop: "2rem" }}>
+              <h4  style={{ marginTop: "2rem" }}>
+              Deal ExtensionConsents   
+              </h4>
+
+              {/* <div class="form-check my-1">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="transferPrincipal"
+                  value={"interested"}
+                  onChange={(event) => {
+                    setDeal({
+                      ...deal,
+                      extension: event.target.value,
+                    });
+                  }}
+                />
+                <label class="form-check-label" for="flexRadioDisabled">
+                Interested
+                </label>
+              </div> */}
+              <Switch defaultChecked={deal.checked} onChange={handleSwitchChange} />
+      <span>{deal.checked ?<>{()=>setDeal({
+           ...deal,
+           checked:true
+      })}</>  : 'Not Interested'}</span>
+              <h4 style={{ marginTop: "2rem" }} >
                 Transfer principal payment method
               </h4>
               <div class="form-check my-1">
@@ -203,7 +299,7 @@ const Participatedeal = () => {
                   class="form-check-input"
                   type="radio"
                   name="transferPrincipal"
-                  value={"wallet"}
+                  value={"WALLET"}
                   onChange={(event) => {
                     setDeal({
                       ...deal,
@@ -220,7 +316,7 @@ const Participatedeal = () => {
                   class="form-check-input"
                   type="radio"
                   name="transferPrincipal"
-                  value={"bank"}
+                  value={"BANKACCOUNT"}
                   onChange={(event) => {
                     setDeal({
                       ...deal,
@@ -358,7 +454,7 @@ const Participatedeal = () => {
                   <>
                     <Card
                       size="meddam"
-                      title={deal.apidata.groupName ==="OXYMARCH09" ? <>OXY FOUNDING LENDER</>: <>New Lender</>}
+                      title={deal.apidata.groupName ==="OXYMARCH09"  ? <>OXY FOUNDING LENDER</>: <>New Lender</>}
                       headStyle={{
                         backgroundColor: "#3d5ee1",
                         color: "white",
@@ -415,19 +511,21 @@ const Participatedeal = () => {
                       </div>
 
                 {deal.apidata.validityStatus ? <>  
-                {/* pay the free */}
+                {/*   nofree */}
+                
+                {console.log(deal.apidata.validityStatus)}
                   <button
                         className="btn btn-primary"
                         type="submit"
-                        onClick={freeParticipation}
+                        onClick={()=>nofreeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
                       >
                         Participate Now
                       </button></> : <>
-                      {/* no free */}
+                      {/* pay free */}
                       <button
                         className="btn btn-primary"
                         type="submit"
-                        onClick={nofreeParticipation}
+                        onClick={()=>freeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
                       >
                         Participate Now
                       </button>
@@ -441,6 +539,74 @@ const Participatedeal = () => {
 
 {deal.apidata.feeStatusToParticipate == "OPTIONAL" ? (
                   <>
+                  {deal.apidata.groupName == "OXYMARCH09" ? <>
+                  <Card
+                      size="meddam"
+                      title={deal.apidata.groupName ? <>OXY FOUNDING LENDER </> : <></>}
+                      headStyle={{
+                        backgroundColor: "#3d5ee1",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                      bodyStyle={{ width: 300 }}
+                    >
+                      <p size="meddam">Choose Your Interest Payout Method</p>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDisabled"
+                          id="flexRadioDisabled"
+                        />
+                        <label class="form-check-label" for="flexRadioDisabled">
+                          {deal.apidata && (
+                            <>
+                              {deal.apidata.monthlyInterest != 0 ? (
+                                <div>
+                                  monthlyInterest pay-out
+                                  {deal.apidata.monthlyInterest} % P.M
+                                </div>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          )}
+                          {deal.apidata.yearlyInterest != 0 ? (
+                            <div>
+                              yearlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                          {deal.apidata.quartlyInterest != 0 ? (
+                            <div>
+                              quartlyInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                          {deal.apidata.halfInterest != 0 ? (
+                            <div>
+                              halfInterest pay-out{" "}
+                              {deal.apidata.monthlyInterest} % P.M
+                            </div>
+                          ) : (
+                            <></>
+                          )}
+                        </label>
+                      </div>
+
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                        onClick={()=>nofreeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
+                      >
+                        Participate Now
+                      </button>
+                    </Card>
+                  </> : <> </>}
                     <Card
                       size="meddam"
                       title="NO Fee To Participate"
@@ -502,11 +668,13 @@ const Participatedeal = () => {
                       <button
                         className="btn btn-primary"
                         type="submit"
-                        onClick={freeParticipation}
+                        onClick={()=>nofreeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
                       >
                         Participate Now
                       </button>
                     </Card>
+
+                    
                   </>
                 ) : (
                   <></>

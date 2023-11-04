@@ -65,6 +65,9 @@
   padding: 2px !important;
 }
 
+.align-items-center1{
+  gap: 4px;
+}
 .badgedat {
   display: flex;
   flex-direction: row !important;
