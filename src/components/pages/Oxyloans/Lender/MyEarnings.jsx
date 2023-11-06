@@ -196,7 +196,7 @@ const MyEarnings = () => {
             </div>
             {/* /Page Header */}
             <div className="student-group-form">
-              <div className="row">
+              <div className="row" style={{ display: "none" }}>
                 <div className="col-lg-3 col-md-6">
                   <div className="form-group">
                     <input
@@ -254,13 +254,11 @@ const MyEarnings = () => {
                       className="btn btn-xs col-md-3 btn-danger col-12"
                       onClick={() => EarningStatementlink()}
                     >
-                       <i class="fa-solid fa-download"></i> Earning Statement
+                      <i class="fa-solid fa-download"></i> Earning Statement
                     </button>
                   </div>
                   <div className="card-body">
-                    {/* Page Header */}
-                    <div className="page-header"></div>
-                    {/* /Page Header */}
+                    <div className="page-header m-0 p-0"></div>
                     <div className="table-responsive">
                       <Table
                         className="table table-stripped table-hover datatable"

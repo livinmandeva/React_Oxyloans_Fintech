@@ -110,11 +110,11 @@ const WithdrawdealfromDeal = () => {
       dataIndex: "Duration",
       sorter: (a, b) => a.Duration - b.Duration,
     },
-    {
-      title: "Deal Status",
-      dataIndex: "DealStatus",
-      sorter: (a, b) => a.DealStatus.length - b.DealStatus.length,
-    },
+    // {
+    //   title: "Deal Status",
+    //   dataIndex: "DealStatus",
+    //   sorter: (a, b) => a.DealStatus.length - b.DealStatus.length,
+    // },
     {
       title: "Requested",
       dataIndex: "RequestedAmount",
@@ -160,7 +160,7 @@ const WithdrawdealfromDeal = () => {
                   <div className="card-header">
                     <div className="row col-12">
                       <button
-                        className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2"
+                        className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2 my-md-1"
                         onClick={handleWithdrawFromEscrow}
                       >
                         <i class="fa-solid fa-briefcase"></i> Withdraw From
@@ -169,7 +169,7 @@ const WithdrawdealfromDeal = () => {
 
                       <button
                         onClick={handleWithdrawFromNormal}
-                        className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2"
+                        className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"
                       >
                         <i class="fa-solid fa-briefcase"></i> Withdraw from a
                         Normal deal

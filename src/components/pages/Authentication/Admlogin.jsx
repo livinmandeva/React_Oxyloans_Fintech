@@ -69,7 +69,7 @@ const Admlogin = () => {
     const retriveresponse = await Admlog(userid.substring(2), password);
     if (retriveresponse.request.status == 200) {
       console.log(retriveresponse);
-      toastrSuccess("Login Suceess !");
+      toastrSuccess("Login Suceess!");
       history.push("/dashboard");
     } else {
       toastrWarning(retriveresponse.response.data.errorMessage);

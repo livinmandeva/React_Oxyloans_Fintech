@@ -201,17 +201,15 @@ const MyreferalStatus = () => {
                         <div className="col">
                           <h3 className="page-title"></h3>
                         </div>
-                        <div className="col-auto text-end float-end ms-auto download-grp">
-                          <a
-                            href="#"
+                        <div className="col-12 text-start float-left ms-auto download-grp">
+                          <button
                             onClick={downloadReferalStatusFileInfo}
                             className="btn btn-danger me-2 text-white"
                           >
                             <i class="fa-solid fa-download mx-1"></i> Referal
                             Status
-                          </a>
-                          <Button
-                            // to="addsalary"
+                          </button>
+                          <button
                             onClick={Inviteborrower}
                             className="btn btn-warning me-2 text-white"
                           >
@@ -223,8 +221,8 @@ const MyreferalStatus = () => {
                                 Borrower
                               </>
                             )}
-                          </Button>
-                          <Button
+                          </button>
+                          <button
                             onClick={handlenriinvite}
                             className="btn btn-info me-2 text-white"
                           >
@@ -236,9 +234,9 @@ const MyreferalStatus = () => {
                                 Invite an NRI
                               </>
                             )}
-                          </Button>
+                          </button>
 
-                          <Button
+                          <button
                             onClick={Invitelender}
                             className="btn btn-success me-2 text-white"
                           >
@@ -252,7 +250,7 @@ const MyreferalStatus = () => {
                                 Lender
                               </>
                             )}
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </div>

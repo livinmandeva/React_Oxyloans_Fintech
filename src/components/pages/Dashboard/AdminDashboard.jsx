@@ -508,14 +508,14 @@ response.then((data)=>{
       sorter: (a, b) => a.Date - b.Date,
     },
     {
-      title: "Description",
-      dataIndex: "Description",
-      sorter: (a, b) => a.Description.length - b.Description.length,
-    },
-    {
       title: "Amount",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Description",
+      dataIndex: "Description",
+      sorter: (a, b) => a.Description.length - b.Description.length,
     },
   ];
 
@@ -760,7 +760,8 @@ response.then((data)=>{
                           ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
                           : `You are an ${
                               getreducerprofiledata.groupName == "OXYMARCH09" ||
-                              getreducerprofiledata.groupName == "OxyPremiuimLenders"
+                              getreducerprofiledata.groupName ==
+                                "OxyPremiuimLenders"
                                 ? "Oxy Founding Lender"
                                 : "NewLender"
                             } group member, and your validity is up to: ${

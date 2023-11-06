@@ -347,7 +347,15 @@ const MyRunningDelas = () => {
                 ))}
               </>
             ) : (
-              <p>No data available</p>
+              <div>
+                <p>No data available</p>
+
+                <div class="text-center">
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>

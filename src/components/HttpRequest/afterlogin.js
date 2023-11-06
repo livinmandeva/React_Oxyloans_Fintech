@@ -1,6 +1,10 @@
 import axios from "axios";
+<<<<<<< Updated upstream
 import { hasUncaughtExceptionCaptureCallback } from "process";
 const userisIn = "local";
+=======
+const userisIn = "prod";
+>>>>>>> Stashed changes
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -769,6 +773,7 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
+<<<<<<< Updated upstream
   export  const chatapi=async()=>{
     const token = getToken();
     const userId = getUserId();
@@ -785,23 +790,33 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
 
 export const nofreeParticipationapi= async( apidata, groupId, dealId, accountType, lenderReturnType, deal)=>{
 
+=======
+export const nofreeParticipationapi = async (
+  apidata,
+  groupId,
+  dealId,
+  accountType,
+  lenderReturnType,
+  deal
+) => {
+>>>>>>> Stashed changes
   console.log(deal.extension);
-  console.log(deal.apidata.lenderTotalParticipationAmount)
-  console.log(deal.apidata.lenderRemainingPanLimit)
-  console.log(groupId, dealId, accountType, lenderReturnType)
+  console.log(deal.apidata.lenderTotalParticipationAmount);
+  console.log(deal.apidata.lenderRemainingPanLimit);
+  console.log(groupId, dealId, accountType, lenderReturnType);
   const token = getToken();
-  const userId = getUserId()
-  if(deal.monthlyInterest !== 0){
-   var lenderReturnType="MONTHLY";
+  const userId = getUserId();
+  if (deal.monthlyInterest !== 0) {
+    var lenderReturnType = "MONTHLY";
     console.log("lenderReturnType");
-  }else if(deal.quarterlyDisplay !== 0){
-    var lenderReturnType="quarterly";
+  } else if (deal.quarterlyDisplay !== 0) {
+    var lenderReturnType = "quarterly";
     console.log("quarterly");
-  }else if(deal.yearlyInterest !== 0){
-    var lenderReturnType="yearly";
+  } else if (deal.yearlyInterest !== 0) {
+    var lenderReturnType = "yearly";
     console.log("   ");
   }
-  const data={
+  const data = {
     userId: userId,
     groupId: groupId,
     dealId: dealId,
@@ -810,45 +825,46 @@ export const nofreeParticipationapi= async( apidata, groupId, dealId, accountTyp
     processingFee: 0,
     lenderFeeId: "0",
     accountType: accountType,
-    feeStatus: "COMPLETED"
-  }
+    feeStatus: "COMPLETED",
+  };
   let userconfirmed = "NO";
 
   // if(participationStatus === true){
-	// 	      userconfirmed = "YES";
-	// 		var participationStatus = "UPDATE";
+  // 	      userconfirmed = "YES";
+  // 		var participationStatus = "UPDATE";
   // }else{
   //   var participationStatus = status;
   // }
 
-  var participationStatus= "ADD";     
-  const data1={
-     userId: userId,
-			groupId: groupId,
-			dealId: dealId,
-			participatedAmount: deal.participatedAmount,
-			lenderReturnType: lenderReturnType,
-			// rateofInterest: choosenRateofInterest,
-			processingFee: 0,
-			paticipationStatus: deal.lenderPaticipatedResponseDto !== null ? "ADD"  : "UPDATE",
-			accountType: accountType,
-			ExtensionConsents: deal.checked ? "INTERESTED" : "NOTINTERESTED",
-			feeStatus: "COMPLETED",
-			// lenderTotalPanLimit:userPanLimit,
-			// totalParticipatedAmount:userTotalParticipation
-      			lenderTotalPanLimit:deal.apidata.lenderRemainingPanLimit,
-			totalParticipatedAmount:deal.apidata.lenderTotalParticipationAmount
-  }
-  const response = await  handleApiRequestAfterLoginService(
+  var participationStatus = "ADD";
+  const data1 = {
+    userId: userId,
+    groupId: groupId,
+    dealId: dealId,
+    participatedAmount: deal.participatedAmount,
+    lenderReturnType: lenderReturnType,
+    // rateofInterest: choosenRateofInterest,
+    processingFee: 0,
+    paticipationStatus:
+      deal.lenderPaticipatedResponseDto !== null ? "ADD" : "UPDATE",
+    accountType: accountType,
+    ExtensionConsents: deal.checked ? "INTERESTED" : "NOTINTERESTED",
+    feeStatus: "COMPLETED",
+    // lenderTotalPanLimit:userPanLimit,
+    // totalParticipatedAmount:userTotalParticipation
+    lenderTotalPanLimit: deal.apidata.lenderRemainingPanLimit,
+    totalParticipatedAmount: deal.apidata.lenderTotalParticipationAmount,
+  };
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    "updatingLenderDeal",  
-       
+    "updatingLenderDeal",
+
     "PATCH",
     token,
     data1
-  )
+  );
   return response;
-}
+};
 export const getMyTransactions = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();

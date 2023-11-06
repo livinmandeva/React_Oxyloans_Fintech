@@ -206,7 +206,7 @@ const Mycontacts = () => {
                           </Link>
 
                           <Button
-                            className="btn btn-warning"
+                            className="btn btn-warning h-100"
                             onClick={handleSelectClick}
                           >
                             {contactdata.selectAll ? (
