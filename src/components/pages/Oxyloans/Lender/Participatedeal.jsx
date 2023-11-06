@@ -660,7 +660,7 @@ const Participatedeal = () => {
                               {deal.apidata.monthlyInterest} % P.M
                             </div>
                           ) : (
-                            <></>
+                            <></>     
                           )}
                           {deal.apidata.quartlyInterest != 0 ? (
                             <div>
