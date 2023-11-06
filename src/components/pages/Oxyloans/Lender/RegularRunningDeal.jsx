@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
-import './InvoiceGrid.css'
+import "./InvoiceGrid.css";
 import SideBar from "../../../SideBar/SideBar";
 import { Table, Pagination } from "antd";
 

@@ -483,19 +483,17 @@ export const getcontactdeatils = async () => {
   return response;
 };
 
-export const handleapicall = async (dealId ,roi, participatedamount,requestedamount,  withdrawalamount) => {
-
+export const handleapicall = async (data) => {
   const token = getToken();
   const userId = getUserId();
 
   const data1 = {
     userId: userId,
-    dealId: dealId,
-    currentAmount: participatedamount,
-    requestedAmount: requestedamount,
-    withDrawalFunds: withdrawalamount,
-
-  };     
+    dealId: data.dealId,
+    currentAmount: data.currentAmount,
+    requestedAmount: data.requestedAmount,
+    withDrawalFunds: data.withdrawAmount,
+  };
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     // user/getLenderStoredEmailContacts/${suserId}

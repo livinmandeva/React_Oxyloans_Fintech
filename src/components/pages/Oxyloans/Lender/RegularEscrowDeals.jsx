@@ -29,7 +29,7 @@ const RegularEscrowDeals = () => {
         maximumparticipation:
           escrow_runningDeal.apidata.lenderParticiptionLimit,
       })
-    : null;
+    : [];
   const columns = [
     {
       title: "Deal Info",
@@ -64,7 +64,6 @@ const RegularEscrowDeals = () => {
       pageno: pros,
     });
   };
-
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
@@ -136,11 +135,13 @@ const RegularEscrowDeals = () => {
                 onChange={changepagination}
               />
             </div>
-            {escrow_runningDeal.apidata.listOfDealsInformationToLender && (
+
+            {console.log(escrow_runningDeal)}
+            {escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
-                {escrow_runningDeal.apidata.listOfDealsInformationToLender !==
+                {escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto !==
                 ""
-                  ? escrow_runningDeal.apidata.listOfDealsInformationToLender.map(
+                  ? escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto.map(
                       (data, index) => (
                         <div className="row" key={index}>
                           <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
@@ -264,19 +265,10 @@ const RegularEscrowDeals = () => {
               </>
             )}
 
-            {escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
+            {escrow_runningDeal.apidata == "" && (
               <>
                 <div className="card">
-                  <Table
-                    columns={columns}
-                    dataSource={
-                      escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto
-                        .length !== 0
-                        ? dataSource
-                        : []
-                    }
-                    pagination={false}
-                  />
+                  <Table columns={columns} dataSource={[]} pagination={false} />
                 </div>
               </>
             )}

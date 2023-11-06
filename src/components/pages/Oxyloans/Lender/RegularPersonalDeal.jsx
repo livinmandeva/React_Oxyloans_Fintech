@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import './InvoiceGrid.css'
+import "./InvoiceGrid.css";
 import { Table, Pagination } from "antd";
 
 const RegularPersonalDeal = () => {
@@ -14,8 +14,6 @@ const RegularPersonalDeal = () => {
     pageno: 1,
   });
 
-
-  
   const dataSource = [];
 
   personal_runningDeal.apidata != ""
@@ -79,7 +77,6 @@ const RegularPersonalDeal = () => {
         personal_runningDeal.pageno
       );
 
-      
       response.then((data) => {
         setRegularRunningDeal({
           ...personal_runningDeal,
@@ -138,11 +135,11 @@ const RegularPersonalDeal = () => {
               onChange={changepagination}
             />
           </div>
-          {personal_runningDeal.apidata.listOfDealsInformationToLender && (
+          {personal_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
             <>
-              {personal_runningDeal.apidata.listOfDealsInformationToLender !==
+              {personal_runningDeal.apidata.listOfBorrowersDealsResponseDto !==
               ""
-                ? personal_runningDeal.apidata.listOfDealsInformationToLender.map(
+                ? personal_runningDeal.apidata.listOfBorrowersDealsResponseDto.map(
                     (data, index) => (
                       <div className="row" key={index}>
                         <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
@@ -264,19 +261,10 @@ const RegularPersonalDeal = () => {
             </>
           )}
 
-          {personal_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
+          {personal_runningDeal.apidata == "" && (
             <>
               <div className="card">
-                <Table
-                  columns={columns}
-                  dataSource={
-                    personal_runningDeal.apidata.listOfBorrowersDealsResponseDto
-                      .length !== 0
-                      ? dataSource
-                      : []
-                  }
-                  pagination={false}
-                />
+                <Table columns={columns} dataSource={[]} pagination={false} />
               </div>
             </>
           )}
@@ -288,4 +276,3 @@ const RegularPersonalDeal = () => {
 };
 
 export default RegularPersonalDeal;
-y
