@@ -1,4 +1,5 @@
 import axios from "axios";
+import { hasUncaughtExceptionCaptureCallback } from "process";
 const userisIn = "local";
 const API_BASE_URL =
   userisIn == "local"
@@ -768,6 +769,19 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
+  export  const chatapi=async()=>{
+    const token = getToken();
+    const userId = getUserId();
+
+    const response = handleApiRequestAfterLoginService(
+      API_BASE_URL,
+      `${userId}/lendertotalInvestmentData`,
+      "GET",
+      token,
+
+    )
+    return response
+  }
 
 export const nofreeParticipationapi= async( apidata, groupId, dealId, accountType, lenderReturnType, deal)=>{
 

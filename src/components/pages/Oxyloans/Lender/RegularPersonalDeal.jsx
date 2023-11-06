@@ -288,3 +288,4 @@ const RegularPersonalDeal = () => {
 };
 
 export default RegularPersonalDeal;
+y

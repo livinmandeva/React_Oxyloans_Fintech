@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "../Oxyloans/Lender/table.css";
 import { Chart as GoogleChart } from "react-google-charts";
 import {
+  chatapi,
   getDashboardInvestment,
   regular_Api,
 } from "../../HttpRequest/afterlogin";
@@ -276,6 +277,13 @@ const AdminDashboard = () => {
     },
   });
 
+
+  useEffect(()=>{
+const response = chatapi();
+response.then((data)=>{
+  console.log(data)
+})
+  },[])
   const [treemap, Settreemap] = useState({
     series: [
       {

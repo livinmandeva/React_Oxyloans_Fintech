@@ -8,7 +8,8 @@ import { handledetail, handlecashapi, nofreeParticipationapi } from "../../../Ht
 import { Card, Switch, Table } from "antd";
 import { useHistory } from "react-router-dom";
 import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
-import { membership } from "../../Base UI Elements/SweetAlert";
+import { freeParticipationapialert, membership } from "../../Base UI Elements/SweetAlert";
+import Swal from "sweetalert2";
 
 const Participatedeal = () => {
   const history = useHistory();
@@ -180,19 +181,34 @@ const Participatedeal = () => {
         if (deal.participatedAmount >= participatedAmount && deal.participatedAmount <= lenderParticipationLimit) {
           alert("correct");
           console.log("Condition met: The deal's participation amount is within the specified range.");
-          const response = nofreeParticipationapi(
+          freeParticipationapialert(
             deal.apidata,
             dealdata.apidata.groupId,
             deal.urldealId,
             deal.bank,
             dealdata.lenderReturnType,
             deal
-            
           );
         
-          response.then((data) => {
-            console.log(data);
-          });
+//            Swal.fire(
+//   'Good job!',
+//   'You clicked the button!',
+//   'success'
+// )
+          // const response = nofreeParticipationapi(
+            // deal.apidata,
+            // dealdata.apidata.groupId,
+            // deal.urldealId,
+            // deal.bank,
+            // dealdata.lenderReturnType,
+            // deal
+            
+          // );
+        
+          // response.then((data) => {
+          //   toastrSuccess("deal participated successfully")
+     
+          // });
         } else {
           alert("not correct");
           toastrError("Condition not met: The deal's participation amount is outside the specified range.");
@@ -517,7 +533,7 @@ const Participatedeal = () => {
                   <button
                         className="btn btn-primary"
                         type="submit"
-                        onClick={()=>nofreeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
+                        onClick={()=>freeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
                       >
                         Participate Now
                       </button></> : <>
@@ -525,7 +541,7 @@ const Participatedeal = () => {
                       <button
                         className="btn btn-primary"
                         type="submit"
-                        onClick={()=>freeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
+                        onClick={()=>nofreeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
                       >
                         Participate Now
                       </button>

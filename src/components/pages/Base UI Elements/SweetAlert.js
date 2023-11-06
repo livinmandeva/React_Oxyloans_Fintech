@@ -7,7 +7,9 @@ import {
   downloadClosedLoanStatement,
   downloadTranactionStatement,
   cancelWithdrawalRequest,
+  nofreeParticipationapi,
 } from "../../HttpRequest/afterlogin";
+import { toastrSuccess } from "./Toast";
 
 export const HandleClick = () => {
   Swal.fire({
@@ -436,6 +438,34 @@ export const downloadMytransactionAlert = () => {
     }
   });
 };
+
+
+export const freeParticipationapialert = (apidata, groupId, urldealId, bank, lenderReturnType, deal) => {
+  Swal.fire({
+    title: "Please review the lending details!",
+    text: `Lending Amount: INR ${deal.participatedAmount}<br></br>Deal Name: ${deal.dealName}<br></br>RoI: ${deal.lenderPaticipatedResponseDto.rateOfInterest}%`,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const response = nofreeParticipationapi(apidata, groupId, urldealId, bank, lenderReturnType, deal);
+      response.then((data) => {
+        console.log(data);
+        if (data.request.status == 200) {
+          toastrSuccess("Deal participated successfully"); // Make sure toastrSuccess is defined
+        } else if (data.response.data.errorCode != "200") {
+          Swal.fire("Warning!", `${data.response.data.errorMessage}`, "warning");
+        }
+      });
+    }
+  });
+};
+
+
+
 
 export const cancelwithdrawalRequestInformation = (fromrequest, id) => {
   Swal.fire({
