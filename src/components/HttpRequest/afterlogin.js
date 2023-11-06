@@ -483,7 +483,7 @@ export const getcontactdeatils = async () => {
   return response;
 };
 
-export const handleapicall = async (data) => {
+export const handleapicall = async (data) => {    console.log(data)
   const token = getToken();
   const userId = getUserId();
 
@@ -493,7 +493,7 @@ export const handleapicall = async (data) => {
     currentAmount: data.currentAmount,
     requestedAmount: data.requestedAmount,
     withDrawalFunds: data.withdrawAmount,
-  };
+  };    
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     // user/getLenderStoredEmailContacts/${suserId}
