@@ -245,7 +245,7 @@ const AdminDashboard = () => {
     },
   ]);
 
-  // const [initialData , setinitialData] = useState({
+   // const [initialData , setinitialData] = useState({
   //   totalInvestment: 1,
   //   participatedStudentDeals: 0,
   //   participatedEscrowDeals: 0,
@@ -256,13 +256,14 @@ const AdminDashboard = () => {
     participatedStudentDeals: 0,
     participatedEscrowDeals: 0,
     participatedNormalDeals: 0,
-  });
+  })
+
 
   // const response = chatapi();
   // response.then((data)=>{
   //   if(data){
   //     SetDistributedColumns({
-
+     
   //         ...DistributedColumns,
   //         totalInvestment: data.data.totalInvestment, // Initialize with 0 or another appropriate default value
   //   participatedStudentDeals: data.data.participatedStudentDeals,
@@ -277,7 +278,7 @@ const AdminDashboard = () => {
       {
         name: "",
         // data: [300000, 200000, 50000, 50000],
-        data: [0, 0, 0, 0],
+    data:[0, 0, 0, 0]
       },
     ],
     options: {
@@ -302,12 +303,7 @@ const AdminDashboard = () => {
         show: false,
       },
       xaxis: {
-        categories: [
-          ["Total Investment"],
-          ["Student"],
-          ["Escow"],
-          ["normalDeals"],
-        ],
+        categories: [["Total Investment"], ["Student"], ["Escow"], ["normalDeals"]],
         labels: {
           style: {
             colors: ["#3D5EE1", "#70C4CF"],
@@ -318,17 +314,18 @@ const AdminDashboard = () => {
     },
   });
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await chatapi(); // Assuming chatapi() is an async function that fetches data
         if (response && response.data) {
           const data = response.data;
-          //  const data1= response.data.data.totalInvestment +
-          //   response.data.data.participatedStudentDeals
-          //    +  response.data.data.participatedEscrowDeals
-          //    + response.data.data.participatedNormalDeals
-          //    ;
+              //  const data1= response.data.data.totalInvestment +
+              //   response.data.data.participatedStudentDeals
+              //    +  response.data.data.participatedEscrowDeals 
+              //    + response.data.data.participatedNormalDeals
+              //    ;
 
           SetDistributedColumns((prevColumns) => ({
             ...prevColumns,
@@ -336,10 +333,7 @@ const AdminDashboard = () => {
               {
                 name: "",
                 data: [
-                  data.totalInvestment +
-                    data.participatedStudentDeals +
-                    data.participatedEscrowDeals +
-                    data.participatedNormalDeals,
+                  data.totalInvestment + data.participatedStudentDeals + data.participatedEscrowDeals + data.participatedNormalDeals,
                   data.participatedStudentDeals,
                   data.participatedEscrowDeals,
                   data.participatedNormalDeals,
@@ -748,9 +742,7 @@ const AdminDashboard = () => {
     return () => {};
   });
 
-  useEffect(() => {
-    console.log(regular_runningDeal);
-  }, [regular_runningDeal]);
+  console.log(googledata);
 
   return (
     <>

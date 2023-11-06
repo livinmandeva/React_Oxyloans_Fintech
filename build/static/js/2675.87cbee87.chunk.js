@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[2675],{62675:function(e,u,n){n.r(u);n(29867);var t=n(92834);u.default=function(){return(0,t.jsx)("div",{children:"ViewAutoHistory"})}}}]);
-//# sourceMappingURL=2675.87cbee87.chunk.js.map

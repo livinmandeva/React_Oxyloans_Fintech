@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[3991],{53991:function(e,a,n){n.r(a);n(29867);var l=n(92834);a.default=function(){return(0,l.jsx)("div",{children:"TransferWalletToWallet"})}}}]);
-//# sourceMappingURL=3991.41bce63a.chunk.js.map

@@ -38,7 +38,7 @@ const Myholdamount = () => {
           datasource.push({
             key: Math.random(),
             Extraamount: data.holdAmount,
-            Extraamountpaiddetails: data.comments,
+            Extraamountpaiddetails: comments,
             Deductiondetails: data.comments,
             Status: data.status,
           });
