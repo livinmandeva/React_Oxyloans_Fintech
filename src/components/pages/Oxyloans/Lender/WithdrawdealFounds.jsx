@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { handleapicall } from "../../../HttpRequest/afterlogin";
+import { toastrSuccess } from "../../Base UI Elements/Toast";
 const WithdrawdealFounds = () => {
   const [data, setdata] = useState({
     resdata: "",
@@ -22,11 +23,11 @@ const WithdrawdealFounds = () => {
     });
   };
 
-  const handlewith = () => {   console.log(data)
-    const response = handleapicall(data);
+  const handlewith = () => {   console.log(data.dealID ,data.roi, data.participatedamount, data.withdrawalamount)
+    const response = handleapicall(data.dealID ,data.roi, data.participatedamount,  data.requestedamount, data.withdrawalamount);
     response.then((data) => {
       if (data.request.status === 200) {
-        alert("success");
+        alert("success");toastrSuccess(data.data.status)
         console.log(data);
       }
     });
@@ -46,6 +47,7 @@ const WithdrawdealFounds = () => {
       dealID: dealId,
       roi: roi,
       participatedamount: currentAmount,
+      requestedamount:requestedAmount
 
     });
     return () => {};
@@ -106,7 +108,7 @@ const WithdrawdealFounds = () => {
                     </p>
                   </div>
                   <div className="card-body">
-                    <form>
+                    {/* <form> */}
                       <div className="row">
                         <div className="col-12 col-sm-4">
                           <div className="form-group local-forms">
@@ -177,7 +179,7 @@ const WithdrawdealFounds = () => {
                             <button
                               type="submit"
                               className="btn btn-primary"
-                              onClick={handlewith}
+                              onClick={()=>handlewith()}
 
                               disabled={data.isValid}
                             >
@@ -186,7 +188,7 @@ const WithdrawdealFounds = () => {
                           </div>
                         </div>
                       </div>
-                    </form>
+                    {/* </form> */}
                   </div>
                 </div>
               </div>

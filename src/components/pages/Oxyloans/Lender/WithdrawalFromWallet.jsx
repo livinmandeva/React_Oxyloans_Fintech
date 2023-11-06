@@ -100,7 +100,7 @@ const WithdrawalFromWallet = () => {
                     </div>
                   </div>
                   <div className="card-body">
-                    <form>
+                    {/* <form> */}
                       <div className="row">
                         <div className="col-12">
                           <h5 className="form-title">
@@ -192,7 +192,7 @@ const WithdrawalFromWallet = () => {
                           </div>
                         </div>
                       </div>
-                    </form>
+                {/*   </form> */}
                   </div>
                 </div>
               </div>

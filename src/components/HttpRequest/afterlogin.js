@@ -483,17 +483,17 @@ export const getcontactdeatils = async () => {
   return response;
 };
 
-export const handleapicall = async (data) => {
+export const handleapicall = async (dealId ,roi, participatedamount,requestedamount,  withdrawalamount) => {
 
   const token = getToken();
   const userId = getUserId();
 
   const data1 = {
     userId: userId,
-    dealId: data.dealId,
-    currentAmount: data.currentAmount,
-    requestedAmount: data.requestedAmount,
-    withDrawalFunds: data.withdrawAmount,
+    dealId: dealId,
+    currentAmount: participatedamount,
+    requestedAmount: requestedamount,
+    withDrawalFunds: withdrawalamount,
 
   };     
   const response = await handleApiRequestAfterLoginService(
