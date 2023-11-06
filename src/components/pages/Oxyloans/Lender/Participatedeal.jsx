@@ -12,7 +12,10 @@ import {
 import { Card, Switch, Table } from "antd";
 import { useHistory } from "react-router-dom";
 import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
-import { freeParticipationapialert, membership } from "../../Base UI Elements/SweetAlert";
+import {
+  freeParticipationapialert,
+  membership,
+} from "../../Base UI Elements/SweetAlert";
 import Swal from "sweetalert2";
 
 const Participatedeal = () => {
@@ -207,7 +210,7 @@ const Participatedeal = () => {
         console.log(
           "Condition met: The deal's participation amount is within the specified range."
         );
-        const response = nofreeParticipationapi(
+        freeParticipationapialert(
           deal.apidata,
           dealdata.apidata.groupId,
           deal.urldealId,
@@ -216,49 +219,20 @@ const Participatedeal = () => {
           deal
         );
 
-<<<<<<< Updated upstream
-        if (deal.participatedAmount >= participatedAmount && deal.participatedAmount <= lenderParticipationLimit) {
-          alert("correct");
-          console.log("Condition met: The deal's participation amount is within the specified range.");
-          freeParticipationapialert(
-            deal.apidata,
-            dealdata.apidata.groupId,
-            deal.urldealId,
-            deal.bank,
-            dealdata.lenderReturnType,
-            deal
-          );
-        
-//            Swal.fire(
-//   'Good job!',
-//   'You clicked the button!',
-//   'success'
-// )
-          // const response = nofreeParticipationapi(
-            // deal.apidata,
-            // dealdata.apidata.groupId,
-            // deal.urldealId,
-            // deal.bank,
-            // dealdata.lenderReturnType,
-            // deal
-            
-          // );
-        
-          // response.then((data) => {
-          //   toastrSuccess("deal participated successfully")
-     
-          // });
-        } else {
-          alert("not correct");
-          toastrError("Condition not met: The deal's participation amount is outside the specified range.");
-        }
-    }else{
-      
-      toastrError("Please Select Transfer principal payment method")
-=======
-        response.then((data) => {
-          console.log(data);
-        });
+        // const response = nofreeParticipationapi(
+        // deal.apidata,
+        // dealdata.apidata.groupId,
+        // deal.urldealId,
+        // deal.bank,
+        // dealdata.lenderReturnType,
+        // deal
+
+        // );
+
+        // response.then((data) => {
+        //   toastrSuccess("deal participated successfully")
+
+        // });
       } else {
         alert("not correct");
         toastrError(
@@ -267,7 +241,6 @@ const Participatedeal = () => {
       }
     } else {
       toastrError("Please Select Transfer principal payment method");
->>>>>>> Stashed changes
     }
   };
 
@@ -592,29 +565,6 @@ const Participatedeal = () => {
                         </label>
                       </div>
 
-<<<<<<< Updated upstream
-                {deal.apidata.validityStatus ? <>  
-                {/*   nofree */}
-                
-                {console.log(deal.apidata.validityStatus)}
-                  <button
-                        className="btn btn-primary"
-                        type="submit"
-                        onClick={()=>freeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
-                      >
-                        Participate Now
-                      </button></> : <>
-                      {/* pay free */}
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        onClick={()=>nofreeParticipation(deal , deal.apidata.minimumPaticipationAmount , deal.apidata.lenderParticiptionLimit)}
-                      >
-                        Participate Now
-                      </button>
-                      </>}
-                  
-=======
                       {deal.apidata.validityStatus ? (
                         <>
                           {/*   nofree */}
@@ -624,7 +574,7 @@ const Participatedeal = () => {
                             className="btn btn-primary"
                             type="submit"
                             onClick={() =>
-                              nofreeParticipation(
+                              freeParticipation(
                                 deal,
                                 deal.apidata.minimumPaticipationAmount,
                                 deal.apidata.lenderParticiptionLimit
@@ -641,7 +591,7 @@ const Participatedeal = () => {
                             className="btn btn-primary"
                             type="submit"
                             onClick={() =>
-                              freeParticipation(
+                              nofreeParticipation(
                                 deal,
                                 deal.apidata.minimumPaticipationAmount,
                                 deal.apidata.lenderParticiptionLimit
@@ -652,7 +602,6 @@ const Participatedeal = () => {
                           </button>
                         </>
                       )}
->>>>>>> Stashed changes
                     </Card>
                   </>
                 ) : (
@@ -787,7 +736,7 @@ const Participatedeal = () => {
                               {deal.apidata.monthlyInterest} % P.M
                             </div>
                           ) : (
-                            <></>     
+                            <></>
                           )}
                           {deal.apidata.quartlyInterest != 0 ? (
                             <div>

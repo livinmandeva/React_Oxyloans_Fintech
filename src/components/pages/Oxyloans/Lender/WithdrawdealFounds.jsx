@@ -22,7 +22,7 @@ const WithdrawdealFounds = () => {
     });
   };
 
-  const handlewith = async () => {
+  const handlewith = async () => {   console.log(data)
     const response = handleapicall(data);
     response.then((data) => {
       if (data.request.status === 200) {

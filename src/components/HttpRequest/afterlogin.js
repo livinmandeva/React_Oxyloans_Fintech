@@ -1,10 +1,6 @@
 import axios from "axios";
-<<<<<<< Updated upstream
-import { hasUncaughtExceptionCaptureCallback } from "process";
-const userisIn = "local";
-=======
 const userisIn = "prod";
->>>>>>> Stashed changes
+
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -488,6 +484,7 @@ export const getcontactdeatils = async () => {
 };
 
 export const handleapicall = async (data) => {
+  console.log(data);
   const token = getToken();
   const userId = getUserId();
 
@@ -773,24 +770,19 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
-<<<<<<< Updated upstream
-  export  const chatapi=async()=>{
-    const token = getToken();
-    const userId = getUserId();
+export const chatapi = async () => {
+  const token = getToken();
+  const userId = getUserId();
 
-    const response = handleApiRequestAfterLoginService(
-      API_BASE_URL,
-      `${userId}/lendertotalInvestmentData`,
-      "GET",
-      token,
+  const response = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lendertotalInvestmentData`,
+    "GET",
+    token
+  );
+  return response;
+};
 
-    )
-    return response
-  }
-
-export const nofreeParticipationapi= async( apidata, groupId, dealId, accountType, lenderReturnType, deal)=>{
-
-=======
 export const nofreeParticipationapi = async (
   apidata,
   groupId,
@@ -799,7 +791,6 @@ export const nofreeParticipationapi = async (
   lenderReturnType,
   deal
 ) => {
->>>>>>> Stashed changes
   console.log(deal.extension);
   console.log(deal.apidata.lenderTotalParticipationAmount);
   console.log(deal.apidata.lenderRemainingPanLimit);

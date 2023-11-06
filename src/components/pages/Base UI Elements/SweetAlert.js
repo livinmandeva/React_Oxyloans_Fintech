@@ -443,7 +443,7 @@ export const downloadMytransactionAlert = () => {
 export const freeParticipationapialert = (apidata, groupId, urldealId, bank, lenderReturnType, deal) => {
   Swal.fire({
     title: "Please review the lending details!",
-    text: `Lending Amount: INR ${deal.participatedAmount}<br></br>Deal Name: ${deal.dealName}<br></br>RoI: ${deal.lenderPaticipatedResponseDto.rateOfInterest}%`,
+    text: `Lending Amount: INR ${deal.participatedAmount}<br></br>Deal Name: ${deal.dealName}<br></br>RoI: ${deal}%`,
     icon: "info",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
