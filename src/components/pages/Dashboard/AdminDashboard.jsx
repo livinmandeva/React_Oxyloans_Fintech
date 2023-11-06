@@ -245,11 +245,40 @@ const AdminDashboard = () => {
     },
   ]);
 
+   // const [initialData , setinitialData] = useState({
+  //   totalInvestment: 1,
+  //   participatedStudentDeals: 0,
+  //   participatedEscrowDeals: 0,
+  //   participatedNormalDeals: 1,
+  // });
+  const [initialData, setinitialData] = useState({
+    totalInvestment: 0, // Initialize with 0 or another appropriate default value
+    participatedStudentDeals: 0,
+    participatedEscrowDeals: 0,
+    participatedNormalDeals: 0,
+  })
+
+
+  // const response = chatapi();
+  // response.then((data)=>{
+  //   if(data){
+  //     SetDistributedColumns({
+     
+  //         ...DistributedColumns,
+  //         totalInvestment: data.data.totalInvestment, // Initialize with 0 or another appropriate default value
+  //   participatedStudentDeals: data.data.participatedStudentDeals,
+  //   participatedEscrowDeals: data.data.participatedEscrowDeals,
+  //   participatedNormalDeals: data.data.participatedNormalDeals,
+  //     })
+  //   }
+
+  // })
   const [DistributedColumns, SetDistributedColumns] = useState({
     series: [
       {
         name: "",
-        data: [300000, 200000, 50000, 50000],
+        // data: [300000, 200000, 50000, 50000],
+    data:[0, 0, 0, 0]
       },
     ],
     options: {
@@ -274,7 +303,7 @@ const AdminDashboard = () => {
         show: false,
       },
       xaxis: {
-        categories: [["Total Investment"], ["Student"], ["Escow"], ["others"]],
+        categories: [["Total Investment"], ["Student"], ["Escow"], ["normalDeals"]],
         labels: {
           style: {
             colors: ["#3D5EE1", "#70C4CF"],
@@ -284,6 +313,42 @@ const AdminDashboard = () => {
       },
     },
   });
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await chatapi(); // Assuming chatapi() is an async function that fetches data
+        if (response && response.data) {
+          const data = response.data;
+              //  const data1= response.data.data.totalInvestment +
+              //   response.data.data.participatedStudentDeals
+              //    +  response.data.data.participatedEscrowDeals 
+              //    + response.data.data.participatedNormalDeals
+              //    ;
+
+          SetDistributedColumns((prevColumns) => ({
+            ...prevColumns,
+            series: [
+              {
+                name: "",
+                data: [
+                  data.totalInvestment + data.participatedStudentDeals + data.participatedEscrowDeals + data.participatedNormalDeals,
+                  data.participatedStudentDeals,
+                  data.participatedEscrowDeals,
+                  data.participatedNormalDeals,
+                ],
+              },
+            ],
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); // Fetch data when the component mounts
+  }, []); // Empty dependency array ensures this effect runs once
 
   useEffect(() => {
     const response = chatapi();

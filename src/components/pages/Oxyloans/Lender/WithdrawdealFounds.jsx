@@ -13,7 +13,7 @@ const WithdrawdealFounds = () => {
     participatedamount: "",
     withdrawalamount: "",  
   });
-
+ 
   const handlechange = (event) => {
     const { name, value } = event.target;
     setdata({
@@ -22,7 +22,7 @@ const WithdrawdealFounds = () => {
     });
   };
 
-  const handlewith = async () => {   console.log(data)
+  const handlewith = () => {   console.log(data)
     const response = handleapicall(data);
     response.then((data) => {
       if (data.request.status === 200) {
