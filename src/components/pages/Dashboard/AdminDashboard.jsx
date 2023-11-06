@@ -10,12 +10,14 @@ import {
   chatapi,
   getDashboardInvestment,
   regular_Api,
+  getInterestEarnings,
 } from "../../HttpRequest/afterlogin";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../Pagination";
 import { fetchData } from "../../Redux/Slice";
 import { fetchDatadashboard } from "../../Redux/SliceDashboard";
 import { useSelector, useDispatch } from "react-redux";
+import useDealActivity from "../../CustomHooks/useDealActivity";
 
 import {
   awardicon01,
@@ -29,13 +31,14 @@ import Footer from "../../Footer/Footer";
 import {
   getuserMembershipValidity,
   getUserDetails,
+  getactivityApisData,
 } from "../../HttpRequest/afterlogin";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const getdashboardData = useSelector((data) => data.dashboard.fetchDashboard);
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
-
+  // const { activitydata } = useDealActivity();
   const [dashboarddata, setdashboarddata] = useState({
     profileData: "",
   });
@@ -43,6 +46,11 @@ const AdminDashboard = () => {
     dashboardData: "",
   });
 
+  const [dashboardDealActive, setdashboardDealActvity] = useState({
+    activedeal: 0,
+    closedDeal: 0,
+    disbursedDeal: 0,
+  });
   const [regular_runningDeal, setRegularRunningDeal] = useState({
     apidata: "",
     dealtype: "HAPPENING",
@@ -237,40 +245,11 @@ const AdminDashboard = () => {
     },
   ]);
 
-  // const [initialData , setinitialData] = useState({
-  //   totalInvestment: 1,
-  //   participatedStudentDeals: 0,
-  //   participatedEscrowDeals: 0,
-  //   participatedNormalDeals: 1,
-  // });
-  const [initialData, setinitialData] = useState({
-    totalInvestment: 0, // Initialize with 0 or another appropriate default value
-    participatedStudentDeals: 0,
-    participatedEscrowDeals: 0,
-    participatedNormalDeals: 0,
-  })
-
-
-  // const response = chatapi();
-  // response.then((data)=>{
-  //   if(data){
-  //     SetDistributedColumns({
-     
-  //         ...DistributedColumns,
-  //         totalInvestment: data.data.totalInvestment, // Initialize with 0 or another appropriate default value
-  //   participatedStudentDeals: data.data.participatedStudentDeals,
-  //   participatedEscrowDeals: data.data.participatedEscrowDeals,
-  //   participatedNormalDeals: data.data.participatedNormalDeals,
-  //     })
-  //   }
-
-  // })
   const [DistributedColumns, SetDistributedColumns] = useState({
     series: [
       {
         name: "",
-        // data: [300000, 200000, 50000, 50000],
-    data:[0, 0, 0, 0]
+        data: [300000, 200000, 50000, 50000],
       },
     ],
     options: {
@@ -295,7 +274,7 @@ const AdminDashboard = () => {
         show: false,
       },
       xaxis: {
-        categories: [["Total Investment"], ["Student"], ["Escow"], ["normalDeals"]],
+        categories: [["Total Investment"], ["Student"], ["Escow"], ["others"]],
         labels: {
           style: {
             colors: ["#3D5EE1", "#70C4CF"],
@@ -306,47 +285,22 @@ const AdminDashboard = () => {
     },
   });
 
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await chatapi(); // Assuming chatapi() is an async function that fetches data
-        if (response && response.data) {
-          const data = response.data;
-              //  const data1= response.data.data.totalInvestment +
-              //   response.data.data.participatedStudentDeals
-              //    +  response.data.data.participatedEscrowDeals 
-              //    + response.data.data.participatedNormalDeals
-              //    ;
-
-          SetDistributedColumns((prevColumns) => ({
-            ...prevColumns,
-            series: [
-              {
-                name: "",
-                data: [
-                  data.totalInvestment + data.participatedStudentDeals + data.participatedEscrowDeals + data.participatedNormalDeals,
-                  data.participatedStudentDeals,
-                  data.participatedEscrowDeals,
-                  data.participatedNormalDeals,
-                ],
-              },
-            ],
-          }));
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData(); // Fetch data when the component mounts
-  }, []); // Empty dependency array ensures this effect runs once
+    const response = chatapi();
+    response.then((data) => {
+      console.log(data);
+    });
+  }, []);
 
   const [treemap, Settreemap] = useState({
     series: [
       {
         name: "",
-        data: [2500000, 2000000, 4500000],
+        data: [
+          dashboardDealActive.activedeal,
+          dashboardDealActive.closedDeal,
+          dashboardDealActive.disbursedDeal,
+        ],
         color: "#664DC9",
       },
     ],
@@ -542,22 +496,28 @@ const AdminDashboard = () => {
 
   const earningProfitInterest = useState({});
 
-  const googledata = [
+  const [googledata, setgoogledate] = useState([
     [
       { type: "date", id: "Date" },
       { type: "number", id: "Won/Loss" },
     ],
+  ]);
 
-    [new Date(2023, 1, 4), 38177],
-    [new Date(2023, 1, 5), 38705],
-    [new Date(2023, 1, 12), 38210],
-    [new Date(2023, 1, 13), 38029],
-    [new Date(2023, 1, 19), 38823],
-    [new Date(2023, 1, 23), 38345],
-    [new Date(2023, 1, 24), 38436],
-    [new Date(2023, 2, 10), 38447],
-    [new Date(2023, 11, 10), 38447],
-  ];
+  // const googledata = [
+  //   [
+  //     { type: "date", id: "Date" },
+  //     { type: "number", id: "Won/Loss" },
+  //   ],
+  //   [new Date(2023, 1, 4), 38177],
+  //   [new Date(2023, 1, 5), 38705],
+  //   [new Date(2023, 1, 12), 38210],
+  //   [new Date(2023, 1, 13), 38029],
+  //   [new Date(2023, 1, 19), 38823],
+  //   [new Date(2023, 1, 23), 38345],
+  //   [new Date(2023, 1, 24), 38436],
+  //   [new Date(2023, 2, 10), 38447],
+  //   [new Date(2023, 11, 10), 38447],
+  // ];
 
   const columns = [
     {
@@ -645,6 +605,29 @@ const AdminDashboard = () => {
   }, []);
 
   useEffect(() => {
+    const activeres = getactivityApisData();
+    activeres.then((data) => {
+      if (data.request.status == 200) {
+        Settreemap({
+          ...treemap,
+          series: [
+            {
+              name: "",
+              data: [
+                data.data.activeDealsAmount,
+                data.data.closedDealsAmount,
+                data.data.disbursedDealsAmount,
+              ],
+              color: "#664DC9",
+            },
+          ],
+        });
+      }
+    });
+    return () => {};
+  }, []);
+
+  useEffect(() => {
     const response = getDashboardInvestment(
       dashboardInvestment.pageNo,
       dashboardInvestment.pageSize
@@ -662,6 +645,39 @@ const AdminDashboard = () => {
     });
     return () => {};
   }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
+
+  useEffect(() => {
+    const earningres = getInterestEarnings();
+    earningres.then((data) => {
+      if (data.request.status == 200) {
+        const newapidata = data.data.map((info, index) => {
+          let datesplit = info.date.split("-");
+          return [
+            new Date(
+              datesplit[0],
+              datesplit[1].includes("0")
+                ? datesplit[1].substring(1)
+                : datesplit[1],
+              datesplit[2]
+            ),
+            info.amount,
+          ];
+        });
+
+        setgoogledate([
+          [
+            { type: "date", id: "Date" },
+            { type: "number", id: "Won/Loss" },
+          ],
+          ...newapidata,
+        ]);
+        // googledata;    // [new Date(2023, 1, 4), 38177],
+      }
+    });
+    return () => {};
+  });
+
+  console.log(googledata);
 
   return (
     <>
@@ -886,6 +902,7 @@ const AdminDashboard = () => {
                       options={treemap.options}
                       series={treemap.series}
                       type="line"
+                      className="activechart"
                     />
                   </div>
                 </div>
@@ -1000,7 +1017,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div className="col-md-12 col-lg-12">
+              <div className="col-md-12 col-lg-12 d-none">
                 {/* Student Chart */}
                 <div className="card card-chart">
                   <div className="card-header">
@@ -1175,7 +1192,7 @@ const AdminDashboard = () => {
                                   </div>
                                 </div>
                               ))
-                        : null}
+                        : "No running deals are available."}
                     </div>
                   </div>
                 </div>

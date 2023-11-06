@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -1300,6 +1300,30 @@ export const getdatachequeLeaf = () => {
   const res = handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/CHEQUELEAF`,
+    "GET",
+    token
+  );
+  return res;
+};
+
+export const getactivityApisData = () => {
+  const token = getToken();
+  const userId = getUserId();
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/dealsStatistics`,
+    "GET",
+    token
+  );
+  return res;
+};
+
+export const getInterestEarnings = () => {
+  const token = getToken();
+  const userId = getUserId();
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderEarnngAndReturn`,
     "GET",
     token
   );
