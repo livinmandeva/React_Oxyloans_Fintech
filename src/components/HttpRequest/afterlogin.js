@@ -1334,3 +1334,15 @@ export const getInterestEarnings = () => {
   );
   return res;
 };
+
+export const getNoDealsParticipated = () => {
+  const token = getToken();
+  const userId = getUserId();
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/dealAndParticipationCount`,
+    "POST",
+    token
+  );
+  return res;
+};

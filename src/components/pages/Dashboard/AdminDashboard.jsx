@@ -11,6 +11,7 @@ import {
   getDashboardInvestment,
   regular_Api,
   getInterestEarnings,
+  getNoDealsParticipated,
 } from "../../HttpRequest/afterlogin";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../Pagination";
@@ -245,25 +246,23 @@ const AdminDashboard = () => {
     },
   ]);
 
-   // const [initialData , setinitialData] = useState({
-  //   totalInvestment: 1,
-  //   participatedStudentDeals: 0,
-  //   participatedEscrowDeals: 0,
-  //   participatedNormalDeals: 1,
-  // });
+  const [dealsProgressed, setdealsProgressed] = useState({
+    totalDeals: 0,
+    participatedDeals: 0,
+    percentage: 0,
+  });
   const [initialData, setinitialData] = useState({
     totalInvestment: 0, // Initialize with 0 or another appropriate default value
     participatedStudentDeals: 0,
     participatedEscrowDeals: 0,
     participatedNormalDeals: 0,
-  })
-
+  });
 
   // const response = chatapi();
   // response.then((data)=>{
   //   if(data){
   //     SetDistributedColumns({
-     
+
   //         ...DistributedColumns,
   //         totalInvestment: data.data.totalInvestment, // Initialize with 0 or another appropriate default value
   //   participatedStudentDeals: data.data.participatedStudentDeals,
@@ -278,7 +277,7 @@ const AdminDashboard = () => {
       {
         name: "",
         // data: [300000, 200000, 50000, 50000],
-    data:[0, 0, 0, 0]
+        data: [0, 0, 0, 0],
       },
     ],
     options: {
@@ -303,7 +302,12 @@ const AdminDashboard = () => {
         show: false,
       },
       xaxis: {
-        categories: [["Total Investment"], ["Student"], ["Escow"], ["normalDeals"]],
+        categories: [
+          ["Total Investment"],
+          ["Student"],
+          ["Escow"],
+          ["normalDeals"],
+        ],
         labels: {
           style: {
             colors: ["#3D5EE1", "#70C4CF"],
@@ -314,18 +318,17 @@ const AdminDashboard = () => {
     },
   });
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await chatapi(); // Assuming chatapi() is an async function that fetches data
         if (response && response.data) {
           const data = response.data;
-              //  const data1= response.data.data.totalInvestment +
-              //   response.data.data.participatedStudentDeals
-              //    +  response.data.data.participatedEscrowDeals 
-              //    + response.data.data.participatedNormalDeals
-              //    ;
+          //  const data1= response.data.data.totalInvestment +
+          //   response.data.data.participatedStudentDeals
+          //    +  response.data.data.participatedEscrowDeals
+          //    + response.data.data.participatedNormalDeals
+          //    ;
 
           SetDistributedColumns((prevColumns) => ({
             ...prevColumns,
@@ -333,7 +336,10 @@ const AdminDashboard = () => {
               {
                 name: "",
                 data: [
-                  data.totalInvestment + data.participatedStudentDeals + data.participatedEscrowDeals + data.participatedNormalDeals,
+                  data.totalInvestment +
+                    data.participatedStudentDeals +
+                    data.participatedEscrowDeals +
+                    data.participatedNormalDeals,
                   data.participatedStudentDeals,
                   data.participatedEscrowDeals,
                   data.participatedNormalDeals,
@@ -740,9 +746,26 @@ const AdminDashboard = () => {
       }
     });
     return () => {};
-  });
+  }, []);
 
-  console.log(googledata);
+  useEffect(() => {
+    const response = getNoDealsParticipated();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+        setdealsProgressed({
+          ...dealsProgressed,
+          totalDeals: data.data.dealCount,
+          participatedDeals: data.data.participationCount,
+          percentage:
+            (data.data.participationCount / data.data.dealCount) * 100,
+        });
+      }
+    });
+    return () => {};
+  }, []);
+
+  // dealsProgressed.participatedDeals  console.log(googledata);
 
   return (
     <>
@@ -916,7 +939,7 @@ const AdminDashboard = () => {
             <div className="row">
               <div className="col-md-12 col-lg-6">
                 {/* Revenue Chart */}
-                <div className="card card-chart">
+                <div className="card card-chart d-i">
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-6">
@@ -1015,7 +1038,7 @@ const AdminDashboard = () => {
                       <ProgressBar
                         width={270}
                         radius={75}
-                        progress={25}
+                        progress={dealsProgressed.percentage}
                         rotate={-180}
                         strokeWidth={10}
                         strokeColor="#70C4CF"
@@ -1030,7 +1053,9 @@ const AdminDashboard = () => {
                       >
                         <div className="circle-graph1" data-percent="50">
                           <div className="progress-less teacher-dashboard">
-                            <h4>50/200 </h4>
+                            <h4>
+                              {`${dealsProgressed.participatedDeals}/${dealsProgressed.totalDeals}`}
+                            </h4>
                             <p>Deals Progressed</p>
                           </div>
                         </div>
@@ -1189,6 +1214,74 @@ const AdminDashboard = () => {
                     <div className="activity-groups">
                       {regular_runningDeal.apidata
                         .listOfDealsInformationToLender &&
+                      regular_runningDeal.apidata.listOfDealsInformationToLender
+                        .length > 4
+                        ? regular_runningDeal.apidata.listOfDealsInformationToLender
+                            .slice(0, 4)
+                            .map((data, index) => (
+                              <div
+                                key={`listOfDealsInfo-${index}`}
+                                className="activity-awards"
+                              >
+                                <div className="award-boxs">
+                                  <img src={awardicon01} alt="Award" />
+                                </div>
+                                <div className="award-list-outs">
+                                  <h4> {data.dealName}</h4>
+                                  <h5>
+                                    Min: {data.minimumAmountInDeal}, Max:
+                                    {data.paticipationLimitToLenders}, RoI:
+                                    {data.rateOfInterest}%
+                                  </h5>
+                                </div>
+                                <div className="award-time-list">
+                                  <Link
+                                    to={`participatedeal?dealId=${data.dealId}`}
+                                  >
+                                    <span>Participate</span>
+                                  </Link>
+                                </div>
+                              </div>
+                            ))
+                        : regular_runningDeal.apidataESCROW &&
+                          regular_runningDeal.apidataESCROW
+                            .slice(0, 4)
+                            .map((data, index) => (
+                              <div
+                                key={`listOfDealsInfo-${index}`}
+                                className="activity-awards"
+                              >
+                                <div className="award-boxs">
+                                  <img src={awardicon01} alt="Award" />
+                                </div>
+                                <div className="award-list-outs">
+                                  <h4
+                                    style={{
+                                      fontWeight: "400",
+                                      inlineSize: "18rem",
+                                    }}
+                                    className="textwrap"
+                                  >
+                                    {data.dealName}
+                                  </h4>
+                                  <h5>
+                                    Min: {data.minimumPaticipationAmount}, Max:
+                                    {data.lenderPaticipationAmount}, RoI:
+                                    {data.rateOfInterest}%
+                                  </h5>
+                                </div>
+                                <div className="award-time-list">
+                                  <Link
+                                    to={`participatedeal?dealId=${data.dealId}`}
+                                  >
+                                    <span>Participate</span>
+                                  </Link>
+                                </div>
+                              </div>
+                            ))}
+
+                      {/* {regular_runningDeal.apidata
+                        .listOfDealsInformationToLender &&
                       Array.isArray(
                         regular_runningDeal.apidata
                           .listOfDealsInformationToLender
@@ -1257,7 +1350,7 @@ const AdminDashboard = () => {
                                   </div>
                                 </div>
                               ))
-                        : "No running deals are available."}
+                        : "No running deals are available."} */}
                     </div>
                   </div>
                 </div>

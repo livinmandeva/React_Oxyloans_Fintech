@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import './InvoiceGrid.css'
+import "./InvoiceGrid.css";
 import { Table, Pagination } from "antd";
 
 const RegularPersonalDeal = () => {
@@ -14,8 +14,6 @@ const RegularPersonalDeal = () => {
     pageno: 1,
   });
 
-
-  
   const dataSource = [];
 
   personal_runningDeal.apidata != ""
@@ -79,7 +77,6 @@ const RegularPersonalDeal = () => {
         personal_runningDeal.pageno
       );
 
-      
       response.then((data) => {
         setRegularRunningDeal({
           ...personal_runningDeal,
@@ -288,4 +285,3 @@ const RegularPersonalDeal = () => {
 };
 
 export default RegularPersonalDeal;
-y
