@@ -22,7 +22,7 @@ const RegularEscrowDeals = () => {
         loanamount: escrow_runningDeal.apidata.dealAmount,
         availablelimit: escrow_runningDeal.apidata.remainingAmountInDeal,
         tenureinmonths: escrow_runningDeal.apidata.duration,
-        funding: escrow_runningDeal.apidata.fundStartDate,
+        funding: escrow_runningDeal.apidata.fundStartDate,   
         fundingdate: escrow_runningDeal.apidata.fundEndDate,
         minimumparticipation:
           escrow_runningDeal.apidata.minimumPaticipationAmount,
