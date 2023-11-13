@@ -3,37 +3,23 @@ import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
+import'./InvoiceGrid.css'
 import { Table, Pagination } from "antd";
 
 const RegularEscrowDeals = () => {
   const [escrow_runningDeal, setRegularRunningDeal] = useState({
     apidata: "",
     dealtype: "HAPPENING",
-    paginationCount: 1,    
+    paginationCount: 1,
     pageno: 1,
+    escrowdealapi:[]
   });
 
-  const dataSource = [];
 
-  escrow_runningDeal.apidata != ""
-    ? dataSource.push({
-        key: Math.random(),
-        name: escrow_runningDeal.apidata.dealName,
-        loanamount: escrow_runningDeal.apidata.dealAmount,
-        availablelimit: escrow_runningDeal.apidata.remainingAmountInDeal,
-        tenureinmonths: escrow_runningDeal.apidata.duration,
-        funding: escrow_runningDeal.apidata.fundStartDate,   
-        fundingdate: escrow_runningDeal.apidata.fundEndDate,
-        minimumparticipation:
-          escrow_runningDeal.apidata.minimumPaticipationAmount,
-        maximumparticipation:
-          escrow_runningDeal.apidata.lenderParticiptionLimit,
-      })
-    : null;
   const columns = [
     {
       title: "Deal Info",
-      dataIndex: "Deal Info",
+      dataIndex: "deal",
       key: "deal",
     },
     {
@@ -77,6 +63,8 @@ const RegularEscrowDeals = () => {
       );
 
       response.then((data) => {
+
+        console.log(data.data)
         setRegularRunningDeal({
           ...escrow_runningDeal,
           apidata: data.data,
@@ -87,6 +75,71 @@ const RegularEscrowDeals = () => {
 
     handleRegular();
   }, [escrow_runningDeal.pageno]);
+
+  const dataSource = [];
+
+
+  // useEffect(() => {
+  //   if (escrow_runningDeal.apidata !== "") {
+  //     const escrodata = escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto;
+  
+  //     if (escrodata) {
+  //       const newData = {
+  //         key: Math.random(),
+  //         name: escrodata.dealName || 'Default Name',
+  //         loanamount: escrodata.dealAmount || 'Default Amount',
+  //         availablelimit: escrodata.remainingAmountToPaticipateInDeal || 'Default Limit',
+  //         tenureinmonths: escrodata.duration || 'Default Duration',
+  //         funding: escrodata.fundsAcceptanceStartDate || 'Default Funding',
+  //         fundingdate: escrodata.fundsAcceptanceEndDate || 'Default Funding Date',
+  //         minimumparticipation: escrodata.minimumPaticipationAmount || 'Default Minimum Participation',
+  //         maximumparticipation: escrodata.paticipationLimitToLenders || 'Default Maximum Participation',
+  //       };
+  
+  //       setRegularRunningDeal({
+  //         ...escrow_runningDeal,
+  //         escrowdealapi: escrodata,
+  //       });
+  //       console.log(escrow_runningDeal.escrowdealapi);
+  //       console.log(newData);
+  //     }
+  //   } else {
+  //     // Handle the case where escrow_runningDeal.apidata is empty
+  //   }
+  // }, [escrow_runningDeal.apidata]);
+  
+  useEffect(() => {
+    if (escrow_runningDeal.apidata !== "") {
+      const escrodata = escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto;
+  
+      if (escrodata && escrodata.length > 0) {
+        const newData = escrodata.map((deal) => ({
+          key: Math.random(),
+          deal: deal.dealName || 'Default Name',
+          loanamount: deal.dealAmount || 'Default Amount',
+          availablelimit: deal.remainingAmountToPaticipateInDeal || 'Default Limit',
+          tenureinmonths: deal.duration || 'Default Duration',
+          funding: deal.fundsAcceptanceStartDate || 'Default Funding',
+          fundingdate: deal.fundsAcceptanceEndDate || 'Default Funding Date',
+          minimumparticipation: deal.minimumPaticipationAmount || 'Default Minimum Participation',
+          maximumparticipation: deal.paticipationLimitToLenders || 'Default Maximum Participation',
+        }));
+  
+        setRegularRunningDeal({
+          ...escrow_runningDeal,
+          escrowdealapi: newData,
+        });
+  
+        console.log(escrow_runningDeal.escrowdealapi);
+        console.log(newData);
+      }
+    } else {
+      // Handle the case where escrow_runningDeal.apidata is empty
+    }
+  }, [escrow_runningDeal.apidata]);
+  
+
+
 
   return (
     <>
@@ -267,12 +320,13 @@ const RegularEscrowDeals = () => {
             {escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
                 <div className="card">
+                  {console.log(escrow_runningDeal.escrowdealapi)}
                   <Table
                     columns={columns}
                     dataSource={
                       escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto
                         .length !== 0
-                        ? dataSource
+                        ? escrow_runningDeal.escrowdealapi
                         : []
                     }
                     pagination={false}
