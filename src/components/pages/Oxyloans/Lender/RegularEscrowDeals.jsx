@@ -9,7 +9,7 @@ const RegularEscrowDeals = () => {
   const [escrow_runningDeal, setRegularRunningDeal] = useState({
     apidata: "",
     dealtype: "HAPPENING",
-    paginationCount: 1,
+    paginationCount: 1,    
     pageno: 1,
   });
 
