@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   let inputRef = useRef();
@@ -27,7 +27,7 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [mobileError, setMobileError] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const history = useNavigate();
   const [passworderror, setPassworderror] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [dataIpv6, setdataIpv6] = useState({});
@@ -115,7 +115,7 @@ const Login = () => {
           localStorage.setItem("accessToken", accessTokenFromHeader);
 
           setAccessToken(accessTokenFromHeader);
-          history.push("/admindashboard");
+          history("/admindashboard");
         })
         .catch((error) => {
           setPassworderror(error.response.data.errorMessage);

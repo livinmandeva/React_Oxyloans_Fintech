@@ -3,9 +3,9 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { login, registerImage } from "../../imagepath";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
-import { useHistory } from "react-router-dom";
+
 import { Admlog, userloginSection } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ import { getProfile } from "../../Redux/Slice";
 
 const Admlogin = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
   const [userLogInInfo, setUserLoginInfo] = useState({
     email: "",
     moblie: "",
@@ -70,7 +70,7 @@ const Admlogin = () => {
     if (retriveresponse.request.status == 200) {
       console.log(retriveresponse);
       toastrSuccess("Login Suceess!");
-      history.push("/dashboard");
+      history("/dashboard");
     } else {
       toastrWarning(retriveresponse.response.data.errorMessage);
     }

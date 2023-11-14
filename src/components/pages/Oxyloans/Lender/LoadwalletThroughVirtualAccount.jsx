@@ -91,7 +91,7 @@ const LoadwalletThroughVirtualAccount = () => {
                               If you have any queries, please reach out to us by
                               :
                               <a className="virtualList" href="#">
-                                clicking here.
+                                Click Here
                               </a>
                             </li>
                           </ul>

@@ -1,7 +1,5 @@
 import React, { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
 import Admlogin from "./components/pages/Authentication/Admlogin";
 
@@ -168,97 +166,99 @@ const MywithdrawalHistory = React.lazy(() =>
 const appcontainer = () => {
   return (
     <Suspense>
-      <Router Router basename="/">
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/forgotpassword" component={ForgotPassword} />
-          <Route path="/error404" component={Error404} />
-          <Route path="/dashboard" component={AdminDashboard} />
-          <Route path="/loadwaletThroughQr" component={LoadwaletThroughQr} />
-          <Route path="/lender_register" component={LenderRegister} />
-          <Route path="/borrower_register" component={BorrowerRegister} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/error404" element={<Error404 />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/loadwaletThroughQr" element={<LoadwaletThroughQr />} />
+          <Route path="/lender_register" element={<LenderRegister />} />
+          <Route path="/borrower_register" element={<BorrowerRegister />} />
           <Route
             path="/register_active_proceed"
-            component={Register_active_proceed}
+            element={<Register_active_proceed />}
           />
-          <Route path="/profile" component={Profile} />
-          <Route path="/forgotpassword1" component={ForgotPassword3} />
-          <Route path="/partnerRegister" component={PartnerRegister} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/forgotpassword1" element={<ForgotPassword3 />} />
+          <Route path="/partnerRegister" element={<PartnerRegister />} />
           <Route
             path="/loadwalletThroughVirtualAccount"
-            component={LoadwalletThroughVirtualAccount}
+            element={<LoadwalletThroughVirtualAccount />}
           />
           <Route
             path="/withdrawdealfromwallet"
-            component={Withdrawdealfromwallet}
+            element={<Withdrawdealfromwallet />}
           />
-                    <Route
-            path="/admlogin"
-            component={Admlogin}
-          />
+          <Route path="/admlogin" element={<Admlogin />} />
           <Route
             path="/withdrawdealfromDeal"
-            component={WithdrawdealfromDeal}
+            element={<WithdrawdealfromDeal />}
           />
           <Route
             path="/transferWalletToWallet"
-            component={TransferWalletToWallet}
+            element={<TransferWalletToWallet />}
           />
-          <Route path="/mywithdrawalHistory" component={MywithdrawalHistory} />
-          <Route path="/writetous" component={Writetous} />
-          <Route path="/viewTicketHistory" component={ViewTicketHistory} />
-
-          <Route path="/emicalculator" component={Emicalculator} />
-          <Route path="/configautoInvest" component={ConfigautoInvest} />
-          <Route path="/viewAutoHistory" component={ViewAutoHistory} />
-          <Route path="/participatedeal" component={Participatedeal} />
-          <Route path="/regularRunningDeal" component={RegularRunningDeal} />
-          <Route path="/regularEscrowDeals" component={RegularEscrowDeals} />
-          <Route path="/regularPersonalDeal" component={RegularPersonalDeal} />
-          <Route path="/myRunningDelas" component={MyRunningDelas} />
-          <Route path="/myclosedDeals" component={MyclosedDeals} />
-          <Route path="/myholdamount" component={Myholdamount} />
+          <Route
+            path="/mywithdrawalHistory"
+            element={<MywithdrawalHistory />}
+          />
+          <Route path="/writetous" element={<Writetous />} />
+          <Route path="/viewTicketHistory" element={<ViewTicketHistory />} />
+          <Route path="/emicalculator" element={<Emicalculator />} />
+          <Route path="/configautoInvest" element={<ConfigautoInvest />} />
+          <Route path="/viewAutoHistory" element={<ViewAutoHistory />} />
+          <Route path="/participatedeal" element={<Participatedeal />} />
+          <Route path="/regularRunningDeal" element={<RegularRunningDeal />} />
+          <Route path="/regularEscrowDeals" element={<RegularEscrowDeals />} />
+          <Route
+            path="/regularPersonalDeal"
+            element={<RegularPersonalDeal />}
+          />
+          <Route path="/myRunningDelas" element={<MyRunningDelas />} />
+          <Route path="/myclosedDeals" element={<MyclosedDeals />} />
+          <Route path="/myholdamount" element={<Myholdamount />} />
           <Route
             path="/mypartiallClosedDeal"
-            component={MypartiallClosedDeal}
+            element={<MypartiallClosedDeal />}
           />
-          <Route path="/ticketHistory" component={TicketHistory} />
-          <Route path="/myinterestEarning" component={MyinterestEarning} />
-          <Route path="/myhighvalueDeals" component={MyhighvalueDeals} />
-          <Route path="/earningCertificate" component={EarningCertificate} />
-          <Route path="/myloansStatement" component={MyloansStatement} />
-          <Route path="/referaFriend" component={ReferaFriend} />
-          <Route path="/myreferalStatus" component={MyreferalStatus} />
-          <Route path="/mycontacts" component={Mycontacts} />
+          <Route path="/ticketHistory" element={<TicketHistory />} />
+          <Route path="/myinterestEarning" element={<MyinterestEarning />} />
+          <Route path="/myhighvalueDeals" element={<MyhighvalueDeals />} />
+          <Route path="/earningCertificate" element={<EarningCertificate />} />
+          <Route path="/myloansStatement" element={<MyloansStatement />} />
+          <Route path="/referaFriend" element={<ReferaFriend />} />
+          <Route path="/myreferalStatus" element={<MyreferalStatus />} />
+          <Route path="/mycontacts" element={<Mycontacts />} />
           <Route
             path="/walletToWalletHistory"
-            component={WalletToWalletHistory}
+            element={<WalletToWalletHistory />}
           />
-          <Route path="/myEarnings" component={MyEarnings} />
-          <Route path="/loanListings" component={LoanListings} />
-          <Route path="/WalletToWallet" component={WalletToWallet} />
+          <Route path="/myEarnings" element={<MyEarnings />} />
+          <Route path="/loanListings" element={<LoanListings />} />
+          <Route path="/WalletToWallet" element={<WalletToWallet />} />
           <Route
             path="/withdrawalFromWallet"
-            component={WithdrawalFromWallet}
+            element={<WithdrawalFromWallet />}
           />
-          <Route path="/withdrawdealFounds" component={WithdrawdealFounds} />
-          <Route path="/membershipHistory" component={MembershipHistory} />
-          <Route path="/mytransactions" component={Mytransactions} />
-          <Route path="/autoInvestHistory" component={AutoInvestHistory} />
+          <Route path="/withdrawdealFounds" element={<WithdrawdealFounds />} />
+          <Route path="/membershipHistory" element={<MembershipHistory />} />
+          <Route path="/mytransactions" element={<Mytransactions />} />
+          <Route path="/autoInvestHistory" element={<AutoInvestHistory />} />
           <Route
             path="/dashboardTransactions"
-            component={DashboardTransactions}
+            element={<DashboardTransactions />}
           />
           <Route
             path="/loadwalletThroughVirtualAccount"
-            component={LoadwalletThroughVirtualAccount}
+            element={<LoadwalletThroughVirtualAccount />}
           />
-          <Route path="/whatapplogin" component={Whatapplog} />
+          <Route path="/whatapplogin" element={<Whatapplog />} />
           {/* 
         oxyroutes End */}
-        </Switch>
-      </Router>
+        </Routes>
+      </BrowserRouter>
     </Suspense>
   );
 };

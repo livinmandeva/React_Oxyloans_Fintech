@@ -4,15 +4,14 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import * as api from "./api";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { login } from "../../imagepath";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate, useParams } from "react-router-dom";
 import { error } from "jquery";
 
 const Register_active_proceed = () => {
+  const history = useNavigate();
   let inputRef = useRef();
   const params = useParams();
   const showIcon = () => (
@@ -53,7 +52,7 @@ const Register_active_proceed = () => {
           date1
         );
         setResponse(loginResponse);
-        history.push("/admindashboard");
+        history("/admindashboard");
         setError(null);
       } catch (error) {
         console.error("Error:", error.response.data.errorMessage);

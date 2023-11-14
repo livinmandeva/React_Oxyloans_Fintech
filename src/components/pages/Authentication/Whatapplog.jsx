@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import OtpInput from "./OtpInput";
 import {
   sendwhatappotp,
@@ -44,7 +44,7 @@ const Whatapplog = () => {
     otpdata: "",
   });
 
-  const history = useHistory();
+  const history = useNavigate();
   const handleipv6 = () => {
     axios({
       method: "get",
@@ -91,7 +91,7 @@ const Whatapplog = () => {
         sessionStorage.setItem("userId", data.data.id);
         sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
         if (accessToken != null) {
-          history.push("/dashboard");
+          history("/dashboard");
         }
       } else if (data.response.status === 400) {
         const errorMessage = data.response.data.errorMessage;
@@ -109,32 +109,30 @@ const Whatapplog = () => {
 
     // Set handlewhatapp to true initially
 
-
-    response
-      .then((data) => {
-        console.log(data);
-        if (data.request.status === 200) {
-          alert("")
-          console.log(data.data);
-          sethandlewhatapp(false);
-          setwhatappotp({
-            ...whatappotp,
-            successMessage: "Otp Sent successfully",
-            otpdata: data.data,
-          });
-        } else {
-            setwhatappotp({
-              ...whatappotp,
-              errorMessage:data.response.data.errorMessage
-            })
-            toastrError(data.response.data.errorMessage)
-          console.log(data.response.data.errorMessage);
-        }
-      })
-      // .finally(() => {
-      //   // Set handlewhatapp to false when the promise is resolved (success or error)
-      //   sethandlewhatapp(false);
-      // });
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status === 200) {
+        alert("");
+        console.log(data.data);
+        sethandlewhatapp(false);
+        setwhatappotp({
+          ...whatappotp,
+          successMessage: "Otp Sent successfully",
+          otpdata: data.data,
+        });
+      } else {
+        setwhatappotp({
+          ...whatappotp,
+          errorMessage: data.response.data.errorMessage,
+        });
+        toastrError(data.response.data.errorMessage);
+        console.log(data.response.data.errorMessage);
+      }
+    });
+    // .finally(() => {
+    //   // Set handlewhatapp to false when the promise is resolved (success or error)
+    //   sethandlewhatapp(false);
+    // });
   };
 
   return (

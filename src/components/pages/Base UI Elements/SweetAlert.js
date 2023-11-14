@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   getNewSessionTime,
@@ -95,7 +95,7 @@ export const WarningAlert = (errorMessage, redirectTo) => {
     text: errorMessage,
     icon: "warning",
     showDenyButton: true,
-    confirmButtonText: "Login",
+    confirmButtonText: "Sign Out",
     denyButtonText: "Contine",
     denyButtonColor: "#5c9b45",
   }).then((result) => {
@@ -109,44 +109,6 @@ export const WarningAlert = (errorMessage, redirectTo) => {
   });
 };
 
-
-// export const membership = (warningType, errormessage) => {
-//   Swal.fire({
-//     title: 'Your validity has expired!',
-//     input: 'radio',
-//     inputOptions: {
-//       'option1': 'One Month',
-//       'option2': 'Quarterly',
-//       'option3': 'Half-Yearly',
-//       'option4': 'One Year',
-//       'option5': 'Five Years',
-//       'option6': 'Ten Years',
-//       'option7': 'life Time',
-//     },
-//     inputValidator: (result) => {
-//       if (!result) {
-//         return 'You must select an option';
-//       }
-//     },
-//     text: warningType, // Display the warning message here
-//     icon: 'error',
-//     confirmButtonText: 'OK',
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       Swal.fire({
-//         title: 'You selected:',
-//         text: result.value,
-//         icon: 'info',
-//         inputOptions:`${inputOptions}`,
-//         confirmButtonText: 'OK',
-//       });
-//     }
-//   });
-// };
-
-
-
-// Define the tenure object
 const tenure = {
   monthly: 1000,
   quarterly: 2900,
@@ -160,8 +122,8 @@ const tenure = {
 // Define the membership function
 export const membership = () => {
   Swal.fire({
-    title: 'Select Membership Duration',
-    width: '600px',
+    title: "Select Membership Duration",
+    width: "600px",
     html: `
       <style>
         .radiobutton {
@@ -176,21 +138,21 @@ export const membership = () => {
         <!-- Add the rest of the radio buttons and labels here -->
       </div>`,
     showCancelButton: true,
-    confirmButtonText: 'Pay & Participate',
-    cancelButtonText: 'Cancel',
-    input: 'radio',
+    confirmButtonText: "Pay & Participate",
+    cancelButtonText: "Cancel",
+    input: "radio",
     inputOptions: {
-      'monthly': 'One Month',
-      'quarterly': 'Quarterly',
-      'halfyearly': 'Half-Yearly',
-      'peryear': 'One Year',
-      'lifetime': 'Five Years',
-      'fiveyears': 'Ten Years',
-      'tenyears': 'Life Time',
+      monthly: "One Month",
+      quarterly: "Quarterly",
+      halfyearly: "Half-Yearly",
+      peryear: "One Year",
+      lifetime: "Five Years",
+      fiveyears: "Ten Years",
+      tenyears: "Life Time",
     },
     inputValidator: (result) => {
       if (!result) {
-        return 'You must select an option';
+        return "You must select an option";
       }
     },
   }).then((result) => {
@@ -199,18 +161,15 @@ export const membership = () => {
       const amount = tenure[selectedOption];
       const calculate = (amount * 118) / 100;
       Swal.fire({
-        title: 'pay amount',
+        title: "pay amount",
         text: selectedOption,
         html: `<br>Your membership amount is  ${calculate}`,
-        icon: 'info',
-        confirmButtonText: 'Pay Amount',
+        icon: "info",
+        confirmButtonText: "Pay Amount",
       });
     }
   });
 };
-
-
-
 
 export const PrincipalTransfer = (warningType, errormessage) => {
   Swal.fire("Principal Payout!", errormessage, warningType);
@@ -227,7 +186,7 @@ export const Error = () => {
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
   });
-};       
+};
 export const autoClose = () => {
   var t;
   Swal.fire({
@@ -308,7 +267,7 @@ export const confirmText = () => {
         confirmButtonClass: "btn btn-success",
       });
   });
-};        
+};
 export const confirmColor = () => {
   Swal.fire({
     title: "Are you sure?",
@@ -439,8 +398,14 @@ export const downloadMytransactionAlert = () => {
   });
 };
 
-
-export const freeParticipationapialert = (apidata, groupId, urldealId, bank, lenderReturnType, deal) => {
+export const freeParticipationapialert = (
+  apidata,
+  groupId,
+  urldealId,
+  bank,
+  lenderReturnType,
+  deal
+) => {
   Swal.fire({
     title: "Please review the lending details!",
     text: `Lending Amount: INR ${deal.participatedAmount}<br></br>Deal Name: ${deal.dealName}<br></br>RoI: ${deal}%`,
@@ -451,21 +416,29 @@ export const freeParticipationapialert = (apidata, groupId, urldealId, bank, len
     confirmButtonText: "Yes!",
   }).then((result) => {
     if (result.isConfirmed) {
-      const response = nofreeParticipationapi(apidata, groupId, urldealId, bank, lenderReturnType, deal);
+      const response = nofreeParticipationapi(
+        apidata,
+        groupId,
+        urldealId,
+        bank,
+        lenderReturnType,
+        deal
+      );
       response.then((data) => {
         console.log(data);
         if (data.request.status == 200) {
           toastrSuccess("Deal participated successfully"); // Make sure toastrSuccess is defined
         } else if (data.response.data.errorCode != "200") {
-          Swal.fire("Warning!", `${data.response.data.errorMessage}`, "warning");
+          Swal.fire(
+            "Warning!",
+            `${data.response.data.errorMessage}`,
+            "warning"
+          );
         }
       });
     }
   });
 };
-
-
-
 
 export const cancelwithdrawalRequestInformation = (fromrequest, id) => {
   Swal.fire({

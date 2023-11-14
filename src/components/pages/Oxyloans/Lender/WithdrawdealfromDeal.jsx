@@ -79,7 +79,7 @@ const WithdrawdealfromDeal = () => {
         RequestedAmount: data.requestedAmount,
         action: (
           <Link to={nextPageUrl}>
-            <button type="submit" className="btn w-100 btn-primary btn-xs">
+            <button type="submit" className="btn w-100 btn-outline-success">
               <i class="fa-solid fa-business-time"></i> Withdraw
             </button>
           </Link>
@@ -160,7 +160,7 @@ const WithdrawdealfromDeal = () => {
                   <div className="card-header">
                     <div className="row col-12">
                       <button
-                        className="btn btn-xs btn-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2 my-md-1"
+                        className="btn  btn-outline-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2 my-md-1"
                         onClick={handleWithdrawFromEscrow}
                       >
                         <i class="fa-solid fa-briefcase"></i> Withdraw From
@@ -169,7 +169,7 @@ const WithdrawdealfromDeal = () => {
 
                       <button
                         onClick={handleWithdrawFromNormal}
-                        className="btn btn-xs btn-primary col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"
+                        className="btn  btn-outline-info col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"
                       >
                         <i class="fa-solid fa-briefcase"></i> Withdraw from a
                         Normal deal

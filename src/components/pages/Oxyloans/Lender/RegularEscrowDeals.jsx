@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import'./InvoiceGrid.css'
+import "./InvoiceGrid.css";
 import { Table, Pagination } from "antd";
 
 const RegularEscrowDeals = () => {
@@ -12,9 +12,8 @@ const RegularEscrowDeals = () => {
     dealtype: "HAPPENING",
     paginationCount: 1,
     pageno: 1,
-    escrowdealapi:[]
+    escrowdealapi: [],
   });
-
 
   const columns = [
     {
@@ -63,8 +62,7 @@ const RegularEscrowDeals = () => {
       );
 
       response.then((data) => {
-
-        console.log(data.data)
+        console.log(data.data);
         setRegularRunningDeal({
           ...escrow_runningDeal,
           apidata: data.data,
@@ -78,58 +76,32 @@ const RegularEscrowDeals = () => {
 
   const dataSource = [];
 
-
-  // useEffect(() => {
-  //   if (escrow_runningDeal.apidata !== "") {
-  //     const escrodata = escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto;
-  
-  //     if (escrodata) {
-  //       const newData = {
-  //         key: Math.random(),
-  //         name: escrodata.dealName || 'Default Name',
-  //         loanamount: escrodata.dealAmount || 'Default Amount',
-  //         availablelimit: escrodata.remainingAmountToPaticipateInDeal || 'Default Limit',
-  //         tenureinmonths: escrodata.duration || 'Default Duration',
-  //         funding: escrodata.fundsAcceptanceStartDate || 'Default Funding',
-  //         fundingdate: escrodata.fundsAcceptanceEndDate || 'Default Funding Date',
-  //         minimumparticipation: escrodata.minimumPaticipationAmount || 'Default Minimum Participation',
-  //         maximumparticipation: escrodata.paticipationLimitToLenders || 'Default Maximum Participation',
-  //       };
-  
-  //       setRegularRunningDeal({
-  //         ...escrow_runningDeal,
-  //         escrowdealapi: escrodata,
-  //       });
-  //       console.log(escrow_runningDeal.escrowdealapi);
-  //       console.log(newData);
-  //     }
-  //   } else {
-  //     // Handle the case where escrow_runningDeal.apidata is empty
-  //   }
-  // }, [escrow_runningDeal.apidata]);
-  
   useEffect(() => {
     if (escrow_runningDeal.apidata !== "") {
-      const escrodata = escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto;
-  
+      const escrodata =
+        escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto;
+
       if (escrodata && escrodata.length > 0) {
         const newData = escrodata.map((deal) => ({
           key: Math.random(),
-          deal: deal.dealName || 'Default Name',
-          loanamount: deal.dealAmount || 'Default Amount',
-          availablelimit: deal.remainingAmountToPaticipateInDeal || 'Default Limit',
-          tenureinmonths: deal.duration || 'Default Duration',
-          funding: deal.fundsAcceptanceStartDate || 'Default Funding',
-          fundingdate: deal.fundsAcceptanceEndDate || 'Default Funding Date',
-          minimumparticipation: deal.minimumPaticipationAmount || 'Default Minimum Participation',
-          maximumparticipation: deal.paticipationLimitToLenders || 'Default Maximum Participation',
+          deal: deal.dealName || "Default Name",
+          loanamount: deal.dealAmount || "Default Amount",
+          availablelimit:
+            deal.remainingAmountToPaticipateInDeal || "Default Limit",
+          tenureinmonths: deal.duration || "Default Duration",
+          funding: deal.fundsAcceptanceStartDate || "Default Funding",
+          fundingdate: deal.fundsAcceptanceEndDate || "Default Funding Date",
+          minimumparticipation:
+            deal.minimumPaticipationAmount || "Default Minimum Participation",
+          maximumparticipation:
+            deal.paticipationLimitToLenders || "Default Maximum Participation",
         }));
-  
+
         setRegularRunningDeal({
           ...escrow_runningDeal,
           escrowdealapi: newData,
         });
-  
+
         console.log(escrow_runningDeal.escrowdealapi);
         console.log(newData);
       }
@@ -137,9 +109,6 @@ const RegularEscrowDeals = () => {
       // Handle the case where escrow_runningDeal.apidata is empty
     }
   }, [escrow_runningDeal.apidata]);
-  
-
-
 
   return (
     <>

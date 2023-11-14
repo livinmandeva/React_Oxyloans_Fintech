@@ -38,7 +38,7 @@ const Register = () => {
                     Enter details to create your account
                   </p>
                   {/* Form */}
-                  <form action="./login">
+                  <form action="#">
                     <div className="form-group">
                       <label>
                         Username <span className="login-danger">*</span>
@@ -88,7 +88,7 @@ const Register = () => {
                       </span>
                     </div>
                     <div className=" dont-have">
-                      Already Registered? <Link to="/login">Login</Link>
+                      Already Registered? <Link to="/">Login</Link>
                     </div>
                     <div className="form-group mb-0">
                       <button

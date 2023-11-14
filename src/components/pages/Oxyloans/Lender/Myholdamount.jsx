@@ -38,12 +38,12 @@ const Myholdamount = () => {
           datasource.push({
             key: Math.random(),
             Extraamount: data.holdAmount,
-            Extraamountpaiddetails: comments,
+            Extraamountpaiddetails: data.comments,
             Deductiondetails: data.comments,
             Status: data.status,
           });
         })
-      : "";
+      : [];
   }
 
   const columns = [

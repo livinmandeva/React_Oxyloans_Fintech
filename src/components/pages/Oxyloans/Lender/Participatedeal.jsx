@@ -10,7 +10,7 @@ import {
   nofreeParticipationapi,
 } from "../../../HttpRequest/afterlogin";
 import { Card, Switch, Table } from "antd";
-import { useHistory } from "react-router-dom";
+// import { useNavigate  } from "react-router-dom";
 import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
 import {
   freeParticipationapialert,
@@ -19,7 +19,7 @@ import {
 import Swal from "sweetalert2";
 
 const Participatedeal = () => {
-  const history = useHistory();
+  // const history = useNavigate();
 
   const [deal, setDeal] = useState({
     apidata: "",
@@ -125,7 +125,7 @@ const Participatedeal = () => {
     );
     response.then((data) => {
       console.log(data);
-      history.push("https://test.cashfree.com/billpay/checkout/post/submit");
+      history("https://test.cashfree.com/billpay/checkout/post/submit");
     });
   };
 

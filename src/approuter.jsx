@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const AppRouter = () => {
   return (
-    <Router basename="/">
-      <Route render={(props) => <AppContainer {...props} />} />
-    </Router>
+    <AppContainer />
+    // <Router>
+    //   <Route render={(props) => <AppContainer {...props} />} />
+    // </Router>
   );
 };
 

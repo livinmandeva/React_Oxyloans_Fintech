@@ -70,7 +70,7 @@ const Header = (profile) => {
           profileData: data,
         });
       } else if (data.response.data.errorCode != "200") {
-        WarningAlert(data.response.data.errorMessage, "/login");
+        WarningAlert(data.response.data.errorMessage, "/");
       }
     });
   }, []);
@@ -341,10 +341,10 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/profile">
                 My Profile
               </Link>
-              <Link className="dropdown-item" to="/inbox">
+              <Link className="dropdown-item" to="/participatedeal">
                 My Deals
               </Link>
-              <Link className="dropdown-item" to="/login">
+              <Link className="dropdown-item" to="/">
                 Logout
               </Link>
             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { Scrollbars } from "react-custom-scrollbars";
 // import { LogoImg, LogoSmallImg } from "../_components/imagepath";
@@ -8,6 +8,8 @@ const Sidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenuLevel, setSideMenuLevel] = useState("");
   const [isSideMenuLevel2, setSideMenuLevel2] = useState("");
+
+  console.log(props);
 
   const toggleSidebar = (value) => {
     console.log(value);
@@ -86,7 +88,7 @@ const Sidebar = (props) => {
     });
   }, []);
 
-  let pathName = props.location.pathname;
+  let pathName = useLocation().pathname;
 
   return (
     <>
@@ -699,7 +701,7 @@ const Sidebar = (props) => {
                 </li>
 
                 <li className={`${"/" === pathName ? "active" : ""}`}>
-                  <Link to="/login">
+                  <Link to="/">
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Sign Out</span>
                   </Link>
@@ -713,4 +715,4 @@ const Sidebar = (props) => {
     </>
   );
 };
-export default withRouter(Sidebar);
+export default Sidebar;

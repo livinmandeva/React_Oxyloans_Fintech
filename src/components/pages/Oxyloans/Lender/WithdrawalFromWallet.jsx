@@ -101,98 +101,98 @@ const WithdrawalFromWallet = () => {
                   </div>
                   <div className="card-body">
                     {/* <form> */}
-                      <div className="row">
-                        <div className="col-12">
-                          <h5 className="form-title">
-                            <span>Withdrawal Details</span>
-                          </h5>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Withdrawal Amount
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="withdrawAmount"
-                              onChange={handleInputchange}
-                              placeholder="Enther the Withdraw Amount"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Feedback
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              name="withdrawFeedback"
-                              className="form-control"
-                              onChange={handleInputchange}
-                              placeholder="Enther the Feedback"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Reason
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="withdraReason"
-                              onChange={handleInputchange}
-                              placeholder="Enther the Reson"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms calendar-icon">
-                            <label>
-                              Withdrawal Date
-                              <span className="login-danger">*</span>
-                            </label>
-
-                            <DatePicker
-                              selected={withdrawrequest.date}
-                              onChange={handleChange}
-                              dateFormat="dd/MM/yyyy"
-                              className="form-control datetimepicker"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <span>
-                              Rating
-                              <ReactStars
-                                count={5}
-                                onChange={ratingChanged}
-                                size={24}
-                                activeColor="#ffd700"
-                              />
-                            </span>
-                          </div>
-                        </div>
-                        <div className="col-12">
-                          <div className="student-submit">
-                            <button
-                              type="button"
-                              className="btn btn-primary"
-                              onClick={withdrawrequestHandler}
-                            >
-                              Submit
-                            </button>
-                          </div>
+                    <div className="row">
+                      <div className="col-12">
+                        <h5 className="form-title">
+                          <span>Withdrawal Details</span>
+                        </h5>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Withdrawal Amount
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="withdrawAmount"
+                            onChange={handleInputchange}
+                            placeholder="Enther the Withdraw Amount"
+                          />
                         </div>
                       </div>
-                {/*   </form> */}
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Feedback
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            onChange={handleInputchange}
+                            placeholder="Enther the Feedback"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Reason
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="withdraReason"
+                            onChange={handleInputchange}
+                            placeholder="Enther the Reson"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms calendar-icon">
+                          <label>
+                            Withdrawal Date
+                            <span className="login-danger">*</span>
+                          </label>
+
+                          <DatePicker
+                            selected={withdrawrequest.date}
+                            onChange={handleChange}
+                            dateFormat="dd/MM/yyyy"
+                            className="form-control datetimepicker"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <span>
+                            Rating
+                            <ReactStars
+                              count={5}
+                              onChange={ratingChanged}
+                              size={24}
+                              activeColor="#ffd700"
+                            />
+                          </span>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="student-submit">
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={withdrawrequestHandler}
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    {/*   </form> */}
                   </div>
                 </div>
               </div>

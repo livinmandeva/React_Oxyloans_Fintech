@@ -14,6 +14,38 @@ const RegularPersonalDeal = () => {
     pageno: 1,
   });
 
+  const changepagination = (pros) => {
+    setRegularRunningDeal({
+      ...personal_runningDeal,
+      pageno: pros,
+    });
+  };
+
+  useEffect(() => {
+    const urlparams = window.location.pathname;
+    const urldealname = urlparams.slice(1);
+    console.log(urldealname);
+    const handleRegular = () => {
+      const response = regular_Api(
+        personal_runningDeal.dealtype,
+        "PERSONAL",
+        personal_runningDeal.pageno
+      );
+
+      response.then((data) => {
+        if (data.request.status == 200) {
+          setRegularRunningDeal({
+            ...personal_runningDeal,
+            apidata: data.data,
+            paginationCount: data.data.count + 1,
+          });
+        }
+      });
+    };
+
+    handleRegular();
+  }, [personal_runningDeal.pageno]);
+
   const dataSource = [];
 
   personal_runningDeal.apidata != ""
@@ -59,35 +91,6 @@ const RegularPersonalDeal = () => {
     },
   ];
 
-  const changepagination = (pros) => {
-    setRegularRunningDeal({
-      ...personal_runningDeal,
-      pageno: pros,
-    });
-  };
-
-  useEffect(() => {
-    const urlparams = window.location.pathname;
-    const urldealname = urlparams.slice(1);
-    console.log(urldealname);
-    const handleRegular = () => {
-      const response = regular_Api(
-        personal_runningDeal.dealtype,
-        "PERSONAL",
-        personal_runningDeal.pageno
-      );
-
-      response.then((data) => {
-        setRegularRunningDeal({
-          ...personal_runningDeal,
-          apidata: data.data,
-          paginationCount: data.data.count + 1,
-        });
-      });
-    };
-
-    handleRegular();
-  }, [personal_runningDeal.pageno]);
   return (
     <div className="main-wrapper">
       {/* Header */}
