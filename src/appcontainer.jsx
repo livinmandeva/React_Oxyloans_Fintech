@@ -169,12 +169,12 @@ const appcontainer = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/error404" element={<Error404 />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/loadwaletThroughQr" element={<LoadwaletThroughQr />} />
-          <Route path="/lender_register" element={<LenderRegister />} />
+          <Route path="/register" element={<LenderRegister />} />
           <Route path="/borrower_register" element={<BorrowerRegister />} />
           <Route
             path="/register_active_proceed"

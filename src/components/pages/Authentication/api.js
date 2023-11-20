@@ -1,6 +1,4 @@
 import axios from "axios";
-import { data } from "jquery";
-
 const API_BASE_URL =
   "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/";
 const API_URL =

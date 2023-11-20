@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { login ,registerImage } from "../../imagepath";
+import { login, registerImage } from "../../imagepath";
 import { Link } from "react-router-dom";
 import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
@@ -139,7 +139,7 @@ export default function LenderRegister() {
       error !== "" ||
       registrationField.passworderror !== "" ||
       registrationField.referrerIderror !== "" ||
-      registrationField.moblieerror !== "" 
+      registrationField.moblieerror !== ""
     ) {
       setTimeout(() => {
         setRegistrationField((prevRegistrationField) => ({
@@ -160,7 +160,7 @@ export default function LenderRegister() {
     registrationField.passworderror,
     registrationField.referrerIderror,
   ]);
-  
+
   return (
     <div>
       <div className="main-wrapper login-body">
@@ -168,7 +168,11 @@ export default function LenderRegister() {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid h-100" src={registerImage} alt="Logo" />
+                <img
+                  className="img-fluid h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">
@@ -202,7 +206,7 @@ export default function LenderRegister() {
                         </>
                       ) : (
                         <>
-                          <h1 >Enter the OTP </h1>
+                          <h1>Enter the OTP </h1>
                         </>
                       )}{" "}
                     </>
