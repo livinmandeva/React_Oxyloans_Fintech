@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -1239,10 +1239,10 @@ export const savenomineeDeatailsApi = async (nominee) => {
   return response;
 };
 
-export const getPanDoc = () => {
+export const getPanDoc =async () => {
   const token = getToken();
   const userId = getUserId();
-  const res = handleApiRequestAfterLoginService(
+  const res = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/PAN`,
     "GET",
@@ -1251,10 +1251,10 @@ export const getPanDoc = () => {
   return res;
 };
 
-export const getdataPassport = () => {
+export const getdataPassport =async () => {
   const token = getToken();
   const userId = getUserId();
-  const res = handleApiRequestAfterLoginService(
+  const res = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/PASSPORT`,
     "GET",
@@ -1263,10 +1263,10 @@ export const getdataPassport = () => {
   return res;
 };
 
-export const getdataAadhar = () => {
+export const getdataAadhar =async () => {
   const token = getToken();
   const userId = getUserId();
-  const res = handleApiRequestAfterLoginService(
+  const res =await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/AADHAR`,
     "GET",
@@ -1275,10 +1275,10 @@ export const getdataAadhar = () => {
   return res;
 };
 
-export const getdataVoterId = () => {
+export const getdataVoterId = async() => {
   const token = getToken();
   const userId = getUserId();
-  const res = handleApiRequestAfterLoginService(
+  const res = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/VOTERID`,
     "GET",
@@ -1287,10 +1287,10 @@ export const getdataVoterId = () => {
   return res;
 };
 
-export const getdataDrivingLicence = () => {
+export const getdataDrivingLicence = async() => {
   const token = getToken();
   const userId = getUserId();
-  const res = handleApiRequestAfterLoginService(
+  const res = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/DRIVINGLICENCE`,
     "GET",
@@ -1299,10 +1299,10 @@ export const getdataDrivingLicence = () => {
   return res;
 };
 
-export const getdatachequeLeaf = () => {
+export const getdatachequeLeaf = async () => {
   const token = getToken();
   const userId = getUserId();
-  const res = handleApiRequestAfterLoginService(
+  const res = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/CHEQUELEAF`,
     "GET",

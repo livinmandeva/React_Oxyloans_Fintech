@@ -64,6 +64,7 @@ const Profile = () => {
     twitterUrl: "",
     whatsAppNumber: "",
     aadharNumber: "",
+    aadharerror:"",
     mobileNumber: "",
     email: "",
   });
@@ -96,6 +97,7 @@ const Profile = () => {
     bank: "",
     branch: "",
     nomineecity: "",
+    copyerror:''
   });
 
   const [kyc, setKyc] = useState({
@@ -116,6 +118,22 @@ const Profile = () => {
     });
   };
 
+
+
+
+  useEffect(()=>{
+if(userProfile.aadharerror >= 12){
+setUserProfile({
+  ...userProfile,
+  aadharerror:"aadhar Number must be 12 digit"
+})
+}else{
+  setUserProfile({
+    ...userProfile,
+    aadharerror:""
+  }) 
+}
+  },[userProfile.aadharerror])
   const handlerNominee = (event) => {
     const { value, name } = event.target;
     setnomineeDetails({
@@ -177,20 +195,45 @@ const Profile = () => {
     });
   };
 
+  // const handlefileupload = (event) => {
+  //   const response = uploadkyc(event);
+  //   response.then((data) => {
+  //     if (data.request.status == 200) {
+  //       setKyc({
+  //         ...kyc,
+  //         isValid: !kyc.isValid,
+  //       });
+  //       Success("success", `${event.target.name} Uploaded Sucessfully`);
+  //     } else if (data.response.data.errorCode != "200") {
+  //       WarningBackendApi("warning", data.response.data.errorMessage);
+  //     }
+  //   });
+  // };
+
+  
   const handlefileupload = (event) => {
     const response = uploadkyc(event);
+  
     response.then((data) => {
-      if (data.request.status == 200) {
-        setKyc({
-          ...kyc,
-          isValid: !kyc.isValid,
-        });
-        Success("success", `${event.target.name} Uploaded Sucessfully`);
-      } else if (data.response.data.errorCode != "200") {
+      console.log(data)
+      if (data && data.request && data.request.status === 200) {
+        setKyc((prevKyc) => ({
+          ...prevKyc,
+          isValid: !prevKyc.isValid,
+        }));
+        Success("success", `${event.target.name} Uploaded Successfully`);
+      } else if (data && data.response && data.response.data && data.response.data.errorCode !== "200") {
         WarningBackendApi("warning", data.response.data.errorMessage);
+      } else {
+        console.error("Unexpected response structure:", data);
+        // Handle unexpected response structure, log or show an error message
       }
+    }).catch((error) => {
+      console.error("Error during file upload:", error);
+      // Handle the error, log or show an error message
     });
   };
+  
 
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -201,6 +244,24 @@ const Profile = () => {
       }),
       () => {}
     );
+  };
+
+  const handlePaste = (event) => {
+    event.preventDefault();
+    // alert('Copying and pasting is disabled for this field.');
+    setnomineeDetails({
+      ...nomineeDetails,
+      copyerror:"Copying and pasting is disabled for this field."
+    })
+  };
+
+  const handleCopy = (event) => {
+    event.preventDefault();
+    // alert('Copying and pasting is disabled for this field.');
+    setnomineeDetails({
+      ...nomineeDetails,
+      copyerror:"Copying and pasting is disabled for this field."
+    })
   };
 
   const handleprofileUpdate = () => {
@@ -676,7 +737,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="number"
+                                  type="tel"
                                   className="form-control"
                                   name="accountNumber"
                                   onChange={handlebankchange}
@@ -687,15 +748,17 @@ const Profile = () => {
 
                               <div className="form-group col-12 col-md-4 local-forms">
                                 <label>
-                                  Confirm Account Number
+                                Confirm Account Number
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="number"
+                                  type="tel"
                                   className="form-control"
                                   name="confirmAccountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Confirm Account Number"
+                                  onPaste={handlePaste}
+                                  onCopy={handleCopy}
                                   value={
                                     bankaccountprofile.confirmAccountNumber
                                   }
@@ -704,7 +767,14 @@ const Profile = () => {
                                   <span className="login-danger">
                                     {bankaccountprofile.bankAccountError}
                                   </span>
-                                )}
+                                )}     
+                                {
+                                nomineeDetails.copyerror && (
+                                  <span className="login-danger">
+                                    {nomineeDetails.copyerror}
+                                  </span>
+                                )  
+                                }
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -893,7 +963,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="tel"
                                     minLength={10}
                                     className="form-control"
                                     placeholder=" Enter  Nominee mobile no "
@@ -905,11 +975,11 @@ const Profile = () => {
 
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                    Account No
+                                  Nominee Name Account No
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="tel"
                                     className="form-control"
                                     placeholder="  Nominee Name Account No"
                                     value={nomineeDetails.accountNo}
@@ -919,7 +989,7 @@ const Profile = () => {
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                    IFSC Code
+                                  Nominee IFSC Code
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
@@ -933,7 +1003,7 @@ const Profile = () => {
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                    Bank Name
+                                  Nominee Bank Name
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
@@ -1054,8 +1124,9 @@ const Profile = () => {
                                   value={userProfile.aadharNumber}
                                   name="aadharNumber"
                                 />
+                                 {userProfile.aadharerror !="" ? <div className="error">{userProfile.aadharerror}</div> : <></>}
                               </div>
-
+                               
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Date of Birth
@@ -1267,7 +1338,6 @@ const Profile = () => {
                         <h5 className="card-title">Upload Kyc</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                            <form>
                               <div className="row mt-3">
                                 <div className="form-group col-12 col-md-6">
                                   <p className="settings-label">
@@ -1276,10 +1346,9 @@ const Profile = () => {
                                   <div className="settings-btn">
                                     <input
                                       type="file"
-                                      accept="image/*"
-                                      name="PAN"
-                                      id="file"
-                                      className="hide-input custom-file-input"
+                                      name="pan"
+                                      id="pan"
+                                      className="hide-input"
                                       onChange={handlefileupload}
                                     />
                                     <label htmlFor="file" className="upload">
@@ -1311,13 +1380,13 @@ const Profile = () => {
                                   <div className="settings-btn">
                                     <input
                                       type="file"
+                                      name="chequ"
                                       accept="image/*"
-                                      name="CHEQUELEAF"
-                                      id="file"
+                                      id="chequ"
                                       className="hide-input"
                                       onChange={handlefileupload}
                                     />
-                                    <label htmlFor="file" className="upload">
+                                    <label htmlFor="cheque" className="upload">
                                       <i className="feather-upload">
                                         <FeatherIcon icon="upload" />
                                       </i>
@@ -1345,12 +1414,12 @@ const Profile = () => {
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="AADHAR"
-                                      id="file"
+                                      name="aadhar"
+                                      id="aadhar"
                                       className="hide-input"
                                       onChange={handlefileupload}
                                     />
-                                    <label htmlFor="file" className="upload">
+                                    <label htmlFor="aadhar" className="upload">
                                       <i className="feather-upload">
                                         <FeatherIcon icon="upload" />
                                       </i>
@@ -1379,12 +1448,12 @@ const Profile = () => {
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="DRIVINGLICENCE"
-                                      id="file"
+                                      name="license"
+                                      id="license"
                                       className="hide-input"
                                       onChange={handlefileupload}
                                     />
-                                    <label htmlFor="file" className="upload">
+                                    <label htmlFor="license" className="upload">
                                       <i className="feather-upload">
                                         <FeatherIcon icon="upload" />
                                       </i>
@@ -1413,12 +1482,12 @@ const Profile = () => {
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      name="VOTERID"
+                                      id="Voter"
+                                      name="Voter"
                                       onChange={handlefileupload}
-                                      id="file"
                                       className="hide-input"
                                     />
-                                    <label htmlFor="file" className="upload">
+                                    <label htmlFor="license" className="upload">
                                       <i className="feather-upload">
                                         <FeatherIcon icon="upload" />
                                       </i>
@@ -1445,13 +1514,13 @@ const Profile = () => {
                                   <div className="settings-btn">
                                     <input
                                       type="file"
+                                      id="Passport"
                                       accept="image/*"
-                                      name="PASSPORT"
+                                      name="Passport"
                                       onChange={handlefileupload}
-                                      id="file"
                                       className="hide-input"
                                     />
-                                    <label htmlFor="file" className="upload">
+                                    <label htmlFor="Passport" className="upload">
                                       <i className="feather-upload">
                                         <FeatherIcon icon="upload" />
                                       </i>
@@ -1472,7 +1541,6 @@ const Profile = () => {
                                   )}
                                 </div>
                               </div>
-                            </form>
                           </div>
                         </div>
                       </div>

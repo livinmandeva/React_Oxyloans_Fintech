@@ -1215,7 +1215,7 @@ const AdminDashboard = () => {
                       {regular_runningDeal.apidata
                         .listOfDealsInformationToLender &&
                       regular_runningDeal.apidata.listOfDealsInformationToLender
-                        .length > 4
+                        .length > 1
                         ? regular_runningDeal.apidata.listOfDealsInformationToLender
                             .slice(0, 4)
                             .map((data, index) => (

@@ -156,7 +156,7 @@ const LoadwaletThroughQr = () => {
                                   type="button"
                                   onClick={loadYourWalletFunction}
                                 >
-                                  Button
+                                  Load Amount
                                 </button>
                               </div>
                             </>

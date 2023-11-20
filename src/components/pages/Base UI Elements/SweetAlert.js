@@ -109,6 +109,7 @@ export const WarningAlert = (errorMessage, redirectTo) => {
   });
 };
 
+
 const tenure = {
   monthly: 1000,
   quarterly: 2900,
@@ -171,6 +172,23 @@ export const membership = () => {
   });
 };
 
+export const WarningAlertWalltTran = (errorMessage, redirectTo) => {
+  Swal.fire({
+    title: "error",
+    text: errorMessage,
+    icon: "warning",
+    // showDenyButton: true,
+    // denyButtonColor: "#5c9b45",
+  }).then((result) => {
+    console.log(result);
+    // if (result.isConfirmed) {
+    //   window.location.href = `${redirectTo}`;
+    // } else if (result.isDenied) {
+    //   getNewSessionTime();
+    //   Swal.fire("Token!", "Your session has Generated.", "success");
+    // }
+  });
+};
 export const PrincipalTransfer = (warningType, errormessage) => {
   Swal.fire("Principal Payout!", errormessage, warningType);
   setTimeout(() => {
@@ -178,6 +196,15 @@ export const PrincipalTransfer = (warningType, errormessage) => {
   }, 3000);
 };
 
+export  const WarningAlerterror= (errorMessage, redirectTo)=>{
+  Swal.fire({
+    title: "error",
+    text: errorMessage,
+    icon: "error",
+    showDenyButton: true,
+
+  })
+}
 export const Error = () => {
   Swal.fire({
     title: "Error!",

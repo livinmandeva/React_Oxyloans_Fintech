@@ -9,6 +9,7 @@ import FeatherIcon from "feather-icons-react";
 import { Admlog, userloginSection } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
+import { Spin } from 'antd';
 import { getProfile } from "../../Redux/Slice";
 
 const Admlogin = () => {
@@ -28,6 +29,12 @@ const Admlogin = () => {
     errormessage: "",
     isvalid: true,
     userid: "",
+
+
+
+
+    
+    loading:true
   });
 
   let inputRef = useRef();
@@ -159,8 +166,9 @@ const Admlogin = () => {
                         disabled={userLogInInfo.isvalid}
                         onClick={loginhandler}
                       >
-                        Login
+                        Login              
                       </button>
+                  
                     </div>
                   </form>
 
