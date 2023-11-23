@@ -4,11 +4,9 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import * as api from "./api";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { login } from "../../imagepath";
-import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { error } from "jquery";
 
 const Register_active_proceed = () => {
   const history = useNavigate();
