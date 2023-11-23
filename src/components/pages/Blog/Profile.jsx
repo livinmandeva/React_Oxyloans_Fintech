@@ -689,20 +689,31 @@ setUserProfile({
                                 }}
                               >
                                 <i className="far fa-edit me-1" />
-                                KYC
+                                Edit
                               </Link>
                             </h5>
-                            <div className="skill-tags">
-                              <span>Pan</span>
-                              <span>Aadhar</span>
-                              <span>Driving license </span>
-                              <span>Cheque leaf </span>
-                              <span>VoterID </span>
-                              <span>Passport</span>
-                            </div>
+                        
                           </div>
                         </div>
                         {/* /Skills */}
+                        <div className="card">
+                          <div className="card-body">
+                            <h5 className="card-title d-flex justify-content-between">
+                              <span>Nominee  </span>
+                              <Link
+                                className="edit-link"
+                                to="#"
+                                onClick={(e) => {
+                                  openTheActiveTabs("Nominee");
+                                }}
+                              >
+                                <i className="far fa-edit me-1" />
+                                Edit
+                              </Link>
+                            </h5>
+                        
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {/* /Personal Details */}
@@ -1122,7 +1133,7 @@ setUserProfile({
                                   placeholder="Enter Aadhar Number"
                                   onChange={handlechange}
                                   value={userProfile.aadharNumber}
-                                  name="aadharNumber"
+                                  name="aadhaarNumber"
                                 />
                                  {userProfile.aadharerror !="" ? <div className="error">{userProfile.aadharerror}</div> : <></>}
                               </div>
@@ -1176,10 +1187,10 @@ setUserProfile({
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="text"
-                                  maxLength={14}
+                                  type="tel"
+                                  maxLength={10}
                                   className="form-control"
-                                  placeholder="Enter WhatsApp Name"
+                                  placeholder="Enter WhatsApp "
                                   onChange={handlechange}
                                   value={userProfile.whatsAppNumber}
                                   name="whatsAppNumber"

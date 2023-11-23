@@ -110,6 +110,79 @@ export const WarningAlert = (errorMessage, redirectTo) => {
 };
 
 
+
+export const validityDatemodal = (validityDate) => {
+  Swal.fire({
+    title: "Membership Renewal Reminder",
+    html: `<p style={{marginBottom: '2px'}}>Your membership validity expired on ${validityDate}.</p>`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Get Membership",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Use window.location.href to navigate to a new URL
+      window.location.href = '/paymembership';
+    }
+  });
+};
+
+export const participatedapi = ({
+  apidata,
+  participatedAmount,
+  lenderReturnType,
+  groupId,
+  dealId,
+  accountType,
+  deal
+}) => {
+  Swal.fire({
+    title: "Please review the lending details!",
+    html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
+           <p><strong> Pay-out Method: </strong>${lenderReturnType}</p><br>
+           <p><strong> Pay-out Method: </strong>${participatedAmount}</p>`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Ok!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Call the nofreeParticipationapi function here
+      const response = nofreeParticipationapi(
+        apidata,
+        groupId,
+        dealId,
+        accountType,
+        lenderReturnType,
+        deal
+      );
+      const amount = localStorage.getItem("lenderRemainingWalletAmount");
+
+      response
+        .then((response) => {
+          console.log(response);
+          Swal.fire({
+            title: "Congratulations!",
+            text: `We are reserving ${participatedAmount} for  .
+            Your new wallet balance: ${amount}`,
+            icon: "success"
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "Error!",
+            text: `We are reserving ${errorMessage} for ROI%%% .
+            Your new wallet balance: ${amount}`,
+            icon: "error"
+          });
+        });
+    }
+  });
+};
+
+
 const tenure = {
   monthly: 1000,
   quarterly: 2900,

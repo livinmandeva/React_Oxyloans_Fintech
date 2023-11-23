@@ -205,3 +205,18 @@
   gap: 2rem;
   margin: 10px 1px;
 }
+
+.displaycenter{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.displaycenter > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;gap: 1rem;
+}

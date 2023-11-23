@@ -833,6 +833,7 @@ export const nofreeParticipationapi = async (
   // }
 
   var participationStatus = "ADD";
+  var lenderRemainingWalletAmount=localStorage.getItem("lenderRemainingWalletAmount")
   const data1 = {
     userId: userId,
     groupId: groupId,
@@ -844,7 +845,8 @@ export const nofreeParticipationapi = async (
     paticipationStatus:
       deal.lenderPaticipatedResponseDto !== null ? "ADD" : "UPDATE",
     accountType: accountType,
-    ExtensionConsents: deal.checked ? "INTERESTED" : "NOTINTERESTED",
+    lenderRemainingWalletAmount:lenderRemainingWalletAmount,
+    ExtensionConsents: userisIn === "local" ? "INTERESTED" : "NOTINTERESTED",
     feeStatus: "COMPLETED",
     // lenderTotalPanLimit:userPanLimit,
     // totalParticipatedAmount:userTotalParticipation

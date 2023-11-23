@@ -127,7 +127,7 @@ const RegularRunningDeal = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </div>  
             <div className="pangnation">
               <Pagination
                 defaultCurrent={1}
@@ -233,7 +233,7 @@ const RegularRunningDeal = () => {
                                 <div className="row align-items-center align-items-center1">
                                   <div className="col-auto">
                                     <Link
-                                      to={`participatedeal?dealId=${data.dealId}`}
+                                      to= {`/participatedeal?dealId=${data.dealId}`}
                                       className="badge bg-success-dark"
                                     >
                                       <i className="fa fa-forward mx-1"></i>

@@ -9,14 +9,18 @@ import {
   handlecashapi,
   nofreeParticipationapi,
 } from "../../../HttpRequest/afterlogin";
-import { Card, Switch, Table } from "antd";
+import { Button, Card, Switch, Table } from "antd";
 // import { useNavigate  } from "react-router-dom";
 import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
 import {
-  freeParticipationapialert,
+  WarningAlert,
+  WarningAlertWalltTran,
   membership,
+  participated,
+  participatedapi,
 } from "../../Base UI Elements/SweetAlert";
 import Swal from "sweetalert2";
+import Freeparticipate from "./Freeparticipate";
 
 const Participatedeal = () => {
   // const history = useNavigate();
@@ -24,37 +28,62 @@ const Participatedeal = () => {
   const [deal, setDeal] = useState({
     apidata: "",
     transactionNumber: "",
-    checked: true,
     accountType: "",
     lenderFeeId: "",
+    feeParticipate: true,
     lenderReturnType: "",
     lenderFeeId: "",
     transferPrincipal: "",
-    participatedAmount: "",
+    participatedAmount: "111",
     bank: "",
     wallet: "",
     urldealId: "",
   });
+   const [buttonvaild ,setbuttonvaild]=useState(false)
+  const [isConditionMet, setIsConditionMet] = useState(false);
 
   useEffect(() => {
-    const handledealinfo = async (dealId) => {
+    const handledealinfo = async () => {
       const urlparam = new URLSearchParams(window.location.search);
-      var dealId = urlparam.get("dealId");
-      const response = handledetail(dealId);
-      response.then((data) => {
-        console.log(data);
+      const dealId = urlparam.get("dealId");
+
+      const response = await handledetail(dealId);
+
+      response.then((response)=>{
+        if(response.request.status == 200){
+          
+        }
+      })
+      console.log(response.data);
+
+      setDeal({
+        ...deal,
+        apidata: response.data,
+        urldealId: dealId,
+      });
+      {response.data.lenderRemainingWalletAmount != "" || null && <>{localStorage.setItem(
+        "lenderRemainingWalletAmount",
+        response.data.lenderRemainingWalletAmount
+      )}</>}
+      
+      console.log("deal apidata", deal.apidata);
+
+      if (response.data.yearlyInterest !== 0) {
         setDeal({
           ...deal,
-          apidata: data.data,
-          urldealId: dealId,
+          lenderReturnType: "YEARLY",
         });
-        if (data.data.yearlyInterest != 0) {
-          setDeal({
-            ...deal,
-            lenderReturnType: "YEARLY",
-          });
-        }
-      });
+      } else if (response.data.halfInterest !== 0 || null) {
+        setDeal({
+          ...deal,
+          lenderReturnType: "Half Year",
+        });
+      } else if (response.data.monthlyInterest !== 0 || null) {
+        setDeal({
+          ...deal,
+          lenderReturnType: "monthly",
+        });
+      }
     };
 
     handledealinfo();
@@ -62,6 +91,7 @@ const Participatedeal = () => {
 
   const dataSource = [];
 
+      console.log(deal.apidata)
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
@@ -116,134 +146,92 @@ const Participatedeal = () => {
       key: "maximumparticipation",
     },
   ];
-  // action="https://test.cashfree.com/billpay/checkout/post/submit"
-  const handlecashfree = () => {
-    console.log(deal.wallet, deal.bank);
-    const response = handlecashapi(
-      deal.apidata.groupId,
-      deal.participatedAmount
-    );
-    response.then((data) => {
-      console.log(data);
-      history("https://test.cashfree.com/billpay/checkout/post/submit");
-    });
-  };
 
-  const freeParticipation = (
-    dealdata,
+  const dealparticipate = (
+    apidata,
     participatedAmount,
-    lenderParticipationLimit
+    lenderReturnType,
+    groupId,
+    dealId,
+    accountType,
+    deal
   ) => {
-    console.log(lenderParticipationLimit);
-    console.log(participatedAmount);
-    console.log(dealdata.participatedAmount); // Assuming dealdata has a participatedAmount property
-    console.log(dealdata.apidata.validityStatus);
+    console.log(deal.apidata.feeStatusToParticipate);
+    console.log(deal.apidata.groupName);
+    console.log(deal.apidata.validityStatus);
 
-    if (dealdata.bank !== "") {
-      if (dealdata.apidata.validityStatus === true) {
-        toastrSuccess("valid");
-        if (
-          dealdata.participatedAmount >= participatedAmount &&
-          dealdata.participatedAmount <= lenderParticipationLimit
-        ) {
-          alert("correct");
-          console.log(
-            "Condition met: The deal's participation amount is within the specified range."
-          );
-          const response = freeParticipationapi(
-            dealdata.apidata.groupId,
-            dealdata.apidata.dealId,
-            deal.bank,
-            dealdata.lenderReturnType
-          );
+    if (isConditionMet) {
+      if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
+        if (deal.apidata.groupName != "" || null) {
+          if (deal.apidata.validityStatus === false) {
+            console.log("deal succuess");
+            // WarningAlert()
 
-          response
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((error) => {
-              console.error("An error occurred:", error);
-              // Handle the error, e.g., display an error message.
+            participatedapi({
+              apidata,
+              participatedAmount,
+              lenderReturnType,
+              groupId,
+              dealId,
+              accountType,
+              deal,
             });
+          } else {
+            console.log("deal validityStatus completed ");
+          }
         } else {
-          alert("not correct");
-          toastrError(
-            "Condition not met: The deal's participation amount is outside the specified range."
-          );
+          console.log("deal  having free feeStatusToParticipate");
         }
       } else {
-        membership(
-          "Your validity has expired. Now you have to choose the membership and participate in the deal.",
-          " has    "
-        );
-        // toastrError("Your validity has expired. Now you have to choose the membership and participate in the deal.");
+        participatedapi({
+          apidata,
+          participatedAmount,
+          lenderReturnType,
+          groupId,
+          dealId,
+          accountType,
+          deal,
+        });
+        console.log("deal not having free feeStatusToParticipate");
+        
       }
     } else {
-      toastrError("Please Select Transfer principal payment method");
+      WarningAlertWalltTran(
+        "The participation fee falls below the specified requirements."
+      );
     }
   };
+  useEffect(() => {
+    console.log(deal.apidata);
 
-  const handleSwitchChange = (checked) => {
-    // Handle the switch change and update the state accordingly
-    setDeal({
-      ...deal,
-      checked: checked,
-    });
-    console.log(deal.checked);
-  };
-  const nofreeParticipation = (
-    dealdata,
-    participatedAmount,
-    lenderParticipationLimit
-  ) => {
-    console.log(lenderParticipationLimit);
-    console.log(participatedAmount);
-    console.log(deal.participatedAmount);
-    console.log(dealdata.validityStatus);
-
-    if (deal.bank !== "") {
+    const checkCondition = () => {
       if (
-        deal.participatedAmount >= participatedAmount &&
-        deal.participatedAmount <= lenderParticipationLimit
+        deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
+        deal.participatedAmount <= deal.apidata.lenderParticiptionLimit
       ) {
-        alert("correct");
-        console.log(
-          "Condition met: The deal's participation amount is within the specified range."
-        );
-        freeParticipationapialert(
-          deal.apidata,
-          dealdata.apidata.groupId,
-          deal.urldealId,
-          deal.bank,
-          dealdata.lenderReturnType,
-          deal
-        );
-
-        // const response = nofreeParticipationapi(
-        // deal.apidata,
-        // dealdata.apidata.groupId,
-        // deal.urldealId,
-        // deal.bank,
-        // dealdata.lenderReturnType,
-        // deal
-
-        // );
-
-        // response.then((data) => {
-        //   toastrSuccess("deal participated successfully")
-
-        // });
+        console.log("Condition passed");
+        setIsConditionMet(true);
       } else {
-        alert("not correct");
-        toastrError(
-          "Condition not met: The deal's participation amount is outside the specified range."
-        );
+        console.log("Condition not passed");
+        setIsConditionMet(false);
       }
-    } else {
-      toastrError("Please Select Transfer principal payment method");
-    }
-  };
+    };
 
+    checkCondition();
+  }, [deal.participatedAmount]);
+
+
+
+  useEffect(()=>{
+    if(deal.bank != ""){
+   console.log("payment type selected");
+   setbuttonvaild(true)
+    }else{
+
+    console.log("select  payment type");
+    setbuttonvaild(false)
+    }
+  },[deal.bank])
   useEffect(() => {
     {
       console.log(deal.bank);
@@ -270,6 +258,7 @@ const Participatedeal = () => {
                     {/* Write To Us */}
                     Deal Info
                   </h3>
+
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
@@ -288,62 +277,12 @@ const Participatedeal = () => {
                 pagination={false}
               />
             </div>
-            <div className="centerdiv mt-5">
-              <h4>Your participation to this deal is</h4>
-              <div className="form-group">
-                <input
-                  className="form-control-lg form-control-lg1"
-                  type="text"
-                  placeholder="Enter amount here..."
-                  onChange={(event) => {
-                    setDeal({
-                      ...deal,
-                      participatedAmount: event.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <h4 style={{ marginTop: "2rem" }}>Deal Extension Consents</h4>
 
-              {/* <div class="form-check my-1">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="transferPrincipal"
-                  value={"interested"}
-                  onChange={(event) => {
-                    setDeal({
-                      ...deal,
-                      extension: event.target.value,
-                    });
-                  }}
-                />
-                <label class="form-check-label" for="flexRadioDisabled">
-                Interested
-                </label>
-              </div> */}
-              <Switch
-                defaultChecked={deal.checked}
-                onChange={handleSwitchChange}
-              />
-              <span>
-                {deal.checked ? (
-                  <>
-                    {() =>
-                      setDeal({
-                        ...deal,
-                        checked: true,
-                      })
-                    }
-                  </>
-                ) : (
-                  "Not Interested"
-                )}
-              </span>
+            <div className="displaycenter">
               <h4 style={{ marginTop: "2rem" }}>
-                Transfer principal payment method
+                Return Principal To :{/* Transfer principal payment method */}
               </h4>
-              <div class="form-check my-1">
+              <div class="form-check">
                 <input
                   class="form-check-input"
                   type="radio"
@@ -357,7 +296,7 @@ const Participatedeal = () => {
                   }}
                 />
                 <label class="form-check-label" for="flexRadioDisabled">
-                  Move Principal to wallet
+                  <strong> Move Principal to wallet </strong>
                 </label>
               </div>
               <div class="form-check">
@@ -375,407 +314,50 @@ const Participatedeal = () => {
                 />
 
                 <label class="form-check-label" for="flexRadioCheckedDisabled">
-                  Move Principal to Bank
+                  <strong> Move Principal to Bank</strong>
                 </label>
               </div>
-              <h3 style={{ marginTop: "1rem", marginBottom: "1rem" }}>
-                Choose your pay out method
-              </h3>
-
-              {/* <div className="card-group col-12">
-                <div className="card col-md-3 col-lg-3 mx-3 col-sm-12 h-30">
-                  <div className="card-header  text-center bg-dark text-white">
-                    NEW LENDER
-                  </div>
-                  <div className="card-body text-center">
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item">Item 1</li>
-                      <li className="list-group-item">Item 2</li>
-                      <li className="list-group-item">Item 3</li>
-                    </ul>
-                  </div>
-                  <div className="card-footer text-center">
-                    <button className="btn btn-primary col-md-4">Submit</button>
-                  </div>
-                </div>
-
-                <div className="card col-md-3 col-lg-3 col-sm-12 mx-3 h-20">
-                  <div className="card-header  text-center bg-success text-white">
-                    NEW LENDER
-                  </div>
-                  <div className="card-body text-center">
-                    <ul className="list-group list-group-flush lead">
-                      <li className="list-group-item border-1">
-                        <input
-                          className="form-check-input mx-2"
-                          type="radio"
-                          name="newlenderpayout"
-                          id="premMonthly"
-                        />
-                        <label for="premMonthly">
-                          Monthly Interest pay-out
-                        </label>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="card-footer text-center">
-                    <button className="btn btn-primary col-md-4">Submit</button>
-                  </div>
-                </div>
-              </div> */}
-
-              <div className="datarender" style={{ marginTop: "3%" }}>
-                {/* <Card
-                  size="meddam"
-                  headStyle={{
-                    backgroundColor: "#3d5ee1",
-                    color: "white",
-                    textAlign: "center",
+            </div>
+            <div className="centerdiv mt-5">
+              <h4>Your participation to this deal is</h4>
+              <div className="form-group">
+                <input
+                  className="form-control-lg form-control-lg1"
+                  type="text"
+                  placeholder="Enter amount here..."
+                  onChange={(event) => {
+                    setDeal({
+                      ...deal,
+                      participatedAmount: event.target.value,
+                    });
                   }}
-                  title="OXY FOUNDING LENDER"
-                  bodyStyle={{ width: 300, textAlign: "center" }}
-                >
-                  <p>Choose Your Interest Payout Method</p>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDisabled"
-                      id="flexRadioDisabled"
-                    />
-                    <label class="form-check-label" for="flexRadioDisabled">
-                    {deal.apidata && (
-  <>
-    {console.log(deal.apidata)}
-    {deal.apidata.monthlyInterest !== undefined && deal.apidata.monthlyInterest !== 0 ? (
-      <div>
-        monthlyInterest pay-out {deal.apidata.monthlyInterest} % P.M
-      </div>
-    ) : null}
-  </>
-)}
-
-                      {deal.apidata.yearlyInterest != 0 ? (
-                        <div>
-                          yearlyInterest pay-out {deal.apidata.monthlyInterest}{" "}
-                          % P.M
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                      {deal.apidata.quartlyInterest != 0 ? (
-                        <div>
-                          quartlyInterest pay-out {deal.apidata.monthlyInterest}{" "}
-                          % P.M
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                      {deal.apidata.halfInterest != 0 ? (
-                        <div>
-                          halfInterest pay-out {deal.apidata.monthlyInterest} %
-                          P.M
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </label>
-                  </div>
-
-                  {deal.apidata.lifeTimeWaiver ? (
-                    <>
-                      <button className="btn btn-primary" type="submit">
-                        Participate Now
-                      </button>
-                    </>
-                  ) : (
-                    <a
-                      href="https://test.cashfree.com/billpay/checkout/post/submit"
-                      className="btn btn-primary"
-                      onClick={handlecashfree}
-                    >
-                      Participate Now
-                    </a>
-                  )}
-                </Card> */}
-
-                {deal.apidata.feeStatusToParticipate == "MANDATORY" ? (
-                  <>
-                    <Card
-                      size="meddam"
-                      title={
-                        deal.apidata.groupName === "OXYMARCH09" ? (
-                          <>OXY FOUNDING LENDER</>
-                        ) : (
-                          <>New Lender</>
-                        )
-                      }
-                      headStyle={{
-                        backgroundColor: "#3d5ee1",
-                        color: "white",
-                        textAlign: "center",
-                      }}
-                      bodyStyle={{ width: 300 }}
-                    >
-                      <p size="meddam">Choose Your Interest Payout Method</p>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="flexRadioDisabled"
-                          id="flexRadioDisabled"
-                        />
-                        <label class="form-check-label" for="flexRadioDisabled">
-                          {deal.apidata && (
-                            <>
-                              {deal.apidata.monthlyInterest != 0 ? (
-                                <div>
-                                  monthlyInterest pay-out
-                                  {deal.apidata.monthlyInterest} % P.M
-                                </div>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          )}
-                          {deal.apidata.yearlyInterest != 0 ? (
-                            <div>
-                              yearlyInterest pay-out{" "}
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                          {deal.apidata.quartlyInterest != 0 ? (
-                            <div>
-                              quartlyInterest pay-out{" "}
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                          {deal.apidata.halfInterest != 0 ? (
-                            <div>
-                              halfInterest pay-out{" "}
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </label>
-                      </div>
-
-                      {deal.apidata.validityStatus ? (
-                        <>
-                          {/*   nofree */}
-
-                          {console.log(deal.apidata.validityStatus)}
-                          <button
-                            className="btn btn-primary"
-                            type="submit"
-                            onClick={() =>
-                              freeParticipation(
-                                deal,
-                                deal.apidata.minimumPaticipationAmount,
-                                deal.apidata.lenderParticiptionLimit
-                              )
-                            }
-                          >
-                            Participate Now
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          {/* pay free */}
-                          <button
-                            className="btn btn-primary"
-                            type="submit"
-                            onClick={() =>
-                              nofreeParticipation(
-                                deal,
-                                deal.apidata.minimumPaticipationAmount,
-                                deal.apidata.lenderParticiptionLimit
-                              )
-                            }
-                          >
-                            Participate Now
-                          </button>
-                        </>
-                      )}
-                    </Card>
-                  </>
-                ) : (
-                  <></>
-                )}
-
-                {deal.apidata.feeStatusToParticipate == "OPTIONAL" ? (
-                  <>
-                    {deal.apidata.groupName == "OXYMARCH09" ? (
-                      <>
-                        <Card
-                          size="meddam"
-                          title={
-                            deal.apidata.groupName ? (
-                              <>OXY FOUNDING LENDER </>
-                            ) : (
-                              <></>
-                            )
-                          }
-                          headStyle={{
-                            backgroundColor: "#3d5ee1",
-                            color: "white",
-                            textAlign: "center",
-                          }}
-                          bodyStyle={{ width: 300 }}
-                        >
-                          <p size="meddam">
-                            Choose Your Interest Payout Method
-                          </p>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="flexRadioDisabled"
-                              id="flexRadioDisabled"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexRadioDisabled"
-                            >
-                              {deal.apidata && (
-                                <>
-                                  {deal.apidata.monthlyInterest != 0 ? (
-                                    <div>
-                                      monthlyInterest pay-out
-                                      {deal.apidata.monthlyInterest} % P.M
-                                    </div>
-                                  ) : (
-                                    <></>
-                                  )}
-                                </>
-                              )}
-                              {deal.apidata.yearlyInterest != 0 ? (
-                                <div>
-                                  yearlyInterest pay-out{" "}
-                                  {deal.apidata.monthlyInterest} % P.M
-                                </div>
-                              ) : (
-                                <></>
-                              )}
-                              {deal.apidata.quartlyInterest != 0 ? (
-                                <div>
-                                  quartlyInterest pay-out{" "}
-                                  {deal.apidata.monthlyInterest} % P.M
-                                </div>
-                              ) : (
-                                <></>
-                              )}
-                              {deal.apidata.halfInterest != 0 ? (
-                                <div>
-                                  halfInterest pay-out{" "}
-                                  {deal.apidata.monthlyInterest} % P.M
-                                </div>
-                              ) : (
-                                <></>
-                              )}
-                            </label>
-                          </div>
-
-                          <button
-                            className="btn btn-primary"
-                            type="submit"
-                            onClick={() =>
-                              nofreeParticipation(
-                                deal,
-                                deal.apidata.minimumPaticipationAmount,
-                                deal.apidata.lenderParticiptionLimit
-                              )
-                            }
-                          >
-                            Participate Now
-                          </button>
-                        </Card>
-                      </>
-                    ) : (
-                      <> </>
-                    )}
-                    <Card
-                      size="meddam"
-                      title="NO Fee To Participate"
-                      headStyle={{
-                        backgroundColor: "#3d5ee1",
-                        color: "white",
-                        textAlign: "center",
-                      }}
-                      bodyStyle={{ width: 300 }}
-                    >
-                      <p size="meddam">Choose Your Interest Payout Method</p>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="flexRadioDisabled"
-                          id="flexRadioDisabled"
-                        />
-                        <label class="form-check-label" for="flexRadioDisabled">
-                          {deal.apidata && (
-                            <>
-                              {deal.apidata.monthlyInterest != 0 ? (
-                                <div>
-                                  monthlyInterest pay-out
-                                  {deal.apidata.monthlyInterest} % P.M
-                                </div>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          )}
-                          {deal.apidata.yearlyInterest != 0 ? (
-                            <div>
-                              yearlyInterest pay-out{" "}
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                          {deal.apidata.quartlyInterest != 0 ? (
-                            <div>
-                              quartlyInterest pay-out{" "}
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                          {deal.apidata.halfInterest != 0 ? (
-                            <div>
-                              halfInterest pay-out{" "}
-                              {deal.apidata.monthlyInterest} % P.M
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </label>
-                      </div>
-
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        onClick={() =>
-                          nofreeParticipation(
-                            deal,
-                            deal.apidata.minimumPaticipationAmount,
-                            deal.apidata.lenderParticiptionLimit
-                          )
-                        }
-                      >
-                        Participate Now
-                      </button>
-                    </Card>
-                  </>
-                ) : (
-                  <></>
-                )}
+                />
               </div>
+              {}
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => {
+                  // Assuming 'dealparticipate' is a function you want to call
+                  dealparticipate(
+                    deal.apidata,
+                    deal.participatedAmount,
+                    deal.lenderReturnType,
+                    deal.apidata.groupId,
+                    deal.urldealId,
+                    deal.bank,
+                    deal
+                  );
+
+                  // Update the 'deal' state
+                  setDeal({
+                    ...deal,
+                    participatedeal: !deal.participatedeal,
+                  });
+                }}
+>
+                Participate
+              </Button>
             </div>
           </div>
           <Footer />

@@ -34,6 +34,7 @@ import {
   getUserDetails,
   getactivityApisData,
 } from "../../HttpRequest/afterlogin";
+import { validityDatemodal } from "../Base UI Elements/SweetAlert";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -662,6 +663,21 @@ const AdminDashboard = () => {
           ...membershipdata,
           dashboardData: data,
         });
+        const currentDate = new Date(); // Get the current date
+
+        // Format the current date as "YYYY-MM-DD"
+        const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+        
+        // Assuming data.validityDate is a string in the format "YYYY-MM-DD"
+        const validityDate = data.data.validityDate; // Replace this with your actual date string
+        console.log(validityDate , formattedCurrentDate)
+        if (validityDate >= formattedCurrentDate) {
+          console.log("valid");
+
+        } else { console.log("validity expires");
+      validityDatemodal(validityDate)
+        }
+        
       }
     });
     getUserDetails().then((data) => {
@@ -674,6 +690,8 @@ const AdminDashboard = () => {
     });
     return () => {};
   }, []);
+
+
 
   useEffect(() => {
     const activeres = getactivityApisData();
