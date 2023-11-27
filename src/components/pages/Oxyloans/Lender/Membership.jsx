@@ -2,19 +2,40 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import { Card, Space } from 'antd';
+import { Button, Card, Space } from 'antd';
+import './member.css'
 import './Dashboardtable.css'
 import { pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
-import { getMyWalletTowalletHistory } from "../../../HttpRequest/afterlogin";
+import { getMyWalletTowalletHistory, handlePaymembershipapi } from "../../../HttpRequest/afterlogin";
+import { membershipsweetalert } from "../../Base UI Elements/SweetAlert";
 
 const Membership = React.memo((pros) => {
   const [mywalletTowalletHistory, setmywalletTowalletHistory] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
+    membershiptype:"",
   });
 
+
+
+  const handlePaymembershipfree = async (membership) => {
+
+       
+    try {
+      const response = await handlePaymembershipapi(membership);
+      console.log(response.data.status);
+      membershipsweetalert(response.data.status)
+
+      // Handle the response data or perform additional actions here
+    } catch (error) {
+      // Handle errors if the promise is rejected
+      
+      membershipsweetalert("error")
+    }
+  };
+  
   
   return (
     <>
@@ -44,60 +65,127 @@ const Membership = React.memo((pros) => {
 
             <div className="row">
               <div className="col-sm-12">
-                <div className="card">
+                <div className="card"  >
                   <div className="card-body">
                     <div>
 
 
-                    <Space direction="horizontal" size={13}>
-    <Card  
+                    <Space direction="horizontal" size={13} style={{display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
+                    <Card
       size="small"
-      title=" size card"
-      extra={<a href="#">More</a>}
+      title="1 Months Plan"
       style={{
         width: 220,
+        textAlign:'center'
       }}
     >
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
+      <h6 className="cardstylemar">1000  + 18 % GST</h6>
+      
+      <p ><strong>1</strong> Month  Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic"   onClick={()=>handlePaymembershipfree("MONTHLY")}>Subscribe</Button>
+      </div>
     </Card>
     <Card
       size="small"
-      title="Small size card"
-      extra={<a href="#">More</a>}
+      title="3 Months plan"
       style={{
         width: 220,
+        textAlign:'center'
       }}
     >
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>  
+      <h6 className="cardstylemar">2900 + 18 % GST</h6>
+      
+      <p ><strong>3 </strong> Year Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic"  onClick={()=>handlePaymembershipfree("QUARTERLY")}>Subscribe</Button>
+      </div>
+    </Card>
     <Card
       size="small"
-      title="Small size card"
-      extra={<a href="#">More</a>}
+      title="6 Months Plan"
       style={{
         width: 220,
+        textAlign:'center'
       }}
     >
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
+      <h6 className="cardstylemar">5600 + 18 % GST</h6>
+      
+      <p ><strong>6</strong> Months  Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic" onClick={()=>handlePaymembershipfree("HALFYEARLY")}>Subscribe</Button>
+      </div>
     </Card>
 
     <Card
       size="small"
-      title="Small size card"
-      extra={<a href="#">More</a>}
+      title="1 Year Plan"
       style={{
         width: 220,
+        textAlign:'center'
       }}
     >
-      <p>Card content</p>
-      <p>Card content</p>
-      <p>Card content</p>
+      <h6 className="cardstylemar">9800  + 18 % GST</h6>
+      
+      <p ><strong>1</strong> Months  Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic" onClick={()=>handlePaymembershipfree("PERYEAR")}>Subscribe</Button>
+      </div>
+    </Card>
+
+    <Card
+      size="small"
+      title="5 Year Plan"
+      style={{
+        width: 220,
+        textAlign:'center'
+      }}
+    >
+      <h6 className="cardstylemar">50000   + 18 % GST</h6>
+      
+      <p ><strong>5</strong> Year  Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic" onClick={()=>handlePaymembershipfree("FIVEYEARS")}>Subscribe</Button>
+      </div>
+    </Card>
+
+    <Card
+      size="small"
+      title="10 Year Plan"
+      style={{
+        width: 220,
+        textAlign:'center'
+      }}
+    >
+      <h6 className="cardstylemar">90000   + 18 % GST</h6>
+      
+      <p ><strong>10 </strong> Year  Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic" onClick={()=>handlePaymembershipfree("TENYEARS")}>Subscribe</Button>
+      </div>
+    </Card>
+
+    <Card
+      size="small"
+      title="Life Time Plan"
+      style={{
+        width: 220,
+        textAlign:'center'
+      }}
+    >
+      <h6 className="cardstylemar">100000   + 18 % GST</h6>
+      
+      <p ><strong>1</strong> Years   Membership</p>
+      <p>Unlimited Deals Participation</p>
+      <div className="centerdic">
+     <Button className="btn btn-primary centerdic" onClick={()=>handlePaymembershipfree("LIFETIME")}>Subscribe</Button>
+      </div>
     </Card>
     </Space>   
                     </div>

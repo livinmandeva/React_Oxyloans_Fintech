@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
 import Admlogin from "./components/pages/Authentication/Admlogin";
 import Membership from "./components/pages/Oxyloans/Lender/Membership";
+import Spining from "./components/pages/Oxyloans/Lender/Spining";
 
 const Login = React.lazy(() => import("./components/pages/Authentication"));
 const Register = React.lazy(() =>
@@ -191,6 +192,10 @@ const appcontainer = () => {
           <Route
             path="/withdrawdealfromwallet"
             element={<Withdrawdealfromwallet />}
+          />
+             <Route
+            path="/spining"
+            element={<Spining />}
           />
           <Route path="/admlogin" element={<Admlogin />} />
           <Route

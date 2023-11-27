@@ -87,6 +87,41 @@ export const sendInvait = async (email, mailContent, mailSubject) => {
   return response;
 };
 
+
+export const handlePaymembershipapi = async (member)=>{
+  const token = getToken();
+  const userId = getUserId();
+
+
+  const membershipfiled = {
+    MONTHLY: "1000",
+    QUARTERLY: "2900",
+    HALFYEARLY: "5600",
+    PERYEAR: "9800",
+    LIFETIME: "100000",
+    FIVEYEARS: "50000",
+    TENYEARS: "90000",
+  };
+
+
+  const calculatedfee = (parseInt(membershipfiled[member]) * 118) / 100;
+  console.log(calculatedfee)
+ 
+  const data = {
+    userId,
+    type: "Wallet",
+    feeAmount: calculatedfee,
+    lenderFeePayments: member,
+  };
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deducting_lender_fee_from_wallet`,
+    "POST",
+    token,
+    data
+  );
+  return  response
+}
 export const getuserMembershipValidity = async () => {
   const token = getToken();
   const userId = getUserId();

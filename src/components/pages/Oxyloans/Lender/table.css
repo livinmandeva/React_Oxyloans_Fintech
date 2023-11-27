@@ -20,7 +20,14 @@
   }
 }
 
-
+.flexcontaner{
+  height: 60vh;
+  width: 70vw;
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+  opacity: 0.5;
+}
 /* tr:nth-child(even) {
     background-color: #f0f0f0;
   } */

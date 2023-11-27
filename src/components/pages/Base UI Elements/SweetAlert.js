@@ -286,6 +286,8 @@ export const Error = () => {
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
   });
+};export const membershipsweetalert = (message) => {
+  Swal.fire(message);
 };
 export const autoClose = () => {
   var t;

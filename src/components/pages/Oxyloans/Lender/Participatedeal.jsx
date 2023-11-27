@@ -21,6 +21,7 @@ import {
 } from "../../Base UI Elements/SweetAlert";
 import Swal from "sweetalert2";
 import Freeparticipate from "./Freeparticipate";
+import Spining from "./Spining";
 
 const Participatedeal = () => {
   // const history = useNavigate();
@@ -38,6 +39,7 @@ const Participatedeal = () => {
     bank: "",
     wallet: "",
     urldealId: "",
+    spining:false,
   });
    const [buttonvaild ,setbuttonvaild]=useState(false)
   const [isConditionMet, setIsConditionMet] = useState(false);
@@ -48,12 +50,6 @@ const Participatedeal = () => {
       const dealId = urlparam.get("dealId");
 
       const response = await handledetail(dealId);
-
-      response.then((response)=>{
-        if(response.request.status == 200){
-          
-        }
-      })
       console.log(response.data);
 
       setDeal({
@@ -61,12 +57,25 @@ const Participatedeal = () => {
         apidata: response.data,
         urldealId: dealId,
       });
+      if(response.request.status == 500){
+      setDeal({
+        ...deal,
+        spining:true,
+      });
+      }
       {response.data.lenderRemainingWalletAmount != "" || null && <>{localStorage.setItem(
         "lenderRemainingWalletAmount",
         response.data.lenderRemainingWalletAmount
       )}</>}
-      
-      console.log("deal apidata", deal.apidata);
+      setTimeout(() => {
+        setDeal({
+          ...deal,
+          apidata: response.data,
+          urldealId: dealId,
+        });
+        console.log("deal apidata", deal.apidata);
+      }, 1000);
+     
 
       if (response.data.yearlyInterest !== 0) {
         setDeal({
@@ -268,7 +277,7 @@ const Participatedeal = () => {
                 </div>
               </div>
             </div>
-            {/* /Page Header */}
+            {deal.spining ? <> <Spining /></> : <>
             <p>Welcome to {deal.apidata && deal.apidata.dealName}</p>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Table
@@ -359,6 +368,9 @@ const Participatedeal = () => {
                 Participate
               </Button>
             </div>
+            </>}
+            {/* /Page Header */}
+      
           </div>
           <Footer />
         </div>

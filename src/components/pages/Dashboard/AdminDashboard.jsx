@@ -1254,7 +1254,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="award-time-list">
                                   <Link
-                                    to={`participatedeal?dealId=${data.dealId}`}
+                                    to={`/participatedeal?dealId=${data.dealId}`}
                                   >
                                     <span>Participate</span>
                                   </Link>
@@ -1290,7 +1290,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="award-time-list">
                                   <Link
-                                    to={`participatedeal?dealId=${data.dealId}`}
+                                    to={`/participatedeal?dealId=${data.dealId}`}
                                   >
                                     <span>Participate</span>
                                   </Link>

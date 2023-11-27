@@ -1,0 +1,11 @@
+
+
+.cardstylemar{
+    margin: 0.6rem !important;
+}
+.centerdic{
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
