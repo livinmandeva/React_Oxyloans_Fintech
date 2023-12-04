@@ -19,14 +19,28 @@ const Membership = React.memo((pros) => {
     hasdata: false,
     loading: true,
     membershiptype: "",
+    loading:false
+
   });
   const handlePaymembershipfree = async (membership) => {
     try {
+      setmywalletTowalletHistory({
+        ...mywalletTowalletHistory,
+        loading:true
+      })
       const response = await handlePaymembershipapi(membership);
       console.log(response.data.status);
       membershipsweetalert(response.data.status);
+      setmywalletTowalletHistory({
+        ...mywalletTowalletHistory,
+        loading:false
+      })
     } catch (error) {
       membershipsweetalert("error");
+      setmywalletTowalletHistory({
+        ...mywalletTowalletHistory,
+        loading:false
+      })
     }
   };
 
@@ -278,6 +292,7 @@ const Membership = React.memo((pros) => {
                           </div>
                         </div>
                       </div>
+
                     </div>
                   </div>
                 </div>

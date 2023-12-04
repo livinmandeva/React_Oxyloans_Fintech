@@ -123,7 +123,7 @@ export const validityDatemodal = (validityDate) => {
   }).then((result) => {
     if (result.isConfirmed) {
       // Use window.location.href to navigate to a new URL
-      window.location.href = '/paymembership';
+      window.location.href = '/membership';
     }
   });
 };

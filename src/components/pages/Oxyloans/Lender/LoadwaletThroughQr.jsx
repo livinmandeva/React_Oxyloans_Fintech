@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import {
-  LoadwalletThroughQrScan,
-  checkqrcodetransaction,
-} from "../../../HttpRequest/afterlogin";
 import { QRCode, Space } from "antd";
 import {
   HandleWithFooter,
