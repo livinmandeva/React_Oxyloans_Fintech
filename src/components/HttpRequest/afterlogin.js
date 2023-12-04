@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -87,11 +87,9 @@ export const sendInvait = async (email, mailContent, mailSubject) => {
   return response;
 };
 
-
-export const handlePaymembershipapi = async (member)=>{
+export const handlePaymembershipapi = async (member) => {
   const token = getToken();
   const userId = getUserId();
-
 
   const membershipfiled = {
     MONTHLY: "1000",
@@ -103,10 +101,9 @@ export const handlePaymembershipapi = async (member)=>{
     TENYEARS: "90000",
   };
 
-
   const calculatedfee = (parseInt(membershipfiled[member]) * 118) / 100;
-  console.log(calculatedfee)
- 
+  console.log(calculatedfee);
+
   const data = {
     userId,
     type: "Wallet",
@@ -120,8 +117,8 @@ export const handlePaymembershipapi = async (member)=>{
     token,
     data
   );
-  return  response
-}
+  return response;
+};
 export const getuserMembershipValidity = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -868,7 +865,9 @@ export const nofreeParticipationapi = async (
   // }
 
   var participationStatus = "ADD";
-  var lenderRemainingWalletAmount=localStorage.getItem("lenderRemainingWalletAmount")
+  var lenderRemainingWalletAmount = localStorage.getItem(
+    "lenderRemainingWalletAmount"
+  );
   const data1 = {
     userId: userId,
     groupId: groupId,
@@ -880,7 +879,7 @@ export const nofreeParticipationapi = async (
     paticipationStatus:
       deal.lenderPaticipatedResponseDto !== null ? "ADD" : "UPDATE",
     accountType: accountType,
-    lenderRemainingWalletAmount:lenderRemainingWalletAmount,
+    lenderRemainingWalletAmount: lenderRemainingWalletAmount,
     ExtensionConsents: userisIn === "local" ? "INTERESTED" : "NOTINTERESTED",
     feeStatus: "COMPLETED",
     // lenderTotalPanLimit:userPanLimit,
@@ -1276,7 +1275,7 @@ export const savenomineeDeatailsApi = async (nominee) => {
   return response;
 };
 
-export const getPanDoc =async () => {
+export const getPanDoc = async () => {
   const token = getToken();
   const userId = getUserId();
   const res = await handleApiRequestAfterLoginService(
@@ -1288,7 +1287,7 @@ export const getPanDoc =async () => {
   return res;
 };
 
-export const getdataPassport =async () => {
+export const getdataPassport = async () => {
   const token = getToken();
   const userId = getUserId();
   const res = await handleApiRequestAfterLoginService(
@@ -1300,10 +1299,10 @@ export const getdataPassport =async () => {
   return res;
 };
 
-export const getdataAadhar =async () => {
+export const getdataAadhar = async () => {
   const token = getToken();
   const userId = getUserId();
-  const res =await handleApiRequestAfterLoginService(
+  const res = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/download/AADHAR`,
     "GET",
@@ -1312,7 +1311,7 @@ export const getdataAadhar =async () => {
   return res;
 };
 
-export const getdataVoterId = async() => {
+export const getdataVoterId = async () => {
   const token = getToken();
   const userId = getUserId();
   const res = await handleApiRequestAfterLoginService(
@@ -1324,7 +1323,7 @@ export const getdataVoterId = async() => {
   return res;
 };
 
-export const getdataDrivingLicence = async() => {
+export const getdataDrivingLicence = async () => {
   const token = getToken();
   const userId = getUserId();
   const res = await handleApiRequestAfterLoginService(

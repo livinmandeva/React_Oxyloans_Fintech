@@ -193,10 +193,7 @@ const appcontainer = () => {
             path="/withdrawdealfromwallet"
             element={<Withdrawdealfromwallet />}
           />
-             <Route
-            path="/spining"
-            element={<Spining />}
-          />
+          <Route path="/spining" element={<Spining />} />
           <Route path="/admlogin" element={<Admlogin />} />
           <Route
             path="/withdrawdealfromDeal"

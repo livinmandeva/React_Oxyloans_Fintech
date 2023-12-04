@@ -1,33 +1,7 @@
-.tablerow > th {
-  border: 1px solid #eeeeee;
-  text-align: left;
-  padding: 8px;
-}
-.textwrap{
-  width: 18rem !important;
-  overflow: hidden !important;
-}
-.tablerow > td {
-  border: 1px solid #eeeeee;
-  text-align: left;
-  padding: 8px;
-}
-
-@media screen and (max-width: 890px) {
-  .scrolling {
-    display: flex;
-    overflow-x: scroll;
-  }
-}
-
-.flexcontaner{
-  height: 60vh;
-  width: 70vw;
+.flexcontaner {
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center !important;
   opacity: 0.5;
 }
-/* tr:nth-child(even) {
-    background-color: #f0f0f0;
-  } */

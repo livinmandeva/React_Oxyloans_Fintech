@@ -39,9 +39,9 @@ const Participatedeal = () => {
     bank: "",
     wallet: "",
     urldealId: "",
-    spining:false,
+    spining: false,
   });
-   const [buttonvaild ,setbuttonvaild]=useState(false)
+  const [buttonvaild, setbuttonvaild] = useState(false);
   const [isConditionMet, setIsConditionMet] = useState(false);
 
   useEffect(() => {
@@ -57,16 +57,23 @@ const Participatedeal = () => {
         apidata: response.data,
         urldealId: dealId,
       });
-      if(response.request.status == 500){
-      setDeal({
-        ...deal,
-        spining:true,
-      });
+      if (response.request.status == 500) {
+        setDeal({
+          ...deal,
+          spining: true,
+        });
       }
-      {response.data.lenderRemainingWalletAmount != "" || null && <>{localStorage.setItem(
-        "lenderRemainingWalletAmount",
-        response.data.lenderRemainingWalletAmount
-      )}</>}
+      {
+        response.data.lenderRemainingWalletAmount != "" ||
+          (null && (
+            <>
+              {localStorage.setItem(
+                "lenderRemainingWalletAmount",
+                response.data.lenderRemainingWalletAmount
+              )}
+            </>
+          ));
+      }
       setTimeout(() => {
         setDeal({
           ...deal,
@@ -75,7 +82,6 @@ const Participatedeal = () => {
         });
         console.log("deal apidata", deal.apidata);
       }, 1000);
-     
 
       if (response.data.yearlyInterest !== 0) {
         setDeal({
@@ -100,7 +106,7 @@ const Participatedeal = () => {
 
   const dataSource = [];
 
-      console.log(deal.apidata)
+  console.log(deal.apidata);
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
@@ -134,23 +140,14 @@ const Participatedeal = () => {
       dataIndex: "tenureinmonths",
       key: "tenureinmonths",
     },
+
     {
-      title: "Funding Start ",
-      dataIndex: "funding",
-      key: "funding",
-    },
-    {
-      title: "Funding End ",
-      dataIndex: "fundingdate",
-      key: "fundingdate",
-    },
-    {
-      title: "Minimum Amount",
+      title: "Min Amount",
       dataIndex: "minimumparticipation",
       key: "minimumparticipation",
     },
     {
-      title: "Maximum Amount",
+      title: "Max Amount",
       dataIndex: "maximumparticipation",
       key: "maximumparticipation",
     },
@@ -202,7 +199,6 @@ const Participatedeal = () => {
           deal,
         });
         console.log("deal not having free feeStatusToParticipate");
-        
       }
     } else {
       WarningAlertWalltTran(
@@ -229,18 +225,15 @@ const Participatedeal = () => {
     checkCondition();
   }, [deal.participatedAmount]);
 
-
-
-  useEffect(()=>{
-    if(deal.bank != ""){
-   console.log("payment type selected");
-   setbuttonvaild(true)
-    }else{
-
-    console.log("select  payment type");
-    setbuttonvaild(false)
+  useEffect(() => {
+    if (deal.bank != "") {
+      console.log("payment type selected");
+      setbuttonvaild(true);
+    } else {
+      console.log("select  payment type");
+      setbuttonvaild(false);
     }
-  },[deal.bank])
+  }, [deal.bank]);
   useEffect(() => {
     {
       console.log(deal.bank);
@@ -277,100 +270,108 @@ const Participatedeal = () => {
                 </div>
               </div>
             </div>
-            {deal.spining ? <> <Spining /></> : <>
-            <p>Welcome to {deal.apidata && deal.apidata.dealName}</p>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={false}
-              />
-            </div>
+            {deal.spining ? (
+              <>
+                {" "}
+                <Spining />
+              </>
+            ) : (
+              <>
+                <p>Welcome to {deal.apidata && deal.apidata.dealName}</p>
+                <div className="row col-12">
+                  <Table
+                    dataSource={dataSource.length < 0 ? [] : dataSource}
+                    columns={columns}
+                    pagination={false}
+                    loading={dataSource.length < 0 ? true : false}
+                  />
+                </div>
 
-            <div className="displaycenter">
-              <h4 style={{ marginTop: "2rem" }}>
-                Return Principal To :{/* Transfer principal payment method */}
-              </h4>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="transferPrincipal"
-                  value={"WALLET"}
-                  onChange={(event) => {
-                    setDeal({
-                      ...deal,
-                      bank: event.target.value,
-                    });
-                  }}
-                />
-                <label class="form-check-label" for="flexRadioDisabled">
-                  <strong> Move Principal to wallet </strong>
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="transferPrincipal"
-                  value={"BANKACCOUNT"}
-                  onChange={(event) => {
-                    setDeal({
-                      ...deal,
-                      bank: event.target.value,
-                    });
-                  }}
-                />
+                <div className="displaycenter">
+                  <h4 style={{ marginTop: "2rem" }}>Return Principal To :</h4>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="transferPrincipal"
+                      value={"WALLET"}
+                      onChange={(event) => {
+                        setDeal({
+                          ...deal,
+                          bank: event.target.value,
+                        });
+                      }}
+                    />
+                    <label class="form-check-label" for="flexRadioDisabled">
+                      <strong> Move Principal to wallet </strong>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="transferPrincipal"
+                      value={"BANKACCOUNT"}
+                      onChange={(event) => {
+                        setDeal({
+                          ...deal,
+                          bank: event.target.value,
+                        });
+                      }}
+                    />
 
-                <label class="form-check-label" for="flexRadioCheckedDisabled">
-                  <strong> Move Principal to Bank</strong>
-                </label>
-              </div>
-            </div>
-            <div className="centerdiv mt-5">
-              <h4>Your participation to this deal is</h4>
-              <div className="form-group">
-                <input
-                  className="form-control-lg form-control-lg1"
-                  type="text"
-                  placeholder="Enter amount here..."
-                  onChange={(event) => {
-                    setDeal({
-                      ...deal,
-                      participatedAmount: event.target.value,
-                    });
-                  }}
-                />
-              </div>
-              {}
-              <Button
-                type="primary"
-                size="large"
-                onClick={() => {
-                  // Assuming 'dealparticipate' is a function you want to call
-                  dealparticipate(
-                    deal.apidata,
-                    deal.participatedAmount,
-                    deal.lenderReturnType,
-                    deal.apidata.groupId,
-                    deal.urldealId,
-                    deal.bank,
-                    deal
-                  );
+                    <label
+                      class="form-check-label"
+                      for="flexRadioCheckedDisabled"
+                    >
+                      <strong> Move Principal to Bank</strong>
+                    </label>
+                  </div>
+                </div>
+                <div className="centerdiv mt-5">
+                  <h4>Your participation to this deal is</h4>
+                  <div className="form-group">
+                    <input
+                      className="form-control-lg form-control-lg1"
+                      type="text"
+                      placeholder="Enter amount here..."
+                      onChange={(event) => {
+                        setDeal({
+                          ...deal,
+                          participatedAmount: event.target.value,
+                        });
+                      }}
+                    />
+                  </div>
+                  {}
+                  <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => {
+                      // Assuming 'dealparticipate' is a function you want to call
+                      dealparticipate(
+                        deal.apidata,
+                        deal.participatedAmount,
+                        deal.lenderReturnType,
+                        deal.apidata.groupId,
+                        deal.urldealId,
+                        deal.bank,
+                        deal
+                      );
 
-                  // Update the 'deal' state
-                  setDeal({
-                    ...deal,
-                    participatedeal: !deal.participatedeal,
-                  });
-                }}
->
-                Participate
-              </Button>
-            </div>
-            </>}
+                      // Update the 'deal' state
+                      setDeal({
+                        ...deal,
+                        participatedeal: !deal.participatedeal,
+                      });
+                    }}
+                  >
+                    Participate
+                  </Button>
+                </div>
+              </>
+            )}
             {/* /Page Header */}
-      
           </div>
           <Footer />
         </div>

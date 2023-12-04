@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import './Dashboardtable.css'
+import "./Dashboardtable.css";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";

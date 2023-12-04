@@ -9,7 +9,6 @@
   .my-element {
     width: 50%;
   }
-
 }
 
 @media (min-width: 768px) {
@@ -18,8 +17,8 @@
     width: 75%;
   }
   .querybtn {
-  margin-top: 3rem;
-    }
+    margin-top: 3rem;
+  }
 }
 
 @media (min-width: 992px) {
@@ -29,7 +28,7 @@
   }
   .querybtn {
     margin-top: 3rem;
-      }
+  }
 }
 
 @media (min-width: 1200px) {
@@ -39,8 +38,7 @@
   }
   .querybtn {
     margin-top: 3rem;
-      }
-
+  }
 }
 
 @media (min-width: 1400px) {
@@ -50,5 +48,5 @@
   }
   .querybtn {
     margin-top: 3rem;
-      }
+  }
 }
