@@ -797,6 +797,7 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
     lastName: "",
     userId: userId,
   });
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderwithdrawalfundssearch`,
@@ -810,7 +811,6 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
 export const chatapi = async () => {
   const token = getToken();
   const userId = getUserId();
-
   const response = handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/lendertotalInvestmentData`,

@@ -324,7 +324,7 @@ const MyRunningDelas = () => {
                                 {data.participationStatus != "ACHIEVED" ? (
                                   <div className="col-auto">
                                     <Link
-                                      to={`participatedeal?dealId=${data.dealId}`}
+                                      to={`/participatedeal?dealId=${data.dealId}`}
                                     >
                                       <span className="badge bg-success-dark">
                                         Participate

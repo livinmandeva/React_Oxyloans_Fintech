@@ -120,6 +120,11 @@ const DashboardTransactions = () => {
           hasdata:
             data.data.lenderWalletHistoryResponseDto.length == 0 ? false : true,
         });
+      } else {
+        setdashboardInvestment({
+          ...dashboardInvestment,
+          loading: false,
+        });
       }
     });
     return () => {};
@@ -139,6 +144,11 @@ const DashboardTransactions = () => {
           loading: false,
           hasdata:
             data.data.lenderReturnsResponseDto.length == 0 ? false : true,
+        });
+      } else {
+        setdashboardPrincipalReturns({
+          ...dashboardPrincipalReturns,
+          loading: false,
         });
       }
     });
@@ -160,6 +170,11 @@ const DashboardTransactions = () => {
           hasdata:
             data.data.lenderReturnsResponseDto.length == 0 ? false : true,
         });
+      } else {
+        setdashboardInterestEarnings({
+          ...dashboardInterestEarnings,
+          loading: false,
+        });
       }
     });
     return () => {};
@@ -178,6 +193,11 @@ const DashboardTransactions = () => {
           apiData: data.data,
           loading: false,
           hasdata: data.data.referrerResponseDto.length == 0 ? false : true,
+        });
+      } else {
+        setdashboardReferralEarnings({
+          ...dashboardReferralEarnings,
+          loading: false,
         });
       }
     });
@@ -199,6 +219,11 @@ const DashboardTransactions = () => {
             data.data.lenderTotalPaticipationDealsInfo.length == 0
               ? false
               : true,
+        });
+      } else {
+        setdashboardDealsVsEarnings({
+          ...dashboardDealsVsEarnings,
+          loading: false,
         });
       }
     });
