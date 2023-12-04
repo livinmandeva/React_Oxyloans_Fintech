@@ -109,8 +109,6 @@ export const WarningAlert = (errorMessage, redirectTo) => {
   });
 };
 
-
-
 export const validityDatemodal = (validityDate) => {
   Swal.fire({
     title: "Membership Renewal Reminder",
@@ -123,7 +121,7 @@ export const validityDatemodal = (validityDate) => {
   }).then((result) => {
     if (result.isConfirmed) {
       // Use window.location.href to navigate to a new URL
-      window.location.href = '/membership';
+      window.location.href = "/membership";
     }
   });
 };
@@ -135,7 +133,7 @@ export const participatedapi = ({
   groupId,
   dealId,
   accountType,
-  deal
+  deal,
 }) => {
   Swal.fire({
     title: "Please review the lending details!",
@@ -146,7 +144,7 @@ export const participatedapi = ({
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Ok!"
+    confirmButtonText: "Ok!",
   }).then((result) => {
     if (result.isConfirmed) {
       // Call the nofreeParticipationapi function here
@@ -167,7 +165,7 @@ export const participatedapi = ({
             title: "Congratulations!",
             text: `We are reserving ${participatedAmount} for  .
             Your new wallet balance: ${amount}`,
-            icon: "success"
+            icon: "success",
           });
         })
         .catch((error) => {
@@ -175,13 +173,12 @@ export const participatedapi = ({
             title: "Error!",
             text: `We are reserving ${errorMessage} for ROI%%% .
             Your new wallet balance: ${amount}`,
-            icon: "error"
+            icon: "error",
           });
         });
     }
   });
 };
-
 
 const tenure = {
   monthly: 1000,
@@ -269,15 +266,14 @@ export const PrincipalTransfer = (warningType, errormessage) => {
   }, 3000);
 };
 
-export  const WarningAlerterror= (errorMessage, redirectTo)=>{
+export const WarningAlerterror = (errorMessage, redirectTo) => {
   Swal.fire({
     title: "error",
     text: errorMessage,
     icon: "error",
     showDenyButton: true,
-
-  })
-}
+  });
+};
 export const Error = () => {
   Swal.fire({
     title: "Error!",
@@ -286,7 +282,8 @@ export const Error = () => {
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
   });
-};export const membershipsweetalert = (message) => {
+};
+export const membershipsweetalert = (message) => {
   Swal.fire(message);
 };
 export const autoClose = () => {

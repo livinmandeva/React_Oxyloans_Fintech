@@ -18,7 +18,7 @@ import { onShowSizeChange, itemRender } from "../../Pagination";
 import { fetchData } from "../../Redux/Slice";
 import { fetchDatadashboard } from "../../Redux/SliceDashboard";
 import { useSelector, useDispatch } from "react-redux";
-import useDealActivity from "../../CustomHooks/useDealActivity";
+import useDealActivity from "../../Hooks/useDealActivity";
 
 import {
   awardicon01,
