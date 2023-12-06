@@ -341,7 +341,7 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/profile">
                 My Profile
               </Link>
-              <Link className="dropdown-item" to="/participatedeal">
+              <Link className="dropdown-item" to="/myRunningDelas">
                 My Deals
               </Link>
               <Link className="dropdown-item" to="/">
