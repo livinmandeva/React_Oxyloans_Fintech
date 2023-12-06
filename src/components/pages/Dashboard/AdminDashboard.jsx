@@ -34,7 +34,11 @@ import {
   getUserDetails,
   getactivityApisData,
 } from "../../HttpRequest/afterlogin";
-import { validityDatemodal } from "../Base UI Elements/SweetAlert";
+import {
+  personalDetails,
+  personalDetailsInfo,
+  validityDatemodal,
+} from "../Base UI Elements/SweetAlert";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -674,11 +678,18 @@ const AdminDashboard = () => {
         if (validityDate >= formattedCurrentDate) {
           console.log("valid");
         } else {
-          console.log("validity expires");
-          validityDatemodal(validityDate);
+          const skipbutton = localStorage.getItem("skip");
+          if (skipbutton) {
+            console.log("skip button not clicked");
+          } else {
+            console.log("validity expires");
+            validityDatemodal(validityDate);
+          }
+
         }
       }
     });
+
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
         setdashboarddata({
@@ -781,7 +792,41 @@ const AdminDashboard = () => {
   }, []);
 
   // dealsProgressed.participatedDeals  console.log(googledata);
+  useEffect(() => {
+    const deatilskip = localStorage.getItem("deatilskip");
 
+    if (deatilskip) {
+      console.log("skip the all details alert");
+    } else {
+      console.log("not the all details alert");
+    
+      const profileData = dashboarddata?.profileData?.data;
+    
+      if (profileData) {
+        const { kycStatus, bankDetailsInfo, personalDetailsInfo } = profileData;
+    
+        if (kycStatus !== undefined && bankDetailsInfo !== undefined && personalDetailsInfo !== undefined) {
+          console.log(kycStatus);
+          console.log(bankDetailsInfo);
+          console.log(personalDetailsInfo);
+
+          console.log("personalDetails, bankDetailsInfo, and kycStatus available");
+        } else {
+          console.log("Some information is undefined or not available");
+          if (personalDetailsInfo === undefined) {
+            personalDetails("personalDetails is not available", "/profile");
+          } else if (bankDetailsInfo === undefined) {
+            personalDetails("bankdetailsinfo is not available", "/profile");
+          } else {
+            personalDetails("kyc is not available", "/profile");
+          }
+        }
+      } else {
+        console.log("profileData is not available");
+      }
+    }
+    
+  }, [dashboarddata.profileData]);
   return (
     <>
       <div className="main-wrapper">
@@ -872,7 +917,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
                 <div className="card bg-comman w-100">
                   <div className="card-body">

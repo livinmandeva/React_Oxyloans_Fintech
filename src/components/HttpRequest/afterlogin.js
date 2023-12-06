@@ -877,7 +877,7 @@ export const nofreeParticipationapi = async (
     // rateofInterest: choosenRateofInterest,
     processingFee: 0,
     paticipationStatus:
-      deal.lenderPaticipatedResponseDto !== null ? "ADD" : "UPDATE",
+      deal.lenderParticipationTotal !== null || 0 ? "ADD" : "UPDATE",
     accountType: accountType,
     lenderRemainingWalletAmount: lenderRemainingWalletAmount,
     ExtensionConsents: userisIn === "local" ? "INTERESTED" : "NOTINTERESTED",

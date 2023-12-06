@@ -8,6 +8,7 @@ import {
   downloadTranactionStatement,
   cancelWithdrawalRequest,
   nofreeParticipationapi,
+  handlePaymembershipapi,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -118,13 +119,44 @@ export const validityDatemodal = (validityDate) => {
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Get Membership",
+    cancelButtonText: "Skip", // Add this line to set the text for the Cancel button
   }).then((result) => {
     if (result.isConfirmed) {
-      // Use window.location.href to navigate to a new URL
-      window.location.href = "/membership";
+      // User clicked "Get Membership"
+      window.location.href = '/membership';
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // User clicked "Skip" or closed the modal
+      // You can add custom logic here if needed
+      localStorage.setItem("skip",true)
+      console.log('User skipped membership renewal.');
+
     }
   });
 };
+
+
+export const personalDetails=(message , route)=>{
+  Swal.fire({
+    title: message,
+    html: `<p style={{marginBottom: '2px'}}></p>`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "update",
+    cancelButtonText: "Skip", // Add this line to set the text for the Cancel button
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // User clicked "Get Membership"
+      window.location.href = route;
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // User clicked "Skip" or closed the modal
+      // You can add custom logic here if needed
+      localStorage.setItem("deatilskip",true)
+      console.log('User skipped membership renewal.');
+    }
+  });
+}
 
 export const participatedapi = ({
   apidata,
@@ -135,10 +167,12 @@ export const participatedapi = ({
   accountType,
   deal,
 }) => {
+
+  const lender=localStorage.getItem("lenderReturnType")
   Swal.fire({
     title: "Please review the lending details!",
     html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
-           <p><strong> Pay-out Method: </strong>${lenderReturnType}</p><br>
+           <p><strong> Pay-out Method: </strong>${lender}</p><br>
            <p><strong> Pay-out Method: </strong>${participatedAmount}</p>`,
     icon: "warning",
     showCancelButton: true,
@@ -286,6 +320,30 @@ export const Error = () => {
 export const membershipsweetalert = (message) => {
   Swal.fire(message);
 };
+
+
+export const membershipsweetalertconformation =(membership , no)=>{
+  Swal.fire({
+    title: "Do you want to whish to pay the free?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Save",
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+ 
+      const response =  handlePaymembershipapi(membership , no);
+      Swal.fire("free paid successfully!");
+      if (response.request.status == 200) {
+      
+      }else{
+        console.log("error1")
+        console.log(response.response.data.errorMessage)
+        membershipsweetalert(response.response.data.errorMessage);
+      }
+    } 
+  });
+}
 export const autoClose = () => {
   var t;
   Swal.fire({

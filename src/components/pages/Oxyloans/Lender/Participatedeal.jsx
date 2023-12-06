@@ -74,31 +74,30 @@ const Participatedeal = () => {
             </>
           ));
       }
+  
       setTimeout(() => {
+
+   
         setDeal({
           ...deal,
           apidata: response.data,
           urldealId: dealId,
         });
-        console.log("deal apidata", deal.apidata);
+        console.log("deal apidata", response.data);
+
+        if (response.data.yearlyInterest !== 0) {
+
+            localStorage.setItem("lenderReturnType", "YEARLY")
+
+        } else if (response.data.halfInterest !== 0 || null) {
+              localStorage.setItem("lenderReturnType", "HalfYear")
+        } else if (response.data.monthlyInterest !== 0) {
+
+         localStorage.setItem("lenderReturnType", "monthly")
+        }
       }, 1000);
 
-      if (response.data.yearlyInterest !== 0) {
-        setDeal({
-          ...deal,
-          lenderReturnType: "YEARLY",
-        });
-      } else if (response.data.halfInterest !== 0 || null) {
-        setDeal({
-          ...deal,
-          lenderReturnType: "Half Year",
-        });
-      } else if (response.data.monthlyInterest !== 0 || null) {
-        setDeal({
-          ...deal,
-          lenderReturnType: "monthly",
-        });
-      }
+
     };
 
     handledealinfo();
@@ -162,10 +161,10 @@ const Participatedeal = () => {
     accountType,
     deal
   ) => {
+   
     console.log(deal.apidata.feeStatusToParticipate);
     console.log(deal.apidata.groupName);
     console.log(deal.apidata.validityStatus);
-
     if (isConditionMet) {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
         if (deal.apidata.groupName != "" || null) {
@@ -302,7 +301,7 @@ const Participatedeal = () => {
                         });
                       }}
                     />
-                    <label class="form-check-label" for="flexRadioDisabled">
+                    <label class="form-check-label mt-2" for="flexRadioDisabled">
                       <strong> Move Principal to wallet </strong>
                     </label>
                   </div>
@@ -321,7 +320,7 @@ const Participatedeal = () => {
                     />
 
                     <label
-                      class="form-check-label"
+                      class="form-check-label mt-2"
                       for="flexRadioCheckedDisabled"
                     >
                       <strong> Move Principal to Bank</strong>
@@ -349,7 +348,7 @@ const Participatedeal = () => {
                     size="large"
                     onClick={() => {
                       // Assuming 'dealparticipate' is a function you want to call
-                      dealparticipate(
+                      console.log(deal.lenderReturnType); dealparticipate(
                         deal.apidata,
                         deal.participatedAmount,
                         deal.lenderReturnType,
