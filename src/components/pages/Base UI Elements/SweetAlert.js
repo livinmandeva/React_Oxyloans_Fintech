@@ -324,7 +324,7 @@ export const membershipsweetalert = (message) => {
 
 export const membershipsweetalertconformation =(membership , no)=>{
   Swal.fire({
-    title: "Do you want to whish to pay the free?",
+    title: "Would you like to proceed with the payment now!",
     showDenyButton: true,
     showCancelButton: true,
     confirmButtonText: "Save",
@@ -333,7 +333,7 @@ export const membershipsweetalertconformation =(membership , no)=>{
     if (result.isConfirmed) {
  
       const response =  handlePaymembershipapi(membership , no);
-      Swal.fire("free paid successfully!");
+      Swal.fire("Payment received successfully!");
       if (response.request.status == 200) {
       
       }else{
