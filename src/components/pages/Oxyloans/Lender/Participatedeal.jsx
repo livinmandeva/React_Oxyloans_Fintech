@@ -367,6 +367,8 @@ const Participatedeal = () => {
                   >
                     Participate
                   </Button>
+
+                
                 </div>
               </>
             )}

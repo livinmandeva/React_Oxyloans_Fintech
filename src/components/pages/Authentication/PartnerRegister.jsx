@@ -3,6 +3,8 @@ import { login } from "../../imagepath";
 import { Link } from "react-router-dom";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const PartnerRegister = () => {
   let inputRef = useRef();
@@ -34,6 +36,9 @@ const PartnerRegister = () => {
     semailerror: "",
   });
 
+  const dispatch = useDispatch();
+
+  const reduxStoreData = useSelector((data) => data.counter.userProfile);
   const handlechange = (event) => {
     const { name, value } = event.target;
     setdata({
