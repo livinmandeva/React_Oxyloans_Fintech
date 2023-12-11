@@ -188,7 +188,6 @@ export const participatedapi = ({
         deal
       );
       const amount = localStorage.getItem("lenderRemainingWalletAmount");
-
       response
         .then((response) => {
           console.log(response);

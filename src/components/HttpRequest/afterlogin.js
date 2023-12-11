@@ -830,14 +830,15 @@ export const nofreeParticipationapi = async (
   console.log(groupId, dealId, accountType, lenderReturnType);
   const token = getToken();
   const userId = getUserId();
+
   if (deal.monthlyInterest !== 0) {
     var lenderReturnType = "MONTHLY";
     console.log("lenderReturnType");
   } else if (deal.quarterlyDisplay !== 0) {
-    var lenderReturnType = "quarterly";
+    var lenderReturnType = "QUARTELY";
     console.log("quarterly");
   } else if (deal.yearlyInterest !== 0) {
-    var lenderReturnType = "yearly";
+    var lenderReturnType = "YEARLY";
     console.log("   ");
   }
   const data = {
@@ -886,7 +887,6 @@ export const nofreeParticipationapi = async (
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     "updatingLenderDeal",
-
     "PATCH",
     token,
     data1

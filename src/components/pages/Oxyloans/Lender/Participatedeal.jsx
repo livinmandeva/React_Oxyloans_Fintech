@@ -79,10 +79,8 @@ const Participatedeal = () => {
             </>
           ));
       }
-  
-      setTimeout(() => {
 
-   
+      setTimeout(() => {
         setDeal({
           ...deal,
           apidata: response.data,
@@ -91,18 +89,13 @@ const Participatedeal = () => {
         console.log("deal apidata", response.data);
 
         if (response.data.yearlyInterest !== 0) {
-
-            localStorage.setItem("lenderReturnType", "YEARLY")
-
+          localStorage.setItem("lenderReturnType", "YEARLY");
         } else if (response.data.halfInterest !== 0 || null) {
-              localStorage.setItem("lenderReturnType", "HalfYear")
+          localStorage.setItem("lenderReturnType", "HalfYear");
         } else if (response.data.monthlyInterest !== 0) {
-
-         localStorage.setItem("lenderReturnType", "monthly")
+          localStorage.setItem("lenderReturnType", "monthly");
         }
       }, 1000);
-
-
     };
 
     handledealinfo();
@@ -166,15 +159,15 @@ const Participatedeal = () => {
     accountType,
     deal
   ) => {
-  
-
-    const amount = `${reduxStoreData?.length !== 0
-      ? reduxStoreData?.lenderWalletAmount -
-        reduxStoreData?.holdAmountInDealParticipation -
-        reduxStoreData?.equityAmount
-      : ""}`
-      const numericAmount = parseInt(amount, 10);
-      console.log(amount)
+    const amount = `${
+      reduxStoreData?.length !== 0
+        ? reduxStoreData?.lenderWalletAmount -
+          reduxStoreData?.holdAmountInDealParticipation -
+          reduxStoreData?.equityAmount
+        : ""
+    }`;
+    const numericAmount = parseInt(amount, 10);
+    console.log(amount);
     console.log(deal.apidata.feeStatusToParticipate);
     console.log(deal.apidata.groupName);
     console.log(deal.apidata.validityStatus);
@@ -182,11 +175,9 @@ const Participatedeal = () => {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
         if (deal.apidata.groupName != "" || null) {
           if (deal.apidata.validityStatus === false) {
-            if (numericAmount >= participatedAmount ) {
+            if (numericAmount >= participatedAmount) {
               console.log("amount is more than deal");
               console.log("deal succuess");
-              // WarningAlert()
-  
               participatedapi({
                 apidata,
                 participatedAmount,
@@ -197,11 +188,10 @@ const Participatedeal = () => {
                 deal,
               });
             } else {
-              toastrError("amout is not not reach your deal particepte amount")
+              toastrError("amout is not not reach your deal particepte amount");
               console.log("participatedAmount:", participatedAmount);
               console.log("amount:", amount);
             }
-
           } else {
             console.log("deal validityStatus completed ");
           }
@@ -209,7 +199,7 @@ const Participatedeal = () => {
           console.log("deal  having free feeStatusToParticipate");
         }
       } else {
-        if (numericAmount >= participatedAmount ) {
+        if (numericAmount >= participatedAmount) {
           participatedapi({
             apidata,
             participatedAmount,
@@ -220,12 +210,10 @@ const Participatedeal = () => {
             deal,
           });
         } else {
-          toastrError("amout is not not reach your deal particepte amount")
+          toastrError("amout is not not reach your deal particepte amount");
           console.log("participatedAmount:", participatedAmount);
           console.log("amount:", amount);
-
         }
-
       }
     } else {
       WarningAlertWalltTran(
@@ -261,6 +249,7 @@ const Participatedeal = () => {
       setbuttonvaild(false);
     }
   }, [deal.bank]);
+
   useEffect(() => {
     {
       console.log(deal.bank);
@@ -329,7 +318,10 @@ const Participatedeal = () => {
                         });
                       }}
                     />
-                    <label class="form-check-label mt-2" for="flexRadioDisabled">
+                    <label
+                      class="form-check-label mt-2"
+                      for="flexRadioDisabled"
+                    >
                       <strong> Move Principal to wallet </strong>
                     </label>
                   </div>
@@ -375,8 +367,8 @@ const Participatedeal = () => {
                     type="primary"
                     size="large"
                     onClick={() => {
-                      // Assuming 'dealparticipate' is a function you want to call
-                      console.log(deal.lenderReturnType); dealparticipate(
+                      console.log(deal.lenderReturnType);
+                      dealparticipate(
                         deal.apidata,
                         deal.participatedAmount,
                         deal.lenderReturnType,
@@ -395,8 +387,6 @@ const Participatedeal = () => {
                   >
                     Participate
                   </Button>
-
-                
                 </div>
               </>
             )}

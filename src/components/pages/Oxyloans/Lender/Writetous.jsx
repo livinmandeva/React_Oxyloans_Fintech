@@ -9,7 +9,7 @@ import {
   writequery,
   fileuploads,
 } from "../../../HttpRequest/afterlogin";
-import './InvoiceGrid.css'
+import "./InvoiceGrid.css";
 import Footer from "../../../Footer/Footer";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
 import { HandleClick } from "../../Base UI Elements/SweetAlert";
@@ -28,9 +28,9 @@ const Writetous = () => {
     id: "",
     respondedBy: "USER",
     profiledata: [],
-    urlquery:"",
-    isval:false,
-    isVaild:true
+    urlquery: "",
+    isval: false,
+    isVaild: true,
   });
 
   const setDataFun = (query) => {
@@ -48,37 +48,31 @@ const Writetous = () => {
     });
   }, [getreducerprofiledata]);
 
- 
-
-  useEffect(()=>{
-
-
-
-    
+  useEffect(() => {
     const url = new URLSearchParams(window.location.search);
-    const dealName = url.get('dealName');
-    const dealId = url.get('dealId');
-     
-    console.log(dealName +"/" + dealId)
-    
+    const dealName = url.get("dealName");
+    const dealId = url.get("dealId");
+
+    console.log(dealName + "/" + dealId);
+
     setWriteTous({
       ...writetous,
-      urlquery:dealName +"/" + dealId
-    })
-  },[])
-  useEffect(()=>{
-if(writetous.query  !== ""){
-  setWriteTous({
-    ...writetous,
-    isVaild:false 
-  })
-}else{
-  setWriteTous({
-    ...writetous,
-    isVaild:true
-  })
-}
-  },[writetous.query])
+      urlquery: dealName + "/" + dealId,
+    });
+  }, []);
+  useEffect(() => {
+    if (writetous.query !== "") {
+      setWriteTous({
+        ...writetous,
+        isVaild: false,
+      });
+    } else {
+      setWriteTous({
+        ...writetous,
+        isVaild: true,
+      });
+    }
+  }, [writetous.query]);
   const querySubmission = () => {
     const response = writequery(writetous);
     response.then((data) => {
@@ -92,7 +86,6 @@ if(writetous.query  !== ""){
   };
   return (
     <>
-    
       <div className="main-wrapper">
         {/* Header */}
         <Header />
@@ -119,7 +112,7 @@ if(writetous.query  !== ""){
             </div>
             {/* /Page Header */}
             <div className="student-group-form">
-              <div className="row">
+              <div className="row d-none">
                 <div className="col-xl-3 col-sm-6 col-12">
                   <div className="card inovices-card">
                     <div className="card-body">
