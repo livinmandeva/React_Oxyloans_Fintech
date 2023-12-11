@@ -257,7 +257,7 @@ const PartnerRegister = () => {
                       </div>
                     </>
                   )}
-
+   
                   {/* </form> */}
                   {/* /Form */}
                   <div className="login-or">
