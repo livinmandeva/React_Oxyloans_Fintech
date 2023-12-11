@@ -22,6 +22,8 @@ import {
 import Swal from "sweetalert2";
 import Freeparticipate from "./Freeparticipate";
 import Spining from "./Spining";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Participatedeal = () => {
   // const history = useNavigate();
@@ -44,6 +46,9 @@ const Participatedeal = () => {
   const [buttonvaild, setbuttonvaild] = useState(false);
   const [isConditionMet, setIsConditionMet] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const reduxStoreData = useSelector((data) => data.counter.userProfile);
   useEffect(() => {
     const handledealinfo = async () => {
       const urlparam = new URLSearchParams(window.location.search);
@@ -161,7 +166,15 @@ const Participatedeal = () => {
     accountType,
     deal
   ) => {
-   
+  
+
+    const amount = `${reduxStoreData?.length !== 0
+      ? reduxStoreData?.lenderWalletAmount -
+        reduxStoreData?.holdAmountInDealParticipation -
+        reduxStoreData?.equityAmount
+      : ""}`
+      const numericAmount = parseInt(amount, 10);
+      console.log(amount)
     console.log(deal.apidata.feeStatusToParticipate);
     console.log(deal.apidata.groupName);
     console.log(deal.apidata.validityStatus);
@@ -169,18 +182,26 @@ const Participatedeal = () => {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
         if (deal.apidata.groupName != "" || null) {
           if (deal.apidata.validityStatus === false) {
-            console.log("deal succuess");
-            // WarningAlert()
+            if (numericAmount >= participatedAmount ) {
+              console.log("amount is more than deal");
+              console.log("deal succuess");
+              // WarningAlert()
+  
+              participatedapi({
+                apidata,
+                participatedAmount,
+                lenderReturnType,
+                groupId,
+                dealId,
+                accountType,
+                deal,
+              });
+            } else {
+              toastrError("amout is not not reach your deal particepte amount")
+              console.log("participatedAmount:", participatedAmount);
+              console.log("amount:", amount);
+            }
 
-            participatedapi({
-              apidata,
-              participatedAmount,
-              lenderReturnType,
-              groupId,
-              dealId,
-              accountType,
-              deal,
-            });
           } else {
             console.log("deal validityStatus completed ");
           }
@@ -188,16 +209,23 @@ const Participatedeal = () => {
           console.log("deal  having free feeStatusToParticipate");
         }
       } else {
-        participatedapi({
-          apidata,
-          participatedAmount,
-          lenderReturnType,
-          groupId,
-          dealId,
-          accountType,
-          deal,
-        });
-        console.log("deal not having free feeStatusToParticipate");
+        if (numericAmount >= participatedAmount ) {
+          participatedapi({
+            apidata,
+            participatedAmount,
+            lenderReturnType,
+            groupId,
+            dealId,
+            accountType,
+            deal,
+          });
+        } else {
+          toastrError("amout is not not reach your deal particepte amount")
+          console.log("participatedAmount:", participatedAmount);
+          console.log("amount:", amount);
+
+        }
+
       }
     } else {
       WarningAlertWalltTran(
