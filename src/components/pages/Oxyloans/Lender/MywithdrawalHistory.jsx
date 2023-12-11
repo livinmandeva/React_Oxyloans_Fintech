@@ -38,6 +38,7 @@ const MywithdrawalHistory = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
+        console.log(data);
         setmywithdrawalHistory({
           ...mywithdrawalHistory,
           apiData: data.data,
@@ -55,7 +56,7 @@ const MywithdrawalHistory = () => {
       ? mywithdrawalHistory.apiData.results.map((data) => {
           datasource.push({
             key: Math.random(),
-            raisedon: data.amountRequiredDate,
+            raisedon: data.createdOn,
             amount: data.amount,
             reason: data.withdrawalReason,
             requestedFrom: data.requestFrom,

@@ -64,7 +64,7 @@ const Profile = () => {
     twitterUrl: "",
     whatsAppNumber: "",
     aadharNumber: "",
-    aadharerror:"",
+    aadharerror: "",
     mobileNumber: "",
     email: "",
   });
@@ -97,7 +97,7 @@ const Profile = () => {
     bank: "",
     branch: "",
     nomineecity: "",
-    copyerror:''
+    copyerror: "",
   });
 
   const [kyc, setKyc] = useState({
@@ -118,22 +118,19 @@ const Profile = () => {
     });
   };
 
-
-
-
-  useEffect(()=>{
-if(userProfile.aadharerror >= 12){
-setUserProfile({
-  ...userProfile,
-  aadharerror:"aadhar Number must be 12 digit"
-})
-}else{
-  setUserProfile({
-    ...userProfile,
-    aadharerror:""
-  }) 
-}
-  },[userProfile.aadharerror])
+  useEffect(() => {
+    if (userProfile.aadharerror >= 12) {
+      setUserProfile({
+        ...userProfile,
+        aadharerror: "aadhar Number must be 12 digit",
+      });
+    } else {
+      setUserProfile({
+        ...userProfile,
+        aadharerror: "",
+      });
+    }
+  }, [userProfile.aadharerror]);
   const handlerNominee = (event) => {
     const { value, name } = event.target;
     setnomineeDetails({
@@ -210,30 +207,32 @@ setUserProfile({
   //   });
   // };
 
-  
   const handlefileupload = (event) => {
     const response = uploadkyc(event);
-  
-    response.then((data) => {
-      console.log(data)
-      if (data && data.request && data.request.status === 200) {
-        setKyc((prevKyc) => ({
-          ...prevKyc,
-          isValid: !prevKyc.isValid,
-        }));
-        Success("success", `${event.target.name} Uploaded Successfully`);
-      } else if (data && data.response && data.response.data && data.response.data.errorCode !== "200") {
-        WarningBackendApi("warning", data.response.data.errorMessage);
-      } else {
-        console.error("Unexpected response structure:", data);
-        // Handle unexpected response structure, log or show an error message
-      }
-    }).catch((error) => {
-      console.error("Error during file upload:", error);
-      // Handle the error, log or show an error message
-    });
+    response
+      .then((data) => {
+        console.log(data);
+        if (data && data.request && data.request.status === 200) {
+          setKyc((prevKyc) => ({
+            ...prevKyc,
+            isValid: !prevKyc.isValid,
+          }));
+          Success("success", `${event.target.name} Uploaded Successfully`);
+        } else if (
+          data &&
+          data.response &&
+          data.response.data &&
+          data.response.data.errorCode !== "200"
+        ) {
+          WarningBackendApi("warning", data.response.data.errorMessage);
+        } else {
+          console.error("Unexpected response structure:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during file upload:", error);
+      });
   };
-  
 
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -251,8 +250,8 @@ setUserProfile({
     // alert('Copying and pasting is disabled for this field.');
     setnomineeDetails({
       ...nomineeDetails,
-      copyerror:"Copying and pasting is disabled for this field."
-    })
+      copyerror: "Copying and pasting is disabled for this field.",
+    });
   };
 
   const handleCopy = (event) => {
@@ -260,8 +259,8 @@ setUserProfile({
     // alert('Copying and pasting is disabled for this field.');
     setnomineeDetails({
       ...nomineeDetails,
-      copyerror:"Copying and pasting is disabled for this field."
-    })
+      copyerror: "Copying and pasting is disabled for this field.",
+    });
   };
 
   const handleprofileUpdate = () => {
@@ -564,7 +563,7 @@ setUserProfile({
                         data-bs-toggle="tab"
                         to="#bankAccount_tab"
                       >
-                        <i class="fa-solid fa-building-columns"></i> Bank
+                        <i className="fa-solid fa-building-columns"></i> Bank
                         Account Details
                       </Link>
                     </li>
@@ -692,14 +691,13 @@ setUserProfile({
                                 Edit
                               </Link>
                             </h5>
-                        
                           </div>
                         </div>
                         {/* /Skills */}
                         <div className="card">
                           <div className="card-body">
                             <h5 className="card-title d-flex justify-content-between">
-                              <span>Nominee  </span>
+                              <span>Nominee </span>
                               <Link
                                 className="edit-link"
                                 to="#"
@@ -711,7 +709,6 @@ setUserProfile({
                                 Edit
                               </Link>
                             </h5>
-                        
                           </div>
                         </div>
                       </div>
@@ -759,7 +756,7 @@ setUserProfile({
 
                               <div className="form-group col-12 col-md-4 local-forms">
                                 <label>
-                                Confirm Account Number
+                                  Confirm Account Number
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
@@ -778,14 +775,12 @@ setUserProfile({
                                   <span className="login-danger">
                                     {bankaccountprofile.bankAccountError}
                                   </span>
-                                )}     
-                                {
-                                nomineeDetails.copyerror && (
+                                )}
+                                {nomineeDetails.copyerror && (
                                   <span className="login-danger">
                                     {nomineeDetails.copyerror}
                                   </span>
-                                )  
-                                }
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -986,7 +981,7 @@ setUserProfile({
 
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                  Nominee Name Account No
+                                    Nominee Name Account No
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
@@ -1000,7 +995,7 @@ setUserProfile({
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                  Nominee IFSC Code
+                                    Nominee IFSC Code
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
@@ -1014,7 +1009,7 @@ setUserProfile({
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                  Nominee Bank Name
+                                    Nominee Bank Name
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
@@ -1135,16 +1130,22 @@ setUserProfile({
                                   value={userProfile.aadharNumber}
                                   name="aadhaarNumber"
                                 />
-                                 {userProfile.aadharerror !="" ? <div className="error">{userProfile.aadharerror}</div> : <></>}
+                                {userProfile.aadharerror != "" ? (
+                                  <div className="error">
+                                    {userProfile.aadharerror}
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
                               </div>
-                               
+
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Date of Birth
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="date"
+                                  type={userProfile.dob == "" ? "date" : "tex"}
                                   className="form-control datetimepicker"
                                   onChange={handlechange}
                                   value={userProfile.dob}
@@ -1349,209 +1350,203 @@ setUserProfile({
                         <h5 className="card-title">Upload Kyc</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
-                              <div className="row mt-3">
-                                <div className="form-group col-12 col-md-6">
-                                  <p className="settings-label">
-                                    Pan Card <span className="star-red">*</span>
-                                  </p>
-                                  <div className="settings-btn">
-                                    <input
-                                      type="file"
-                                      name="pan"
-                                      id="pan"
-                                      className="hide-input"
-                                      onChange={handlefileupload}
-                                    />
-                                    <label htmlFor="file" className="upload">
-                                      <i className="feather-upload">
-                                        <FeatherIcon icon="upload" />
-                                      </i>
-                                    </label>
-                                  </div>
-
-                                  {kyc.PanCard != undefined &&
-                                  kyc.PanCard != "" ? (
-                                    <h6 className="settings-size text-success">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.PanCard.fileName}</small>
-                                    </h6>
-                                  ) : (
-                                    <h6 className="settings-size text-warning">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>Upload Pan</small>
-                                    </h6>
-                                  )}
+                            <div className="row mt-3">
+                              <div className="form-group col-12 col-md-6">
+                                <p className="settings-label">
+                                  Pan Card <span className="star-red">*</span>
+                                </p>
+                                <div className="settings-btn">
+                                  <input
+                                    type="file"
+                                    name="pan"
+                                    id="pan"
+                                    className="hide-input"
+                                    onChange={handlefileupload}
+                                  />
+                                  <label htmlFor="file" className="upload">
+                                    <i className="feather-upload">
+                                      <FeatherIcon icon="upload" />
+                                    </i>
+                                  </label>
                                 </div>
 
-                                <div className="form-group col-12 col-md-6">
-                                  <p className="settings-label">
-                                    Cheque Leaf
-                                    <span className="star-red">*</span>
-                                  </p>
-                                  <div className="settings-btn">
-                                    <input
-                                      type="file"
-                                      name="chequ"
-                                      accept="image/*"
-                                      id="chequ"
-                                      className="hide-input"
-                                      onChange={handlefileupload}
-                                    />
-                                    <label htmlFor="cheque" className="upload">
-                                      <i className="feather-upload">
-                                        <FeatherIcon icon="upload" />
-                                      </i>
-                                    </label>
-                                  </div>
-                                  {kyc.cheque != undefined &&
-                                  kyc.cheque != "" ? (
-                                    <h6 className="settings-size text-success">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.cheque.fileName}</small>
-                                    </h6>
-                                  ) : (
-                                    <h6 className="settings-size text-warning">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>Upload Cheque</small>
-                                    </h6>
-                                  )}
-                                </div>
-                                <div className="form-group col-12 col-md-6">
-                                  <p className="settings-label">
-                                    Aadhar
-                                    <span className="star-red">*</span>
-                                  </p>
-                                  <div className="settings-btn">
-                                    <input
-                                      type="file"
-                                      accept="image/*"
-                                      name="aadhar"
-                                      id="aadhar"
-                                      className="hide-input"
-                                      onChange={handlefileupload}
-                                    />
-                                    <label htmlFor="aadhar" className="upload">
-                                      <i className="feather-upload">
-                                        <FeatherIcon icon="upload" />
-                                      </i>
-                                    </label>
-                                  </div>
-
-                                  {kyc.aadhar != undefined &&
-                                  kyc.aadhar != "" ? (
-                                    <h6 className="settings-size text-success">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.aadhar.fileName}</small>
-                                    </h6>
-                                  ) : (
-                                    <h6 className="settings-size text-warning">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>Upload Aadhar</small>
-                                    </h6>
-                                  )}
-                                </div>
-                                <div className="form-group col-12 col-md-6">
-                                  <p className="settings-label">
-                                    Driving License
-                                    {/* <span className="star-red">*</span> */}
-                                  </p>
-                                  <div className="settings-btn">
-                                    <input
-                                      type="file"
-                                      accept="image/*"
-                                      name="license"
-                                      id="license"
-                                      className="hide-input"
-                                      onChange={handlefileupload}
-                                    />
-                                    <label htmlFor="license" className="upload">
-                                      <i className="feather-upload">
-                                        <FeatherIcon icon="upload" />
-                                      </i>
-                                    </label>
-                                  </div>
-
-                                  {kyc.license != undefined &&
-                                  kyc.license != "" ? (
-                                    <h6 className="settings-size text-success">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.license.fileName}</small>
-                                    </h6>
-                                  ) : (
-                                    <h6 className="settings-size text-warning">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>Upload License</small>
-                                    </h6>
-                                  )}
-                                </div>
-                                <div className="form-group col-12 col-md-6">
-                                  <p className="settings-label">
-                                    Voter ID
-                                    {/* <span className="star-red">*</span> */}
-                                  </p>
-                                  <div className="settings-btn">
-                                    <input
-                                      type="file"
-                                      accept="image/*"
-                                      id="Voter"
-                                      name="Voter"
-                                      onChange={handlefileupload}
-                                      className="hide-input"
-                                    />
-                                    <label htmlFor="license" className="upload">
-                                      <i className="feather-upload">
-                                        <FeatherIcon icon="upload" />
-                                      </i>
-                                    </label>
-                                  </div>
-
-                                  {kyc.Voter != undefined && kyc.Voter != "" ? (
-                                    <h6 className="settings-size text-success">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.Voter.fileName}</small>
-                                    </h6>
-                                  ) : (
-                                    <h6 className="settings-size text-warning">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>Upload Voter Id</small>
-                                    </h6>
-                                  )}
-                                </div>
-                                <div className="form-group col-12 col-md-6">
-                                  <p className="settings-label">
-                                    Passport
-                                    {/* <span className="star-red">*</span> */}
-                                  </p>
-                                  <div className="settings-btn">
-                                    <input
-                                      type="file"
-                                      id="Passport"
-                                      accept="image/*"
-                                      name="Passport"
-                                      onChange={handlefileupload}
-                                      className="hide-input"
-                                    />
-                                    <label htmlFor="Passport" className="upload">
-                                      <i className="feather-upload">
-                                        <FeatherIcon icon="upload" />
-                                      </i>
-                                    </label>
-                                  </div>
-
-                                  {kyc.Passport != undefined &&
-                                  kyc.Passport != "" ? (
-                                    <h6 className="settings-size text-success">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>{kyc.Passport.fileName}</small>
-                                    </h6>
-                                  ) : (
-                                    <h6 className="settings-size text-warning">
-                                      <i className="fa-solid fa-check mx-lg-1 "></i>
-                                      <small>Upload Passport</small>
-                                    </h6>
-                                  )}
-                                </div>
+                                {kyc.PanCard != undefined &&
+                                kyc.PanCard != "" ? (
+                                  <h6 className="settings-size text-success">
+                                    <i className="fa-solid fa-check mx-lg-1 "></i>
+                                    <small>{kyc.PanCard.fileName}</small>
+                                  </h6>
+                                ) : (
+                                  <h6 className="settings-size text-warning">
+                                    <i className="fa-solid fa-upload mx-lg-1 "></i>
+                                    <small>Upload Pan</small>
+                                  </h6>
+                                )}
                               </div>
+
+                              <div className="form-group col-12 col-md-6">
+                                <p className="settings-label">
+                                  Cheque Leaf
+                                  <span className="star-red">*</span>
+                                </p>
+                                <div className="settings-btn">
+                                  <input
+                                    type="file"
+                                    name="chequ"
+                                    accept="image/*"
+                                    id="chequ"
+                                    className="hide-input"
+                                    onChange={handlefileupload}
+                                  />
+                                  <label htmlFor="cheque" className="upload">
+                                    <i className="feather-upload">
+                                      <FeatherIcon icon="upload" />
+                                    </i>
+                                  </label>
+                                </div>
+                                {kyc.cheque != undefined && kyc.cheque != "" ? (
+                                  <h6 className="settings-size text-success">
+                                    <i className="fa-solid fa-check mx-lg-1 "></i>
+                                    <small>{kyc.cheque.fileName}</small>
+                                  </h6>
+                                ) : (
+                                  <h6 className="settings-size text-warning">
+                                    <i className="fa-solid fa-upload mx-lg-1 "></i>
+                                    <small>Upload Cheque</small>
+                                  </h6>
+                                )}
+                              </div>
+                              <div className="form-group col-12 col-md-6">
+                                <p className="settings-label">
+                                  Aadhar
+                                  <span className="star-red">*</span>
+                                </p>
+                                <div className="settings-btn">
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    name="aadhar"
+                                    id="aadhar"
+                                    className="hide-input"
+                                    onChange={handlefileupload}
+                                  />
+                                  <label htmlFor="aadhar" className="upload">
+                                    <i className="feather-upload">
+                                      <FeatherIcon icon="upload" />
+                                    </i>
+                                  </label>
+                                </div>
+
+                                {kyc.aadhar != undefined && kyc.aadhar != "" ? (
+                                  <h6 className="settings-size text-success">
+                                    <i className="fa-solid fa-check mx-lg-1 "></i>
+                                    <small>{kyc.aadhar.fileName}</small>
+                                  </h6>
+                                ) : (
+                                  <h6 className="settings-size text-warning">
+                                    <i className="fa-solid fa-upload mx-lg-1 "></i>
+                                    <small>Upload Aadhar</small>
+                                  </h6>
+                                )}
+                              </div>
+                              <div className="form-group col-12 col-md-6">
+                                <p className="settings-label">
+                                  Driving License
+                                  {/* <span className="star-red">*</span> */}
+                                </p>
+                                <div className="settings-btn">
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    name="license"
+                                    id="license"
+                                    className="hide-input"
+                                    onChange={handlefileupload}
+                                  />
+                                  <label htmlFor="license" className="upload">
+                                    <i className="feather-upload">
+                                      <FeatherIcon icon="upload" />
+                                    </i>
+                                  </label>
+                                </div>
+                                {kyc.license != undefined &&
+                                kyc.license != "" ? (
+                                  <h6 className="settings-size text-success">
+                                    <i className="fa-solid fa-check mx-lg-1 "></i>
+                                    <small>{kyc.license.fileName}</small>
+                                  </h6>
+                                ) : (
+                                  <h6 className="settings-size text-warning">
+                                    <i className="fa-solid fa-upload mx-lg-1 "></i>
+                                    <small>Upload License</small>
+                                  </h6>
+                                )}
+                              </div>
+                              <div className="form-group col-12 col-md-6">
+                                <p className="settings-label">Voter ID</p>
+                                <div className="settings-btn">
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    id="Voter"
+                                    name="Voter"
+                                    onChange={handlefileupload}
+                                    className="hide-input"
+                                  />
+                                  <label htmlFor="license" className="upload">
+                                    <i className="feather-upload">
+                                      <FeatherIcon icon="upload" />
+                                    </i>
+                                  </label>
+                                </div>
+
+                                {kyc.Voter != undefined && kyc.Voter != "" ? (
+                                  <h6 className="settings-size text-success">
+                                    <i className="fa-solid fa-check mx-lg-1 "></i>
+                                    <small>{kyc.Voter.fileName}</small>
+                                  </h6>
+                                ) : (
+                                  <h6 className="settings-size text-warning">
+                                    <i className="fa-solid fa-upload mx-lg-1 "></i>
+                                    <small>Upload Voter Id</small>
+                                  </h6>
+                                )}
+                              </div>
+                              <div className="form-group col-12 col-md-6">
+                                <p className="settings-label">
+                                  Passport
+                                  {/* <span className="star-red">*</span> */}
+                                </p>
+                                <div className="settings-btn">
+                                  <input
+                                    type="file"
+                                    id="Passport"
+                                    accept="image/*"
+                                    name="Passport"
+                                    onChange={handlefileupload}
+                                    className="hide-input"
+                                  />
+                                  <label htmlFor="Passport" className="upload">
+                                    <i className="feather-upload">
+                                      <FeatherIcon icon="upload" />
+                                    </i>
+                                  </label>
+                                </div>
+
+                                {kyc.Passport != undefined &&
+                                kyc.Passport != "" ? (
+                                  <h6 className="settings-size text-success">
+                                    <i className="fa-solid fa-check mx-lg-1 "></i>
+                                    <small>{kyc.Passport.fileName}</small>
+                                  </h6>
+                                ) : (
+                                  <h6 className="settings-size text-warning">
+                                    <i className="fa-solid fa-upload mx-lg-1 "></i>
+                                    <small>Upload Passport</small>
+                                  </h6>
+                                )}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

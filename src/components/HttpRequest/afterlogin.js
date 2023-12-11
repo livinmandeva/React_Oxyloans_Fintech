@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -90,7 +90,6 @@ export const sendInvait = async (email, mailContent, mailSubject) => {
 export const handlePaymembershipapi = async (member) => {
   const token = getToken();
   const userId = getUserId();
-
   const membershipfiled = {
     MONTHLY: "1000",
     QUARTERLY: "2900",
@@ -100,10 +99,7 @@ export const handlePaymembershipapi = async (member) => {
     FIVEYEARS: "50000",
     TENYEARS: "90000",
   };
-
   const calculatedfee = (parseInt(membershipfiled[member]) * 118) / 100;
-  console.log(calculatedfee);
-
   const data = {
     userId,
     type: "Wallet",
