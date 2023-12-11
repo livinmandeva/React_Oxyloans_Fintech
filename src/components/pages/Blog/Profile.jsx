@@ -1469,7 +1469,6 @@ const Profile = () => {
                                     </i>
                                   </label>
                                 </div>
-
                                 {kyc.license != undefined &&
                                 kyc.license != "" ? (
                                   <h6 className="settings-size text-success">
@@ -1484,10 +1483,7 @@ const Profile = () => {
                                 )}
                               </div>
                               <div className="form-group col-12 col-md-6">
-                                <p className="settings-label">
-                                  Voter ID
-                                  {/* <span className="star-red">*</span> */}
-                                </p>
+                                <p className="settings-label">Voter ID</p>
                                 <div className="settings-btn">
                                   <input
                                     type="file"
