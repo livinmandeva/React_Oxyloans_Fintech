@@ -123,19 +123,17 @@ export const validityDatemodal = (validityDate) => {
   }).then((result) => {
     if (result.isConfirmed) {
       // User clicked "Get Membership"
-      window.location.href = '/membership';
+      window.location.href = "/membership";
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       // User clicked "Skip" or closed the modal
       // You can add custom logic here if needed
-      localStorage.setItem("skip",true)
-      console.log('User skipped membership renewal.');
-
+      localStorage.setItem("skip", true);
+      console.log("User skipped membership renewal.");
     }
   });
 };
 
-
-export const personalDetails=(message , route)=>{
+export const personalDetails = (message, route) => {
   Swal.fire({
     title: message,
     html: `<p style={{marginBottom: '2px'}}></p>`,
@@ -152,11 +150,11 @@ export const personalDetails=(message , route)=>{
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       // User clicked "Skip" or closed the modal
       // You can add custom logic here if needed
-      localStorage.setItem("deatilskip",true)
-      console.log('User skipped membership renewal.');
+      localStorage.setItem("deatilskip", true);
+      console.log("User skipped membership renewal.");
     }
   });
-}
+};
 
 export const participatedapi = ({
   apidata,
@@ -167,8 +165,7 @@ export const participatedapi = ({
   accountType,
   deal,
 }) => {
-
-  const lender=localStorage.getItem("lenderReturnType")
+  const lender = localStorage.getItem("lenderReturnType");
   Swal.fire({
     title: "Please review the lending details!",
     html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
@@ -321,29 +318,26 @@ export const membershipsweetalert = (message) => {
   Swal.fire(message);
 };
 
-
-export const membershipsweetalertconformation =(membership , no)=>{
+export const membershipsweetalertconformation = (membership, no) => {
   Swal.fire({
-    title: "Would you like to proceed with the payment now!",
+    title: "Are you willing to proceed with the payment at this moment ?",
     showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: "Save",
+    confirmButtonText: "Pay Through wallet",
   }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
- 
-      const response =  handlePaymembershipapi(membership , no);
-      Swal.fire("Payment received successfully!");
-      if (response.request.status == 200) {
-      
-      }else{
-        console.log("error1")
-        console.log(response.response.data.errorMessage)
-        membershipsweetalert(response.response.data.errorMessage);
-      }
-    } 
+      const response = handlePaymembershipapi(membership, no);
+      response.then((data) => {
+        if (data.response.status == 200) {
+          const navigate = useNavigate();
+          navigate("/dashboard");
+          Swal.fire("Payment received successfully!");
+        } else {
+          membershipsweetalert(data.response.data.errorMessage);
+        }
+      });
+    }
   });
-}
+};
 export const autoClose = () => {
   var t;
   Swal.fire({
