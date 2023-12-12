@@ -133,6 +133,29 @@ export const validityDatemodal = (validityDate) => {
   });
 };
 
+
+export const dealmembership = (message, route) => {
+  Swal.fire({
+    title: message,
+    html: `<p style={{marginBottom: '2px'}}></p>`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "update",
+    cancelButtonText: "Skip", // Add this line to set the text for the Cancel button
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // User clicked "Get Membership"
+      window.location.href = route;
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // User clicked "Skip" or closed the modal
+      // You can add custom logic here if needed
+      localStorage.setItem("dealmember", true);
+      console.log("User skipped membership renewal.");
+    }
+  });
+};
 export const personalDetails = (message, route) => {
   Swal.fire({
     title: message,
@@ -338,6 +361,21 @@ export const membershipsweetalertconformation = (membership, no) => {
     }
   });
 };
+
+
+export const newlendersweetalert = () => {
+  const navigate = useNavigate();
+
+  Swal.fire({
+    title: "You are a new lender group, pay the annual membership fee to participate in the multiple deals. ?",
+    showDenyButton: true,
+    confirmButtonText: "Pay Through wallet",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      navigate("/membership");
+    }
+  });
+}
 export const autoClose = () => {
   var t;
   Swal.fire({
