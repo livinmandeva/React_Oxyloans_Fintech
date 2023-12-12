@@ -136,7 +136,7 @@ const Header = (profile) => {
           </li> */}
           {/* Notifications */}
 
-          <li className="nav-item dropdown noti-dropdown me-2">
+          <li className="nav-item dropdown noti-dropdown me-2 d-none">
             <Link
               to="#"
               className="dropdown-toggle nav-link header-nav-list"
