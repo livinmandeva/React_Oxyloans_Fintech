@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 
 function OtpInput() {
-  const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
+  const [otpValues, setOtpValues] = useState(["", "", "", ""]);
 
   const handleChange = (index, value) => {
     if (/^\d*$/.test(value) && value.length <= 1) {
@@ -16,9 +16,9 @@ function OtpInput() {
 
   const inputRefs = [];
   useEffect(() => {
-    //  console.log(otpValues);
     localStorage.setItem("otp", otpValues);
   }, [otpValues]);
+
   return (
     <div className="otp-field">
       {otpValues.map((value, index) => (
@@ -35,4 +35,4 @@ function OtpInput() {
   );
 }
 
-export default OtpInput;
+export default memo(OtpInput);

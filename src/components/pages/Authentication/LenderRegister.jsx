@@ -335,7 +335,7 @@ export default function LenderRegister() {
                         </div>
                         {error && <div className="errormessage">{error}</div>}
                         <div className=" dont-have">
-                          Already Registered? <Link to="/login">Login</Link>
+                          Already Registered? <Link to="/">Login</Link>
                         </div>
                         <div className="form-group mb-0">
                           <button
@@ -367,7 +367,7 @@ export default function LenderRegister() {
                               <OtpInput />
                             </div>
                             <div className=" dont-have">
-                              Already Registered? <Link to="/login">Login</Link>
+                              Already Registered? <Link to="/">Login</Link>
                             </div>
                             {error && <p className="errormessage">{error}</p>}
                             <div className="form-group mb-0">

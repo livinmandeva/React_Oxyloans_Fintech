@@ -68,9 +68,7 @@ const AdminDashboard = () => {
     apidataESCROW: "",
   });
 
-       useEffect(()=>{
-
-       },[])
+  useEffect(() => {}, []);
   const [dashboardInvestment, setdashboardInvestment] = useState({
     apiData: "",
     hasdata: false,
@@ -89,7 +87,7 @@ const AdminDashboard = () => {
     });
   };
 
-  const [newlender , setnewlender]=useState(false)
+  const [newlender, setnewlender] = useState(false);
 
   const datasource = [];
   {
@@ -140,23 +138,31 @@ const AdminDashboard = () => {
     },
   ]);
 
-
   useEffect(() => {
     const fetchdata = async () => {
       try {
         const response = await lenderTotalInvestmentsAndReturns(); // Assuming lenderTotalInvestmentsAndReturns is an asynchronous function
-  
 
         console.log(response.data[0]?.lenderTotalInvestment);
         // Update the state based on the response data
-        setSeries(prevSeries => [
+        setSeries((prevSeries) => [
           {
             name: "Investment",
-            data: [...prevSeries[0].data, response.data[0]?.lenderTotalInvestment , 0 , 0 ],
+            data: [
+              ...prevSeries[0].data,
+              response.data[0]?.lenderTotalInvestment,
+              0,
+              0,
+            ],
           },
           {
             name: "Total Returns",
-            data: [...prevSeries[1].data, response.data[0]?.totalReturnedAmount , 0, 0],
+            data: [
+              ...prevSeries[1].data,
+              response.data[0]?.totalReturnedAmount,
+              0,
+              0,
+            ],
           },
         ]);
       } catch (error) {
@@ -164,9 +170,9 @@ const AdminDashboard = () => {
       }
     };
 
-  fetchdata();
+    fetchdata();
   }, []);
-  
+
   // Student Chart
 
   const [dataBar, object] = useState({
@@ -721,7 +727,6 @@ const AdminDashboard = () => {
             console.log("validity expires");
             validityDatemodal(validityDate);
           }
-
         }
       }
     });
@@ -829,34 +834,37 @@ const AdminDashboard = () => {
 
   // dealsProgressed.participatedDeals  console.log(googledata);
   useEffect(() => {
-    
     const deatilskip = localStorage.getItem("deatilskip");
-    
 
     if (deatilskip) {
       console.log("skip the all details alert");
     } else {
       console.log("not the all details alert");
-    
-      const profileData = dashboarddata?.profileData?.data;
-    
-      console.log(profileData)
-      if (profileData) {    
 
+      const profileData = dashboarddata?.profileData?.data;
+
+      console.log(profileData);
+      if (profileData) {
         // personalDetails("personalDetails is not available", "/profile");
         const { kycStatus, bankDetailsInfo, personalDetailsInfo } = profileData;
-    
-        if (kycStatus !== true && bankDetailsInfo !== true && personalDetailsInfo !== true) {
+
+        if (
+          kycStatus !== true &&
+          bankDetailsInfo !== true &&
+          personalDetailsInfo !== true
+        ) {
           console.log(kycStatus);
           console.log(bankDetailsInfo);
           console.log(personalDetailsInfo);
 
-          console.log("personalDetails, bankDetailsInfo, and kycStatus available");
+          console.log(
+            "personalDetails, bankDetailsInfo, and kycStatus available"
+          );
         } else {
           console.log("Some information is undefined or not available");
-          if (personalDetailsInfo === true ) {
+          if (personalDetailsInfo === true) {
             personalDetails("personalDetails is not available", "/profile");
-          } else if (bankDetailsInfo === true ) {
+          } else if (bankDetailsInfo === true) {
             personalDetails("bankdetailsinfo is not available", "/profile");
           } else {
             personalDetails("kyc is not available", "/profile");
@@ -865,28 +873,23 @@ const AdminDashboard = () => {
       } else {
         console.log("profileData is not available");
       }
-    } const profileData = dashboarddata?.profileData?.data;
-    if(profileData){
-  console.log(profileData.lenderValidityStatus)
-  if(profileData.lenderValidityStatus){
-        const deal=localStorage.getItem("dealmember")
-       if(deal){
-        console.log("localstorge  skip")
-      
-       }else{
-        dealmembership("You are a new lender group, pay the annual membership fee to participate in multiple deals.", "/membership");
-       }
-   
-  }else{
-
-  }
+    }
+    const profileData = dashboarddata?.profileData?.data;
+    if (profileData) {
+      if (profileData.lenderValidityStatus) {
+        const deal = localStorage.getItem("dealmember");
+        if (deal) {
+          console.log("localstorge  skip");
+        } else {
+          dealmembership(
+            "You are a new lender group, pay the annual membership fee to participate in multiple deals.",
+            "/membership"
+          );
+        }
+      }
     }
   }, [dashboarddata.profileData]);
 
-
-  useEffect(()=>{
- 
-  },[])
   return (
     <>
       <div className="main-wrapper">
@@ -977,7 +980,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
                 <div className="card bg-comman w-100">
                   <div className="card-body">
@@ -1037,25 +1040,26 @@ const AdminDashboard = () => {
                       <span className="text-bold text-success mx-lg-1">
                         Congratulation :
                       </span>
-                      {
-  getreducerprofiledata?.length !== 0
-    ? getreducerprofiledata?.groupName === "NewLender"
-      ? (
-          <>
-            You are a new lender group, pay the annual membership fee to participate in multiple deals. 
-         
-          </>
-        )
-      : `You are an ${
-          getreducerprofiledata.groupName === "OXYMARCH09" ||
-          getreducerprofiledata.groupName === "OxyPremiuimLenders"
-            ? "Oxy Founding Lender"
-            : "NewLender"
-        } group member, and your validity is up to: ${getdashboardData.validityDate}`
-    : ""
-}
-  
-                    
+                      {getreducerprofiledata?.length !== 0 ? (
+                        getreducerprofiledata?.groupName === "NewLender" ? (
+                          <>
+                            You are a new lender group, pay the annual
+                            membership fee to participate in multiple deals.
+                          </>
+                        ) : (
+                          `You are an ${
+                            getreducerprofiledata.groupName === "OXYMARCH09" ||
+                            getreducerprofiledata.groupName ===
+                              "OxyPremiuimLenders"
+                              ? "Oxy Founding Lender"
+                              : "NewLender"
+                          } group member, and your validity is up to: ${
+                            getdashboardData.validityDate
+                          }`
+                        )
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
                 </div>
