@@ -226,7 +226,7 @@ const Sidebar = (props) => {
                             "/regularRunningDeal" === pathName ? "active" : ""
                           }`}
                         >
-                          Regular Running Delas
+                          Regular Running Deals
                         </Link>
                       </li>
                       <li>
@@ -236,7 +236,7 @@ const Sidebar = (props) => {
                             "/regularEscrowDeals" === pathName ? "active" : ""
                           }`}
                         >
-                          Regular Escrow Delas
+                          Regular Escrow Deals
                         </Link>
                       </li>
                       <li>
@@ -246,7 +246,7 @@ const Sidebar = (props) => {
                             "/regularPersonalDeal" === pathName ? "active" : ""
                           }`}
                         >
-                          Personal Delas
+                          Personal Deals
                         </Link>
                       </li>
                     </ul>
@@ -680,7 +680,7 @@ const Sidebar = (props) => {
                             "/mycontacts" === pathName ? "active" : ""
                           }`}
                         >
-                          My contact
+                          My contacts
                         </Link>
                       </li>
 

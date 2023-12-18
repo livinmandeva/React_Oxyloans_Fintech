@@ -111,9 +111,9 @@ const interestType =
     : deal.apidata.quartlyInterest !== 0.0
     ? "Quartly"
     : deal.apidata.monthlyInterest !== 0.0
-    ? "Monthly"
+    ? " % P.M"
     : deal.apidata.yearlyInterest !== 0.0
-    ? "Yearly"
+    ? "% P.A"
     : null;
 
 // You can then use the interestType variable as needed.

@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 
 const API_BASE_URL =
   userisIn == "local"

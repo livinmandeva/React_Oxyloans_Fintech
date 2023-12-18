@@ -146,7 +146,7 @@ const Writetous = () => {
             </div>
             {/* /Page Header */}
             <div className="student-group-form">
-              <div className="row ">
+              <div className="row d-none">
                 <div className="col-xl-3 col-sm-6 col-12">
                   <div className="card inovices-card">
                     <div className="card-body">

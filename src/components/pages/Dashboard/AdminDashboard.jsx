@@ -1065,7 +1065,7 @@ const AdminDashboard = () => {
             <div className="row">
               <div className="col-md-12 col-lg-6">
                 {/* Revenue Chart */}
-                <div className="card card-chart d-i">
+                <div className="card card-chart d-i d-none">
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-6">
@@ -1101,8 +1101,8 @@ const AdminDashboard = () => {
               </div>
 
               <div className="col-md-12 col-lg-6">
-                {/* Student Chart */}
-                <div className="card card-chart">
+                {/* Student Chart */} 
+                {/* <div className="card card-chart  d-none">
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-8">
@@ -1119,14 +1119,14 @@ const AdminDashboard = () => {
                       className="activechart"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* /Student Chart */}
               </div>
 
               <div className="col-md-12 col-lg-6">
                 {/* Student Chart */}
-                <div className="card card-chart">
+                {/* <div className="card card-chart  d-none">
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-6">
@@ -1142,13 +1142,13 @@ const AdminDashboard = () => {
                       type="bar"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* /Student Chart */}
               </div>
 
               <div className="col-12 col-lg-4 col-xl-6 d-flex">
-                <div className="card flex-fill comman-shadow">
+                <div className="card flex-fill comman-shadow d-none">
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-12">
@@ -1158,9 +1158,9 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="dash-widget d-flex justify-content-center align-items-center">
+                  {/* <div className="dash-widget d-flex justify-content-center align-items-center">
                     <div className="circle-bar circle-bar">
-                      {/* <div className="circle-graph1" data-percent={50}> */}
+             
                       <ProgressBar
                         width={270}
                         radius={75}
@@ -1186,14 +1186,14 @@ const AdminDashboard = () => {
                           </div>
                         </div>
                       </ProgressBar>
-                      {/* </div> */}
+                 
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
-              <div className="col-xl-12 col-md-12 d-flex">
-                <div className="card flex-fill comman-shadow">
+              {/* <div className="col-xl-12 col-md-12 d-flex d-none">
+                <div className="card flex-fill comman-shadow ">
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-12">
@@ -1231,7 +1231,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="col-md-12 col-lg-12 d-none">
                 {/* Student Chart */}
