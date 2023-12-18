@@ -1,6 +1,5 @@
 import axios from "axios";
-import { toastrWarning } from "../pages/Base UI Elements/Toast";
-const userisIn = "prod";
+const userisIn = "local";
 let API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -107,27 +106,34 @@ export const sendwhatappotp = async (value1) => {
   return response;
 };
 export const verifywhatappotp = async (api) => {
+  console.log(api);
   const value1 = localStorage.getItem("otp");
   const otp = value1.replace(/,/g, "");
-  if (otp == "") {
-    toastrWarning("Enter The WhastApp Otp");
-  } else {
-    const data = {
-      whatsappNumber: api.whatsappNumber,
-      session: api.session,
-      otp: otp,
-      id: api.id,
-      otpGeneratedTime: api.otpGeneratedTime,
-    };
-    const response = await handleApiRequestBeforeLogin(
-      "POST",
-      API_BASE_URL,
-      "whatsapp-login-otp-verification",
-      data
-    );
-    return response;
-  }
+  const data = {
+    whatsappNumber: api.whatsappNumber,
+    session: api.session,
+    otp: otp,
+    id: api.id,
+    otpGeneratedTime: api.otpGeneratedTime,
+  };
+  const response = await handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    "whatsapp-login-otp-verification",
+    data
+  );
+  return response;
 };
+
+// export const handleip4 = () => {
+//   return handleApiRequestBeforeLogin(
+//     "get",
+//     "https://api.ipify.org/?format=json"
+//   );
+// };
+// export const handleipv6 = () => {
+//   return handleApiRequestBeforeLogin("get", "https://ipapi.co/json/");
+// };
 
 export const passwordupdated = async (
   email,

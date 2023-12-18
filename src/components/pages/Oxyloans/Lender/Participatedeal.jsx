@@ -43,7 +43,7 @@ const Participatedeal = () => {
     urldealId: "",
     spining: false,
   });
-  const [buttonvaild, setbuttonvaild] = useState(false);
+  const [buttonvaild, setbuttonvaild] = useState(true);
   const [isConditionMet, setIsConditionMet] = useState(false);
 
   const dispatch = useDispatch();
@@ -264,10 +264,10 @@ const interestType =
   useEffect(() => {
     if (deal.bank != "") {
       console.log("payment type selected");
-      setbuttonvaild(true);
+      setbuttonvaild(false);
     } else {
       console.log("select  payment type");
-      setbuttonvaild(false);
+      setbuttonvaild(true);
     }
   }, [deal.bank]);
 
@@ -387,6 +387,7 @@ const interestType =
                   <Button
                     type="primary"
                     size="large"
+                    disabled={buttonvaild}
                     onClick={() => {
                       console.log(deal.lenderReturnType);
                       dealparticipate(

@@ -43,7 +43,7 @@ const Register = () => {
                       <label>
                         Username <span className="login-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" required />
+                      <input className="form-control" type="text" />
                       <span className="profile-views">
                         <i className="fas fa-user-circle" />
                       </span>
@@ -52,7 +52,7 @@ const Register = () => {
                       <label>
                         Email <span className="login-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" required />
+                      <input className="form-control" type="text" />
                       <span className="profile-views">
                         <i className="fas fa-envelope" />
                       </span>
@@ -65,7 +65,6 @@ const Register = () => {
                         ref={inputRef}
                         className="form-control pass-input"
                         type="password"
-                        required
                       />
                       <ReactPasswordToggleIcon
                         inputRef={inputRef}
@@ -82,7 +81,6 @@ const Register = () => {
                         ref={inputRef2}
                         className="form-control pass-confirm"
                         type="text"
-                        required
                       />
 
                       <span className="profile-views">
