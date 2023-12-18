@@ -12,6 +12,7 @@ import {
   regular_Api,
   getInterestEarnings,
   getNoDealsParticipated,
+  lenderTotalInvestmentsAndReturns,
 } from "../../HttpRequest/afterlogin";
 import { Table, Pagination } from "antd";
 import { onShowSizeChange, itemRender } from "../../Pagination";
@@ -126,19 +127,46 @@ const AdminDashboard = () => {
     },
     colors: ["#3D5EE1", "#70C4CF"],
     borderWidth: 3,
-    labels: ["2020", "2021", "2022", "2023"],
+    labels: ["2020-21", "2021-22", "2022-23", "2023-24"],
   });
   const [series, setSeries] = useState([
     {
       name: "Investment",
-      data: [100000, 25000, 1000000, 300000],
+      data: [],
     },
     {
       name: "Total Returns",
-      data: [120000, 32000, 1300000, 450000],
+      data: [],
     },
   ]);
 
+
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await lenderTotalInvestmentsAndReturns(); // Assuming lenderTotalInvestmentsAndReturns is an asynchronous function
+  
+
+        console.log(response.data[0]?.lenderTotalInvestment);
+        // Update the state based on the response data
+        setSeries(prevSeries => [
+          {
+            name: "Investment",
+            data: [...prevSeries[0].data, response.data[0]?.lenderTotalInvestment , 0 , 0 ],
+          },
+          {
+            name: "Total Returns",
+            data: [...prevSeries[1].data, response.data[0]?.totalReturnedAmount , 0, 0],
+          },
+        ]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+  fetchdata();
+  }, []);
+  
   // Student Chart
 
   const [dataBar, object] = useState({
@@ -850,14 +878,14 @@ const AdminDashboard = () => {
        }
    
   }else{
-    alert("")
+
   }
     }
   }, [dashboarddata.profileData]);
 
 
   useEffect(()=>{
-
+ 
   },[])
   return (
     <>
@@ -1042,7 +1070,7 @@ const AdminDashboard = () => {
                     <div className="row align-items-center">
                       <div className="col-6">
                         <small className="card-title">
-                          Investment & Returns
+                          Investment & Returns FY-Years
                         </small>
                       </div>
                       <div className="col-6">

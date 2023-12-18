@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -816,6 +816,21 @@ export const chatapi = async () => {
   return response;
 };
 
+
+export const lenderTotalInvestmentsAndReturns =async()=>{
+  const token = getToken();
+  const userId = getUserId();
+
+  const response   =  await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderTotalInvestmentsAndReturns`,
+    "GET",
+    token,
+  );
+
+
+  return  response;
+}
 export const nofreeParticipationapi = async (
   apidata,
   groupId,
@@ -882,6 +897,7 @@ export const nofreeParticipationapi = async (
     // lenderTotalPanLimit:userPanLimit,
     // totalParticipatedAmount:userTotalParticipation
     lenderTotalPanLimit: deal.apidata.lenderRemainingPanLimit,
+    lenderParticipationFrom:"WEB",
     totalParticipatedAmount: deal.apidata.lenderTotalParticipationAmount,
   };
   const response = await handleApiRequestAfterLoginService(
@@ -893,6 +909,20 @@ export const nofreeParticipationapi = async (
   );
   return response;
 };
+export const allQueriesCount1 =async()=>{
+  const token = getToken();
+  const userId = getUserId();
+
+  const response   =  await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/allQueriesCount`,
+    "GET",
+    token,
+  );
+
+
+  return  response;
+}
 export const getMyTransactions = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();

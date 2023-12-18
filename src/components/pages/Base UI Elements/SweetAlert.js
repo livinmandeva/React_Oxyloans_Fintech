@@ -189,6 +189,8 @@ export const participatedapi = ({
   deal,
 }) => {
   const lender = localStorage.getItem("lenderReturnType");
+  const amount = localStorage.getItem("lenderRemainingWalletAmount");
+  const  remaingamount =amount - participatedAmount
   Swal.fire({
     title: "Please review the lending details!",
     html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
@@ -210,26 +212,44 @@ export const participatedapi = ({
         lenderReturnType,
         deal
       );
-      const amount = localStorage.getItem("lenderRemainingWalletAmount");
+    
       response
-        .then((response) => {
-          console.log(response);
-          Swal.fire({
-            title: "Congratulations!",
-            text: `We are reserving ${participatedAmount} for  .
-            Your new wallet balance: ${amount}`,
-            icon: "success",
-          });
-        })
+        .then((data) => {
+          console.log(data); // Logging the entire response
+    
+          // Check the status code in the response
+          if (data.request.status === 200) {
+            Swal.fire({
+              title: "Congratulations!",
+              text: `We are reserving ${participatedAmount} `,
+              icon: "success",
+            });
+          } else if (data.request.status === 403) {
+            console.log("403");
+            Swal.fire({
+              title: "Error!",
+              text: `${data.response.data.errorMessage}`, // Displaying the error message
+              icon: "error",
+            });
+          } else if (data.request.status === 500) {
+            console.log("500");
+            Swal.fire({
+              title: "Error!",
+              text: `${data.response.data.errorMessage}`, // Displaying the error message
+              icon: "error",
+            });
+          } 
+         
+        }) 
         .catch((error) => {
           Swal.fire({
             title: "Error!",
-            text: `We are reserving ${errorMessage} for ROI%%% .
-            Your new wallet balance: ${amount}`,
+            text: `${error}`, // Displaying the error message
             icon: "error",
           });
         });
     }
+    
   });
 };
 
