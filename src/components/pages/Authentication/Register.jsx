@@ -9,7 +9,7 @@ const Register = () => {
   let inputRef2 = useRef();
   const showIcon = () => (
     <i class="feather feather-eye" aria-hidden="true">
-      <FeatherIcon icon="eye" />
+      <FeatherIcon icon="eye" />    
     </i>
   );
   const hideIcon = () => (

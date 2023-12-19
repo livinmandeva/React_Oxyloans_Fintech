@@ -688,7 +688,7 @@ const Sidebar = (props) => {
                         <Link
                           to="/myEarnings"
                           className={`${
-                            "/myEarnings" === pathName ? "active" : ""
+                          "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
                           My Earning

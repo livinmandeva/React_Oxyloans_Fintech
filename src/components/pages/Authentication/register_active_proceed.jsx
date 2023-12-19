@@ -7,6 +7,8 @@ import { login } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
 import { useNavigate, useParams } from "react-router-dom";
+import { toastrWarning, topCenter1 } from "../Base UI Elements/Toast";
+import { registersuccess } from "../Base UI Elements/SweetAlert";
 
 const Register_active_proceed = () => {
   const history = useNavigate();
@@ -27,7 +29,7 @@ const Register_active_proceed = () => {
   const [date1, setdate1] = useState("");
   const [response, setResponse] = useState(null);
 
-  const [id, setid] = useState("");
+  const [id, setid] = useState("318");
   const [time, settime] = useState("");
   const [error, setError] = useState("");
   const [data, setdata] = useState({
@@ -49,16 +51,21 @@ const Register_active_proceed = () => {
           id,
           date1
         );
+        registersuccess("registration successfully completed")
         setResponse(loginResponse);
-        history("/admindashboard");
+        history("/");
         setError(null);
       } catch (error) {
+   
         console.error("Error:", error.response.data.errorMessage);
         setError(error.response.data.errorMessage);
+        toastrWarning(error.response.data.errorMessage)
         // setError('An error occurred during login');
       }
     } else {
       setError("please enter vaild pan-card number");
+     
+      toastrWarning("please enter vaild pan-card number")
     }
   };
 
@@ -70,18 +77,21 @@ const Register_active_proceed = () => {
     });
   };
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    // const urlParams = new URLSearchParams(window.location.search);
 
     // Get the value of the 'id' parameter
-    const id = urlParams.get("id");
+    // const id = urlParams.get("id");
 
     // Get the value of the 'time' parameter
-    const time = urlParams.get("time");
+    // const time = urlParams.get("time");
 
     // Do something with the id and time values
-    console.log("id:", id);
-    console.log("time:", time);
-    settime(time);
+
+    const id=localStorage.getItem("id")
+    const getimemail=localStorage.getItem("timemilll")
+    console.log("id", id);
+    console.log("time:", getimemail);
+    settime(getimemail);
     setid(id);
   }, []);
 
@@ -133,9 +143,9 @@ const Register_active_proceed = () => {
                       name="date"
                       onChange={handlechanges}
                     />
-                    <span className="profile-views">
+                    {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
-                    </span>
+                    </span> */}
                   </div>
                   <div className="form-group">
                     <label>

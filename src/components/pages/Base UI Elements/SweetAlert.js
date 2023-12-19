@@ -90,6 +90,15 @@ export const Info = () => {
     buttonsStyling: !1,
   });
 };
+export const registersuccess = (message) => {
+  Swal.fire({
+    title: "Info!",
+    text:  message,
+    type: "info",
+    confirmButtonClass: "btn btn-primary",
+    buttonsStyling: !1,
+  });
+}; 
 export const WarningAlert = (errorMessage, redirectTo) => {
   Swal.fire({
     title: "session Expiring",

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { login, registerImage } from "../../imagepath";
-import { Link } from "react-router-dom";
+import { Link  ,
+  useNavigate } from "react-router-dom";
 import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
@@ -112,12 +113,25 @@ export default function LenderRegister() {
           session,
           registrationField.referrerId
         );
+        //  const mill=gettime()
 
-        // Handle the successful response, e.g., update state
-        setRegistrationSu(response);
+         
+        console.log(response)
+        console.log(response.responseData.userId)
+        // console.log(response.data.id)
+
+        localStorage.setItem("id",response.responseData.userId)
+
+        const mill1 = new Date().getTime();
+        localStorage.setItem("timemilll",mill1)
+        navigate("/register_active_proceed")
       } else {
         // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
+
+        
+        console.log(mill);
+   
       }
     } catch (error) {
       // Handle any errors that occur during OTP validation
@@ -125,6 +139,7 @@ export default function LenderRegister() {
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
       );
+      console.log(error)
       setError(
         error.response
           ? error.response.data.errorMessage
@@ -160,6 +175,7 @@ export default function LenderRegister() {
     registrationField.passworderror,
     registrationField.referrerIderror,
   ]);
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -206,7 +222,7 @@ export default function LenderRegister() {
                         </>
                       ) : (
                         <>
-                          <h1>Enter the OTP </h1>
+                          <h1  className="center">Enter the OTP </h1>
                         </>
                       )}{" "}
                     </>
@@ -335,7 +351,7 @@ export default function LenderRegister() {
                         </div>
                         {error && <div className="errormessage">{error}</div>}
                         <div className=" dont-have">
-                          Already Registered? <Link to="/login">Login</Link>
+                          Already Registered? <Link to="/">Login</Link>
                         </div>
                         <div className="form-group mb-0">
                           <button
@@ -367,7 +383,7 @@ export default function LenderRegister() {
                               <OtpInput />
                             </div>
                             <div className=" dont-have">
-                              Already Registered? <Link to="/login">Login</Link>
+                              Already Registered? <Link to="/">Login</Link>
                             </div>
                             {error && <p className="errormessage">{error}</p>}
                             <div className="form-group mb-0">
@@ -393,18 +409,18 @@ export default function LenderRegister() {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
-                    <Link to="#">
+                    {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
+                    </Link> */}
+                    <Link to="/whatapplogin" className="bg-success text-white">
+                      <i className="fa fa-whatsapp" />{" "}
                     </Link>
-                    <Link to="#">
+                    {/* <Link onClick={() => {}} to="#">
                       <i className="fab fa-facebook-f" />
                     </Link>
                     <Link to="#">
                       <i className="fab fa-twitter" />
-                    </Link>
-                    <Link to="#">
-                      <i className="fab fa-linkedin-in" />
-                    </Link>
+                    </Link> */}
                   </div>
                   {/* /Social Login */}
                 </div>

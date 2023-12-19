@@ -77,10 +77,12 @@ export const verifypannumber = async (pannumber, address, time, id, date) => {
     dob: date,
     panNumber: pannumber,
     timeInMilliSeconds: time,
+    emailOtp : null,
+    emailOtpSession:null,
     userId: id,
   };
   try {
-    const response = await axios.post(
+    const response = await axios.patch(
       API_BASE_URL + "user/emailVerification",
       data,
       {
@@ -208,7 +210,9 @@ export const vaildateotp = async (
       citizenship: "NONNRI",
       uniqueNumber: 0,
       utm: "WEB",
-      uuid: "asdfghjkl",
+      // uuid: "asdfghjkl",
+      cifNumber: null,
+      finoEmployeeMobileNumber: null,
     };
   } else {
     var data = {
@@ -222,7 +226,9 @@ export const vaildateotp = async (
       citizenship: "NONNRI",
       uniqueNumber: 0,
       utm: "WEB",
-      uuid: "asdfghjkl",
+      cifNumber: null,
+      finoEmployeeMobileNumber: null,
+      // uuid: "asdfghjkl",
     };
   }
 
