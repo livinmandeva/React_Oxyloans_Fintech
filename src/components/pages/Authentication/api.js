@@ -196,9 +196,10 @@ export const vaildateotp = async (
   name,
   password,
   session,
-  referrerId
-) => {
-  if (referrerId === "") {
+  referrerId,
+  
+) => {    const uniqnumber=localStorage.getItem("uniqnumber")
+  if (uniqnumber == "" || null) {
     var data = {
       mobileNumber: moblie,
       mobileOtpSession: session,
@@ -224,7 +225,7 @@ export const vaildateotp = async (
       email: email,
       password: password,
       citizenship: "NONNRI",
-      uniqueNumber: 0,
+      uniqueNumber: uniqnumber,
       utm: "WEB",
       cifNumber: null,
       finoEmployeeMobileNumber: null,
@@ -237,6 +238,7 @@ export const vaildateotp = async (
       API_BASE_URL + "user/newUserRegistration",
       data
     );
+    
     return {
       responseData: response.data,
     };

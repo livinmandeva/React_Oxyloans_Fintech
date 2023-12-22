@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 let API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -9,7 +9,7 @@ const handleApiRequestBeforeLogin = async (
   method,
   BASE_URL,
   End_Url,
-  POSTDATA
+  POSTDATA 
 ) => {
   try {
     const response = await axios({
@@ -105,6 +105,36 @@ export const sendwhatappotp = async (value1) => {
   );
   return response;
 };
+export const referrerdata =(referrerId  , refParam)=>{
+  console.log(referrerId);
+
+  const numericPart = referrerId.match(/\d+$/);
+
+
+
+
+
+
+  if(referrerId !==""){
+    const response = handleApiRequestBeforeLogin(
+      "GET",
+      API_BASE_URL,
+      
+      `${numericPart}/user-uniquenumber`,
+    )
+    return  response
+  }else{
+    const response = handleApiRequestBeforeLogin(
+      "GET",
+      API_BASE_URL,
+      
+      `${refParam}/user-uniquenumber`,
+    )
+
+    return   response
+  }
+
+}
 export const verifywhatappotp = async (api) => {
   console.log(api);
   const value1 = localStorage.getItem("otp");

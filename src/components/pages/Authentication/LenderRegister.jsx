@@ -8,6 +8,7 @@ import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import Register from "./Register";
 import OtpInput from "./OtpInput";
+import { referrerdata } from "../../HttpRequest/beforelogin";
 
 export default function LenderRegister() {
   let inputRef = useRef();
@@ -32,6 +33,7 @@ export default function LenderRegister() {
     pancarderror: "",
     passworderror: "",
     referrerIderror: "",
+    uniqueNumber:"",
     moblieerror: "",
   });
   const [field, setfield] = useState(true);
@@ -49,7 +51,30 @@ export default function LenderRegister() {
 
   const handleLenderRegister = async () => {
     const error = {};
+    const searchParams = new URLSearchParams(window.location.search);
+    const refParam = searchParams.get('ref');
+    const numericPart = refParam.match(/\d+$/);
+    console.log(numericPart)
+ 
+    if(registrationField.referrerId != "" || numericPart !==""){
+      
+      setRegistrationField({
+        ...registrationField,
+        referrerId:numericPart
+      });
+           const response =await referrerdata(registrationField.referrerId  , numericPart);
+           console.log(response);
+          //  uniqueNumber
+           console.log(response.data.uniqueNumber);
+           
+         localStorage.setItem("uniqnumber",response.data.uniqueNumber)
+    }else{
 
+    }
+    setRegistrationField({
+      ...registrationField,
+      ...error,
+    });
     if (registrationField.email === "") {
       error.emailerror = "Please enter The  email";
     }
@@ -63,10 +88,7 @@ export default function LenderRegister() {
       error.passworderror = "Please enter The  password";
     }
 
-    setRegistrationField({
-      ...registrationField,
-      ...error,
-    });
+    
 
     const validationError = api.validateRegisterInput(
       registrationField.email,
@@ -111,7 +133,7 @@ export default function LenderRegister() {
           registrationField.name,
           registrationField.password, // Ensure `password` is available in registrationField
           session,
-          registrationField.referrerId
+          registrationField.referrerId,
         );
         //  const mill=gettime()
 
@@ -177,6 +199,24 @@ export default function LenderRegister() {
   ]);
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    const searchParams = new URLSearchParams(window.location.search);
+    
+    // Get the value of the 'ref' parameter
+    const refParam = searchParams.get('ref');
+
+ 
+    if(registrationField.referrerId != ""  || refParam  !=""){
+      
+      setRegistrationField({
+        ...registrationField,
+        referrerId:refParam
+      });
+          
+    }else{
+
+    }
+  } ,[])
   return (
     <div>
       <div className="main-wrapper login-body">
@@ -316,6 +356,7 @@ export default function LenderRegister() {
                             className="form-control pass-confirm"
                             type="text"
                             name="referrerId"
+                            value={registrationField.referrerId}
                             onChange={handlechange}
                           />
                           <span className="profile-views">
