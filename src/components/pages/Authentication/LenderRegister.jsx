@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { login, registerImage } from "../../imagepath";
-import { Link  ,
-  useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate
+} from "react-router-dom";
 import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
@@ -32,8 +34,9 @@ export default function LenderRegister() {
     emailerror: "",
     pancarderror: "",
     passworderror: "",
+    eamilerror: "",
     referrerIderror: "",
-    uniqueNumber:"",
+    uniqueNumber: "",
     moblieerror: "",
   });
   const [field, setfield] = useState(true);
@@ -50,45 +53,29 @@ export default function LenderRegister() {
   };
 
   const handleLenderRegister = async () => {
-    const error = {};
-    const searchParams = new URLSearchParams(window.location.search);
-    const refParam = searchParams.get('ref');
-    const numericPart = refParam.match(/\d+$/);
-    console.log(numericPart)
+
+    setRegistrationField((prevState) => ({
+      ...prevState,
+      emailerror: registrationField.email === "" ? "Please enter The email" : "",
+      pancarderror: registrationField.pancard === "" ? "Please enter  Name" : "",
+      moblieerror: registrationField.moblie === "" ? "Please enter The moblie" : "",
+      passworderror: registrationField.password === "" ? "Please enter The password" : "",
+    }));
+
+
+    // if (registrationField.referrerId !== "" ) {
+
+    //   const response = await referrerdata(registrationField.referrerId);
+    //   console.log(response);
+    //   //  uniqueNumber
+    //   console.log(response.data.uniqueNumber);
+
+    //   localStorage.setItem("uniqnumber", response.data.uniqueNumber)
+    // } else {
+
+
+    // }
  
-    if(registrationField.referrerId != "" || numericPart !==""){
-      
-      setRegistrationField({
-        ...registrationField,
-        referrerId:numericPart
-      });
-           const response =await referrerdata(registrationField.referrerId  , numericPart);
-           console.log(response);
-          //  uniqueNumber
-           console.log(response.data.uniqueNumber);
-           
-         localStorage.setItem("uniqnumber",response.data.uniqueNumber)
-    }else{
-
-    }
-    setRegistrationField({
-      ...registrationField,
-      ...error,
-    });
-    if (registrationField.email === "") {
-      error.emailerror = "Please enter The  email";
-    }
-    if (registrationField.pancard === "") {
-      error.pancarderror = "Please enter The  pancard";
-    }
-    if (registrationField.moblie === "") {
-      error.moblieerror = "Please enter The  moblie";
-    }
-    if (registrationField.password === "") {
-      error.passworderror = "Please enter The  password";
-    }
-
-    
 
     const validationError = api.validateRegisterInput(
       registrationField.email,
@@ -100,7 +87,8 @@ export default function LenderRegister() {
       setError(validationError);
       return;
     }
-
+    if (registrationField.emailerror === "" && registrationField.pancarderror === "" && registrationField.moblieerror === "" && registrationField.passworderror === "") {
+  console.log("fields")
     try {
       const RegisterResponse = await api.RegisterUser(registrationField.moblie);
       alert(RegisterResponse);
@@ -113,8 +101,9 @@ export default function LenderRegister() {
       setError(error.response.data.errorMessage);
       // setError('An error occurred during login');
     }
+  }
   };
-  const handlesumitmoblie = () => {};
+  const handlesumitmoblie = () => { };
 
   const Otpverify = async () => {
     try {
@@ -137,23 +126,23 @@ export default function LenderRegister() {
         );
         //  const mill=gettime()
 
-         
+
         console.log(response)
         console.log(response.responseData.userId)
         // console.log(response.data.id)
 
-        localStorage.setItem("id",response.responseData.userId)
+        localStorage.setItem("id", response.responseData.userId)
 
         const mill1 = new Date().getTime();
-        localStorage.setItem("timemilll",mill1)
+        localStorage.setItem("timemilll", mill1)
         navigate("/register_active_proceed")
       } else {
         // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
 
-        
+
         console.log(mill);
-   
+
       }
     } catch (error) {
       // Handle any errors that occur during OTP validation
@@ -169,54 +158,27 @@ export default function LenderRegister() {
       );
     }
   };
-  useEffect(() => {
-    if (
-      registrationField.emailerror !== "" ||
-      registrationField.pancarderror !== "" ||
-      error !== "" ||
-      registrationField.passworderror !== "" ||
-      registrationField.referrerIderror !== "" ||
-      registrationField.moblieerror !== ""
-    ) {
-      setTimeout(() => {
-        setRegistrationField((prevRegistrationField) => ({
-          ...prevRegistrationField,
-          emailerror: "",
-          pancarderror: "",
-          passworderror: "",
-          referrerIderror: "",
-          moblieerror: "",
-        }));
-      }, 5000);
-    }
-  }, [
-    registrationField.pancarderror,
-    registrationField.moblieerror,
-    registrationField.emailerror,
-    error,
-    registrationField.passworderror,
-    registrationField.referrerIderror,
-  ]);
+
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    
+
     // Get the value of the 'ref' parameter
     const refParam = searchParams.get('ref');
 
- 
-    if(registrationField.referrerId != ""  || refParam  !=""){
-      
+
+    if (registrationField.referrerId != "" || refParam != "") {
+
       setRegistrationField({
         ...registrationField,
-        referrerId:refParam
+        referrerId: refParam
       });
-          
-    }else{
+
+    } else {
 
     }
-  } ,[])
+  }, [])
   return (
     <div>
       <div className="main-wrapper login-body">
@@ -262,7 +224,7 @@ export default function LenderRegister() {
                         </>
                       ) : (
                         <>
-                          <h1  className="center">Enter the OTP </h1>
+                          <h1 className="center">Enter the OTP </h1>
                         </>
                       )}{" "}
                     </>
@@ -284,7 +246,7 @@ export default function LenderRegister() {
                           <input
                             className="form-control"
                             type="text"
-                            name="name"
+                            name="pancard"
                             onChange={handlechange}
                           />
                           <span className="profile-views">
@@ -359,9 +321,9 @@ export default function LenderRegister() {
                             value={registrationField.referrerId}
                             onChange={handlechange}
                           />
-                          <span className="profile-views">
+                          {/* <span className="profile-views">
                             <i className="fas fa-phone" />
-                          </span>{" "}
+                          </span>{" "} */}
                           {registrationField.referrerIderror && (
                             <div className="error">
                               {registrationField.referrerIderror}
@@ -377,8 +339,9 @@ export default function LenderRegister() {
                           <input
                             ref={inputRef2}
                             className="form-control pass-confirm"
-                            type="text"
+                            type="tel"
                             name="moblie"
+                            maxLength={10}
                             onChange={handlechange}
                           />
                           <span className="profile-views">

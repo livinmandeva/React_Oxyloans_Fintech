@@ -242,9 +242,9 @@ const appcontainer = () => {
           <Route path="/myEarnings" element={<MyEarnings />} />
           <Route path="/loanListings" element={<LoanListings />} />
           <Route path="/WalletToWallet" element={<WalletToWallet />} />
-          <Route
-            path="/withdrawalFromWallet"
-            element={<WithdrawalFromWallet />}
+          <Route 
+          path="/withdrawalFromWallet" 
+          element={<WithdrawalFromWallet />}
           />
           <Route path="/withdrawdealFounds" element={<WithdrawdealFounds />} />
           <Route path="/membershipHistory" element={<MembershipHistory />} />

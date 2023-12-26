@@ -146,7 +146,7 @@ const WithdrawdealfromDeal = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      withdrawdeal from Deal
+                    Withdraw Funds
                     </li>
                   </ul>
                 </div>

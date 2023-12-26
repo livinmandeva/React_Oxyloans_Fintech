@@ -1,9 +1,14 @@
 .errormessage {
   font-size: 13px;
-  color: green;
+  /* color: green; */
+  color: red;
 }
-.error {
+/* .error {
   color: grey;
+  font-size: 12px;
+} */
+.error {
+  color:red;
   font-size: 12px;
 }
 

@@ -291,6 +291,9 @@ const Header = (profile) => {
                     {reduxStoreData?.length != 0
                       ? reduxStoreData?.firstName ?? ""
                       : ""}
+                       {reduxStoreData?.length != 0
+                      ? localStorage.setItem("userName", reduxStoreData?.firstName) ?? ""
+                      : ""}
 
                     {/* {reduxStoreData.length !== 0 && reduxStoreData != undefined
                       ? reduxStoreData.firstName

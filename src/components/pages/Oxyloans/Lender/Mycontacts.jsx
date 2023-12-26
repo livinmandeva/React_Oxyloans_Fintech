@@ -8,6 +8,7 @@ import {
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
+import './Mycontacts.css'
 import { Button, Table } from "antd";
 import { data, event } from "jquery";
 import Result1 from "./Result1";
@@ -21,6 +22,8 @@ const Mycontacts = () => {
     pageSize: 5,
     selectAll: false,
     setsuccessMessage: "",
+    model:true,
+  
   });
 
   const [message, setmesage] = useState({
@@ -99,6 +102,13 @@ const Mycontacts = () => {
     });
   };
 
+  const handleClick=()=>{
+
+    setModel({
+      ...module,
+
+    })
+  }
   const column = [
     {
       title: "Email",
@@ -122,6 +132,7 @@ const Mycontacts = () => {
   useEffect(() => {
     return () => {};
   }, [contactdata.selectAll]);
+  const userName=localStorage.getItem("userName")
   const handleSelectClick = () => {
     // Update selectAll in contactData
     setcontactData((prevContactData) => ({
@@ -136,6 +147,8 @@ const Mycontacts = () => {
       const name = contactNames[index];
       return `${name ? name + "-" : "-"}${email}`;
     });
+
+
 
     // Join the combined data with commas
     const combinedEmails = combinedData.join(",");
@@ -206,7 +219,7 @@ const Mycontacts = () => {
                           </Link>
 
                           <Button
-                            className="btn btn-warning h-100"
+                            className="btn btn-warning h-100" style={{marginRight: '8px',}}
                             onClick={handleSelectClick}
                           >
                             {contactdata.selectAll ? (
@@ -217,7 +230,11 @@ const Mycontacts = () => {
                                 All
                               </>
                             )}
-                          </Button>
+                          </Button>   
+
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"  >
+                          Preview
+</button>
                         </div>
                       </div>
                     </div>
@@ -249,6 +266,37 @@ const Mycontacts = () => {
           {/* Footer */}
           <Footer />
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  {/* <div class="modal-dialog modal-md"> */}
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"> Here is the email invitation preview</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Subject:- {userName} || OxyLoans - Interesting FinTech Platform</p>
+        <p    className="imagecard">Date:- 2022/06/05</p>
+        <p>Hi</p>
+
+          <br></br>
+
+        <p>Greetings from ! I am an existing lender in OxyLoans.com! OXYLOANS.com– RBI Approved Peer 2 Peer Lending Platform. OxyLoans enables every individual to Lend Money Like A Bank.</p>
+      
+      <p>Greetings from {userName} ! I am an existing LENDER in OxyLoans.com! OXYLOANS.com– RBI Approved Peer 2 Peer Lending Platform. OxyLoans enables every individual to lend money like a bank. I am investing multiples of INR 50,000 in numerous deals, distributing risk, and maximizing monthly profit. I am earning a profit of on average 1.75% per montht. My friends from MNCs like TCS, Microsoft, IBM, Cap Gemini, Yash, etc have started their investment journey with small amounts (like 50k) and currently investing in lakhs. If this interests you and want to earn like them then OxyLoans is the connection.</p>
+      <a  href=""><p>Please join as a Lender / Investor and start earning monthly income.</p></a>
+      <p>OxyLoans is founded and run by Mr.RadhakrishnaThatavarti! Please review his linkedin profile <a href="https://www.linkedin.com/in/venkata-radhakrishna-thatavarti-214b2a213/" target="_blank">https://www.linkedin.com/in/venkata-radhakrishna-thatavarti-214b2a213/</a>  I am sending this e-mail on my own interest, I have experienced good response directly from the founder and respective team. Please feel free to reach me on 221455225.</p>
+      
+      <p>Thanks & Regards,</p>
+      {/* <p>JOHN DOE DOE.</p> */}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
       </div>
       {/* /Main Wrapper */}
     </>

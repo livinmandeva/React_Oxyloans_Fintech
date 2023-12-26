@@ -80,7 +80,7 @@ const WithdrawalFromWallet = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      withdrawal FromWallet
+                      withdrawal From Wallet
                     </li>
                   </ul>
                 </div>

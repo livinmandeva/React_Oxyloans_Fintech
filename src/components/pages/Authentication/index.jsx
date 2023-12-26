@@ -149,7 +149,7 @@ const Login = () => {
                           <span className="checkmark" />
                         </label>
                       </div>
-                      <Link to="/forgotpassword">Forgot Password?</Link>
+                      <Link to="/forgotpassword1">Forgot Password?</Link>
                     </div>
                     <div className="form-group">
                       <button

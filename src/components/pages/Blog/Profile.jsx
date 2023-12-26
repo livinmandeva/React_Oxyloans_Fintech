@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
-import { Success, WarningBackendApi } from "../Base UI Elements/SweetAlert";
+import { Success, WarningAlerterror, WarningBackendApi } from "../Base UI Elements/SweetAlert";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 
 import {
@@ -98,6 +98,7 @@ const Profile = () => {
     branch: "",
     nomineecity: "",
     copyerror: "",
+    isdeatail:false
   });
 
   const [kyc, setKyc] = useState({
@@ -139,6 +140,25 @@ const Profile = () => {
     });
   };
 
+
+  useEffect(()=>{
+if( nomineeDetails.nomineeName != "" &&
+nomineeDetails.relation != ""  &&
+nomineeDetails.nomineeEmail != "" &&
+nomineeDetails.nomineeMobile != "" &&
+nomineeDetails.accountNo != "" &&
+nomineeDetails.nomineeIfsc != "" &&
+nomineeDetails.bank != "" &&
+nomineeDetails.branch != "" &&
+nomineeDetails.nomineecity != ""){
+  console.log("all fileds are success")
+  setnomineeDetails({
+    ...nomineeDetails,
+    isdeatail:true
+  })
+}
+
+  },[nomineeDetails.nomineeName])
   const savebankdetailsProfile = () => {
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
@@ -152,14 +172,20 @@ const Profile = () => {
 
   const submitNomineeDetails = (event) => {
     event.preventDefault();
-    const response = savenomineeDeatailsApi(nomineeDetails);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        Success("success", "Nominee Details Save Successfully");
-      } else if (data.response.data.errorCode != "200") {
-        WarningBackendApi("warning", data.response.data.errorMessage);
-      }
-    });
+    if(nomineeDetails.isdeatail  == true){
+      const response = savenomineeDeatailsApi(nomineeDetails);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          Success("success", "Nominee Details Save Successfully");
+        } else if (data.response.data.errorCode != "200") {
+          WarningBackendApi("warning", data.response.data.errorMessage);
+        }
+      });
+    }else{
+
+      WarningBackendApi("warning");
+    }
+  
   };
 
   const verifybankAccountCashfree = () => {
@@ -435,7 +461,7 @@ const Profile = () => {
       });
   }, [kyc.isValid]);
 
-  console.log(kyc);
+  // console.log(kyc);
   return (
     <>
       <div className="main-wrapper">
@@ -1145,12 +1171,12 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type={userProfile.dob == "" ? "date" : "tex"}
+                                  type={userProfile.dob == "" ? "date" : "text"}
                                   className="form-control datetimepicker"
                                   onChange={handlechange}
                                   value={userProfile.dob}
                                   name="dob"
-                                />
+                                />    
                               </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
@@ -1398,7 +1424,7 @@ const Profile = () => {
                                     className="hide-input"
                                     onChange={handlefileupload}
                                   />
-                                  <label htmlFor="cheque" className="upload">
+                                  <label htmlFor="chequ" className="upload">
                                     <i className="feather-upload">
                                       <FeatherIcon icon="upload" />
                                     </i>
@@ -1493,7 +1519,7 @@ const Profile = () => {
                                     onChange={handlefileupload}
                                     className="hide-input"
                                   />
-                                  <label htmlFor="license" className="upload">
+                                  <label htmlFor="Voter" className="upload">
                                     <i className="feather-upload">
                                       <FeatherIcon icon="upload" />
                                     </i>

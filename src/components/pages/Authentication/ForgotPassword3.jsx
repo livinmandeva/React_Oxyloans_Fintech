@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { login } from "../../imagepath";
 import * as api from "./api";
 import { sendotpemail } from "../../HttpRequest/beforelogin";
+import { toastrError, toastrSuccess } from "../Base UI Elements/Toast";
 
 const ForgotPassword3 = () => {
-  const [email, setemail] = useState({
+  const [email, setEmail] = useState({
     emailid: "",
     error: "",
     data: {},
   });
 
+
+
   const handlechange = (event) => {
     const { name, value } = event.target;
-    setemail({
+    setEmail({
       ...email,
       [name]: value,
     });
@@ -21,19 +24,30 @@ const ForgotPassword3 = () => {
   const handleresetpassword = async () => {
     const vaildatebu = api.vaildateemail(email.emailid);
     if (vaildatebu) {
-      setemail({
+      setEmail({
         ...email,
         error: vaildatebu,
       });
       return;
     }
     try {
-      const sendOtpEmail = sendotpemail(email.emailid);
-      setemailisvaild(!emailisvaild);
-      setEmail({
-        ...email,
-        data: sendOtpEmail,
-      });
+      const sendOtpEmail =await sendotpemail(email.emailid);
+
+      console.log(sendOtpEmail);
+      console.log(sendOtpEmail.status)
+      // setemailisvaild(!emailisvaild);     
+
+      if(sendOtpEmail.status  === 200){
+
+        setEmail({
+          ...email,
+          data: sendOtpEmail,
+        });
+        toastrSuccess("We've sent an email to reset the password.")
+      }else{
+           toastrError("error")
+      }
+      
     } catch (error) {
       setEmail({
         ...email,
