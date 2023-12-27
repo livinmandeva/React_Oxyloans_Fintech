@@ -4,6 +4,7 @@ import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal"
 import Admlogin from "./components/pages/Authentication/Admlogin";
 import Membership from "./components/pages/Oxyloans/Lender/Membership";
 import Spining from "./components/pages/Oxyloans/Lender/Spining";
+import Loginotp from "./components/pages/Authentication/Loginotp";
 
 const Login = React.lazy(() => import("./components/pages/Authentication"));
 const Register = React.lazy(() =>
@@ -176,6 +177,7 @@ const appcontainer = () => {
           <Route path="/error404" element={<Error404 />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/loadwaletThroughQr" element={<LoadwaletThroughQr />} />
+          <Route path="/loginotp" element={<Loginotp />} />
           <Route path="/register" element={<LenderRegister />} />
           <Route path="/borrower_register" element={<BorrowerRegister />} />
           <Route

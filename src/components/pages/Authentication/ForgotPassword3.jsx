@@ -85,7 +85,7 @@ const ForgotPassword3 = () => {
                     </span>
                   </div>
                   {email.error && (
-                    <div className="errormessage">{email.error}</div>
+                    <div className="text-danger">{email.error}</div>
                   )}
                   <div className="form-group">
                     <button

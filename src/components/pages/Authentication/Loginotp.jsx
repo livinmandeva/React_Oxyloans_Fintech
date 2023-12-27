@@ -6,12 +6,12 @@ import { login, registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 
-import { userloginSection } from "../../HttpRequest/beforelogin";
+import { handlesenOtp, userloginSection, usersubmitotp } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
 import { getProfile } from "../../Redux/Slice";
 
-const Login = () => {
+const Loginotp = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const [userLogInInfo, setUserLoginInfo] = useState({
@@ -21,6 +21,7 @@ const Login = () => {
     password: "",
     emailerror:"",
     passworderror:"",
+    sentotp:false,
     response: null,
     dataIpv4: "",
     oftermoblieotp: false,
@@ -56,16 +57,15 @@ const Login = () => {
   const submitloginhandler = async () => {
   
      
-         if(userLogInInfo.email === "" || userLogInInfo.password === ""){
+         if( userLogInInfo.password === ""){
           setUserLoginInfo((prevState) => ({
             ...prevState,
-            emailerror: userLogInInfo.email === "" ? "Please enter The email" : "",
-            passworderror: userLogInInfo.password === "" ? "Please enter The password" : "",
+            passworderror: userLogInInfo.password === "" ? "Please enter The OTP" : "",
           })); 
          }else{
 
           let { email, password } = userLogInInfo;
-          const retriveresponse = await userloginSection(email, password);
+          const retriveresponse = await usersubmitotp(email, password);
       
           if (retriveresponse.request.status == 200) {
             toastrSuccess("Login Suceess !");
@@ -76,6 +76,25 @@ const Login = () => {
           }       
          }
   };
+
+
+  const sendtheOtp=async()=>{
+    if(userLogInInfo.email === "" ){
+        setUserLoginInfo((prevState) => ({
+          ...prevState,
+          emailerror: userLogInInfo.email === "" ? "Please enter The Moblie Number" : "",
+        }))
+    }else{
+        const response = await handlesenOtp(userLogInInfo.email);
+        console.log(response)
+
+        setUserLoginInfo({
+            ...userLogInInfo,
+            sentotp:true,
+        })
+          }
+    }
+  
 
   return (
     <>
@@ -101,11 +120,11 @@ const Login = () => {
 
                     <div className="form-group">
                       <label htmlFor="userloginusername">
-                        Email/Mobile No <span className="login-danger">*</span>
+                        Enter Moblie Number <span className="login-danger">*</span>
                       </label>
                       <input
                         className="form-control"
-                        type="text"
+                        type="number"
                         value={userLogInInfo.email}
                         name="email"
                         onChange={handlechange}
@@ -117,15 +136,14 @@ const Login = () => {
                       </span>
                       {userLogInInfo.emailerror && <div  className="text-danger"> {userLogInInfo.emailerror}</div>}
                     </div>    
-                
-                    <div className="form-group">
+                {userLogInInfo.sentotp && <> <div className="form-group">
                       <label htmlFor="userpassword">
-                        Password <span className="login-danger">*</span>
+                        Enter OTP <span className="login-danger">*</span>
                       </label>
                       <input
                         ref={inputRef}
                         className="form-control pass-input"
-                        type="password"
+                        type="number"
                         name="password"
                         id="userpassword"
                         value={userLogInInfo.password}
@@ -142,24 +160,35 @@ const Login = () => {
                         showIcon={showIcon}
                         hideIcon={hideIcon}
                       />
-                    </div>   
+                    </div>   </>}
+                   
                  
                     <div className="forgotpass">
                       <div className="remember-me">
-                      <Link to="/loginotp">Login with OTP ?</Link>
+                        <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
+                          Remember me
+                          <input type="checkbox" name="remember" />
+                          <span className="checkmark" />
+                        </label>
                       </div>
                       <Link to="/forgotpassword1">Forgot Password?</Link>
-                      
                     </div>
-                    
                     <div className="form-group">
-                      <button
+                    {userLogInInfo.sentotp ? <>    <button
                         className="btn btn-primary btn-block"
                         type="button"
                         onClick={submitloginhandler}
                       >
                         Login
-                      </button>
+                      </button></> : <>
+                      <button
+                        className="btn btn-primary btn-block"
+                        type="button"
+                        onClick={sendtheOtp}
+                      >
+                        Send OTP
+                      </button></> }
+                  
                     </div>
 
                   <div className="login-or">
@@ -191,4 +220,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Loginotp;

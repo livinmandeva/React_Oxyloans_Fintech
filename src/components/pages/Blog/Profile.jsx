@@ -67,6 +67,21 @@ const Profile = () => {
     aadharerror: "",
     mobileNumber: "",
     email: "",
+    addresserror: "",
+    cityer: "",
+    doberror: "",
+    fatherNameerror: "",
+    firstNamrror: "",
+    lastNamerror: "",
+    panNumbererror: "",
+    permanentAddresserror: "",
+    pinCodeerror: "",
+    stateerror: "",
+    whatsAppNumbererror: "",
+    aadhaarNumbererror: "",
+    aadhaarNumbererror: "",
+    mobileNumbererror: "",
+    emailerror: "",
   });
 
   const [bankaccountprofile, setBankaccountProfile] = useState({
@@ -85,6 +100,19 @@ const Profile = () => {
     updateBankDetails: true,
     nameAtBank: "",
     bankCity: "",
+    moblieNumbererror: "",
+    bankAccounterror: "",
+    accountNumbererror: "",
+    bankAddresserror: "",
+    bankNameerror: "",
+    branchNameerror: "",
+    confirmAccountNumbererror: "",
+    ifscCodeerror: "",
+    mobileOtperror: "",
+    mobileOtpSessionerror: "",
+    bankAccountError: "",
+    nameAtBankerror: "",
+    bankCityerror: "",
   });
 
   const [nomineeDetails, setnomineeDetails] = useState({
@@ -105,9 +133,9 @@ const Profile = () => {
     aadhar: "",
     Passport: "",
     PanCard: "",
-    cheque: "",
+    CHEQUELEAF: "",
     license: "",
-    Voter: "",
+    VOTERID: "",
     isValid: true,
   });
 
@@ -290,39 +318,89 @@ nomineeDetails.nomineecity != ""){
   };
 
   const handleprofileUpdate = () => {
-    const response = profileupadate(userProfile);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        Success("success", "Personal Details Save Successfully");
-      } else if (data.response.data.errorCode != "200") {
-        WarningBackendApi("warning", data.response.data.errorMessage);
-      }
-    });
+
+        if(userProfile.email === ""  || userProfile.firstName === ""  || userProfile.lastName  === ""  || userProfile.mobileNumber  === "" || userProfile.whatsAppNumber  === "" || userProfile.city === "" || userProfile.pinCode === "" ||  userProfile.fatherName === "" || userProfile.city  === ""  || userProfile.state  === "" || userProfile.aadharNumber  === "" || userProfile.city === "" || userProfile.locality  === ""  ){
+          setUserProfile({
+            ...userProfile,
+            
+            addresserror: userProfile.address === "" ? "Please enter The address" : "",
+            cityer:  userProfile.city === "" ? "Please enter The city" : "",
+            doberror:  userProfile.dob === "" ? "Please enter The dob" : "",
+            fatherNameerror:  userProfile.fatherName === "" ? "Please enter The fatherName" : "",
+            firstNamrror:  userProfile.firstName === "" ? "Please enter The firstName" : "",
+            lastNamerror:  userProfile.lastName === "" ? "Please enter The lastName" : "",
+            panNumbererror:  userProfile.panNumber === "" ? "Please enter The panNumber" : "",
+            permanentAddresserror:  userProfile.permanentAddress === "" ? "Please enter The permanentAddress" : "",
+            pinCodeerror:  userProfile.pinCode === "" ? "Please enter The pinCode" : "",
+            stateerror: userProfile.state === "" ? "Please enter The state" : "",
+            whatsAppNumbererror:  userProfile.whatsAppNumber === "" ? "Please enter The whatsAppNumber" : "",
+            aadhaarNumbererror:  userProfile.aadharNumber === "" ? "Please enter The aadharNumber" : "",
+      
+            mobileNumbererror:  userProfile.mobileNumber === "" ? "Please enter The mobileNumber" : "",
+            emailerror:  userProfile.email === "" ? "Please enter The email" : "",
+          })
+        }else   {
+
+          const response = profileupadate(userProfile);
+          response.then((data) => {
+            if (data.request.status == 200) {
+              Success("success", "Personal Details Save Successfully");
+            } else if (data.response.data.errorCode != "200") {
+              WarningBackendApi("warning", data.response.data.errorMessage);
+            }    
+          });
+        }
+ 
+
   };
 
   const sendotp = async () => {
-    const response = sendMoblieOtp(bankaccountprofile);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        setdashboarddata({
-          ...dashboarddata,
-          sendotpbtn: true,
-          verifyotp: true,
-          sendotpbtnText: "ReSend Otp",
-          sendOtpsession: data.data.mobileOtpSession,
-          isValid: true,
-        });
 
-        setBankaccountProfile({
-          ...bankaccountprofile,
-          mobileOtpSession: data.data.mobileOtpSession,
-        });
 
-        toastrSuccess("Otp Sent Sucessfully!", "top-right");
-      } else if (data.response.data.errorCode != "200") {
-        toastrWarning(data.response.data.errorMessage);
-      }
-    });
+    if(bankaccountprofile.nameAtBank === "" || bankaccountprofile.accountNumber === "" || bankaccountprofile.confirmAccountNumber === ""  || bankaccountprofile.ifscCode === ""  || bankaccountprofile.bankName === ""  || bankaccountprofile.branchName === ""  || bankaccountprofile.bankCity === ""    || bankaccountprofile.moblieNumber === ""  ){
+      setBankaccountProfile({
+
+        ...bankaccountprofile,
+      
+          moblieNumbererror:  bankaccountprofile.moblieNumber === "" ? "Enter the MoblieNumber" : "",
+          bankAccounterror: bankaccountprofile.bankAccount === "" ? "Enter the bankAccount" : "",
+          accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the accountNumber" : "",
+          bankAddresserror: bankaccountprofile.bankAddress === "" ? "Enter the bankAddress" : "",
+          bankNameerror: bankaccountprofile.bankName === "" ? "Enter the bankName " : "",
+          branchNameerror: bankaccountprofile.branchName === "" ? "Enter the branchName  " : "",
+          confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" ? "Enter the ConfirmAccountNumber" : "",
+          ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the ifscCode" : "",
+          mobileOtperror: bankaccountprofile.mobileOtp === "" ? "Enter the mobileOtp" : "",
+          mobileOtpSessionerror: bankaccountprofile.mobileOtpSession === "" ? "Enter the MobileOtpSession" : "",
+          nameAtBankerror: bankaccountprofile.nameAtBank === "" ? "Enter the nameAtBank" : "",
+          bankCityerror: bankaccountprofile.bankCity === "" ? "Enter the bankCity" : "",
+        })
+    }else{
+      const response = sendMoblieOtp(bankaccountprofile);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          setdashboarddata({
+            ...dashboarddata,
+            sendotpbtn: true,
+            verifyotp: true,
+            sendotpbtnText: "ReSend Otp",
+            sendOtpsession: data.data.mobileOtpSession,
+            isValid: true,
+          });
+  
+          setBankaccountProfile({
+            ...bankaccountprofile,
+            mobileOtpSession: data.data.mobileOtpSession,
+          });
+  
+          toastrSuccess("Otp Sent Sucessfully!", "top-right");
+        } else if (data.response.data.errorCode != "200") {
+          toastrWarning(data.response.data.errorMessage);
+        }
+      });
+    }
+
+   
   };
 
   const openTheActiveTabs = (type) => {
@@ -450,9 +528,9 @@ nomineeDetails.nomineecity != ""){
           ...kyc,
           PanCard: responses[0].data,
           Passport: responses[1].data,
-          cheque: responses[2].data,
+          CHEQUELEAF: responses[2].data,
           license: responses[3].data,
-          Voter: responses[4].data,
+          VOTERID: responses[4].data,
           aadhar: responses[5].data,
         });
       })
@@ -763,7 +841,8 @@ nomineeDetails.nomineecity != ""){
                                   name="nameAtBank"
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.nameAtBank}
-                                />
+                                />   
+                                {bankaccountprofile.nameAtBank  && <div  className="text-danger">{bankaccountprofile.nameAtBankerror}</div>}
                               </div>
                               <div className="form-group col-12 col-md-4 local-forms">
                                 <label>
@@ -778,6 +857,7 @@ nomineeDetails.nomineecity != ""){
                                   placeholder=" Enter your Account Number"
                                   value={bankaccountprofile.accountNumber}
                                 />
+                                    {bankaccountprofile.accountNumbererror  && <div  className="text-danger">{bankaccountprofile.accountNumbererror}</div>}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -807,6 +887,7 @@ nomineeDetails.nomineecity != ""){
                                     {nomineeDetails.copyerror}
                                   </span>
                                 )}
+                                  {bankaccountprofile.confirmAccountNumbererror  && <div  className="text-danger">{bankaccountprofile.confirmAccountNumbererror}</div>}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -822,6 +903,7 @@ nomineeDetails.nomineecity != ""){
                                   placeholder=" Enter your IFSC Code"
                                   value={bankaccountprofile.ifscCode}
                                 />
+                                   {bankaccountprofile.ifscCodeerror  && <div  className="text-danger">{bankaccountprofile.ifscCodeerror}</div>}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -837,6 +919,7 @@ nomineeDetails.nomineecity != ""){
                                   placeholder=" Enter your Bank Name"
                                   value={bankaccountprofile.bankName}
                                 />
+                                  {bankaccountprofile.bankNameerror  && <div  className="text-danger">{bankaccountprofile.bankNameerror}</div>}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -852,6 +935,7 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.branchName}
                                 />
+                                   {bankaccountprofile.branchNameerror  && <div  className="text-danger">{bankaccountprofile.branchNameerror}</div>}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -867,6 +951,7 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.bankCity}
                                 />
+                                   {bankaccountprofile.bankCityerror  && <div  className="text-danger">{bankaccountprofile.bankCityerror}</div>}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -882,6 +967,7 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.moblieNumber}
                                 />
+                                  {bankaccountprofile.moblieNumbererror  && <div  className="text-danger">{bankaccountprofile.moblieNumbererror}</div>}
                               </div>
 
                               {dashboarddata.isValid && (
@@ -1114,6 +1200,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.firstName}
                                   name="firstName"
                                 />
+                                {userProfile.firstNamrror && <div   className="text-danger">{userProfile.firstNamrror}</div>}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1128,6 +1215,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.lastName}
                                   name="lastName"
                                 />
+                                  {userProfile.lastNamerror && <div   className="text-danger">{userProfile.lastNamerror}</div>}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1142,6 +1230,8 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.panNumber}
                                   name="panNumber"
                                 />
+
+{userProfile.panNumbererror && <div   className="text-danger">{userProfile.panNumbererror}</div>}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1149,20 +1239,22 @@ nomineeDetails.nomineecity != ""){
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="number"
+                                  type="tel"
                                   className="form-control"
                                   placeholder="Enter Aadhar Number"
                                   onChange={handlechange}
                                   value={userProfile.aadharNumber}
+                                  maxLength={12}
                                   name="aadhaarNumber"
                                 />
-                                {userProfile.aadharerror != "" ? (
+                                {userProfile.aadhaarNumbererror && <div   className="text-danger">{userProfile.aadhaarNumbererror}</div>}
+                                {/* {userProfile.aadharerror != "" ? (
                                   <div className="error">
                                     {userProfile.aadharerror}
                                   </div>
                                 ) : (
                                   <></>
-                                )}
+                                )} */}
                               </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
@@ -1171,12 +1263,14 @@ nomineeDetails.nomineecity != ""){
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type={userProfile.dob == "" ? "date" : "text"}
-                                  className="form-control datetimepicker"
+                                  type={userProfile.dob == "" ? "date" : ""}
+                                  className="form-control "
                                   onChange={handlechange}
                                   value={userProfile.dob}
                                   name="dob"
-                                />    
+                                />  
+
+                                  {userProfile.doberror && <div   className="text-danger">{userProfile.doberror}</div>}  
                               </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
@@ -1192,6 +1286,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.fatherName}
                                   name="fatherName"
                                 />
+                                 {userProfile.fatherNameerror && <div   className="text-danger">{userProfile.fatherNameerror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1207,6 +1302,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.mobileNumber}
                                   name="mobileNumber"
                                 />
+                                 {userProfile.mobileNumbererror && <div   className="text-danger">{userProfile.mobileNumbererror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1222,6 +1318,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.whatsAppNumber}
                                   name="whatsAppNumber"
                                 />
+                                   {userProfile.whatsAppNumbererror && <div   className="text-danger">{userProfile.whatsAppNumbererror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1236,6 +1333,8 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.email}
                                   name="email"
                                 />
+
+{userProfile.emailerror && <div   className="text-danger">{userProfile.emailerror}</div>}  
                               </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
@@ -1251,6 +1350,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.permanentAddress}
                                   name="permanentAddress"
                                 />
+                                {userProfile.permanentAddresserror && <div   className="text-danger">{userProfile.permanentAddresserror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1258,13 +1358,15 @@ nomineeDetails.nomineecity != ""){
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="number"
+                                  type="tel"
                                   className="form-control"
                                   placeholder="Enter Pincode"
+                                  maxLength={6}
                                   onChange={handlechange}
                                   value={userProfile.pinCode}
                                   name="pinCode"
                                 />
+                                  {userProfile.pinCodeerror && <div   className="text-danger">{userProfile.pinCodeerror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1279,6 +1381,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.address}
                                   name="address"
                                 />
+                                     {userProfile.addresserror && <div   className="text-danger">{userProfile.addresserror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1292,6 +1395,7 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.city}
                                   name="city"
                                 />
+                                    {userProfile.cityer && <div   className="text-danger">{userProfile.cityer}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1306,11 +1410,12 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.state}
                                   name="state"
                                 />
+                                                                    {userProfile.stateerror && <div   className="text-danger">{userProfile.stateerror}</div>}  
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Facebook URL
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="text"
@@ -1325,7 +1430,7 @@ nomineeDetails.nomineecity != ""){
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Twitter URL
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="text"
@@ -1340,7 +1445,7 @@ nomineeDetails.nomineecity != ""){
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Linkedin URL
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="text"
@@ -1418,22 +1523,22 @@ nomineeDetails.nomineecity != ""){
                                 <div className="settings-btn">
                                   <input
                                     type="file"
-                                    name="chequ"
+                                    name="CHEQUELEAF"
                                     accept="image/*"
-                                    id="chequ"
+                                    id="CHEQUELEAF"
                                     className="hide-input"
                                     onChange={handlefileupload}
                                   />
-                                  <label htmlFor="chequ" className="upload">
+                                  <label htmlFor="CHEQUELEAF" className="upload">
                                     <i className="feather-upload">
                                       <FeatherIcon icon="upload" />
                                     </i>
                                   </label>
                                 </div>
-                                {kyc.cheque != undefined && kyc.cheque != "" ? (
+                                {kyc.CHEQUELEAF != undefined && kyc.CHEQUELEAF != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
-                                    <small>{kyc.cheque.fileName}</small>
+                                    <small>{kyc.CHEQUELEAF.fileName}</small>
                                   </h6>
                                 ) : (
                                   <h6 className="settings-size text-warning">
@@ -1514,22 +1619,22 @@ nomineeDetails.nomineecity != ""){
                                   <input
                                     type="file"
                                     accept="image/*"
-                                    id="Voter"
-                                    name="Voter"
+                                    id="VOTERID"
+                                    name="VOTERID"
                                     onChange={handlefileupload}
                                     className="hide-input"
                                   />
-                                  <label htmlFor="Voter" className="upload">
+                                  <label htmlFor="VOTERID" className="upload">
                                     <i className="feather-upload">
                                       <FeatherIcon icon="upload" />
                                     </i>
                                   </label>
                                 </div>
 
-                                {kyc.Voter != undefined && kyc.Voter != "" ? (
+                                {kyc.VOTERID != undefined && kyc.VOTERID != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
-                                    <small>{kyc.Voter.fileName}</small>
+                                    <small>{kyc.VOTERID.fileName}</small>
                                   </h6>
                                 ) : (
                                   <h6 className="settings-size text-warning">

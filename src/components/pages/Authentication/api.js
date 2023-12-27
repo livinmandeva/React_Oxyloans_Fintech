@@ -1,6 +1,11 @@
 import axios from "axios";
+
+const userisIn = "prod";
 const API_BASE_URL =
-  "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/";
+  userisIn == "local"
+    ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
+    : "https://fintech.oxyloans.com/oxyloans/v1/user";
+
 const API_URL =
   "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/login?grantType=PWD";
 const API_URL_otp =
@@ -54,7 +59,7 @@ export const sendotpemail = async (email) => {
   };
   try {
     const response = await axios.post(
-      API_BASE_URL + "user/resetpassword",
+      API_BASE_URL + "/resetpassword",
       data,
       {
         headers: {
@@ -83,7 +88,7 @@ export const verifypannumber = async (pannumber, address, time, id, date) => {
   };
   try {
     const response = await axios.patch(
-      API_BASE_URL + "user/emailVerification",
+      API_BASE_URL + "/emailVerification",
       data,
       {
         headers: {
@@ -155,7 +160,7 @@ export const validateotpsubmit = async (moblie, otp) => {
   };
   try {
     const response = await axios.post(
-      "http://ec2-13-127-118-128.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/login?grantType=PWD",
+      API_BASE_URL + "/login?grantType=PWD",
       data,
       {
         headers: {
@@ -179,7 +184,7 @@ export const RegisterUser = async (moblie) => {
   };
   try {
     const response = await axios.post(
-      API_BASE_URL + "user/newUserRegistration",
+      API_BASE_URL + "/newUserRegistration",
       data
     );
     return response.data.mobileOtpSession;
@@ -199,7 +204,8 @@ export const vaildateotp = async (
   referrerId,
   
 ) => {    const uniqnumber=localStorage.getItem("uniqnumber")
-  if (uniqnumber == "" || null) {
+console.log(uniqnumber)
+  if (uniqnumber === null) {
     var data = {
       mobileNumber: moblie,
       mobileOtpSession: session,
@@ -221,11 +227,12 @@ export const vaildateotp = async (
       mobileOtpSession: session,
       mobileOtpValue: otp_data,
       primaryType: "LENDER",
-      name: name,
+      name: "shiva",
       email: email,
       password: password,
       citizenship: "NONNRI",
       uniqueNumber: uniqnumber,
+      utmForPartner:null,
       utm: "WEB",
       cifNumber: null,
       finoEmployeeMobileNumber: null,
@@ -235,7 +242,7 @@ export const vaildateotp = async (
 
   try {
     const response = await axios.post(
-      API_BASE_URL + "user/newUserRegistration",
+      API_BASE_URL + "/newUserRegistration",
       data
     );
     

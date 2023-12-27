@@ -119,7 +119,7 @@ export default function LenderRegister() {
           registrationField.email,
           registrationField.moblie,
           otp_data,
-          registrationField.name,
+          registrationField.pancard,
           registrationField.password, // Ensure `password` is available in registrationField
           session,
           registrationField.referrerId,

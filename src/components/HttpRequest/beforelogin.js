@@ -135,6 +135,39 @@ export const referrerdata =(referrerId  , refParam)=>{
   }
 
 }
+
+
+export const handlesenOtp =async(moblie)=>{
+
+
+  var data={
+    mobileNumber: moblie
+  }
+
+  const response =await handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    `sendOtp`,
+    data
+  )
+return  response;
+}
+
+
+export   const usersubmitotp =async(email, password)=>{
+   const data={
+    mobileNumber: email,
+    mobileOtpValue: password
+   }
+   const response = await  handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    `login?grantType=PWD `,
+    data
+   )
+
+   return  response;
+}
 export const verifywhatappotp = async (api) => {
   console.log(api);
   const value1 = localStorage.getItem("otp");
