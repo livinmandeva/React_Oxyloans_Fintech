@@ -7,7 +7,6 @@ import { bulidingicon } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { loadVirtualAccount } from "../../../HttpRequest/afterlogin";
 import { useSelector, useDispatch } from "react-redux";
-import { getProfile } from "../../../Redux/Slice";
 
 const LoadwalletThroughVirtualAccount = () => {
   const [userid, setUserid] = useState("");

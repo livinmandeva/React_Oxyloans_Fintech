@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Spin } from "antd";
+import { Spin } from "antd";
 export default function Spining() {
   const [spinning, setSpinning] = React.useState(true);
 

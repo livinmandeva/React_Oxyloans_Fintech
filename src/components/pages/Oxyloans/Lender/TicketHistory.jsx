@@ -7,8 +7,6 @@ import {
   TicketHistoryapi,
   ticketcommentapi,
 } from "../../../HttpRequest/afterlogin";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import ViewTicketHistory from "./ViewTicketHistory";
 import "./InvoiceGrid.css";
 import Comment from "../Utills/Modals/Comment";
 
@@ -52,7 +50,6 @@ const TicketHistory = () => {
   };
 
   useEffect(() => {}, [ticketcomment]);
-
 
   const handeticketcomment = async (id) => {
     const response = ticketcommentapi(id);

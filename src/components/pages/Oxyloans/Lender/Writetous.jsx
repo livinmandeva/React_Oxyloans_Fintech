@@ -4,19 +4,13 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
-import {
-  getUserDetails,
-  writequery,
-  fileuploads,
-  allQueriesCount1,
-} from "../../../HttpRequest/afterlogin";
+import { writequery, allQueriesCount1 } from "../../../HttpRequest/afterlogin";
 import "./InvoiceGrid.css";
 import Footer from "../../../Footer/Footer";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
-import { HandleClick } from "../../Base UI Elements/SweetAlert";
-import { Upload } from "feather-icons-react/build/IconComponents";
+
 import MyRichTextEditor from "./MyRichTextEditor";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Writetous = () => {
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
@@ -34,12 +28,12 @@ const Writetous = () => {
     isVaild: true,
   });
 
-  const [queryresponse ,  setqueryresponse]=useState({
-      allQueriesCount: 3,
-      resolvedCount: 0,
-      cancelledCount: 0,
-      pendingCount: 3
-  })
+  const [queryresponse, setqueryresponse] = useState({
+    allQueriesCount: 3,
+    resolvedCount: 0,
+    cancelledCount: 0,
+    pendingCount: 3,
+  });
   const setDataFun = (query) => {
     console.log(query);
     setWriteTous({
@@ -67,14 +61,9 @@ const Writetous = () => {
       urlquery: dealName + "/" + dealId,
     });
 
-
-    const fetchallQueriesCount1 =async()=>{
-
-
-      try{
-
+    const fetchallQueriesCount1 = async () => {
+      try {
         const response = await allQueriesCount1(); // Assuming lenderTotalInvestmentsAndReturns is an asynchronous function
-  
 
         console.log(response.data);
         setqueryresponse({
@@ -83,16 +72,14 @@ const Writetous = () => {
           allQueriesCount: response.data.allQueriesCount,
           resolvedCount: response.data.resolvedCount,
           cancelledCount: response.data.cancelledCount,
-          pendingCount: response.data.pendingCount
-        })
-      }catch{
+          pendingCount: response.data.pendingCount,
+        });
+      } catch {
         console.log("error");
-
       }
-    }
-    
+    };
 
-    fetchallQueriesCount1()
+    fetchallQueriesCount1();
   }, []);
   useEffect(() => {
     if (writetous.query !== "") {
@@ -146,7 +133,7 @@ const Writetous = () => {
             </div>
             {/* /Page Header */}
             <div className="student-group-form">
-              <div className="row d-none">
+              <div className="row">
                 <div className="col-xl-3 col-sm-6 col-12">
                   <div className="card inovices-card">
                     <div className="card-body">
@@ -155,7 +142,9 @@ const Writetous = () => {
                           <img src={allqueries} alt="" className="queyImage" />
                         </span>
                         <div className="inovices-dash-count">
-                          <div className="inovices-amount">{queryresponse.allQueriesCount}</div>
+                          <div className="inovices-amount">
+                            {queryresponse.allQueriesCount}
+                          </div>
                         </div>
                       </div>
                       <p className="inovices-all">
@@ -172,7 +161,9 @@ const Writetous = () => {
                           <img src={resolved} alt="" className="queyImage" />
                         </span>
                         <div className="inovices-dash-count">
-                          <div className="inovices-amount">{queryresponse.resolvedCount}</div>
+                          <div className="inovices-amount">
+                            {queryresponse.resolvedCount}
+                          </div>
                         </div>
                       </div>
                       <p className="inovices-all">
@@ -189,7 +180,9 @@ const Writetous = () => {
                           <img src={cancelled} alt="" className="queyImage" />
                         </span>
                         <div className="inovices-dash-count">
-                          <div className="inovices-amount">{queryresponse.cancelledCount}</div>
+                          <div className="inovices-amount">
+                            {queryresponse.cancelledCount}
+                          </div>
                         </div>
                       </div>
                       <p className="inovices-all">
@@ -206,7 +199,9 @@ const Writetous = () => {
                           <img src={pending} alt="" className="queyImage" />
                         </span>
                         <div className="inovices-dash-count">
-                          <div className="inovices-amount pull-left">{queryresponse.pendingCount}</div>
+                          <div className="inovices-amount pull-left">
+                            {queryresponse.pendingCount}
+                          </div>
                         </div>
                       </div>
                       <p className="inovices-all">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import { pagination, Table } from "antd";
+import { Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { getMyTransactions } from "../../../HttpRequest/afterlogin";
 import { downloadMytransactionAlert } from "../../Base UI Elements/SweetAlert";

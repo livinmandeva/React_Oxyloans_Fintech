@@ -8,8 +8,7 @@ import {
   getemailcontent,
   bulkinvitegmailLink,
 } from "../../../HttpRequest/afterlogin";
-import { avatar02 } from "../../../imagepath";
-import FeatherIcon from "feather-icons-react";
+
 import {
   HandleWithFooter,
   WarningAlert,
@@ -239,7 +238,8 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-warning col-md-3 col-12 "
                             onClick={Invitelender}
                           >
-                            <i class="fa-solid fa-share-nodes"></i> Invite a Friend
+                            <i class="fa-solid fa-share-nodes"></i> Invite a
+                            Friend
                           </button>
                         </>
                       )}
@@ -283,7 +283,8 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"
                             onClick={Inviteborrower}
                           >
-                           <i class="fa-solid fa-share-nodes mx-1"></i> Invite a Borrower
+                            <i class="fa-solid fa-share-nodes mx-1"></i> Invite
+                            a Borrower
                           </button>
                         </>
                       )}
@@ -298,7 +299,7 @@ const ReferaFriend = () => {
                         data-bs-toggle="tab"
                         to="#invite_tab"
                       >
-                       <i class="fa-solid fa-user-tie"></i>   Invite Friend
+                        <i class="fa-solid fa-user-tie"></i> Invite Friend
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -308,9 +309,8 @@ const ReferaFriend = () => {
                         to="#BulkInvite_tab"
                         onClick={handlebulkInvite}
                       >
-                       
-                       <i class="fa-solid mx-1 fa-cloud-arrow-up"></i>
-                             Bulk Invite
+                        <i class="fa-solid mx-1 fa-cloud-arrow-up"></i>
+                        Bulk Invite
                       </Link>
                     </li>
 
@@ -320,7 +320,8 @@ const ReferaFriend = () => {
                         data-bs-toggle="tab"
                         to="#setupneo_tab"
                       >
-                       <i class="fa-solid fa-building-columns mx-1"></i>   Setup Neo Bank
+                        <i class="fa-solid fa-building-columns mx-1"></i> Setup
+                        Neo Bank
                       </Link>
                     </li>
                   </ul>

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal } from "antd";
+import React, {  useState } from "react";
+import {  Modal } from "antd";
 import "../Lender/InvoiceGrid.css";
-import { title } from "process";
-import Table from "./Table";
 
 export default function Modell({ data, open: propOpen }) {
   const [loading, setLoading] = useState(false);

@@ -4,9 +4,9 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { Myreferal, downloadreferal } from "../../../HttpRequest/afterlogin";
 import Footer from "../../../Footer/Footer";
-import { Button, Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../Pagination";
-import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
+import { Table } from "antd";
+import { onShowSizeChange } from "../../../Pagination";
+import { Success } from "../../Base UI Elements/SweetAlert";
 
 const MyreferalStatus = () => {
   const [referdata, setreferaldata] = useState({

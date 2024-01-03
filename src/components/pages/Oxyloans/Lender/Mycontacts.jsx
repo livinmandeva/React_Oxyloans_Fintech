@@ -10,7 +10,6 @@ import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import './Mycontacts.css'
 import { Button, Table } from "antd";
-import { data, event } from "jquery";
 import Result1 from "./Result1";
 
 const Mycontacts = () => {

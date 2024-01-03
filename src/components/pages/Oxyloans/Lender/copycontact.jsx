@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   getcontactdeatils,
-  sendInvait,
   getemailcontent,
 } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import { Button, Table } from "antd";
-import { data, event } from "jquery";
 
 const Mycontacts = () => {
   const [contactdata, setcontactData] = useState({

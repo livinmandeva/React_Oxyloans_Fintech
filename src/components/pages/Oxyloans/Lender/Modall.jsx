@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import "../Lender/InvoiceGrid.css";
-import { Space, Table, Tag } from "antd";
+
 import "./table.css";
 
 export default function Modall({ data, open: propOpen }) {
