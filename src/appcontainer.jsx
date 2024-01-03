@@ -5,12 +5,12 @@ import Admlogin from "./components/pages/Authentication/Admlogin";
 import Membership from "./components/pages/Oxyloans/Lender/Membership";
 import Spining from "./components/pages/Oxyloans/Lender/Spining";
 import Loginotp from "./components/pages/Authentication/Loginotp";
-import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
-import CreateDeal from "./components/pages/Oxyloans/Admin/CreateDeal/CreateDeal";
-import ViewDeals from "./components/pages/Oxyloans/Admin/CreateDeal/ViewDeals";
-import EquityDeals from "./components/pages/Oxyloans/Admin/Equitydeals/EquityDeals";
-import EscrowDeals from "./components/pages/Oxyloans/Admin/EscrowDeals/EscrowDeals";
-import TestDeals from "./components/pages/Oxyloans/Admin/TestDeals/TestDeals";
+// import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
+// import CreateDeal from "./components/pages/Oxyloans/Admin/CreateDeal/CreateDeal";
+// import ViewDeals from "./components/pages/Oxyloans/Admin/CreateDeal/ViewDeals";
+// import EquityDeals from "./components/pages/Oxyloans/Admin/Equitydeals/EquityDeals";
+// import EscrowDeals from "./components/pages/Oxyloans/Admin/EscrowDeals/EscrowDeals";
+// import TestDeals from "./components/pages/Oxyloans/Admin/TestDeals/TestDeals";
 
 
 const Login = React.lazy(() => import("./components/pages/Authentication"));
@@ -192,10 +192,10 @@ const appcontainer = () => {
             element={<Register_active_proceed />}
           />
           <Route path="/profile" element={<Profile />} />
-          <Route  path="/equityDeals" element={<EquityDeals />} />
+          {/* <Route  path="/equityDeals" element={<EquityDeals />} /> */}
           <Route path="/forgotpassword1" element={<ForgotPassword3 />} />
           <Route path="/partnerRegister" element={<PartnerRegister />} />
-          <Route path="/escrowDeals" element={<EscrowDeals />} />
+          {/* <Route path="/escrowDeals" element={<EscrowDeals />} /> */}
           <Route
             path="/loadwalletThroughVirtualAccount"
             element={<LoadwalletThroughVirtualAccount />}
@@ -205,11 +205,11 @@ const appcontainer = () => {
             element={<Withdrawdealfromwallet />}
           />
           
-          <Route path="/mainadmindashboard" element={<MainAdminDashboard />} />
+          {/* <Route path="/mainadmindashboard" element={<MainAdminDashboard />} />
           <Route path="/viewdeals" element={<ViewDeals />} />
           <Route path="/escrowDeals" element={<EscrowDeals />} />
           <Route path="/createdeal" element={<CreateDeal />} />
-          <Route path="/testDeals" element={<TestDeals />} />
+          <Route path="/testDeals" element={<TestDeals />} /> */}
           <Route path="/spining" element={<Spining />} />
           <Route path="/spining" element={<Spining />} />
           <Route path="/admlogin" element={<Admlogin />} />
