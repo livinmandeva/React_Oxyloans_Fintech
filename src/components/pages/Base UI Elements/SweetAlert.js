@@ -92,7 +92,7 @@ export const Info = () => {
 };
 export const registersuccess = (message) => {
   Swal.fire({
-    title: "Info!",
+    title: "Success!",
     text:  message,
     type: "info",
     confirmButtonClass: "btn btn-primary",
@@ -276,20 +276,19 @@ const tenure = {
 export const membership = () => {
   Swal.fire({
     title: "Select Membership Duration",
-    width: "600px",
+    width: "790px",
     html: `
       <style>
         .radiobutton {
           display: flex;
-          flex-direction: column;
-          align-items: center;
+          flex-direction: column !important;
+          justify-content: center !important;
+          align-items: center !important;
         }
       </style>
       <div class="radiobutton">
-        <input type="radio" name="membershipOption" value="monthly" id="option1">
-        <label for="option1">One Month</label>
-        <!-- Add the rest of the radio buttons and labels here -->
-      </div>`,
+
+      </div><br></br>`,
     showCancelButton: true,
     confirmButtonText: "Pay & Participate",
     cancelButtonText: "Cancel",
@@ -303,6 +302,8 @@ export const membership = () => {
       fiveyears: "Ten Years",
       tenyears: "Life Time",
     },
+// });
+
     inputValidator: (result) => {
       if (!result) {
         return "You must select an option";

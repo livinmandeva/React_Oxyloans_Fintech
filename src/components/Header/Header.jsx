@@ -282,7 +282,7 @@ const Header = (profile) => {
               <span className="user-img">
                 <img
                   className="rounded-circle"
-                  src={avatar01}
+                  src="https://cdn3.iconfinder.com/data/icons/avatars-flat/33/man_5-512.png"
                   width={31}
                   alt="Ryan Taylor"
                 />
@@ -309,7 +309,7 @@ const Header = (profile) => {
               <div className="user-header">
                 <div className="avatar avatar-sm">
                   <img
-                    src={avatar01}
+                    src="https://cdn3.iconfinder.com/data/icons/avatars-flat/33/man_5-512.png"
                     alt="User Image"
                     className="avatar-img rounded-circle"
                   />

@@ -11,6 +11,7 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import Register from "./Register";
 import OtpInput from "./OtpInput";
 import { referrerdata } from "../../HttpRequest/beforelogin";
+import { toastrWarning } from "../Base UI Elements/Toast";
 
 export default function LenderRegister() {
   let inputRef = useRef();
@@ -44,6 +45,13 @@ export default function LenderRegister() {
   const [error, setError] = useState("");
   const [response1, setResponse] = useState({});
 
+
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      setError("")
+    },1000)
+  },[error])
   const handlechange = (event) => {
     const { name, value } = event.target;
     setRegistrationField({
@@ -56,10 +64,10 @@ export default function LenderRegister() {
 
     setRegistrationField((prevState) => ({
       ...prevState,
-      emailerror: registrationField.email === "" ? "Please enter The email" : "",
-      pancarderror: registrationField.pancard === "" ? "Please enter  Name" : "",
-      moblieerror: registrationField.moblie === "" ? "Please enter The moblie" : "",
-      passworderror: registrationField.password === "" ? "Please enter The password" : "",
+      emailerror: registrationField.email === "" ? "Please enter the email" : "",
+      pancarderror: registrationField.pancard === "" ? "Please enter the Name" : "",
+      moblieerror: registrationField.moblie === "" ? "Please enter the moblie" : "",
+      passworderror: registrationField.password === "" ? "Please enter the password" : "",
     }));
 
 
@@ -353,7 +361,8 @@ export default function LenderRegister() {
                             </div>
                           )}
                         </div>
-                        {error && <div className="errormessage">{error}</div>}
+                        
+                        {error && <div className="errormessage">{toastrWarning(error)}</div>}
                         <div className=" dont-have">
                           Already Registered? <Link to="/">Login</Link>
                         </div>

@@ -15,6 +15,7 @@ import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
 import {
   WarningAlert,
   WarningAlertWalltTran,
+  freeParticipationapialert,
   membership,
   participated,
   participatedapi,
@@ -215,9 +216,12 @@ const interestType =
             }
           } else {
             console.log("deal validityStatus completed ");
+            membership()
+         
           }
         } else {
           console.log("deal  having free feeStatusToParticipate");
+          toastrError("deal  having free feeStatusToParticipate");
         }
       } else {
         if (numericAmount >= participatedAmount) {

@@ -10,6 +10,7 @@ import { handlesenOtp, userloginSection, usersubmitotp } from "../../HttpRequest
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
 import { getProfile } from "../../Redux/Slice";
+import { responsiveArray } from "antd/es/_util/responsiveObserver";
 
 const Loginotp = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ const Loginotp = () => {
 
     
   });
+
+
+
 
   let inputRef = useRef();
   const showIcon = () => (
@@ -66,9 +70,13 @@ const Loginotp = () => {
 
           let { email, password } = userLogInInfo;
           const retriveresponse = await usersubmitotp(email, password);
-      
+      console.log(retriveresponse.request.status)
           if (retriveresponse.request.status == 200) {
             toastrSuccess("Login Suceess !");
+            console.log(retriveresponse);
+            sessionStorage.setItem("userId" ,retriveresponse.data.id)
+            sessionStorage.setItem("tokenTime" ,retriveresponse.data.tokenGeneratedTime)
+            sessionStorage.setItem("accessToken", retriveresponse.headers.accesstoken)
             // dispatch(getProfile({ res: retriveresponse.data }));
             history("/dashboard");
           } else {
@@ -85,13 +93,33 @@ const Loginotp = () => {
           emailerror: userLogInInfo.email === "" ? "Please enter The Moblie Number" : "",
         }))
     }else{
+
+      if(userLogInInfo.email.length === 10){
+
+        console.log("10 digit")
         const response = await handlesenOtp(userLogInInfo.email);
         console.log(response)
+console.log(response.data.id)
 
-        setUserLoginInfo({
-            ...userLogInInfo,
-            sentotp:true,
-        })
+
+if(response.request.status == 200){
+
+  if(response.data.id){
+    sessionStorage.setItem("userId",response.data.id)
+  }
+          setUserLoginInfo({
+              ...userLogInInfo,
+              sentotp:true,
+          })
+}
+
+      }else{
+        setUserLoginInfo((prevState) => ({
+          ...prevState,
+          emailerror: userLogInInfo.email === "" ? "Please 10 digit Moblie Number" : "",
+        }))
+      }
+
           }
     }
   

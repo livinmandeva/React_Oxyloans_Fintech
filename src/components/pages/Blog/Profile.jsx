@@ -134,7 +134,7 @@ const Profile = () => {
     Passport: "",
     PanCard: "",
     CHEQUELEAF: "",
-    license: "",
+    DRIVINGLICENCE: "",
     VOTERID: "",
     isValid: true,
   });
@@ -151,7 +151,7 @@ const Profile = () => {
     if (userProfile.aadharerror >= 12) {
       setUserProfile({
         ...userProfile,
-        aadharerror: "aadhar Number must be 12 digit",
+        aadharerror: "aadhaar Number must be 12 digit",
       });
     } else {
       setUserProfile({
@@ -323,21 +323,21 @@ nomineeDetails.nomineecity != ""){
           setUserProfile({
             ...userProfile,
             
-            addresserror: userProfile.address === "" ? "Please enter The address" : "",
-            cityer:  userProfile.city === "" ? "Please enter The city" : "",
-            doberror:  userProfile.dob === "" ? "Please enter The dob" : "",
-            fatherNameerror:  userProfile.fatherName === "" ? "Please enter The fatherName" : "",
-            firstNamrror:  userProfile.firstName === "" ? "Please enter The firstName" : "",
-            lastNamerror:  userProfile.lastName === "" ? "Please enter The lastName" : "",
-            panNumbererror:  userProfile.panNumber === "" ? "Please enter The panNumber" : "",
-            permanentAddresserror:  userProfile.permanentAddress === "" ? "Please enter The permanentAddress" : "",
-            pinCodeerror:  userProfile.pinCode === "" ? "Please enter The pinCode" : "",
-            stateerror: userProfile.state === "" ? "Please enter The state" : "",
-            whatsAppNumbererror:  userProfile.whatsAppNumber === "" ? "Please enter The whatsAppNumber" : "",
-            aadhaarNumbererror:  userProfile.aadharNumber === "" ? "Please enter The aadharNumber" : "",
+            addresserror: userProfile.address === "" ? "Please enter the address" : "",
+            cityer:  userProfile.city === "" ? "Please enter the city" : "",
+            doberror:  userProfile.dob === "" ? "Please enter the dob" : "",
+            fatherNameerror:  userProfile.fatherName === "" ? "Please enter the father Name" : "",
+            firstNamrror:  userProfile.firstName === "" ? "Please enter the first Name" : "",
+            lastNamerror:  userProfile.lastName === "" ? "Please enter the last Name" : "",
+            panNumbererror:  userProfile.panNumber === "" ? "Please enter the panNumber" : "",
+            permanentAddresserror:  userProfile.permanentAddress === "" ? "Please enter the Residence Address" : "",
+            pinCodeerror:  userProfile.pinCode === "" ? "Please enter the pinCode" : "",
+            stateerror: userProfile.state === "" ? "Please enter the state" : "",
+            whatsAppNumbererror:  userProfile.whatsAppNumber === "" ? "Please enter the whatsAppNumber" : "",
+            aadhaarNumbererror:  userProfile.aadharNumber === "" ? "Please enter the Aadhaar Number" : "",
       
-            mobileNumbererror:  userProfile.mobileNumber === "" ? "Please enter The mobileNumber" : "",
-            emailerror:  userProfile.email === "" ? "Please enter The email" : "",
+            mobileNumbererror:  userProfile.mobileNumber === "" ? "Please enter the mobileNumber" : "",
+            emailerror:  userProfile.email === "" ? "Please enter the email" : "",
           })
         }else   {
 
@@ -355,27 +355,34 @@ nomineeDetails.nomineecity != ""){
   };
 
   const sendotp = async () => {
+ console.log(bankaccountprofile.nameAtBank)
+ if (
+  (bankaccountprofile.nameAtBank === "" || bankaccountprofile.nameAtBank === null) &&
+  (bankaccountprofile.accountNumber === "" || bankaccountprofile.accountNumber === null) &&
+  (bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber === null) &&
+  (bankaccountprofile.ifscCode === "" || bankaccountprofile.ifscCode === null) &&
+  (bankaccountprofile.bankName === "" || bankaccountprofile.bankName === null) &&
+  (bankaccountprofile.branchName === "" || bankaccountprofile.branchName === null) &&
+  (bankaccountprofile.bankCityerror === "" || bankaccountprofile.bankCity === null) &&
+  (bankaccountprofile.moblieNumbererror === "" || bankaccountprofile.moblieNumber === null)
+) {
+ 
 
+  console.log("true")
+  setBankaccountProfile((stateconta)=>({
+    ...stateconta,
+    moblieNumbererror: bankaccountprofile.moblieNumber !== "" ? "Enter the Mobile Number" : "",
+    accountNumbererror: bankaccountprofile.accountNumber !== "" ? "Enter the account Number" : "",
+    confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber !== "" ? "Enter the Confirm Account Number" : "",
+    ifscCodeerror: bankaccountprofile.ifscCode !== "" ? "Enter the IFSC Code" : "",
+    bankNameerror: bankaccountprofile.bankName !== "" ? "Enter the bank Name " : "",
+    branchNameerror: bankaccountprofile.branchName !== "" ? "Enter the branch Name  " : "",
+    bankCityerror: bankaccountprofile.bankCity !== "" ? "Enter the bank City" : "",
+    // Add other error messages as needed
 
-    if(bankaccountprofile.nameAtBank === "" || bankaccountprofile.accountNumber === "" || bankaccountprofile.confirmAccountNumber === ""  || bankaccountprofile.ifscCode === ""  || bankaccountprofile.bankName === ""  || bankaccountprofile.branchName === ""  || bankaccountprofile.bankCity === ""    || bankaccountprofile.moblieNumber === ""  ){
-      setBankaccountProfile({
-
-        ...bankaccountprofile,
-      
-          moblieNumbererror:  bankaccountprofile.moblieNumber === "" ? "Enter the MoblieNumber" : "",
-          bankAccounterror: bankaccountprofile.bankAccount === "" ? "Enter the bankAccount" : "",
-          accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the accountNumber" : "",
-          bankAddresserror: bankaccountprofile.bankAddress === "" ? "Enter the bankAddress" : "",
-          bankNameerror: bankaccountprofile.bankName === "" ? "Enter the bankName " : "",
-          branchNameerror: bankaccountprofile.branchName === "" ? "Enter the branchName  " : "",
-          confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" ? "Enter the ConfirmAccountNumber" : "",
-          ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the ifscCode" : "",
-          mobileOtperror: bankaccountprofile.mobileOtp === "" ? "Enter the mobileOtp" : "",
-          mobileOtpSessionerror: bankaccountprofile.mobileOtpSession === "" ? "Enter the MobileOtpSession" : "",
-          nameAtBankerror: bankaccountprofile.nameAtBank === "" ? "Enter the nameAtBank" : "",
-          bankCityerror: bankaccountprofile.bankCity === "" ? "Enter the bankCity" : "",
-        })
+  }))
     }else{
+      console.log("false")
       const response = sendMoblieOtp(bankaccountprofile);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -398,6 +405,7 @@ nomineeDetails.nomineecity != ""){
           toastrWarning(data.response.data.errorMessage);
         }
       });
+      verifybankAccountCashfree()
     }
 
    
@@ -529,7 +537,7 @@ nomineeDetails.nomineecity != ""){
           PanCard: responses[0].data,
           Passport: responses[1].data,
           CHEQUELEAF: responses[2].data,
-          license: responses[3].data,
+          DRIVINGLICENCE: responses[3].data,
           VOTERID: responses[4].data,
           aadhar: responses[5].data,
         });
@@ -577,7 +585,7 @@ nomineeDetails.nomineecity != ""){
                         <img
                           className="rounded-circle"
                           alt="User Image"
-                          src={avatar02}
+                          src= "https://cdn3.iconfinder.com/data/icons/avatars-flat/33/man_5-512.png"
                         />
                       </Link>
                     </div>
@@ -855,6 +863,7 @@ nomineeDetails.nomineecity != ""){
                                   name="accountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your Account Number"
+                                  maxLength={14}
                                   value={bankaccountprofile.accountNumber}
                                 />
                                     {bankaccountprofile.accountNumbererror  && <div  className="text-danger">{bankaccountprofile.accountNumbererror}</div>}
@@ -870,8 +879,9 @@ nomineeDetails.nomineecity != ""){
                                   className="form-control"
                                   name="confirmAccountNumber"
                                   onChange={handlebankchange}
-                                  placeholder=" Confirm Account Number"
+                                  placeholder="Enter Confirm Account Number"
                                   onPaste={handlePaste}
+                                  maxLength={14}
                                   onCopy={handleCopy}
                                   value={
                                     bankaccountprofile.confirmAccountNumber
@@ -901,6 +911,7 @@ nomineeDetails.nomineecity != ""){
                                   name="ifscCode"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your IFSC Code"
+                                  maxLength={12}
                                   value={bankaccountprofile.ifscCode}
                                 />
                                    {bankaccountprofile.ifscCodeerror  && <div  className="text-danger">{bankaccountprofile.ifscCodeerror}</div>}
@@ -1219,7 +1230,7 @@ nomineeDetails.nomineecity != ""){
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
-                                  PAN Number
+                                  Pan Number
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
@@ -1241,11 +1252,11 @@ nomineeDetails.nomineecity != ""){
                                 <input
                                   type="tel"
                                   className="form-control"
-                                  placeholder="Enter Aadhar Number"
+                                  placeholder="Enter Aadhaar Number"
                                   onChange={handlechange}
                                   value={userProfile.aadharNumber}
                                   maxLength={12}
-                                  name="aadhaarNumber"
+                                  name="aadharNumber"
                                 />
                                 {userProfile.aadhaarNumbererror && <div   className="text-danger">{userProfile.aadhaarNumbererror}</div>}
                                 {/* {userProfile.aadharerror != "" ? (
@@ -1549,7 +1560,7 @@ nomineeDetails.nomineecity != ""){
                               </div>
                               <div className="form-group col-12 col-md-6">
                                 <p className="settings-label">
-                                  Aadhar
+                                  Aadhaar
                                   <span className="star-red">*</span>
                                 </p>
                                 <div className="settings-btn">
@@ -1589,7 +1600,7 @@ nomineeDetails.nomineecity != ""){
                                   <input
                                     type="file"
                                     accept="image/*"
-                                    name="license"
+                                    name="DRIVINGLICENCE"
                                     id="license"
                                     className="hide-input"
                                     onChange={handlefileupload}
@@ -1600,11 +1611,11 @@ nomineeDetails.nomineecity != ""){
                                     </i>
                                   </label>
                                 </div>
-                                {kyc.license != undefined &&
-                                kyc.license != "" ? (
+                                {kyc.DRIVINGLICENCE != undefined &&
+                                kyc.DRIVINGLICENCE != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
-                                    <small>{kyc.license.fileName}</small>
+                                    <small>{kyc.DRIVINGLICENCE.fileName}</small>
                                   </h6>
                                 ) : (
                                   <h6 className="settings-size text-warning">

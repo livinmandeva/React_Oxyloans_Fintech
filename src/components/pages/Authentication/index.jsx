@@ -59,8 +59,8 @@ const Login = () => {
          if(userLogInInfo.email === "" || userLogInInfo.password === ""){
           setUserLoginInfo((prevState) => ({
             ...prevState,
-            emailerror: userLogInInfo.email === "" ? "Please enter The email" : "",
-            passworderror: userLogInInfo.password === "" ? "Please enter The password" : "",
+            emailerror: userLogInInfo.email === "" ? "Please   enter the email" : "",
+            passworderror: userLogInInfo.password === "" ? "Please enter the password" : "",
           })); 
          }else{
 

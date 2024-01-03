@@ -51,7 +51,7 @@ const Register_active_proceed = () => {
           id,
           date1
         );
-        registersuccess("registration successfully completed")
+        registersuccess("Registration successfully completed")
         setResponse(loginResponse);
         history("/");
         setError(null);
