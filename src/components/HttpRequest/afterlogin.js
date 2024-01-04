@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -403,6 +403,36 @@ export const verifyBankAccountAndIfsc = async (bankaccountprofile) => {
   );
   return response;
 };
+
+
+export  const feeApicall= async (calculatedfee , choosenmembership)=>{
+
+  const token = getToken();
+  const userId = getUserId();
+  const choose = choosenmembership; // Replace someValue with your actual variable or value
+  const uppercaseMembership = choose.toUpperCase();
+
+  const data = {
+		userId,
+		type: "Wallet",
+		feeAmount: calculatedfee,
+		lenderFeePayments: uppercaseMembership,
+	};
+
+  const response = await  handleApiRequestAfterLoginService(
+        
+        
+        API_BASE_URL,
+        `deducting_lender_fee_from_wallet`,
+        "POST",
+        token,
+        data
+  )
+  return  response;
+
+}
+
+
 export const Earning = async (status) => {
   const token = getToken();
   const userId = getUserId();

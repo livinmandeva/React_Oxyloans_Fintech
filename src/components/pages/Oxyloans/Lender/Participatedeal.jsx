@@ -196,7 +196,7 @@ const interestType =
     if (isConditionMet) {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
         if (deal.apidata.groupName != "" || null) {
-          if (deal.apidata.validityStatus === false) {
+          if (deal.apidata.validityStatus === true) {
             if (numericAmount >= participatedAmount) {
               console.log("amount is more than deal");
               console.log("deal succuess");
@@ -216,7 +216,7 @@ const interestType =
             }
           } else {
             console.log("deal validityStatus completed ");
-            membership()
+            membership(dealId)
          
           }
         } else {

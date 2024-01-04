@@ -9,6 +9,8 @@ import {
   cancelWithdrawalRequest,
   nofreeParticipationapi,
   handlePaymembershipapi,
+  feeApicall,
+  cashsuccessapihit,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -273,7 +275,7 @@ const tenure = {
 };
 
 // Define the membership function
-export const membership = () => {
+export const membership = (dealId) => {
   Swal.fire({
     title: "Select Membership Duration",
     width: "790px",
@@ -302,8 +304,6 @@ export const membership = () => {
       fiveyears: "Ten Years",
       tenyears: "Life Time",
     },
-// });
-
     inputValidator: (result) => {
       if (!result) {
         return "You must select an option";
@@ -315,11 +315,21 @@ export const membership = () => {
       const amount = tenure[selectedOption];
       const calculate = (amount * 118) / 100;
       Swal.fire({
-        title: "pay amount",
+        title: "Pay Amount",
         text: selectedOption,
-        html: `<br>Your membership amount is  ${calculate}`,
+        html: `<br>Your membership amount is ${calculate}`,
         icon: "info",
         confirmButtonText: "Pay Amount",
+      }).then(() => {
+        // Call your API here
+        feeApicall(calculate, selectedOption).then((response) => {
+          // Handle the response from the API call if needed
+          console.log(response);
+        }).catch((error) => {
+          console.log(error);
+        });
+      }).catch((error) => {
+        console.log(error);
       });
     }
   });
