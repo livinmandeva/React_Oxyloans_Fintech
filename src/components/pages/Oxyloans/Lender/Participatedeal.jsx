@@ -10,12 +10,10 @@ import { handledetail } from "../../../HttpRequest/afterlogin";
 import { toastrError } from "../../Base UI Elements/Toast";
 import {
   WarningAlertWalltTran,
-<<<<<<< Updated upstream
   freeParticipationapialert,
   membership,
   participated,
-=======
->>>>>>> Stashed changes
+
   participatedapi,
 } from "../../Base UI Elements/SweetAlert";
 
@@ -167,7 +165,7 @@ const Participatedeal = () => {
       key: "maximumparticipation",
     },
   ];
-
+   
   const dealparticipate = (
     apidata,
     participatedAmount,
@@ -260,7 +258,7 @@ const Participatedeal = () => {
 
     checkCondition();
   }, [deal.participatedAmount]);
-
+ 
   useEffect(() => {
     if (deal.bank != "") {
       console.log("payment type selected");
