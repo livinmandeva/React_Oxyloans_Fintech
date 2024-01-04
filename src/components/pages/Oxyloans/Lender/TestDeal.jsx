@@ -71,17 +71,19 @@ const TestDeal = () => {
     const urldealname = urlparams.slice(1);
     console.log(urldealname);
     const handleRegular = () => {
-      const response = regular_Api(
+      const response =    regular_Api(
         regular_runningDeal.dealtype,
         urldealname,
         regular_runningDeal.pageno
       );
 
+      
+      console.log(response.data)
       response.then((data) => {
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidata: data.data,
-          paginationCount: data.data.totalCount,
+      
         });
       });
     };
@@ -136,11 +138,11 @@ const TestDeal = () => {
                 onChange={changepagination}
               />
             </div>
-            {regular_runningDeal.apidata.listOfDealsInformationToLender && (
+            {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
-                {regular_runningDeal.apidata.listOfDealsInformationToLender !==
+                {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto !==
                 ""
-                  ? regular_runningDeal.apidata.listOfDealsInformationToLender.map(
+                  ? regular_runningDeal.apidata.listOfBorrowersDealsResponseDto.map(
                       (data, index) => (
                         <div className="row" key={index}>
                           <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
@@ -150,7 +152,7 @@ const TestDeal = () => {
                                   to="/viewinvoice"
                                   className="invoice-grid-link col-sm-12 col-lg-4"
                                 >
-                                  Deal Name: {data.dealName}
+                                  Deal Name: {data.adminId}
                                 </Link>
 
                                 <div className="col-sm-12 col-lg-2">
@@ -262,7 +264,7 @@ const TestDeal = () => {
               </>
             )}
 
-            {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
+            {/* {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
                 <div className="card">
                   <Table
@@ -276,7 +278,7 @@ const TestDeal = () => {
                   />
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
         {/* /Page Wrapper */}
