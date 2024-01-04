@@ -4,19 +4,24 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import "./InvoiceGrid.css";
-import { handledetail } from "../../../HttpRequest/afterlogin";
-
-// import { useNavigate  } from "react-router-dom";
-import { toastrError } from "../../Base UI Elements/Toast";
 import {
+  handledetail,
+  handlecashapi,
+  nofreeParticipationapi,
+} from "../../../HttpRequest/afterlogin";
+import { Button, Card, Switch, Table } from "antd";
+// import { useNavigate  } from "react-router-dom";
+import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
+import {
+  WarningAlert,
   WarningAlertWalltTran,
   freeParticipationapialert,
   membership,
   participated,
-
   participatedapi,
 } from "../../Base UI Elements/SweetAlert";
-
+import Swal from "sweetalert2";
+import Freeparticipate from "./Freeparticipate";
 import Spining from "./Spining";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -101,19 +106,20 @@ const Participatedeal = () => {
 
   console.log(deal.apidata);
 
-  const interestType =
-    deal.apidata.halfInterest !== 0.0
-      ? null
-      : deal.apidata.quartlyInterest !== 0.0
-      ? "Quartly"
-      : deal.apidata.monthlyInterest !== 0.0
-      ? " % P.M"
-      : deal.apidata.yearlyInterest !== 0.0
-      ? "% P.A"
-      : null;
+const interestType =
+  deal.apidata.halfInterest !== 0.0
+    ? null
+    : deal.apidata.quartlyInterest !== 0.0
+    ? "Quartly"
+    : deal.apidata.monthlyInterest !== 0.0
+    ? " % P.M"
+    : deal.apidata.yearlyInterest !== 0.0
+    ? "% P.A"
+    : null;
 
-  // You can then use the interestType variable as needed.
-
+// You can then use the interestType variable as needed.
+  
+  
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
@@ -165,7 +171,7 @@ const Participatedeal = () => {
       key: "maximumparticipation",
     },
   ];
-   
+
   const dealparticipate = (
     apidata,
     participatedAmount,
@@ -190,7 +196,7 @@ const Participatedeal = () => {
     if (isConditionMet) {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
         if (deal.apidata.groupName != "" || null) {
-          if (deal.apidata.validityStatus === true) {
+          if (deal.apidata.validityStatus === false) {
             if (numericAmount >= participatedAmount) {
               console.log("amount is more than deal");
               console.log("deal succuess");
@@ -258,7 +264,7 @@ const Participatedeal = () => {
 
     checkCondition();
   }, [deal.participatedAmount]);
- 
+
   useEffect(() => {
     if (deal.bank != "") {
       console.log("payment type selected");

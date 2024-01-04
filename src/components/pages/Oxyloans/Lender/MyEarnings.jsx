@@ -222,7 +222,7 @@ const MyEarnings = () => {
                   <div className="card-header">
                     <button
                       onClick={Inviteborrower}
-                      className="btn btn-xs col-md-2 btn-info col-12"
+                      className="btn btn-xs col-md-2 btn-info col-12 text-white"
                     >
                       {referalMyearnigs.borrowerlink ? (
                         <>Invite Borrower</>
@@ -232,7 +232,7 @@ const MyEarnings = () => {
                     </button>
                     <button
                       onClick={Invitelender}
-                      className="btn btn-xs col-md-2 btn-warning  mx-lg-1 col-12"
+                      className="btn btn-xs col-md-2 btn-warning  mx-lg-1 col-12 text-white"
                     >
                       {referalMyearnigs.lenderlink ? (
                         <>Invite Lender</>

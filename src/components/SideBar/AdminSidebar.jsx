@@ -118,14 +118,99 @@ const Sidebar = (props) => {
 
                 <li
                   className={`${
-                    "/dashboardTransactions" === pathName ? "active" : ""
+                    "/referaFriend" === pathName ||
+                    "/myreferalStatus" === pathName ||
+                    "/myreferalStatus" === pathName
+                      ? "active submenu"
+                      : "submenu"
                   }`}
                 >
-                  <Link to="/dashboardTransactions">
-                    <i className="fa-solid fa-right-to-bracket"></i>
-                    <span> Transactions </span>
-                    <span className="menu-arrow"></span>
+                  <Link
+                    to="#"
+                    className={isSideMenu == "Deals" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "Deals" ? "" : "Deals"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-network-wired"></i>
+                    <span> Deals</span> <span className="menu-arrow" />
                   </Link>
+                  {isSideMenu == "Deals" ? (
+                    <ul
+                      style={{
+                        display: isSideMenu == "Deals" ? "block" : "none",
+                      }}
+                    >
+                      <li>
+                        <Link
+                          to="/referaFriend"
+                          className={`${
+                            "/reatenewdeal" === pathName ? "active" : ""
+                          }`}
+                        >
+                         Create New Deal
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/myreferalStatus"
+                          className={`${
+                            "/myreferalStatus" === pathName ? "active" : ""
+                          }`}
+                        >
+                         View & Edit Deals
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/mycontacts"
+                          className={`${
+                            "/mycontacts" === pathName ? "active" : ""
+                          }`}
+                        >
+                            View Equity Deals
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/myEarnings"
+                          className={`${
+                          "/myEarnings" === pathName ? "active" : ""
+                          }`}
+                        >
+                          View Escrow Deals
+                        </Link>
+                      </li>
+
+
+                      <li>
+                        <Link
+                          to="/myEarnings"
+                          className={`${
+                          "/myEarnings" === pathName ? "active" : ""
+                          }`}
+                        >
+                          View Test Deals
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/myEarnings"
+                          className={`${
+                          "/myEarnings" === pathName ? "active" : ""
+                          }`}
+                        >
+                          View Personal Deals
+                        </Link>
+                      </li>
+                      
+                    </ul>
+                  ) : (
+                    ""
+                  )}
                 </li>
                 <li className={`${"/profile" === pathName ? "active" : ""}`}>
                   <Link to="/profile">
@@ -227,14 +312,6 @@ const Sidebar = (props) => {
                           }`}
                         >
                           Regular Running Deals
-                        </Link>
-                        <Link
-                          to="/viewCurrentDayDeals"
-                          className={`${
-                            "/viewCurrentDayDeals" === pathName ? "active" : ""
-                          }`}
-                        >
-                              Today Deals  
                         </Link>
                       </li>
                       <li>

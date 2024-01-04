@@ -41,7 +41,8 @@ import {
   validityDatemodal,
 } from "../../Base UI Elements/SweetAlert";
 import Header from "../../../Header/Header";
-import Sidebar from "../../../SideBar/SideBar";
+import AdminSidebar from "../../../SideBar/AdminSidebar";
+
 
 const MainAdminDashboard = () => {
   const dispatch = useDispatch();
@@ -723,7 +724,7 @@ const MainAdminDashboard = () => {
         <Header />
 
         {/* Sidebar */}        
-        <Sidebar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
         <div className="page-wrapper">

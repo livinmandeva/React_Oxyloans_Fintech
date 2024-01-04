@@ -2,13 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, pagination, Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../../Pagination";
+import {onShowSizeChange,   itemRender } from "../../../../../Pagination";
 
-import SideBar from "../../../../SideBar/SideBar";
-import Footer from "../../../../Footer/Footer";
-import { Earning  , referralEarningsInfo } from "../../../../HttpRequest/afterlogin";
-import { Success ,  WarningBackendApi } from "../../../Base UI Elements/SweetAlert";
-import Header from "../../../../Header/Header";
+import SideBar from "../../../../../SideBar/SideBar";
+import Footer from "../../../../../Footer/Footer";
+
+
+import Header from "../../../../../Header/Header";
+import { referralEarningsInfo } from "../../../../../HttpRequest/afterlogin";
+
+
 
 
 

@@ -2,13 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, pagination, Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../../Pagination";
-
-import SideBar from "../../../../SideBar/SideBar";
-import Footer from "../../../../Footer/Footer";
-import { Earning  , referralEarningsInfo } from "../../../../HttpRequest/afterlogin";
-import { Success ,  WarningBackendApi } from "../../../Base UI Elements/SweetAlert";
-import Header from "../../../../Header/Header";
+import {onShowSizeChange,  itemRender } from "../../../../../Pagination";
+import Header from "../../../../../Header/Header";
+import Sidebar from "../../../../../SideBar/SideBar";
+import Footer from "../../../../../Footer/Footer";
+import { Earning  , referralEarningsInfo } from "../../../../../HttpRequest/afterlogin";
 import './viewdeal.css'
 
 
@@ -157,7 +155,7 @@ const ViewDeals = () => {
         <Header />
 
         {/* Sidebar */}
-        <SideBar />
+        <Sidebar />
 
         {/* Page Wrapper */}
 

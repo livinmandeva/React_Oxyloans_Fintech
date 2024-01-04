@@ -5,6 +5,13 @@ import Admlogin from "./components/pages/Authentication/Admlogin";
 import Membership from "./components/pages/Oxyloans/Lender/Membership";
 import Spining from "./components/pages/Oxyloans/Lender/Spining";
 import Loginotp from "./components/pages/Authentication/Loginotp";
+import CreateDeal from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal";
+import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
+import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
+import TestDeals from "./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals";
+import ViewDeals from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals";
+import ViewCurrentDayDeals from "./components/pages/Oxyloans/Lender/ViewCurrentDayDeals";
+import TestDeal from "./components/pages/Oxyloans/Lender/TestDeal";
 // import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
 // import CreateDeal from "./components/pages/Oxyloans/Admin/CreateDeal/CreateDeal";
 // import ViewDeals from "./components/pages/Oxyloans/Admin/CreateDeal/ViewDeals";
@@ -205,11 +212,11 @@ const appcontainer = () => {
             element={<Withdrawdealfromwallet />}
           />
           
-          {/* <Route path="/mainadmindashboard" element={<MainAdminDashboard />} />
+          <Route path="/mainadmindashboard" element={<MainAdminDashboard />} />
           <Route path="/viewdeals" element={<ViewDeals />} />
           <Route path="/escrowDeals" element={<EscrowDeals />} />
           <Route path="/createdeal" element={<CreateDeal />} />
-          <Route path="/testDeals" element={<TestDeals />} /> */}
+          <Route path="/testDeals" element={<TestDeals />} />
           <Route path="/spining" element={<Spining />} />
           <Route path="/spining" element={<Spining />} />
           <Route path="/admlogin" element={<Admlogin />} />
@@ -227,12 +234,14 @@ const appcontainer = () => {
           />
           <Route path="/writetous" element={<Writetous />} />
           <Route path="/viewTicketHistory" element={<ViewTicketHistory />} />
+          <Route path="/viewCurrentDayDeals" element={<ViewCurrentDayDeals />} />
           <Route path="/emicalculator" element={<Emicalculator />} />
           <Route path="/configautoInvest" element={<ConfigautoInvest />} />
           <Route path="/membership" element={<Membership />} />
           <Route path="/viewAutoHistory" element={<ViewAutoHistory />} />
           <Route path="/participatedeal" element={<Participatedeal />} />
           <Route path="/regularRunningDeal" element={<RegularRunningDeal />} />
+          <Route path="/testDeal" element={<TestDeal />} />
           <Route path="/regularEscrowDeals" element={<RegularEscrowDeals />} />
           <Route
             path="/regularPersonalDeal"

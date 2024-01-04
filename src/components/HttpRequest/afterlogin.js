@@ -376,6 +376,21 @@ export const regular_Api = async (dealType, urldealname, pageNo = 1) => {
       pageSize: 10,
       dealType: dealType,
     };
+  }else if (urldealname == "viewCurrentDayDeals") {
+    var url = "listOfDealsInformationToLender";
+    var data = {
+      pageNo: pageNo,
+      pageSize: 10,
+      dealType:  "CURRENT",
+    };
+  }else if (urldealname == "testDeal" || "TestDeal") {
+    var url = "listOfDealsInformationForEquityDeals";
+    var data = {
+      dealName:"TEST",
+      pageNo: pageNo,
+      pageSize: 10,
+      dealType:  "HAPPENING",
+    };
   }
 
   const response = await handleApiRequestAfterLoginService(

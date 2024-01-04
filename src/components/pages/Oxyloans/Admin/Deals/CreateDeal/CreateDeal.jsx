@@ -2,31 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
-import { Success, WarningAlerterror,  WarningBackendApi} from "../../../Base UI Elements/SweetAlert";
 
-import {
-  profileupadate,
-  getUserDetails,
-  handleapicall,
-  sendMoblieOtp,
-  loadlendernomineeDetails,
-  savenomineeDeatailsApi,
-  verifyBankAccountAndIfsc,
-  updatebankDetails,
-  uploadkyc,
-  getAllUploadedDocs,
-  getPanDoc,
-  getdataPassport,
-  getdatachequeLeaf,
-  getdataDrivingLicence,
-  getdataVoterId,
-  getdataAadhar,
-} from "../../../../HttpRequest/afterlogin";
 
 import { useDispatch, useSelector } from "react-redux";
+import Header from "../../../../../Header/Header";
+import Sidebar from "../../../../../SideBar/SideBar";
 
-import Sidebar from "../../../../SideBar/SideBar";
-import Header from "../../../../Header/Header";
 
 
 const CreateDeal = () => {
