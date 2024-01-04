@@ -4,7 +4,6 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import {
   HandleWithFooter,
-  WarningAlert,
   WarningAlertWalltTran,
   WarningAlerterror,
 } from "../../Base UI Elements/SweetAlert";
@@ -38,9 +37,9 @@ const WalletToWallet = () => {
         HandleWithFooter(
           "The wallet-to-wallet transfer was successful. Your withdrawal request has been initiated, and the receiver will receive the wallet amount after OxyAdmins approval."
         );
-      } else   if (data.request.status == 403) {
+      } else if (data.request.status == 403) {
         WarningAlertWalltTran(data.response.data.errorMessage);
-      }else{
+      } else {
         WarningAlerterror(data.response.data.errorMessage);
       }
     });

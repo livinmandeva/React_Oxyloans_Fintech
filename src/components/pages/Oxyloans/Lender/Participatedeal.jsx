@@ -4,24 +4,21 @@ import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
 import "./InvoiceGrid.css";
-import {
-  handledetail,
-  handlecashapi,
-  nofreeParticipationapi,
-} from "../../../HttpRequest/afterlogin";
-import { Button, Card, Switch, Table } from "antd";
+import { handledetail } from "../../../HttpRequest/afterlogin";
+
 // import { useNavigate  } from "react-router-dom";
-import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
+import { toastrError } from "../../Base UI Elements/Toast";
 import {
-  WarningAlert,
   WarningAlertWalltTran,
+<<<<<<< Updated upstream
   freeParticipationapialert,
   membership,
   participated,
+=======
+>>>>>>> Stashed changes
   participatedapi,
 } from "../../Base UI Elements/SweetAlert";
-import Swal from "sweetalert2";
-import Freeparticipate from "./Freeparticipate";
+
 import Spining from "./Spining";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -106,20 +103,19 @@ const Participatedeal = () => {
 
   console.log(deal.apidata);
 
-const interestType =
-  deal.apidata.halfInterest !== 0.0
-    ? null
-    : deal.apidata.quartlyInterest !== 0.0
-    ? "Quartly"
-    : deal.apidata.monthlyInterest !== 0.0
-    ? " % P.M"
-    : deal.apidata.yearlyInterest !== 0.0
-    ? "% P.A"
-    : null;
+  const interestType =
+    deal.apidata.halfInterest !== 0.0
+      ? null
+      : deal.apidata.quartlyInterest !== 0.0
+      ? "Quartly"
+      : deal.apidata.monthlyInterest !== 0.0
+      ? " % P.M"
+      : deal.apidata.yearlyInterest !== 0.0
+      ? "% P.A"
+      : null;
 
-// You can then use the interestType variable as needed.
-  
-  
+  // You can then use the interestType variable as needed.
+
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,

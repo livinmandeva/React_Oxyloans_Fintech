@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { pagination, Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { Table } from "antd";
+import { onShowSizeChange } from "../../../Pagination";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";

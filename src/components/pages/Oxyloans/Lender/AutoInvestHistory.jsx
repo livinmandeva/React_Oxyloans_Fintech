@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import Footer from "../../../Footer/Footer";
+
 import { Table } from "antd";
 
 const AutoInvestHistory = () => {

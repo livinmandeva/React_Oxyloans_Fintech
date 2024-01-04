@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { QRCode, Space } from "antd";
+import { QRCode } from "antd";
 import {
   HandleWithFooter,
   WarningAlert,

@@ -1,20 +1,10 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
-import { Button, Card, Space } from "antd";
 import "./member.css";
 import "./Dashboardtable.css";
-import { pagination, Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../Pagination";
-import {
-  getMyWalletTowalletHistory,
-  handlePaymembershipapi,
-} from "../../../HttpRequest/afterlogin";
-import {
-  membershipsweetalert,
-  membershipsweetalertconformation,
-} from "../../Base UI Elements/SweetAlert";
+import { membershipsweetalertconformation } from "../../Base UI Elements/SweetAlert";
 
 const Membership = React.memo((pros) => {
   const [mywalletTowalletHistory, setmywalletTowalletHistory] = useState({

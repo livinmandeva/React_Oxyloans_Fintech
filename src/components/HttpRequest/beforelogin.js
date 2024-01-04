@@ -9,7 +9,7 @@ const handleApiRequestBeforeLogin = async (
   method,
   BASE_URL,
   End_Url,
-  POSTDATA 
+  POSTDATA
 ) => {
   try {
     const response = await axios({
@@ -105,35 +105,28 @@ export const sendwhatappotp = async (value1) => {
   );
   return response;
 };
-export const referrerdata =(referrerId  , refParam)=>{
+export const referrerdata = (referrerId, refParam) => {
   console.log(referrerId);
 
   const numericPart = referrerId.match(/\d+$/);
 
-
-
-
-
-
-  if(referrerId !==""){
+  if (referrerId !== "") {
     const response = handleApiRequestBeforeLogin(
       "GET",
       API_BASE_URL,
-      
-      `${numericPart}/user-uniquenumber`,
-    )
-    return  response
-  }else{
+
+      `${numericPart}/user-uniquenumber`
+    );
+    return response;
+  } else {
     const response = handleApiRequestBeforeLogin(
       "GET",
       API_BASE_URL,
-      
-      `${refParam}/user-uniquenumber`,
-    )
 
-    return   response
-  }
+      `${refParam}/user-uniquenumber`
+    );
 
+<<<<<<< Updated upstream
 }
 
 
@@ -168,6 +161,11 @@ export   const usersubmitotp =async(email, password)=>{
 
    return  response;
 }
+=======
+    return response;
+  }
+};
+>>>>>>> Stashed changes
 export const verifywhatappotp = async (api) => {
   console.log(api);
   const value1 = localStorage.getItem("otp");

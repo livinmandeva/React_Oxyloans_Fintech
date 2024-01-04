@@ -6,7 +6,7 @@ const API_BASE_URL =
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
     : "https://fintech.oxyloans.com/oxyloans/v1/user/";
 
-const getToken = () => { 
+const getToken = () => {
   return sessionStorage.getItem("accessToken");
 };
 export const getUserId = () => {
@@ -846,21 +846,19 @@ export const chatapi = async () => {
   return response;
 };
 
-
-export const lenderTotalInvestmentsAndReturns =async()=>{
+export const lenderTotalInvestmentsAndReturns = async () => {
   const token = getToken();
   const userId = getUserId();
 
-  const response   =  await handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/lenderTotalInvestmentsAndReturns`,
     "GET",
-    token,
+    token
   );
 
-
-  return  response;
-}
+  return response;
+};
 export const nofreeParticipationapi = async (
   apidata,
   groupId,
@@ -927,7 +925,7 @@ export const nofreeParticipationapi = async (
     // lenderTotalPanLimit:userPanLimit,
     // totalParticipatedAmount:userTotalParticipation
     lenderTotalPanLimit: deal.apidata.lenderRemainingPanLimit,
-    lenderParticipationFrom:"WEB",
+    lenderParticipationFrom: "WEB",
     totalParticipatedAmount: deal.apidata.lenderTotalParticipationAmount,
   };
   const response = await handleApiRequestAfterLoginService(
@@ -939,20 +937,19 @@ export const nofreeParticipationapi = async (
   );
   return response;
 };
-export const allQueriesCount1 =async()=>{
+export const allQueriesCount1 = async () => {
   const token = getToken();
   const userId = getUserId();
 
-  const response   =  await handleApiRequestAfterLoginService(
+  const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/allQueriesCount`,
     "GET",
-    token,
+    token
   );
 
-
-  return  response;
-}
+  return response;
+};
 export const getMyTransactions = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();

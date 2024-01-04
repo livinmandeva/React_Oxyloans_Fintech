@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { bulidingicon, profilebg, profileuser } from "../../../imagepath";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 
 const ConfigautoInvest = () => {
   return (

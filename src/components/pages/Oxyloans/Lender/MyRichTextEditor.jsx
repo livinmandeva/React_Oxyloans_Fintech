@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 // import ImageUploader from "react-quill-image-upload";
 import "react-quill/dist/quill.snow.css"; // Import styles
-import { fileuploads } from "../../../HttpRequest/afterlogin";
 
 const MyRichTextEditor = ({ data, setdata }) => {
   const [text, settext] = useState("hellllo");

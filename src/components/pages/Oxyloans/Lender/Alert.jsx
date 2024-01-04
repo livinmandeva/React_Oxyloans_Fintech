@@ -1,10 +1,10 @@
-import React from 'react';
-import { Alert, Button, Space } from 'antd';
+import React from "react";
+import { Alert, Button, Space } from "antd";
 const App = () => (
   <Space
     direction="vertical"
     style={{
-      width: '100%',
+      width: "100%",
     }}
   >
     <Alert
