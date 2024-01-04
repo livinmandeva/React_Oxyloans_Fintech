@@ -98,38 +98,39 @@ const AdminDashboard = () => {
       : "";
   }
 
-  const [data, setObject] = useState({
-    chart: {
-      height: 350,
-      type: "line",
-      toolbar: {
-        show: false,
-      },
-      fill: false,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    datasets: {
-      id: "apaxcharts-line",
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    colors: ["#3D5EE1", "#70C4CF"],
-    borderWidth: 3,
-    labels: ["2020", "2021", "2022", "2023"],
-  });
-  const [series, setSeries] = useState([
-    {
-      name: "Investment",
-      data: [100000, 25000, 1000000, 300000],
-    },
-    {
-      name: "Total Returns",
-      data: [120000, 32000, 1300000, 450000],
-    },
-  ]);
+  // const [data, setObject] = useState({
+  //   chart: {
+  //     height: 350,
+  //     type: "line",
+  //     toolbar: {
+  //       show: false,
+  //     },
+  //     fill: false,
+  //   },
+  //   dataLabels: {
+  //     enabled: false,
+  //   },
+  //   datasets: {
+  //     id: "apaxcharts-line",
+  //   },
+  //   stroke: {
+  //     curve: "smooth",
+  //   },
+  //   colors: ["#3D5EE1", "#70C4CF"],
+  //   borderWidth: 3,
+  //   labels: ["2020", "2021", "2022", "2023"],
+  // });
+
+  // const [series, setSeries] = useState([
+  //   {
+  //     name: "Investment",
+  //     data: [100000, 25000, 1000000, 300000],
+  //   },
+  //   {
+  //     name: "Total Returns",
+  //     data: [120000, 32000, 1300000, 450000],
+  //   },
+  // ]);
 
   // Student Chart
 
@@ -277,51 +278,51 @@ const AdminDashboard = () => {
   //   }
 
   // })
-  const [DistributedColumns, SetDistributedColumns] = useState({
-    series: [
-      {
-        name: "",
-        // data: [300000, 200000, 50000, 50000],
-        data: [0, 0, 0, 0],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: "bar",
-        events: {
-          click: function (chart, w, e) {},
-        },
-      },
-      colors: ["#45C4B0", "#3D5EE1", "#70C4CF", "#777"],
-      plotOptions: {
-        bar: {
-          columnWidth: "45%",
-          distributed: true,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      legend: {
-        show: false,
-      },
-      xaxis: {
-        categories: [
-          ["Total Investment"],
-          ["Student"],
-          ["Escow"],
-          ["normalDeals"],
-        ],
-        labels: {
-          style: {
-            colors: ["#3D5EE1", "#70C4CF"],
-            fontSize: "12px",
-          },
-        },
-      },
-    },
-  });
+  // const [DistributedColumns, SetDistributedColumns] = useState({
+  //   series: [
+  //     {
+  //       name: "",
+  //       // data: [300000, 200000, 50000, 50000],
+  //       data: [0, 0, 0, 0],
+  //     },
+  //   ],
+  //   options: {
+  //     chart: {
+  //       height: 350,
+  //       type: "bar",
+  //       events: {
+  //         click: function (chart, w, e) {},
+  //       },
+  //     },
+  //     colors: ["#45C4B0", "#3D5EE1", "#70C4CF", "#777"],
+  //     plotOptions: {
+  //       bar: {
+  //         columnWidth: "45%",
+  //         distributed: true,
+  //       },
+  //     },
+  //     dataLabels: {
+  //       enabled: false,
+  //     },
+  //     legend: {
+  //       show: false,
+  //     },
+  //     xaxis: {
+  //       categories: [
+  //         ["Total Investment"],
+  //         ["Student"],
+  //         ["Escow"],
+  //         ["normalDeals"],
+  //       ],
+  //       labels: {
+  //         style: {
+  //           colors: ["#3D5EE1", "#70C4CF"],
+  //           fontSize: "12px",
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -601,15 +602,16 @@ const AdminDashboard = () => {
       dataIndex: "Date",
       sorter: (a, b) => a.Date - b.Date,
     },
-    {
-      title: "Amount",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-    },
+
     {
       title: "Description",
       dataIndex: "Description",
       sorter: (a, b) => a.Description.length - b.Description.length,
+    },
+    {
+      title: "Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
     },
   ];
 
@@ -773,7 +775,6 @@ const AdminDashboard = () => {
     return () => {};
   }, []);
 
-  const nme1=getreducerprofiledata.firstName;
   useEffect(() => {
     const response = getNoDealsParticipated();
     response.then((data) => {
@@ -812,7 +813,7 @@ const AdminDashboard = () => {
         ) {
           console.log(kycStatus);
           console.log(bankDetailsInfo);
-          console.log(personalDetailsInfo);    
+          console.log(personalDetailsInfo);
 
           console.log(
             "personalDetails, bankDetailsInfo, and kycStatus available"
@@ -838,7 +839,7 @@ const AdminDashboard = () => {
         {/* Header */}
         <Header />
 
-        {/* Sidebar */}        
+        {/* Sidebar */}
         <SideBar />
 
         {/* Page Wrapper */}
@@ -849,8 +850,8 @@ const AdminDashboard = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="page-sub-header">
-                    <h3 className="page-title text-lowercase">
-                      welcome {""}
+                    <h3 className="page-title text-capitalize">
+                      Welcome {""}
                       {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata?.firstName ?? ""
                         : ""}
@@ -864,7 +865,7 @@ const AdminDashboard = () => {
                         {" "}
                         <Link to="/dashboard">Dashboard</Link>
                       </li>
-                    </ul>     
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -1002,7 +1003,7 @@ const AdminDashboard = () => {
             </div>
             {/* /Overview Section */}
             <div className="row ">
-              <div className="col-md-12 col-lg-6">
+              <div className="col-md-12 col-lg-6 d-none">
                 {/* Revenue Chart */}
                 <div className="card card-chart d-i">
                   <div className="card-header">
@@ -1033,7 +1034,7 @@ const AdminDashboard = () => {
                   </div>
                   <div className="card-body">
                     <div id="apexcharts-area"></div>
-                    <Chart options={data} series={series} type="line" />
+                    {/* <Chart options={data} series={series} type="line" /> */}
                   </div>
                 </div>
                 {/* /Revenue Chart */}
@@ -1063,7 +1064,7 @@ const AdminDashboard = () => {
                 {/* /Student Chart */}
               </div>
 
-              <div className="col-md-12 col-lg-6">
+              <div className="col-md-12 col-lg-6 d-none">
                 {/* Student Chart */}
                 <div className="card card-chart">
                   <div className="card-header">
@@ -1075,11 +1076,11 @@ const AdminDashboard = () => {
                   </div>
                   <div className="card-body">
                     <div id="apexcharts-area"></div>
-                    <Chart
+                    {/* <Chart
                       options={DistributedColumns.options}
                       series={DistributedColumns.series}
                       type="bar"
-                    />
+                    /> */}
                   </div>
                 </div>
 
@@ -1131,7 +1132,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div className="col-xl-12 col-md-12 d-flex">
+              <div className="col-xl-12 col-md-12 d-flex d-none">
                 <div className="card flex-fill comman-shadow">
                   <div className="card-header">
                     <div className="row align-items-center">
@@ -1144,7 +1145,7 @@ const AdminDashboard = () => {
                   </div>
                   <div className="dash-widget d-flex justify-content-center align-items-center">
                     <div className="w-100 scrolling">
-                      <GoogleChart
+                      {/* <GoogleChart
                         chartType="Calendar"
                         loader={<div>Loading Chart</div>}
                         data={googledata}
@@ -1166,7 +1167,7 @@ const AdminDashboard = () => {
                             dayOfWeekRightSpace: 10,
                           },
                         }}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -1221,7 +1222,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="row">
-              <div className="col-xl-6 d-flex">
+              <div className="col-xl-12 d-flex">
                 {/* Star Students */}
                 <div className="card flex-fill student-space comman-shadow">
                   <div className="card-header d-flex align-items-center">
@@ -1262,7 +1263,7 @@ const AdminDashboard = () => {
                 </div>
                 {/* /Star Students */}
               </div>
-              <div className="col-xl-6 d-flex">
+              <div className="col-xl-12 d-flex">
                 {/* Feed Activity */}
                 <div className="card flex-fill comman-shadow">
                   <div className="card-header d-flex align-items-center">

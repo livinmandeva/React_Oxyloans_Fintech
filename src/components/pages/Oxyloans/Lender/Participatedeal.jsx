@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
+import { Pagination } from "antd";
 import "./InvoiceGrid.css";
+
 import {
   handledetail,
   handlecashapi,
   nofreeParticipationapi,
 } from "../../../HttpRequest/afterlogin";
 import { Button, Card, Switch, Table } from "antd";
+
 // import { useNavigate  } from "react-router-dom";
 import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
 import {
@@ -106,20 +109,19 @@ const Participatedeal = () => {
 
   console.log(deal.apidata);
 
-const interestType =
-  deal.apidata.halfInterest !== 0.0
-    ? null
-    : deal.apidata.quartlyInterest !== 0.0
-    ? "Quartly"
-    : deal.apidata.monthlyInterest !== 0.0
-    ? " % P.M"
-    : deal.apidata.yearlyInterest !== 0.0
-    ? "% P.A"
-    : null;
+  const interestType =
+    deal.apidata.halfInterest !== 0.0
+      ? null
+      : deal.apidata.quartlyInterest !== 0.0
+      ? "Quartly"
+      : deal.apidata.monthlyInterest !== 0.0
+      ? " % P.M"
+      : deal.apidata.yearlyInterest !== 0.0
+      ? "% P.A"
+      : null;
 
-// You can then use the interestType variable as needed.
-  
-  
+  // You can then use the interestType variable as needed.
+
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
@@ -216,8 +218,8 @@ const interestType =
             }
           } else {
             console.log("deal validityStatus completed ");
-            membership(dealId)
-         
+
+            membership(dealId);
           }
         } else {
           console.log("deal  having free feeStatusToParticipate");

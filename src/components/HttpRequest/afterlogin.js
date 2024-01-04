@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 
 const API_BASE_URL =
   userisIn == "local"
@@ -376,20 +376,20 @@ export const regular_Api = async (dealType, urldealname, pageNo = 1) => {
       pageSize: 10,
       dealType: dealType,
     };
-  }else if (urldealname == "viewCurrentDayDeals") {
+  } else if (urldealname == "viewCurrentDayDeals") {
     var url = "listOfDealsInformationToLender";
     var data = {
       pageNo: pageNo,
       pageSize: 10,
-      dealType:  "CURRENT",
+      dealType: "CURRENT",
     };
-  }else if (urldealname == "testDeal" || "TestDeal") {
+  } else if (urldealname == "testDeal" || "TestDeal") {
     var url = "listOfDealsInformationForEquityDeals";
     var data = {
-      dealName:"TEST",
+      dealName: "TEST",
       pageNo: pageNo,
       pageSize: 10,
-      dealType:  "HAPPENING",
+      dealType: "HAPPENING",
     };
   }
 
@@ -419,34 +419,28 @@ export const verifyBankAccountAndIfsc = async (bankaccountprofile) => {
   return response;
 };
 
-
-export  const feeApicall= async (calculatedfee , choosenmembership)=>{
-
+export const feeApicall = async (calculatedfee, choosenmembership) => {
   const token = getToken();
   const userId = getUserId();
   const choose = choosenmembership; // Replace someValue with your actual variable or value
   const uppercaseMembership = choose.toUpperCase();
 
   const data = {
-		userId,
-		type: "Wallet",
-		feeAmount: calculatedfee,
-		lenderFeePayments: uppercaseMembership,
-	};
+    userId,
+    type: "Wallet",
+    feeAmount: calculatedfee,
+    lenderFeePayments: uppercaseMembership,
+  };
 
-  const response = await  handleApiRequestAfterLoginService(
-        
-        
-        API_BASE_URL,
-        `deducting_lender_fee_from_wallet`,
-        "POST",
-        token,
-        data
-  )
-  return  response;
-
-}
-
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deducting_lender_fee_from_wallet`,
+    "POST",
+    token,
+    data
+  );
+  return response;
+};
 
 export const Earning = async (status) => {
   const token = getToken();
