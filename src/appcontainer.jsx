@@ -220,6 +220,7 @@ export const newRouter = createBrowserRouter([
     element: <LenderRegister />,
     errorElement: <Error404></Error404>,
   },
+
   {
     path: "/borrower_register",
     element: <BorrowerRegister />,

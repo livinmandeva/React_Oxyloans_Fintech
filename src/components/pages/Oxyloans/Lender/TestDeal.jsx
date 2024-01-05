@@ -105,10 +105,10 @@ const TestDeal = () => {
               <div className="card-body h-10">
                 <div className="row">
                   <Link
-                    to="/myRunningDelas"
+                    to="/regularRunningDeal"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    <i className="fa fa-user mx-1"></i> My Participated Delas
+                    <i className="fa fa-user mx-1"></i> Another Delas
                   </Link>
                 </div>
               </div>
@@ -121,10 +121,7 @@ const TestDeal = () => {
                 onChange={changepagination}
               />
             </div>
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
             {regular_runningDeal.apidata != "" && (
               <>
                 {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto
@@ -150,7 +147,6 @@ const TestDeal = () => {
                               </div>
                               <div className="col-auto col-lg-3">
                                 Deal Value : {data.dealAmount}
-<<<<<<< Updated upstream
                               </div>
                               {/* <div>Status : Open</div> */}
                             </div>
@@ -174,31 +170,6 @@ const TestDeal = () => {
                                   Comments : {data.messageSentToLenders}
                                 </small>
                               </div>
-=======
-                              </div>
-                              {/* <div>Status : Open</div> */}
-                            </div>
-                            <div className="card-middle row">
-                              <div className="col-sm-12 col-lg-6">
-                                <h6>
-                                  Deal Opened Time :{" "}
-                                  {data.fundsAcceptanceStartDate}
-                                </h6>
-                                <h6>
-                                  Deal Closing Time :{" "}
-                                  {data.fundsAcceptanceEndDate}
-                                </h6>
-                                <h6>
-                                  First Participation :{" "}
-                                  {data.firstParticipationDate}
-                                </h6>
-                              </div>
-                              <div className="col-sm-12 col-lg-6">
-                                <small>
-                                  Comments : {data.messageSentToLenders}
-                                </small>
-                              </div>
->>>>>>> Stashed changes
                             </div>
                             <div className="card-body">
                               <div className="row align-items-center">
