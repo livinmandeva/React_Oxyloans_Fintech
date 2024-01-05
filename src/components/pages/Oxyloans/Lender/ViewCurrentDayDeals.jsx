@@ -15,21 +15,6 @@ const ViewCurrentDayDeals = () => {
   });
 
   const dataSource = [];
-  // regular_runningDeal.apidata != ""
-  //   ? dataSource.push({
-  //       key: Math.random(),
-  //       name: regular_runningDeal.apidata.dealName,
-  //       loanamount: regular_runningDeal.apidata.dealAmount,
-  //       availablelimit: regular_runningDeal.apidata.remainingAmountInDeal,
-  //       tenureinmonths: regular_runningDeal.apidata.duration,
-  //       funding: regular_runningDeal.apidata.fundStartDate,
-  //       fundingdate: regular_runningDeal.apidata.fundEndDate,
-  //       minimumparticipation:
-  //         regular_runningDeal.apidata.minimumPaticipationAmount,
-  //       maximumparticipation:
-  //         regular_runningDeal.apidata.lenderParticiptionLimit,
-  //     })
-  //   : null;
 
   const columns = [
     {
@@ -120,10 +105,10 @@ const ViewCurrentDayDeals = () => {
               <div className="card-body h-10">
                 <div className="row">
                   <Link
-                    to="/myRunningDelas"
+                    to="/regularRunningDeal"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    <i className="fa fa-user mx-1"></i> My Participated Delas
+                    <i className="fa fa-user mx-1"></i> View Another Deals
                   </Link>
                 </div>
               </div>
