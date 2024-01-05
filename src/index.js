@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 // import { App } from "./app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/plugins/bootstrap/css/bootstrap.min.css";
@@ -13,14 +13,16 @@ import "./assets/plugins/select2/css/select2.min.css";
 //Font Awesome
 import "./assets/plugins/fontawesome/css/fontawesome.min.css";
 import "./assets/plugins/fontawesome/css/all.min.css";
-import Approuter from "./approuter";
-
+// import Approuter from "./approuter";
 import { Provider } from "react-redux";
 import store from "./components/Redux/Store";
+import { newRouter } from "./appcontainer.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <Approuter />
+    <Suspense>
+      <RouterProvider router={newRouter} />
+    </Suspense>
   </Provider>
 );

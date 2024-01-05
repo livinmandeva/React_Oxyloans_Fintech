@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
-import { Success, WarningAlerterror, WarningBackendApi } from "../Base UI Elements/SweetAlert";
+import {
+  Success,
+  WarningAlerterror,
+  WarningBackendApi,
+} from "../Base UI Elements/SweetAlert";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 
 import {
@@ -126,7 +130,7 @@ const Profile = () => {
     branch: "",
     nomineecity: "",
     copyerror: "",
-    isdeatail:false
+    isdeatail: false,
   });
 
   const [kyc, setKyc] = useState({
@@ -168,25 +172,25 @@ const Profile = () => {
     });
   };
 
-
-  useEffect(()=>{
-if( nomineeDetails.nomineeName != "" &&
-nomineeDetails.relation != ""  &&
-nomineeDetails.nomineeEmail != "" &&
-nomineeDetails.nomineeMobile != "" &&
-nomineeDetails.accountNo != "" &&
-nomineeDetails.nomineeIfsc != "" &&
-nomineeDetails.bank != "" &&
-nomineeDetails.branch != "" &&
-nomineeDetails.nomineecity != ""){
-  console.log("all fileds are success")
-  setnomineeDetails({
-    ...nomineeDetails,
-    isdeatail:true
-  })
-}
-
-  },[nomineeDetails.nomineeName])
+  useEffect(() => {
+    if (
+      nomineeDetails.nomineeName != "" &&
+      nomineeDetails.relation != "" &&
+      nomineeDetails.nomineeEmail != "" &&
+      nomineeDetails.nomineeMobile != "" &&
+      nomineeDetails.accountNo != "" &&
+      nomineeDetails.nomineeIfsc != "" &&
+      nomineeDetails.bank != "" &&
+      nomineeDetails.branch != "" &&
+      nomineeDetails.nomineecity != ""
+    ) {
+      console.log("all fileds are success");
+      setnomineeDetails({
+        ...nomineeDetails,
+        isdeatail: true,
+      });
+    }
+  }, [nomineeDetails.nomineeName]);
   const savebankdetailsProfile = () => {
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
@@ -200,7 +204,7 @@ nomineeDetails.nomineecity != ""){
 
   const submitNomineeDetails = (event) => {
     event.preventDefault();
-    if(nomineeDetails.isdeatail  == true){
+    if (nomineeDetails.isdeatail == true) {
       const response = savenomineeDeatailsApi(nomineeDetails);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -209,11 +213,9 @@ nomineeDetails.nomineecity != ""){
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
       });
-    }else{
-
+    } else {
       WarningBackendApi("warning");
     }
-  
   };
 
   const verifybankAccountCashfree = () => {
@@ -245,21 +247,6 @@ nomineeDetails.nomineecity != ""){
       }
     });
   };
-
-  // const handlefileupload = (event) => {
-  //   const response = uploadkyc(event);
-  //   response.then((data) => {
-  //     if (data.request.status == 200) {
-  //       setKyc({
-  //         ...kyc,
-  //         isValid: !kyc.isValid,
-  //       });
-  //       Success("success", `${event.target.name} Uploaded Sucessfully`);
-  //     } else if (data.response.data.errorCode != "200") {
-  //       WarningBackendApi("warning", data.response.data.errorMessage);
-  //     }
-  //   });
-  // };
 
   const handlefileupload = (event) => {
     const response = uploadkyc(event);
@@ -318,71 +305,114 @@ nomineeDetails.nomineecity != ""){
   };
 
   const handleprofileUpdate = () => {
+    if (
+      userProfile.email === "" ||
+      userProfile.firstName === "" ||
+      userProfile.mobileNumber === "" ||
+      userProfile.whatsAppNumber === "" ||
+      userProfile.city === "" ||
+      userProfile.pinCode === "" ||
+      userProfile.fatherName === "" ||
+      userProfile.city === "" ||
+      userProfile.state === "" ||
+      userProfile.aadharNumber === "" ||
+      userProfile.city === "" ||
+      userProfile.locality === ""
+    ) {
+      setUserProfile({
+        ...userProfile,
 
-        if(userProfile.email === ""  || userProfile.firstName === ""  || userProfile.lastName  === ""  || userProfile.mobileNumber  === "" || userProfile.whatsAppNumber  === "" || userProfile.city === "" || userProfile.pinCode === "" ||  userProfile.fatherName === "" || userProfile.city  === ""  || userProfile.state  === "" || userProfile.aadharNumber  === "" || userProfile.city === "" || userProfile.locality  === ""  ){
-          setUserProfile({
-            ...userProfile,
-            
-            addresserror: userProfile.address === "" ? "Please enter the address" : "",
-            cityer:  userProfile.city === "" ? "Please enter the city" : "",
-            doberror:  userProfile.dob === "" ? "Please enter the dob" : "",
-            fatherNameerror:  userProfile.fatherName === "" ? "Please enter the father Name" : "",
-            firstNamrror:  userProfile.firstName === "" ? "Please enter the first Name" : "",
-            lastNamerror:  userProfile.lastName === "" ? "Please enter the last Name" : "",
-            panNumbererror:  userProfile.panNumber === "" ? "Please enter the panNumber" : "",
-            permanentAddresserror:  userProfile.permanentAddress === "" ? "Please enter the Residence Address" : "",
-            pinCodeerror:  userProfile.pinCode === "" ? "Please enter the pinCode" : "",
-            stateerror: userProfile.state === "" ? "Please enter the state" : "",
-            whatsAppNumbererror:  userProfile.whatsAppNumber === "" ? "Please enter the whatsAppNumber" : "",
-            aadhaarNumbererror:  userProfile.aadharNumber === "" ? "Please enter the Aadhaar Number" : "",
-      
-            mobileNumbererror:  userProfile.mobileNumber === "" ? "Please enter the mobileNumber" : "",
-            emailerror:  userProfile.email === "" ? "Please enter the email" : "",
-          })
-        }else   {
+        addresserror:
+          userProfile.address === "" ? "Please enter the address" : "",
+        cityer: userProfile.city === "" ? "Please enter the city" : "",
+        doberror: userProfile.dob === "" ? "Please enter the dob" : "",
+        fatherNameerror:
+          userProfile.fatherName === "" ? "Please enter the father Name" : "",
+        firstNamrror:
+          userProfile.firstName === "" ? "Please enter the first Name" : "",
+        panNumbererror:
+          userProfile.panNumber === "" ? "Please enter the panNumber" : "",
+        permanentAddresserror:
+          userProfile.permanentAddress === ""
+            ? "Please enter the Residence Address"
+            : "",
+        pinCodeerror:
+          userProfile.pinCode === "" ? "Please enter the pinCode" : "",
+        stateerror: userProfile.state === "" ? "Please enter the state" : "",
+        whatsAppNumbererror:
+          userProfile.whatsAppNumber === ""
+            ? "Please enter the whatsAppNumber"
+            : "",
+        aadhaarNumbererror:
+          userProfile.aadharNumber === ""
+            ? "Please enter the Aadhaar Number"
+            : "",
 
-          const response = profileupadate(userProfile);
-          response.then((data) => {
-            if (data.request.status == 200) {
-              Success("success", "Personal Details Save Successfully");
-            } else if (data.response.data.errorCode != "200") {
-              WarningBackendApi("warning", data.response.data.errorMessage);
-            }    
-          });
+        mobileNumbererror:
+          userProfile.mobileNumber === ""
+            ? "Please enter the mobileNumber"
+            : "",
+        emailerror: userProfile.email === "" ? "Please enter the email" : "",
+      });
+    } else {
+      const response = profileupadate(userProfile);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          Success("success", "Personal Details Save Successfully");
+        } else if (data.response.data.errorCode != "200") {
+          WarningBackendApi("warning", data.response.data.errorMessage);
         }
- 
-
+      });
+    }
   };
 
   const sendotp = async () => {
- console.log(bankaccountprofile.nameAtBank)
- if (
-  (bankaccountprofile.nameAtBank === "" || bankaccountprofile.nameAtBank === null) &&
-  (bankaccountprofile.accountNumber === "" || bankaccountprofile.accountNumber === null) &&
-  (bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber === null) &&
-  (bankaccountprofile.ifscCode === "" || bankaccountprofile.ifscCode === null) &&
-  (bankaccountprofile.bankName === "" || bankaccountprofile.bankName === null) &&
-  (bankaccountprofile.branchName === "" || bankaccountprofile.branchName === null) &&
-  (bankaccountprofile.bankCityerror === "" || bankaccountprofile.bankCity === null) &&
-  (bankaccountprofile.moblieNumbererror === "" || bankaccountprofile.moblieNumber === null)
-) {
- 
-
-  console.log("true")
-  setBankaccountProfile((stateconta)=>({
-    ...stateconta,
-    moblieNumbererror: bankaccountprofile.moblieNumber !== "" ? "Enter the Mobile Number" : "",
-    accountNumbererror: bankaccountprofile.accountNumber !== "" ? "Enter the account Number" : "",
-    confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber !== "" ? "Enter the Confirm Account Number" : "",
-    ifscCodeerror: bankaccountprofile.ifscCode !== "" ? "Enter the IFSC Code" : "",
-    bankNameerror: bankaccountprofile.bankName !== "" ? "Enter the bank Name " : "",
-    branchNameerror: bankaccountprofile.branchName !== "" ? "Enter the branch Name  " : "",
-    bankCityerror: bankaccountprofile.bankCity !== "" ? "Enter the bank City" : "",
-    // Add other error messages as needed
-
-  }))
-    }else{
-      console.log("false")
+    console.log(bankaccountprofile.nameAtBank);
+    if (
+      (bankaccountprofile.nameAtBank === "" ||
+        bankaccountprofile.nameAtBank === null) &&
+      (bankaccountprofile.accountNumber === "" ||
+        bankaccountprofile.accountNumber === null) &&
+      (bankaccountprofile.confirmAccountNumber === "" ||
+        bankaccountprofile.confirmAccountNumber === null) &&
+      (bankaccountprofile.ifscCode === "" ||
+        bankaccountprofile.ifscCode === null) &&
+      (bankaccountprofile.bankName === "" ||
+        bankaccountprofile.bankName === null) &&
+      (bankaccountprofile.branchName === "" ||
+        bankaccountprofile.branchName === null) &&
+      (bankaccountprofile.bankCityerror === "" ||
+        bankaccountprofile.bankCity === null) &&
+      (bankaccountprofile.moblieNumbererror === "" ||
+        bankaccountprofile.moblieNumber === null)
+    ) {
+      console.log("true");
+      setBankaccountProfile((stateconta) => ({
+        ...stateconta,
+        moblieNumbererror:
+          bankaccountprofile.moblieNumber !== ""
+            ? "Enter the Mobile Number"
+            : "",
+        accountNumbererror:
+          bankaccountprofile.accountNumber !== ""
+            ? "Enter the account Number"
+            : "",
+        confirmAccountNumbererror:
+          bankaccountprofile.confirmAccountNumber !== ""
+            ? "Enter the Confirm Account Number"
+            : "",
+        ifscCodeerror:
+          bankaccountprofile.ifscCode !== "" ? "Enter the IFSC Code" : "",
+        bankNameerror:
+          bankaccountprofile.bankName !== "" ? "Enter the bank Name " : "",
+        branchNameerror:
+          bankaccountprofile.branchName !== "" ? "Enter the branch Name  " : "",
+        bankCityerror:
+          bankaccountprofile.bankCity !== "" ? "Enter the bank City" : "",
+        // Add other error messages as needed
+      }));
+    } else {
+      console.log("false");
       const response = sendMoblieOtp(bankaccountprofile);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -394,21 +424,19 @@ nomineeDetails.nomineecity != ""){
             sendOtpsession: data.data.mobileOtpSession,
             isValid: true,
           });
-  
+
           setBankaccountProfile({
             ...bankaccountprofile,
             mobileOtpSession: data.data.mobileOtpSession,
           });
-  
+
           toastrSuccess("Otp Sent Sucessfully!", "top-right");
         } else if (data.response.data.errorCode != "200") {
           toastrWarning(data.response.data.errorMessage);
         }
       });
-      verifybankAccountCashfree()
+      verifybankAccountCashfree();
     }
-
-   
   };
 
   const openTheActiveTabs = (type) => {
@@ -585,7 +613,7 @@ nomineeDetails.nomineecity != ""){
                         <img
                           className="rounded-circle"
                           alt="User Image"
-                          src= "https://cdn3.iconfinder.com/data/icons/avatars-flat/33/man_5-512.png"
+                          src="https://cdn3.iconfinder.com/data/icons/avatars-flat/33/man_5-512.png"
                         />
                       </Link>
                     </div>
@@ -849,8 +877,12 @@ nomineeDetails.nomineecity != ""){
                                   name="nameAtBank"
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.nameAtBank}
-                                />   
-                                {bankaccountprofile.nameAtBank  && <div  className="text-danger">{bankaccountprofile.nameAtBankerror}</div>}
+                                />
+                                {bankaccountprofile.nameAtBank && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.nameAtBankerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-md-4 local-forms">
                                 <label>
@@ -866,7 +898,11 @@ nomineeDetails.nomineecity != ""){
                                   maxLength={14}
                                   value={bankaccountprofile.accountNumber}
                                 />
-                                    {bankaccountprofile.accountNumbererror  && <div  className="text-danger">{bankaccountprofile.accountNumbererror}</div>}
+                                {bankaccountprofile.accountNumbererror && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.accountNumbererror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -897,7 +933,13 @@ nomineeDetails.nomineecity != ""){
                                     {nomineeDetails.copyerror}
                                   </span>
                                 )}
-                                  {bankaccountprofile.confirmAccountNumbererror  && <div  className="text-danger">{bankaccountprofile.confirmAccountNumbererror}</div>}
+                                {bankaccountprofile.confirmAccountNumbererror && (
+                                  <div className="text-danger">
+                                    {
+                                      bankaccountprofile.confirmAccountNumbererror
+                                    }
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -914,7 +956,11 @@ nomineeDetails.nomineecity != ""){
                                   maxLength={12}
                                   value={bankaccountprofile.ifscCode}
                                 />
-                                   {bankaccountprofile.ifscCodeerror  && <div  className="text-danger">{bankaccountprofile.ifscCodeerror}</div>}
+                                {bankaccountprofile.ifscCodeerror && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.ifscCodeerror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -930,7 +976,11 @@ nomineeDetails.nomineecity != ""){
                                   placeholder=" Enter your Bank Name"
                                   value={bankaccountprofile.bankName}
                                 />
-                                  {bankaccountprofile.bankNameerror  && <div  className="text-danger">{bankaccountprofile.bankNameerror}</div>}
+                                {bankaccountprofile.bankNameerror && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.bankNameerror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -946,7 +996,11 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.branchName}
                                 />
-                                   {bankaccountprofile.branchNameerror  && <div  className="text-danger">{bankaccountprofile.branchNameerror}</div>}
+                                {bankaccountprofile.branchNameerror && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.branchNameerror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -962,7 +1016,11 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.bankCity}
                                 />
-                                   {bankaccountprofile.bankCityerror  && <div  className="text-danger">{bankaccountprofile.bankCityerror}</div>}
+                                {bankaccountprofile.bankCityerror && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.bankCityerror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-md-4 local-forms">
@@ -978,7 +1036,11 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.moblieNumber}
                                 />
-                                  {bankaccountprofile.moblieNumbererror  && <div  className="text-danger">{bankaccountprofile.moblieNumbererror}</div>}
+                                {bankaccountprofile.moblieNumbererror && (
+                                  <div className="text-danger">
+                                    {bankaccountprofile.moblieNumbererror}
+                                  </div>
+                                )}
                               </div>
 
                               {dashboarddata.isValid && (
@@ -1176,10 +1238,10 @@ nomineeDetails.nomineecity != ""){
 
                                 <div className="row col-12">
                                   <button
-                                    className="btn btn-success col-12 col-md-4"
+                                    className="btn btn-success col-12 col-md-2"
                                     type="submit"
                                   >
-                                    Save Nominee Details
+                                    Save
                                   </button>
                                 </div>
                               </div>
@@ -1211,7 +1273,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.firstName}
                                   name="firstName"
                                 />
-                                {userProfile.firstNamrror && <div   className="text-danger">{userProfile.firstNamrror}</div>}
+                                {userProfile.firstNamrror && (
+                                  <div className="text-danger">
+                                    {userProfile.firstNamrror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1226,7 +1292,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.lastName}
                                   name="lastName"
                                 />
-                                  {userProfile.lastNamerror && <div   className="text-danger">{userProfile.lastNamerror}</div>}
+                                {userProfile.lastNamerror && (
+                                  <div className="text-danger">
+                                    {userProfile.lastNamerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1242,7 +1312,11 @@ nomineeDetails.nomineecity != ""){
                                   name="panNumber"
                                 />
 
-{userProfile.panNumbererror && <div   className="text-danger">{userProfile.panNumbererror}</div>}
+                                {userProfile.panNumbererror && (
+                                  <div className="text-danger">
+                                    {userProfile.panNumbererror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1258,7 +1332,11 @@ nomineeDetails.nomineecity != ""){
                                   maxLength={12}
                                   name="aadharNumber"
                                 />
-                                {userProfile.aadhaarNumbererror && <div   className="text-danger">{userProfile.aadhaarNumbererror}</div>}
+                                {userProfile.aadhaarNumbererror && (
+                                  <div className="text-danger">
+                                    {userProfile.aadhaarNumbererror}
+                                  </div>
+                                )}
                                 {/* {userProfile.aadharerror != "" ? (
                                   <div className="error">
                                     {userProfile.aadharerror}
@@ -1279,9 +1357,13 @@ nomineeDetails.nomineecity != ""){
                                   onChange={handlechange}
                                   value={userProfile.dob}
                                   name="dob"
-                                />  
+                                />
 
-                                  {userProfile.doberror && <div   className="text-danger">{userProfile.doberror}</div>}  
+                                {userProfile.doberror && (
+                                  <div className="text-danger">
+                                    {userProfile.doberror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
@@ -1297,7 +1379,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.fatherName}
                                   name="fatherName"
                                 />
-                                 {userProfile.fatherNameerror && <div   className="text-danger">{userProfile.fatherNameerror}</div>}  
+                                {userProfile.fatherNameerror && (
+                                  <div className="text-danger">
+                                    {userProfile.fatherNameerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1313,7 +1399,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.mobileNumber}
                                   name="mobileNumber"
                                 />
-                                 {userProfile.mobileNumbererror && <div   className="text-danger">{userProfile.mobileNumbererror}</div>}  
+                                {userProfile.mobileNumbererror && (
+                                  <div className="text-danger">
+                                    {userProfile.mobileNumbererror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1329,7 +1419,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.whatsAppNumber}
                                   name="whatsAppNumber"
                                 />
-                                   {userProfile.whatsAppNumbererror && <div   className="text-danger">{userProfile.whatsAppNumbererror}</div>}  
+                                {userProfile.whatsAppNumbererror && (
+                                  <div className="text-danger">
+                                    {userProfile.whatsAppNumbererror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1345,7 +1439,11 @@ nomineeDetails.nomineecity != ""){
                                   name="email"
                                 />
 
-{userProfile.emailerror && <div   className="text-danger">{userProfile.emailerror}</div>}  
+                                {userProfile.emailerror && (
+                                  <div className="text-danger">
+                                    {userProfile.emailerror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-sm-4 local-forms">
@@ -1361,7 +1459,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.permanentAddress}
                                   name="permanentAddress"
                                 />
-                                {userProfile.permanentAddresserror && <div   className="text-danger">{userProfile.permanentAddresserror}</div>}  
+                                {userProfile.permanentAddresserror && (
+                                  <div className="text-danger">
+                                    {userProfile.permanentAddresserror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1377,7 +1479,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.pinCode}
                                   name="pinCode"
                                 />
-                                  {userProfile.pinCodeerror && <div   className="text-danger">{userProfile.pinCodeerror}</div>}  
+                                {userProfile.pinCodeerror && (
+                                  <div className="text-danger">
+                                    {userProfile.pinCodeerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1392,7 +1498,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.address}
                                   name="address"
                                 />
-                                     {userProfile.addresserror && <div   className="text-danger">{userProfile.addresserror}</div>}  
+                                {userProfile.addresserror && (
+                                  <div className="text-danger">
+                                    {userProfile.addresserror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1406,7 +1516,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.city}
                                   name="city"
                                 />
-                                    {userProfile.cityer && <div   className="text-danger">{userProfile.cityer}</div>}  
+                                {userProfile.cityer && (
+                                  <div className="text-danger">
+                                    {userProfile.cityer}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1421,7 +1535,11 @@ nomineeDetails.nomineecity != ""){
                                   value={userProfile.state}
                                   name="state"
                                 />
-                                                                    {userProfile.stateerror && <div   className="text-danger">{userProfile.stateerror}</div>}  
+                                {userProfile.stateerror && (
+                                  <div className="text-danger">
+                                    {userProfile.stateerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
@@ -1540,13 +1658,17 @@ nomineeDetails.nomineecity != ""){
                                     className="hide-input"
                                     onChange={handlefileupload}
                                   />
-                                  <label htmlFor="CHEQUELEAF" className="upload">
+                                  <label
+                                    htmlFor="CHEQUELEAF"
+                                    className="upload"
+                                  >
                                     <i className="feather-upload">
                                       <FeatherIcon icon="upload" />
                                     </i>
                                   </label>
                                 </div>
-                                {kyc.CHEQUELEAF != undefined && kyc.CHEQUELEAF != "" ? (
+                                {kyc.CHEQUELEAF != undefined &&
+                                kyc.CHEQUELEAF != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.CHEQUELEAF.fileName}</small>
@@ -1642,7 +1764,8 @@ nomineeDetails.nomineecity != ""){
                                   </label>
                                 </div>
 
-                                {kyc.VOTERID != undefined && kyc.VOTERID != "" ? (
+                                {kyc.VOTERID != undefined &&
+                                kyc.VOTERID != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.VOTERID.fileName}</small>
