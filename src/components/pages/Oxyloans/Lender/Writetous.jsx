@@ -220,7 +220,7 @@ const Writetous = () => {
                     <div className="page-header">
                       <div className="row align-items-center">
                         <div className="col">
-                          <h3 className="page-title">Write A Query</h3>
+                          <h3 className="page-title">Write a query</h3>
                         </div>
                       </div>
                     </div>

@@ -65,6 +65,7 @@ const Header = (profile) => {
     dispatch(fetchDatadashboard());
     getUserDetails().then((data) => {
       if (data.request.status == 200) {
+        localStorage.setItem("userType", data.data.userDisplayId);
         setdashboarddata({
           ...dashboarddata,
           profileData: data,
@@ -350,7 +351,7 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/myRunningDelas">
                 My Deals
               </Link>
-              <Link className="dropdown-item" to="/">
+              <Link className="dropdown-item" to="/"   onClick={() => { localStorage.clear(); sessionStorage.clear() }}>
                 Logout
               </Link>
             </div>

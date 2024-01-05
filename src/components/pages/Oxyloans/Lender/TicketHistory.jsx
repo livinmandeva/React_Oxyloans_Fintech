@@ -131,21 +131,20 @@ const TicketHistory = () => {
                                   <td className="text-center">
                                     <div>{item.receivedOn}</div>
                                   </td>
-                                  <td>
-                                    <div
-                                      className={
-                                        item.status === "Completed"
-                                          ? "badge badge-success"
-                                          : "badge badge-danger"
-                                      }
-                                    >
+                                  <td className="text-center">
+                                  <div
+                                       className={
+                                        
+                                         (item.status === "Completed" ? "badge badge-success" : "badge badge-danger")
+                                       }
+                                     >
                                       {item.status}
                                     </div>
                                   </td>
                                   <td
                                     className=""
                                     style={{
-                                      width: "20px",
+                                      width: "4rem !important",
                                       whiteSpace: "break-spaces",
                                     }}
                                   >
