@@ -235,7 +235,7 @@ const ReferaFriend = () => {
                       ) : (
                         <>
                           <button
-                            className="btn btn-xs btn-warning col-md-3 col-12 "
+                            className="btn btn-xs btn-warning col-md-3 col-12 text-white"
                             onClick={Invitelender}
                           >
                             <i class="fa-solid fa-share-nodes"></i> Invite a
@@ -248,7 +248,7 @@ const ReferaFriend = () => {
                         <>
                           {" "}
                           <button
-                            className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"
+                            className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2 text-white"
                             onClick={invitenri}
                           >
                             copied
@@ -258,7 +258,7 @@ const ReferaFriend = () => {
                         <>
                           {" "}
                           <button
-                            className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2"
+                            className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2 text-white"
                             onClick={invitenri}
                           >
                             <i class="fa-solid fa-plane-departure mx-1"></i>{" "}
@@ -270,7 +270,7 @@ const ReferaFriend = () => {
                       {emailres.invaitborrowerlink ? (
                         <>
                           <button
-                            className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"
+                            className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2 text-white"
                             onClick={Inviteborrower}
                           >
                             copied
@@ -280,7 +280,7 @@ const ReferaFriend = () => {
                         <>
                           {" "}
                           <button
-                            className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2"
+                            className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2 text-white"
                             onClick={Inviteborrower}
                           >
                             <i class="fa-solid fa-share-nodes mx-1"></i> Invite

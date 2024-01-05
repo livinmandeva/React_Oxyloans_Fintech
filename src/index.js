@@ -24,8 +24,3 @@ root.render(
     <Approuter />
   </Provider>
 );
-
-// ReactDOM.render(
-//   <Approuter/>,
-// document.getElementById('root')
-// );

@@ -221,6 +221,17 @@ const Sidebar = (props) => {
                     >
                       <li>
                         <Link
+                          to="/viewCurrentDayDeals"
+                          className={`${
+                            "/viewCurrentDayDeals" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Today Deals
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
                           to="/regularRunningDeal"
                           className={`${
                             "/regularRunningDeal" === pathName ? "active" : ""
@@ -228,15 +239,8 @@ const Sidebar = (props) => {
                         >
                           Regular Running Deals
                         </Link>
-                        <Link
-                          to="/viewCurrentDayDeals"
-                          className={`${
-                            "/viewCurrentDayDeals" === pathName ? "active" : ""
-                          }`}
-                        >
-                              Today Deals  
-                        </Link>
                       </li>
+
                       <li>
                         <Link
                           to="/regularEscrowDeals"
@@ -696,7 +700,7 @@ const Sidebar = (props) => {
                         <Link
                           to="/myEarnings"
                           className={`${
-                          "/myEarnings" === pathName ? "active" : ""
+                            "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
                           My Earning
@@ -723,4 +727,4 @@ const Sidebar = (props) => {
     </>
   );
 };
-export default Sidebar;
+export default React.memo(Sidebar);

@@ -850,7 +850,7 @@ const AdminDashboard = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="page-sub-header">
-                    <h3 className="page-title text-capitalize">
+                    <h3 className="page-title text-lowercase">
                       Welcome {""}
                       {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata?.firstName ?? ""

@@ -291,8 +291,11 @@ const Header = (profile) => {
                     {reduxStoreData?.length != 0
                       ? reduxStoreData?.firstName ?? ""
                       : ""}
-                       {reduxStoreData?.length != 0
-                      ? localStorage.setItem("userName", reduxStoreData?.firstName) ?? ""
+                    {reduxStoreData?.length != 0
+                      ? localStorage.setItem(
+                          "userName",
+                          reduxStoreData?.firstName
+                        ) ?? ""
                       : ""}
 
                     {/* {reduxStoreData.length !== 0 && reduxStoreData != undefined
@@ -361,4 +364,4 @@ const Header = (profile) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
