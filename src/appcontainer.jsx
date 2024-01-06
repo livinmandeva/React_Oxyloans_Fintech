@@ -1,10 +1,5 @@
-import React, { Suspense } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  createBrowserRouter,
-} from "react-router-dom";
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
 
 const CreateDeal = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
@@ -525,9 +520,3 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
 ]);
-
-// const appcontainer = () => {
-//   return <Suspense></Suspense>;
-// };
-
-// export default appcontainer;

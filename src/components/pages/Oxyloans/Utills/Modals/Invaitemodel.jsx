@@ -51,29 +51,34 @@ export default function Invaitemodel() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div  style={{display:'flex',flexDirection: 'row',justifyContent: 'center',}}>
-          <div className="form-group col-12 col-md-6">
-            <p className="settings-label">
-        
-              {/* <span className="star-red">*</span> */}
-            </p>
-            <div className="settings-btn">
-              <input
-                type="file"
-                id="file"
-                name="file"
-                className="hide-input"
-                onChange={handleFileChange}
-              />
-              <label htmlFor="file" className="upload">
-                <i className="feather-upload">
-                  <FeatherIcon icon="upload" />
-                </i>
-              </label>
-            </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <div className="form-group col-12 col-md-6">
+              <p className="settings-label">
+                {/* <span className="star-red">*</span> */}
+              </p>
+              <div className="settings-btn">
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  className="hide-input"
+                  onChange={handleFileChange}
+                />
+                <label htmlFor="file" className="upload">
+                  <i className="feather-upload">
+                    <FeatherIcon icon="upload" />
+                  </i>
+                </label>
+              </div>
 
-            {UploadFile && UploadFile.name}
-          </div>
+              {UploadFile && UploadFile.name}
+            </div>
           </div>
         </Modal.Body>
       </Modal>

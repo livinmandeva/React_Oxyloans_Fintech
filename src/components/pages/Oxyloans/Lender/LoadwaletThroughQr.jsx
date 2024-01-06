@@ -8,7 +8,10 @@ import {
   HandleWithFooter,
   WarningAlert,
 } from "../../Base UI Elements/SweetAlert";
-import { LoadwalletThroughQrScan, checkqrcodetransaction } from "../../../HttpRequest/afterlogin";
+import {
+  LoadwalletThroughQrScan,
+  checkqrcodetransaction,
+} from "../../../HttpRequest/afterlogin";
 
 const LoadwaletThroughQr = () => {
   const [qrcodeImageStatus, setqrcodeImageStatus] = useState("active");

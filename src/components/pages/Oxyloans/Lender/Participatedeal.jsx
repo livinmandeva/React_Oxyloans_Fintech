@@ -3,35 +3,25 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-import { Pagination } from "antd";
+
 import "./InvoiceGrid.css";
 
-import {
-  handledetail,
-  handlecashapi,
-  nofreeParticipationapi,
-} from "../../../HttpRequest/afterlogin";
-import { Button, Card, Switch, Table } from "antd";
+import { handledetail } from "../../../HttpRequest/afterlogin";
+import { Button, Table } from "antd";
 
 // import { useNavigate  } from "react-router-dom";
-import { toastrError, toastrSuccess } from "../../Base UI Elements/Toast";
+import { toastrError } from "../../Base UI Elements/Toast";
 import {
-  WarningAlert,
   WarningAlertWalltTran,
-  freeParticipationapialert,
   membership,
-  participated,
   participatedapi,
 } from "../../Base UI Elements/SweetAlert";
-import Swal from "sweetalert2";
-import Freeparticipate from "./Freeparticipate";
+
 import Spining from "./Spining";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const Participatedeal = () => {
-  // const history = useNavigate();
-
   const [deal, setDeal] = useState({
     apidata: "",
     transactionNumber: "",
@@ -122,13 +112,25 @@ const Participatedeal = () => {
 
   // You can then use the interestType variable as needed.
 
-
-  const data=deal.apidata
+  const data = deal.apidata;
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
         loanamount: deal.apidata.dealAmount,
-        rateOfInterest: data.yearlyInterest != 0 ? data.yearlyInterest : (data.monthlyInterest != 0 ? data.monthlyInterest : (data.quartlyInterest != 0 ? data.quartlyInterest : (data.yearlyInterest != 0 ? data.yearlyInterest : (data.monthlyInterest != 0 ? data.monthlyInterest : null)))) + " " + interestType,
+        rateOfInterest:
+          data.yearlyInterest != 0
+            ? data.yearlyInterest
+            : (data.monthlyInterest != 0
+                ? data.monthlyInterest
+                : data.quartlyInterest != 0
+                ? data.quartlyInterest
+                : data.yearlyInterest != 0
+                ? data.yearlyInterest
+                : data.monthlyInterest != 0
+                ? data.monthlyInterest
+                : null) +
+              " " +
+              interestType,
         availablelimit: deal.apidata.remainingAmountInDeal,
         tenureinmonths: deal.apidata.duration + "M",
         funding: deal.apidata.fundStartDate,

@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { login, registerImage } from "../../imagepath";
-import {
-  Link,
-  useNavigate
-} from "react-router-dom";
+import { registerImage } from "../../imagepath";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import Register from "./Register";
+
 import OtpInput from "./OtpInput";
-import { referrerdata } from "../../HttpRequest/beforelogin";
+
 import { toastrWarning } from "../Base UI Elements/Toast";
 
 export default function LenderRegister() {
@@ -45,13 +42,11 @@ export default function LenderRegister() {
   const [error, setError] = useState("");
   const [response1, setResponse] = useState({});
 
-
-
-  useEffect(()=>{
-    setTimeout(()=>{
-      setError("")
-    },1000)
-  },[error])
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 1000);
+  }, [error]);
   const handlechange = (event) => {
     const { name, value } = event.target;
     setRegistrationField({
@@ -61,15 +56,17 @@ export default function LenderRegister() {
   };
 
   const handleLenderRegister = async () => {
-
     setRegistrationField((prevState) => ({
       ...prevState,
-      emailerror: registrationField.email === "" ? "Please enter the email" : "",
-      pancarderror: registrationField.pancard === "" ? "Please enter the Name" : "",
-      moblieerror: registrationField.moblie === "" ? "Please enter the moblie" : "",
-      passworderror: registrationField.password === "" ? "Please enter the password" : "",
+      emailerror:
+        registrationField.email === "" ? "Please enter the email" : "",
+      pancarderror:
+        registrationField.pancard === "" ? "Please enter the Name" : "",
+      moblieerror:
+        registrationField.moblie === "" ? "Please enter the moblie" : "",
+      passworderror:
+        registrationField.password === "" ? "Please enter the password" : "",
     }));
-
 
     // if (registrationField.referrerId !== "" ) {
 
@@ -81,9 +78,7 @@ export default function LenderRegister() {
     //   localStorage.setItem("uniqnumber", response.data.uniqueNumber)
     // } else {
 
-
     // }
- 
 
     const validationError = api.validateRegisterInput(
       registrationField.email,
@@ -95,23 +90,30 @@ export default function LenderRegister() {
       setError(validationError);
       return;
     }
-    if (registrationField.emailerror === "" && registrationField.pancarderror === "" && registrationField.moblieerror === "" && registrationField.passworderror === "") {
-  console.log("fields")
-    try {
-      const RegisterResponse = await api.RegisterUser(registrationField.moblie);
-      alert(RegisterResponse);
-      localStorage.setItem("seesion", RegisterResponse);
-      setResponse(RegisterResponse);
-      setfield(false);
-      setError(null);
-    } catch (error) {
-      console.error("Error:", error.response.data.errorMessage);
-      setError(error.response.data.errorMessage);
-      // setError('An error occurred during login');
+    if (
+      registrationField.emailerror === "" &&
+      registrationField.pancarderror === "" &&
+      registrationField.moblieerror === "" &&
+      registrationField.passworderror === ""
+    ) {
+      console.log("fields");
+      try {
+        const RegisterResponse = await api.RegisterUser(
+          registrationField.moblie
+        );
+        alert(RegisterResponse);
+        localStorage.setItem("seesion", RegisterResponse);
+        setResponse(RegisterResponse);
+        setfield(false);
+        setError(null);
+      } catch (error) {
+        console.error("Error:", error.response.data.errorMessage);
+        setError(error.response.data.errorMessage);
+        // setError('An error occurred during login');
+      }
     }
-  }
   };
-  const handlesumitmoblie = () => { };
+  const handlesumitmoblie = () => {};
 
   const Otpverify = async () => {
     try {
@@ -130,27 +132,24 @@ export default function LenderRegister() {
           registrationField.pancard,
           registrationField.password, // Ensure `password` is available in registrationField
           session,
-          registrationField.referrerId,
+          registrationField.referrerId
         );
         //  const mill=gettime()
 
-
-        console.log(response)
-        console.log(response.responseData.userId)
+        console.log(response);
+        console.log(response.responseData.userId);
         // console.log(response.data.id)
 
-        localStorage.setItem("id", response.responseData.userId)
+        localStorage.setItem("id", response.responseData.userId);
 
         const mill1 = new Date().getTime();
-        localStorage.setItem("timemilll", mill1)
-        navigate("/register_active_proceed")
+        localStorage.setItem("timemilll", mill1);
+        navigate("/register_active_proceed");
       } else {
         // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
 
-
         console.log(mill);
-
       }
     } catch (error) {
       // Handle any errors that occur during OTP validation
@@ -158,7 +157,7 @@ export default function LenderRegister() {
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
       );
-      console.log(error)
+      console.log(error);
       setError(
         error.response
           ? error.response.data.errorMessage
@@ -173,20 +172,16 @@ export default function LenderRegister() {
     const searchParams = new URLSearchParams(window.location.search);
 
     // Get the value of the 'ref' parameter
-    const refParam = searchParams.get('ref');
-
+    const refParam = searchParams.get("ref");
 
     if (registrationField.referrerId != "" || refParam != "") {
-
       setRegistrationField({
         ...registrationField,
-        referrerId: refParam
+        referrerId: refParam,
       });
-
     } else {
-
     }
-  }, [])
+  }, []);
   return (
     <div>
       <div className="main-wrapper login-body">
@@ -361,8 +356,11 @@ export default function LenderRegister() {
                             </div>
                           )}
                         </div>
-                        
-                        {error && <div className="errormessage">{toastrWarning(error)}</div>}
+                        {error && (
+                          <div className="errormessage">
+                            {toastrWarning(error)}
+                          </div>
+                        )}
                         <div className=" dont-have">
                           Already Registered? <Link to="/">Login</Link>
                         </div>

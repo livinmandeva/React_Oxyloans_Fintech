@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import {  Modal } from "antd";
+import React, { useState } from "react";
+import { Modal } from "antd";
 import "../Lender/InvoiceGrid.css";
 
 export default function Modell({ data, open: propOpen }) {

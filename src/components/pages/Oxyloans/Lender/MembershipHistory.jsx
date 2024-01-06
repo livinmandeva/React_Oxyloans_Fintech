@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../Pagination";
+import { onShowSizeChange } from "../../../Pagination";
 import { getMembershiphistory } from "../../../HttpRequest/afterlogin";
 
 const MembershipHistory = () => {

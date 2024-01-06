@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import * as api from "./api";
-import ReactPasswordToggleIcon from "react-password-toggle-icon";
+
 import { login } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { toastrWarning, topCenter1 } from "../Base UI Elements/Toast";
+import { toastrWarning } from "../Base UI Elements/Toast";
 import { registersuccess } from "../Base UI Elements/SweetAlert";
 
 const Register_active_proceed = () => {
@@ -51,21 +51,20 @@ const Register_active_proceed = () => {
           id,
           date1
         );
-        registersuccess("Registration successfully completed")
+        registersuccess("Registration successfully completed");
         setResponse(loginResponse);
         history("/");
         setError(null);
       } catch (error) {
-   
         console.error("Error:", error.response.data.errorMessage);
         setError(error.response.data.errorMessage);
-        toastrWarning(error.response.data.errorMessage)
+        toastrWarning(error.response.data.errorMessage);
         // setError('An error occurred during login');
       }
     } else {
       setError("please enter vaild pan-card number");
-     
-      toastrWarning("please enter vaild pan-card number")
+
+      toastrWarning("please enter vaild pan-card number");
     }
   };
 
@@ -87,8 +86,8 @@ const Register_active_proceed = () => {
 
     // Do something with the id and time values
 
-    const id=localStorage.getItem("id")
-    const getimemail=localStorage.getItem("timemilll")
+    const id = localStorage.getItem("id");
+    const getimemail = localStorage.getItem("timemilll");
     console.log("id", id);
     console.log("time:", getimemail);
     settime(getimemail);

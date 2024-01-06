@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { login, registerImage } from "../../imagepath";
-import * as api from "./api";
+import { registerImage } from "../../imagepath";
+
 import { passwordupdated } from "../../HttpRequest/beforelogin";
 
 const ForgotPassword = () => {

@@ -2,15 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
-import { login, registerImage } from "../../imagepath";
+import { registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 
-import { Admlog, userloginSection } from "../../HttpRequest/beforelogin";
+import { Admlog } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
-import { Spin } from "antd";
-import { getProfile } from "../../Redux/Slice";
 
 const Admlogin = () => {
   const dispatch = useDispatch();

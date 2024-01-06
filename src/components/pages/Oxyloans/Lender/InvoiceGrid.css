@@ -65,7 +65,7 @@
   padding: 2px !important;
 }
 
-.align-items-center1{
+.align-items-center1 {
   gap: 4px;
 }
 .badgedat {
@@ -206,7 +206,7 @@
   margin: 10px 1px;
 }
 
-.displaycenter{
+.displaycenter {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -218,5 +218,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;gap: 1rem;
+  margin-top: 2rem;
+  gap: 1rem;
 }

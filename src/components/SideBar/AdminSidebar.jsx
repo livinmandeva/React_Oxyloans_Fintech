@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import FeatherIcon from "feather-icons-react";
+
 import { Scrollbars } from "react-custom-scrollbars";
-// import { LogoImg, LogoSmallImg } from "../_components/imagepath";
 
 const Sidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState("");
@@ -129,9 +128,7 @@ const Sidebar = (props) => {
                     to="#"
                     className={isSideMenu == "Deals" ? "subdrop" : ""}
                     onClick={() =>
-                      toggleSidebar(
-                        isSideMenu == "Deals" ? "" : "Deals"
-                      )
+                      toggleSidebar(isSideMenu == "Deals" ? "" : "Deals")
                     }
                   >
                     <i className="fa-solid fa-network-wired"></i>
@@ -150,7 +147,7 @@ const Sidebar = (props) => {
                             "/reatenewdeal" === pathName ? "active" : ""
                           }`}
                         >
-                         Create New Deal
+                          Create New Deal
                         </Link>
                       </li>
                       <li>
@@ -160,7 +157,7 @@ const Sidebar = (props) => {
                             "/myreferalStatus" === pathName ? "active" : ""
                           }`}
                         >
-                         View & Edit Deals
+                          View & Edit Deals
                         </Link>
                       </li>
                       <li>
@@ -170,7 +167,7 @@ const Sidebar = (props) => {
                             "/mycontacts" === pathName ? "active" : ""
                           }`}
                         >
-                            View Equity Deals
+                          View Equity Deals
                         </Link>
                       </li>
 
@@ -178,19 +175,18 @@ const Sidebar = (props) => {
                         <Link
                           to="/myEarnings"
                           className={`${
-                          "/myEarnings" === pathName ? "active" : ""
+                            "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
                           View Escrow Deals
                         </Link>
                       </li>
 
-
                       <li>
                         <Link
                           to="/myEarnings"
                           className={`${
-                          "/myEarnings" === pathName ? "active" : ""
+                            "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
                           View Test Deals
@@ -200,13 +196,12 @@ const Sidebar = (props) => {
                         <Link
                           to="/myEarnings"
                           className={`${
-                          "/myEarnings" === pathName ? "active" : ""
+                            "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
                           View Personal Deals
                         </Link>
                       </li>
-                      
                     </ul>
                   ) : (
                     ""
@@ -773,7 +768,7 @@ const Sidebar = (props) => {
                         <Link
                           to="/myEarnings"
                           className={`${
-                          "/myEarnings" === pathName ? "active" : ""
+                            "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
                           My Earning
