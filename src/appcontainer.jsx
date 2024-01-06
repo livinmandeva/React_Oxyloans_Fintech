@@ -5,26 +5,55 @@ import {
   Routes,
   createBrowserRouter,
 } from "react-router-dom";
-import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
-import Admlogin from "./components/pages/Authentication/Admlogin";
-import Membership from "./components/pages/Oxyloans/Lender/Membership";
-import Spining from "./components/pages/Oxyloans/Lender/Spining";
-import Loginotp from "./components/pages/Authentication/Loginotp";
-import CreateDeal from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal";
-import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
-import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
-import TestDeals from "./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals";
-import ViewDeals from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals";
-import ViewCurrentDayDeals from "./components/pages/Oxyloans/Lender/ViewCurrentDayDeals";
-import TestDeal from "./components/pages/Oxyloans/Lender/TestDeal";
-// import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
-// import CreateDeal from "./components/pages/Oxyloans/Admin/CreateDeal/CreateDeal";
-// import ViewDeals from "./components/pages/Oxyloans/Admin/CreateDeal/ViewDeals";
-// import EquityDeals from "./components/pages/Oxyloans/Admin/Equitydeals/EquityDeals";
-// import EscrowDeals from "./components/pages/Oxyloans/Admin/EscrowDeals/EscrowDeals";
-// import TestDeals from "./components/pages/Oxyloans/Admin/TestDeals/TestDeals";
+
+const CreateDeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
+);
+const EscrowDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals")
+);
+
+const MainAdminDashboard = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/MainAdminDashboard")
+);
+
+const TestDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals")
+);
+
+const ViewCurrentDayDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/ViewCurrentDayDeals")
+);
+
+const ViewDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals")
+);
+
+const TestDeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/TestDeal")
+);
 
 const Login = React.lazy(() => import("./components/pages/Authentication"));
+
+const Participatedeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/Participatedeal")
+);
+const Admlogin = React.lazy(() =>
+  import("./components/pages/Authentication/Admlogin")
+);
+
+const Membership = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/Membership")
+);
+
+const Spining = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/Spining")
+);
+
+const Loginotp = React.lazy(() =>
+  import("./components/pages/Authentication/Loginotp")
+);
+
 const Register = React.lazy(() =>
   import("./components/pages/Authentication/Register")
 );
