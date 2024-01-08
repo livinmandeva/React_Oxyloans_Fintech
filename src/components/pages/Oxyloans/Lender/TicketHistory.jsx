@@ -139,6 +139,8 @@ const TicketHistory = () => {
                                           : "badge badge-danger"
                                       }
                                     >
+
+
                                       {item.status}
                                     </div>
                                   </td>

@@ -358,7 +358,8 @@ const Header = (profile) => {
                   localStorage.clear();
                   sessionStorage.clear();
                 }}
-              >
+              >   
+
                 Logout
               </Link>
             </div>

@@ -112,7 +112,7 @@ const Participatedeal = () => {
 
   // You can then use the interestType variable as needed.
 
-  const data = deal.apidata;
+  const data =deal.apidata;
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
@@ -131,6 +131,7 @@ const Participatedeal = () => {
                 : null) +
               " " +
               interestType,
+
         availablelimit: deal.apidata.remainingAmountInDeal,
         tenureinmonths: deal.apidata.duration + "M",
         funding: deal.apidata.fundStartDate,
