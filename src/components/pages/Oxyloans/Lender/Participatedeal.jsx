@@ -199,7 +199,7 @@ const Participatedeal = () => {
     console.log(deal.apidata.validityStatus);
     if (isConditionMet) {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
-        if (deal.apidata.groupName != "" || null) {
+        if (deal.apidata.groupName != ""  || null) {
           if (deal.apidata.validityStatus === false) {
             if (numericAmount >= participatedAmount) {
               console.log("amount is more than deal");
@@ -221,7 +221,23 @@ const Participatedeal = () => {
           } else {
             console.log("deal validityStatus completed ");
 
-            membership(dealId);
+            if (deal.apidata.groupName == "New Lender") {
+
+              console.log("newlender  particepate");
+                localStorage.setItem("newLender" , "new");
+                localStorage.setItem("participatedAmount" , participatedAmount);
+              participatedapi({
+                apidata,
+                participatedAmount,
+                lenderReturnType,
+                groupId,
+                dealId,
+                accountType,
+                deal,
+              });  
+            }else{
+              membership(dealId);
+            }
           }
         } else {
           console.log("deal  having free feeStatusToParticipate");
@@ -229,15 +245,33 @@ const Participatedeal = () => {
         }
       } else {
         if (numericAmount >= participatedAmount) {
-          participatedapi({
-            apidata,
-            participatedAmount,
-            lenderReturnType,
-            groupId,
-            dealId,
-            accountType,
-            deal,
-          });
+          console.log("deal validityStatus completed ");
+
+         console.log(deal.apidata.groupName)
+          if (deal.apidata.groupName === "NewLender") {
+
+            console.log("newlender  particepate");
+              localStorage.setItem("newLender" , "new");
+              localStorage.setItem("participatedAmount" , participatedAmount);
+            participatedapi({
+              apidata,
+              participatedAmount,
+              lenderReturnType,
+              groupId,
+              dealId,
+              accountType,
+              deal,
+            });
+          }
+          // participatedapi({
+          //   apidata,
+          //   participatedAmount,
+          //   lenderReturnType,
+          //   groupId,
+          //   dealId,
+          //   accountType,
+          //   deal,
+          // });
         } else {
           toastrError("amout is not not reach your deal particepte amount");
           console.log("participatedAmount:", participatedAmount);

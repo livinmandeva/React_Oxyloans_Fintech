@@ -442,6 +442,27 @@ export const feeApicall = async (calculatedfee, choosenmembership) => {
   return response;
 };
 
+export const feeapicallforonedeal = async (calculatedfee , dealId) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const data = {
+    userId,
+    type: "Wallet",
+    feeAmount: calculatedfee,
+    dealId:dealId,
+    lenderFeePayments: "PERDEAL",
+  };
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deducting_lender_fee_from_wallet`,
+    "POST",
+    token,
+    data
+  );
+  return response;
+};
 export const Earning = async (status) => {
   const token = getToken();
   const userId = getUserId();
@@ -913,7 +934,7 @@ export const nofreeParticipationapi = async (
   //   var participationStatus = status;
   // }
 
-  var participationStatus = "ADD";
+
   var lenderRemainingWalletAmount = localStorage.getItem(
     "lenderRemainingWalletAmount"
   );

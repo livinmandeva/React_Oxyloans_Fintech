@@ -11,6 +11,7 @@ import {
   handlePaymembershipapi,
   feeApicall,
   cashsuccessapihit,
+  feeapicallforonedeal,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -201,8 +202,11 @@ export const participatedapi = ({
 }) => {
   const lender = localStorage.getItem("lenderReturnType");
   const amount = localStorage.getItem("lenderRemainingWalletAmount");
+
+ const lendershiptype = localStorage.getItem("newLender");
+  const partipatedamount = localStorage.getItem("participatedAmount");
   const  remaingamount =amount - participatedAmount
-  Swal.fire({
+  Swal.fire({ 
     title: "Please review the lending details!",
     html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
            <p><strong> Pay-out Method: </strong>${lender}</p><br>
@@ -235,6 +239,11 @@ export const participatedapi = ({
               text: `We are reserving ${participatedAmount} `,
               icon: "success",
             });
+            if(lendershiptype == "new"){
+              console.log("new lender your particepated in deal pay the free")
+              localStorage.removeItem('newLender');
+              newlenderfree(participatedAmount , dealId) 
+            }
           } else if (data.request.status === 403) {
             console.log("403");
             Swal.fire({
@@ -334,6 +343,37 @@ export const membership = (dealId) => {
     }
   });
 };
+export const newlenderfree = (amount, dealId) => {
+  console.log(amount)
+  const freeamount = (amount * 1) / 100;
+console.log(freeamount)
+
+  Swal.fire({
+    title: "Congratulations on successfully completing your participation!",
+    text: `To finalize the process, a nominal 1%  Rs:${freeamount} /- processing fee is required. Kindly submit the payment at your earliest convenience.`,
+    icon: "success",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      feeapicallforonedeal(freeamount, dealId)
+        .then((data) => {
+          console.log(data); 
+          Swal.fire({
+            title: "Processing fee paid successfully!",
+            // text: `${data.data.status}`,
+            icon: "success",
+          })
+          localStorage.removeItem('participatedAmount');
+          localStorage.removeItem('newLender');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  });
+};
+
+
+
 
 export const WarningAlertWalltTran = (errorMessage, redirectTo) => {
   Swal.fire({
