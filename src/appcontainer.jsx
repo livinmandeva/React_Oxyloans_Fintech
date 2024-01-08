@@ -1,26 +1,54 @@
-import React, { Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
-import Admlogin from "./components/pages/Authentication/Admlogin";
-import Membership from "./components/pages/Oxyloans/Lender/Membership";
-import Spining from "./components/pages/Oxyloans/Lender/Spining";
-import Loginotp from "./components/pages/Authentication/Loginotp";
-import CreateDeal from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal";
-import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
-import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
-import TestDeals from "./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals";
-import ViewDeals from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals";
-import ViewCurrentDayDeals from "./components/pages/Oxyloans/Lender/ViewCurrentDayDeals";
-import TestDeal from "./components/pages/Oxyloans/Lender/TestDeal";
-// import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
-// import CreateDeal from "./components/pages/Oxyloans/Admin/CreateDeal/CreateDeal";
-// import ViewDeals from "./components/pages/Oxyloans/Admin/CreateDeal/ViewDeals";
-// import EquityDeals from "./components/pages/Oxyloans/Admin/Equitydeals/EquityDeals";
-// import EscrowDeals from "./components/pages/Oxyloans/Admin/EscrowDeals/EscrowDeals";
-// import TestDeals from "./components/pages/Oxyloans/Admin/TestDeals/TestDeals";
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
 
+const CreateDeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
+);
+const EscrowDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals")
+);
+
+const MainAdminDashboard = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/MainAdminDashboard")
+);
+
+const TestDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals")
+);
+
+const ViewCurrentDayDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/ViewCurrentDayDeals")
+);
+
+const ViewDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals")
+);
+
+const TestDeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/TestDeal")
+);
 
 const Login = React.lazy(() => import("./components/pages/Authentication"));
+
+const Participatedeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/Participatedeal")
+);
+const Admlogin = React.lazy(() =>
+  import("./components/pages/Authentication/Admlogin")
+);
+
+const Membership = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/Membership")
+);
+
+const Spining = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/Spining")
+);
+
+const Loginotp = React.lazy(() =>
+  import("./components/pages/Authentication/Loginotp")
+);
+
 const Register = React.lazy(() =>
   import("./components/pages/Authentication/Register")
 );
@@ -180,118 +208,315 @@ const MywithdrawalHistory = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/MywithdrawalHistory")
 );
 
-const appcontainer = () => {
-  return (
-    <Suspense>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/error404" element={<Error404 />} />
-          <Route path="/dashboard" element={<AdminDashboard />} />
-          <Route path="/loadwaletThroughQr" element={<LoadwaletThroughQr />} />
-          <Route path="/loginotp" element={<Loginotp />} />
-          <Route path="/register" element={<LenderRegister />} />
-          <Route path="/borrower_register" element={<BorrowerRegister />} />
-          <Route
-            path="/register_active_proceed"
-            element={<Register_active_proceed />}
-          />
-          <Route path="/profile" element={<Profile />} />
-          {/* <Route  path="/equityDeals" element={<EquityDeals />} /> */}
-          <Route path="/forgotpassword1" element={<ForgotPassword3 />} />
-          <Route path="/partnerRegister" element={<PartnerRegister />} />
-          {/* <Route path="/escrowDeals" element={<EscrowDeals />} /> */}
-          <Route
-            path="/loadwalletThroughVirtualAccount"
-            element={<LoadwalletThroughVirtualAccount />}
-          />
-          <Route
-            path="/withdrawdealfromwallet"
-            element={<Withdrawdealfromwallet />}
-          />
-          
-          <Route path="/mainadmindashboard" element={<MainAdminDashboard />} />
-          <Route path="/viewdeals" element={<ViewDeals />} />
-          <Route path="/escrowDeals" element={<EscrowDeals />} />
-          <Route path="/createdeal" element={<CreateDeal />} />
-          <Route path="/testDeals" element={<TestDeals />} />
-          <Route path="/spining" element={<Spining />} />
-          <Route path="/spining" element={<Spining />} />
-          <Route path="/admlogin" element={<Admlogin />} />
-          <Route
-            path="/withdrawdealfromDeal"
-            element={<WithdrawdealfromDeal />}
-          />
-          <Route
-            path="/transferWalletToWallet"
-            element={<TransferWalletToWallet />}
-          />
-          <Route
-            path="/mywithdrawalHistory"
-            element={<MywithdrawalHistory />}
-          />
-          <Route path="/writetous" element={<Writetous />} />
-          <Route path="/viewTicketHistory" element={<ViewTicketHistory />} />
-          <Route path="/viewCurrentDayDeals" element={<ViewCurrentDayDeals />} />
-          <Route path="/emicalculator" element={<Emicalculator />} />
-          <Route path="/configautoInvest" element={<ConfigautoInvest />} />
-          <Route path="/membership" element={<Membership />} />
-          <Route path="/viewAutoHistory" element={<ViewAutoHistory />} />
-          <Route path="/participatedeal" element={<Participatedeal />} />
-          <Route path="/regularRunningDeal" element={<RegularRunningDeal />} />
-          <Route path="/testDeal" element={<TestDeal />} />
-          <Route path="/regularEscrowDeals" element={<RegularEscrowDeals />} />
-          <Route
-            path="/regularPersonalDeal"
-            element={<RegularPersonalDeal />}
-          />
-          <Route path="/myRunningDelas" element={<MyRunningDelas />} />
-          <Route path="/myclosedDeals" element={<MyclosedDeals />} />
-          <Route path="/myholdamount" element={<Myholdamount />} />
-          <Route
-            path="/mypartiallClosedDeal"
-            element={<MypartiallClosedDeal />}
-          />
-          <Route path="/ticketHistory" element={<TicketHistory />} />
-          <Route path="/myinterestEarning" element={<MyinterestEarning />} />
-          <Route path="/myhighvalueDeals" element={<MyhighvalueDeals />} />
-          <Route path="/earningCertificate" element={<EarningCertificate />} />
-          <Route path="/myloansStatement" element={<MyloansStatement />} />
-          <Route path="/referaFriend" element={<ReferaFriend />} />
-          <Route path="/myreferalStatus" element={<MyreferalStatus />} />
-          <Route path="/mycontacts" element={<Mycontacts />} />
-          <Route
-            path="/walletToWalletHistory"
-            element={<WalletToWalletHistory />}
-          />
-          <Route path="/myEarnings" element={<MyEarnings />} />
-          <Route path="/loanListings" element={<LoanListings />} />
-          <Route path="/WalletToWallet" element={<WalletToWallet />} />
-          <Route 
-          path="/withdrawalFromWallet" 
-          element={<WithdrawalFromWallet />}
-          />
-          <Route path="/withdrawdealFounds" element={<WithdrawdealFounds />} />
-          <Route path="/membershipHistory" element={<MembershipHistory />} />
-          <Route path="/mytransactions" element={<Mytransactions />} />
-          <Route path="/autoInvestHistory" element={<AutoInvestHistory />} />
-          <Route
-            path="/dashboardTransactions"
-            element={<DashboardTransactions />}
-          />
-          <Route
-            path="/loadwalletThroughVirtualAccount"
-            element={<LoadwalletThroughVirtualAccount />}
-          />
-          <Route path="/whatapplogin" element={<Whatapplog />} />
-          {/* 
-        oxyroutes End */}
-        </Routes>
-      </BrowserRouter>
-    </Suspense>
-  );
-};
+export const newRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Login />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/forgotpassword",
+    element: <ForgotPassword />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/dashboard",
+    element: <AdminDashboard />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/loadwaletThroughQr",
+    element: <LoadwaletThroughQr />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/loginotp",
+    element: <Loginotp />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/register",
+    element: <LenderRegister />,
+    errorElement: <Error404></Error404>,
+  },
 
-export default appcontainer;
+  {
+    path: "/borrower_register",
+    element: <BorrowerRegister />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/register_active_proceed",
+    element: <Register_active_proceed />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/forgotpassword1",
+    element: <ForgotPassword3 />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/partnerRegister",
+    element: <PartnerRegister />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/escrowDeals",
+    element: <EscrowDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/loadwalletThroughVirtualAccount",
+    element: <LoadwalletThroughVirtualAccount />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/withdrawdealfromwallet",
+    element: <Withdrawdealfromwallet />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/mainadmindashboard",
+    element: <MainAdminDashboard />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewdeals",
+    element: <ViewDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/escrowDeals",
+    element: <EscrowDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/createdeal",
+    element: <CreateDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/testDeals",
+    element: <TestDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/spining",
+    element: <Spining />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/admlogin",
+    element: <Admlogin />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/withdrawdealfromDeal",
+    element: <WithdrawdealfromDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/transferWalletToWallet",
+    element: <TransferWalletToWallet />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/mywithdrawalHistory",
+    element: <MywithdrawalHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/writetous",
+    element: <Writetous />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewTicketHistory",
+    element: <ViewTicketHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewCurrentDayDeals",
+    element: <ViewCurrentDayDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/emicalculator",
+    element: <Emicalculator />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/configautoInvest",
+    element: <ConfigautoInvest />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/membership",
+    element: <Membership />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewAutoHistory",
+    element: <ViewAutoHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/participatedeal",
+    element: <Participatedeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/regularRunningDeal",
+    element: <RegularRunningDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/testDeal",
+    element: <TestDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/regularEscrowDeals",
+    element: <RegularEscrowDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/regularPersonalDeal",
+    element: <RegularPersonalDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myRunningDelas",
+    element: <MyRunningDelas />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myclosedDeals",
+    element: <MyclosedDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myholdamount",
+    element: <Myholdamount />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/mypartiallClosedDeal",
+    element: <MypartiallClosedDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/ticketHistory",
+    element: <TicketHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myinterestEarning",
+    element: <MyinterestEarning />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myhighvalueDeals",
+    element: <MyhighvalueDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/earningCertificate",
+    element: <EarningCertificate />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myloansStatement",
+    element: <MyloansStatement />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/referaFriend",
+    element: <ReferaFriend />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myreferalStatus",
+    element: <MyreferalStatus />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/mycontacts",
+    element: <Mycontacts />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/walletToWalletHistory",
+    element: <WalletToWalletHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/myEarnings",
+    element: <MyEarnings />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/loanListings",
+    element: <LoanListings />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/WalletToWallet",
+    element: <WalletToWallet />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/withdrawalFromWallet",
+    element: <WithdrawalFromWallet />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/withdrawdealFounds",
+    element: <WithdrawdealFounds />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/membershipHistory",
+    element: <MembershipHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/mytransactions",
+    element: <Mytransactions />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/autoInvestHistory",
+    element: <AutoInvestHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/dashboardTransactions",
+    element: <DashboardTransactions />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/loadwalletThroughVirtualAccount",
+    element: <LoadwalletThroughVirtualAccount />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/whatapplogin",
+    element: <Whatapplog />,
+    errorElement: <Error404></Error404>,
+  },
+]);

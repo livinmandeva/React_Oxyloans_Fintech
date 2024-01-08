@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { login, registerImage } from "../../imagepath";
+import { registerImage } from "../../imagepath";
 import { Link } from "react-router-dom";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
@@ -9,7 +9,7 @@ const Register = () => {
   let inputRef2 = useRef();
   const showIcon = () => (
     <i class="feather feather-eye" aria-hidden="true">
-      <FeatherIcon icon="eye" />    
+      <FeatherIcon icon="eye" />
     </i>
   );
   const hideIcon = () => (

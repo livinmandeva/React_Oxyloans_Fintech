@@ -105,10 +105,10 @@ const TestDeal = () => {
               <div className="card-body h-10">
                 <div className="row">
                   <Link
-                    to="/myRunningDelas"
+                    to="/regularRunningDeal"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    <i className="fa fa-user mx-1"></i> My Participated Delas
+                    <i className="fa fa-user mx-1"></i> Another Delas
                   </Link>
                 </div>
               </div>

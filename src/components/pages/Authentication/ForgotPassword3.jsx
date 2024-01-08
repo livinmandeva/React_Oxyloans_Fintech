@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { login } from "../../imagepath";
 import * as api from "./api";
 import { sendotpemail } from "../../HttpRequest/beforelogin";
@@ -10,8 +10,6 @@ const ForgotPassword3 = () => {
     error: "",
     data: {},
   });
-
-
 
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -31,23 +29,21 @@ const ForgotPassword3 = () => {
       return;
     }
     try {
-      const sendOtpEmail =await sendotpemail(email.emailid);
+      const sendOtpEmail = await sendotpemail(email.emailid);
 
       console.log(sendOtpEmail);
-      console.log(sendOtpEmail.status)
-      // setemailisvaild(!emailisvaild);     
+      console.log(sendOtpEmail.status);
+      // setemailisvaild(!emailisvaild);
 
-      if(sendOtpEmail.status  === 200){
-
+      if (sendOtpEmail.status === 200) {
         setEmail({
           ...email,
           data: sendOtpEmail,
         });
-        toastrSuccess("We've sent an email to reset the password.")
-      }else{
-           toastrError("error")
+        toastrSuccess("We've sent an email to reset the password.");
+      } else {
+        toastrError("error");
       }
-      
     } catch (error) {
       setEmail({
         ...email,

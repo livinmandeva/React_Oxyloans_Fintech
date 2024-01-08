@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
-import { login, registerImage } from "../../imagepath";
+import { registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 
 import { userloginSection } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
-import { getProfile } from "../../Redux/Slice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,8 +18,8 @@ const Login = () => {
     moblie: "",
     loginwithotp: false,
     password: "",
-    emailerror:"",
-    passworderror:"",
+    emailerror: "",
+    passworderror: "",
     response: null,
     dataIpv4: "",
     oftermoblieotp: false,
@@ -28,8 +27,6 @@ const Login = () => {
     dataIpv6: "",
     error: null,
     errormessage: "",
-
-    
   });
 
   let inputRef = useRef();
@@ -51,30 +48,28 @@ const Login = () => {
       [name]: value,
     });
   };
-    
 
   const submitloginhandler = async () => {
-  
-     
-         if(userLogInInfo.email === "" || userLogInInfo.password === ""){
-          setUserLoginInfo((prevState) => ({
-            ...prevState,
-            emailerror: userLogInInfo.email === "" ? "Please   enter the email" : "",
-            passworderror: userLogInInfo.password === "" ? "Please enter the password" : "",
-          })); 
-         }else{
+    if (userLogInInfo.email === "" || userLogInInfo.password === "") {
+      setUserLoginInfo((prevState) => ({
+        ...prevState,
+        emailerror:
+          userLogInInfo.email === "" ? "Please   enter the email" : "",
+        passworderror:
+          userLogInInfo.password === "" ? "Please enter the password" : "",
+      }));
+    } else {
+      let { email, password } = userLogInInfo;
+      const retriveresponse = await userloginSection(email, password);
 
-          let { email, password } = userLogInInfo;
-          const retriveresponse = await userloginSection(email, password);
-      
-          if (retriveresponse.request.status == 200) {
-            toastrSuccess("Login Suceess !");
-            // dispatch(getProfile({ res: retriveresponse.data }));
-            history("/dashboard");
-          } else {
-            toastrWarning(retriveresponse.response.data.errorMessage);
-          }       
-         }
+      if (retriveresponse.request.status == 200) {
+        toastrSuccess("Login Suceess !");
+        // dispatch(getProfile({ res: retriveresponse.data }));
+        history("/dashboard");
+      } else {
+        toastrWarning(retriveresponse.response.data.errorMessage);
+      }
+    }
   };
 
   return (
@@ -99,68 +94,78 @@ const Login = () => {
                   </p>
                   <h2>Sign in</h2>
 
-                    <div className="form-group">
-                      <label htmlFor="userloginusername">
-                        Email/Mobile No <span className="login-danger">*</span>
-                      </label>
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={userLogInInfo.email}
-                        name="email"
-                        onChange={handlechange}
-                        id="userloginusername"
-                        required
-                      />
-                      <span className="profile-views">
-                        <i className="fas fa-user-circle" />
-                      </span>
-                      {userLogInInfo.emailerror && <div  className="text-danger"> {userLogInInfo.emailerror}</div>}
-                    </div>    
-                
-                    <div className="form-group">
-                      <label htmlFor="userpassword">
-                        Password <span className="login-danger">*</span>
-                      </label>
-                      <input
-                        ref={inputRef}
-                        className="form-control pass-input"
-                        type="password"
-                        name="password"
-                        id="userpassword"
-                        value={userLogInInfo.password}
-                        onChange={handlechange}
-                        required
-                      />
-                      {userLogInInfo.error && (
-                        <div className="text-danger">
-                          {userLogInInfo.errormessage}
-                        </div>
-                      )}   {userLogInInfo.passworderror && <div  className="text-danger"> {userLogInInfo.passworderror}</div>}
-                      <ReactPasswordToggleIcon
-                        inputRef={inputRef}
-                        showIcon={showIcon}
-                        hideIcon={hideIcon}
-                      />
-                    </div>   
-                 
-                    <div className="forgotpass">
-                      <div className="remember-me">
-                      <Link to="/loginotp">Login with OTP ?</Link>
+                  <div className="form-group">
+                    <label htmlFor="userloginusername">
+                      Email/Mobile No <span className="login-danger">*</span>
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      value={userLogInInfo.email}
+                      name="email"
+                      onChange={handlechange}
+                      id="userloginusername"
+                      required
+                    />
+                    <span className="profile-views">
+                      <i className="fas fa-user-circle" />
+                    </span>
+                    {userLogInInfo.emailerror && (
+                      <div className="text-danger">
+                        {" "}
+                        {userLogInInfo.emailerror}
                       </div>
-                      <Link to="/forgotpassword1">Forgot Password?</Link>
-                      
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="userpassword">
+                      Password <span className="login-danger">*</span>
+                    </label>
+                    <input
+                      ref={inputRef}
+                      className="form-control pass-input"
+                      type="password"
+                      name="password"
+                      id="userpassword"
+                      value={userLogInInfo.password}
+                      onChange={handlechange}
+                      required
+                    />
+                    {userLogInInfo.error && (
+                      <div className="text-danger">
+                        {userLogInInfo.errormessage}
+                      </div>
+                    )}{" "}
+                    {userLogInInfo.passworderror && (
+                      <div className="text-danger">
+                        {" "}
+                        {userLogInInfo.passworderror}
+                      </div>
+                    )}
+                    <ReactPasswordToggleIcon
+                      inputRef={inputRef}
+                      showIcon={showIcon}
+                      hideIcon={hideIcon}
+                    />
+                  </div>
+
+                  <div className="forgotpass">
+                    <div className="remember-me">
+                      <Link to="/loginotp">Login with OTP ?</Link>
                     </div>
-                    
-                    <div className="form-group">
-                      <button
-                        className="btn btn-primary btn-block"
-                        type="button"
-                        onClick={submitloginhandler}
-                      >
-                        Login
-                      </button>
-                    </div>
+                    <Link to="/forgotpassword1">Forgot Password?</Link>
+                  </div>
+
+                  <div className="form-group">
+                    <button
+                      className="btn btn-primary btn-block"
+                      type="button"
+                      onClick={submitloginhandler}
+                    >
+                      Login
+                    </button>
+                  </div>
 
                   <div className="login-or">
                     <span className="or-line" />

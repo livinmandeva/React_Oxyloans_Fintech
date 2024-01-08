@@ -2,15 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
-import { login, registerImage } from "../../imagepath";
+import { registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
 
-import { handlesenOtp, userloginSection, usersubmitotp } from "../../HttpRequest/beforelogin";
+import { handlesenOtp, usersubmitotp } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
-import { getProfile } from "../../Redux/Slice";
-import { responsiveArray } from "antd/es/_util/responsiveObserver";
 
 const Loginotp = () => {
   const dispatch = useDispatch();
@@ -20,9 +18,9 @@ const Loginotp = () => {
     moblie: "",
     loginwithotp: false,
     password: "",
-    emailerror:"",
-    passworderror:"",
-    sentotp:false,
+    emailerror: "",
+    passworderror: "",
+    sentotp: false,
     response: null,
     dataIpv4: "",
     oftermoblieotp: false,
@@ -30,12 +28,7 @@ const Loginotp = () => {
     dataIpv6: "",
     error: null,
     errormessage: "",
-
-    
   });
-
-
-
 
   let inputRef = useRef();
   const showIcon = () => (
@@ -56,73 +49,70 @@ const Loginotp = () => {
       [name]: value,
     });
   };
-    
 
   const submitloginhandler = async () => {
-  
-     
-         if( userLogInInfo.password === ""){
-          setUserLoginInfo((prevState) => ({
-            ...prevState,
-            passworderror: userLogInInfo.password === "" ? "Please enter The OTP" : "",
-          })); 
-         }else{
-
-          let { email, password } = userLogInInfo;
-          const retriveresponse = await usersubmitotp(email, password);
-      console.log(retriveresponse.request.status)
-          if (retriveresponse.request.status == 200) {
-            toastrSuccess("Login Suceess !");
-            console.log(retriveresponse);
-            sessionStorage.setItem("userId" ,retriveresponse.data.id)
-            sessionStorage.setItem("tokenTime" ,retriveresponse.data.tokenGeneratedTime)
-            sessionStorage.setItem("accessToken", retriveresponse.headers.accesstoken)
-            // dispatch(getProfile({ res: retriveresponse.data }));
-            history("/dashboard");
-          } else {
-            toastrWarning(retriveresponse.response.data.errorMessage);
-          }       
-         }
+    if (userLogInInfo.password === "") {
+      setUserLoginInfo((prevState) => ({
+        ...prevState,
+        passworderror:
+          userLogInInfo.password === "" ? "Please enter The OTP" : "",
+      }));
+    } else {
+      let { email, password } = userLogInInfo;
+      const retriveresponse = await usersubmitotp(email, password);
+      console.log(retriveresponse.request.status);
+      if (retriveresponse.request.status == 200) {
+        toastrSuccess("Login Suceess !");
+        console.log(retriveresponse);
+        sessionStorage.setItem("userId", retriveresponse.data.id);
+        sessionStorage.setItem(
+          "tokenTime",
+          retriveresponse.data.tokenGeneratedTime
+        );
+        sessionStorage.setItem(
+          "accessToken",
+          retriveresponse.headers.accesstoken
+        );
+        // dispatch(getProfile({ res: retriveresponse.data }));
+        history("/dashboard");
+      } else {
+        toastrWarning(retriveresponse.response.data.errorMessage);
+      }
+    }
   };
 
-
-  const sendtheOtp=async()=>{
-    if(userLogInInfo.email === "" ){
-        setUserLoginInfo((prevState) => ({
-          ...prevState,
-          emailerror: userLogInInfo.email === "" ? "Please enter The Moblie Number" : "",
-        }))
-    }else{
-
-      if(userLogInInfo.email.length === 10){
-
-        console.log("10 digit")
+  const sendtheOtp = async () => {
+    if (userLogInInfo.email === "") {
+      setUserLoginInfo((prevState) => ({
+        ...prevState,
+        emailerror:
+          userLogInInfo.email === "" ? "Please enter The Moblie Number" : "",
+      }));
+    } else {
+      if (userLogInInfo.email.length === 10) {
+        console.log("10 digit");
         const response = await handlesenOtp(userLogInInfo.email);
-        console.log(response)
-console.log(response.data.id)
+        console.log(response);
+        console.log(response.data.id);
 
-
-if(response.request.status == 200){
-
-  if(response.data.id){
-    sessionStorage.setItem("userId",response.data.id)
-  }
+        if (response.request.status == 200) {
+          if (response.data.id) {
+            sessionStorage.setItem("userId", response.data.id);
+          }
           setUserLoginInfo({
-              ...userLogInInfo,
-              sentotp:true,
-          })
-}
-
-      }else{
+            ...userLogInInfo,
+            sentotp: true,
+          });
+        }
+      } else {
         setUserLoginInfo((prevState) => ({
           ...prevState,
-          emailerror: userLogInInfo.email === "" ? "Please 10 digit Moblie Number" : "",
-        }))
+          emailerror:
+            userLogInInfo.email === "" ? "Please 10 digit Moblie Number" : "",
+        }));
       }
-
-          }
     }
-  
+  };
 
   return (
     <>
@@ -146,78 +136,101 @@ if(response.request.status == 200){
                   </p>
                   <h2>Sign in</h2>
 
-                    <div className="form-group">
-                      <label htmlFor="userloginusername">
-                        Enter Moblie Number <span className="login-danger">*</span>
-                      </label>
-                      <input
-                        className="form-control"
-                        type="number"
-                        value={userLogInInfo.email}
-                        name="email"
-                        onChange={handlechange}
-                        id="userloginusername"
-                        required
-                      />
-                      <span className="profile-views">
-                        <i className="fas fa-user-circle" />
-                      </span>
-                      {userLogInInfo.emailerror && <div  className="text-danger"> {userLogInInfo.emailerror}</div>}
-                    </div>    
-                {userLogInInfo.sentotp && <> <div className="form-group">
-                      <label htmlFor="userpassword">
-                        Enter OTP <span className="login-danger">*</span>
-                      </label>
-                      <input
-                        ref={inputRef}
-                        className="form-control pass-input"
-                        type="number"
-                        name="password"
-                        id="userpassword"
-                        value={userLogInInfo.password}
-                        onChange={handlechange}
-                        required
-                      />
-                      {userLogInInfo.error && (
-                        <div className="text-danger">
-                          {userLogInInfo.errormessage}
-                        </div>
-                      )}   {userLogInInfo.passworderror && <div  className="text-danger"> {userLogInInfo.passworderror}</div>}
-                      <ReactPasswordToggleIcon
-                        inputRef={inputRef}
-                        showIcon={showIcon}
-                        hideIcon={hideIcon}
-                      />
-                    </div>   </>}
-                   
-                 
-                    <div className="forgotpass">
-                      <div className="remember-me">
-                        <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
-                          Remember me
-                          <input type="checkbox" name="remember" />
-                          <span className="checkmark" />
-                        </label>
+                  <div className="form-group">
+                    <label htmlFor="userloginusername">
+                      Enter Moblie Number{" "}
+                      <span className="login-danger">*</span>
+                    </label>
+                    <input
+                      className="form-control"
+                      type="number"
+                      value={userLogInInfo.email}
+                      name="email"
+                      onChange={handlechange}
+                      id="userloginusername"
+                      required
+                    />
+                    <span className="profile-views">
+                      <i className="fas fa-user-circle" />
+                    </span>
+                    {userLogInInfo.emailerror && (
+                      <div className="text-danger">
+                        {" "}
+                        {userLogInInfo.emailerror}
                       </div>
-                      <Link to="/forgotpassword1">Forgot Password?</Link>
+                    )}
+                  </div>
+                  {userLogInInfo.sentotp && (
+                    <>
+                      {" "}
+                      <div className="form-group">
+                        <label htmlFor="userpassword">
+                          Enter OTP <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          ref={inputRef}
+                          className="form-control pass-input"
+                          type="number"
+                          name="password"
+                          id="userpassword"
+                          value={userLogInInfo.password}
+                          onChange={handlechange}
+                          required
+                        />
+                        {userLogInInfo.error && (
+                          <div className="text-danger">
+                            {userLogInInfo.errormessage}
+                          </div>
+                        )}{" "}
+                        {userLogInInfo.passworderror && (
+                          <div className="text-danger">
+                            {" "}
+                            {userLogInInfo.passworderror}
+                          </div>
+                        )}
+                        <ReactPasswordToggleIcon
+                          inputRef={inputRef}
+                          showIcon={showIcon}
+                          hideIcon={hideIcon}
+                        />
+                      </div>{" "}
+                    </>
+                  )}
+
+                  <div className="forgotpass">
+                    <div className="remember-me">
+                      <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
+                        Remember me
+                        <input type="checkbox" name="remember" />
+                        <span className="checkmark" />
+                      </label>
                     </div>
-                    <div className="form-group">
-                    {userLogInInfo.sentotp ? <>    <button
-                        className="btn btn-primary btn-block"
-                        type="button"
-                        onClick={submitloginhandler}
-                      >
-                        Login
-                      </button></> : <>
-                      <button
-                        className="btn btn-primary btn-block"
-                        type="button"
-                        onClick={sendtheOtp}
-                      >
-                        Send OTP
-                      </button></> }
-                  
-                    </div>
+                    <Link to="/forgotpassword1">Forgot Password?</Link>
+                  </div>
+                  <div className="form-group">
+                    {userLogInInfo.sentotp ? (
+                      <>
+                        {" "}
+                        <button
+                          className="btn btn-primary btn-block"
+                          type="button"
+                          onClick={submitloginhandler}
+                        >
+                          Login
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="btn btn-primary btn-block"
+                          type="button"
+                          onClick={sendtheOtp}
+                        >
+                          Send OTP
+                        </button>
+                      </>
+                    )}
+                  </div>
 
                   <div className="login-or">
                     <span className="or-line" />

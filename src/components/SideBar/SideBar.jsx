@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import FeatherIcon from "feather-icons-react";
+
 import { Scrollbars } from "react-custom-scrollbars";
-// import { LogoImg, LogoSmallImg } from "../_components/imagepath";
 
 const Sidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState("");
@@ -713,7 +712,13 @@ const Sidebar = (props) => {
                 </li>
 
                 <li className={`${"/" === pathName ? "active" : ""}`}>
-                  <Link to="/" onClick={() => { localStorage.clear(); sessionStorage.clear()}}>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      localStorage.clear();
+                      sessionStorage.clear();
+                    }}
+                  >
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Sign Out</span>
                   </Link>

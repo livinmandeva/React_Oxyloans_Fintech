@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import { useState, useEffect } from "react";
-import {  Table } from "antd";
+import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { onShowSizeChange, itemRender } from "../../../Pagination";
 import { handelapi, myclosedDealsInfo } from "../../../HttpRequest/afterlogin";

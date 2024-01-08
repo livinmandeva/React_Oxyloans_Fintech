@@ -5,7 +5,6 @@ import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import Register from "./Register";
 import OtpInput from "./OtpInput";
 
 export default function BorrowerRegister() {

@@ -3,9 +3,9 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import ReactPasswordToggleIcon from "react-password-toggle-icon";
-import { login, registerImage } from "../../imagepath";
-import { loginapi } from "./api";
+
+import { registerImage } from "../../imagepath";
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";

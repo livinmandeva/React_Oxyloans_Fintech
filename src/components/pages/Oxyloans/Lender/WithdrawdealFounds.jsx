@@ -7,14 +7,14 @@ import { toastrSuccess } from "../../Base UI Elements/Toast";
 const WithdrawdealFounds = () => {
   const [data, setdata] = useState({
     resdata: "",
-    dealname: "", 
+    dealname: "",
     dealID: "",
     roi: "",
-    isValid:true,
+    isValid: true,
     participatedamount: "",
-    withdrawalamount: "",  
+    withdrawalamount: "",
   });
- 
+
   const handlechange = (event) => {
     const { name, value } = event.target;
     setdata({
@@ -23,11 +23,24 @@ const WithdrawdealFounds = () => {
     });
   };
 
-  const handlewith = () => {   console.log(data.dealID ,data.roi, data.participatedamount, data.withdrawalamount)
-    const response = handleapicall(data.dealID ,data.roi, data.participatedamount,  data.requestedamount, data.withdrawalamount);
+  const handlewith = () => {
+    console.log(
+      data.dealID,
+      data.roi,
+      data.participatedamount,
+      data.withdrawalamount
+    );
+    const response = handleapicall(
+      data.dealID,
+      data.roi,
+      data.participatedamount,
+      data.requestedamount,
+      data.withdrawalamount
+    );
     response.then((data) => {
       if (data.request.status === 200) {
-        alert("success");toastrSuccess(data.data.status)
+        alert("success");
+        toastrSuccess(data.data.status);
         console.log(data);
       }
     });
@@ -47,25 +60,23 @@ const WithdrawdealFounds = () => {
       dealID: dealId,
       roi: roi,
       participatedamount: currentAmount,
-      requestedamount:requestedAmount
-
+      requestedamount: requestedAmount,
     });
     return () => {};
   }, []);
 
   useEffect(() => {
     if (data.withdrawalamount !== "") {
-      setdata(prevData => ({
+      setdata((prevData) => ({
         ...prevData,
-        isValid: false
+        isValid: false,
       }));
-
     }
   }, [data.withdrawalamount]);
-  
+
   // const isFormValid = Object.values(data).every(value => value !== "");
   // useEffect(()=>{
-  //  if(data.withdrawalamount) 
+  //  if(data.withdrawalamount)
   // },[data.withdrawalamount])
   return (
     <>
@@ -109,85 +120,84 @@ const WithdrawdealFounds = () => {
                   </div>
                   <div className="card-body">
                     {/* <form> */}
-                      <div className="row">
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Deal Name <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={data.dealname}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Deal ID
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={data.dealID}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              ROI <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={data.roi}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Participated Amount{" "}
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={data.participatedamount}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12 col-sm-4">
-                          <div className="form-group local-forms">
-                            <label>
-                              Withdrawal Amount:
-                              <span className="login-danger">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="withdrawalamount"
-                              onChange={handlechange}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-12">
-                          <div className="student-submit">
-                            <button
-                              type="submit"
-                              className="btn btn-primary"
-                              onClick={()=>handlewith()}
-
-                              disabled={data.isValid}
-                            >
-                              Submit
-                            </button>
-                          </div>
+                    <div className="row">
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Deal Name <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={data.dealname}
+                          />
                         </div>
                       </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Deal ID
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={data.dealID}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            ROI <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={data.roi}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Participated Amount{" "}
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={data.participatedamount}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Withdrawal Amount:
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="withdrawalamount"
+                            onChange={handlechange}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="student-submit">
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={() => handlewith()}
+                            disabled={data.isValid}
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     {/* </form> */}
                   </div>
                 </div>
