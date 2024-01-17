@@ -1,5 +1,51 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
+import HoldAmountRequest from "./components/pages/Oxyloans/Admin/Deals/Hold/HoldAmountRequest";
+import HoldAmountBreakUp from "./components/pages/Oxyloans/Admin/Deals/Hold/HoldAmountBreakUp";
+import BorrowerRunningsinfo from "./components/pages/Oxyloans/Admin/StudentLoanProcess/BorrowerRunningsinfo";
+import BorrowerLoanStatus from "./components/pages/Oxyloans/Admin/StudentLoanProcess/BorrowerLoanStatus";
+import UploadFdData from "./components/pages/Oxyloans/Admin/StudentLoanProcess/UploadFdData";
+import FdPaymentDetails from "./components/pages/Oxyloans/Admin/StudentLoanProcess/FdPaymentDetails";
+import VerifyPaymentDetail from "./components/pages/Oxyloans/Admin/StudentLoanProcess/VerifyPaymentDetail";
+import TransferFunds from "./components/pages/Oxyloans/Admin/StudentLoanProcess/TransferFunds";
+import ViewListOfFds from "./components/pages/Oxyloans/Admin/StudentLoanProcess/ViewListOfFds";
+import SearchfdUsers from "./components/pages/Oxyloans/Admin/StudentLoanProcess/SearchfdUsers";
+import InsertPendingInformation from "./components/pages/Oxyloans/Admin/LenderPending/InsertPendingInformation";
+import PendingamountUser from "./components/pages/Oxyloans/Admin/LenderPending/PendingamountUser";
+import FdStatistics from "./components/pages/Oxyloans/Admin/FdStatistics/FdStatistics";
+import FddownloadInvoice from "./components/pages/Oxyloans/Admin/FdStatistics/FddownloadInvoice";
+import FdmonthlyloansInfo from "./components/pages/Oxyloans/Admin/FdStatistics/FdmonthlyloansInfo";
+import FdexecutedPayment from "./components/pages/Oxyloans/Admin/FdStatistics/FdexecutedPayment";
+import FdClosedDetails from "./components/pages/Oxyloans/Admin/FdStatistics/FdClosedDetails";
+import LoanAprroved from "./components/pages/Oxyloans/Admin/borrowersapplications/LoanAprroved";
+import NewDisbursed from "./components/pages/Oxyloans/Admin/borrowersapplications/NewDisbursed";
+import Intrested from "./components/pages/Oxyloans/Admin/borrowersapplications/Intrested";
+import Approvedloan from "./components/pages/Oxyloans/Admin/borrowersapplications/Approvedloan";
+import ApplicationLevelDisbursed from "./components/pages/Oxyloans/Admin/borrowersapplications/ApplicationLevelDisbursed";
+import ViewVanNumber from "./components/pages/Oxyloans/Admin/borrowersapplications/ViewVanNumber";
+import LendersLoanApplications from "./components/pages/Oxyloans/Admin/LENDERS/LendersLoanApplications";
+import LenderWallettransactions from "./components/pages/Oxyloans/Admin/LENDERS/LenderWallettransactions";
+import Uploadtransactions from "./components/pages/Oxyloans/Admin/LENDERS/Uploadtransactions";
+import PoolingLendrs from "./components/pages/Oxyloans/Admin/LENDERS/PoolingLendrs";
+import Lenderreferalinfo from "./components/pages/Oxyloans/Admin/LENDERS/Lenderreferalinfo";
+import ApproveReferenceamount from "./components/pages/Oxyloans/Admin/LENDERS/ApproveReferenceamount";
+import EditReferenceDeatils from "./components/pages/Oxyloans/Admin/LENDERS/EditReferenceDeatils";
+import EditGroupinfo from "./components/pages/Oxyloans/Admin/LENDERS/EditGroupinfo";
+import Lenderstatistics from "./components/pages/Oxyloans/Admin/LENDERS/Lenderstatistics";
+import SumofDealAmountInfo2 from "./components/pages/Oxyloans/Admin/LENDERS/SumofDealAmountInfo2";
+import LendersInAllEquityDeals from "./components/pages/Oxyloans/Admin/LENDERS/LendersInAllEquityDeals";
+import FromDeal from "./components/pages/Oxyloans/Admin/WithdrawalRequests/FromDeal";
+import DisplaylenderwithdrawalfundsList from "./components/pages/Oxyloans/Admin/WithdrawalRequests/DisplaylenderwithdrawalfundsList";
+import CheckLenderDashboard from "./components/pages/Oxyloans/LendersWallet/CheckLenderDashboard";
+import Lenderwalletamountdetails from "./components/pages/Oxyloans/LendersWallet/Lenderwalletamountdetails";
+import Lendersemiamount from "./components/pages/Oxyloans/LendersWallet/Lendersemiamount";
+import Addloanowner from "./components/pages/Oxyloans/LendersWallet/Addloanowner";
+import GetOxyFounding from "./components/pages/Oxyloans/LendersWallet/GetOxyFounding";
+import ClosedLoans from "./components/pages/Oxyloans/Admin/LoanRecords/ClosedLoans";
+import ClosedLoansByPlatform from "./components/pages/Oxyloans/Admin/LoanRecords/ClosedLoansByPlatform";
+import LenderRunningsloans from "./components/pages/Oxyloans/Admin/LoanRecords/LenderRunningsloans";
+import PaidBorrower from "./components/pages/Oxyloans/Admin/LoanRecords/PaidBorrower";
+
 
 const CreateDeal = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
@@ -291,6 +337,240 @@ export const newRouter = createBrowserRouter([
   {
     path: "/mainadmindashboard",
     element: <MainAdminDashboard />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/holdAmountBreakUp",
+    element: <HoldAmountBreakUp />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/transferFunds",
+    element: <TransferFunds />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/SearchfdUsers",
+    element: <SearchfdUsers />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewListOfFds",
+    element: <ViewListOfFds />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fdPaymentDetails",
+    element: <FdPaymentDetails />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/insertPendingInformation",
+    element: <InsertPendingInformation />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/verifyPaymentDetail",
+    element: <VerifyPaymentDetail />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/pendingamountUser",
+    element: <PendingamountUser />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fdClosedDetails",
+    element: <FdClosedDetails />,
+
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/loanAprroved",
+    element: <LoanAprroved />,
+    
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/newDisbursed",
+    element: <NewDisbursed />,
+    
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fdexecutedPayment",
+    element: <FdexecutedPayment />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fdmonthlyloansInfo",
+    element: <FdmonthlyloansInfo />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fddownloadInvoice",
+    element: <FddownloadInvoice />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fdStatistics",
+    element: <FdStatistics />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/uploadFdData",
+    element: <UploadFdData />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/walletToWalletHistory",
+    element: <WalletToWalletHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerLoanStatus",
+    element: <BorrowerLoanStatus />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/checkLenderDashboard",
+    element: <CheckLenderDashboard />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lenderwalletamountdetails",
+    element: <Lenderwalletamountdetails />,
+    errorElement: <Error404></Error404>,
+  },{
+    path: "/lendersemiamount",
+    element: <Lendersemiamount />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/addloanowner",
+    element: <Addloanowner />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/getOxyFounding",
+    element: <GetOxyFounding />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/uploadtransactions",
+    element: <Uploadtransactions />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/poolingLendrs",
+    element: <PoolingLendrs />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lenderreferalinfo",
+    element: <Lenderreferalinfo />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/sumofDealAmountInfo",
+    element: <SumofDealAmountInfo2 />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/displaylenderwithdrawalfundsList",
+    element: <DisplaylenderwithdrawalfundsList />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/paidBorrower",
+    element: <PaidBorrower />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lenderRunningsloans",
+    element: <LenderRunningsloans />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/closedLoans",
+    element: <ClosedLoans />,
+    errorElement: <Error404></Error404>,
+  },
+  
+  {
+    path: "/closedLoansByPlatform",
+    element: <ClosedLoansByPlatform />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/fromDeal",
+    element: <FromDeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lendersInAllEquityDeals",
+    element: <LendersInAllEquityDeals />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lenderstatistics",
+    element: <Lenderstatistics />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/approveReferenceamount",
+    element: <ApproveReferenceamount />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/editGroupinfo",
+    element: <EditGroupinfo />,
+    errorElement: <Error404></Error404>,EditGroupinfo
+  },
+  {
+    path: "/editReferenceDeatils",
+    element: <EditReferenceDeatils />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/approvedloan",
+    element: <Approvedloan />,
+    errorElement: <Error404></Error404>,
+  },
+  
+  {
+    path: "/applicationLevelDisbursed",
+    element: <ApplicationLevelDisbursed />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lenderWallettransactions",
+    element: <LenderWallettransactions />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/lendersLoanApplications",
+    element: <LendersLoanApplications />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewVanNumber",
+    element: <ViewVanNumber />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/intrested",
+    element: <Intrested />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerRunningsinfo",
+    element: <BorrowerRunningsinfo />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/holdAmountRequest",
+    element: <HoldAmountRequest />,
     errorElement: <Error404></Error404>,
   },
   {
