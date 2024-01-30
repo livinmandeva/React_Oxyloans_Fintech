@@ -9,7 +9,7 @@ import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
 
-const Expiredloans = () => {
+const AcceptedLoans = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
     hasdata: false,
@@ -18,7 +18,7 @@ const Expiredloans = () => {
     pageSize: 5,
     defaultPageSize: 5,
   });
- 
+
   const membershiphistoryPagination = (Pagination) => {
     setmembershiphistory({
       ...membershiphistory,
@@ -64,33 +64,53 @@ const Expiredloans = () => {
   							
   const columns = [
     {
-      title: "Application ID",
+      title: "Borrower Id",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
     {
     
-      title: "Borrower Name",
+      title: "Regd Date & Exp Date",
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
-      title: "Mobile Number",
+      title: "Name & Mobile",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Paid EMI",
+        title: "Email & Address",
         dataIndex: "Amount",
         sorter: (a, b) => a.Amount - b.Amount,
       },
       {
-        title: "Borrower EMail",
+        title: "City",
         dataIndex: "Amount",
         sorter: (a, b) => a.Amount - b.Amount,
       },
       {
-        title: "Paid Date",
+        title: "Utm source",
+        dataIndex: "Amount",
+        sorter: (a, b) => a.Amount - b.Amount,
+      },
+      {
+        title: "Amount & ROI",
+        dataIndex: "Amount",
+        sorter: (a, b) => a.Amount - b.Amount,
+      },
+      {
+        title: "View Documents",
+        dataIndex: "Amount",
+        sorter: (a, b) => a.Amount - b.Amount,
+      },
+      {
+        title: "Comments",
+        dataIndex: "Amount",
+        sorter: (a, b) => a.Amount - b.Amount,
+      },
+      {
+        title: "Oxy Score",
         dataIndex: "Amount",
         sorter: (a, b) => a.Amount - b.Amount,
       },
@@ -109,7 +129,7 @@ const Expiredloans = () => {
               <div className="row">
                 <div className="col">
                   <h3 className="page-title"> 
-                  Paid Borrowers
+                  Accepted Borrower Loan Applications
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -117,7 +137,7 @@ const Expiredloans = () => {
                     </li>
                     <li className="breadcrumb-item active">
                      
-                    Paid Borrowers
+                    Accepted Borrower Loan
 
                     </li>
                   </ul>
@@ -146,7 +166,11 @@ const Expiredloans = () => {
       placeholder="Enther the LENDER ID "
     >
         <option>-- Choose --</option>
-        <option>Loan Id</option>
+        <option>Name</option>
+        <option>Borrower ID</option>
+        <option>ROI</option>
+        <option>Amount</option>
+        <option>Amount&city</option>
         </select>
   </div>
 </div>
@@ -208,4 +232,4 @@ const Expiredloans = () => {
   );
 };
 
-export default Expiredloans;
+export default AcceptedLoans;

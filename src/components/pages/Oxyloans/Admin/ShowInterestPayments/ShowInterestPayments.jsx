@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Table } from "antd";
+import { Button, Table } from "antd";
 
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
+import CMSModel from "../CmsfoldersFiles/CMSModel";
 
 
-const Expiredloans = () => {
+const ShowInterestPayments = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
     hasdata: false,
@@ -18,7 +19,7 @@ const Expiredloans = () => {
     pageSize: 5,
     defaultPageSize: 5,
   });
- 
+
   const membershiphistoryPagination = (Pagination) => {
     setmembershiphistory({
       ...membershiphistory,
@@ -64,36 +65,20 @@ const Expiredloans = () => {
   							
   const columns = [
     {
-      title: "Application ID",
+      title: "Payment Date",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
     {
-    
-      title: "Borrower Name",
+      title: "Amount	View",
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
-      title: "Mobile Number",
+      title: "Current Deals",				
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
     },
-    {
-        title: "Paid EMI",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Borrower EMail",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Paid Date",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
   ];
 
   return (
@@ -109,16 +94,15 @@ const Expiredloans = () => {
               <div className="row">
                 <div className="col">
                   <h3 className="page-title"> 
-                  Paid Borrowers
+                     Interest Payments Info
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
-                    Paid Borrowers
-
+                       
+                      Interest Payments Info
                     </li>
                   </ul>
                 </div>
@@ -130,27 +114,26 @@ const Expiredloans = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
                   <div className="row">
 
-<div className="col-12 col-sm-3">
+<div className="col-12 col-sm-3"> 
   <div className="form-group local-forms">
     {/* <label>
     Date Range
       <span className="login-danger">*</span>
-    </label> */}
+    </label> */}    
     <select
       type="text"
       name="withdrawFeedback"
       className="form-control"
       placeholder="Enther the LENDER ID "
     >
-        <option>-- Choose --</option>
-        <option>Loan Id</option>
-        </select>
+        <option>--  Choose Month and year --</option>
+        <option>MONTH&YEAR</option>
+        </select> 
   </div>
 </div>
-
+<CMSModel  />
 
 <div className="col-12 col-sm-3">
   <div className="form-group local-forms">
@@ -178,7 +161,7 @@ const Expiredloans = () => {
   </div>
 </div>
 </div>
-                    <div>
+                    <div>   <button       className="btn btn-primary mt-2 mb-2">View Executed Files</button>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
@@ -195,7 +178,7 @@ const Expiredloans = () => {
                         loading={membershiphistory.loading}
                         onChange={membershiphistoryPagination}
                       />
-                    </div>
+                    </div>    
                   </div>
                 </div>
               </div>
@@ -208,4 +191,4 @@ const Expiredloans = () => {
   );
 };
 
-export default Expiredloans;
+export default ShowInterestPayments;

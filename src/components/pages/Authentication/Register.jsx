@@ -71,7 +71,7 @@ const Register = () => {
                         showIcon={showIcon}
                         hideIcon={hideIcon}
                       />
-                    </div>
+                    </div>      
                     <div className="form-group">
                       <label>
                         Phone Number <span className="login-danger">*</span>

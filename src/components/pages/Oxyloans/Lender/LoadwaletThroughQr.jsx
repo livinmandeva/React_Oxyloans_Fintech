@@ -33,7 +33,7 @@ const LoadwaletThroughQr = () => {
       ...loadwaletThroughQr,
       [name]: value,
     });
-  };
+  };     
 
   const loadYourWalletFunction = async () => {
     const response = LoadwalletThroughQrScan(loadwaletThroughQr.amount);

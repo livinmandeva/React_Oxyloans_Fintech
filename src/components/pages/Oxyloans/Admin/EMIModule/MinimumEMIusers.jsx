@@ -9,7 +9,7 @@ import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
 
-const Expiredloans = () => {
+const MinimumEMIusers = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
     hasdata: false,
@@ -18,7 +18,7 @@ const Expiredloans = () => {
     pageSize: 5,
     defaultPageSize: 5,
   });
- 
+
   const membershiphistoryPagination = (Pagination) => {
     setmembershiphistory({
       ...membershiphistory,
@@ -61,39 +61,39 @@ const Expiredloans = () => {
       : "";
   }
 
-  							
   const columns = [
     {
-      title: "Application ID",
+      title: "App ID",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
     {
-    
-      title: "Borrower Name",
+      title: "BR ID & Name",
+
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
-      title: "Mobile Number",
+      title: "BR Email",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Paid EMI",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
+      title: "EMI Amount",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+        title: "Tenure",
+        dataIndex: "PaidThrough",
+        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
       },
       {
-        title: "Borrower EMail",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
+        title: "Created On",
+        dataIndex: "PaidThrough",
+        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
       },
-      {
-        title: "Paid Date",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+
   ];
 
   return (
@@ -108,17 +108,14 @@ const Expiredloans = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                  Paid Borrowers
+                  <h3 className="page-title">Borrowers Minimum eNACH Amount Users
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
-                    Paid Borrowers
-
+                                                 Search Fd Types
                     </li>
                   </ul>
                 </div>
@@ -135,35 +132,37 @@ const Expiredloans = () => {
 
 <div className="col-12 col-sm-3">
   <div className="form-group local-forms">
-    {/* <label>
-    Date Range
+    <label>
+    Search  User Id :
       <span className="login-danger">*</span>
-    </label> */}
+    </label>
     <select
       type="text"
       name="withdrawFeedback"
       className="form-control"
       placeholder="Enther the LENDER ID "
     >
-        <option>-- Choose --</option>
-        <option>Loan Id</option>
+       <option >-- select --</option> 
+       <option >Name</option> 
+       <option >Borrower ID</option> 
+       
         </select>
   </div>
 </div>
 
-
 <div className="col-12 col-sm-3">
   <div className="form-group local-forms">
     <label>
-    Date Range
+    Search  User Id :
       <span className="login-danger">*</span>
     </label>
     <input
       type="text"
       name="withdrawFeedback"
       className="form-control"
-      placeholder="Enther the Start Date"
+      placeholder="Enther the LENDER ID "
     />
+
 
   </div>
 </div>
@@ -208,4 +207,4 @@ const Expiredloans = () => {
   );
 };
 
-export default Expiredloans;
+export default MinimumEMIusers;

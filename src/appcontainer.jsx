@@ -62,6 +62,15 @@ import ViewPartnerAndDealer from "./components/pages/Oxyloans/Admin/AutoGenerate
 import UserValidityFee from "./components/pages/Oxyloans/Admin/PAYMENTS/UserValidityFee";
 import UploadedStatus from "./components/pages/Oxyloans/Admin/PAYMENTS/UploadedStatus";
 import ENACHActiveUsers from "./components/pages/Oxyloans/Admin/EMIModule/ENACHActiveUsers";
+import CheckfeatureEMIs from "./components/pages/Oxyloans/Admin/EMIModule/CheckfeatureEMIs";
+import PendingCurrentEMI from "./components/pages/Oxyloans/Admin/EMIModule/PendingCurrentEMI";
+import SetMinimumAmountForEnach from "./components/pages/Oxyloans/Admin/EMIModule/SetMinimumAmountForEnach";
+import MinimumEMIusers from "./components/pages/Oxyloans/Admin/EMIModule/MinimumEMIusers";
+import AcceptedLoans from "./components/pages/Oxyloans/Admin/SUPERADMIN/AcceptedLoans";
+import ShowInterestPayments from "./components/pages/Oxyloans/Admin/ShowInterestPayments/ShowInterestPayments";
+import QrTransactions from "./components/pages/Oxyloans/Admin/PAYMENTS/QrTransactions";
+import ApprovedStatus from "./components/pages/Oxyloans/Admin/PAYMENTS/ApprovedStatus";
+import CmsfoldersFiles from "./components/pages/Oxyloans/Admin/CmsfoldersFiles/CmsfoldersFiles";
 
 
 const CreateDeal = React.lazy(() =>
@@ -367,6 +376,11 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
   {
+    path: "/cmsfoldersFiles",
+    element: <CmsfoldersFiles />,
+    errorElement: <Error404></Error404>,
+  },
+  {
     path: "/SearchfdUsers",
     element: <SearchfdUsers />,
     errorElement: <Error404></Error404>,
@@ -611,8 +625,18 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
   {
+    path: "/pendingCurrentEMI",
+    element: <PendingCurrentEMI />,
+    errorElement: <Error404></Error404>,
+  },
+  {
     path: "/userValidityFee",
     element: <UserValidityFee />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/checkfeatureEMIs",
+    element: <CheckfeatureEMIs />,
     errorElement: <Error404></Error404>,
   },
   {
@@ -625,12 +649,30 @@ export const newRouter = createBrowserRouter([
     element: <UploadedStatus />,
     errorElement: <Error404></Error404>,
   },
+
+
+
+
+  {
+    path: "/setMinimumAmountForEnach",
+    element: <SetMinimumAmountForEnach />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/viewminimumEMIusers",
+    element: <MinimumEMIusers />,
+    errorElement: <Error404></Error404>,
+  },
   {
     path: "/CreateUtmforpartnerDealer",
     element: <CreateUtmforpartnerDealer />,
     errorElement: <Error404></Error404>,
   },
   {
+    path: "/acceptedLoans",
+    element: <AcceptedLoans />,
+    errorElement: <Error404></Error404>,
+  },{
     path: "/LenderParticiaption",
     element: <LenderParticiaption />,
     errorElement: <Error404></Error404>,
@@ -646,8 +688,23 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
   {
+    path: "/ShowInterestPayments",
+    element: <ShowInterestPayments />,
+    errorElement: <Error404></Error404>,
+  },
+  {
     path: "/approvedloan",
     element: <Approvedloan />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/approvedStatus",
+    element: <ApprovedStatus />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/qrTransactions",
+    element: <QrTransactions />,
     errorElement: <Error404></Error404>,
   },
   
