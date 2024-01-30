@@ -351,14 +351,8 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/myRunningDelas">
                 My Deals
               </Link>
-              <Link
-                className="dropdown-item"
-                to="/"
-                onClick={() => {
-                  localStorage.clear();
-                  sessionStorage.clear();
-                }}
-              >   
+
+              <Link className="dropdown-item" to="/"   onClick={() => { localStorage.clear(); sessionStorage.clear() }}>
 
                 Logout
               </Link>

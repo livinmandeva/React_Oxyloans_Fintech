@@ -117,20 +117,7 @@ const Participatedeal = () => {
     ? dataSource.push({
         name: deal.apidata.dealName,
         loanamount: deal.apidata.dealAmount,
-        rateOfInterest:
-          data.yearlyInterest != 0
-            ? data.yearlyInterest
-            : (data.monthlyInterest != 0
-                ? data.monthlyInterest
-                : data.quartlyInterest != 0
-                ? data.quartlyInterest
-                : data.yearlyInterest != 0
-                ? data.yearlyInterest
-                : data.monthlyInterest != 0
-                ? data.monthlyInterest
-                : null) +
-              " " +
-              interestType,
+        rateOfInterest:data.yearlyInterest != 0 ? data.yearlyInterest : (data.monthlyInterest != 0 ? data.monthlyInterest : (data.quartlyInterest != 0 ? data.quartlyInterest : (data.yearlyInterest != 0 ? data.yearlyInterest : (data.monthlyInterest != 0 ? data.monthlyInterest : null)))) + " " + interestType,
 
         availablelimit: deal.apidata.remainingAmountInDeal,
         tenureinmonths: deal.apidata.duration + "M",

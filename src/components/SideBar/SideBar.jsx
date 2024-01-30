@@ -712,13 +712,8 @@ const Sidebar = (props) => {
                 </li>
 
                 <li className={`${"/" === pathName ? "active" : ""}`}>
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      localStorage.clear();
-                      sessionStorage.clear();
-                    }}
-                  >
+
+                  <Link to="/" onClick={() => { localStorage.clear(); sessionStorage.clear()}}>
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Sign Out</span>
                   </Link>

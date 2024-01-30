@@ -132,15 +132,12 @@ const TicketHistory = () => {
                                     <div>{item.receivedOn}</div>
                                   </td>
                                   <td className="text-center">
-                                    <div
-                                      className={
-                                        item.status === "Completed"
-                                          ? "badge badge-success"
-                                          : "badge badge-danger"
-                                      }
-                                    >
-
-
+                                  <div
+                                       className={
+                                        
+                                         (item.status === "Completed" ? "badge badge-success" : "badge badge-danger")
+                                       }
+                                     >
                                       {item.status}
                                     </div>
                                   </td>
