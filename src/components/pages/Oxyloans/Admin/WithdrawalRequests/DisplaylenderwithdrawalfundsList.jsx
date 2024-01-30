@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const DisplaylenderwithdrawalfundsList = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -63,7 +62,7 @@ const DisplaylenderwithdrawalfundsList = () => {
 
   const columns = [
     {
-      title: "LR ID & Name",			
+      title: "LR ID & Name",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
@@ -78,10 +77,10 @@ const DisplaylenderwithdrawalfundsList = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Actions",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Actions",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -96,15 +95,12 @@ const DisplaylenderwithdrawalfundsList = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Lender Withdrawal List
-                  </h3>
+                  <h3 className="page-title">Lender Withdrawal List</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                  Hold Deal Users
-                    </li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>
@@ -115,43 +111,33 @@ const DisplaylenderwithdrawalfundsList = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
+                    <div className="row">
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            -- Choose --
+                            <span className="login-danger">*</span>
+                          </label>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            // placeholder="Enther the Borrower Id "
+                          >
+                            <option>Lender ID</option>
+                            <option>Name</option>
+                          </select>
+                        </div>
+                      </div>
 
-                  <div className="row">
-
-<div className="col-12 col-sm-4">
-  <div className="form-group local-forms">
-    <label>
-    -- Choose --
-      <span className="login-danger">*</span>
-    </label>
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      // placeholder="Enther the Borrower Id "
-    >
-
-        <option>Lender ID</option>
-        <option>Name</option>
-
-        </select>
-
-
-  </div>
-</div>
-
-
-<div className="col-4">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-        Fetch details
-    </button>
-  </div>
-</div>
-</div>
+                      <div className="col-4">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

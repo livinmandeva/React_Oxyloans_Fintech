@@ -5,7 +5,7 @@ import SideBar from "../../SideBar/SideBar";
 import ProgressBar from "react-customizable-progressbar";
 import { Link } from "react-router-dom";
 import "../Oxyloans/Lender/table.css";
-import { Chart as GoogleChart } from "react-google-charts";
+
 import {
   chatapi,
   getDashboardInvestment,
@@ -13,12 +13,12 @@ import {
   getInterestEarnings,
   getNoDealsParticipated,
 } from "../../HttpRequest/afterlogin";
-import { Table, Pagination } from "antd";
-import { onShowSizeChange, itemRender } from "../../Pagination";
+import { Table } from "antd";
+import { onShowSizeChange } from "../../Pagination";
 import { fetchData } from "../../Redux/Slice";
 import { fetchDatadashboard } from "../../Redux/SliceDashboard";
 import { useSelector, useDispatch } from "react-redux";
-import useDealActivity from "../../Hooks/useDealActivity";
+// import useDealActivity from "../../Hooks/useDealActivity";
 
 import {
   awardicon01,
@@ -36,7 +36,6 @@ import {
 } from "../../HttpRequest/afterlogin";
 import {
   personalDetails,
-  personalDetailsInfo,
   validityDatemodal,
 } from "../Base UI Elements/SweetAlert";
 

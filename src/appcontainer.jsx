@@ -63,7 +63,6 @@ import UserValidityFee from "./components/pages/Oxyloans/Admin/PAYMENTS/UserVali
 import UploadedStatus from "./components/pages/Oxyloans/Admin/PAYMENTS/UploadedStatus";
 import ENACHActiveUsers from "./components/pages/Oxyloans/Admin/EMIModule/ENACHActiveUsers";
 
-
 const CreateDeal = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
 );
@@ -405,13 +404,13 @@ export const newRouter = createBrowserRouter([
   {
     path: "/loanAprroved",
     element: <LoanAprroved />,
-    
+
     errorElement: <Error404></Error404>,
   },
   {
     path: "/newDisbursed",
     element: <NewDisbursed />,
-    
+
     errorElement: <Error404></Error404>,
   },
   {
@@ -458,7 +457,8 @@ export const newRouter = createBrowserRouter([
     path: "/lenderwalletamountdetails",
     element: <Lenderwalletamountdetails />,
     errorElement: <Error404></Error404>,
-  },{
+  },
+  {
     path: "/lendersemiamount",
     element: <Lendersemiamount />,
     errorElement: <Error404></Error404>,
@@ -513,7 +513,7 @@ export const newRouter = createBrowserRouter([
     element: <ClosedLoans />,
     errorElement: <Error404></Error404>,
   },
-  
+
   {
     path: "/closedLoansByPlatform",
     element: <ClosedLoansByPlatform />,
@@ -542,7 +542,8 @@ export const newRouter = createBrowserRouter([
   {
     path: "/editGroupinfo",
     element: <EditGroupinfo />,
-    errorElement: <Error404></Error404>,EditGroupinfo
+    errorElement: <Error404></Error404>,
+    EditGroupinfo,
   },
   {
     path: "/editReferenceDeatils",
@@ -599,7 +600,7 @@ export const newRouter = createBrowserRouter([
   //   element: <AcceptedLoanApplications />,
   //   errorElement: <Error404></Error404>,
   // },
-  
+
   {
     path: "/createAgreements",
     element: <CreateAgreements />,
@@ -650,7 +651,7 @@ export const newRouter = createBrowserRouter([
     element: <Approvedloan />,
     errorElement: <Error404></Error404>,
   },
-  
+
   {
     path: "/applicationLevelDisbursed",
     element: <ApplicationLevelDisbursed />,

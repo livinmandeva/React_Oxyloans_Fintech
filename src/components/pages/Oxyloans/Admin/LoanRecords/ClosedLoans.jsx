@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const ClosedLoans = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -61,7 +60,6 @@ const ClosedLoans = () => {
       : "";
   }
 
-  							
   const columns = [
     {
       title: "Lender Id",
@@ -79,30 +77,30 @@ const ClosedLoans = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Amount",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Transaction Date",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Transaction Screen Shot",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Status",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Approve",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Transaction Date",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Transaction Screen Shot",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Status",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Approve",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -117,16 +115,13 @@ const ClosedLoans = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                  Lender Transaction
-                  </h3>
+                  <h3 className="page-title">Lender Transaction</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
-                     Lender Transaction
+                      Lender Transaction
                     </li>
                   </ul>
                 </div>
@@ -138,54 +133,47 @@ const ClosedLoans = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Date Range
+                            <span className="login-danger">*</span>
+                          </label>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the LENDER ID "
+                          >
+                            <option>-- Choose --</option>
+                            <option>Date Range</option>
+                          </select>
+                        </div>
+                      </div>
 
-                  <div className="row">
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Date Range
-      <span className="login-danger">*</span>
-    </label>
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the LENDER ID "
-    >
-        <option>-- Choose --</option>
-        <option>Date Range</option>
-        </select>
-  </div>
-</div>
-
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Date Range
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the Start Date"
-    />
-
-  </div>
-</div>
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Date Range
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the Start Date"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

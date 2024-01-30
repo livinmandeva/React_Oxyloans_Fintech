@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const Ninetydaysbucket = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -69,7 +68,7 @@ const Ninetydaysbucket = () => {
     },
     {
       title: "BR ID",
-      dataIndex: "TransactionNumber",       
+      dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
@@ -83,15 +82,15 @@ const Ninetydaysbucket = () => {
       sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
     },
     {
-        title: "Loan offer Amount",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
-      {
-        title: "View Lenders For this Loan",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
+      title: "Loan offer Amount",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+      title: "View Lenders For this Loan",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
   ];
 
   return (
@@ -106,16 +105,15 @@ const Ninetydaysbucket = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Thirty days Borrower Loan Applications
-
+                  <h3 className="page-title">
+                    Thirty days Borrower Loan Applications
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                                                               Lender Loans Information
-
+                      Lender Loans Information
                     </li>
                   </ul>
                 </div>
@@ -127,53 +125,45 @@ const Ninetydaysbucket = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
-
-                  <div className="row">
-
-
-                  <div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Borrower ID
-      <span className="login-danger">*</span>
-    </label>
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the Start Date"
-    >
-        <option>-- Choose --</option>
-        <option>borrower ID</option>
-</select>
-  </div>
-</div>
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Borrower ID
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-    />
-
-  </div>
-</div>
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Borrower ID
+                            <span className="login-danger">*</span>
+                          </label>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the Start Date"
+                          >
+                            <option>-- Choose --</option>
+                            <option>borrower ID</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Borrower ID
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
 
                     <div>
                       <Table

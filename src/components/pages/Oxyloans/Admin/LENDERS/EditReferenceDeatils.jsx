@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 
-
-
-
 const EditReferenceDeatils = () => {
-
   return (
     <>
       <div className="main-wrapper">
@@ -26,13 +22,13 @@ const EditReferenceDeatils = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">   Reference Details</h3>
+                  <h3 className="page-title"> Reference Details</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                        Transaction Details
+                      Transaction Details
                     </li>
                   </ul>
                 </div>
@@ -42,17 +38,27 @@ const EditReferenceDeatils = () => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
-                  <div className="card-header">
-                  
-                  </div>
+                  <div className="card-header"></div>
                   <div className="card-body">
                     {/* <form> */}
                     <div className="row">
-
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          RefereeId :
+                            RefereeId :<span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            // placeholder="Enther the Borrower Id "
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            ReferrerId:
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -61,31 +67,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          ReferrerId:
-                            <span className="login-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            name="withdrawFeedback"
-                            className="form-control"
-                            // placeholder="Enther the Borrower Id "
-                          />
-
-
-                        </div>
-                      </div>
-                      <div className="col-12 col-sm-4">
-                        <div className="form-group local-forms">
-                          <label>
-                          Email :
-                            <span className="login-danger">*</span>
+                            Email :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="email"
@@ -93,14 +80,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                           MobileNumber :
+                            MobileNumber :
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -109,16 +94,13 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Name :
-                            <span className="login-danger">*</span>
+                            Name :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -126,15 +108,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          PrimaryType :
-                            <span className="login-danger">*</span>
+                            PrimaryType :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -142,15 +121,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          PrimaryType :
-                            <span className="login-danger">*</span>
+                            PrimaryType :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -158,16 +134,13 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
-                      
+
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          PrimaryType :
-                            <span className="login-danger">*</span>
+                            PrimaryType :<span className="login-danger">*</span>
                           </label>
                           <select
                             type="text"
@@ -179,17 +152,13 @@ const EditReferenceDeatils = () => {
                             <option>Lender</option>
                             <option>Borrower</option>
                           </select>
-
-
                         </div>
                       </div>
-
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Status :
-                            <span className="login-danger">*</span>
+                            Status :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -197,15 +166,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Amount :
-                            <span className="login-danger">*</span>
+                            Amount :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -213,14 +179,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Super Admin Comments
+                            Super Admin Comments
                             <span className="login-danger">*</span>
                           </label>
                           <select
@@ -228,20 +192,17 @@ const EditReferenceDeatils = () => {
                             name="withdrawFeedback"
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
-                          > 
-                          <option>Hold</option>
-                          <option>Approved</option></select>
-                      
-
-
+                          >
+                            <option>Hold</option>
+                            <option>Approved</option>
+                          </select>
                         </div>
                       </div>
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                           ReferredOn :
-                            <span className="login-danger">*</span>
+                            ReferredOn :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -249,16 +210,13 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          MailSubject :
-                            <span className="login-danger">*</span>
+                            MailSubject :<span className="login-danger">*</span>
                           </label>
                           <textarea
                             type="text"
@@ -266,15 +224,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           ></textarea>
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          MailContent :
-                            <span className="login-danger">*</span>
+                            MailContent :<span className="login-danger">*</span>
                           </label>
                           <textarea
                             type="text"
@@ -282,14 +237,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           ></textarea>
-
-
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Upload Transaction Screen Shot :
+                            Upload Transaction Screen Shot :
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -298,17 +251,12 @@ const EditReferenceDeatils = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="student-submit">
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                          >
-                              Fetch details
+                          <button type="button" className="btn btn-primary">
+                            Fetch details
                           </button>
                         </div>
                       </div>

@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const PoolingLendrs = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -63,7 +62,7 @@ const PoolingLendrs = () => {
 
   const columns = [
     {
-      title: "Lender Name",			
+      title: "Lender Name",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
@@ -78,10 +77,10 @@ const PoolingLendrs = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Interest Date For EveryMonth",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Interest Date For EveryMonth",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -96,15 +95,12 @@ const PoolingLendrs = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Pooling Lenders
-                  </h3>
+                  <h3 className="page-title">Pooling Lenders</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                  Hold Deal Users
-                    </li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>
@@ -115,11 +111,7 @@ const PoolingLendrs = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
-                  <div className="row">
-
-
-</div>
+                    <div className="row"></div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

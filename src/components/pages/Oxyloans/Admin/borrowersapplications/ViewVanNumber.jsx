@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const NewDisbursed = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -78,30 +77,30 @@ const NewDisbursed = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "BR ID & Name",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Loan Details",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Bank Details",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "BR documents",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Disbursed",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "BR ID & Name",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Loan Details",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Bank Details",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "BR documents",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Disbursed",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -116,15 +115,12 @@ const NewDisbursed = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">BORROWER VAN NUMBER
-                  </h3>
+                  <h3 className="page-title">BORROWER VAN NUMBER</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                  Hold Deal Users
-                    </li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>
@@ -135,36 +131,30 @@ const NewDisbursed = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Enter The borrower Id
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            // placeholder="Enter The borrower Id"
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="row">
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Enter The borrower Id 
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      // placeholder="Enter The borrower Id"
-    />
-   
-  </div>
-</div>
-</div>
-
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-        Submit
-    </button>
-  </div>
-</div>
+                    <div className="col-3">
+                      <div className="student-submit">
+                        <button type="button" className="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

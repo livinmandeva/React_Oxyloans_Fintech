@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const UploadedStatus = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -59,12 +58,11 @@ const UploadedStatus = () => {
           });
         })
       : "";
-
   }
 
   const columns = [
     {
-      title: "Borrower Name",			
+      title: "Borrower Name",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
@@ -79,35 +77,35 @@ const UploadedStatus = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Payment Type",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Paid Date",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Updated By",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "User Status",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Payment ScreenShot",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Verify",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Payment Type",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Paid Date",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Updated By",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "User Status",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Payment ScreenShot",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Verify",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -122,16 +120,12 @@ const UploadedStatus = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Uploaded Status Borrowers
-
-                  </h3>
+                  <h3 className="page-title">Uploaded Status Borrowers</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                  Hold Deal Users
-                    </li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>
@@ -142,57 +136,45 @@ const UploadedStatus = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            <span className="login-danger">*</span>
+                          </label>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            // placeholder="Enther the Borrower Id "
+                          >
+                            <option>Borrower Unique Number</option>
+                          </select>
+                        </div>
+                      </div>
 
-                  <div className="row">
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-  
-      <span className="login-danger">*</span>
-    </label>
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      // placeholder="Enther the Borrower Id "
-    >
-
-        <option>Borrower Unique Number</option>
-
-
-        </select>
-
-
-  </div>
-</div>
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Borrower Unique Number
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      // placeholder="Enther the Borrower Id "
-    />
-
-  </div>
-</div>
-<div className="col-4">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-        Fetch details
-    </button>
-  </div>
-</div>
-</div>
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Borrower Unique Number
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            // placeholder="Enther the Borrower Id "
+                          />
+                        </div>
+                      </div>
+                      <div className="col-4">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

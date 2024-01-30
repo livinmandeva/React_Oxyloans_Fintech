@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const FromDeal = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -61,7 +60,6 @@ const FromDeal = () => {
       : "";
   }
 
-  							
   const columns = [
     {
       title: "LR ID & Name",
@@ -74,29 +72,30 @@ const FromDeal = () => {
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
-      title: "Withdraw Amount",				
+      title: "Withdraw Amount",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Requested on",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Bank Details",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Withdrawal Statust",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },      {
-        title: "Actions",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Requested on",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Bank Details",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Withdrawal Statust",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Actions",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -111,16 +110,13 @@ const FromDeal = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                  Deal Withdrawal List
-                  </h3>
+                  <h3 className="page-title">Deal Withdrawal List</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
-                    Lender Withdrawal info
+                      Lender Withdrawal info
                     </li>
                   </ul>
                 </div>

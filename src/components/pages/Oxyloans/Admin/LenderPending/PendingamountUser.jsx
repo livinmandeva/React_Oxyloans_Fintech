@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const PendingamountUser = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -96,15 +95,12 @@ const PendingamountUser = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Search Fd Types
-                  </h3>
+                  <h3 className="page-title">Search Fd Types</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                                 Search Fd Types
-                    </li>
+                    <li className="breadcrumb-item active">Search Fd Types</li>
                   </ul>
                 </div>
               </div>
@@ -115,7 +111,6 @@ const PendingamountUser = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

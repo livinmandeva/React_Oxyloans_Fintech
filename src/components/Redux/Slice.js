@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  getUserDetails,
-  getuserMembershipValidity,
-} from "../HttpRequest/afterlogin";
+import { getUserDetails } from "../HttpRequest/afterlogin";
 
 export const fetchData = createAsyncThunk("fetchData", async () => {
   const response = getUserDetails().then((data) => data.data);

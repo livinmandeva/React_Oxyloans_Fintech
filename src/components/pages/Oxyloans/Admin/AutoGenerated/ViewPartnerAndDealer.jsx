@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const ViewPartnerAndDealer = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -69,7 +68,7 @@ const ViewPartnerAndDealer = () => {
     },
     {
       title: "User Type",
-      dataIndex: "TransactionNumber",       
+      dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
@@ -83,30 +82,30 @@ const ViewPartnerAndDealer = () => {
       sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
     },
     {
-        title: "CIBIL 400-500 ROI",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
-      {
-        title: "CIBIL 500-600 ROI",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
-      {
-        title: "CIBIL 600-700 ROI",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
-      {
-        title: "CIBIL 800-900 ROI",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
-      {
-        title: "Modify",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
+      title: "CIBIL 400-500 ROI",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+      title: "CIBIL 500-600 ROI",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+      title: "CIBIL 600-700 ROI",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+      title: "CIBIL 800-900 ROI",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+      title: "Modify",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
   ];
 
   return (
@@ -121,16 +120,13 @@ const ViewPartnerAndDealer = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">View Partners
-
-                  </h3>
+                  <h3 className="page-title">View Partners</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                                                               Lender Loans Information
-
+                      Lender Loans Information
                     </li>
                   </ul>
                 </div>
@@ -142,21 +138,15 @@ const ViewPartnerAndDealer = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
-
-                  <div className="row">
-
-<div className="col-3 mb-2">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                    <div className="row">
+                      <div className="col-3 mb-2">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
 
                     <div>
                       <Table

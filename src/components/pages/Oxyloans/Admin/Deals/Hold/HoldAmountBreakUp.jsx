@@ -82,15 +82,15 @@ const HoldAmountBreakUp = () => {
       sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
     },
     {
-        title: " Reason ",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
-      {
-        title: " Status",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
+      title: " Reason ",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
+    {
+      title: " Status",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
   ];
 
   return (
@@ -105,15 +105,12 @@ const HoldAmountBreakUp = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Hold Deal Users
-                  </h3>
+                  <h3 className="page-title">Hold Deal Users</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                  Hold Deal Users
-                    </li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function ViewListOfFds() {
-  return (
-    <div>ViewListOfFds</div>
-  )
+  return <div>ViewListOfFds</div>;
 }

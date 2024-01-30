@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const ClosedLoansByPlatform = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -61,7 +60,6 @@ const ClosedLoansByPlatform = () => {
       : "";
   }
 
-  							
   const columns = [
     {
       title: "Loan ID",
@@ -79,40 +77,40 @@ const ClosedLoansByPlatform = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Borrower ID",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Loan Amount	ROI",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Tenure",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Emi's Paid",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Due Amount",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Profit",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Agreement",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Borrower ID",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Loan Amount	ROI",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Tenure",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Emi's Paid",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Due Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Profit",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Agreement",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -127,16 +125,13 @@ const ClosedLoansByPlatform = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                  Lender Transaction
-                  </h3>
+                  <h3 className="page-title">Lender Transaction</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
-                     Lender Transaction
+                      Lender Transaction
                     </li>
                   </ul>
                 </div>
@@ -148,54 +143,47 @@ const ClosedLoansByPlatform = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
-                  <div className="row">
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    {/* <label>
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          {/* <label>
     Date Range
       <span className="login-danger">*</span>
     </label> */}
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the LENDER ID "
-    >
-        <option>-- Choose --</option>
-        <option>Loan Id</option>
-        </select>
-  </div>
-</div>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the LENDER ID "
+                          >
+                            <option>-- Choose --</option>
+                            <option>Loan Id</option>
+                          </select>
+                        </div>
+                      </div>
 
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Date Range
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the Start Date"
-    />
-
-  </div>
-</div>
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Date Range
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the Start Date"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

@@ -8,7 +8,6 @@ import Sidebar from "../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../Pagination";
 import { getMembershiphistory } from "../../../HttpRequest/afterlogin";
 
-
 const Lenderwalletamountdetails = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -83,10 +82,10 @@ const Lenderwalletamountdetails = () => {
       sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
     },
     {
-        title: "status",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
+      title: "status",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
   ];
 
   return (
@@ -101,15 +100,12 @@ const Lenderwalletamountdetails = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Lenders Transactions History
-                  </h3>
+                  <h3 className="page-title">Lenders Transactions History</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                                 Search Fd Types
-                    </li>
+                    <li className="breadcrumb-item active">Search Fd Types</li>
                   </ul>
                 </div>
               </div>
@@ -120,14 +116,17 @@ const Lenderwalletamountdetails = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
+                    <div className="row"></div>
 
-                  <div className="row">
-
-</div>
-
-<div>
-    <p><strong>Note:</strong> Our immediate goal is to showcase your wallet transactions, interest earnings, principal returns and principal return upon withdrawal request. In the Future, We will be adding much more meaningful details and map them to Running Loans.</p>
-</div>
+                    <div>
+                      <p>
+                        <strong>Note:</strong> Our immediate goal is to showcase
+                        your wallet transactions, interest earnings, principal
+                        returns and principal return upon withdrawal request. In
+                        the Future, We will be adding much more meaningful
+                        details and map them to Running Loans.
+                      </p>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

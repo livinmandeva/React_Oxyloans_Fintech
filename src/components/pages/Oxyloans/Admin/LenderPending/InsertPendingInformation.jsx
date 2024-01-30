@@ -4,10 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 
-
-
 const InsertPendingInformation = () => {
-
   return (
     <>
       <div className="main-wrapper">
@@ -25,13 +22,13 @@ const InsertPendingInformation = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">  Lender pending Amount </h3>
+                  <h3 className="page-title"> Lender pending Amount </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                    Lender pending Amount
+                      Lender pending Amount
                     </li>
                   </ul>
                 </div>
@@ -41,14 +38,11 @@ const InsertPendingInformation = () => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
-                  <div className="card-header">
-                  
-                  </div>
+                  <div className="card-header"></div>
                   <div className="card-body">
                     {/* <form> */}
                     {/* <h3 className="mb-3">Fill the Details</h3> */}
                     <div className="row">
-
                       {/* <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
@@ -66,8 +60,7 @@ const InsertPendingInformation = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          User Id :
-                            <span className="login-danger">*</span>
+                            User Id :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -80,8 +73,7 @@ const InsertPendingInformation = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Amount Type :
-                            <span className="login-danger">*</span>
+                            Amount Type :<span className="login-danger">*</span>
                           </label>
                           <select
                             type="text"
@@ -89,19 +81,17 @@ const InsertPendingInformation = () => {
                             className="form-control"
                             placeholder="Enther the  Amount Type"
                           >
-
                             <option>LENDER INTEREST</option>
                             <option>LENDER PRINCIPAL</option>
                             <option>REFERRAL BONUS</option>
-                            
-                            </select>
+                          </select>
                         </div>
                       </div>
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Amount:
+                            Amount:
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -116,8 +106,7 @@ const InsertPendingInformation = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          deal Id :
-                            <span className="login-danger">*</span>
+                            deal Id :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -131,7 +120,7 @@ const InsertPendingInformation = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Reason:
+                            Reason:
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -146,8 +135,7 @@ const InsertPendingInformation = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Amount Type :
-                            <span className="login-danger">*</span>
+                            Amount Type :<span className="login-danger">*</span>
                           </label>
                           <select
                             type="text"
@@ -155,20 +143,17 @@ const InsertPendingInformation = () => {
                             className="form-control"
                             placeholder="Enther the Borrower Id "
                           >
-
                             <option>DISBURSMENT</option>
                             <option>LENDER PRINCIPAL</option>
                             <option>RE PAYMENT</option>
-                            
-                            </select>
+                          </select>
                         </div>
                       </div>
-
 
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          No Of Days:
+                            No Of Days:
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -182,11 +167,8 @@ const InsertPendingInformation = () => {
 
                       <div className="col-12">
                         <div className="student-submit">
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                          >
-                              submit
+                          <button type="button" className="btn btn-primary">
+                            submit
                           </button>
                         </div>
                       </div>

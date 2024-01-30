@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 
-
-
-
 const Lenderstatistics = () => {
-
   return (
     <>
       <div className="main-wrapper">
@@ -26,13 +22,13 @@ const Lenderstatistics = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">  Transaction Details </h3>
+                  <h3 className="page-title"> Transaction Details </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                        Transaction Details
+                      Transaction Details
                     </li>
                   </ul>
                 </div>
@@ -42,18 +38,14 @@ const Lenderstatistics = () => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
-                  <div className="card-header">
-                  
-                  </div>
+                  <div className="card-header"></div>
                   <div className="card-body">
                     {/* <form> */}
                     <div className="row">
-
-
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          Lender ID:
+                            Lender ID:
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -62,18 +54,13 @@ const Lenderstatistics = () => {
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
-
-
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="student-submit">
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                          >
-                              Fetch details
+                          <button type="button" className="btn btn-primary">
+                            Fetch details
                           </button>
                         </div>
                       </div>

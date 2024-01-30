@@ -3,12 +3,10 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
-
 import Sidebar from "../../../../../SideBar/AdminSidebar";
 import Header from "../../../../../Header/Header";
 
 const HoldAmountRequest = () => {
-
   return (
     <>
       <div className="main-wrapper">
@@ -26,14 +24,12 @@ const HoldAmountRequest = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">  Hold Deal Amount </h3>
+                  <h3 className="page-title"> Hold Deal Amount </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                    Hold Deal Amount
-                    </li>
+                    <li className="breadcrumb-item active">Hold Deal Amount</li>
                   </ul>
                 </div>
               </div>
@@ -42,18 +38,14 @@ const HoldAmountRequest = () => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
-                  <div className="card-header">
-                  
-                  </div>
+                  <div className="card-header"></div>
                   <div className="card-body">
                     {/* <form> */}
                     <div className="row">
-
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          LENDER ID :
-                            <span className="login-danger">*</span>
+                            LENDER ID :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -66,8 +58,7 @@ const HoldAmountRequest = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          DEAL ID :
-                            <span className="login-danger">*</span>
+                            DEAL ID :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -80,8 +71,7 @@ const HoldAmountRequest = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          HOLD AMOUNT :
-                            <span className="login-danger">*</span>
+                            HOLD AMOUNT :<span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
@@ -94,7 +84,7 @@ const HoldAmountRequest = () => {
                       <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                          COMMENTS:
+                            COMMENTS:
                             <span className="login-danger">*</span>
                           </label>
                           <textarea
@@ -102,18 +92,13 @@ const HoldAmountRequest = () => {
                             name="withdrawFeedback"
                             className="form-control"
                             placeholder="Enther the COMMENTS"
-                            
-                          >
-                            </textarea>
+                          ></textarea>
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="student-submit">
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                          >
+                          <button type="button" className="btn btn-primary">
                             process
                           </button>
                         </div>

@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const SearchfdUsers = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -83,10 +82,10 @@ const SearchfdUsers = () => {
       sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
     },
     {
-        title: " Edit ",
-        dataIndex: "PaidThrough",
-        sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-      },
+      title: " Edit ",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
+    },
   ];
 
   return (
@@ -101,15 +100,12 @@ const SearchfdUsers = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Search Fd Types
-                  </h3>
+                  <h3 className="page-title">Search Fd Types</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                                                 Search Fd Types
-                    </li>
+                    <li className="breadcrumb-item active">Search Fd Types</li>
                   </ul>
                 </div>
               </div>
@@ -120,42 +116,35 @@ const SearchfdUsers = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
+                    <div className="row">
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Search User Id :
+                            <span className="login-danger">*</span>
+                          </label>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the LENDER ID "
+                          >
+                            <option>select</option>
+                            <option>FD TYPE</option>
+                            <option>Consultancy</option>
+                            <option>Bank</option>
+                          </select>
+                        </div>
+                      </div>
 
-                  <div className="row">
-
-<div className="col-12 col-sm-4">
-  <div className="form-group local-forms">
-    <label>
-    Search  User Id :
-      <span className="login-danger">*</span>
-    </label>
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the LENDER ID "
-    >
-       <option >select</option> 
-       <option >FD TYPE</option> 
-       <option >Consultancy</option> 
-       <option >Bank</option> 
-       
-        </select>
-  </div>
-</div>
-
-
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                      <div className="col-3">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

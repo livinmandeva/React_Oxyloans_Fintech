@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const LendersInAllEquityDeals = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -61,7 +60,6 @@ const LendersInAllEquityDeals = () => {
       : "";
   }
 
-  							
   const columns = [
     {
       title: "Lender Id",
@@ -74,25 +72,25 @@ const LendersInAllEquityDeals = () => {
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
     },
     {
-      title: "Lender Group Id",				
+      title: "Lender Group Id",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Deal Id",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Deal Name",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Participated Amount",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Deal Id",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Deal Name",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Participated Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -107,16 +105,13 @@ const LendersInAllEquityDeals = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                  Lender Transaction
-                  </h3>
+                  <h3 className="page-title">Lender Transaction</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
-                     Lender Transaction
+                      Lender Transaction
                     </li>
                   </ul>
                 </div>

@@ -3,7 +3,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { login } from "../../imagepath";
-import { loginapi } from "./api";
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";

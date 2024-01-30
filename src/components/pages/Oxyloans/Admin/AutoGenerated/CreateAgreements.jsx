@@ -8,9 +8,7 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const CreateAgreements = () => {
-    
   return (
     <>
       <div className="main-wrapper">
@@ -23,15 +21,12 @@ const CreateAgreements = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                    Generate Auto Agreements
-                  </h3>
+                  <h3 className="page-title">Generate Auto Agreements</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                     
                       Generate Auto Agreements
                     </li>
                   </ul>
@@ -44,51 +39,43 @@ const CreateAgreements = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
-                  <div className="row">
-
-
-                  <div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Lender ID 
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the Start Date"
-    />
-
-  </div>
-</div>
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    First Month Interest Date
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the Start Date"
-    />
-
-  </div>
-</div>
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Lender ID
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the Start Date"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            First Month Interest Date
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the Start Date"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

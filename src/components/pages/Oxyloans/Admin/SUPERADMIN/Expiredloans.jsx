@@ -8,7 +8,6 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
 
-
 const Expiredloans = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
@@ -61,7 +60,6 @@ const Expiredloans = () => {
       : "";
   }
 
-  							
   const columns = [
     {
       title: "Application ID",
@@ -69,7 +67,6 @@ const Expiredloans = () => {
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
     },
     {
-    
       title: "Borrower Name",
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
@@ -80,20 +77,20 @@ const Expiredloans = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-        title: "Paid EMI",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Borrower EMail",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
-      {
-        title: "Paid Date",
-        dataIndex: "Amount",
-        sorter: (a, b) => a.Amount - b.Amount,
-      },
+      title: "Paid EMI",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Borrower EMail",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Paid Date",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+    },
   ];
 
   return (
@@ -108,18 +105,12 @@ const Expiredloans = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title"> 
-                  Paid Borrowers
-                  </h3>
+                  <h3 className="page-title">Paid Borrowers</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">
-                     
-                    Paid Borrowers
-
-                    </li>
+                    <li className="breadcrumb-item active">Paid Borrowers</li>
                   </ul>
                 </div>
               </div>
@@ -130,54 +121,47 @@ const Expiredloans = () => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-body">
-
-                  <div className="row">
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    {/* <label>
+                    <div className="row">
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          {/* <label>
     Date Range
       <span className="login-danger">*</span>
     </label> */}
-    <select
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the LENDER ID "
-    >
-        <option>-- Choose --</option>
-        <option>Loan Id</option>
-        </select>
-  </div>
-</div>
+                          <select
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the LENDER ID "
+                          >
+                            <option>-- Choose --</option>
+                            <option>Loan Id</option>
+                          </select>
+                        </div>
+                      </div>
 
-
-<div className="col-12 col-sm-3">
-  <div className="form-group local-forms">
-    <label>
-    Date Range
-      <span className="login-danger">*</span>
-    </label>
-    <input
-      type="text"
-      name="withdrawFeedback"
-      className="form-control"
-      placeholder="Enther the Start Date"
-    />
-
-  </div>
-</div>
-<div className="col-3">
-  <div className="student-submit">
-    <button
-      type="button"
-      className="btn btn-primary"
-    >
-      Fetch Deatils
-    </button>
-  </div>
-</div>
-</div>
+                      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                            Date Range
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            placeholder="Enther the Start Date"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-3">
+                        <div className="student-submit">
+                          <button type="button" className="btn btn-primary">
+                            Fetch Deatils
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function SearchfdUsers() {
-  return (
-    <div>SearchfdUsers</div>
-  )
+  return <div>SearchfdUsers</div>;
 }
