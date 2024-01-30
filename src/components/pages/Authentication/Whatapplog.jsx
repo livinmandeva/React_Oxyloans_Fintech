@@ -193,7 +193,10 @@ const Whatapplog = () => {
                         {/* <Link to="#">
                           <i className="fab fa-google-plus-g" />
                         </Link> */}
-                        <Link to="/whatapplogin">
+                        <Link
+                          to="/whatapplogin"
+                          className="bg-success text-white"
+                        >
                           <i className="fa fa-whatsapp" />
                         </Link>
                         {/* <Link to="#">
