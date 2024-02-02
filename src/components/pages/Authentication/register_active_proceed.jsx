@@ -87,12 +87,12 @@ const Register_active_proceed = () => {
     if (isvalid) {
       setdata({
         ...data,
-        isbtnvalid: true,
+        isbtnvalid: false,
       });
     } else {
       setdata({
         ...data,
-        isbtnvalid: false,
+        isbtnvalid: true,
       });
     }
   }, [data.address, data.date, data.pannumber]);

@@ -667,7 +667,7 @@ const Profile = () => {
                       {reduxStoreData.groupName != "NewLender" && (
                         <div className="user-Location my-1">
                           <i className="fa-solid fa-calendar-days" /> Validity :
-                          {reduxStoreDataDashboard.validityDate}
+                          {reduxStoreDataDashboard?.validityDate}
                         </div>
                       )}
                     </div>
@@ -962,7 +962,7 @@ const Profile = () => {
                                   onChange={handlebankchange}
                                   placeholder=" Enter your IFSC Code"
                                   maxLength={12}
-                                  value={bankaccountprofile.ifscCode.toUpperCase()}
+                                  value={bankaccountprofile.ifscCode}
                                 />
                                 {bankaccountprofile.ifscCodeerror && (
                                   <div className="text-danger">
@@ -1196,7 +1196,7 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Nominee IFSC Code"
-                                    value={nomineeDetails.nomineeIfsc.toUpperCase()}
+                                    value={nomineeDetails.nomineeIfsc}
                                     name="nomineeIfsc"
                                     onChange={handlerNominee}
                                   />

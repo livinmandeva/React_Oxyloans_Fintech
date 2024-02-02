@@ -323,43 +323,38 @@ const AdminDashboard = () => {
   //   },
   // });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await chatapi(); // Assuming chatapi() is an async function that fetches data
-        if (response && response.data) {
-          const data = response.data;
-          //  const data1= response.data.data.totalInvestment +
-          //   response.data.data.participatedStudentDeals
-          //    +  response.data.data.participatedEscrowDeals
-          //    + response.data.data.participatedNormalDeals
-          //    ;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await chatapi();
+  //       if (response && response.data) {
+  //         const data = response.data;
 
-          SetDistributedColumns((prevColumns) => ({
-            ...prevColumns,
-            series: [
-              {
-                name: "",
-                data: [
-                  data.totalInvestment +
-                    data.participatedStudentDeals +
-                    data.participatedEscrowDeals +
-                    data.participatedNormalDeals,
-                  data.participatedStudentDeals,
-                  data.participatedEscrowDeals,
-                  data.participatedNormalDeals,
-                ],
-              },
-            ],
-          }));
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //         SetDistributedColumns((prevColumns) => ({
+  //           ...prevColumns,
+  //           series: [
+  //             {
+  //               name: "",
+  //               data: [
+  //                 data.totalInvestment +
+  //                   data.participatedStudentDeals +
+  //                   data.participatedEscrowDeals +
+  //                   data.participatedNormalDeals,
+  //                 data.participatedStudentDeals,
+  //                 data.participatedEscrowDeals,
+  //                 data.participatedNormalDeals,
+  //               ],
+  //             },
+  //           ],
+  //         }));
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData(); // Fetch data when the component mounts
-  }, []); // Empty dependency array ensures this effect runs once
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const response = chatapi();
@@ -1021,7 +1016,7 @@ const AdminDashboard = () => {
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-8">
-                        <h6 className="card-title">Deal Activity Amount</h6>
+                        <h6 className="card-title">Deal Activities Amount</h6>
                       </div>
                     </div>
                   </div>
