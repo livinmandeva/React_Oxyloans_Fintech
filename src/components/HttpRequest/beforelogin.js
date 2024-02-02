@@ -106,8 +106,6 @@ export const sendwhatappotp = async (value1) => {
   return response;
 };
 export const referrerdata = (referrerId, refParam) => {
-  console.log(referrerId);
-
   const numericPart = referrerId.match(/\d+$/);
 
   if (referrerId !== "") {
@@ -160,7 +158,6 @@ export const usersubmitotp = async (email, password) => {
 };
 
 export const verifywhatappotp = async (api) => {
-  console.log(api);
   const value1 = localStorage.getItem("otp");
   const otp = value1.replace(/,/g, "");
   const data = {

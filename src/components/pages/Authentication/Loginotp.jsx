@@ -5,6 +5,7 @@ import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
+import { WarningBackendApi } from "../Base UI Elements/SweetAlert";
 
 import { handlesenOtp, usersubmitotp } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
@@ -60,10 +61,10 @@ const Loginotp = () => {
     } else {
       let { email, password } = userLogInInfo;
       const retriveresponse = await usersubmitotp(email, password);
-      console.log(retriveresponse.request.status);
+
       if (retriveresponse.request.status == 200) {
         toastrSuccess("Login Suceess !");
-        console.log(retriveresponse);
+
         sessionStorage.setItem("userId", retriveresponse.data.id);
         sessionStorage.setItem(
           "tokenTime",
@@ -90,11 +91,8 @@ const Loginotp = () => {
       }));
     } else {
       if (userLogInInfo.email.length === 10) {
-        console.log("10 digit");
         const response = await handlesenOtp(userLogInInfo.email);
         console.log(response);
-        console.log(response.data.id);
-
         if (response.request.status == 200) {
           if (response.data.id) {
             sessionStorage.setItem("userId", response.data.id);
@@ -103,6 +101,11 @@ const Loginotp = () => {
             ...userLogInInfo,
             sentotp: true,
           });
+        } else {
+          WarningBackendApi(
+            response.response.data.errorCode,
+            response.response.data.errorMessage
+          );
         }
       } else {
         setUserLoginInfo((prevState) => ({
@@ -134,7 +137,7 @@ const Loginotp = () => {
                   <p className="account-subtitle">
                     Need an account? <Link to="/register">Sign Up</Link>
                   </p>
-                  <h2>Sign in</h2>
+                  <h2>LogIn With Otp</h2>
 
                   <div className="form-group">
                     <label htmlFor="userloginusername">
@@ -143,10 +146,11 @@ const Loginotp = () => {
                     </label>
                     <input
                       className="form-control"
-                      type="number"
+                      type="tel"
                       value={userLogInInfo.email}
                       name="email"
                       onChange={handlechange}
+                      maxLength={10}
                       id="userloginusername"
                       required
                     />
@@ -205,7 +209,7 @@ const Loginotp = () => {
                         <span className="checkmark" />
                       </label>
                     </div>
-                    <Link to="/forgotpassword1">Forgot Password?</Link>
+                    <Link to="/forgotpassword">Forgot Password?</Link>
                   </div>
                   <div className="form-group">
                     {userLogInInfo.sentotp ? (

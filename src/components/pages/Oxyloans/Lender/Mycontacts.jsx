@@ -112,14 +112,13 @@ const Mycontacts = () => {
       sorter: (a, b) => a.Email.length - b.Email.length,
     },
     {
-      title: "ContactName",
+      title: "Contact Name",
       dataIndex: "ContactName",
       sorter: (a, b) => a.ContactName.length - b.ContactName.length,
     },
     {
       title: "Invite",
       dataIndex: "Invite",
-      sorter: (a, b) => a.Invite.length - b.Invite.length,
     },
 
     ,
@@ -151,8 +150,6 @@ const Mycontacts = () => {
       ...message,
       email: combinedEmails,
     });
-
-    console.log(combinedEmails);
   };
 
   const handlesendInvaite = () => {
@@ -161,9 +158,7 @@ const Mycontacts = () => {
       message.emailcontent,
       message.emailsubject
     );
-    response.then((data) => {
-      console.log(data);
-    });
+    response.then((data) => {});
   };
 
   return (
@@ -185,9 +180,9 @@ const Mycontacts = () => {
                   <h3 className="page-title">My Gmail Contacts</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Salary</li>
+                    <li className="breadcrumb-item active">My Contact</li>
                   </ul>
                 </div>
               </div>
@@ -209,7 +204,8 @@ const Mycontacts = () => {
                             className="btn btn-outline-primary me-2"
                             onClick={handlesendInvaite}
                           >
-                            <i class="fa-solid fa-share mx-1"></i> Send Invite
+                            <i className="fa-solid fa-share mx-1"></i> Send
+                            Invite
                           </Link>
 
                           <Button
@@ -221,15 +217,15 @@ const Mycontacts = () => {
                               <>De select All</>
                             ) : (
                               <>
-                                <i class="fa-solid fa-share mx-1"></i> Invite
-                                All
+                                <i className="fa-solid fa-share mx-1"></i>{" "}
+                                Invite All
                               </>
                             )}
                           </Button>
 
                           <button
                             type="button"
-                            class="btn btn-primary"
+                            className="btn btn-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
                           >
@@ -267,28 +263,28 @@ const Mycontacts = () => {
           <Footer />
         </div>
         <div
-          class="modal fade"
+          className="modal fade"
           id="exampleModal"
           tabindex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
           {/* <div class="modal-dialog modal-md"> */}
-          <div class="modal-dialog modal-md">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">
+          <div className="modal-dialog modal-md">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">
                   {" "}
                   Here is the email invitation preview
                 </h1>
                 <button
                   type="button"
-                  class="btn-close"
+                  className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
+              <div className="modal-body">
                 <p>
                   Subject:- {userName} || OxyLoans - Interesting FinTech
                   Platform
@@ -339,10 +335,10 @@ const Mycontacts = () => {
                 <p>Thanks & Regards,</p>
                 {/* <p>JOHN DOE DOE.</p> */}
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close

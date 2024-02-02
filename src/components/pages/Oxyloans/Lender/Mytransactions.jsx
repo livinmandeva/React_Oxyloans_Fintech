@@ -45,8 +45,6 @@ const Mytransactions = () => {
     return () => {};
   }, [mytransactions.pageNo, mytransactions.pageSize]);
 
-  console.log(mytransactions);
-
   const datasource = [];
   {
     mytransactions.apiData != ""

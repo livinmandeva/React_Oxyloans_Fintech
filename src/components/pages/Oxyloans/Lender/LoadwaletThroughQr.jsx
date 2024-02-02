@@ -106,13 +106,13 @@ const LoadwaletThroughQr = () => {
                 <div className="col-sm-12">
                   <div className="page-sub-header">
                     <h3 className="page-title">
-                      Load Your wallet with QR Scan
+                      Top Up Your Wallet with a QR Scanner
                     </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/dashboard">DashBoard</Link>
+                        <Link to="/dashboard">Dashboard</Link>
                       </li>
-                      <li className="breadcrumb-item active">QR Code</li>
+                      <li className="breadcrumb-item active">QR Scanner</li>
                     </ul>
                   </div>
                 </div>
@@ -128,7 +128,7 @@ const LoadwaletThroughQr = () => {
                           <div className="heading-detail">
                             <h4>
                               <i className="fa-solid fa-qrcode"></i> Load Your
-                              wallet with QR Scan
+                              wallet with a QR Scanner
                             </h4>
                           </div>
 

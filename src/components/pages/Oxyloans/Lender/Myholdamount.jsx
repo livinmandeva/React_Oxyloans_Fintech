@@ -50,7 +50,7 @@ const Myholdamount = () => {
     {
       title: "Extra amount",
       dataIndex: "Extraamount",
-      sorter: (a, b) => a.Extraamount.length - b.Extraamount.length,
+      sorter: (a, b) => a.Extraamount - b.Extraamount,
     },
     {
       title: "Extra paid details",

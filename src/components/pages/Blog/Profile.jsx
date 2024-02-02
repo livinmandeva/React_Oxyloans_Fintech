@@ -42,7 +42,7 @@ const Profile = () => {
 
   const [dashboarddata, setdashboarddata] = useState({
     sendotpbtn: true,
-    sendotpbtnText: "Send Otp",
+    sendotpbtnText: "Send OTP",
     sendOtpsession: "",
     verifyotp: false,
     verifyotpText: "Verify",
@@ -131,6 +131,7 @@ const Profile = () => {
     nomineecity: "",
     copyerror: "",
     isdeatail: false,
+    isbtndisable: true,
   });
 
   const [kyc, setKyc] = useState({
@@ -173,24 +174,40 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (
-      nomineeDetails.nomineeName != "" &&
-      nomineeDetails.relation != "" &&
-      nomineeDetails.nomineeEmail != "" &&
-      nomineeDetails.nomineeMobile != "" &&
+    const isvalid =
       nomineeDetails.accountNo != "" &&
-      nomineeDetails.nomineeIfsc != "" &&
       nomineeDetails.bank != "" &&
       nomineeDetails.branch != "" &&
-      nomineeDetails.nomineecity != ""
-    ) {
-      console.log("all fileds are success");
+      nomineeDetails.nomineeEmail != "" &&
+      nomineeDetails.nomineeIfsc != "" &&
+      nomineeDetails.nomineeMobile != "" &&
+      nomineeDetails.nomineeName != "" &&
+      nomineeDetails.relation != "" &&
+      nomineeDetails.city != "";
+    if (isvalid) {
       setnomineeDetails({
         ...nomineeDetails,
+        isbtndisable: false,
         isdeatail: true,
       });
+    } else {
+      setnomineeDetails({
+        ...nomineeDetails,
+        isbtndisable: true,
+      });
     }
-  }, [nomineeDetails.nomineeName]);
+  }, [
+    nomineeDetails.accountNo,
+    nomineeDetails.bank,
+    nomineeDetails.branch,
+    nomineeDetails.nomineeEmail,
+    nomineeDetails.nomineeIfsc,
+    nomineeDetails.nomineeMobile,
+    nomineeDetails.nomineeName,
+    nomineeDetails.relation,
+    nomineeDetails.city,
+  ]);
+
   const savebankdetailsProfile = () => {
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
@@ -222,8 +239,6 @@ const Profile = () => {
     const response = verifyBankAccountAndIfsc(bankaccountprofile);
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
-
         if (data.data.status == "SUCCESS") {
           setdashboarddata({
             ...dashboarddata,
@@ -252,7 +267,6 @@ const Profile = () => {
     const response = uploadkyc(event);
     response
       .then((data) => {
-        console.log(data);
         if (data && data.request && data.request.status === 200) {
           setKyc((prevKyc) => ({
             ...prevKyc,
@@ -367,7 +381,6 @@ const Profile = () => {
   };
 
   const sendotp = async () => {
-    console.log(bankaccountprofile.nameAtBank);
     if (
       (bankaccountprofile.nameAtBank === "" ||
         bankaccountprofile.nameAtBank === null) &&
@@ -386,7 +399,6 @@ const Profile = () => {
       (bankaccountprofile.moblieNumbererror === "" ||
         bankaccountprofile.moblieNumber === null)
     ) {
-      console.log("true");
       setBankaccountProfile((stateconta) => ({
         ...stateconta,
         moblieNumbererror:
@@ -412,7 +424,6 @@ const Profile = () => {
         // Add other error messages as needed
       }));
     } else {
-      console.log("false");
       const response = sendMoblieOtp(bankaccountprofile);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -420,7 +431,7 @@ const Profile = () => {
             ...dashboarddata,
             sendotpbtn: true,
             verifyotp: true,
-            sendotpbtnText: "ReSend Otp",
+            sendotpbtnText: "ReSend OTP",
             sendOtpsession: data.data.mobileOtpSession,
             isValid: true,
           });
@@ -467,7 +478,6 @@ const Profile = () => {
     const nomineresponse = loadlendernomineeDetails();
     nomineresponse.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
         setnomineeDetails({
           ...nomineeDetails,
           nomineeName: data.data.name == null ? "" : data.data.name,
@@ -488,7 +498,6 @@ const Profile = () => {
 
   useEffect(() => {
     getUserDetails().then((data) => {
-      console.log(data.data);
       localStorage.setItem("userType", data.data.userDisplayId);
       setdashboarddata({
         ...dashboarddata,
@@ -575,7 +584,6 @@ const Profile = () => {
       });
   }, [kyc.isValid]);
 
-  // console.log(kyc);
   return (
     <>
       <div className="main-wrapper">
@@ -819,7 +827,7 @@ const Profile = () => {
                         <div className="card">
                           <div className="card-body">
                             <h5 className="card-title d-flex justify-content-between">
-                              <span>Kyc </span>
+                              <span>KYC </span>
                               <Link
                                 className="edit-link"
                                 to="#"
@@ -895,7 +903,7 @@ const Profile = () => {
                                   name="accountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your Account Number"
-                                  maxLength={14}
+                                  maxLength={18}
                                   value={bankaccountprofile.accountNumber}
                                 />
                                 {bankaccountprofile.accountNumbererror && (
@@ -954,7 +962,7 @@ const Profile = () => {
                                   onChange={handlebankchange}
                                   placeholder=" Enter your IFSC Code"
                                   maxLength={12}
-                                  value={bankaccountprofile.ifscCode}
+                                  value={bankaccountprofile.ifscCode.toUpperCase()}
                                 />
                                 {bankaccountprofile.ifscCodeerror && (
                                   <div className="text-danger">
@@ -1029,11 +1037,12 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="text"
+                                  type="tel"
                                   className="form-control"
                                   name="moblieNumber"
                                   placeholder=" Enter your Mobile Number"
                                   onChange={handlebankchange}
+                                  maxLength={10}
                                   value={bankaccountprofile.moblieNumber}
                                 />
                                 {bankaccountprofile.moblieNumbererror && (
@@ -1187,7 +1196,7 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Nominee IFSC Code"
-                                    value={nomineeDetails.nomineeIfsc}
+                                    value={nomineeDetails.nomineeIfsc.toUpperCase()}
                                     name="nomineeIfsc"
                                     onChange={handlerNominee}
                                   />
@@ -1240,6 +1249,7 @@ const Profile = () => {
                                   <button
                                     className="btn btn-success col-12 col-md-2"
                                     type="submit"
+                                    disabled={nomineeDetails.isbtndisable}
                                   >
                                     Save
                                   </button>
@@ -1352,7 +1362,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type={userProfile.dob == "" ? "date" : ""}
+                                  type={userProfile.dob == "" ? "date" : "text"}
                                   className="form-control "
                                   onChange={handlechange}
                                   value={userProfile.dob}
@@ -1391,7 +1401,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="text"
+                                  type="tel"
                                   maxLength={10}
                                   className="form-control"
                                   placeholder="Enter Mobile Name"
@@ -1412,7 +1422,7 @@ const Profile = () => {
                                 </label>
                                 <input
                                   type="tel"
-                                  maxLength={10}
+                                  maxLength={12}
                                   className="form-control"
                                   placeholder="Enter WhatsApp "
                                   onChange={handlechange}
@@ -1607,7 +1617,7 @@ const Profile = () => {
                   <div id="uploadKyc_tab" className="tab-pane fade Kyc">
                     <div className="card">
                       <div className="card-body">
-                        <h5 className="card-title">Upload Kyc</h5>
+                        <h5 className="card-title">Upload KYC</h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
                             <div className="row mt-3">
@@ -1676,7 +1686,7 @@ const Profile = () => {
                                 ) : (
                                   <h6 className="settings-size text-warning">
                                     <i className="fa-solid fa-upload mx-lg-1 "></i>
-                                    <small>Upload Cheque</small>
+                                    <small>Upload Cheque Leaf</small>
                                   </h6>
                                 )}
                               </div>
@@ -1709,7 +1719,7 @@ const Profile = () => {
                                 ) : (
                                   <h6 className="settings-size text-warning">
                                     <i className="fa-solid fa-upload mx-lg-1 "></i>
-                                    <small>Upload Aadhar</small>
+                                    <small>Upload Aadhaar</small>
                                   </h6>
                                 )}
                               </div>
@@ -1742,7 +1752,7 @@ const Profile = () => {
                                 ) : (
                                   <h6 className="settings-size text-warning">
                                     <i className="fa-solid fa-upload mx-lg-1 "></i>
-                                    <small>Upload License</small>
+                                    <small>Upload Driving License</small>
                                   </h6>
                                 )}
                               </div>

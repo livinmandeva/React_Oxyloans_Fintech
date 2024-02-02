@@ -53,7 +53,6 @@ export default function Modall({ data, open: propOpen }) {
           ]
         }
       >
-        {console.log(data)}
         {/* Interest Statement */}
         <p>
           If you've any queries please write to us <a href="">Click Here</a>{" "}

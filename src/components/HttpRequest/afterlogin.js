@@ -1,6 +1,5 @@
 import axios from "axios";
 const userisIn = "prod";
-
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -23,6 +22,7 @@ export const loadVirtualAccount = () => {
     userId,
   };
 };
+
 const getuserLoginId = getUserId();
 const getUserLoginToken = getToken();
 
@@ -197,7 +197,6 @@ export const handlecashapi = async (groupId, amount) => {
     dealId: groupId,
   };
 
-  console.log(data);
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/cashfree`,
@@ -243,7 +242,6 @@ export const myrunnig = async (props) => {
   const token = getToken();
   const userId = getUserId();
 
-  console.log(props);
   const data = {
     pageNo: props.pageNo,
     pageSize: 10,
@@ -279,8 +277,16 @@ export const profileupadate = async (userProfile) => {
   const userId = getUserId();
 
   var dateComponents = userProfile.dob.split("-");
-  var formattedDate =
+  let formattedDate =
     dateComponents[2] + "/" + dateComponents[1] + "/" + dateComponents[0];
+
+  if (formattedDate.includes("undefined/undefined/")) {
+    let startIndex =
+      formattedDate.indexOf("undefined/undefined/") +
+      "undefined/undefined/".length;
+    formattedDate = formattedDate.substring(startIndex);
+    console.log(formattedDate);
+  }
 
   const data = JSON.stringify({
     firstName: userProfile.firstName,
@@ -510,7 +516,7 @@ export const updatebankDetails = async (bankaccountprofile) => {
     bankName: bankaccountprofile.bankName,
     branchName: bankaccountprofile.branchName,
     confirmAccountNumber: bankaccountprofile.confirmAccountNumber,
-    ifscCode: bankaccountprofile.ifscCode,
+    ifscCode: bankaccountprofile.ifscCode.toUpperCase(),
     mobileOtp: bankaccountprofile.mobileOtp,
     mobileOtpSession: bankaccountprofile.mobileOtpSession,
     userName: bankaccountprofile.nameAtBank,
@@ -599,11 +605,9 @@ export const handleapicall = async (
   return response;
 };
 export const writequery = async (userdata) => {
-  console.log(userdata);
-
   const token = getToken();
   const userId = getUserId();
-  console.log("User Data:", userdata);
+
   const postwritequerydata = {
     query: userdata.query + userdata.urlquery,
     documentId: 0,
@@ -718,8 +722,6 @@ export const TicketHistoryapi = async () => {
 };
 
 export const uploadapicall = async (event) => {
-  console.log(event);
-
   const token = getToken();
   const userId = getUserId();
   var fd = new FormData();
@@ -795,6 +797,18 @@ export const getMyWalletTowalletHistory = async (pageNo = 1) => {
   return response;
 };
 
+export const getMyWalletTowalletTransactionHistory = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/wallet_to_wallet_request_list`,
+    "GET",
+    token
+  );
+  return response;
+};
+
 export const getMembershiphistory = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
@@ -853,7 +867,6 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
     lastName: "",
     userId: userId,
   });
-
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderwithdrawalfundssearch`,
@@ -897,22 +910,15 @@ export const nofreeParticipationapi = async (
   lenderReturnType,
   deal
 ) => {
-  console.log(deal.extension);
-  console.log(deal.apidata.lenderTotalParticipationAmount);
-  console.log(deal.apidata.lenderRemainingPanLimit);
-  console.log(groupId, dealId, accountType, lenderReturnType);
   const token = getToken();
   const userId = getUserId();
 
   if (deal.monthlyInterest !== 0) {
     var lenderReturnType = "MONTHLY";
-    console.log("lenderReturnType");
   } else if (deal.quarterlyDisplay !== 0) {
     var lenderReturnType = "QUARTELY";
-    console.log("quarterly");
   } else if (deal.yearlyInterest !== 0) {
     var lenderReturnType = "YEARLY";
-    console.log("   ");
   }
   const data = {
     userId: userId,
@@ -1253,6 +1259,24 @@ export const cancelWithdrawalRequest = async (fromrequest, requestId) => {
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `to-cancel-withdrawal-request`,
+    "PATCH",
+    token,
+    postdata
+  );
+  return response;
+};
+
+export const cancelMyWithdrawWalletRequest = async (requestId) => {
+  console.log(requestId);
+  const token = getToken();
+  const userId = getUserId();
+  var postdata = JSON.stringify({
+    id: requestId,
+    status: "REJECTED",
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `wallet_to_wallet_request`,
     "PATCH",
     token,
     postdata

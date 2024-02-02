@@ -20,7 +20,6 @@ const LoadwalletThroughVirtualAccount = () => {
   }, []);
 
   const reducerData = useSelector((data) => {
-    console.log(data);
     return data.counter.value;
   });
 
@@ -43,7 +42,7 @@ const LoadwalletThroughVirtualAccount = () => {
                     </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/dashboard">DashBoard</Link>
+                        <Link to="/dashboard">Dashboard</Link>
                       </li>
                       <li className="breadcrumb-item active">
                         <Link to="/loadwaletThroughQr">Scan-QR</Link>
@@ -89,9 +88,9 @@ const LoadwalletThroughVirtualAccount = () => {
                               Keep in mind that we only accept payments in INR,
                               If you have any queries, please reach out to us by
                               :
-                              <a className="virtualList" href="#">
+                              <Link className="virtualList" to="/writetous">
                                 Click Here
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </div>

@@ -23,9 +23,7 @@ const TicketHistory = () => {
   const handleWriteClick = async () => {
     const response = TicketHistoryapi();
     response.then((data) => {
-      console.log(data);
       if (data.request.status == 200) {
-        console.log(data);
         setticketdata(data);
         // alert("success");
         var queryDetailsArray = data.data.listOfUserQueryDetailsResponseDto;
@@ -60,7 +58,6 @@ const TicketHistory = () => {
     });
   };
 
-  // console.log("api" + apires)
   return (
     <>
       <div className="main-wrapper">
@@ -132,12 +129,13 @@ const TicketHistory = () => {
                                     <div>{item.receivedOn}</div>
                                   </td>
                                   <td className="text-center">
-                                  <div
-                                       className={
-                                        
-                                         (item.status === "Completed" ? "badge badge-success" : "badge badge-danger")
-                                       }
-                                     >
+                                    <div
+                                      className={
+                                        item.status === "Completed"
+                                          ? "badge badge-success"
+                                          : "badge badge-danger"
+                                      }
+                                    >
                                       {item.status}
                                     </div>
                                   </td>

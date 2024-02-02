@@ -162,7 +162,6 @@ const DashboardTransactions = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data.data.lenderReturnsResponseDto.length);
         setdashboardInterestEarnings({
           ...dashboardInterestEarnings,
           apiData: data.data,
@@ -340,7 +339,7 @@ const DashboardTransactions = () => {
     {
       title: "Date",
       dataIndex: "Date",
-      sorter: (a, b) => a.Date.length - b.Date.length,
+      sorter: (a, b) => new Date(a.Date) - new Date(b.Date),
     },
     {
       title: "Deal Name",
@@ -369,7 +368,7 @@ const DashboardTransactions = () => {
     {
       title: "Date",
       dataIndex: "Date",
-      sorter: (a, b) => a.Date - b.Date,
+      sorter: (a, b) => new Date(a.Date) - new Date(b.Date),
     },
     {
       title: "Deal Name",
@@ -398,23 +397,18 @@ const DashboardTransactions = () => {
     {
       title: "RoI",
       dataIndex: "RoI",
-      sorter: (a, b) => a.RoI - b.RoI,
+      sorter: (a, b) => a.RoI.length - b.RoI.length,
     },
 
     {
       title: "Tenure",
       dataIndex: "Tenure",
-      sorter: (a, b) => a.Tenure - b.Tenure,
+      sorter: (a, b) => a.Tenure.length - b.Tenure.length,
     },
     {
       title: "Date",
       dataIndex: "Date",
-      sorter: (a, b) => a.Date - b.Date,
-    },
-    {
-      title: "Closed Date",
-      dataIndex: "ClosedDate",
-      sorter: (a, b) => a.ClosedDate - b.ClosedDate,
+      sorter: (a, b) => new Date(a.Date) - new Date(b.Date),
     },
     {
       title: "Amount",
@@ -432,23 +426,23 @@ const DashboardTransactions = () => {
     {
       title: "Date",
       dataIndex: "Date",
-      sorter: (a, b) => a.Date - b.Date,
+      sorter: (a, b) => new Date(a.Date) - new Date(b.Date),
     },
     {
       title: "Lender",
       dataIndex: "Lender",
-      sorter: (a, b) => a.Lender - b.Lender,
+      sorter: (a, b) => a.Lender.length - b.Lender.length,
     },
     {
       title: "Deal Name",
       dataIndex: "DealName",
-      sorter: (a, b) => a.DealName - b.DealName,
+      sorter: (a, b) => a.DealName.length - b.DealName.length,
     },
 
     {
       title: "Status",
       dataIndex: "Status",
-      sorter: (a, b) => a.Status - b.Status,
+      sorter: (a, b) => a.Status.length - b.Status.length,
     },
   ];
   return (
@@ -470,7 +464,7 @@ const DashboardTransactions = () => {
                     <h3 className="page-title">My Transactions </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/dashboard">DashBoard</Link>
+                        <Link to="/dashboard">Dashboard</Link>
                       </li>
                       <li className="breadcrumb-item active">
                         My Transactions
@@ -483,50 +477,6 @@ const DashboardTransactions = () => {
             <div className="card">
               <div className="card-body card-bodytable">
                 <div className="row col-12">
-                  <div className="col-xl-12 d-flex">
-                    {/* Star Students */}
-                    <div className="card flex-fill student-space comman-shadow">
-                      <div className="card-header d-flex align-items-center">
-                        <h5 className="card-title">Investment / Wallet</h5>
-                        <ul className="chart-list-out student-ellips">
-                          <li className="star-menus">
-                            <Link to="#">
-                              <i className="fas fa-ellipsis-v" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="card-body card-bodytable">
-                        <div>
-                          <Table
-                            className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
-                            pagination={{
-                              total: dashboardInvestment.apiData.countValue,
-                              defaultPageSize:
-                                dashboardInvestment.defaultPageSize,
-                              showTotal: (total, range) =>
-                                `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                              position: ["topRight"],
-                              showSizeChanger: false,
-                              onShowSizeChange: onShowSizeChange,
-                              size: "default",
-                              showLessItems: true,
-                              pageSizeOptions: [5, 10, 15, 20],
-                              responsive: true,
-                            }}
-                            columns={columns}
-                            expandable={true}
-                            dataSource={
-                              dashboardInvestment.hasdata ? datasource : []
-                            }
-                            loading={dashboardInvestment.loading}
-                            onChange={investmentdashboardPagination}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    {/* /Star Students */}
-                  </div>
                   <div className="col-xl-12 d-flex">
                     {/* Star Students */}
                     <div className="card flex-fill student-space comman-shadow">
@@ -704,11 +654,58 @@ const DashboardTransactions = () => {
                             expandable={true}
                             dataSource={
                               dashboardDealsVsEarnings.hasdata
-                                ? dashboarddealsVsEarningsdata
+                                ? dashboarddealsVsEarningsdata.filter(
+                                    (data, index) =>
+                                      data.ClosedDate == "Running"
+                                  )
                                 : []
                             }
                             loading={dashboardDealsVsEarnings.loading}
                             onChange={dashboardDealsVsEarningsPagination}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* /Star Students */}
+                  </div>
+                  <div className="col-xl-12 d-flex">
+                    {/* Star Students */}
+                    <div className="card flex-fill student-space comman-shadow">
+                      <div className="card-header d-flex align-items-center">
+                        <h5 className="card-title">Investment / Wallet</h5>
+                        <ul className="chart-list-out student-ellips">
+                          <li className="star-menus">
+                            <Link to="#">
+                              <i className="fas fa-ellipsis-v" />
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="card-body card-bodytable">
+                        <div>
+                          <Table
+                            className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
+                            pagination={{
+                              total: dashboardInvestment.apiData.countValue,
+                              defaultPageSize:
+                                dashboardInvestment.defaultPageSize,
+                              showTotal: (total, range) =>
+                                `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                              position: ["topRight"],
+                              showSizeChanger: false,
+                              onShowSizeChange: onShowSizeChange,
+                              size: "default",
+                              showLessItems: true,
+                              pageSizeOptions: [5, 10, 15, 20],
+                              responsive: true,
+                            }}
+                            columns={columns}
+                            expandable={true}
+                            dataSource={
+                              dashboardInvestment.hasdata ? datasource : []
+                            }
+                            loading={dashboardInvestment.loading}
+                            onChange={investmentdashboardPagination}
                           />
                         </div>
                       </div>

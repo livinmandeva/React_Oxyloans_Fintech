@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { login } from "../../imagepath";
+import { login, registerImage } from "../../imagepath";
 import * as api from "./api";
 import { sendotpemail } from "../../HttpRequest/beforelogin";
 import { toastrError, toastrSuccess } from "../Base UI Elements/Toast";
+import { Link } from "react-router-dom";
 
 const ForgotPassword3 = () => {
   const [email, setEmail] = useState({
@@ -31,8 +32,6 @@ const ForgotPassword3 = () => {
     try {
       const sendOtpEmail = await sendotpemail(email.emailid);
 
-      console.log(sendOtpEmail);
-      console.log(sendOtpEmail.status);
       // setemailisvaild(!emailisvaild);
 
       if (sendOtpEmail.status === 200) {
@@ -58,16 +57,24 @@ const ForgotPassword3 = () => {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img
+                  className="img-fluid h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">
                   <h1>Reset Password</h1>
-                  <p className="account-subtitle">Let Us Help You</p>
+                  <p className="account-subtitle">
+                    Enter the email address associated with your account and
+                    we'll send you a link to reset your password ?{" "}
+                    <Link to="/">LogIn</Link>
+                  </p>
 
                   <div className="form-group">
                     <label>
-                      Enter your registered email address
+                      Email address
                       <span className="login-danger">*</span>
                     </label>
                     <input

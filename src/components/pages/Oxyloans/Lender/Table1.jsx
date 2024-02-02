@@ -5,9 +5,9 @@ const Table1 = ({ data }) => {
   const newData = [];
 
   if (data !== "") {
-    console.log(data);
     data.lenderReturns.map((dataItem, index) => {
       newData.push({
+        key: index,
         so: index + 1,
         date: dataItem.returnedDate,
         amount: dataItem.amountReturned,

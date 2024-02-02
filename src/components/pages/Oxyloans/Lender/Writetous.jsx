@@ -35,7 +35,6 @@ const Writetous = () => {
     pendingCount: 3,
   });
   const setDataFun = (query) => {
-    console.log(query);
     setWriteTous({
       ...writetous,
       query: query,
@@ -53,8 +52,6 @@ const Writetous = () => {
     const url = new URLSearchParams(window.location.search);
     const dealName = url.get("dealName");
     const dealId = url.get("dealId");
-
-    console.log(dealName + "/" + dealId);
 
     setWriteTous({
       ...writetous,
@@ -97,7 +94,6 @@ const Writetous = () => {
   const querySubmission = () => {
     const response = writequery(writetous);
     response.then((data) => {
-      console.log(data);
       if (data.request.status == 200) {
         Success("success", "You have sucessfully submitted the query");
       } else if (data.response.data.errorCode != "200") {
@@ -121,12 +117,12 @@ const Writetous = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Write To Us </h3>
+                  <h3 className="page-title">Write to us </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">writetous</li>
+                    <li className="breadcrumb-item active">Write to us</li>
                   </ul>
                 </div>
               </div>

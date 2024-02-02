@@ -74,18 +74,13 @@ const MyhighvalueDeals = () => {
     {
       title: "Funds Start Date",
       dataIndex: "FundsStartDate",
-      sorter: (a, b) => a.FundsStartDate - b.FundsStartDate,
+      sorter: (a, b) => new Date(a.FundsStartDate) - new Date(b.FundsStartDate),
     },
     {
       title: "Deal Closed Date",
       dataIndex: "DealClosedDate",
-      sorter: (a, b) => a.DealClosedDate - b.DealClosedDate,
+      sorter: (a, b) => new Date(a.DealClosedDate) - new Date(b.DealClosedDate),
     },
-    // {
-    //   title: "Participated Lenders",
-    //   dataIndex: "NoofParticipatedLenders",
-    //   sorter: (a, b) => a.NoofParticipatedLenders - b.NoofParticipatedLenders,
-    // },
   ];
 
   return (

@@ -49,7 +49,6 @@ const Participatedeal = () => {
       const dealId = urlparam.get("dealId");
 
       const response = await handledetail(dealId);
-      console.log(response.data);
 
       setDeal({
         ...deal,
@@ -80,7 +79,6 @@ const Participatedeal = () => {
           apidata: response.data,
           urldealId: dealId,
         });
-        console.log("deal apidata", response.data);
 
         if (response.data.yearlyInterest !== 0) {
           localStorage.setItem("lenderReturnType", "YEARLY");
@@ -97,8 +95,6 @@ const Participatedeal = () => {
 
   const dataSource = [];
 
-  console.log(deal.apidata);
-
   const interestType =
     deal.apidata.halfInterest !== 0.0
       ? null
@@ -112,12 +108,25 @@ const Participatedeal = () => {
 
   // You can then use the interestType variable as needed.
 
-  const data =deal.apidata;
+  const data = deal.apidata;
   deal.apidata && deal.apidata != ""
     ? dataSource.push({
         name: deal.apidata.dealName,
         loanamount: deal.apidata.dealAmount,
-        rateOfInterest:data.yearlyInterest != 0 ? data.yearlyInterest : (data.monthlyInterest != 0 ? data.monthlyInterest : (data.quartlyInterest != 0 ? data.quartlyInterest : (data.yearlyInterest != 0 ? data.yearlyInterest : (data.monthlyInterest != 0 ? data.monthlyInterest : null)))) + " " + interestType,
+        rateOfInterest:
+          data.yearlyInterest != 0
+            ? data.yearlyInterest
+            : (data.monthlyInterest != 0
+                ? data.monthlyInterest
+                : data.quartlyInterest != 0
+                ? data.quartlyInterest
+                : data.yearlyInterest != 0
+                ? data.yearlyInterest
+                : data.monthlyInterest != 0
+                ? data.monthlyInterest
+                : null) +
+              " " +
+              interestType,
 
         availablelimit: deal.apidata.remainingAmountInDeal,
         tenureinmonths: deal.apidata.duration + "M",
@@ -183,17 +192,12 @@ const Participatedeal = () => {
         : ""
     }`;
     const numericAmount = parseInt(amount, 10);
-    console.log(amount);
-    console.log(deal.apidata.feeStatusToParticipate);
-    console.log(deal.apidata.groupName);
-    console.log(deal.apidata.validityStatus);
+
     if (isConditionMet) {
       if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
-        if (deal.apidata.groupName != ""  || null) {
+        if (deal.apidata.groupName != "" || null) {
           if (deal.apidata.validityStatus === false) {
             if (numericAmount >= participatedAmount) {
-              console.log("amount is more than deal");
-              console.log("deal succuess");
               participatedapi({
                 apidata,
                 participatedAmount,
@@ -205,17 +209,12 @@ const Participatedeal = () => {
               });
             } else {
               toastrError("amout is not not reach your deal particepte amount");
-              console.log("participatedAmount:", participatedAmount);
-              console.log("amount:", amount);
             }
           } else {
-            console.log("deal validityStatus completed ");
-
             if (deal.apidata.groupName == "New Lender") {
-
               console.log("newlender  particepate");
-                localStorage.setItem("newLender" , "new");
-                localStorage.setItem("participatedAmount" , participatedAmount);
+              localStorage.setItem("newLender", "new");
+              localStorage.setItem("participatedAmount", participatedAmount);
               participatedapi({
                 apidata,
                 participatedAmount,
@@ -224,25 +223,19 @@ const Participatedeal = () => {
                 dealId,
                 accountType,
                 deal,
-              });  
-            }else{
+              });
+            } else {
               membership(dealId);
             }
           }
         } else {
-          console.log("deal  having free feeStatusToParticipate");
           toastrError("deal  having free feeStatusToParticipate");
         }
       } else {
         if (numericAmount >= participatedAmount) {
-          console.log("deal validityStatus completed ");
-
-         console.log(deal.apidata.groupName)
           if (deal.apidata.groupName === "NewLender") {
-
-            console.log("newlender  particepate");
-              localStorage.setItem("newLender" , "new");
-              localStorage.setItem("participatedAmount" , participatedAmount);
+            localStorage.setItem("newLender", "new");
+            localStorage.setItem("participatedAmount", participatedAmount);
             participatedapi({
               apidata,
               participatedAmount,
@@ -264,8 +257,6 @@ const Participatedeal = () => {
           // });
         } else {
           toastrError("amout is not not reach your deal particepte amount");
-          console.log("participatedAmount:", participatedAmount);
-          console.log("amount:", amount);
         }
       }
     } else {
@@ -275,17 +266,13 @@ const Participatedeal = () => {
     }
   };
   useEffect(() => {
-    console.log(deal.apidata);
-
     const checkCondition = () => {
       if (
         deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
         deal.participatedAmount <= deal.apidata.lenderParticiptionLimit
       ) {
-        console.log("Condition passed");
         setIsConditionMet(true);
       } else {
-        console.log("Condition not passed");
         setIsConditionMet(false);
       }
     };
@@ -295,17 +282,14 @@ const Participatedeal = () => {
 
   useEffect(() => {
     if (deal.bank != "") {
-      console.log("payment type selected");
       setbuttonvaild(false);
     } else {
-      console.log("select  payment type");
       setbuttonvaild(true);
     }
   }, [deal.bank]);
 
   useEffect(() => {
     {
-      console.log(deal.bank);
     }
   }, [deal.bank]);
 
@@ -358,9 +342,9 @@ const Participatedeal = () => {
 
                 <div className="displaycenter">
                   <h4 style={{ marginTop: "2rem" }}>Return Principal To :</h4>
-                  <div class="form-check">
+                  <div className="form-check">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="transferPrincipal"
                       value={"WALLET"}
@@ -372,15 +356,15 @@ const Participatedeal = () => {
                       }}
                     />
                     <label
-                      class="form-check-label mt-2"
+                      className="form-check-label mt-2"
                       for="flexRadioDisabled"
                     >
                       <strong> Move Principal to wallet </strong>
                     </label>
                   </div>
-                  <div class="form-check">
+                  <div className="form-check">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="transferPrincipal"
                       value={"BANKACCOUNT"}
@@ -393,7 +377,7 @@ const Participatedeal = () => {
                     />
 
                     <label
-                      class="form-check-label mt-2"
+                      className="form-check-label mt-2"
                       for="flexRadioCheckedDisabled"
                     >
                       <strong> Move Principal to Bank</strong>

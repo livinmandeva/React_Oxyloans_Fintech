@@ -54,9 +54,9 @@ const Login = () => {
       setUserLoginInfo((prevState) => ({
         ...prevState,
         emailerror:
-          userLogInInfo.email === "" ? "Please   enter the email" : "",
+          userLogInInfo.email === "" ? "Please enter the Email/Mobile No" : "",
         passworderror:
-          userLogInInfo.password === "" ? "Please enter the password" : "",
+          userLogInInfo.password === "" ? "Please Enter The Password" : "",
       }));
     } else {
       let { email, password } = userLogInInfo;
@@ -154,7 +154,7 @@ const Login = () => {
                     <div className="remember-me">
                       <Link to="/loginotp">Login with OTP ?</Link>
                     </div>
-                    <Link to="/forgotpassword1">Forgot Password?</Link>
+                    <Link to="/forgotpassword">Forgot Password?</Link>
                   </div>
 
                   <div className="form-group">

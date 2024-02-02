@@ -53,7 +53,7 @@ const RegularEscrowDeals = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         escrow_runningDeal.dealtype,
@@ -62,7 +62,6 @@ const RegularEscrowDeals = () => {
       );
 
       response.then((data) => {
-        console.log(data.data);
         setRegularRunningDeal({
           ...escrow_runningDeal,
           apidata: data.data,
@@ -101,9 +100,6 @@ const RegularEscrowDeals = () => {
           ...escrow_runningDeal,
           escrowdealapi: newData,
         });
-
-        console.log(escrow_runningDeal.escrowdealapi);
-        console.log(newData);
       }
     } else {
       // Handle the case where escrow_runningDeal.apidata is empty
@@ -289,7 +285,6 @@ const RegularEscrowDeals = () => {
             {escrow_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
               <>
                 <div className="card">
-                  {console.log(escrow_runningDeal.escrowdealapi)}
                   <Table
                     columns={columns}
                     dataSource={

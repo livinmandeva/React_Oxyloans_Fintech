@@ -122,7 +122,6 @@ const MyEarnings = () => {
   const EarningStatementlink = async () => {
     const response = Earning("");
     response.then((data) => {
-      console.log(data);
       if (data.request.status == 200) {
         setreferalMyearnigs({
           ...referalMyearnigs,
@@ -146,7 +145,7 @@ const MyEarnings = () => {
     {
       title: "Earned Amount",
       dataIndex: "EarnedAmount",
-      sorter: (a, b) => a.EarnedAmount.length - b.EarnedAmount.length,
+      sorter: (a, b) => a.EarnedAmount - b.EarnedAmount,
     },
     {
       title: "Payment Status",
@@ -156,7 +155,8 @@ const MyEarnings = () => {
     {
       title: "Transferred On",
       dataIndex: "TransferredOn",
-      sorter: (a, b) => a.TransferredOn.length - b.TransferredOn.length,
+      sorter: (a, b) =>
+        new Date(a.TransferredOn.length) - new Date(b.TransferredOn.length),
     },
     {
       title: "Remarks",
@@ -187,7 +187,7 @@ const MyEarnings = () => {
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My Network</li>
                   </ul>
@@ -254,7 +254,7 @@ const MyEarnings = () => {
                       className="btn btn-xs col-md-3 btn-danger col-12"
                       onClick={() => EarningStatementlink()}
                     >
-                      <i class="fa-solid fa-download"></i> Earning Statement
+                      <i className="fa-solid fa-download"></i> Earning Statement
                     </button>
                   </div>
                   <div className="card-body">

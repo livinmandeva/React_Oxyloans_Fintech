@@ -27,9 +27,8 @@ const ForgotPassword = () => {
   useEffect(() => {
     const urlemail = new URLSearchParams(window.location.search);
     const email = urlemail.get("email");
-    console.log(email);
+
     const emailToken = urlemail.get("emailToken");
-    console.log(emailToken);
 
     setemail({
       ...email,
@@ -52,8 +51,6 @@ const ForgotPassword = () => {
           email.password,
           email.confirmpassword
         );
-
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -80,9 +77,11 @@ const ForgotPassword = () => {
                   {/* <form action="./login"> */}
 
                   <div>
-                    {" "}
                     <h1>Reset Password</h1>
-                    <p className="account-subtitle">Let Us Help You</p>
+                    <p className="account-subtitle">
+                      Enter the email address associated with your account and
+                      we'll send you a link to reset your password
+                    </p>
                     {/* Form */}
                     {/* <form action="./login"> */}
                     <div className="form-group">

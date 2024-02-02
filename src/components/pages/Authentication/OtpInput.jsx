@@ -16,7 +16,6 @@ function OtpInput() {
 
   const inputRefs = [];
   useEffect(() => {
-    //  console.log(otpValues);
     localStorage.setItem("otp", otpValues);
   }, [otpValues]);
   return (

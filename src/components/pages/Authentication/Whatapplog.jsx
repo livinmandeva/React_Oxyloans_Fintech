@@ -79,9 +79,8 @@ const Whatapplog = () => {
     const response = verifywhatappotp(whatappotp.otpdata);
 
     response.then((data) => {
-      console.log(data);
       const accessToken = data.data.accessToken;
-      console.log("Access Token: " + accessToken);
+
       if (data) {
         setwhatappotp({
           ...whatappotp,
@@ -95,7 +94,7 @@ const Whatapplog = () => {
         }
       } else if (data.response.status === 400) {
         const errorMessage = data.response.data.errorMessage;
-        console.log("Error Message: " + errorMessage);
+
         setwhatappotp({
           ...whatappotp,
           errorMessage: data.response.data.errorMessage,
@@ -110,10 +109,7 @@ const Whatapplog = () => {
     // Set handlewhatapp to true initially
 
     response.then((data) => {
-      console.log(data);
       if (data.request.status === 200) {
-        alert("");
-        console.log(data.data);
         sethandlewhatapp(false);
         setwhatappotp({
           ...whatappotp,

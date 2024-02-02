@@ -120,13 +120,6 @@ const Mycontacts = () => {
     });
   };
 
-  // const handlesendInvaite=()=>{
-  //   const response =sendInvait(contactdata.email,contactdata.emailcontent,contactdata.emailsubject)
-  //   response.then((data)=>{
-  //     console.log(data)
-  //   })
-  //       }
-
   return (
     <>
       <div className="main-wrapper">
@@ -146,7 +139,7 @@ const Mycontacts = () => {
                   <h3 className="page-title">My Gmail Contacts</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">Salary</li>
                   </ul>

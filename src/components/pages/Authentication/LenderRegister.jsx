@@ -5,11 +5,8 @@ import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-
 import OtpInput from "./OtpInput";
-
 import { toastrWarning } from "../Base UI Elements/Toast";
-
 export default function LenderRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
@@ -68,18 +65,6 @@ export default function LenderRegister() {
         registrationField.password === "" ? "Please enter the password" : "",
     }));
 
-    // if (registrationField.referrerId !== "" ) {
-
-    //   const response = await referrerdata(registrationField.referrerId);
-    //   console.log(response);
-    //   //  uniqueNumber
-    //   console.log(response.data.uniqueNumber);
-
-    //   localStorage.setItem("uniqnumber", response.data.uniqueNumber)
-    // } else {
-
-    // }
-
     const validationError = api.validateRegisterInput(
       registrationField.email,
       registrationField.password,
@@ -96,12 +81,11 @@ export default function LenderRegister() {
       registrationField.moblieerror === "" &&
       registrationField.passworderror === ""
     ) {
-      console.log("fields");
       try {
         const RegisterResponse = await api.RegisterUser(
           registrationField.moblie
         );
-        alert(RegisterResponse);
+
         localStorage.setItem("seesion", RegisterResponse);
         setResponse(RegisterResponse);
         setfield(false);
@@ -113,7 +97,6 @@ export default function LenderRegister() {
       }
     }
   };
-  const handlesumitmoblie = () => {};
 
   const Otpverify = async () => {
     try {
@@ -136,10 +119,6 @@ export default function LenderRegister() {
         );
         //  const mill=gettime()
 
-        console.log(response);
-        console.log(response.responseData.userId);
-        // console.log(response.data.id)
-
         localStorage.setItem("id", response.responseData.userId);
 
         const mill1 = new Date().getTime();
@@ -148,8 +127,6 @@ export default function LenderRegister() {
       } else {
         // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
-
-        console.log(mill);
       }
     } catch (error) {
       // Handle any errors that occur during OTP validation
@@ -157,7 +134,7 @@ export default function LenderRegister() {
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
       );
-      console.log(error);
+
       setError(
         error.response
           ? error.response.data.errorMessage
@@ -227,7 +204,7 @@ export default function LenderRegister() {
                         </>
                       ) : (
                         <>
-                          <h1 className="center">Enter the OTP </h1>
+                          <h1 className="center">Please Enter the OTP </h1>
                         </>
                       )}{" "}
                     </>
@@ -243,7 +220,7 @@ export default function LenderRegister() {
                       <>
                         <div className="form-group">
                           <label>
-                            NAME AS PER PANCARD{" "}
+                            Name as per PAN card
                             <span className="login-danger">*</span>
                           </label>
                           <input
@@ -311,11 +288,7 @@ export default function LenderRegister() {
                           his/her referrer id ( EX : LR100001)
                         </p>
                         <div className="form-group">
-                          <label>
-                            ENTER THE REFERRER ID{" "}
-                            <span className="login-danger">*</span>
-                          </label>
-                          {/* <input className="form-control pass-confirm" type="text" /> */}
+                          <label>Enter the referrer ID</label>
                           <input
                             ref={inputRef2}
                             className="form-control pass-confirm"
@@ -362,7 +335,7 @@ export default function LenderRegister() {
                           </div>
                         )}
                         <div className=" dont-have">
-                          Already Registered? <Link to="/">Login</Link>
+                          Already Registered ? <Link to="/">Login</Link>
                         </div>
                         <div className="form-group mb-0">
                           <button

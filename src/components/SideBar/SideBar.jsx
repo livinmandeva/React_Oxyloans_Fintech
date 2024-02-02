@@ -8,18 +8,13 @@ const Sidebar = (props) => {
   const [isSideMenuLevel, setSideMenuLevel] = useState("");
   const [isSideMenuLevel2, setSideMenuLevel2] = useState("");
 
-  console.log(props);
-
   const toggleSidebar = (value) => {
-    console.log(value);
     setSideMenu(value);
   };
   const toggleSidebar1 = (value) => {
-    console.log(value);
     setSideMenuLevel(value);
   };
   const toggleSidebar2 = (value) => {
-    console.log(value);
     setSideMenuLevel2(value);
   };
 
@@ -172,7 +167,7 @@ const Sidebar = (props) => {
                             "/loadwaletThroughQr" === pathName ? "active" : ""
                           }`}
                         >
-                          Through QR
+                          QR Scanner
                         </Link>
                       </li>
                       <li>
@@ -184,7 +179,7 @@ const Sidebar = (props) => {
                               : ""
                           }`}
                         >
-                          Through Virtual Account
+                          Virtual Account
                         </Link>
                       </li>
                     </ul>
@@ -197,7 +192,8 @@ const Sidebar = (props) => {
                   className={`${
                     "/regularRunningDeal" === pathName ||
                     "/regularEscrowDeals" === pathName ||
-                    "/regularPersonalDeal" === pathName
+                    "/regularPersonalDeal" === pathName ||
+                    "/viewCurrentDayDeals" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -209,7 +205,7 @@ const Sidebar = (props) => {
                       toggleSidebar(isSideMenu == "Subjects" ? "" : "Subjects")
                     }
                   >
-                    <i className="fas fa-book-reader" />{" "}
+                    <i className="fa-solid fa-chart-simple"></i>
                     <span> Ongoing Deals</span> <span className="menu-arrow" />
                   </Link>
                   {isSideMenu == "Subjects" ? (
@@ -236,7 +232,7 @@ const Sidebar = (props) => {
                             "/regularRunningDeal" === pathName ? "active" : ""
                           }`}
                         >
-                          Regular Running Deals
+                          Running Deals
                         </Link>
                       </li>
 
@@ -247,18 +243,18 @@ const Sidebar = (props) => {
                             "/regularEscrowDeals" === pathName ? "active" : ""
                           }`}
                         >
-                          Regular Escrow Deals
+                          Escrow Deals
                         </Link>
                       </li>
                       <li>
-                        <Link
+                        {/* <Link
                           to="/regularPersonalDeal"
                           className={`${
                             "/regularPersonalDeal" === pathName ? "active" : ""
                           }`}
                         >
                           Personal Deals
-                        </Link>
+                        </Link> */}
                       </li>
                     </ul>
                   ) : (
@@ -333,7 +329,7 @@ const Sidebar = (props) => {
                             "/myinterestEarning" === pathName ? "active" : ""
                           }`}
                         >
-                          My Interest Earning
+                          Interest Earnings
                         </Link>
                       </li>
                       <li>
@@ -354,7 +350,7 @@ const Sidebar = (props) => {
                             "/earningCertificate" === pathName ? "active" : ""
                           }`}
                         >
-                          Earning Certificate
+                          Financial Reports
                         </Link>
                       </li>
 
@@ -429,7 +425,7 @@ const Sidebar = (props) => {
                             "/MywithdrawalHistory" === pathName ? "active" : ""
                           }`}
                         >
-                          My Withdraw History
+                          My Withdrawal History
                         </Link>
                       </li>
                     </ul>
@@ -441,9 +437,7 @@ const Sidebar = (props) => {
                 <li
                   className={`${
                     "/mytransactions" === pathName ||
-                    "/membershipHistory" === pathName ||
-                    "/walletToWalletHistory" === pathName ||
-                    "/WalletToWallet" === pathName
+                    "/membershipHistory" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -467,7 +461,7 @@ const Sidebar = (props) => {
                         display: isSideMenu == "WalletTrans" ? "block" : "none",
                       }}
                     >
-                      <li>
+                      {/* <li>
                         <Link
                           to="/WalletToWallet"
                           className={`${
@@ -475,6 +469,97 @@ const Sidebar = (props) => {
                           }`}
                         >
                           Wallet To Wallet
+                        </Link>
+                      </li> */}
+
+                      {/* <li>
+                        <Link
+                          to="/walletToWalletHistory"
+                          className={`${
+                            "/walletToWalletHistory" === pathName
+                              ? "active"
+                              : ""
+                          }`}
+                        >
+                          Wallet To Wallet History
+                        </Link>
+                      </li> */}
+
+                      <li>
+                        <Link
+                          to="/mytransactions"
+                          className={`${
+                            "/mytransactions" === pathName ? "active" : ""
+                          }`}
+                        >
+                          My Transactions
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/membershipHistory"
+                          className={`${
+                            "/membershipHistory" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Membership History
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </li>
+
+                <li
+                  className={`${
+                    "/WalletToWallet" === pathName ||
+                    "/walletToWalletHistory" === pathName ||
+                    "/walletToWalletTransactionHistory" === pathName
+                      ? "active submenu"
+                      : "submenu"
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className={isSideMenu == "WalletToWallet" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "WalletToWallet" ? "" : "WalletToWallet"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-business-time"></i>
+                    <span>Wallet to Wallet</span>
+                    <span className="menu-arrow" />
+                  </Link>
+                  {isSideMenu == "WalletToWallet" ? (
+                    <ul
+                      style={{
+                        display:
+                          isSideMenu == "WalletToWallet" ? "block" : "none",
+                      }}
+                    >
+                      <li>
+                        <Link
+                          to="/WalletToWallet"
+                          className={`${
+                            "/WalletToWallet" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Raise a Request
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/walletToWalletTransactionHistory"
+                          className={`${
+                            "/walletToWalletTransactionHistory" === pathName
+                              ? "active"
+                              : ""
+                          }`}
+                        >
+                          View history
                         </Link>
                       </li>
 
@@ -487,28 +572,83 @@ const Sidebar = (props) => {
                               : ""
                           }`}
                         >
-                          Wallet To Wallet History
+                          Debit history
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </li>
+
+                <li
+                  className={`${
+                    "/referaFriend" === pathName ||
+                    "/myreferalStatus" === pathName ||
+                    "/myreferalStatus" === pathName ||
+                    "/mycontacts" === pathName ||
+                    "/myEarnings" === pathName
+                      ? "active submenu"
+                      : "submenu"
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className={isSideMenu == "MyNetwork" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "MyNetwork" ? "" : "MyNetwork"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-network-wired"></i>
+                    <span> My Network</span> <span className="menu-arrow" />
+                  </Link>
+                  {isSideMenu == "MyNetwork" ? (
+                    <ul
+                      style={{
+                        display: isSideMenu == "MyNetwork" ? "block" : "none",
+                      }}
+                    >
+                      <li>
+                        <Link
+                          to="/referaFriend"
+                          className={`${
+                            "/referaFriend" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Refer a Friend
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/myreferalStatus"
+                          className={`${
+                            "/myreferalStatus" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Referral Status
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/mycontacts"
+                          className={`${
+                            "/mycontacts" === pathName ? "active" : ""
+                          }`}
+                        >
+                          My Contacts
                         </Link>
                       </li>
 
                       <li>
                         <Link
-                          to="/mytransactions"
+                          to="/myEarnings"
                           className={`${
-                            "/mytransactions" === pathName ? "active" : ""
+                            "/myEarnings" === pathName ? "active" : ""
                           }`}
                         >
-                          Wallet Transactions
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/membershipHistory"
-                          className={`${
-                            "/membershipHistory" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Membership History
+                          My Earning
                         </Link>
                       </li>
                     </ul>
@@ -549,7 +689,7 @@ const Sidebar = (props) => {
                             "/writetous" === pathName ? "active" : ""
                           }`}
                         >
-                          Write To us
+                          Write to us
                         </Link>
                       </li>
                       <li>
@@ -585,10 +725,10 @@ const Sidebar = (props) => {
                       ? "active submenu"
                       : "submenu"
                   }`}
+                  style={{ display: "none" }}
                 >
                   <Link
                     to="#"
-                    style={{ display: "none" }}
                     className={isSideMenu == "AutoInvest" ? "subdrop" : ""}
                     onClick={() =>
                       toggleSidebar(
@@ -630,95 +770,22 @@ const Sidebar = (props) => {
                     ""
                   )}
                 </li>
-              </ul>
-              {/* /Main Menu*/}
-              {/* Management */}
-              <ul>
-                {/* <li className="menu-title">
-                  <span>Refer A Friend</span>
-                </li> */}
-                <li
-                  className={`${
-                    "/referaFriend" === pathName ||
-                    "/myreferalStatus" === pathName ||
-                    "/myreferalStatus" === pathName
-                      ? "active submenu"
-                      : "submenu"
-                  }`}
-                >
-                  <Link
-                    to="#"
-                    className={isSideMenu == "MyNetwork" ? "subdrop" : ""}
-                    onClick={() =>
-                      toggleSidebar(
-                        isSideMenu == "MyNetwork" ? "" : "MyNetwork"
-                      )
-                    }
-                  >
-                    <i className="fa-solid fa-network-wired"></i>
-                    <span> My Network</span> <span className="menu-arrow" />
-                  </Link>
-                  {isSideMenu == "MyNetwork" ? (
-                    <ul
-                      style={{
-                        display: isSideMenu == "MyNetwork" ? "block" : "none",
-                      }}
-                    >
-                      <li>
-                        <Link
-                          to="/referaFriend"
-                          className={`${
-                            "/referaFriend" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Refer A friend
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/myreferalStatus"
-                          className={`${
-                            "/myreferalStatus" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Referal Status
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/mycontacts"
-                          className={`${
-                            "/mycontacts" === pathName ? "active" : ""
-                          }`}
-                        >
-                          My contacts
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link
-                          to="/myEarnings"
-                          className={`${
-                            "/myEarnings" === pathName ? "active" : ""
-                          }`}
-                        >
-                          My Earning
-                        </Link>
-                      </li>
-                    </ul>
-                  ) : (
-                    ""
-                  )}
-                </li>
 
                 <li className={`${"/" === pathName ? "active" : ""}`}>
-
-                  <Link to="/" onClick={() => { localStorage.clear(); sessionStorage.clear()}}>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      localStorage.clear();
+                      sessionStorage.clear();
+                    }}
+                  >
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Sign Out</span>
                   </Link>
                 </li>
               </ul>
+              {/* 
+              <ul></ul> */}
               {/* /UI Interface */}
             </div>
           </div>

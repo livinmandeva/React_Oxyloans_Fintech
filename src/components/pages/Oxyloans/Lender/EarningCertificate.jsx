@@ -54,7 +54,7 @@ const EarningCertificate = () => {
                   );
                 }}
               >
-                <i class="fa-solid fa-download"></i> Download FY Report
+                <i className="fa-solid fa-download"></i> Download FY Report
               </span>
             ),
             EMAILFYREPORT: (
@@ -69,7 +69,7 @@ const EarningCertificate = () => {
                   );
                 }}
               >
-                <i class="fa-solid fa-envelope"></i> Get FY Email Report
+                <i className="fa-solid fa-envelope"></i> Get FY Email Report
               </span>
             ),
           });
@@ -81,7 +81,7 @@ const EarningCertificate = () => {
     {
       title: "S#",
       dataIndex: "SO",
-      sorter: (a, b) => a.SO.length - b.SO.length,
+      sorter: (a, b) => a.SO - b.SO,
     },
     {
       title: "FY",
@@ -96,13 +96,11 @@ const EarningCertificate = () => {
     {
       title: "DOWNLOAD FY REPORT",
       dataIndex: "DOWNLOADFYREPORT",
-      sorter: (a, b) => a.DOWNLOADFYREPORT.length - b.DOWNLOADFYREPORT.length,
     },
 
     {
       title: "EMAIL FY REPORT",
       dataIndex: "EMAILFYREPORT",
-      sorter: (a, b) => a.EMAILFYREPORT.length - b.EMAILFYREPORT.length,
     },
   ];
 
@@ -124,7 +122,7 @@ const EarningCertificate = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      Earning Certificate
+                      Financial Reports
                     </li>
                   </ul>
                 </div>

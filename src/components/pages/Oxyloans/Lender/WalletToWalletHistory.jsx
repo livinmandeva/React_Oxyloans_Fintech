@@ -22,7 +22,6 @@ const WalletToWalletHistory = React.memo((pros) => {
   useMemo(() => {
     fetchData()
       .then((data) => {
-        console.log("data fetch");
         if (data.request.status == 200) {
           setmywalletTowalletHistory({
             ...mywalletTowalletHistory,
@@ -57,19 +56,20 @@ const WalletToWalletHistory = React.memo((pros) => {
 
   const columns = [
     {
-      title: "ReceiverId",
+      title: "Receiver Id",
       dataIndex: "ReceiverId",
-      sorter: (a, b) => a.ReceiverId - b.ReceiverId,
+      sorter: (a, b) => a.ReceiverId.length - b.ReceiverId.length,
     },
     {
-      title: "ReceiverName",
+      title: "Receiver Name",
       dataIndex: "ReceiverName",
       sorter: (a, b) => a.ReceiverName.length - b.ReceiverName.length,
     },
     {
       title: "Approved Date",
       dataIndex: "TransformedDate",
-      sorter: (a, b) => a.TransformedDate - b.TransformedDate,
+      sorter: (a, b) =>
+        new Date(a.TransformedDate) - new Date(b.TransformedDate),
     },
     {
       title: "Amount",
@@ -90,13 +90,13 @@ const WalletToWalletHistory = React.memo((pros) => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Wallet To Wallet History</h3>
+                  <h3 className="page-title">Wallet Debit history</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      wallet To WalletHistory
+                      Wallet To Wallet History
                     </li>
                   </ul>
                 </div>

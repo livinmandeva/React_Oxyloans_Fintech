@@ -53,7 +53,6 @@ const ViewDealTypePayOut = () => {
     });
   }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
 
-  console.log(referalMyearnigs);
   const datasource = [];
   {
     referalMyearnigs.apiData != ""
@@ -194,7 +193,7 @@ const ViewDealTypePayOut = () => {
                   <h3 className="page-title">Running & Closed Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My Network</li>
                   </ul>

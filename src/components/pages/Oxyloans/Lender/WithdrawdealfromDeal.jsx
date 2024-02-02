@@ -63,7 +63,6 @@ const WithdrawdealfromDeal = () => {
     });
   };
   const datasource = [];
-
   if (participatedDeals.apiData !== "") {
     participatedDeals.apiData.lenderPaticipatedResponseDto.forEach((data) => {
       const nextPageUrl = `/withdrawdealFounds?dealId=${data.dealId}&currentAmount=${data.currentValue}&requestedAmount=${data.requestedAmount}&dealName=${data.dealName}&roi=${data.rateOfInterest}`;
@@ -80,7 +79,7 @@ const WithdrawdealfromDeal = () => {
         action: (
           <Link to={nextPageUrl}>
             <button type="submit" className="btn w-100 btn-outline-success">
-              <i class="fa-solid fa-business-time"></i> Withdraw
+              <i className="fa-solid fa-business-time"></i> Withdraw
             </button>
           </Link>
         ),
@@ -101,20 +100,16 @@ const WithdrawdealfromDeal = () => {
       sorter: (a, b) => a.ParticipatedAmount - b.ParticipatedAmount,
     },
     {
-      title: "RoI",
+      title: "ROI",
       dataIndex: "RoI",
-      sorter: (a, b) => a.RoI - b.RoI,
+      sorter: (a, b) => a.RoI.length - b.RoI.length,
     },
     {
       title: "Duration",
       dataIndex: "Duration",
-      sorter: (a, b) => a.Duration - b.Duration,
+      sorter: (a, b) => a.Duration.length - b.Duration.length,
     },
-    // {
-    //   title: "Deal Status",
-    //   dataIndex: "DealStatus",
-    //   sorter: (a, b) => a.DealStatus.length - b.DealStatus.length,
-    // },
+
     {
       title: "Requested",
       dataIndex: "RequestedAmount",
@@ -139,7 +134,11 @@ const WithdrawdealfromDeal = () => {
               <div className="row">
                 <div className="col">
                   <h3 className="page-title">
-                    Withdraw Funds from {participatedDeals.dealtype} Deal
+                    Deal Withdraw Funds from{" "}
+                    {participatedDeals.dealtype == "NORMAL"
+                      ? "Regular "
+                      : participatedDeals.dealtype + " "}
+                    Deals
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -158,19 +157,18 @@ const WithdrawdealfromDeal = () => {
                   <div className="card-header">
                     <div className="row col-12">
                       <button
-                        className="btn  btn-outline-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2 my-md-1"
-                        onClick={handleWithdrawFromEscrow}
-                      >
-                        <i class="fa-solid fa-briefcase"></i> Withdraw From
-                        Escrow
-                      </button>
-
-                      <button
                         onClick={handleWithdrawFromNormal}
                         className="btn  btn-outline-info col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"
                       >
-                        <i class="fa-solid fa-briefcase"></i> Withdraw from a
-                        Normal deal
+                        <i className="fa-solid fa-briefcase"></i> From a Regular
+                        Deal
+                      </button>
+
+                      <button
+                        className="btn  btn-outline-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2 my-md-1"
+                        onClick={handleWithdrawFromEscrow}
+                      >
+                        <i className="fa-solid fa-briefcase"></i> From an Escrow
                       </button>
                     </div>
                   </div>

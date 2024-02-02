@@ -30,7 +30,6 @@ const MyreferalStatus = () => {
   };
 
   const referdashboardPagination = (Pagination) => {
-    console.log(Pagination);
     setreferaldata({
       ...referdata,
       defaultPageSize: Pagination.pageSize,
@@ -83,7 +82,6 @@ const MyreferalStatus = () => {
     response.then((data) => {
       if (data.request.status == 200) {
         setrefer(data.data.downloadUrl);
-        console.log(data.data);
       }
     });
   };
@@ -107,34 +105,29 @@ const MyreferalStatus = () => {
     {
       title: "User Name",
       dataIndex: "UserName",
-      sorter: (a, b) => a.UserName - b.UserName,
+      sorter: (a, b) => a.UserName.length - b.UserName.length,
     },
     {
       title: "Email",
       dataIndex: "Email",
-      sorter: (a, b) => a.Email - b.Email,
+      sorter: (a, b) => a.Email.length - b.Email.length,
     },
     {
       title: "Mobile Number",
       dataIndex: "MobileNumber",
-      sorter: (a, b) => a.MobileNumber - b.MobileNumber,
+      sorter: (a, b) => a.MobileNumber.length - b.MobileNumber.length,
     },
     {
       title: "Status",
       dataIndex: "Status",
-      sorter: (a, b) => a.Status - b.Status,
+      sorter: (a, b) => a.Status.length - b.Status.length,
     },
 
     {
       title: "Referred On",
       dataIndex: "ReferredOn",
-      sorter: (a, b) => a.ReferredOn - b.ReferredOn,
+      sorter: (a, b) => new Date(a.ReferredOn) - new Date(b.ReferredOn),
     },
-    // {
-    //   title: "View Referee",
-    //   dataIndex: "ViewReferee",
-    //   sorter: (a, b) => a.ViewReferee - b.ViewReferee,
-    // },
   ];
 
   const handlenriinvite = () => {
@@ -180,12 +173,12 @@ const MyreferalStatus = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Referral Infos</h3>
+                  <h3 className="page-title">Referral Info</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">myreferal Status</li>
+                    <li className="breadcrumb-item active">Referral Status</li>
                   </ul>
                 </div>
               </div>
@@ -206,8 +199,8 @@ const MyreferalStatus = () => {
                             onClick={downloadReferalStatusFileInfo}
                             className="btn btn-danger me-2 text-white"
                           >
-                            <i class="fa-solid fa-download mx-1"></i> Referal
-                            Status
+                            <i className="fa-solid fa-download mx-1"></i>{" "}
+                            Referal Status
                           </button>
                           <button
                             onClick={Inviteborrower}
@@ -217,7 +210,7 @@ const MyreferalStatus = () => {
                               <>copied</>
                             ) : (
                               <>
-                                <i class="fa-solid fa-user mx-1"></i>Invite
+                                <i className="fa-solid fa-user mx-1"></i>Invite
                                 Borrower
                               </>
                             )}
@@ -230,7 +223,7 @@ const MyreferalStatus = () => {
                               <> copied</>
                             ) : (
                               <>
-                                <i class="fa-solid fa-plane-departure mx-1"></i>
+                                <i className="fa-solid fa-plane-departure mx-1"></i>
                                 Invite an NRI
                               </>
                             )}
@@ -246,8 +239,8 @@ const MyreferalStatus = () => {
                               <> copied</>
                             ) : (
                               <>
-                                <i class="fa-solid fa-user mx-1"></i> Invite an
-                                Lender
+                                <i className="fa-solid fa-user mx-1"></i> Invite
+                                an Lender
                               </>
                             )}
                           </button>

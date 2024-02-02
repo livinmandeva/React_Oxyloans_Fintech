@@ -50,12 +50,12 @@ function AlertTable({ data, open: propOpen, sendRunningDealStatement }) {
           </p>
           <Table dataSource={tableapi} pagination={false}>
             <Column
-              title="upatedDate"
+              title="Upated Date"
               dataIndex="upatedDate"
               key="upatedDate"
             />
 
-            <Column title="amount" dataIndex="amount" key="amount" />
+            <Column title="Amount" dataIndex="amount" key="amount" />
           </Table>
         </Modal.Body>
       </Modal>

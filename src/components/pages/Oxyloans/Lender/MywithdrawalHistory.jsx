@@ -27,8 +27,6 @@ const MywithdrawalHistory = () => {
 
   const confirmcancelrequest = (fromrequest, id) => {
     cancelwithdrawalRequestInformation(fromrequest, id);
-    // console.log(fromrequest);
-    // console.log(id);
   };
 
   useEffect(() => {
@@ -38,7 +36,6 @@ const MywithdrawalHistory = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
         setmywithdrawalHistory({
           ...mywithdrawalHistory,
           apiData: data.data,
@@ -86,7 +83,7 @@ const MywithdrawalHistory = () => {
     {
       title: "Raised on",
       dataIndex: "raisedon",
-      sorter: (a, b) => a.raisedon - b.raisedon,
+      sorter: (a, b) => new Date(a.raisedon) - new Date(b.raisedon),
     },
     {
       title: "Amount",
@@ -96,17 +93,17 @@ const MywithdrawalHistory = () => {
     {
       title: "Reason",
       dataIndex: "reason",
-      sorter: (a, b) => a.reason - b.reason,
+      sorter: (a, b) => a.reason.length - b.reason.length,
     },
     {
       title: "Requested From",
       dataIndex: "requestedFrom",
-      sorter: (a, b) => a.requestedFrom - b.requestedFrom,
+      sorter: (a, b) => a.requestedFrom.length - b.requestedFrom.length,
     },
     {
       title: "Status",
       dataIndex: "status",
-      sorter: (a, b) => a.status - b.status,
+      sorter: (a, b) => a.status.length - b.status.length,
     },
     {
       title: "Action",
@@ -132,7 +129,7 @@ const MywithdrawalHistory = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      Mywithdrawal History
+                      My Withdrawal History
                     </li>
                   </ul>
                 </div>

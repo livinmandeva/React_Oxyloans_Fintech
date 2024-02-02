@@ -11,9 +11,7 @@ export default function Invaitemodel() {
 
   const handleFileChange = (event) => {
     const response = uploadapicall(event);
-    response.then((data) => {
-      console.log(data);
-    });
+    response.then((data) => {});
   };
 
   //         const form=new FormData();

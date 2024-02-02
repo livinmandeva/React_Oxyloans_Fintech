@@ -3,7 +3,7 @@ import { Table } from "antd";
 
 const MyParticipateStatementTable = ({ data }) => {
   const newData = [];
-  console.log(data);
+
   if (data !== "") {
     data.data.dealLevelLoanEmiCard.map((dataItem, index) => {
       newData.push({
@@ -24,27 +24,27 @@ const MyParticipateStatementTable = ({ data }) => {
     {
       title: "S no",
       dataIndex: "Sno",
-      sorter: (a, b) => a.length - b.length,
+      sorter: (a, b) => a - b,
     },
     {
       title: "Actual Payment Date",
       dataIndex: "ActualPaymentDate",
-      sorter: (a, b) => a.length - b.length,
+      sorter: (a, b) => new Date(a.length) - new Date(b.length),
     },
     {
       title: "Interest Paid Date",
       dataIndex: "InterestPaidDate",
-      sorter: (a, b) => a.length - b.length,
+      sorter: (a, b) => new Date(a.length) - new Date(b.length),
     },
     {
       title: "Interest Amount",
       dataIndex: "InterestAmount",
-      sorter: (a, b) => a.length - b.length,
+      sorter: (a, b) => a - b,
     },
     {
       title: "No of days",
       dataIndex: "Noofdays",
-      sorter: (a, b) => a.length - b.length,
+      sorter: (a, b) => a - b,
     },
   ];
 

@@ -181,7 +181,10 @@ const RegularRunningDeal = () => {
                                 </div>
                                 <div className="col-sm-12 col-lg-6">
                                   <small>
-                                    Comments : {data.messageSentToLenders}
+                                    <span className="fw-bold fs-6">
+                                      Comments :
+                                    </span>
+                                    {data.messageSentToLenders}
                                   </small>
                                 </div>
                               </div>
@@ -262,14 +265,14 @@ const RegularRunningDeal = () => {
               </>
             )}
 
-            {regular_runningDeal.apidata.listOfBorrowersDealsResponseDto && (
+            {regular_runningDeal.apidata.listOfDealsInformationToLender && (
               <>
                 <div className="card">
                   <Table
                     columns={columns}
                     dataSource={
-                      regular_runningDeal.apidata
-                        .listOfBorrowersDealsResponseDto.length !== 0
+                      regular_runningDeal.apidata.listOfDealsInformationToLender
+                        .length !== 0
                         ? dataSource
                         : []
                     }

@@ -24,12 +24,6 @@ const WithdrawdealFounds = () => {
   };
 
   const handlewith = () => {
-    console.log(
-      data.dealID,
-      data.roi,
-      data.participatedamount,
-      data.withdrawalamount
-    );
     const response = handleapicall(
       data.dealID,
       data.roi,
@@ -41,7 +35,6 @@ const WithdrawdealFounds = () => {
       if (data.request.status === 200) {
         alert("success");
         toastrSuccess(data.data.status);
-        console.log(data);
       }
     });
   };
@@ -53,7 +46,7 @@ const WithdrawdealFounds = () => {
     const requestedAmount = urlSearchParams.get("requestedAmount");
     const dealName = urlSearchParams.get("dealName");
     const roi = urlSearchParams.get("roi");
-    console.log(roi);
+
     setdata({
       ...data,
       dealname: dealName,

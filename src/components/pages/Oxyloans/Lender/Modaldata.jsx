@@ -4,8 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import Table1 from "./Table1";
 
 function Modaldata({ data, open, hidingStatement }) {
+  console.log(data);
   const [lgShow, setLgShow] = useState(open);
   const [donloadlink, setdownloadlink] = useState(data.downloadStatement);
+  const [statementDeal, setstatementDeal] = useState(data.dealName);
 
   const hidingStatementModal = () => {
     setLgShow(!lgShow);
@@ -23,9 +25,10 @@ function Modaldata({ data, open, hidingStatement }) {
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
             <a href={donloadlink} className="pull-right mx-2">
-              <i class="fa-solid fa-download" typeof="download"></i>
+              <i className="fa-solid fa-download" typeof="download"></i>
             </a>
-            statement
+            {""}
+            {statementDeal} {""} Statement
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

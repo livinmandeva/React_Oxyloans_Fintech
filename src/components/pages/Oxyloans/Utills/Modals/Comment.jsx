@@ -6,8 +6,6 @@ function Comment(dataapi) {
   const [lgShow, setLgShow] = useState(true);
   const [data1, setdata] = useState(dataapi);
 
-  console.log(data1.data?.data);
-
   return (
     <>
       <Modal

@@ -87,12 +87,12 @@ const Emicalculator = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Emi Calculator</h3>
+                  <h3 className="page-title">EMI Calculator</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">emicalculator</li>
+                    <li className="breadcrumb-item active">EMI Calculator</li>
                   </ul>
                 </div>
               </div>
@@ -136,7 +136,7 @@ const Emicalculator = () => {
                               defaultValue={emicalculatorOption.inputroi}
                               onChange={setInputValuesFun}
                             >
-                              <option value="">Choose RoI</option>
+                              <option value="">Choose ROI</option>
                               <option value="10">10</option>
                               <option value="11">11</option>
                               <option value="12">12</option>
@@ -188,7 +188,7 @@ const Emicalculator = () => {
                         <div className="col-12 col-sm-4">
                           <div className="form-group local-forms">
                             <label>
-                              Emi Type
+                              EMI Type
                               <span className="login-danger">*</span>
                             </label>
 
@@ -198,7 +198,7 @@ const Emicalculator = () => {
                               value={emicalculatorOption.emiType}
                               onChange={setInputValuesFun}
                             >
-                              <option value="">Choose Emi Type</option>
+                              <option value="">Choose EMI Type</option>
                               <option value="REDUCE">Reduce</option>
                               <option value="FLAT">Flat</option>
                             </select>
@@ -225,7 +225,7 @@ const Emicalculator = () => {
                           <div className="col-lg-12 col-12 col-md-12">
                             <div className="card">
                               <div className="card-header">
-                                <h4 className="card-title">Emi Calculation</h4>
+                                <h4 className="card-title">EMI Calculation</h4>
                               </div>
                               <div className="card-body">
                                 <div className="table-responsive">
@@ -233,7 +233,7 @@ const Emicalculator = () => {
                                     <thead>
                                       <tr>
                                         <th>So</th>
-                                        <th>Emi Amount</th>
+                                        <th>EMI Amount</th>
                                         <th>Interest Amount</th>
                                         <th>Principal Amount</th>
                                         <th>Outstanding</th>

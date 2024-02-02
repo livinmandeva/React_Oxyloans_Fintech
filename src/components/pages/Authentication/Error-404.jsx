@@ -12,7 +12,7 @@ const Error404 = () => {
         <p className="h4 font-weight-normal">
           The page you requested was not found.
         </p>
-        <Link to="/admindashboard" className="btn btn-primary">
+        <Link to="/" className="btn btn-primary">
           Back to Home
         </Link>
       </div>

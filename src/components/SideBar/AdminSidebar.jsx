@@ -7,18 +7,13 @@ const Sidebar = (props) => {
   const [isSideMenuLevel, setSideMenuLevel] = useState("");
   const [isSideMenuLevel2, setSideMenuLevel2] = useState("");
 
-  console.log(props);
-
   const toggleSidebar = (value) => {
-    console.log(value);
     setSideMenu(value);
   };
   const toggleSidebar1 = (value) => {
-    console.log(value);
     setSideMenuLevel(value);
   };
   const toggleSidebar2 = (value) => {
-    console.log(value);
     setSideMenuLevel2(value);
   };
 
@@ -637,7 +632,7 @@ const Sidebar = (props) => {
                             "/emicalculator" === pathName ? "active" : ""
                           }`}
                         >
-                          Emi Calculator
+                          EMI Calculator
                         </Link>
                       </li>
                     </ul>

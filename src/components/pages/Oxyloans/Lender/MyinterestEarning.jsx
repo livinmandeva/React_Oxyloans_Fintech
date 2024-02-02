@@ -111,7 +111,7 @@ const MyinterestEarning = () => {
       key: Math.random(),
       title: "Paid Date",
       dataIndex: "PaidDate",
-      sorter: (a, b) => a.PaidDate - b.PaidDate,
+      sorter: (a, b) => new Date(a.PaidDate) - new Date(b.PaidDate),
     },
   ];
   return (

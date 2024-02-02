@@ -58,15 +58,11 @@ export const sendotpemail = async (email) => {
     email: email,
   };
   try {
-    const response = await axios.post(
-      API_BASE_URL + "/resetpassword",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(API_BASE_URL + "/resetpassword", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     return {
       responseData: response.data,
@@ -82,8 +78,8 @@ export const verifypannumber = async (pannumber, address, time, id, date) => {
     dob: date,
     panNumber: pannumber,
     timeInMilliSeconds: time,
-    emailOtp : null,
-    emailOtpSession:null,
+    emailOtp: null,
+    emailOtpSession: null,
     userId: id,
   };
   try {
@@ -201,10 +197,10 @@ export const vaildateotp = async (
   name,
   password,
   session,
-  referrerId,
-  
-) => {    const uniqnumber=localStorage.getItem("uniqnumber")
-console.log(uniqnumber)
+  referrerId
+) => {
+  const uniqnumber = localStorage.getItem("uniqnumber");
+
   if (uniqnumber === null) {
     var data = {
       mobileNumber: moblie,
@@ -232,7 +228,7 @@ console.log(uniqnumber)
       password: password,
       citizenship: "NONNRI",
       uniqueNumber: uniqnumber,
-      utmForPartner:null,
+      utmForPartner: null,
       utm: "WEB",
       cifNumber: null,
       finoEmployeeMobileNumber: null,
@@ -245,7 +241,7 @@ console.log(uniqnumber)
       API_BASE_URL + "/newUserRegistration",
       data
     );
-    
+
     return {
       responseData: response.data,
     };

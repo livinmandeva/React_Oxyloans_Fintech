@@ -59,7 +59,6 @@ const EquityDeals = () => {
     });
   }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
 
-  console.log(referalMyearnigs);
   const datasource = [];
   {
     referalMyearnigs.apiData != ""
@@ -200,7 +199,7 @@ const EquityDeals = () => {
                   <h3 className="page-title">Running & Closed Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/admindashboard">Dashboard</Link>
+                      <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My Network</li>
                   </ul>
@@ -244,7 +243,7 @@ const EquityDeals = () => {
                       className="btn btn-xs col-md-4 btn-success col-12"
                       style={{ marginLeft: "6px" }}
                     >
-                      <i class="fa-solid fa-download"></i>
+                      <i className="fa-solid fa-download"></i>
                       Regular Participation Closed Deals
                     </button>
                   </div>

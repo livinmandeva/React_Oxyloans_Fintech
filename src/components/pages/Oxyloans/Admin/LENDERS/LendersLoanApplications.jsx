@@ -69,44 +69,48 @@ const LendersLoanApplications = () => {
                     </div>
 
                     <div className="row col-6" style={{ marginTop: "1rem" }}>
-                      <table class="table table-hover">
+                      <table className="table table-hover">
                         <tr>
-                          <td class="table-primary">No of FDs Done</td>
-                          <td class="table-secondary"> 4</td>
+                          <td className="table-primary">No of FDs Done</td>
+                          <td className="table-secondary"> 4</td>
                         </tr>
 
                         <tr>
-                          <td class="table-primary">Value of the FDS</td>
-                          <td class="table-secondary">INR 2600000</td>
+                          <td className="table-primary">Value of the FDS</td>
+                          <td className="table-secondary">INR 2600000</td>
                         </tr>
 
                         <tr>
-                          <td class="table-primary">No of the active FDS</td>
-                          <td class="table-secondary"> 0</td>
+                          <td className="table-primary">
+                            No of the active FDS
+                          </td>
+                          <td className="table-secondary"> 0</td>
                         </tr>
 
                         <tr>
-                          <td class="table-primary">Value of the active Fds</td>
-                          <td class="table-secondary"> INR 0</td>
+                          <td className="table-primary">
+                            Value of the active Fds
+                          </td>
+                          <td className="table-secondary"> INR 0</td>
                         </tr>
 
                         <tr>
-                          <td class="table-primary">
+                          <td className="table-primary">
                             Total Interest Received to ICICI
                           </td>
-                          <td class="table-secondary">INR 3000</td>
+                          <td className="table-secondary">INR 3000</td>
                         </tr>
                         <tr>
-                          <td class="table-primary">
+                          <td className="table-primary">
                             Total Interest Received to HDFC
                           </td>
-                          <td class="table-secondary"> INR 550</td>
+                          <td className="table-secondary"> INR 550</td>
                         </tr>
                         <tr>
-                          <td class="table-primary">
+                          <td className="table-primary">
                             Total Fd Closed Interest
                           </td>
-                          <td class="table-secondary"> INR 2510000</td>
+                          <td className="table-secondary"> INR 2510000</td>
                         </tr>
                       </table>
                     </div>

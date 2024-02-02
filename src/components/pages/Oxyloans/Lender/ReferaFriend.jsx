@@ -11,7 +11,7 @@ import {
 
 import {
   HandleWithFooter,
-  WarningAlert,
+  WarningBackendApi,
 } from "../../Base UI Elements/SweetAlert";
 import Invaitemodel from "../Utills/Modals/Invaitemodel";
 
@@ -27,6 +27,7 @@ const ReferaFriend = () => {
     seekerRequestedId: "0",
     inviteType: "SingleInvite",
     mailContent: 0,
+    savebtndisable: true,
   });
 
   const [emailres, setEmailres] = useState({
@@ -81,24 +82,43 @@ const ReferaFriend = () => {
     return () => {};
   }, [url]);
 
-  const handleprofilesubmit = (event) => {
-    event.preventDefault();
-    const response = profilesubmit(profile);
+  useEffect(() => {
+    const inputValid =
+      profile.email != "" &&
+      profile.mobileNumber != "" &&
+      profile.name != "" &&
+      profile.citizenType != "";
 
+    if (inputValid) {
+      setprofile({
+        ...profile,
+        savebtndisable: false,
+      });
+    } else {
+      setprofile({
+        ...profile,
+        savebtndisable: true,
+      });
+    }
+
+    return () => {};
+  }, [profile.email, profile.name, profile.citizenType, profile.mobileNumber]);
+
+  const handleprofilesubmit = (event) => {
+    const response = profilesubmit(profile);
     response.then((data) => {
-      console.log(data);
       if (data.request.status == 200) {
         HandleWithFooter("lender invited successfully ");
       } else {
-        WarningAlert(data.response.data.errorMessage);
+        WarningBackendApi("Error", data.response.data.errorMessage);
       }
     });
+    event.preventDefault();
   };
 
   const handlebulkInvite = async () => {
     const response = bulkinvitegmailLink();
     response.then((data) => {
-      console.log(data);
       seturl(data.data.signInUrl);
       if (data.request.status == 200) {
       } else {
@@ -177,7 +197,7 @@ const ReferaFriend = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">referaFriend</li>
+                    <li className="breadcrumb-item active">Refer a Friend</li>
                   </ul>
                 </div>
               </div>
@@ -238,7 +258,7 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-warning col-md-3 col-12 text-white"
                             onClick={Invitelender}
                           >
-                            <i class="fa-solid fa-share-nodes"></i> Invite a
+                            <i className="fa-solid fa-share-nodes"></i> Invite a
                             Friend
                           </button>
                         </>
@@ -261,7 +281,7 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-info col-12 col-md-3 mx-lg-2 text-white"
                             onClick={invitenri}
                           >
-                            <i class="fa-solid fa-plane-departure mx-1"></i>{" "}
+                            <i className="fa-solid fa-plane-departure mx-1"></i>{" "}
                             Invite an NRI
                           </button>
                         </>
@@ -283,8 +303,8 @@ const ReferaFriend = () => {
                             className="btn btn-xs btn-success col-12 col-md-3 mx-lg-2 text-white"
                             onClick={Inviteborrower}
                           >
-                            <i class="fa-solid fa-share-nodes mx-1"></i> Invite
-                            a Borrower
+                            <i className="fa-solid fa-share-nodes mx-1"></i>{" "}
+                            Invite a Borrower
                           </button>
                         </>
                       )}
@@ -299,7 +319,7 @@ const ReferaFriend = () => {
                         data-bs-toggle="tab"
                         to="#invite_tab"
                       >
-                        <i class="fa-solid fa-user-tie"></i> Invite Friend
+                        <i className="fa-solid fa-user-tie"></i> Invite Friend
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -309,7 +329,7 @@ const ReferaFriend = () => {
                         to="#BulkInvite_tab"
                         onClick={handlebulkInvite}
                       >
-                        <i class="fa-solid mx-1 fa-cloud-arrow-up"></i>
+                        <i className="fa-solid mx-1 fa-cloud-arrow-up"></i>
                         Bulk Invite
                       </Link>
                     </li>
@@ -320,8 +340,8 @@ const ReferaFriend = () => {
                         data-bs-toggle="tab"
                         to="#setupneo_tab"
                       >
-                        <i class="fa-solid fa-building-columns mx-1"></i> Setup
-                        Neo Bank
+                        <i className="fa-solid fa-building-columns mx-1"></i>{" "}
+                        Setup Neo Bank
                       </Link>
                     </li>
                   </ul>
@@ -355,14 +375,13 @@ const ReferaFriend = () => {
                                   {/* </button> */}{" "}
                                 </a>
 
-                                {/* <button */}
-                                <a
+                                {/* <a
                                   href={url}
                                   className="btn btn-outline-warning my-lg-3 border-2 "
                                 >
                                   Invite Through Gmail
-                                  {/* </button> */}
-                                </a>
+                      
+                                </a> */}
                               </div>
                             </form>
                           </div>
@@ -419,7 +438,9 @@ const ReferaFriend = () => {
                   <div id="invite_tab" className="tab-pane fade show active">
                     <div className="card">
                       <div className="card-body">
-                        <h5 className="card-title">Referral Details</h5>
+                        <h5 className="card-title">
+                          Invite Friends/ Professionals
+                        </h5>
                         <div className="row">
                           <div className="col-md-12 col-lg-12 row">
                             <div className="row mt-3">
@@ -429,7 +450,9 @@ const ReferaFriend = () => {
                                   type="text"
                                   className="form-control"
                                   name="name"
+                                  placeholder="Enter The Name"
                                   onChange={handlechanges}
+                                  required
                                 />
                               </div>
                               <div className="form-group col-12 col-sm-4">
@@ -438,6 +461,7 @@ const ReferaFriend = () => {
                                   type="email"
                                   className="form-control"
                                   name="email"
+                                  placeholder="Enter The Email"
                                   onChange={handlechanges}
                                 />
                               </div>
@@ -455,16 +479,18 @@ const ReferaFriend = () => {
                               </div>
 
                               <div className="form-group col-12 col-sm-4">
-                                <label>Frined Mobile </label>
+                                <label>Friend Mobile </label>
                                 <input
-                                  type="number"
+                                  type="tel"
                                   className="form-control"
+                                  placeholder="Enter The mobile No"
+                                  maxLength={10}
                                   name="mobileNumber"
                                   onChange={handlechanges}
                                 />
                               </div>
 
-                              <div className="form-group col-12 col-sm-6">
+                              <div className="form-group col-12 col-sm-8">
                                 <label>Email Subject </label>
                                 <input
                                   type="text"
@@ -488,6 +514,7 @@ const ReferaFriend = () => {
                                   className="btn btn-primary col-md-4 col-12"
                                   type="submit"
                                   onClick={handleprofilesubmit}
+                                  disabled={profile.savebtndisable}
                                 >
                                   Save Deatils
                                 </button>

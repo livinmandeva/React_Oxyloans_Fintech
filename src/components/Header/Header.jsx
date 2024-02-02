@@ -27,7 +27,6 @@ import {
 
 const Header = (profile) => {
   const dispatch = useDispatch();
-
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
   const [dashboarddata, setdashboarddata] = useState({
     profileData: "",
@@ -78,7 +77,7 @@ const Header = (profile) => {
 
   useMemo(() => {
     const sessionsExpire = getSessionExpireTime();
-    console.log(sessionsExpire);
+
     if (sessionsExpire) {
       WarningAlert("Your session is expiring in 5 minutes.", "/dashboard");
     }
@@ -287,24 +286,19 @@ const Header = (profile) => {
                   width={31}
                   alt="Ryan Taylor"
                 />
-                <div className="user-text text-wrap text-lowercase">
+                <div className="user-text text-wrap">
                   <h6>
                     {reduxStoreData?.length != 0
-                      ? reduxStoreData?.firstName ?? ""
+                      ? reduxStoreData?.firstName.charAt(0).toUpperCase() +
+                          reduxStoreData?.firstName.slice(1).toLowerCase() ?? ""
                       : ""}
                     {reduxStoreData?.length != 0
                       ? localStorage.setItem(
                           "userName",
-                          reduxStoreData?.firstName
+                          reduxStoreData?.firstName.charAt(0).toUpperCase() +
+                            reduxStoreData?.firstName.slice(1).toLowerCase()
                         ) ?? ""
                       : ""}
-
-                    {/* {reduxStoreData.length !== 0 && reduxStoreData != undefined
-                      ? reduxStoreData.firstName
-                      : dashboarddata.profileData.length != 0 &&
-                        dashboarddata.profileData != undefined
-                      ? dashboarddata.profileData.data.firstName
-                      : "hlo"} */}
                   </h6>
                 </div>
               </span>
@@ -320,7 +314,7 @@ const Header = (profile) => {
                 </div>
                 <div className="user-text">
                   <p className="text-muted mb-0">
-                    LR {""}
+                    LR
                     {reduxStoreData?.length !== 0
                       ? reduxStoreData?.userId ?? 0
                       : ""}
@@ -332,8 +326,7 @@ const Header = (profile) => {
                         reduxStoreData?.groupName == "OxyPremiuimLenders"
                         ? "Oxy Founding"
                         : "NewLender"
-                      : // reduxStoreData?.groupName ?? ""
-                        ""}
+                      : ""}
                   </p>
                   <p className="text-muted mb-0">
                     Wallet :
@@ -352,8 +345,14 @@ const Header = (profile) => {
                 My Deals
               </Link>
 
-              <Link className="dropdown-item" to="/"   onClick={() => { localStorage.clear(); sessionStorage.clear() }}>
-
+              <Link
+                className="dropdown-item"
+                to="/"
+                onClick={() => {
+                  localStorage.clear();
+                  sessionStorage.clear();
+                }}
+              >
                 Logout
               </Link>
             </div>

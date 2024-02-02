@@ -69,7 +69,7 @@ const ViewCurrentDayDeals = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,
@@ -103,7 +103,7 @@ const ViewCurrentDayDeals = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Today Deals</h3>
+                  <h3 className="page-title">Today's Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
@@ -123,7 +123,7 @@ const ViewCurrentDayDeals = () => {
                     to="/regularRunningDeal"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    <i className="fa fa-user mx-1"></i> View Another Deals
+                    <i className="fa fa-user mx-1"></i>View Other Deals
                   </Link>
                 </div>
               </div>

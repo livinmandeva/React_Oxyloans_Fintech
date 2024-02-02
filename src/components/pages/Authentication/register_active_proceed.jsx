@@ -3,7 +3,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import * as api from "./api";
 
-import { login } from "../../imagepath";
+import { registerImage } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -25,7 +25,6 @@ const Register_active_proceed = () => {
     </i>
   );
 
-  //   const [Errordate, setErrordate] = useState('');
   const [date1, setdate1] = useState("");
   const [response, setResponse] = useState(null);
 
@@ -36,6 +35,7 @@ const Register_active_proceed = () => {
     pannumber: "",
     address: "",
     date: "",
+    isbtnvalid: true,
   });
 
   const handlesubmit = async () => {
@@ -63,7 +63,6 @@ const Register_active_proceed = () => {
       }
     } else {
       setError("please enter vaild pan-card number");
-
       toastrWarning("please enter vaild pan-card number");
     }
   };
@@ -76,32 +75,32 @@ const Register_active_proceed = () => {
     });
   };
   useEffect(() => {
-    // const urlParams = new URLSearchParams(window.location.search);
-
-    // Get the value of the 'id' parameter
-    // const id = urlParams.get("id");
-
-    // Get the value of the 'time' parameter
-    // const time = urlParams.get("time");
-
-    // Do something with the id and time values
-
     const id = localStorage.getItem("id");
     const getimemail = localStorage.getItem("timemilll");
-    console.log("id", id);
-    console.log("time:", getimemail);
     settime(getimemail);
     setid(id);
   }, []);
 
   useEffect(() => {
+    const isvalid =
+      (data.address != "") & (data.pannumber != "") && data.date != "";
+    if (isvalid) {
+      setdata({
+        ...data,
+        isbtnvalid: true,
+      });
+    } else {
+      setdata({
+        ...data,
+        isbtnvalid: false,
+      });
+    }
+  }, [data.address, data.date, data.pannumber]);
+
+  useEffect(() => {
     var inputDate = data.date;
-
     var dateParts = inputDate.split("-");
-
-    // Create a Date object
     var dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-
     // Format the date as DD/MM/YYYY with leading zeros
     var formattedDay = String(dateObj.getDate()).padStart(2, "0");
     var formattedMonth = String(dateObj.getMonth() + 1).padStart(2, "0");
@@ -121,13 +120,13 @@ const Register_active_proceed = () => {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img className="img-fluid" src={registerImage} alt="Logo" />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">
                   {/* <h1>Final Step: Complete Registration</h1> */}
 
-                  <h2>Final Step: Complete Registration</h2>
+                  <h4>Final Step: Complete Registration</h4>
 
                   {/* Form */}
                   {/* <form > */}
@@ -175,12 +174,11 @@ const Register_active_proceed = () => {
                     </span>
                   </div>
 
-                  {error && <div className="errormessage">{error} </div>}
-
                   <button
                     className="btn btn-primary btn-block"
                     type="submit"
                     onClick={handlesubmit}
+                    disabled={data.isbtnvalid}
                   >
                     {" "}
                     Submit{" "}

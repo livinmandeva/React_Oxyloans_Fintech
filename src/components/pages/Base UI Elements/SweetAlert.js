@@ -12,6 +12,7 @@ import {
   feeApicall,
   cashsuccessapihit,
   feeapicallforonedeal,
+  cancelMyWithdrawWalletRequest,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -39,6 +40,7 @@ export const HandleWithFooter = (message) => {
     buttonsStyling: !1,
   });
 };
+
 export const topStart = () => {
   Swal.fire({
     position: "top-start",
@@ -96,12 +98,12 @@ export const Info = () => {
 export const registersuccess = (message) => {
   Swal.fire({
     title: "Success!",
-    text:  message,
+    text: message,
     type: "info",
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
   });
-}; 
+};
 export const WarningAlert = (errorMessage, redirectTo) => {
   Swal.fire({
     title: "session Expiring",
@@ -112,7 +114,6 @@ export const WarningAlert = (errorMessage, redirectTo) => {
     denyButtonText: "Contine",
     denyButtonColor: "#5c9b45",
   }).then((result) => {
-    console.log(result);
     if (result.isConfirmed) {
       window.location.href = `${redirectTo}`;
     } else if (result.isDenied) {
@@ -140,11 +141,9 @@ export const validityDatemodal = (validityDate) => {
       // User clicked "Skip" or closed the modal
       // You can add custom logic here if needed
       localStorage.setItem("skip", true);
-      console.log("User skipped membership renewal.");
     }
   });
 };
-
 
 export const dealmembership = (message, route) => {
   Swal.fire({
@@ -164,7 +163,6 @@ export const dealmembership = (message, route) => {
       // User clicked "Skip" or closed the modal
       // You can add custom logic here if needed
       localStorage.setItem("dealmember", true);
-      console.log("User skipped membership renewal.");
     }
   });
 };
@@ -186,7 +184,6 @@ export const personalDetails = (message, route) => {
       // User clicked "Skip" or closed the modal
       // You can add custom logic here if needed
       localStorage.setItem("deatilskip", true);
-      console.log("User skipped membership renewal.");
     }
   });
 };
@@ -203,10 +200,10 @@ export const participatedapi = ({
   const lender = localStorage.getItem("lenderReturnType");
   const amount = localStorage.getItem("lenderRemainingWalletAmount");
 
- const lendershiptype = localStorage.getItem("newLender");
+  const lendershiptype = localStorage.getItem("newLender");
   const partipatedamount = localStorage.getItem("participatedAmount");
-  const  remaingamount =amount - participatedAmount
-  Swal.fire({ 
+  const remaingamount = amount - participatedAmount;
+  Swal.fire({
     title: "Please review the lending details!",
     html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
            <p><strong> Pay-out Method: </strong>${lender}</p><br>
@@ -227,11 +224,9 @@ export const participatedapi = ({
         lenderReturnType,
         deal
       );
-    
+
       response
         .then((data) => {
-          console.log(data); // Logging the entire response
-    
           // Check the status code in the response
           if (data.request.status === 200) {
             Swal.fire({
@@ -239,28 +234,24 @@ export const participatedapi = ({
               text: `We are reserving ${participatedAmount} `,
               icon: "success",
             });
-            if(lendershiptype == "new"){
-              console.log("new lender your particepated in deal pay the free")
-              localStorage.removeItem('newLender');
-              newlenderfree(participatedAmount , dealId) 
+            if (lendershiptype == "new") {
+              localStorage.removeItem("newLender");
+              newlenderfree(participatedAmount, dealId);
             }
           } else if (data.request.status === 403) {
-            console.log("403");
             Swal.fire({
               title: "Error!",
               text: `${data.response.data.errorMessage}`, // Displaying the error message
               icon: "error",
             });
           } else if (data.request.status === 500) {
-            console.log("500");
             Swal.fire({
               title: "Error!",
               text: `${data.response.data.errorMessage}`, // Displaying the error message
               icon: "error",
             });
-          } 
-         
-        }) 
+          }
+        })
         .catch((error) => {
           Swal.fire({
             title: "Error!",
@@ -269,7 +260,6 @@ export const participatedapi = ({
           });
         });
     }
-    
   });
 };
 
@@ -329,24 +319,21 @@ export const membership = (dealId) => {
         html: `<br>Your membership amount is ${calculate}`,
         icon: "info",
         confirmButtonText: "Pay Amount",
-      }).then(() => {
-        // Call your API here
-        feeApicall(calculate, selectedOption).then((response) => {
-          // Handle the response from the API call if needed
-          console.log(response);
-        }).catch((error) => {
-          console.log(error);
-        });
-      }).catch((error) => {
-        console.log(error);
-      });
+      })
+        .then(() => {
+          // Call your API here
+          feeApicall(calculate, selectedOption)
+            .then((response) => {
+              // Handle the response from the API call if needed
+            })
+            .catch((error) => {});
+        })
+        .catch((error) => {});
     }
   });
 };
 export const newlenderfree = (amount, dealId) => {
-  console.log(amount)
   const freeamount = (amount * 1) / 100;
-console.log(freeamount)
 
   Swal.fire({
     title: "Congratulations on successfully completing your participation!",
@@ -356,24 +343,18 @@ console.log(freeamount)
     if (result.isConfirmed) {
       feeapicallforonedeal(freeamount, dealId)
         .then((data) => {
-          console.log(data); 
           Swal.fire({
             title: "Processing fee paid successfully!",
             // text: `${data.data.status}`,
             icon: "success",
-          })
-          localStorage.removeItem('participatedAmount');
-          localStorage.removeItem('newLender');
+          });
+          localStorage.removeItem("participatedAmount");
+          localStorage.removeItem("newLender");
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
     }
   });
 };
-
-
-
 
 export const WarningAlertWalltTran = (errorMessage, redirectTo) => {
   Swal.fire({
@@ -383,7 +364,6 @@ export const WarningAlertWalltTran = (errorMessage, redirectTo) => {
     // showDenyButton: true,
     // denyButtonColor: "#5c9b45",
   }).then((result) => {
-    console.log(result);
     // if (result.isConfirmed) {
     //   window.location.href = `${redirectTo}`;
     // } else if (result.isDenied) {
@@ -441,12 +421,12 @@ export const membershipsweetalertconformation = (membership, no) => {
   });
 };
 
-
 export const newlendersweetalert = () => {
   const navigate = useNavigate();
 
   Swal.fire({
-    title: "You are a new lender group, pay the annual membership fee to participate in the multiple deals. ?",
+    title:
+      "You are a new lender group, pay the annual membership fee to participate in the multiple deals. ?",
     showDenyButton: true,
     confirmButtonText: "Pay Through wallet",
   }).then((result) => {
@@ -454,7 +434,7 @@ export const newlendersweetalert = () => {
       navigate("/membership");
     }
   });
-}
+};
 export const autoClose = () => {
   var t;
   Swal.fire({
@@ -587,7 +567,6 @@ export const confirmationAlertFyYear = (startdate, enddate, downloadType) => {
         downloadType
       );
       response.then((data) => {
-        console.log(data);
         if (data.request.status == 200) {
           if (downloadType == "DOWNLOAD") {
             // window.location.href = data.data.lenderProfit;
@@ -621,7 +600,6 @@ export const downloadClosedLoanStatementAlert = (type) => {
     if (result.isConfirmed) {
       const response = downloadClosedLoanStatement(type);
       response.then((data) => {
-        console.log(data);
         if (data.request.status == 200) {
           window.open(data.data.closedDealsDownloadUrl, "_blank");
           Swal.fire("Success!", `Downloaded Successfully`, "success");
@@ -650,7 +628,6 @@ export const downloadMytransactionAlert = () => {
     if (result.isConfirmed) {
       const response = downloadTranactionStatement();
       response.then((data) => {
-        console.log(data);
         if (data.request.status == 200) {
           window.open(data.data.downloadUrl, "_blank");
           Swal.fire("Success!", `Downloaded Successfully`, "success");
@@ -693,7 +670,6 @@ export const freeParticipationapialert = (
         deal
       );
       response.then((data) => {
-        console.log(data);
         if (data.request.status == 200) {
           toastrSuccess("Deal participated successfully"); // Make sure toastrSuccess is defined
         } else if (data.response.data.errorCode != "200") {
@@ -721,9 +697,44 @@ export const cancelwithdrawalRequestInformation = (fromrequest, id) => {
     if (result.isConfirmed) {
       const response = cancelWithdrawalRequest(fromrequest, id);
       response.then((data) => {
-        console.log(data);
         if (data.request.status == 200) {
           Swal.fire("Success!", `Sucessfully Cancel The Request`, "success");
+        } else if (data.response.data.errorCode != "200") {
+          Swal.fire(
+            "warning!",
+            `${data.response.data.errorMessage}`,
+            "warning"
+          );
+        }
+      });
+    }
+  });
+};
+
+export const cancelwithdrawalWalletToWallet = async (id) => {
+  console.log(id);
+  Swal.fire({
+    title: "Are you sure?",
+    text: `You want to Cancel The  Request`,
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes !",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      console.log(id);
+      const response = cancelMyWithdrawWalletRequest(id);
+      response.then((data) => {
+        if (
+          data == undefined ||
+          data.request.status == 200 ||
+          data.request.status == 204
+        ) {
+          Swal.fire("Success!", `Sucessfully Cancel The Request`, "success");
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         } else if (data.response.data.errorCode != "200") {
           Swal.fire(
             "warning!",

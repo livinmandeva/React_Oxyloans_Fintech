@@ -31,8 +31,8 @@ const MyclosedDeals = () => {
     });
   };
 
-  const handelSatement = async (dealId) => {
-    const response = handelapi(dealId);
+  const handelSatement = async (dealId, dealName) => {
+    const response = handelapi(dealId, dealName);
     response.then((data) => {
       setmyclosedDeals({
         ...myclosedDeals,
@@ -48,7 +48,6 @@ const MyclosedDeals = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
         setmyclosedDeals({
           ...myclosedDeals,
           apiData: data.data,
@@ -76,9 +75,9 @@ const MyclosedDeals = () => {
               <button
                 type="submit"
                 className="btn  w-70 btn-primary btn-xs"
-                onClick={() => handelSatement(data.dealId)}
+                onClick={() => handelSatement(data.dealId, data.dealName)}
               >
-                <i class="fa-regular fa-eye"></i> Statement
+                <i className="fa-regular fa-eye"></i> Statement
               </button>
             ),
           });
@@ -111,14 +110,14 @@ const MyclosedDeals = () => {
     },
 
     {
-      title: "Deal start",
+      title: "Start Date",
       dataIndex: "Dealstart",
-      sorter: (a, b) => a.Dealstart.length - b.Dealstart.length,
+      sorter: (a, b) => new Date(a.Dealstart) - new Date(b.Dealstart),
     },
     {
-      title: "Deal Closed",
+      title: "Closed Date",
       dataIndex: "DealClosed",
-      sorter: (a, b) => a.DealClosed.length - b.DealClosed.length,
+      sorter: (a, b) => new Date(a.DealClosed) - new Date(b.DealClosed),
     },
     {
       title: "Statement",
@@ -210,11 +209,6 @@ const MyclosedDeals = () => {
                 </div>
               </div>
             </div>
-            {/* Footer */}
-            <footer>
-              <p>Copyright © 2016 OxyLoans.com. All rights reserved.</p>
-            </footer>
-            {/* /Footer */}
           </div>
         </div>
         {/* /Main Wrapper */}

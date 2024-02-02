@@ -270,17 +270,21 @@ const MywithdrawalHistory = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/MywithdrawalHistory")
 );
 
+const WalletToWalletTransactionHistory = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/WalletToWalletTransactionHistory")
+);
+
 export const newRouter = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
     errorElement: <Error404></Error404>,
   },
-  {
-    path: "/forgotpassword",
-    element: <ForgotPassword />,
-    errorElement: <Error404></Error404>,
-  },
+  // {
+  //   path: "/forgotpassword",
+  //   element: <ForgotPassword />,
+  //   errorElement: <Error404></Error404>,
+  // },
   {
     path: "/dashboard",
     element: <AdminDashboard />,
@@ -291,11 +295,7 @@ export const newRouter = createBrowserRouter([
     element: <LoadwaletThroughQr />,
     errorElement: <Error404></Error404>,
   },
-  {
-    path: "/register",
-    element: <Register />,
-    errorElement: <Error404></Error404>,
-  },
+
   {
     path: "/loginotp",
     element: <Loginotp />,
@@ -325,7 +325,7 @@ export const newRouter = createBrowserRouter([
   },
 
   {
-    path: "/forgotpassword1",
+    path: "/forgotpassword",
     element: <ForgotPassword3 />,
     errorElement: <Error404></Error404>,
   },
@@ -911,6 +911,11 @@ export const newRouter = createBrowserRouter([
   {
     path: "/whatapplogin",
     element: <Whatapplog />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/walletToWalletTransactionHistory",
+    element: <WalletToWalletTransactionHistory />,
     errorElement: <Error404></Error404>,
   },
 ]);

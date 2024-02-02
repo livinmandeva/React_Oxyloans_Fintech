@@ -363,9 +363,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const response = chatapi();
-    response.then((data) => {
-      console.log(data);
-    });
+    response.then((data) => {});
   }, []);
 
   const [treemap, Settreemap] = useState({
@@ -599,7 +597,7 @@ const AdminDashboard = () => {
     {
       title: "Date",
       dataIndex: "Date",
-      sorter: (a, b) => a.Date - b.Date,
+      sorter: (a, b) => new Date(a.Date) - new Date(b.Date),
     },
 
     {
@@ -617,7 +615,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = "regularRunningDeal";
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,
@@ -640,7 +638,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = "ESCROW";
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,
@@ -649,7 +647,6 @@ const AdminDashboard = () => {
       );
 
       response.then((data) => {
-        console.log(data);
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidataESCROW: data.data.listOfBorrowersDealsResponseDto,
@@ -675,15 +672,12 @@ const AdminDashboard = () => {
 
         // Assuming data.validityDate is a string in the format "YYYY-MM-DD"
         const validityDate = data.data.validityDate; // Replace this with your actual date string
-        console.log(validityDate, formattedCurrentDate);
+
         if (validityDate >= formattedCurrentDate) {
-          console.log("valid");
         } else {
           const skipbutton = localStorage.getItem("skip");
           if (skipbutton) {
-            console.log("skip button not clicked");
           } else {
-            console.log("validity expires");
             validityDatemodal(validityDate);
           }
         }
@@ -778,7 +772,6 @@ const AdminDashboard = () => {
     const response = getNoDealsParticipated();
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
         setdealsProgressed({
           ...dealsProgressed,
           totalDeals: data.data.dealCount,
@@ -791,15 +784,11 @@ const AdminDashboard = () => {
     return () => {};
   }, []);
 
-  // dealsProgressed.participatedDeals  console.log(googledata);
   useEffect(() => {
     const deatilskip = localStorage.getItem("deatilskip");
 
     if (deatilskip) {
-      console.log("skip the all details alert");
     } else {
-      console.log("not the all details alert");
-
       const profileData = dashboarddata?.profileData?.data;
 
       if (profileData) {
@@ -810,15 +799,7 @@ const AdminDashboard = () => {
           bankDetailsInfo !== undefined &&
           personalDetailsInfo !== undefined
         ) {
-          console.log(kycStatus);
-          console.log(bankDetailsInfo);
-          console.log(personalDetailsInfo);
-
-          console.log(
-            "personalDetails, bankDetailsInfo, and kycStatus available"
-          );
         } else {
-          console.log("Some information is undefined or not available");
           if (personalDetailsInfo === undefined) {
             personalDetails("personalDetails is not available", "/profile");
           } else if (bankDetailsInfo === undefined) {
@@ -828,7 +809,6 @@ const AdminDashboard = () => {
           }
         }
       } else {
-        console.log("profileData is not available");
       }
     }
   }, [dashboarddata.profileData]);
@@ -849,10 +829,15 @@ const AdminDashboard = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="page-sub-header">
-                    <h3 className="page-title text-lowercase">
+                    <h3 className="page-title">
                       Welcome {""}
                       {getreducerprofiledata?.length !== 0
-                        ? getreducerprofiledata?.firstName ?? ""
+                        ? getreducerprofiledata?.firstName
+                            .charAt(0)
+                            .toUpperCase() +
+                            getreducerprofiledata?.firstName
+                              .slice(1)
+                              .toLowerCase() ?? ""
                         : ""}
                     </h3>
                     <ul className="breadcrumb">
@@ -951,7 +936,7 @@ const AdminDashboard = () => {
                   <div className="card-body">
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
-                        <h6>Disburse Deals</h6>
+                        <h6>Total Deals</h6>
                         <h3>
                           {getdashboardData?.length !== 0
                             ? getdashboardData?.numberOfClosedDealsCount +
@@ -979,20 +964,12 @@ const AdminDashboard = () => {
                   <div className="card-body">
                     <span>
                       <span className="text-bold text-success mx-lg-1">
-                        Congratulation :
+                        Subscription Validity:
                       </span>
                       {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata?.groupName == "NewLender"
                           ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
-                          : `You are an ${
-                              getreducerprofiledata.groupName == "OXYMARCH09" ||
-                              getreducerprofiledata.groupName ==
-                                "OxyPremiuimLenders"
-                                ? "Oxy Founding Lender"
-                                : "NewLender"
-                            } group member, and your validity is up to: ${
-                              getdashboardData.validityDate
-                            }`
+                          : `Active until: ${getdashboardData.validityDate}`
                         : ""}
                     </span>
                   </div>
@@ -1044,7 +1021,7 @@ const AdminDashboard = () => {
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-8">
-                        <h6 className="card-title">Deal Activity</h6>
+                        <h6 className="card-title">Deal Activity Amount</h6>
                       </div>
                     </div>
                   </div>
@@ -1091,7 +1068,7 @@ const AdminDashboard = () => {
                     <div className="row align-items-center">
                       <div className="col-12">
                         <h5 className="card-title text-center">
-                          No of Deals Participated
+                          Deals Participated vs Deals Created In System
                         </h5>
                       </div>
                     </div>
@@ -1261,90 +1238,93 @@ const AdminDashboard = () => {
                 </div>
                 {/* /Star Students */}
               </div>
-              <div className="col-xl-12 d-flex">
-                {/* Feed Activity */}
-                <div className="card flex-fill comman-shadow">
-                  <div className="card-header d-flex align-items-center">
-                    <h5 className="card-title ">Current Running Deals</h5>
-                    <ul className="chart-list-out student-ellips">
-                      <li className="star-menus">
-                        <Link to="#">
-                          <i className="fas fa-ellipsis-v" />
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="card-body">
-                    <div className="activity-groups">
-                      {regular_runningDeal.apidata
-                        .listOfDealsInformationToLender &&
-                      regular_runningDeal.apidata.listOfDealsInformationToLender
-                        .length > 1
-                        ? regular_runningDeal.apidata.listOfDealsInformationToLender
-                            .slice(0, 4)
-                            .map((data, index) => (
-                              <div
-                                key={`listOfDealsInfo-${index}`}
-                                className="activity-awards"
-                              >
-                                <div className="award-boxs">
-                                  <img src={awardicon01} alt="Award" />
+              {regular_runningDeal.apidata?.listOfDealsInformationToLender
+                ?.length > 0 ? (
+                <div className="col-xl-12 d-flex">
+                  {/* Feed Activity */}
+                  <div className="card flex-fill comman-shadow">
+                    <div className="card-header d-flex align-items-center">
+                      <h5 className="card-title ">Ongoing Deals</h5>
+                      <ul className="chart-list-out student-ellips">
+                        <li className="star-menus">
+                          <Link to="#">
+                            <i className="fas fa-ellipsis-v" />
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="card-body">
+                      <div className="activity-groups">
+                        {regular_runningDeal.apidata
+                          .listOfDealsInformationToLender &&
+                        regular_runningDeal.apidata
+                          .listOfDealsInformationToLender.length > 1
+                          ? regular_runningDeal.apidata.listOfDealsInformationToLender
+                              .slice(0, 4)
+                              .map((data, index) => (
+                                <div
+                                  key={`listOfDealsInfo-${index}`}
+                                  className="activity-awards"
+                                >
+                                  <div className="award-boxs">
+                                    <img src={awardicon01} alt="Award" />
+                                  </div>
+                                  <div className="award-list-outs">
+                                    <h4> {data.dealName}</h4>
+                                    <h5>
+                                      Min: {data.minimumAmountInDeal}, Max:
+                                      {data.paticipationLimitToLenders}, RoI:
+                                      {data.rateOfInterest}%
+                                    </h5>
+                                  </div>
+                                  <div className="award-time-list">
+                                    <Link
+                                      to={`/participatedeal?dealId=${data.dealId}`}
+                                    >
+                                      <span>Participate</span>
+                                    </Link>
+                                  </div>
                                 </div>
-                                <div className="award-list-outs">
-                                  <h4> {data.dealName}</h4>
-                                  <h5>
-                                    Min: {data.minimumAmountInDeal}, Max:
-                                    {data.paticipationLimitToLenders}, RoI:
-                                    {data.rateOfInterest}%
-                                  </h5>
+                              ))
+                          : regular_runningDeal.apidataESCROW &&
+                            regular_runningDeal.apidataESCROW
+                              .slice(0, 4)
+                              .map((data, index) => (
+                                <div
+                                  key={`listOfDealsInfo-${index}`}
+                                  className="activity-awards"
+                                >
+                                  <div className="award-boxs">
+                                    <img src={awardicon01} alt="Award" />
+                                  </div>
+                                  <div className="award-list-outs">
+                                    <h4
+                                      style={{
+                                        fontWeight: "400",
+                                        inlineSize: "18rem",
+                                      }}
+                                      className="textwrap"
+                                    >
+                                      {data.dealName}
+                                    </h4>
+                                    <h5>
+                                      Min: {data.minimumPaticipationAmount},
+                                      Max:
+                                      {data.lenderPaticipationAmount}, RoI:
+                                      {data.rateOfInterest}%
+                                    </h5>
+                                  </div>
+                                  <div className="award-time-list">
+                                    <Link
+                                      to={`/participatedeal?dealId=${data.dealId}`}
+                                    >
+                                      <span>Participate</span>
+                                    </Link>
+                                  </div>
                                 </div>
-                                <div className="award-time-list">
-                                  <Link
-                                    to={`/participatedeal?dealId=${data.dealId}`}
-                                  >
-                                    <span>Participate</span>
-                                  </Link>
-                                </div>
-                              </div>
-                            ))
-                        : regular_runningDeal.apidataESCROW &&
-                          regular_runningDeal.apidataESCROW
-                            .slice(0, 4)
-                            .map((data, index) => (
-                              <div
-                                key={`listOfDealsInfo-${index}`}
-                                className="activity-awards"
-                              >
-                                <div className="award-boxs">
-                                  <img src={awardicon01} alt="Award" />
-                                </div>
-                                <div className="award-list-outs">
-                                  <h4
-                                    style={{
-                                      fontWeight: "400",
-                                      inlineSize: "18rem",
-                                    }}
-                                    className="textwrap"
-                                  >
-                                    {data.dealName}
-                                  </h4>
-                                  <h5>
-                                    Min: {data.minimumPaticipationAmount}, Max:
-                                    {data.lenderPaticipationAmount}, RoI:
-                                    {data.rateOfInterest}%
-                                  </h5>
-                                </div>
-                                <div className="award-time-list">
-                                  <Link
-                                    to={`/participatedeal?dealId=${data.dealId}`}
-                                  >
-                                    <span>Participate</span>
-                                  </Link>
-                                </div>
-                              </div>
-                            ))}
+                              ))}
 
-                      {/* {regular_runningDeal.apidata
+                        {/* {regular_runningDeal.apidata
                         .listOfDealsInformationToLender &&
                       Array.isArray(
                         regular_runningDeal.apidata
@@ -1415,11 +1395,14 @@ const AdminDashboard = () => {
                                 </div>
                               ))
                         : "No running deals are available."} */}
+                      </div>
                     </div>
                   </div>
+                  {/* /Feed Activity */}
                 </div>
-                {/* /Feed Activity */}
-              </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           {/* Footer */}

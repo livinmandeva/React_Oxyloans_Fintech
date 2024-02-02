@@ -62,7 +62,7 @@ const MembershipHistory = () => {
     {
       title: "Payment Date",
       dataIndex: "PaymentDate",
-      sorter: (a, b) => a.PaymentDate - b.PaymentDate,
+      sorter: (a, b) => new Date(a.PaymentDate) - new Date(b.PaymentDate),
     },
     {
       title: "Transaction Number",
@@ -75,7 +75,7 @@ const MembershipHistory = () => {
       sorter: (a, b) => a.Amount - b.Amount,
     },
     {
-      title: "PaidThrough",
+      title: "Paid Through",
       dataIndex: "PaidThrough",
       sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
     },
@@ -101,7 +101,7 @@ const MembershipHistory = () => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      membership History
+                      Membership History
                     </li>
                   </ul>
                 </div>
