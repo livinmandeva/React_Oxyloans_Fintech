@@ -225,7 +225,7 @@ const Profile = () => {
       const response = savenomineeDeatailsApi(nomineeDetails);
       response.then((data) => {
         if (data.request.status == 200) {
-          Success("success", "Nominee Details Save Successfully");
+          Success("success", "Nominee Details Saved Successfully");
         } else if (data.response.data.errorCode != "200") {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
@@ -236,31 +236,35 @@ const Profile = () => {
   };
 
   const verifybankAccountCashfree = () => {
-    const response = verifyBankAccountAndIfsc(bankaccountprofile);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        if (data.data.status == "SUCCESS") {
-          setdashboarddata({
-            ...dashboarddata,
-            verifyotpText: "Verifed",
-            submitbankdeatail: true,
-          });
+    if (bankaccountprofile.mobileOtp == "") {
+      WarningBackendApi("warning", "Enter The mobile OTP");
+    } else {
+      const response = verifyBankAccountAndIfsc(bankaccountprofile);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          if (data.data.status == "SUCCESS") {
+            setdashboarddata({
+              ...dashboarddata,
+              verifyotpText: "Verifed",
+              submitbankdeatail: true,
+            });
 
-          setBankaccountProfile({
-            ...bankaccountprofile,
-            nameAtBank: data.data.data.nameAtBank,
-            bankName: data.data.data.bankName,
-            bankCity: data.data.data.city,
-            branchName: data.data.data.branch,
-          });
-          toastrSuccess("Sucessfully Verified!", "top-right");
-        } else {
-          WarningBackendApi("warning", data.data.message);
+            setBankaccountProfile({
+              ...bankaccountprofile,
+              nameAtBank: data.data.data.nameAtBank,
+              bankName: data.data.data.bankName,
+              bankCity: data.data.data.city,
+              branchName: data.data.data.branch,
+            });
+            toastrSuccess("Sucessfully Verified!", "top-right");
+          } else {
+            WarningBackendApi("warning", data.data.message);
+          }
+        } else if (data.response.data.errorCode != "200") {
+          WarningBackendApi("warning", data.response.data.errorMessage);
         }
-      } else if (data.response.data.errorCode != "200") {
-        WarningBackendApi("warning", data.response.data.errorMessage);
-      }
-    });
+      });
+    }
   };
 
   const handlefileupload = (event) => {
@@ -272,7 +276,10 @@ const Profile = () => {
             ...prevKyc,
             isValid: !prevKyc.isValid,
           }));
-          Success("success", `${event.target.name} Uploaded Successfully`);
+          Success(
+            "success",
+            `${event.target.name?.toLowerCase()} uploaded successfully`
+          );
         } else if (
           data &&
           data.response &&
@@ -372,7 +379,7 @@ const Profile = () => {
       const response = profileupadate(userProfile);
       response.then((data) => {
         if (data.request.status == 200) {
-          Success("success", "Personal Details Save Successfully");
+          Success("success", "Personal Details Saved Successfully");
         } else if (data.response.data.errorCode != "200") {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
@@ -431,9 +438,9 @@ const Profile = () => {
             ...dashboarddata,
             sendotpbtn: true,
             verifyotp: true,
-            sendotpbtnText: "ReSend OTP",
+            sendotpbtnText: "Resend OTP",
             sendOtpsession: data.data.mobileOtpSession,
-            isValid: true,
+            isValid: !dashboarddata.isValid,
           });
 
           setBankaccountProfile({
@@ -446,7 +453,7 @@ const Profile = () => {
           toastrWarning(data.response.data.errorMessage);
         }
       });
-      verifybankAccountCashfree();
+      // verifybankAccountCashfree();
     }
   };
 
@@ -925,7 +932,7 @@ const Profile = () => {
                                   onChange={handlebankchange}
                                   placeholder="Enter Confirm Account Number"
                                   onPaste={handlePaste}
-                                  maxLength={14}
+                                  maxLength={18}
                                   onCopy={handleCopy}
                                   value={
                                     bankaccountprofile.confirmAccountNumber
@@ -1058,9 +1065,10 @@ const Profile = () => {
                                     Otp <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="text"
+                                    type="number"
                                     className="form-control"
                                     name="mobileOtp"
+                                    maxLength={6}
                                     placeholder=" Enter your Mobile otp"
                                     onChange={handlebankchange}
                                     value={bankaccountprofile.mobileOtp}
@@ -1163,7 +1171,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="tel"
+                                    type="number"
                                     minLength={10}
                                     className="form-control"
                                     placeholder=" Enter  Nominee mobile no "
@@ -1179,7 +1187,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="tel"
+                                    type="number"
                                     className="form-control"
                                     placeholder="  Nominee Name Account No"
                                     value={nomineeDetails.accountNo}
@@ -1700,7 +1708,7 @@ const Profile = () => {
                                     type="file"
                                     accept="image/*"
                                     name="aadhar"
-                                    id="aadhar"
+                                    id="aadhaar"
                                     className="hide-input"
                                     onChange={handlefileupload}
                                   />

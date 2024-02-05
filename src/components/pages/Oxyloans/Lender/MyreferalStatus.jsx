@@ -25,7 +25,7 @@ const MyreferalStatus = () => {
   const [referlink, setrefer] = useState("");
 
   const downloadReferalStatusFileInfo = () => {
-    Success("success", "Referal Status File Download");
+    Success("success", "Referral  Status File Download");
     window.open(referlink, "_blank");
   };
 
@@ -200,7 +200,7 @@ const MyreferalStatus = () => {
                             className="btn btn-danger me-2 text-white"
                           >
                             <i className="fa-solid fa-download mx-1"></i>{" "}
-                            Referal Status
+                            Referral Status
                           </button>
                           <button
                             onClick={Inviteborrower}
@@ -240,7 +240,7 @@ const MyreferalStatus = () => {
                             ) : (
                               <>
                                 <i className="fa-solid fa-user mx-1"></i> Invite
-                                an Lender
+                                Lender
                               </>
                             )}
                           </button>

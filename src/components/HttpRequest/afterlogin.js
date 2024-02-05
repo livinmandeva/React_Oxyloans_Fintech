@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -972,6 +972,40 @@ export const nofreeParticipationapi = async (
   );
   return response;
 };
+
+export const dealparticipationValidityUser = async (deal) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  console.log(deal);
+
+  const data1 = {
+    userId: userId,
+    groupId: deal.apidata.groupId,
+    dealId: deal.urldealId,
+    participatedAmount: deal.participatedAmount,
+    lenderReturnType: deal.payout,
+    processingFee: 0,
+    paticipationStatus:
+      deal.apidata.lenderParticipationTotal !== null || 0 ? "ADD" : "UPDATE",
+    accountType: deal.bank,
+    feeStatus: "COMPLETED",
+    lenderTotalPanLimit: deal.apidata.lenderRemainingPanLimit,
+    totalParticipatedAmount: deal.apidata.lenderTotalParticipationAmount,
+    lenderRemainingWalletAmount: deal.apidata.lenderRemainingWalletAmount,
+    lenderParticipationFrom: "WEB",
+    ExtensionConsents: userisIn === "local" ? "INTERESTED" : "NOTINTERESTED",
+  };
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    "updatingLenderDeal",
+    "PATCH",
+    token,
+    data1
+  );
+  return response;
+};
+
 export const allQueriesCount1 = async () => {
   const token = getToken();
   const userId = getUserId();

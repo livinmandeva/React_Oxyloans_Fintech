@@ -24,17 +24,17 @@ const MyParticipateStatementTable = ({ data }) => {
     {
       title: "S no",
       dataIndex: "Sno",
-      sorter: (a, b) => a - b,
+      sorter: (a, b) => parseInt(a) - parseInt(b),
     },
     {
       title: "Actual Payment Date",
       dataIndex: "ActualPaymentDate",
-      sorter: (a, b) => new Date(a.length) - new Date(b.length),
+      sorter: (a, b) => new Date(a) - new Date(b),
     },
     {
       title: "Interest Paid Date",
       dataIndex: "InterestPaidDate",
-      sorter: (a, b) => new Date(a.length) - new Date(b.length),
+      sorter: (a, b) => new Date(a) - new Date(b),
     },
     {
       title: "Interest Amount",

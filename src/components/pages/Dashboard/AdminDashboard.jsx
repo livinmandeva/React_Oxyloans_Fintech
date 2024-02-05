@@ -43,12 +43,14 @@ const AdminDashboard = () => {
   const dispatch = useDispatch();
   const getdashboardData = useSelector((data) => data.dashboard.fetchDashboard);
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
-  // const { activitydata } = useDealActivity();
+
   const [dashboarddata, setdashboarddata] = useState({
     profileData: "",
   });
   const [membershipdata, setmembershipdata] = useState({
     dashboardData: "",
+    ismembershiptrue: "",
+    isnewlender: false,
   });
 
   const [dashboardDealActive, setdashboardDealActvity] = useState({
@@ -396,7 +398,11 @@ const AdminDashboard = () => {
         },
       },
       xaxis: {
-        categories: ["Active Deals", "Closed Deals", "Disbursed Deals"],
+        categories: [
+          "Active Deals Amount ",
+          "Closed Deals Amount",
+          "Total Deals Amount ",
+        ],
       },
     },
   });
@@ -563,8 +569,6 @@ const AdminDashboard = () => {
     },
   });
 
-  const earningProfitInterest = useState({});
-
   const [googledata, setgoogledate] = useState([
     [
       { type: "date", id: "Date" },
@@ -619,7 +623,6 @@ const AdminDashboard = () => {
       );
 
       response.then((data) => {
-        console.log(data);
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidata: data.data,
@@ -656,26 +659,18 @@ const AdminDashboard = () => {
     dispatch(fetchData());
     getuserMembershipValidity().then((data) => {
       if (data.request.status == 200) {
+        const validitydate = new Date(data.data?.validityDate);
+        var next_date = new Date();
+        const diffTime = Math.abs(validitydate - next_date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const validityDatecheck =
+          validitydate > next_date && data.data?.validityDate !== null;
+
         setmembershipdata({
           ...membershipdata,
           dashboardData: data,
+          ismembershiptrue: validityDatecheck,
         });
-        const currentDate = new Date(); // Get the current date
-
-        // Format the current date as "YYYY-MM-DD"
-        const formattedCurrentDate = currentDate.toISOString().split("T")[0];
-
-        // Assuming data.validityDate is a string in the format "YYYY-MM-DD"
-        const validityDate = data.data.validityDate; // Replace this with your actual date string
-
-        if (validityDate >= formattedCurrentDate) {
-        } else {
-          const skipbutton = localStorage.getItem("skip");
-          if (skipbutton) {
-          } else {
-            validityDatemodal(validityDate);
-          }
-        }
       }
     });
 
@@ -757,7 +752,6 @@ const AdminDashboard = () => {
           ],
           ...newapidata,
         ]);
-        // googledata;    // [new Date(2023, 1, 4), 38177],
       }
     });
     return () => {};
@@ -780,33 +774,68 @@ const AdminDashboard = () => {
   }, []);
 
   useEffect(() => {
-    const deatilskip = localStorage.getItem("deatilskip");
-
-    if (deatilskip) {
+    const profileskip = localStorage.getItem("profileskip");
+    if (profileskip) {
     } else {
       const profileData = dashboarddata?.profileData?.data;
-
       if (profileData) {
-        const { kycStatus, bankDetailsInfo, personalDetailsInfo } = profileData;
+        const { kycStatus, bankDetailsInfo, personalDetailsInfo, groupName } =
+          profileData;
+        const isvalidity = membershipdata.ismembershiptrue;
 
         if (
-          kycStatus !== undefined &&
-          bankDetailsInfo !== undefined &&
-          personalDetailsInfo !== undefined
+          kycStatus == false &&
+          bankDetailsInfo == true &&
+          personalDetailsInfo == true
         ) {
-        } else {
-          if (personalDetailsInfo === undefined) {
-            personalDetails("personalDetails is not available", "/profile");
-          } else if (bankDetailsInfo === undefined) {
-            personalDetails("bankdetailsinfo is not available", "/profile");
+          personalDetails(
+            "Attention: Update Your Personal Details for Enhanced Services and Security. ",
+            "/profile"
+          );
+        } else if (
+          kycStatus == true &&
+          bankDetailsInfo == true &&
+          personalDetailsInfo == false
+        ) {
+          personalDetails(
+            "Kindly provide/update your bank information,",
+            "/profile"
+          );
+        } else if (
+          kycStatus == true &&
+          bankDetailsInfo == true &&
+          personalDetailsInfo == false
+        ) {
+          personalDetails(
+            " Kindly provide/update your personal Information",
+            "/profile"
+          );
+        } else if (
+          kycStatus == false &&
+          bankDetailsInfo == false &&
+          personalDetailsInfo == false
+        ) {
+          personalDetails(
+            "Personal details are currently unavailable. Kindly provide/update your bank information, nominee details, and complete the KYC process ",
+            "/profile"
+          );
+        } else if (
+          kycStatus == true &&
+          bankDetailsInfo == true &&
+          personalDetailsInfo == true &&
+          isvalidity == false
+        ) {
+          const skipbutton = localStorage.getItem("skip");
+          if (skipbutton) {
           } else {
-            personalDetails("kyc is not available", "/profile");
+            validityDatemodal(getdashboardData?.validityDate, groupName);
           }
         }
-      } else {
       }
     }
-  }, [dashboarddata.profileData]);
+    return () => {};
+  }, [dashboarddata.profileData, membershipdata.ismembershiptrue]);
+
   return (
     <>
       <div className="main-wrapper">
@@ -963,8 +992,8 @@ const AdminDashboard = () => {
                       </span>
                       {getreducerprofiledata?.length !== 0
                         ? getreducerprofiledata?.groupName == "NewLender"
-                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
-                          : `Active until: ${getdashboardData.validityDate}`
+                          ? `You are a new lender group, pay the annual membership fee to participate in the multiple deals.`
+                          : `Active until: ${getdashboardData?.validityDate}`
                         : ""}
                     </span>
                   </div>
@@ -1016,7 +1045,7 @@ const AdminDashboard = () => {
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-8">
-                        <h6 className="card-title">Deal Activities Amount</h6>
+                        <h6 className="card-title">Deals Progress Monitor</h6>
                       </div>
                     </div>
                   </div>
@@ -1025,7 +1054,7 @@ const AdminDashboard = () => {
                     <Chart
                       options={treemap.options}
                       series={treemap.series}
-                      type="line"
+                      type="bar"
                       className="activechart"
                     />
                   </div>
@@ -1092,7 +1121,7 @@ const AdminDashboard = () => {
                             <h4>
                               {`${dealsProgressed.participatedDeals}/${dealsProgressed.totalDeals}`}
                             </h4>
-                            <p>Deals Progressed</p>
+                            <p>Deals </p>
                           </div>
                         </div>
                       </ProgressBar>
@@ -1253,7 +1282,7 @@ const AdminDashboard = () => {
                         {regular_runningDeal.apidata
                           .listOfDealsInformationToLender &&
                         regular_runningDeal.apidata
-                          .listOfDealsInformationToLender.length > 1
+                          .listOfDealsInformationToLender.length > 0
                           ? regular_runningDeal.apidata.listOfDealsInformationToLender
                               .slice(0, 4)
                               .map((data, index) => (

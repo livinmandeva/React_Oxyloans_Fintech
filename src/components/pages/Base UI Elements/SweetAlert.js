@@ -13,6 +13,7 @@ import {
   cashsuccessapihit,
   feeapicallforonedeal,
   cancelMyWithdrawWalletRequest,
+  dealparticipationValidityUser,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -123,10 +124,14 @@ export const WarningAlert = (errorMessage, redirectTo) => {
   });
 };
 
-export const validityDatemodal = (validityDate) => {
+export const validityDatemodal = (validityDate, groupName) => {
   Swal.fire({
-    title: "Membership Renewal Reminder",
-    html: `<p style={{marginBottom: '2px'}}>Your membership validity expired on ${validityDate}.</p>`,
+    title: "Membership reminder",
+    html: `<p style={{marginBottom: '2px'}}> ${
+      groupName == "NewLender"
+        ? " Membership reminder"
+        : "Your membership validity expired"
+    }   ${validityDate == null ? "" : validityDate}.</p>`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -157,11 +162,8 @@ export const dealmembership = (message, route) => {
     cancelButtonText: "Skip", // Add this line to set the text for the Cancel button
   }).then((result) => {
     if (result.isConfirmed) {
-      // User clicked "Get Membership"
       window.location.href = route;
     } else if (result.dismiss === Swal.DismissReason.cancel) {
-      // User clicked "Skip" or closed the modal
-      // You can add custom logic here if needed
       localStorage.setItem("dealmember", true);
     }
   });
@@ -175,90 +177,124 @@ export const personalDetails = (message, route) => {
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "update",
-    cancelButtonText: "Skip", // Add this line to set the text for the Cancel button
+    cancelButtonText: "Skip",
   }).then((result) => {
     if (result.isConfirmed) {
-      // User clicked "Get Membership"
       window.location.href = route;
     } else if (result.dismiss === Swal.DismissReason.cancel) {
-      // User clicked "Skip" or closed the modal
-      // You can add custom logic here if needed
-      localStorage.setItem("deatilskip", true);
+      localStorage.setItem("profileskip", true);
     }
   });
 };
 
-export const participatedapi = ({
-  apidata,
-  participatedAmount,
-  lenderReturnType,
-  groupId,
-  dealId,
-  accountType,
-  deal,
-}) => {
-  const lender = localStorage.getItem("lenderReturnType");
-  const amount = localStorage.getItem("lenderRemainingWalletAmount");
+export const participatedapi = async (deal) => {
+  console.log(deal);
+  const payoutmethod = localStorage.getItem("choosenPayOutOption");
 
-  const lendershiptype = localStorage.getItem("newLender");
-  const partipatedamount = localStorage.getItem("participatedAmount");
-  const remaingamount = amount - participatedAmount;
   Swal.fire({
     title: "Please review the lending details!",
-    html: `<p><strong> Lending Amount :- INR </strong>${participatedAmount}</p><br>
-           <p><strong> Pay-out Method: </strong>${lender}</p><br>
-           <p><strong> Pay-out Method: </strong>${participatedAmount}</p>`,
-    icon: "warning",
+    html: `<p><strong> Lending Amount :- INR </strong>${deal.participatedAmount}</p>
+           <p><strong> Deal Name : </strong>${deal.apidata.dealAmount}</p>
+           <p><strong> Pay-out Method : </strong>${payoutmethod}</p>`,
+    icon: "info",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Ok!",
   }).then((result) => {
     if (result.isConfirmed) {
-      // Call the nofreeParticipationapi function here
-      const response = nofreeParticipationapi(
-        apidata,
-        groupId,
-        dealId,
-        accountType,
-        lenderReturnType,
-        deal
-      );
-
-      response
-        .then((data) => {
-          // Check the status code in the response
+      console.log(" participation entered block");
+      if ((deal.apidata.feeStatusToParticipate = "OPTIONAL")) {
+        const response = dealparticipationValidityUser(deal);
+        response.then((data) => {
+          console.log(data);
           if (data.request.status === 200) {
             Swal.fire({
               title: "Congratulations!",
-              text: `We are reserving ${participatedAmount} `,
+              text: `We are reserving ${deal.participatedAmount} `,
               icon: "success",
             });
-            if (lendershiptype == "new") {
-              localStorage.removeItem("newLender");
-              newlenderfree(participatedAmount, dealId);
-            }
-          } else if (data.request.status === 403) {
-            Swal.fire({
-              title: "Error!",
-              text: `${data.response.data.errorMessage}`, // Displaying the error message
-              icon: "error",
-            });
-          } else if (data.request.status === 500) {
+          } else {
             Swal.fire({
               title: "Error!",
               text: `${data.response.data.errorMessage}`, // Displaying the error message
               icon: "error",
             });
           }
-        })
-        .catch((error) => {
-          Swal.fire({
-            title: "Error!",
-            text: `${error}`, // Displaying the error message
-            icon: "error",
-          });
         });
+      } else {
+        if (deal.apidata.groupName == "NewLender") {
+        } else if (
+          deal.apidata.validityStatus == true &&
+          deal.apidata.groupName != "NewLender"
+        ) {
+        } else if (
+          deal.apidata.validityStatus == false &&
+          deal.apidata.groupName != "NewLender"
+        ) {
+          const response = dealparticipationValidityUser(deal);
+          response.then((data) => {
+            console.log(data);
+            if (data.request.status === 200) {
+              Swal.fire({
+                title: "Congratulations!",
+                text: `We are reserving ${deal.participatedAmount} `,
+                icon: "success",
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `${data.response.data.errorMessage}`, // Displaying the error message
+                icon: "error",
+              });
+            }
+          });
+        }
+      }
+
+      // Call the nofreeParticipationapi function here
+      // const response = nofreeParticipationapi(
+      //   apidata,
+      //   groupId,
+      //   dealId,
+      //   accountType,
+      //   lenderReturnType,
+      //   deal
+      // );
+      // response
+      //   .then((data) => {
+      //     // Check the status code in the response
+      //     if (data.request.status === 200) {
+      //       Swal.fire({
+      //         title: "Congratulations!",
+      //         text: `We are reserving ${participatedAmount} `,
+      //         icon: "success",
+      //       });
+      //       if (lendershiptype == "new") {
+      //         localStorage.removeItem("newLender");
+      //         newlenderfree(participatedAmount, dealId);
+      //       }
+      //     } else if (data.request.status === 403) {
+      //       Swal.fire({
+      //         title: "Error!",
+      //         text: `${data.response.data.errorMessage}`, // Displaying the error message
+      //         icon: "error",
+      //       });
+      //     } else if (data.request.status === 500) {
+      //       Swal.fire({
+      //         title: "Error!",
+      //         text: `${data.response.data.errorMessage}`, // Displaying the error message
+      //         icon: "error",
+      //       });
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     Swal.fire({
+      //       title: "Error!",
+      //       text: `${error}`, // Displaying the error message
+      //       icon: "error",
+      //     });
+      //   });
     }
   });
 };
@@ -409,10 +445,11 @@ export const membershipsweetalertconformation = (membership, no) => {
     if (result.isConfirmed) {
       const response = handlePaymembershipapi(membership, no);
       response.then((data) => {
-        if (data.response.status == 200) {
-          const navigate = useNavigate();
-          navigate("/dashboard");
-          Swal.fire("Payment received successfully!");
+        if (data.status == 200) {
+          Swal.fire("Success!", `Payment received successfully!`, "success");
+          setTimeout(() => {
+            window.location.href = `/dashboard`;
+          }, 5000);
         } else {
           membershipsweetalert(data.response.data.errorMessage);
         }

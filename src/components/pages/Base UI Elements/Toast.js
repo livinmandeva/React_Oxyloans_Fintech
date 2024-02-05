@@ -23,7 +23,7 @@ export const topCenter1 = (messages) => {
 };
 export const toastrError = (error) => {
   alertify.set("notifier", "position", "top-right");
-  alertify.error(error)
+  alertify.error(error);
 };
 export const topLeft = () => {
   alertify.set("notifier", "position", "top-left");

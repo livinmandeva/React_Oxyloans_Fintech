@@ -3,25 +3,25 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
-
 import "./InvoiceGrid.css";
-
 import { handledetail } from "../../../HttpRequest/afterlogin";
 import { Button, Table } from "antd";
-
-// import { useNavigate  } from "react-router-dom";
 import { toastrError } from "../../Base UI Elements/Toast";
 import {
   WarningAlertWalltTran,
   membership,
   participatedapi,
 } from "../../Base UI Elements/SweetAlert";
-
 import Spining from "./Spining";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const Participatedeal = () => {
+  const [buttonvaild, setbuttonvaild] = useState(true);
+  const [isConditionMet, setIsConditionMet] = useState(false);
+  const dispatch = useDispatch();
+  const reduxStoreData = useSelector((data) => data.counter.userProfile);
+
   const [deal, setDeal] = useState({
     apidata: "",
     transactionNumber: "",
@@ -31,111 +31,240 @@ const Participatedeal = () => {
     lenderReturnType: "",
     lenderFeeId: "",
     transferPrincipal: "",
-    participatedAmount: "111",
+    participatedAmount: 0,
     bank: "",
     wallet: "",
     urldealId: "",
     spining: false,
+    lenderRemainingPanLimit: 0,
+    lenderTotalParticipationAmount: 0,
+    lenderRemainingWalletAmount: 0,
+    dealParticipatedAmount: 0,
+    lenderParticipated: false,
+    dealfeestatus: "",
+    uservalidity: "",
+    groupName: "",
+    dealId: 0,
   });
-  const [buttonvaild, setbuttonvaild] = useState(true);
-  const [isConditionMet, setIsConditionMet] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const reduxStoreData = useSelector((data) => data.counter.userProfile);
   useEffect(() => {
     const handledealinfo = async () => {
       const urlparam = new URLSearchParams(window.location.search);
       const dealId = urlparam.get("dealId");
-
       const response = await handledetail(dealId);
+      const newObj = { ...response.data };
+      if (newObj.monthlyInterest != 0) {
+        newObj.rateOfInterest = newObj.monthlyInterest + " % PM";
+        newObj["payout"] = "MONTHLY";
+        localStorage.setItem("choosenPayOutOption", "MONTHLY");
+      } else if (newObj.quartlyInterest != 0) {
+        newObj.rateOfInterest = newObj.quartlyInterest * 3 + " % PA ";
+        newObj["payout"] = "QUARTERLY";
+        localStorage.setItem("choosenPayOutOption", "QUARTELY");
+      } else if (newObj.halfInterest != 0) {
+        newObj.rateOfInterest = newObj.halfInterest * 6 + " % PA ";
+        newObj["payout"] = "HALFYEARLY";
+        localStorage.setItem("choosenPayOutOption", "HALFLY");
+      } else if (newObj.yearlyInterest === "YEARLY") {
+        newObj.rateOfInterest = newObj.yearlyInterest * 12 + " %  PA ";
+        newObj["payout"] = "YEARLY";
+        localStorage.setItem("choosenPayOutOption", "YEARLY");
+      } else if (newObj.endofthedealInterest != 0) {
+        newObj.rateOfInterest = newObj.endofthedealInterest * 12 + " %  PA ";
+        newObj["payout"] = "ENDOFTHEDEAL";
+        localStorage.setItem("choosenPayOutOption", "ENDOFTHEDEAL");
+      }
 
-      setDeal({
-        ...deal,
-        apidata: response.data,
-        urldealId: dealId,
-      });
       if (response.request.status == 500) {
         setDeal({
           ...deal,
           spining: true,
         });
-      }
-      {
-        response.data.lenderRemainingWalletAmount != "" ||
-          (null && (
-            <>
-              {localStorage.setItem(
-                "lenderRemainingWalletAmount",
-                response.data.lenderRemainingWalletAmount
-              )}
-            </>
-          ));
-      }
-
-      setTimeout(() => {
+      } else {
         setDeal({
           ...deal,
-          apidata: response.data,
+          apidata: newObj,
           urldealId: dealId,
+          lenderRemainingPanLimit: newObj.lenderRemainingPanLimit,
+          lenderTotalParticipationAmount: newObj.lenderTotalParticipationAmount,
+          lenderRemainingWalletAmount: newObj.lenderRemainingWalletAmount,
+          dealParticipatedAmount: newObj.lenderParticipationTotal,
+          lenderParticipated:
+            newObj.lenderParticipationTotal != 0 &&
+            newObj.lenderParticipationTotal != null
+              ? true
+              : false,
+          dealfeestatus: newObj.feeStatusToParticipate,
+          uservalidity: newObj.lenderValidityStatus,
+          groupName: newObj.groupName,
         });
-
-        if (response.data.yearlyInterest !== 0) {
-          localStorage.setItem("lenderReturnType", "YEARLY");
-        } else if (response.data.halfInterest !== 0 || null) {
-          localStorage.setItem("lenderReturnType", "HalfYear");
-        } else if (response.data.monthlyInterest !== 0) {
-          localStorage.setItem("lenderReturnType", "monthly");
-        }
-      }, 1000);
+      }
     };
 
     handledealinfo();
   }, []);
 
-  const dataSource = [];
+  useEffect(() => {
+    const checkCondition = () => {
+      if (
+        deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
+        deal.participatedAmount <= deal.apidata.lenderParticiptionLimit &&
+        deal.bank != ""
+      ) {
+        setIsConditionMet(true);
+        setbuttonvaild(false);
+      } else {
+        setIsConditionMet(false);
+        setbuttonvaild(true);
+      }
+    };
+    checkCondition();
+  }, [deal.participatedAmount, deal.bank]);
 
-  const interestType =
-    deal.apidata.halfInterest !== 0.0
-      ? null
-      : deal.apidata.quartlyInterest !== 0.0
-      ? "Quartly"
-      : deal.apidata.monthlyInterest !== 0.0
-      ? " % P.M"
-      : deal.apidata.yearlyInterest !== 0.0
-      ? "% P.A"
-      : null;
+  const dealparticipate = () => {
+    const amount = `${
+      reduxStoreData?.length !== 0
+        ? reduxStoreData?.lenderWalletAmount -
+          reduxStoreData?.holdAmountInDealParticipation -
+          reduxStoreData?.equityAmount
+        : ""
+    }`;
+    const numericAmount = parseInt(amount);
 
-  // You can then use the interestType variable as needed.
+    if (deal.participatedAmount == "") {
+      toastrError(
+        "Please entere the amount that you wish to lend in this deal."
+      );
+      return false;
+    } else if (numericAmount < deal.participatedAmount) {
+      toastrError(
+        "Your participation amount is greater than your wallet balance."
+      );
+      return false;
+    } else if (deal.participatedAmount > deal.apidata.maximumparticipation) {
+      toastrError("You are participating in more than the maximum amount.");
+      return false;
+    } else if (
+      deal.participatedAmount < deal.apidata.minimumPaticipationAmount
+    ) {
+      toastrError("You are participating in less than the minimum amount.");
+      return false;
+    } else {
+      if (
+        deal.apidata.remainingAmountInDeal >
+        deal.apidata.minimumPaticipationAmount
+      ) {
+        if (
+          deal.participatedAmount < deal.apidata.minimumPaticipationAmount &&
+          deal.lenderParticipated == false
+        ) {
+          toastrError(
+            "Minimum investment is INR" + deal.apidata.minimumPaticipationAmount
+          );
 
-  const data = deal.apidata;
-  deal.apidata && deal.apidata != ""
-    ? dataSource.push({
-        name: deal.apidata.dealName,
-        loanamount: deal.apidata.dealAmount,
-        rateOfInterest:
-          data.yearlyInterest != 0
-            ? data.yearlyInterest
-            : (data.monthlyInterest != 0
-                ? data.monthlyInterest
-                : data.quartlyInterest != 0
-                ? data.quartlyInterest
-                : data.yearlyInterest != 0
-                ? data.yearlyInterest
-                : data.monthlyInterest != 0
-                ? data.monthlyInterest
-                : null) +
-              " " +
-              interestType,
+          return false;
+        } else if (
+          deal.participatedAmount > deal.apidata.remainingAmountInDeal
+        ) {
+          toastrError(
+            "Your participation amount is greater than the Deal available limit."
+          );
 
-        availablelimit: deal.apidata.remainingAmountInDeal,
-        tenureinmonths: deal.apidata.duration + "M",
-        funding: deal.apidata.fundStartDate,
-        fundingdate: deal.apidata.fundEndDate,
-        minimumparticipation: deal.apidata.minimumPaticipationAmount,
-        maximumparticipation: deal.apidata.lenderParticiptionLimit,
-      })
-    : null;
+          return false;
+        }
+      } else if (
+        deal.apidata.remainingAmountInDeal <
+        deal.apidata.minimumPaticipationAmount
+      ) {
+        if (deal.apidata.remainingAmountInDeal == 0) {
+          toastrError("Deal Is Closed");
+
+          return false;
+        } else if (
+          deal.participatedAmount < deal.apidata.remainingAmountInDeal
+        ) {
+          toastrError(
+            " investment is INR" + deal.apidata.remainingAmountInDeal
+          );
+
+          return false;
+        } else if (
+          deal.participatedAmount > deal.apidata.remainingAmountInDeal
+        ) {
+          toastrError(
+            "Your participation amount is greater than the Deal available limit."
+          );
+          return false;
+        }
+      }
+    }
+
+    participatedapi(deal);
+
+    // if (isConditionMet) {
+    //   if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
+    //     if (deal.apidata.groupName != "" || null) {
+    //       if (deal.apidata.validityStatus === false) {
+    //         if (numericAmount >= participatedAmount) {
+    //           participatedapi({
+    //             apidata,
+    //             participatedAmount,
+    //             lenderReturnType,
+    //             groupId,
+    //             dealId,
+    //             accountType,
+    //             deal,
+    //           });
+    //         } else {
+    //           toastrError("amout is not not reach your deal particepte amount");
+    //         }
+    //       } else {
+    //         if (deal.apidata.groupName == "New Lender") {
+    //           console.log("newlender  particepate");
+    //           localStorage.setItem("newLender", "new");
+    //           localStorage.setItem("participatedAmount", participatedAmount);
+    //           participatedapi({
+    //             apidata,
+    //             participatedAmount,
+    //             lenderReturnType,
+    //             groupId,
+    //             dealId,
+    //             accountType,
+    //             deal,
+    //           });
+    //         } else {
+    //           membership(dealId);
+    //         }
+    //       }
+    //     } else {
+    //       toastrError("deal  having free feeStatusToParticipate");
+    //     }
+    //   } else {
+    //     if (numericAmount >= participatedAmount) {
+    //       if (deal.apidata.groupName === "NewLender") {
+    //         localStorage.setItem("newLender", "new");
+    //         localStorage.setItem("participatedAmount", participatedAmount);
+    //         participatedapi({
+    //           apidata,
+    //           participatedAmount,
+    //           lenderReturnType,
+    //           groupId,
+    //           dealId,
+    //           accountType,
+    //           deal,
+    //         });
+    //       }
+    //     } else {
+    //       toastrError("amout is not not reach your deal particepte amount");
+    //     }
+    //   }
+    // } else {
+    //   WarningAlertWalltTran(
+    //     "The participation fee falls below the specified requirements."
+    //   );
+    // }
+  };
+
   const columns = [
     {
       title: "Deal Name",
@@ -175,123 +304,21 @@ const Participatedeal = () => {
     },
   ];
 
-  const dealparticipate = (
-    apidata,
-    participatedAmount,
-    lenderReturnType,
-    groupId,
-    dealId,
-    accountType,
-    deal
-  ) => {
-    const amount = `${
-      reduxStoreData?.length !== 0
-        ? reduxStoreData?.lenderWalletAmount -
-          reduxStoreData?.holdAmountInDealParticipation -
-          reduxStoreData?.equityAmount
-        : ""
-    }`;
-    const numericAmount = parseInt(amount, 10);
-
-    if (isConditionMet) {
-      if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
-        if (deal.apidata.groupName != "" || null) {
-          if (deal.apidata.validityStatus === false) {
-            if (numericAmount >= participatedAmount) {
-              participatedapi({
-                apidata,
-                participatedAmount,
-                lenderReturnType,
-                groupId,
-                dealId,
-                accountType,
-                deal,
-              });
-            } else {
-              toastrError("amout is not not reach your deal particepte amount");
-            }
-          } else {
-            if (deal.apidata.groupName == "New Lender") {
-              console.log("newlender  particepate");
-              localStorage.setItem("newLender", "new");
-              localStorage.setItem("participatedAmount", participatedAmount);
-              participatedapi({
-                apidata,
-                participatedAmount,
-                lenderReturnType,
-                groupId,
-                dealId,
-                accountType,
-                deal,
-              });
-            } else {
-              membership(dealId);
-            }
-          }
-        } else {
-          toastrError("deal  having free feeStatusToParticipate");
-        }
-      } else {
-        if (numericAmount >= participatedAmount) {
-          if (deal.apidata.groupName === "NewLender") {
-            localStorage.setItem("newLender", "new");
-            localStorage.setItem("participatedAmount", participatedAmount);
-            participatedapi({
-              apidata,
-              participatedAmount,
-              lenderReturnType,
-              groupId,
-              dealId,
-              accountType,
-              deal,
-            });
-          }
-          // participatedapi({
-          //   apidata,
-          //   participatedAmount,
-          //   lenderReturnType,
-          //   groupId,
-          //   dealId,
-          //   accountType,
-          //   deal,
-          // });
-        } else {
-          toastrError("amout is not not reach your deal particepte amount");
-        }
-      }
-    } else {
-      WarningAlertWalltTran(
-        "The participation fee falls below the specified requirements."
-      );
-    }
-  };
-  useEffect(() => {
-    const checkCondition = () => {
-      if (
-        deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
-        deal.participatedAmount <= deal.apidata.lenderParticiptionLimit
-      ) {
-        setIsConditionMet(true);
-      } else {
-        setIsConditionMet(false);
-      }
-    };
-
-    checkCondition();
-  }, [deal.participatedAmount]);
-
-  useEffect(() => {
-    if (deal.bank != "") {
-      setbuttonvaild(false);
-    } else {
-      setbuttonvaild(true);
-    }
-  }, [deal.bank]);
-
-  useEffect(() => {
-    {
-    }
-  }, [deal.bank]);
+  const dataSource = [];
+  deal.apidata && deal.apidata != ""
+    ? dataSource.push({
+        key: Math.random(),
+        name: deal.apidata.dealName,
+        loanamount: deal.apidata.dealAmount,
+        rateOfInterest: deal.apidata.rateOfInterest,
+        availablelimit: deal.apidata.remainingAmountInDeal,
+        tenureinmonths: deal.apidata.duration + "M",
+        funding: deal.apidata.fundStartDate,
+        fundingdate: deal.apidata.fundEndDate,
+        minimumparticipation: deal.apidata.minimumPaticipationAmount,
+        maximumparticipation: deal.apidata.lenderParticiptionLimit,
+      })
+    : [];
 
   return (
     <>
@@ -384,7 +411,36 @@ const Participatedeal = () => {
                     </label>
                   </div>
                 </div>
-                <div className="centerdiv mt-5">
+
+                {deal.apidata.validityStatus == true && (
+                  <div className="row notepoint text-center m-5 align-self-center">
+                    {deal.apidata.feeStatusToParticipate == "OPTIONAL" &&
+                    deal.apidata.validityStatus == true ? (
+                      <h4 className="text-bold font-monospace">
+                        <code>Note :</code> Processing Fee is waived for this
+                        deal.
+                      </h4>
+                    ) : deal.apidata.validityStatus == true &&
+                      deal.apidata.groupName != "NewLender" ? (
+                      <h4 className="text-bold fs-4 fw-light">
+                        <code>Note :</code> Your validity has expired. Please
+                        pay to continue your participation.
+                      </h4>
+                    ) : deal.apidata.validityStatus == true &&
+                      deal.apidata.groupName == "NewLender" ? (
+                      <h4 className="text-bold fs-4 fw-light">
+                        <code>Note :</code> You are requested to pay a 1%
+                        processing fee on your investment.
+                      </h4>
+                    ) : null}
+                  </div>
+                )}
+
+                <div
+                  className={`centerdiv ${
+                    deal.apidata?.validityStatus ? "mt-5" : "mt-2"
+                  }`}
+                >
                   <h4>Your participation to this deal is</h4>
                   <div className="form-group">
                     <input
@@ -405,22 +461,7 @@ const Participatedeal = () => {
                     size="large"
                     disabled={buttonvaild}
                     onClick={() => {
-                      console.log(deal.lenderReturnType);
-                      dealparticipate(
-                        deal.apidata,
-                        deal.participatedAmount,
-                        deal.lenderReturnType,
-                        deal.apidata.groupId,
-                        deal.urldealId,
-                        deal.bank,
-                        deal
-                      );
-
-                      // Update the 'deal' state
-                      setDeal({
-                        ...deal,
-                        participatedeal: !deal.participatedeal,
-                      });
+                      dealparticipate();
                     }}
                   >
                     Participate

@@ -45,7 +45,7 @@ const LoadwalletThroughVirtualAccount = () => {
                         <Link to="/dashboard">Dashboard</Link>
                       </li>
                       <li className="breadcrumb-item active">
-                        <Link to="/loadwaletThroughQr">Scan-QR</Link>
+                        <Link to="/loadwaletThroughQr">QR Scanner</Link>
                       </li>
                     </ul>
                   </div>
@@ -66,8 +66,8 @@ const LoadwalletThroughVirtualAccount = () => {
                           <ul style={{ listStyle: "block" }}>
                             <li>OXYLRV{userid} is your virtual account.</li>
                             <li>
-                              Add 'OXYLRV{userid}' as a beneficiary in your bank
-                              account and Initiate the fund transfer
+                              Add 'OXYLRV {userid}' as a beneficiary in your
+                              bank account and Initiate the fund transfer
                             </li>
                             <li>
                               <code>Note </code> that there is an issue with

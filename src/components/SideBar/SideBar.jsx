@@ -709,7 +709,7 @@ const Sidebar = (props) => {
                             "/emicalculator" === pathName ? "active" : ""
                           }`}
                         >
-                          Emi Calculator
+                          EMI Calculator
                         </Link>
                       </li>
                     </ul>

@@ -54,7 +54,9 @@ const Login = () => {
       setUserLoginInfo((prevState) => ({
         ...prevState,
         emailerror:
-          userLogInInfo.email === "" ? "Please enter the Email/Mobile No" : "",
+          userLogInInfo.email === ""
+            ? "Please Enter the Email/Mobile Number"
+            : "",
         passworderror:
           userLogInInfo.password === "" ? "Please Enter The Password" : "",
       }));
@@ -92,7 +94,7 @@ const Login = () => {
                   <p className="account-subtitle">
                     Need an account? <Link to="/register">Sign Up</Link>
                   </p>
-                  <h2>Sign in</h2>
+                  <h2>Login</h2>
 
                   <div className="form-group">
                     <label htmlFor="userloginusername">

@@ -87,7 +87,7 @@ const Loginotp = () => {
       setUserLoginInfo((prevState) => ({
         ...prevState,
         emailerror:
-          userLogInInfo.email === "" ? "Please enter The Moblie Number" : "",
+          userLogInInfo.email === "" ? "Please Enter The Moblie Number" : "",
       }));
     } else {
       if (userLogInInfo.email.length === 10) {
@@ -137,7 +137,7 @@ const Loginotp = () => {
                   <p className="account-subtitle">
                     Need an account? <Link to="/register">Sign Up</Link>
                   </p>
-                  <h2>LogIn With Otp</h2>
+                  <h2>LogIn With OTP</h2>
 
                   <div className="form-group">
                     <label htmlFor="userloginusername">
@@ -146,11 +146,11 @@ const Loginotp = () => {
                     </label>
                     <input
                       className="form-control"
-                      type="tel"
+                      type="number"
                       value={userLogInInfo.email}
                       name="email"
                       onChange={handlechange}
-                      maxLength={10}
+                      maxLength={6}
                       id="userloginusername"
                       required
                     />

@@ -53,6 +53,7 @@ const MembershipHistory = () => {
             TransactionNumber: data.transactionNumber,
             Amount: data.amount,
             PaidThrough: data.paidType,
+            DealId: data.dealId,
           });
         })
       : "";
@@ -73,6 +74,11 @@ const MembershipHistory = () => {
       title: "Amount",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
+    },
+    {
+      title: "Deal Id",
+      dataIndex: "DealId",
+      sorter: (a, b) => a.dealId - b.dealId,
     },
     {
       title: "Paid Through",

@@ -47,14 +47,13 @@ const TicketHistory = () => {
     });
   };
 
-  useEffect(() => {}, [ticketcomment]);
-
   const handeticketcomment = async (id) => {
     const response = ticketcommentapi(id);
-    setticketcommit(!ticketcomment);
+
     response.then((data) => {
       console.log(data);
       setdataapi(data);
+      setticketcommit(!ticketcomment);
     });
   };
 
@@ -77,7 +76,7 @@ const TicketHistory = () => {
                     <h3 className="page-title">Ticket History </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/students">DashBoard</Link>
+                        <Link to="/students">Dashboard</Link>
                       </li>
                       <li className="breadcrumb-item active">Ticket History</li>
                     </ul>
@@ -107,11 +106,11 @@ const TicketHistory = () => {
                           <table className="table border-0 star-student  table-center mb-0">
                             <thead>
                               <tr>
-                                <th className="text-center"> Ticket Id</th>
-                                <th className="text-center"> Received On</th>
-                                <th className="text-center"> Status</th>
+                                <th className=""> Query Info</th>
+                                {/* <th className="text-center"> Received On</th>
+                                <th className="text-center"> Status</th> */}
                                 <th className=""> Query</th>
-                                <th className="text-center">Admin Comments</th>
+                                <th className="">Admin Comments</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -122,13 +121,15 @@ const TicketHistory = () => {
                                     index % 2 === 0 ? "event" : "odd"
                                   }`}
                                 >
-                                  <td className="text-center">
-                                    <div>{item.ticketId}</div>
-                                  </td>
-                                  <td className="text-center">
-                                    <div>{item.receivedOn}</div>
-                                  </td>
-                                  <td className="text-center">
+                                  <td className="">
+                                    <div>
+                                      <h6>Ticket Id</h6>
+                                      {item.ticketId}
+                                    </div>
+                                    <div>
+                                      <h6>Received On</h6>
+                                      {item.receivedOn}
+                                    </div>
                                     <div
                                       className={
                                         item.status === "Completed"
@@ -139,6 +140,8 @@ const TicketHistory = () => {
                                       {item.status}
                                     </div>
                                   </td>
+                                  {/* <td className="text-center"></td>
+                                  <td className="text-center"></td> */}
                                   <td
                                     className=""
                                     style={{
@@ -148,35 +151,59 @@ const TicketHistory = () => {
                                   >
                                     {item.query}
                                   </td>
-                                  <td className="text-center">
+                                  <td
+                                    className=""
+                                    style={{
+                                      width: "4rem !important",
+                                      whiteSpace: "break-spaces",
+                                    }}
+                                  >
+                                    <div>{item.query && item.comments}</div>
                                     <div className="buttn">
                                       <div className="badgedat">
-                                        <div
-                                          className="badge bg-success"
-                                          typeof="button"
+                                        {/* <button
+                                          className="badge badge-success outline-none"
+                                          typeof="badge"
                                           onClick={() =>
                                             handeticketcomment(item.id)
                                           }
                                         >
                                           View Comments
-                                        </div>
-                                        <div
-                                          className="badge bg-warning"
+                                        </button> */}
+                                        {/* <button
+                                          className="badge bg-info"
                                           typeof="button"
                                         >
                                           Inquiries Reply
-                                        </div>
+                                        </button> */}
                                       </div>
                                       <div className="badgedat">
-                                        <Link
-                                          className="badge bg-info col-md-9 col-12"
-                                          to="/writetous"
+                                        <button
+                                          disabled={
+                                            item.status == "Completed"
+                                              ? true
+                                              : flase
+                                          }
+                                          className="btn btn-success"
                                         >
-                                          <div className="">Write Reply</div>
-                                        </Link>
-                                        <div className=" badge bg-success-dark  col-md-8 col-12">
+                                          <Link
+                                            className="text-white"
+                                            to="/writetous"
+                                          >
+                                            Write Reply
+                                          </Link>
+                                        </button>
+
+                                        <button
+                                          className="badge bg-success-dark"
+                                          disabled={
+                                            item.status == "Completed"
+                                              ? true
+                                              : flase
+                                          }
+                                        >
                                           Cancel
-                                        </div>
+                                        </button>
                                       </div>
                                     </div>
                                   </td>
@@ -187,17 +214,15 @@ const TicketHistory = () => {
                         </div>
                       </div>
                     </div>
-                    {/* /Star Students */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/* Footer */}
+
           <Footer />
         </div>
       </div>
-      {/* /Main Wrapper */}
     </>
   );
 };

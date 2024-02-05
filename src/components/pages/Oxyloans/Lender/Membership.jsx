@@ -28,6 +28,7 @@ const Membership = React.memo((pros) => {
       });
 
       membershipsweetalertconformation(membership, no);
+
       setmywalletTowalletHistory({
         ...mywalletTowalletHistory,
         [`loading${no}`]: false,

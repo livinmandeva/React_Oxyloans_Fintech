@@ -104,32 +104,25 @@ export default function LenderRegister() {
       let session = localStorage.getItem("seesion");
       let otpdata = localStorage.getItem("otp");
       let otp_data = otpdata.replace(/,/g, "");
-
-      // Check if OTP has a valid length (e.g., 6 characters)
       if (otp_data.length === 6) {
-        // Assuming `api.vaildateotp` expects the parameters in this order: otp_data, mobile, name, email, password
         const response = await api.vaildateotp(
           registrationField.email,
           registrationField.moblie,
           otp_data,
           registrationField.pancard,
-          registrationField.password, // Ensure `password` is available in registrationField
+          registrationField.password,
           session,
           registrationField.referrerId
         );
-        //  const mill=gettime()
 
         localStorage.setItem("id", response.responseData.userId);
-
         const mill1 = new Date().getTime();
         localStorage.setItem("timemilll", mill1);
         navigate("/register_active_proceed");
       } else {
-        // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
       }
     } catch (error) {
-      // Handle any errors that occur during OTP validation
       console.error(
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
@@ -147,10 +140,7 @@ export default function LenderRegister() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-
-    // Get the value of the 'ref' parameter
     const refParam = searchParams.get("ref");
-
     if (registrationField.referrerId != "" || refParam != "") {
       setRegistrationField({
         ...registrationField,
@@ -369,7 +359,7 @@ export default function LenderRegister() {
                             <div className=" dont-have">
                               Already Registered? <Link to="/">Login</Link>
                             </div>
-                            {error && <p className="errormessage">{error}</p>}
+                            {error && toastrWarning(error)}
                             <div className="form-group mb-0">
                               <button
                                 className="btn btn-primary btn-block"
