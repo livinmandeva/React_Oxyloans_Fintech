@@ -45,6 +45,7 @@ const Participatedeal = () => {
     uservalidity: "",
     groupName: "",
     dealId: 0,
+    currentUserWallet: 0,
   });
 
   useEffect(() => {
@@ -121,7 +122,8 @@ const Participatedeal = () => {
     checkCondition();
   }, [deal.participatedAmount, deal.bank]);
 
-  const dealparticipate = () => {
+  const dealparticipate = async () => {
+    console.log(deal);
     const amount = `${
       reduxStoreData?.length !== 0
         ? reduxStoreData?.lenderWalletAmount -
@@ -199,7 +201,7 @@ const Participatedeal = () => {
       }
     }
 
-    participatedapi(deal);
+    const userparticipatestatis = await participatedapi(deal);
 
     // if (isConditionMet) {
     //   if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
@@ -384,7 +386,7 @@ const Participatedeal = () => {
                     />
                     <label
                       className="form-check-label mt-2"
-                      for="flexRadioDisabled"
+                      htmlFor="transferPrincipal"
                     >
                       <strong> Move Principal to wallet </strong>
                     </label>
@@ -405,28 +407,28 @@ const Participatedeal = () => {
 
                     <label
                       className="form-check-label mt-2"
-                      for="flexRadioCheckedDisabled"
+                      htmlFor="transferPrincipal"
                     >
                       <strong> Move Principal to Bank</strong>
                     </label>
                   </div>
                 </div>
 
-                {deal.apidata.validityStatus == true && (
+                {deal.apidata.lenderValidityStatus == true && (
                   <div className="row notepoint text-center m-5 align-self-center">
                     {deal.apidata.feeStatusToParticipate == "OPTIONAL" &&
-                    deal.apidata.validityStatus == true ? (
+                    deal.apidata.lenderValidityStatus == true ? (
                       <h4 className="text-bold font-monospace">
                         <code>Note :</code> Processing Fee is waived for this
                         deal.
                       </h4>
-                    ) : deal.apidata.validityStatus == true &&
+                    ) : deal.apidata.lenderValidityStatus == true &&
                       deal.apidata.groupName != "NewLender" ? (
                       <h4 className="text-bold fs-4 fw-light">
                         <code>Note :</code> Your validity has expired. Please
                         pay to continue your participation.
                       </h4>
-                    ) : deal.apidata.validityStatus == true &&
+                    ) : deal.apidata.lenderValidityStatus == true &&
                       deal.apidata.groupName == "NewLender" ? (
                       <h4 className="text-bold fs-4 fw-light">
                         <code>Note :</code> You are requested to pay a 1%
@@ -438,7 +440,7 @@ const Participatedeal = () => {
 
                 <div
                   className={`centerdiv ${
-                    deal.apidata?.validityStatus ? "mt-5" : "mt-2"
+                    deal.apidata?.lenderValidityStatus ? "mt-5" : "mt-5"
                   }`}
                 >
                   <h4>Your participation to this deal is</h4>

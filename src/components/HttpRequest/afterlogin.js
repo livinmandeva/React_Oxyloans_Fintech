@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -451,7 +451,6 @@ export const feeApicall = async (calculatedfee, choosenmembership) => {
 export const feeapicallforonedeal = async (calculatedfee, dealId) => {
   const token = getToken();
   const userId = getUserId();
-
   const data = {
     userId,
     type: "Wallet",
@@ -469,6 +468,7 @@ export const feeapicallforonedeal = async (calculatedfee, dealId) => {
   );
   return response;
 };
+
 export const Earning = async (status) => {
   const token = getToken();
   const userId = getUserId();
@@ -977,14 +977,12 @@ export const dealparticipationValidityUser = async (deal) => {
   const token = getToken();
   const userId = getUserId();
 
-  console.log(deal);
-
   const data1 = {
     userId: userId,
     groupId: deal.apidata.groupId,
     dealId: deal.urldealId,
     participatedAmount: deal.participatedAmount,
-    lenderReturnType: deal.payout,
+    lenderReturnType: deal.apidata.payout,
     processingFee: 0,
     paticipationStatus:
       deal.apidata.lenderParticipationTotal !== null || 0 ? "ADD" : "UPDATE",
@@ -1002,6 +1000,40 @@ export const dealparticipationValidityUser = async (deal) => {
     "PATCH",
     token,
     data1
+  );
+  return response;
+};
+
+export const newlenderdealparticipation = async (deal) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  var newLenderFeePercentage = (parseInt(deal.participatedAmount) * 1) / 100;
+  var newLenderGstAndFeeCalculation = (newLenderFeePercentage * 118) / 100;
+
+  const data = {
+    userId: userId,
+    groupId: deal.apidata.groupId,
+    dealId: deal.urldealId,
+    participatedAmount: deal.participatedAmount,
+    lenderReturnType: deal.apidata.payout,
+    processingFee: newLenderGstAndFeeCalculation,
+    paticipationStatus:
+      deal.apidata.lenderParticipationTotal !== null || 0 ? "ADD" : "UPDATE",
+    accountType: deal.bank,
+    feeStatus: "PENDING",
+    lenderTotalPanLimit: deal.apidata.lenderRemainingPanLimit,
+    totalParticipatedAmount: deal.apidata.lenderTotalParticipationAmount,
+    lenderRemainingWalletAmount: deal.apidata.lenderRemainingWalletAmount,
+    lenderParticipationFrom: "WEB",
+    ExtensionConsents: userisIn === "local" ? "INTERESTED" : "NOTINTERESTED",
+  };
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    "updatingLenderDeal",
+    "PATCH",
+    token,
+    data
   );
   return response;
 };

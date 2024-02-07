@@ -14,6 +14,7 @@ import {
   feeapicallforonedeal,
   cancelMyWithdrawWalletRequest,
   dealparticipationValidityUser,
+  newlenderdealparticipation,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -112,7 +113,7 @@ export const WarningAlert = (errorMessage, redirectTo) => {
     icon: "warning",
     showDenyButton: true,
     confirmButtonText: "Sign Out",
-    denyButtonText: "Contine",
+    denyButtonText: "Continue",
     denyButtonColor: "#5c9b45",
   }).then((result) => {
     if (result.isConfirmed) {
@@ -143,8 +144,6 @@ export const validityDatemodal = (validityDate, groupName) => {
       // User clicked "Get Membership"
       window.location.href = "/membership";
     } else if (result.dismiss === Swal.DismissReason.cancel) {
-      // User clicked "Skip" or closed the modal
-      // You can add custom logic here if needed
       localStorage.setItem("skip", true);
     }
   });
@@ -187,6 +186,77 @@ export const personalDetails = (message, route) => {
   });
 };
 
+// const newlenderParticipationModeal = async (deal) => {
+//   const payoutmethod = localStorage.getItem("choosenPayOutOption");
+
+//   Swal.fire({
+//     title: "Please review the lending details!",
+//     html: `<p><strong> Lending Amount :- INR </strong>${deal.participatedAmount}</p>
+//            <p><strong> Deal Name : </strong>${deal.apidata.dealName}</p>
+//            <p><strong> Pay-out Method : </strong>${payoutmethod}</p>`,
+//     icon: "info",
+//     showCancelButton: true,
+//     confirmButtonColor: "#3085d6",
+//     cancelButtonColor: "#d33",
+//     confirmButtonText: "Ok!",
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       const response = newlenderdealparticipation(deal);
+//       var newLenderFeePercentage =
+//         (parseInt(deal.participatedAmount) * 1) / 100;
+//       var newLenderGstAndFeeCalculation = (newLenderFeePercentage * 118) / 100;
+
+//       response.then((data) => {
+//         if (data.request.status === 200) {
+//           Swal.fire({
+//             title: "Congratulations!",
+//             text: `We are reserving ${deal.participatedAmount} for ${deal.apidata.dealName} .<br/>please pay the INR ${newLenderGstAndFeeCalculation}
+// 						 for the deal processing fee. `,
+//             icon: "success",
+//             showCancelButton: true,
+//             cancelButtonText: "cancel",
+//             showConfirmButton: true,
+//             confirmButtonText: "Pay Fee",
+//           }).then(async (result) => {
+//             if (result.isConfirmed) {
+//               const res = feeapicallforonedeal(
+//                 newLenderGstAndFeeCalculation,
+//                 deal.urldealId
+//               );
+
+//               res.then((data) => {
+//                 if (data.request.status === 200) {
+//                   Swal.fire({
+//                     title: "Congratulations!",
+//                     text: `You have successfully paid the fee`,
+//                     icon: "success",
+//                     showCancelButton: true,
+//                     cancelButtonText: "cancel",
+//                     showConfirmButton: true,
+//                     confirmButtonText: "ok",
+//                   });
+//                 } else {
+//                   Swal.fire({
+//                     title: "Error!",
+//                     text: `${data.response.data.errorMessage}`, // Displaying the error message
+//                     icon: "error",
+//                   });
+//                 }
+//               });
+//             }
+//           });
+//         } else {
+//           Swal.fire({
+//             title: "Error!",
+//             text: `${data.response.data.errorMessage}`, // Displaying the error message
+//             icon: "error",
+//           });
+//         }
+//       });
+//     }
+//   });
+// };
+
 export const participatedapi = async (deal) => {
   console.log(deal);
   const payoutmethod = localStorage.getItem("choosenPayOutOption");
@@ -194,7 +264,7 @@ export const participatedapi = async (deal) => {
   Swal.fire({
     title: "Please review the lending details!",
     html: `<p><strong> Lending Amount :- INR </strong>${deal.participatedAmount}</p>
-           <p><strong> Deal Name : </strong>${deal.apidata.dealAmount}</p>
+           <p><strong> Deal Name : </strong>${deal.apidata.dealName}</p>
            <p><strong> Pay-out Method : </strong>${payoutmethod}</p>`,
     icon: "info",
     showCancelButton: true,
@@ -203,33 +273,86 @@ export const participatedapi = async (deal) => {
     confirmButtonText: "Ok!",
   }).then((result) => {
     if (result.isConfirmed) {
-      console.log(" participation entered block");
-      if ((deal.apidata.feeStatusToParticipate = "OPTIONAL")) {
+      if (deal.apidata.feeStatusToParticipate == "OPTIONAL") {
         const response = dealparticipationValidityUser(deal);
         response.then((data) => {
           console.log(data);
           if (data.request.status === 200) {
             Swal.fire({
               title: "Congratulations!",
-              text: `We are reserving ${deal.participatedAmount} `,
+              text: `We are reserving ${deal.participatedAmount} for ${deal.apidata.dealName}. `,
               icon: "success",
             });
           } else {
             Swal.fire({
               title: "Error!",
-              text: `${data.response.data.errorMessage}`, // Displaying the error message
+              text: `${data.response.data.errorMessage}`,
               icon: "error",
             });
           }
         });
       } else {
         if (deal.apidata.groupName == "NewLender") {
+          const response = newlenderdealparticipation(deal);
+          var newLenderFeePercentage =
+            (parseInt(deal.participatedAmount) * 1) / 100;
+          var newLenderGstAndFeeCalculation =
+            (newLenderFeePercentage * 118) / 100;
+
+          response.then((data) => {
+            if (data.request.status === 200) {
+              Swal.fire({
+                title: "Congratulations!",
+                text: `We are reserving ${deal.participatedAmount} for ${deal.apidata.dealName} .please pay the INR ${newLenderGstAndFeeCalculation}
+					    	 for the deal processing fee. `,
+                icon: "success",
+                showCancelButton: true,
+                cancelButtonText: "cancel",
+                showConfirmButton: true,
+                confirmButtonText: "Pay Fee",
+              }).then(async (result) => {
+                if (result.isConfirmed) {
+                  const res = feeapicallforonedeal(
+                    newLenderGstAndFeeCalculation,
+                    deal.urldealId
+                  );
+
+                  res.then((data) => {
+                    if (data.request.status === 200) {
+                      Swal.fire({
+                        title: "Congratulations!",
+                        text: `You have successfully paid the fee`,
+                        icon: "success",
+                        showCancelButton: true,
+                        cancelButtonText: "cancel",
+                        showConfirmButton: true,
+                        confirmButtonText: "ok",
+                      });
+                    } else {
+                      Swal.fire({
+                        title: "Error!",
+                        text: `${data.response.data.errorMessage}`, // Displaying the error message
+                        icon: "error",
+                      });
+                    }
+                  });
+                }
+              });
+            } else {
+              Swal.fire({
+                title: "Error!",
+                text: `${data.response.data.errorMessage}`, // Displaying the error message
+                icon: "error",
+              });
+            }
+          });
         } else if (
-          deal.apidata.validityStatus == true &&
+          deal.apidata.lenderValidityStatus == true &&
           deal.apidata.groupName != "NewLender"
         ) {
+          const membershipExpiredUser = membership(deal.urldealId, deal);
         } else if (
-          deal.apidata.validityStatus == false &&
+          deal.apidata.lenderValidityStatus == false &&
           deal.apidata.groupName != "NewLender"
         ) {
           const response = dealparticipationValidityUser(deal);
@@ -238,7 +361,7 @@ export const participatedapi = async (deal) => {
             if (data.request.status === 200) {
               Swal.fire({
                 title: "Congratulations!",
-                text: `We are reserving ${deal.participatedAmount} `,
+                text: `We are reserving ${deal.participatedAmount} for ${deal.apidata.dealName}.`,
                 icon: "success",
               });
             } else {
@@ -310,64 +433,158 @@ const tenure = {
 };
 
 // Define the membership function
-export const membership = (dealId) => {
-  Swal.fire({
-    title: "Select Membership Duration",
-    width: "790px",
-    html: `
-      <style>
-        .radiobutton {
-          display: flex;
-          flex-direction: column !important;
-          justify-content: center !important;
-          align-items: center !important;
-        }
-      </style>
-      <div class="radiobutton">
+export const membership = async (dealId, dealInfo) => {
+  console.log(dealInfo);
+  const inputOptions = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        monthly: "One Month",
+        quarterly: "Quarterly",
+        halfyearly: "Half-Yearly",
+        peryear: "One Year",
+        lifetime: "Five Years",
+        fiveyears: "Ten Years",
+        tenyears: "Life Time",
+      });
+    }, 1000);
+  });
 
-      </div><br></br>`,
-    showCancelButton: true,
-    confirmButtonText: "Pay & Participate",
-    cancelButtonText: "Cancel",
+  const { value: choosenPayoutMethod } = await Swal.fire({
+    title: "Select Payment Method",
+    width: "1000px",
     input: "radio",
-    inputOptions: {
-      monthly: "One Month",
-      quarterly: "Quarterly",
-      halfyearly: "Half-Yearly",
-      peryear: "One Year",
-      lifetime: "Five Years",
-      fiveyears: "Ten Years",
-      tenyears: "Life Time",
-    },
-    inputValidator: (result) => {
-      if (!result) {
-        return "You must select an option";
+    inputOptions,
+    cancelButtonText: "Cancel",
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to choose Payment Method!";
       }
     },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const selectedOption = result.value;
-      const amount = tenure[selectedOption];
-      const calculate = (amount * 118) / 100;
-      Swal.fire({
-        title: "Pay Amount",
-        text: selectedOption,
-        html: `<br>Your membership amount is ${calculate}`,
-        icon: "info",
-        confirmButtonText: "Pay Amount",
-      })
-        .then(() => {
-          // Call your API here
-          feeApicall(calculate, selectedOption)
-            .then((response) => {
-              // Handle the response from the API call if needed
-            })
-            .catch((error) => {});
-        })
-        .catch((error) => {});
-    }
   });
+
+  if (choosenPayoutMethod) {
+    const selectedOption = choosenPayoutMethod;
+    const amount = tenure[selectedOption];
+    const calculate = (amount * 118) / 100;
+    Swal.fire({
+      html: `You selected: ${choosenPayoutMethod}  membership tenure and you have to pay the ${calculate} to participate the deal `,
+      showCancelButton: true,
+      confirmButtonText: "Pay & Participate",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        feeApicall(calculate, selectedOption).then((response) => {
+          if (response.request.status === 200) {
+            const responseValidity = dealparticipationValidityUser(dealInfo);
+            responseValidity.then((data) => {
+              console.log(data);
+              if (data.request.status === 200) {
+                Swal.fire({
+                  title: "Congratulations!",
+                  text: `We are reserving ${dealInfo.participatedAmount} for ${dealInfo.apidata.dealName}. `,
+                  icon: "success",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error!",
+                  text: `${data.response.data.errorMessage}`, // Displaying the error message
+                  icon: "error",
+                });
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: `${data.response.data.errorMessage}`, // Displaying the error message
+              icon: "error",
+            });
+          }
+        });
+      }
+    });
+  }
+
+  // Swal.fire({
+  //   title: "Select Membership Duration",
+  //   width: "790px",
+  //   html: `
+  //     <style>
+  //       .radiobutton {
+  //         display: flex;
+  //         flex-direction: column !important;
+  //         justify-content: center !important;
+  //         align-items: center !important;
+  //       }
+  //     </style>
+  //     <div class="row radiobutton">
+  //     </div>`,
+  //   showCancelButton: true,
+  //   confirmButtonText: "Pay & Participate",
+  //   cancelButtonText: "Cancel",
+  //   input: "radio",
+  //   inputOptions: {
+  //     monthly: "One Month",
+  //     quarterly: "Quarterly",
+  //     halfyearly: "Half-Yearly",
+  //     peryear: "One Year",
+  //     lifetime: "Five Years",
+  //     fiveyears: "Ten Years",
+  //     tenyears: "Life Time",
+  //   },
+  //   inputValidator: (result) => {
+  //     if (!result) {
+  //       return "You must select an option";
+  //     }
+  //   },
+  // }).then((result) => {
+  //   if (result.isConfirmed) {
+  //     const selectedOption = result.value;
+  //     const amount = tenure[selectedOption];
+  //     const calculate = (amount * 118) / 100;
+  //     Swal.fire({
+  //       title: "Pay Amount",
+  //       text: selectedOption,
+  //       html: `<br>Your membership amount is ${calculate}`,
+  //       icon: "info",
+  //       confirmButtonText: "Pay  & Participate",
+  //     })
+  //       .then(() => {
+  //         feeApicall(calculate, selectedOption)
+  //           .then((response) => {
+  //             if (response.request.status === 200) {
+  //               const responseValidity =
+  //                 dealparticipationValidityUser(dealInfo);
+  //               responseValidity.then((data) => {
+  //                 console.log(data);
+  //                 if (data.request.status === 200) {
+  //                   Swal.fire({
+  //                     title: "Congratulations!",
+  //                     text: `We are reserving ${dealInfo.participatedAmount} for ${dealInfo.apidata.dealName}. `,
+  //                     icon: "success",
+  //                   });
+  //                 } else {
+  //                   Swal.fire({
+  //                     title: "Error!",
+  //                     text: `${data.response.data.errorMessage}`, // Displaying the error message
+  //                     icon: "error",
+  //                   });
+  //                 }
+  //               });
+  //             } else {
+  //               Swal.fire({
+  //                 title: "Error!",
+  //                 text: `${data.response.data.errorMessage}`, // Displaying the error message
+  //                 icon: "error",
+  //               });
+  //             }
+  //           })
+  //           .catch((error) => {});
+  //       })
+  //       .catch((error) => {});
+  //   }
+  // });
 };
+
 export const newlenderfree = (amount, dealId) => {
   const freeamount = (amount * 1) / 100;
 
@@ -606,7 +823,6 @@ export const confirmationAlertFyYear = (startdate, enddate, downloadType) => {
       response.then((data) => {
         if (data.request.status == 200) {
           if (downloadType == "DOWNLOAD") {
-            // window.location.href = data.data.lenderProfit;
             window.open(data.data.lenderProfit, "_blank");
           }
           Swal.fire(

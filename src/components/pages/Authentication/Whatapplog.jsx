@@ -125,10 +125,6 @@ const Whatapplog = () => {
         console.log(data.response.data.errorMessage);
       }
     });
-    // .finally(() => {
-    //   // Set handlewhatapp to false when the promise is resolved (success or error)
-    //   sethandlewhatapp(false);
-    // });
   };
 
   return (

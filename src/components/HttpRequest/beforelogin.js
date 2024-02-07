@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 let API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -33,7 +33,6 @@ export const sendotpemail = async (email) => {
   const data = {
     email: email,
   };
-
   const response = handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,
@@ -123,7 +122,6 @@ export const referrerdata = (referrerId, refParam) => {
 
       `${refParam}/user-uniquenumber`
     );
-
     return response;
   }
 };
@@ -153,7 +151,6 @@ export const usersubmitotp = async (email, password) => {
     `login?grantType=PWD `,
     data
   );
-
   return response;
 };
 
