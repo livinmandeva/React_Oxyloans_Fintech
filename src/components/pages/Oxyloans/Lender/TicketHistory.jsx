@@ -182,7 +182,7 @@ const TicketHistory = () => {
                                           disabled={
                                             item.status == "Completed"
                                               ? true
-                                              : flase
+                                              : false
                                           }
                                           className="btn btn-success"
                                         >
@@ -199,7 +199,7 @@ const TicketHistory = () => {
                                           disabled={
                                             item.status == "Completed"
                                               ? true
-                                              : flase
+                                              : false
                                           }
                                         >
                                           Cancel

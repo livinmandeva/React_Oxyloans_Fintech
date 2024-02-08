@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
@@ -118,7 +120,7 @@ const WithdrawalFromWallet = () => {
                             className="form-control"
                             name="withdrawAmount"
                             onChange={handleInputchange}
-                            placeholder="Enther the Withdraw Amount"
+                            placeholder="Enter the Withdraw Amount"
                           />
                         </div>
                       </div>
@@ -133,7 +135,7 @@ const WithdrawalFromWallet = () => {
                             name="withdrawFeedback"
                             className="form-control"
                             onChange={handleInputchange}
-                            placeholder="Enther the Feedback"
+                            placeholder="Enter the Feedback"
                           />
                         </div>
                       </div>
@@ -148,8 +150,22 @@ const WithdrawalFromWallet = () => {
                             className="form-control"
                             name="withdraReason"
                             onChange={handleInputchange}
-                            placeholder="Enther the Reson"
+                            placeholder="Enter the Reson"
                           />
+                        </div>
+                      </div>
+
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <span>
+                            Rating
+                            <ReactStars
+                              count={5}
+                              onChange={ratingChanged}
+                              size={24}
+                              activeColor="#ffd700"
+                            />
+                          </span>
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -165,19 +181,6 @@ const WithdrawalFromWallet = () => {
                             dateFormat="dd/MM/yyyy"
                             className="form-control datetimepicker"
                           />
-                        </div>
-                      </div>
-                      <div className="col-12 col-sm-4">
-                        <div className="form-group local-forms">
-                          <span>
-                            Rating
-                            <ReactStars
-                              count={5}
-                              onChange={ratingChanged}
-                              size={24}
-                              activeColor="#ffd700"
-                            />
-                          </span>
                         </div>
                       </div>
                       <div className="col-12">

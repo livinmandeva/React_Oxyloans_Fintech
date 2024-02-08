@@ -33,7 +33,6 @@ const WithdrawdealFounds = () => {
     );
     response.then((data) => {
       if (data.request.status === 200) {
-        alert("success");
         toastrSuccess(data.data.status);
       }
     });

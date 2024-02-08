@@ -104,14 +104,11 @@ const Participatedeal = () => {
 
     handledealinfo();
   }, []);
-
+  // deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
+  //   deal.participatedAmount <= deal.apidata.lenderParticiptionLimit &&
   useEffect(() => {
     const checkCondition = () => {
-      if (
-        deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
-        deal.participatedAmount <= deal.apidata.lenderParticiptionLimit &&
-        deal.bank != ""
-      ) {
+      if (deal.bank != "") {
         setIsConditionMet(true);
         setbuttonvaild(false);
       } else {
@@ -202,69 +199,6 @@ const Participatedeal = () => {
     }
 
     const userparticipatestatis = await participatedapi(deal);
-
-    // if (isConditionMet) {
-    //   if (deal.apidata.feeStatusToParticipate == "MANDATORY") {
-    //     if (deal.apidata.groupName != "" || null) {
-    //       if (deal.apidata.validityStatus === false) {
-    //         if (numericAmount >= participatedAmount) {
-    //           participatedapi({
-    //             apidata,
-    //             participatedAmount,
-    //             lenderReturnType,
-    //             groupId,
-    //             dealId,
-    //             accountType,
-    //             deal,
-    //           });
-    //         } else {
-    //           toastrError("amout is not not reach your deal particepte amount");
-    //         }
-    //       } else {
-    //         if (deal.apidata.groupName == "New Lender") {
-    //           console.log("newlender  particepate");
-    //           localStorage.setItem("newLender", "new");
-    //           localStorage.setItem("participatedAmount", participatedAmount);
-    //           participatedapi({
-    //             apidata,
-    //             participatedAmount,
-    //             lenderReturnType,
-    //             groupId,
-    //             dealId,
-    //             accountType,
-    //             deal,
-    //           });
-    //         } else {
-    //           membership(dealId);
-    //         }
-    //       }
-    //     } else {
-    //       toastrError("deal  having free feeStatusToParticipate");
-    //     }
-    //   } else {
-    //     if (numericAmount >= participatedAmount) {
-    //       if (deal.apidata.groupName === "NewLender") {
-    //         localStorage.setItem("newLender", "new");
-    //         localStorage.setItem("participatedAmount", participatedAmount);
-    //         participatedapi({
-    //           apidata,
-    //           participatedAmount,
-    //           lenderReturnType,
-    //           groupId,
-    //           dealId,
-    //           accountType,
-    //           deal,
-    //         });
-    //       }
-    //     } else {
-    //       toastrError("amout is not not reach your deal particepte amount");
-    //     }
-    //   }
-    // } else {
-    //   WarningAlertWalltTran(
-    //     "The participation fee falls below the specified requirements."
-    //   );
-    // }
   };
 
   const columns = [

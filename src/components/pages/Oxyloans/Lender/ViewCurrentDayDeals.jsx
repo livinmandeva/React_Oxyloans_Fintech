@@ -4,7 +4,7 @@ import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import "./InvoiceGrid.css";
 import SideBar from "../../../SideBar/SideBar";
-import { Table, Pagination } from "antd";
+import { Table, Pagination, Progress, Space } from "antd";
 
 const ViewCurrentDayDeals = () => {
   const [regular_runningDeal, setRegularRunningDeal] = useState({
@@ -186,6 +186,16 @@ const ViewCurrentDayDeals = () => {
                               </div>
                             </div>
                             <div className="card-body">
+                              <div className="row col-12 align-items-center">
+                                <Progress
+                                  percent={(
+                                    (data.totalPaticipatedAmount /
+                                      data.dealAmount) *
+                                    100
+                                  ).toFixed(2)}
+                                  size={"default"}
+                                />
+                              </div>
                               <div className="row align-items-center">
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Available Limit</span>

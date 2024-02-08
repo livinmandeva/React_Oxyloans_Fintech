@@ -358,10 +358,10 @@ const AdminDashboard = () => {
   //   fetchData();
   // }, []);
 
-  useEffect(() => {
-    const response = chatapi();
-    response.then((data) => {});
-  }, []);
+  // useEffect(() => {
+  //   const response = chatapi();
+  //   response.then((data) => {});
+  // }, []);
 
   const [treemap, Settreemap] = useState({
     series: [
@@ -727,35 +727,35 @@ const AdminDashboard = () => {
     return () => {};
   }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
 
-  useEffect(() => {
-    const earningres = getInterestEarnings();
-    earningres.then((data) => {
-      if (data.request.status == 200) {
-        const newapidata = data.data.map((info, index) => {
-          let datesplit = info.date.split("-");
-          return [
-            new Date(
-              datesplit[0],
-              datesplit[1].includes("0")
-                ? datesplit[1].substring(1)
-                : datesplit[1],
-              datesplit[2]
-            ),
-            info.amount,
-          ];
-        });
+  // useEffect(() => {
+  //   const earningres = getInterestEarnings();
+  //   earningres.then((data) => {
+  //     if (data.request.status == 200) {
+  //       const newapidata = data.data.map((info, index) => {
+  //         let datesplit = info.date.split("-");
+  //         return [
+  //           new Date(
+  //             datesplit[0],
+  //             datesplit[1].includes("0")
+  //               ? datesplit[1].substring(1)
+  //               : datesplit[1],
+  //             datesplit[2]
+  //           ),
+  //           info.amount,
+  //         ];
+  //       });
 
-        setgoogledate([
-          [
-            { type: "date", id: "Date" },
-            { type: "number", id: "Won/Loss" },
-          ],
-          ...newapidata,
-        ]);
-      }
-    });
-    return () => {};
-  }, []);
+  //       setgoogledate([
+  //         [
+  //           { type: "date", id: "Date" },
+  //           { type: "number", id: "Won/Loss" },
+  //         ],
+  //         ...newapidata,
+  //       ]);
+  //     }
+  //   });
+  //   return () => {};
+  // }, []);
 
   useEffect(() => {
     const response = getNoDealsParticipated();
@@ -990,11 +990,22 @@ const AdminDashboard = () => {
                       <span className="text-bold text-success mx-lg-1">
                         Subscription Validity:
                       </span>
-                      {getreducerprofiledata?.length !== 0
-                        ? getreducerprofiledata?.groupName == "NewLender"
-                          ? `You are a new lender group, pay the annual membership fee to participate in the multiple deals.`
-                          : `Active until: ${getdashboardData?.validityDate}`
-                        : ""}
+                      {getreducerprofiledata?.length !== 0 &&
+                        (getreducerprofiledata?.groupName === "NewLender" ? (
+                          <span>
+                            You are a new lender, pay the annual membership fee
+                            to participate in the multiple deals
+                            <span className="badge bg-info mx-2">
+                              <Link to="/membership" className="text-white">
+                                Get Membership
+                              </Link>
+                            </span>
+                          </span>
+                        ) : (
+                          <span>
+                            Active until: {getdashboardData?.validityDate}
+                          </span>
+                        ))}
                     </span>
                   </div>
                 </div>

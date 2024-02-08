@@ -334,11 +334,8 @@ const Profile = () => {
       userProfile.city === "" ||
       userProfile.pinCode === "" ||
       userProfile.fatherName === "" ||
-      userProfile.city === "" ||
       userProfile.state === "" ||
-      userProfile.aadharNumber === "" ||
-      userProfile.city === "" ||
-      userProfile.locality === ""
+      userProfile.aadharNumber === ""
     ) {
       setUserProfile({
         ...userProfile,
@@ -1300,7 +1297,7 @@ const Profile = () => {
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Last Name
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="text"

@@ -39,12 +39,12 @@ const MyParticipateStatementTable = ({ data }) => {
     {
       title: "Interest Amount",
       dataIndex: "InterestAmount",
-      sorter: (a, b) => a - b,
+      sorter: (a, b) => parseInt(a) - parseInt(b),
     },
     {
       title: "No of days",
       dataIndex: "Noofdays",
-      sorter: (a, b) => a - b,
+      sorter: (a, b) => parseInt(a) - parseInt(b),
     },
   ];
 

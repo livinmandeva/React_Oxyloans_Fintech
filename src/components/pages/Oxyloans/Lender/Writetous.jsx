@@ -92,6 +92,10 @@ const Writetous = () => {
     }
   }, [writetous.query]);
   const querySubmission = () => {
+    setWriteTous({
+      ...writetous,
+      isVaild: true,
+    });
     const response = writequery(writetous);
     response.then((data) => {
       if (data.request.status == 200) {

@@ -50,7 +50,7 @@ function AlertTable({ data, open: propOpen, sendRunningDealStatement }) {
           </p>
           <Table dataSource={tableapi} pagination={false}>
             <Column
-              title="Upated Date"
+              title="Updated Date"
               dataIndex="upatedDate"
               key="upatedDate"
             />

@@ -14,6 +14,7 @@ import {
 import AlertTable from "./AlertTable";
 import ModalComponet from "../../Base UI/ModalComponet";
 import MyParticipatedStatement from "../Utills/Modals/MyParticipatedStatement";
+import { paypendingprocessingAmount } from "../../Base UI Elements/SweetAlert";
 
 const MyRunningDelas = () => {
   const [runningdeals, setrunningdeals] = useState({
@@ -239,30 +240,32 @@ const MyRunningDelas = () => {
                               </small>
                             </div>
                           </div>
-                          <div className="card-body">
+                          <div className="card-body row">
                             <div className="row align-items-center">
-                              <div className="col-sm-6 col-lg-2">
+                              <div className="col-sm-6 col-lg-1">
                                 <span>Deal-ID </span>
                                 <h6 className="mb-0">{data.dealId}</h6>
                               </div>
-                              {data.interestEarned != null ? (
-                                <div className="col-sm-6 col-lg-2">
-                                  <span>Interest Earned</span>
-                                  <h6 className="mb-0">
-                                    INR {data.interestEarned}
-                                  </h6>
-                                </div>
-                              ) : (
-                                ""
-                              )}
 
                               <div className="col-sm-6 col-lg-2">
                                 <span>Payout Type </span>
                                 <h6 className="mb-0">{data.lederReturnType}</h6>
                               </div>
-                              <div className="col-sm-6 col-lg-2">
+                              <div className="col-sm-6 col-lg-1">
                                 <span>Is ATW</span>
                                 <h6 className="mb-0">{data.withdrawStatus}</h6>
+                              </div>
+
+                              <div className="col-sm-6 col-lg-3">
+                                <span>Deal Status</span>
+                                <h6 className="mb-0">
+                                  {data.participationStatus}
+                                </h6>
+                              </div>
+
+                              <div className="col-sm-6 col-lg-2">
+                                <span>Principal Payout</span>
+                                <h6 className="mb-0">{data.accountType}</h6>
                               </div>
 
                               {data.withdrawStatus == "YES" && (
@@ -274,17 +277,14 @@ const MyRunningDelas = () => {
                                 </div>
                               )}
 
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Deal Status</span>
-                                <h6 className="mb-0">
-                                  {data.participationStatus}
-                                </h6>
-                              </div>
-
-                              <div className="col-sm-6 col-lg-2">
-                                <span>Principal Payout</span>
-                                <h6 className="mb-0">{data.accountType}</h6>
-                              </div>
+                              {data.interestEarned != null && (
+                                <div className="col-sm-6 col-lg-2">
+                                  <span>Interest Earned</span>
+                                  <h6 className="mb-0">
+                                    INR {data.interestEarned}
+                                  </h6>
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="card-footer">
@@ -325,25 +325,41 @@ const MyRunningDelas = () => {
 
                               <div className="col-auto">
                                 <Link
-                                  className="badge bg-danger"
+                                  className="badge bg-warning"
                                   to={`/writetous?dealName=${data.dealName}&&dealId=${data.dealId}`}
                                 >
                                   <i className="fa fa-edit"></i> Raise A query
                                 </Link>
                               </div>
 
-                              {data.participationStatus != "ACHIEVED" ? (
+                              {data.feeStatus == "PENDING" && (
+                                <div className="col-auto">
+                                  <span
+                                    type="button"
+                                    className="badge bg-danger"
+                                    onClick={() =>
+                                      paypendingprocessingAmount(
+                                        data.dealId,
+                                        data.processingFee
+                                      )
+                                    }
+                                  >
+                                    <i className="fa fa-money"> </i> Fee Pending
+                                  </span>
+                                </div>
+                              )}
+
+                              {data.participationStatus != "ACHIEVED" && (
                                 <div className="col-auto">
                                   <Link
                                     to={`/participatedeal?dealId=${data.dealId}`}
                                   >
                                     <span className="badge bg-success-dark">
+                                      <i className="fa fa-forward mx-1"></i>
                                       Participate
                                     </span>
                                   </Link>
                                 </div>
-                              ) : (
-                                ""
                               )}
                             </div>
                           </div>

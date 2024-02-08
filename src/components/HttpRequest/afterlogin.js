@@ -1332,6 +1332,27 @@ export const cancelWithdrawalRequest = async (fromrequest, requestId) => {
   return response;
 };
 
+export const confirmthependingamount = async (dealId, amount) => {
+  const token = getToken();
+  const userId = getUserId();
+  var postdata = JSON.stringify({
+    userId,
+    type: "Wallet",
+    feeAmount: amount,
+    dealId,
+    lenderFeePayments: "PERDEAL",
+  });
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deducting_lender_fee_from_wallet`,
+    "POST",
+    token,
+    postdata
+  );
+  return response;
+};
+
 export const cancelMyWithdrawWalletRequest = async (requestId) => {
   console.log(requestId);
   const token = getToken();
