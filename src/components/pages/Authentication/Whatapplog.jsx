@@ -32,7 +32,7 @@ const Whatapplog = () => {
   );
 
   const [handlewhatapp, sethandlewhatapp] = useState(true);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
   const [dataIpv6, setdataIpv6] = useState({});
   const [dataIpv4, setdataIpv4] = useState("");
 
@@ -103,28 +103,28 @@ const Whatapplog = () => {
     });
   };
   const sethandlewhatappclick = async () => {
-    // Call the async function
-    const response = sendwhatappotp(value);
-
-    // Set handlewhatapp to true initially
-
-    response.then((data) => {
-      if (data.request.status === 200) {
-        sethandlewhatapp(false);
-        setwhatappotp({
-          ...whatappotp,
-          successMessage: "Otp Sent successfully",
-          otpdata: data.data,
-        });
-      } else {
-        setwhatappotp({
-          ...whatappotp,
-          errorMessage: data.response.data.errorMessage,
-        });
-        toastrError(data.response.data.errorMessage);
-        console.log(data.response.data.errorMessage);
-      }
-    });
+    if (value == "") {
+      toastrError("Enter The Whatsapp Number");
+    } else {
+      const response = sendwhatappotp(value);
+      response.then((data) => {
+        if (data.request.status === 200) {
+          sethandlewhatapp(false);
+          setwhatappotp({
+            ...whatappotp,
+            successMessage: "Otp Sent successfully",
+            otpdata: data.data,
+          });
+        } else {
+          setwhatappotp({
+            ...whatappotp,
+            errorMessage: data.response.data.errorMessage,
+          });
+          toastrError(data.response.data.errorMessage);
+          console.log(data.response.data.errorMessage);
+        }
+      });
+    }
   };
 
   return (
@@ -186,7 +186,7 @@ const Whatapplog = () => {
                           <i className="fab fa-google-plus-g" />
                         </Link> */}
                         <Link
-                          to="/whatapplogin"
+                          to="/whatsapplogin"
                           className="bg-success text-white"
                         >
                           <i className="fa fa-whatsapp" />
@@ -241,7 +241,7 @@ const Whatapplog = () => {
                         <Link to="#">
                           <i className="fab fa-google-plus-g" />
                         </Link>
-                        <Link to="/whatapplogin">
+                        <Link to="/whatsapplogin">
                           <i className="fa fa-whatsapp  " />
                         </Link>
                         <Link to="#">

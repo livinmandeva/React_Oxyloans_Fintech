@@ -65,7 +65,7 @@ const Login = () => {
       const retriveresponse = await userloginSection(email, password);
 
       if (retriveresponse.request.status == 200) {
-        toastrSuccess("Login Suceess !");
+        toastrSuccess("Login Success !");
         // dispatch(getProfile({ res: retriveresponse.data }));
         history("/dashboard");
       } else {
@@ -178,7 +178,7 @@ const Login = () => {
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                    <Link to="/whatapplogin" className="bg-success text-white">
+                    <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
                     </Link>
                     {/* <Link onClick={() => {}} to="#">

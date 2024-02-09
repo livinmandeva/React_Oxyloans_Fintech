@@ -404,10 +404,10 @@ const Sidebar = (props) => {
                             "/withdrawdealfromDeal" === pathName ? "active" : ""
                           }`}
                         >
-                          From Deals
+                          Raise a request
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link
                           to="/withdrawalFromWallet"
                           className={`${
@@ -416,7 +416,7 @@ const Sidebar = (props) => {
                         >
                           From Wallet
                         </Link>
-                      </li>
+                      </li> */}
 
                       <li>
                         <Link
@@ -547,7 +547,7 @@ const Sidebar = (props) => {
                             "/WalletToWallet" === pathName ? "active" : ""
                           }`}
                         >
-                          Raise a Request
+                          Raise a request
                         </Link>
                       </li>
                       <li>

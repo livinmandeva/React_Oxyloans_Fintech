@@ -134,9 +134,9 @@ const WithdrawdealfromDeal = () => {
               <div className="row">
                 <div className="col">
                   <h3 className="page-title">
-                    Deal Withdraw Funds from{" "}
+                    Withdraw Funds from{" "}
                     {participatedDeals.dealtype == "NORMAL"
-                      ? "Regular "
+                      ? ""
                       : participatedDeals.dealtype + " "}
                     Deals
                   </h3>
@@ -156,19 +156,26 @@ const WithdrawdealfromDeal = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="row col-12">
+                      <button className="btn  btn-outline-success col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1">
+                        <Link to={"/withdrawalFromWallet"}>
+                          <i className="fa-solid fa-briefcase"></i>
+                          From Wallet
+                        </Link>
+                      </button>
                       <button
                         onClick={handleWithdrawFromNormal}
                         className="btn  btn-outline-info col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"
                       >
-                        <i className="fa-solid fa-briefcase"></i> From a Regular
-                        Deal
+                        <i className="fa-solid fa-briefcase"></i> from a normal
+                        deal
                       </button>
 
                       <button
                         className="btn  btn-outline-warning col-md-2 col-xs-6 col-lg-3 mx-lg-2 my-xs-2 my-md-1"
                         onClick={handleWithdrawFromEscrow}
                       >
-                        <i className="fa-solid fa-briefcase"></i> From an Escrow
+                        <i className="fa-solid fa-briefcase"></i> from an
+                        escrow deal
                       </button>
                     </div>
                   </div>

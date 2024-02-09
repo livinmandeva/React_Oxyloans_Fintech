@@ -909,7 +909,7 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
   {
-    path: "/whatapplogin",
+    path: "/whatsapplogin",
     element: <Whatapplog />,
     errorElement: <Error404></Error404>,
   },

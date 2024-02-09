@@ -398,11 +398,7 @@ const AdminDashboard = () => {
         },
       },
       xaxis: {
-        categories: [
-          "Active Deals Amount ",
-          "Closed Deals Amount",
-          "Total Deals Amount ",
-        ],
+        categories: ["Active  Amount ", "Closed  Amount", "Total  Amount "],
       },
     },
   });
@@ -1003,7 +999,7 @@ const AdminDashboard = () => {
                           </span>
                         ) : (
                           <span>
-                            Active until: {getdashboardData?.validityDate}
+                            Active until {getdashboardData?.validityDate}
                           </span>
                         ))}
                     </span>
@@ -1056,7 +1052,7 @@ const AdminDashboard = () => {
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-8">
-                        <h6 className="card-title">Deals Progress Monitor</h6>
+                        <h6 className="card-title">Deals Amount Monitor</h6>
                       </div>
                     </div>
                   </div>
@@ -1103,7 +1099,7 @@ const AdminDashboard = () => {
                     <div className="row align-items-center">
                       <div className="col-12">
                         <h5 className="card-title text-center">
-                          Deals Participated vs Deals Created In System
+                          Participated vs Created In System
                         </h5>
                       </div>
                     </div>

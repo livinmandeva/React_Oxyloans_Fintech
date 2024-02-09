@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import "./InvoiceGrid.css";
 import SideBar from "../../../SideBar/SideBar";
-import { Table, Pagination } from "antd";
+import { Table, Pagination, Spin } from "antd";
 import "./InvoiceGrid.css";
 
 import {
@@ -191,7 +191,12 @@ const MyRunningDelas = () => {
                 />
               </div>
               <br />
-
+              <Spin
+                tip="Loading..."
+                className="text-center"
+                large="large"
+                fullscreen={true}
+              ></Spin>
               {Array.isArray(runningdeals.data) &&
               runningdeals.data.length > 0 ? (
                 runningdeals.data.map((data, index) => (
@@ -259,7 +264,9 @@ const MyRunningDelas = () => {
                               <div className="col-sm-6 col-lg-3">
                                 <span>Deal Status</span>
                                 <h6 className="mb-0">
-                                  {data.participationStatus}
+                                  {data.participationStatus == "NOTATACHIEVED"
+                                    ? "RUNNING"
+                                    : data.participationStatus}
                                 </h6>
                               </div>
 

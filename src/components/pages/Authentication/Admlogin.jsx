@@ -69,7 +69,7 @@ const Admlogin = () => {
     let { userid, password } = userLogInInfo;
     const retriveresponse = await Admlog(userid.substring(2), password);
     if (retriveresponse.request.status == 200) {
-      toastrSuccess("Login Suceess!");
+      toastrSuccess("Login Success!");
       history("/dashboard");
     } else {
       toastrWarning(retriveresponse.response.data.errorMessage);
@@ -173,7 +173,7 @@ const Admlogin = () => {
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                    <Link to="/whatapplogin" className="bg-success text-white">
+                    <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
                     </Link>
                     {/* <Link onClick={() => {}} to="#">

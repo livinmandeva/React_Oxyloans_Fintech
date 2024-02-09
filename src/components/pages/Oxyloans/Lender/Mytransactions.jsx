@@ -77,7 +77,7 @@ const Mytransactions = () => {
       sorter: (a, b) => a.DebitedAmount - b.DebitedAmount,
     },
     {
-      title: "Amount From",
+      title: "Description",
       dataIndex: "Status",
       sorter: (a, b) => a.Status - b.Status,
     },

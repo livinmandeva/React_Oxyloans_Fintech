@@ -227,7 +227,7 @@ const Login = () => {
                     <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link>
-                    <Link to="/whatapplogin">
+                    <Link to="/whatsapplogin">
                       <i className="fa fa-whatsapp  " />
                     </Link>
                     <Link to="#">

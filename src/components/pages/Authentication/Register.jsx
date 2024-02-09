@@ -106,7 +106,7 @@ const Register = () => {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
-                    <Link to="/whatapplogin" className="bg-success text-white">
+                    <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp  " />
                     </Link>
                     {/* <Link to="#">

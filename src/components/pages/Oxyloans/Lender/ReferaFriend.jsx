@@ -232,7 +232,7 @@ const ReferaFriend = () => {
                       </li>
                       <li className="disPlayNone">
                         For more information and frequently asked questions,
-                        please visit
+                        please visit{" "}
                         <a
                           href="https://sites.google.com/oxyloans.com/referrer-faq/home"
                           target="_blank"

@@ -79,10 +79,10 @@ const WithdrawalFromWallet = () => {
                   <h3 className="page-title">Lender Withdrawal Funds</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/withdrawdealfromDeal">Withdraw From Deal</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      withdrawal From Wallet
+                      Withdrawal From Wallet
                     </li>
                   </ul>
                 </div>
@@ -156,19 +156,6 @@ const WithdrawalFromWallet = () => {
                       </div>
 
                       <div className="col-12 col-sm-4">
-                        <div className="form-group local-forms">
-                          <span>
-                            Rating
-                            <ReactStars
-                              count={5}
-                              onChange={ratingChanged}
-                              size={24}
-                              activeColor="#ffd700"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <div className="col-12 col-sm-4">
                         <div className="form-group local-forms calendar-icon">
                           <label>
                             Withdrawal Date
@@ -181,6 +168,20 @@ const WithdrawalFromWallet = () => {
                             dateFormat="dd/MM/yyyy"
                             className="form-control datetimepicker"
                           />
+                        </div>
+                      </div>
+
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <span>
+                            Rating
+                            <ReactStars
+                              count={5}
+                              onChange={ratingChanged}
+                              size={24}
+                              activeColor="#ffd700"
+                            />
+                          </span>
                         </div>
                       </div>
                       <div className="col-12">

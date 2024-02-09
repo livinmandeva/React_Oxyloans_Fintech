@@ -15,21 +15,6 @@ const ViewCurrentDayDeals = () => {
   });
 
   const dataSource = [];
-  // regular_runningDeal.apidata != ""
-  //   ? dataSource.push({
-  //       key: Math.random(),
-  //       name: regular_runningDeal.apidata.dealName,
-  //       loanamount: regular_runningDeal.apidata.dealAmount,
-  //       availablelimit: regular_runningDeal.apidata.remainingAmountInDeal,
-  //       tenureinmonths: regular_runningDeal.apidata.duration,
-  //       funding: regular_runningDeal.apidata.fundStartDate,
-  //       fundingdate: regular_runningDeal.apidata.fundEndDate,
-  //       minimumparticipation:
-  //         regular_runningDeal.apidata.minimumPaticipationAmount,
-  //       maximumparticipation:
-  //         regular_runningDeal.apidata.lenderParticiptionLimit,
-  //     })
-  //   : null;
 
   const columns = [
     {
@@ -268,27 +253,14 @@ const ViewCurrentDayDeals = () => {
                   )
                 ) : (
                   <div className="card">
-                    <Table columns={columns} dataSource={[]} />
+                    <Table columns={columns} dataSource={[]} loading={true} />
+                    {setTimeout(() => {
+                      window.location = "/regularRunningDeal";
+                    }, 500)}
                   </div>
                 )}
               </>
             )}
-
-            {/* {regular_runningDeal.apidata && (
-              <>
-                <div className="card">
-                  <Table
-                    columns={columns}
-                    dataSource={
-                      regular_runningDeal.apidata
-                        .listOfBorrowersDealsResponseDto.length !== 0
-                        ? dataSource
-                        : []
-                    }
-                  />
-                </div>
-              </>
-            )} */}
           </div>
         </div>
         {/* /Page Wrapper */}

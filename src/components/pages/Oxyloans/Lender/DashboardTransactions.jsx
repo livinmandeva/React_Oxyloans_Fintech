@@ -137,6 +137,7 @@ const DashboardTransactions = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
+        console.log(data);
         console.log(data.data.lenderReturnsResponseDto.length);
         setdashboardPrincipalReturns({
           ...dashboardPrincipalReturns,
@@ -255,7 +256,10 @@ const DashboardTransactions = () => {
               Date: data.returedDate,
               DealName: data.dealName,
               AmountLent: data.amount,
-              ReturnedAmount: data.remarks,
+              ReturnedAmount:
+                data.remarks == "Returned to account"
+                  ? "Account"
+                  : data.remarks,
               DealBal: data.currentAmount,
             });
           }
@@ -353,7 +357,7 @@ const DashboardTransactions = () => {
     },
 
     {
-      title: "Returned Amount",
+      title: "Returned To",
       dataIndex: "ReturnedAmount",
       sorter: (a, b) => a.ReturnedAmount - b.ReturnedAmount,
     },
