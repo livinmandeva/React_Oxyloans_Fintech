@@ -720,7 +720,7 @@ const MainAdminDashboard = () => {
         <Header />
 
         {/* Sidebar */}
-        <AdminSidebar />
+        <SideBar />
 
         {/* Page Wrapper */}
         <div className="page-wrapper">

@@ -285,7 +285,7 @@ export const newRouter = createBrowserRouter([
   //   element: <ForgotPassword />,
   //   errorElement: <Error404></Error404>,
   // },
-  {
+{
     path: "/dashboard",
     element: <AdminDashboard />,
     errorElement: <Error404></Error404>,

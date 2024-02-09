@@ -224,8 +224,8 @@ const Participatedeal = () => {
                 accountType,
                 deal,
               });
-            } else {
-              membership(dealId);
+          } else {
+              membership(dealId);  
             }
           }
         } else {

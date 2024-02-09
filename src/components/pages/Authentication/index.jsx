@@ -65,7 +65,15 @@ const Login = () => {
       if (retriveresponse.request.status == 200) {
         toastrSuccess("Login Suceess !");
         // dispatch(getProfile({ res: retriveresponse.data }));
-        history("/dashboard");
+        console.log(retriveresponse.data.primaryType)
+        if(retriveresponse.data.primaryType === "ADMIN"){
+          history("/mainadmindashboard");
+        }else if(retriveresponse.data.primaryType === "LENDER"){
+          history("/dashboard");
+        }else if(retriveresponse.data.primaryType === "BORROWER"){
+          history("/dashboard");
+        }
+
       } else {
         toastrWarning(retriveresponse.response.data.errorMessage);
       }

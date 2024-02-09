@@ -962,7 +962,7 @@ const Profile = () => {
                                   onChange={handlebankchange}
                                   placeholder=" Enter your IFSC Code"
                                   maxLength={12}
-                                  value={bankaccountprofile.ifscCode.toUpperCase()}
+                                  value={bankaccountprofile.ifscCode}
                                 />
                                 {bankaccountprofile.ifscCodeerror && (
                                   <div className="text-danger">
@@ -1196,7 +1196,7 @@ const Profile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Nominee IFSC Code"
-                                    value={nomineeDetails.nomineeIfsc.toUpperCase()}
+                                    value={nomineeDetails.nomineeIfsc}
                                     name="nomineeIfsc"
                                     onChange={handlerNominee}
                                   />
