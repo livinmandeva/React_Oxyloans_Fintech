@@ -65,9 +65,17 @@ const Login = () => {
       const retriveresponse = await userloginSection(email, password);
 
       if (retriveresponse.request.status == 200) {
+        console.log(retriveresponse);
         toastrSuccess("Login Success !");
         // dispatch(getProfile({ res: retriveresponse.data }));
-        history("/dashboard");
+
+        if (retriveresponse.data.primaryType == "LENDER") {
+          history("/dashboard");
+        } else if (retriveresponse.data.primaryType == "ADMIN") {
+          history("/dashboard");
+        } else {
+          history("/borrowerDashboard");
+        }
       } else {
         toastrWarning(retriveresponse.response.data.errorMessage);
       }

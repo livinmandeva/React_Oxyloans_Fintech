@@ -120,8 +120,6 @@ const Mycontacts = () => {
       title: "Invite",
       dataIndex: "Invite",
     },
-
-    ,
   ];
 
   useEffect(() => {

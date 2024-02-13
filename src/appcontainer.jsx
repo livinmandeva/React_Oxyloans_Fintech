@@ -274,6 +274,60 @@ const WalletToWalletTransactionHistory = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/WalletToWalletTransactionHistory")
 );
 
+const BorrowerDashboard = React.lazy(() =>
+  import("./components/pages/Dashboard/BorrowerDashboard")
+);
+
+const BorrowerProfile = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/BorrowerProfile")
+);
+
+const BorrowerAgreedLoans = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/AgreedLoan")
+);
+
+const BorrowerEnach = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/Enach")
+);
+
+const BorrowerLoanEligibility = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/LoanEligibility")
+);
+
+const BorrowerLoanListing = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/LoanListings")
+);
+
+const BorrowerLoanstatement = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/LoanStatement")
+);
+
+const Borrowermycontacts = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/Mycontacts")
+);
+const BorrowerMyEarnings = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/MyEarnings")
+);
+
+const BorrowerMyLoanApplication = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/MyLoanApplication")
+);
+
+const BorrowerPayEmi = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/PayEmi")
+);
+
+const BorrowerReferFriend = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/ReferFriend")
+);
+
+const BorrowerReferStatus = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/ReferralStatus")
+);
+
+const BorrowerRunningLoans = React.lazy(() =>
+  import("./components/pages/Oxyloans/Borrower/RunningLoan")
+);
 export const newRouter = createBrowserRouter([
   {
     path: "/",
@@ -916,6 +970,81 @@ export const newRouter = createBrowserRouter([
   {
     path: "/walletToWalletTransactionHistory",
     element: <WalletToWalletTransactionHistory />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerDashboard",
+    element: <BorrowerDashboard />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerProfile",
+    element: <BorrowerProfile />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/borrowerAgreedLoans",
+    element: <BorrowerAgreedLoans />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerenach",
+    element: <BorrowerEnach />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerLoaneligibility",
+    element: <BorrowerLoanEligibility />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/borrowerloanListing",
+    element: <BorrowerLoanListing />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/borrowerloanstatement",
+    element: <BorrowerLoanstatement />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowermycontacts",
+    element: <Borrowermycontacts />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/borrowermyearnings",
+    element: <BorrowerMyEarnings />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowermyloanApplication",
+    element: <BorrowerMyLoanApplication />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerpayemi",
+    element: <BorrowerPayEmi />,
+    errorElement: <Error404></Error404>,
+  },
+
+  {
+    path: "/borrowerreferfriend",
+    element: <BorrowerReferFriend />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerreferstatus",
+    element: <BorrowerReferStatus />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/borrowerrunningLoans",
+    element: <BorrowerRunningLoans />,
     errorElement: <Error404></Error404>,
   },
 ]);

@@ -30,6 +30,7 @@ const MyRunningDelas = () => {
     paginationCount: 0,
     pageNo: 1,
     pageSize: 10,
+    loader: true,
   });
   const [modelopen, setOpen] = useState(false);
 
@@ -126,6 +127,7 @@ const MyRunningDelas = () => {
         ...runningdeals,
         data: data.data.lenderPaticipatedResponseDto,
         paginationCount: data.data.count,
+        loader: false,
       });
     });
   }, [runningdeals.pageNo]);
@@ -191,14 +193,18 @@ const MyRunningDelas = () => {
                 />
               </div>
               <br />
-              <Spin
-                tip="Loading..."
-                className="text-center"
-                large="large"
-                fullscreen={true}
-              ></Spin>
-              {Array.isArray(runningdeals.data) &&
-              runningdeals.data.length > 0 ? (
+
+              {runningdeals.loader == true ? (
+                <div className="row d-flex justify-content-center">
+                  <Spin
+                    tip="Loading..."
+                    className="text-center"
+                    large="large"
+                    fullscreen={true}
+                  ></Spin>
+                </div>
+              ) : Array.isArray(runningdeals.data) &&
+                runningdeals.data.length > 0 ? (
                 runningdeals.data.map((data, index) => (
                   <div className="row" key={index}>
                     <div className="card invoices-tabs-card border-0">

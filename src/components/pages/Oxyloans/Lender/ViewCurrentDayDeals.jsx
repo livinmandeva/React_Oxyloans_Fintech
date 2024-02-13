@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import "./InvoiceGrid.css";
@@ -7,6 +7,8 @@ import SideBar from "../../../SideBar/SideBar";
 import { Table, Pagination, Progress, Space } from "antd";
 
 const ViewCurrentDayDeals = () => {
+  const navigate = useNavigate();
+
   const [regular_runningDeal, setRegularRunningDeal] = useState({
     apidata: "",
     dealtype: "CURRENT",
@@ -255,7 +257,13 @@ const ViewCurrentDayDeals = () => {
                   <div className="card">
                     <Table columns={columns} dataSource={[]} loading={true} />
                     {setTimeout(() => {
-                      window.location = "/regularRunningDeal";
+                      // window.location = "/regularRunningDeal";
+                      // <Navigate
+                      //   to="/regularRunningDeal"
+                      //   replace={"false"}
+                      // ></Navigate>;
+
+                      navigate("/regularRunningDeal");
                     }, 500)}
                   </div>
                 )}

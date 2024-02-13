@@ -90,10 +90,18 @@ const Whatapplog = () => {
         sessionStorage.setItem("userId", data.data.id);
         sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
         if (accessToken != null) {
-          history("/dashboard");
+          if (data.data.primaryType == "LENDER") {
+            history("/dashboard");
+          } else if (data.data.primaryType == "ADMIN") {
+            history("/dashboard");
+          } else {
+            history("/borrowerDashboard");
+          }
+
+          // history("/dashboard");
         }
       } else if (data.response.status === 400) {
-        const errorMessage = data.response.data.errorMessage;
+        // const errorMessage = data.response.data.errorMessage;
 
         setwhatappotp({
           ...whatappotp,
