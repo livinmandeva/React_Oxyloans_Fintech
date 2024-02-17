@@ -32,7 +32,6 @@ const WalletToWallet = () => {
   const handleSubmitHandler = () => {
     const response = submitWalletToWallet(walletTowallet);
     response.then((data) => {
-      console.log(data);
       if (data.request.status == 200) {
         HandleWithFooter(
           "The wallet-to-wallet transfer was successful. Your withdrawal request has been initiated, and the receiver will receive the wallet amount after OxyAdmins approval."

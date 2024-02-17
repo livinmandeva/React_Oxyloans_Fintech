@@ -445,7 +445,10 @@ const ReferaFriend = () => {
                           <div className="col-md-12 col-lg-12 row">
                             <div className="row mt-3">
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Name </label>
+                                <label>
+                                  Friend Name{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <input
                                   type="text"
                                   className="form-control"
@@ -456,7 +459,10 @@ const ReferaFriend = () => {
                                 />
                               </div>
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Email</label>
+                                <label>
+                                  Friend Email{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <input
                                   type="email"
                                   className="form-control"
@@ -466,7 +472,10 @@ const ReferaFriend = () => {
                                 />
                               </div>
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Location</label>
+                                <label>
+                                  Friend Location{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <select
                                   className="form-control form-select"
                                   name="citizenType"
@@ -479,7 +488,10 @@ const ReferaFriend = () => {
                               </div>
 
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Mobile </label>
+                                <label>
+                                  Friend Mobile{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <input
                                   type="tel"
                                   className="form-control"
@@ -491,7 +503,10 @@ const ReferaFriend = () => {
                               </div>
 
                               <div className="form-group col-12 col-sm-8">
-                                <label>Email Subject </label>
+                                <label>
+                                  Email Subject
+                                  <span className="login-danger">*</span>{" "}
+                                </label>
                                 <input
                                   type="text"
                                   className="form-control"
@@ -502,7 +517,10 @@ const ReferaFriend = () => {
                               </div>
 
                               <div className="form-group col-12 col-sm-12">
-                                <label>Email Content </label>
+                                <label>
+                                  Email Content{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <textarea
                                   className="form-control"
                                   value={emailcontentdata}

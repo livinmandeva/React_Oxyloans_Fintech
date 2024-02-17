@@ -54,7 +54,7 @@ const TestDeal = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,
@@ -62,7 +62,6 @@ const TestDeal = () => {
         regular_runningDeal.pageno
       );
 
-      console.log(response.data);
       response.then((data) => {
         setRegularRunningDeal({
           ...regular_runningDeal,

@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
-import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { registerImage } from "../../imagepath";
+import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { Link, useNavigate } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
-
 import { userloginSection } from "../../HttpRequest/beforelogin";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 import { useDispatch } from "react-redux";
@@ -65,7 +62,6 @@ const Login = () => {
       const retriveresponse = await userloginSection(email, password);
 
       if (retriveresponse.request.status == 200) {
-        console.log(retriveresponse);
         toastrSuccess("Login Success !");
         // dispatch(getProfile({ res: retriveresponse.data }));
 
@@ -162,7 +158,7 @@ const Login = () => {
 
                   <div className="forgotpass">
                     <div className="remember-me">
-                      <Link to="/loginotp">Login with OTP ?</Link>
+                      <Link to="/loginotp">Login With OTP ?</Link>
                     </div>
                     <Link to="/forgotpassword">Forgot Password?</Link>
                   </div>

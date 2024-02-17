@@ -110,7 +110,7 @@ const Register_active_proceed = () => {
       formattedDay + "/" + formattedMonth + "/" + formattedYear;
 
     // Print the result
-    console.log(formattedDate);
+
     setdate1(formattedDate);
   }, [data.date]);
   return (
@@ -125,12 +125,28 @@ const Register_active_proceed = () => {
               <div className="login-right">
                 <div className="login-right-wrap">
                   {/* <h1>Final Step: Complete Registration</h1> */}
-
-                  <h4>Final Step: Complete Registration</h4>
+                  <h4 className="tex-muted my-3 text-center">
+                    Complete Registration
+                  </h4>
 
                   {/* Form */}
                   {/* <form > */}
 
+                  <div className="form-group">
+                    <label>
+                      Pan Number <span className="login-danger">*</span>
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="pannumber"
+                      maxLength={10}
+                      onChange={handlechanges}
+                    />
+                    <span className="profile-views">
+                      <i className="fas fa-user-circle" />
+                    </span>
+                  </div>
                   <div className="form-group">
                     <label>
                       Date of Birth <span className="login-danger">*</span>
@@ -144,20 +160,6 @@ const Register_active_proceed = () => {
                     {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span> */}
-                  </div>
-                  <div className="form-group">
-                    <label>
-                      Pan Number <span className="login-danger">*</span>
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="pannumber"
-                      onChange={handlechanges}
-                    />
-                    <span className="profile-views">
-                      <i className="fas fa-user-circle" />
-                    </span>
                   </div>
                   <div className="form-group">
                     <label>

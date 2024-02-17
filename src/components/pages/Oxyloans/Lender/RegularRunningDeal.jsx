@@ -69,7 +69,7 @@ const RegularRunningDeal = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,

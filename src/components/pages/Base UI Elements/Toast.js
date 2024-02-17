@@ -45,9 +45,9 @@ export const bottomLeft = () => {
   alertify.set("notifier", "position", "bottom-left");
   alertify.message("Bottom Left! Have fun storming");
 };
-export const bottomCenter = () => {
+export const bottomCenter = (message) => {
   alertify.set("notifier", "position", "bottom-center");
-  alertify.message("Bottom Center! Have fun storming");
+  alertify.error(message);
 };
 export const bottomRight = () => {
   alertify.set("notifier", "position", "bottom-right");

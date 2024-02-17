@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -285,7 +285,6 @@ export const profileupadate = async (userProfile) => {
       formattedDate.indexOf("undefined/undefined/") +
       "undefined/undefined/".length;
     formattedDate = formattedDate.substring(startIndex);
-    console.log(formattedDate);
   }
 
   const data = JSON.stringify({
@@ -1354,7 +1353,6 @@ export const confirmthependingamount = async (dealId, amount) => {
 };
 
 export const cancelMyWithdrawWalletRequest = async (requestId) => {
-  console.log(requestId);
   const token = getToken();
   const userId = getUserId();
   var postdata = JSON.stringify({

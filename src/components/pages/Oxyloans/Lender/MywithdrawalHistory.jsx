@@ -63,7 +63,11 @@ const MywithdrawalHistory = () => {
                 type="submit"
                 className="btn  w-70 btn-primary btn-xs"
                 disabled={
-                  data.status == "APPROVED" || data.status == "REJECTED"
+                  data.status == "APPROVED" ||
+                  data.status == "REJECTED" ||
+                  data.status == "ADMINREJECTED" ||
+                  data.status == "USERREJECTED" ||
+                  data.status == "AUTOREJECTED"
                     ? true
                     : false
                 }

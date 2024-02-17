@@ -12,11 +12,12 @@ import {
   viewdealamountemi,
 } from "../../../HttpRequest/afterlogin";
 import AlertTable from "./AlertTable";
-import ModalComponet from "../../Base UI/ModalComponet";
+import ModalComponet from "../../Base UI Elements/ModalComponet";
 import MyParticipatedStatement from "../Utills/Modals/MyParticipatedStatement";
 import { paypendingprocessingAmount } from "../../Base UI Elements/SweetAlert";
 
 const MyRunningDelas = () => {
+  const [modelopen, setOpen] = useState(false);
   const [runningdeals, setrunningdeals] = useState({
     data: "",
     modelopen: false,
@@ -32,18 +33,16 @@ const MyRunningDelas = () => {
     pageSize: 10,
     loader: true,
   });
-  const [modelopen, setOpen] = useState(false);
 
   const handlemodalopen = (dealId) => {
     const response = viewdealamountemi(dealId);
-
     response.then((data) => {
       setrunningdeals({
         ...runningdeals,
         dealLevelLoanEmiCard: data,
       });
+      setOpen(!modelopen);
     });
-    setOpen(!modelopen);
   };
 
   const principal_return_account_type = (type, dealId) => {

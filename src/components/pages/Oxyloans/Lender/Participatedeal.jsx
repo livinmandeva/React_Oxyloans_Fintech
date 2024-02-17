@@ -120,7 +120,6 @@ const Participatedeal = () => {
   }, [deal.participatedAmount, deal.bank]);
 
   const dealparticipate = async () => {
-    console.log(deal);
     const amount = `${
       reduxStoreData?.length !== 0
         ? reduxStoreData?.lenderWalletAmount -

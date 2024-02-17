@@ -33,8 +33,6 @@ const Membership = React.memo((pros) => {
         ...mywalletTowalletHistory,
         [`loading${no}`]: false,
       });
-
-      console.log("No error");
     } catch (error) {
       console.error(`Error: ${error.errorMessage}`);
       setmywalletTowalletHistory({

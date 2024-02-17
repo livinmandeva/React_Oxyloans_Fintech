@@ -24,7 +24,7 @@ const RegularPersonalDeal = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         personal_runningDeal.dealtype,

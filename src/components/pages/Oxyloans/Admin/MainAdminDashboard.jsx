@@ -143,7 +143,6 @@ const MainAdminDashboard = () => {
       try {
         const response = await lenderTotalInvestmentsAndReturns(); // Assuming lenderTotalInvestmentsAndReturns is an asynchronous function
 
-        console.log(response.data[0]?.lenderTotalInvestment);
         // Update the state based on the response data
         setSeries((prevSeries) => [
           {
@@ -229,9 +228,7 @@ const MainAdminDashboard = () => {
 
   useEffect(() => {
     const response = chatapi();
-    response.then((data) => {
-      console.log(data);
-    });
+    response.then((data) => {});
   }, []);
 
   const [treemap, Settreemap] = useState({
@@ -478,7 +475,7 @@ const MainAdminDashboard = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = "regularRunningDeal";
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,
@@ -487,7 +484,6 @@ const MainAdminDashboard = () => {
       );
 
       response.then((data) => {
-        console.log(data);
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidata: data.data,
@@ -501,7 +497,7 @@ const MainAdminDashboard = () => {
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = "ESCROW";
-    console.log(urldealname);
+
     const handleRegular = () => {
       const response = regular_Api(
         regular_runningDeal.dealtype,
@@ -510,7 +506,6 @@ const MainAdminDashboard = () => {
       );
 
       response.then((data) => {
-        console.log(data);
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidataESCROW: data.data.listOfBorrowersDealsResponseDto,
@@ -536,15 +531,12 @@ const MainAdminDashboard = () => {
 
         // Assuming data.validityDate is a string in the format "YYYY-MM-DD"
         const validityDate = data.data.validityDate; // Replace this with your actual date string
-        console.log(validityDate, formattedCurrentDate);
+
         if (validityDate >= formattedCurrentDate) {
-          console.log("valid");
         } else {
           const skipbutton = localStorage.getItem("skip");
           if (skipbutton) {
-            console.log("skip button not clicked");
           } else {
-            console.log("validity expires");
             validityDatemodal(validityDate);
           }
         }
@@ -639,7 +631,6 @@ const MainAdminDashboard = () => {
     const response = getNoDealsParticipated();
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
         setdealsProgressed({
           ...dealsProgressed,
           totalDeals: data.data.dealCount,
@@ -652,7 +643,6 @@ const MainAdminDashboard = () => {
     return () => {};
   }, []);
 
-  // dealsProgressed.participatedDeals  console.log(googledata);
   useEffect(() => {
     const deatilskip = localStorage.getItem("deatilskip");
 
@@ -663,7 +653,6 @@ const MainAdminDashboard = () => {
 
       const profileData = dashboarddata?.profileData?.data;
 
-      console.log(profileData);
       if (profileData) {
         // personalDetails("personalDetails is not available", "/profile");
         const { kycStatus, bankDetailsInfo, personalDetailsInfo } = profileData;
@@ -673,10 +662,6 @@ const MainAdminDashboard = () => {
           bankDetailsInfo !== true &&
           personalDetailsInfo !== true
         ) {
-          console.log(kycStatus);
-          console.log(bankDetailsInfo);
-          console.log(personalDetailsInfo);
-
           console.log(
             "personalDetails, bankDetailsInfo, and kycStatus available"
           );
@@ -696,11 +681,9 @@ const MainAdminDashboard = () => {
     }
     const profileData = dashboarddata?.profileData?.data;
     if (profileData) {
-      console.log(profileData.lenderValidityStatus);
       if (profileData.lenderValidityStatus) {
         const deal = localStorage.getItem("dealmember");
         if (deal) {
-          console.log("localstorge  skip");
         } else {
           dealmembership(
             "You are a new lender group, pay the annual membership fee to participate in multiple deals.",

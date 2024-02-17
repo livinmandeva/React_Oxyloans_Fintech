@@ -16,7 +16,6 @@ const MyhighvalueDeals = () => {
   });
 
   const setHighValueDealsPagination = (dats) => {
-    console.log(dats);
     setHighValueDeals({
       ...selectedHighValueDeals,
       defaultPageSize: dats.pageSize,

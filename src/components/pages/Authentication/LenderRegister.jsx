@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
-import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import OtpInput from "./OtpInput";
+
 import { toastrWarning } from "../Base UI Elements/Toast";
+import "./login.css";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 export default function LenderRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
@@ -234,7 +235,7 @@ export default function LenderRegister() {
                           </label>
                           <input
                             className="form-control"
-                            type="text"
+                            type="email"
                             name="email"
                             onChange={handlechange}
                           />
@@ -263,10 +264,7 @@ export default function LenderRegister() {
                             showIcon={showIcon}
                             hideIcon={hideIcon}
                           />
-                          {/* <input className="form-control pass-input" type="text" />
-                                            <span className="profile-views feather-eye toggle-password">
-                                                <FeatherIcon icon="eye" />
-                                            </span> */}{" "}
+                          {""}
                           {registrationField.passworderror && (
                             <div className="error">
                               {registrationField.passworderror}

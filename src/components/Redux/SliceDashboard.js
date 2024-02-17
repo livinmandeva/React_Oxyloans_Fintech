@@ -21,7 +21,6 @@ const counterDashboardSlice = createSlice({
   reducers: {
     getProfile: (state, action) => {},
   },
-
   extraReducers: (bulider) => {
     bulider.addCase(fetchDatadashboard.fulfilled, (state, action) => {
       state.fetchDashboard = action.payload;

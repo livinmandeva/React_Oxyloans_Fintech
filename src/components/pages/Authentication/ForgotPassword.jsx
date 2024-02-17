@@ -90,7 +90,7 @@ const ForgotPassword = () => {
                       </label>
                       <input
                         className="form-control"
-                        type="text"
+                        type="email"
                         name="emailid"
                         value={email.email}
                       />

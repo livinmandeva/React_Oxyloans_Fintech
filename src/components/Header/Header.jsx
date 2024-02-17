@@ -20,7 +20,6 @@ import {
   avatar17,
   avatar13,
   headericon04,
-  avatar01,
   oxylogomobile,
   oxylogodashboard,
 } from "../imagepath";

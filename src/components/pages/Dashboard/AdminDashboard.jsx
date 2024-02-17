@@ -1126,7 +1126,10 @@ const AdminDashboard = () => {
                         <div className="circle-graph1" data-percent="50">
                           <div className="progress-less teacher-dashboard">
                             <h4>
-                              {`${dealsProgressed.participatedDeals}/${dealsProgressed.totalDeals}`}
+                              {`${
+                                getdashboardData?.numberOfClosedDealsCount +
+                                getdashboardData?.numberOfActiveDealsCount
+                              }/${dealsProgressed.totalDeals}`}
                             </h4>
                             <p>Deals </p>
                           </div>

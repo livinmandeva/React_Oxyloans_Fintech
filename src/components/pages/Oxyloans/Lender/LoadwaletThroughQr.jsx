@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import Footer from "../../../Footer/Footer";
+import { bottomCenter } from "../../Base UI Elements/Toast";
 import { QRCode } from "antd";
 import {
   HandleWithFooter,
-  WarningAlert,
+  WarningAlertWalltTran,
 } from "../../Base UI Elements/SweetAlert";
 import {
   LoadwalletThroughQrScan,
@@ -36,21 +37,25 @@ const LoadwaletThroughQr = () => {
   };
 
   const loadYourWalletFunction = async () => {
-    const response = LoadwalletThroughQrScan(loadwaletThroughQr.amount);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        setloadwaletThroughQr({
-          ...loadwaletThroughQr,
-          qrUrlpath: data.data.qrGenerationString,
-          qrcodeStatus: data.data.status,
-          qrUrlID: data.data.qrTableId,
-          isvalid: true,
-          qrcode: true,
-        });
+    if (loadwaletThroughQr.amount == "") {
+      bottomCenter("Enter The Amount");
+    } else {
+      const response = LoadwalletThroughQrScan(loadwaletThroughQr.amount);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          setloadwaletThroughQr({
+            ...loadwaletThroughQr,
+            qrUrlpath: data.data.qrGenerationString,
+            qrcodeStatus: data.data.status,
+            qrUrlID: data.data.qrTableId,
+            isvalid: true,
+            qrcode: true,
+          });
 
-        updateTheValueTimeOut();
-      }
-    });
+          updateTheValueTimeOut();
+        }
+      });
+    }
   };
 
   const updateTheValueTimeOut = () => {
@@ -76,7 +81,7 @@ const LoadwaletThroughQr = () => {
             }
           } else if (data.response.data.errorCode != "200") {
             setqrcodeImageStatus("expired");
-            WarningAlert(
+            WarningAlertWalltTran(
               data.response.data.errorMessage + "  Please Try Again"
             );
             clearInterval(intervalId);
@@ -156,7 +161,7 @@ const LoadwaletThroughQr = () => {
                                   type="button"
                                   onClick={loadYourWalletFunction}
                                 >
-                                  Load Amount
+                                  Get QR
                                 </button>
                               </div>
                             </>

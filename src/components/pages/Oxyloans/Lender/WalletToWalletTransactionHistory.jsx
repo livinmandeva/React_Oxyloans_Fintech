@@ -26,7 +26,6 @@ const WalletToWalletTransactionHistory = React.memo((pros) => {
   useMemo(() => {
     fetchData()
       .then((data) => {
-        console.log(data);
         if (data.request.status == 200) {
           setmywalletTowalletHistory({
             ...mywalletTowalletHistory,

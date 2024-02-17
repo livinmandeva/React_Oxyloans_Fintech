@@ -69,7 +69,6 @@ const Admlogin = () => {
     let { userid, password } = userLogInInfo;
     const retriveresponse = await Admlog(userid.substring(2), password);
     if (retriveresponse.request.status == 200) {
-      console.log(retriveresponse);
       toastrSuccess("Login Success!");
       if (retriveresponse.data.primaryType == "LENDER") {
         history("/dashboard");

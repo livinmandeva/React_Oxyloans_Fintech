@@ -1,18 +1,15 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-
-import Header from "../../../Header/Header";
-import SideBar from "../../../SideBar/SideBar";
 import { Success, WarningBackendApi } from "../../Base UI Elements/SweetAlert";
 import { writequery, allQueriesCount1 } from "../../../HttpRequest/afterlogin";
-import "./InvoiceGrid.css";
 import Footer from "../../../Footer/Footer";
 import { allqueries, cancelled, resolved, pending } from "../../../imagepath";
-
-import MyRichTextEditor from "./MyRichTextEditor";
+import MyRichTextEditor from "../Lender/MyRichTextEditor";
 import { useSelector } from "react-redux";
+import BorrowerHeader from "../../../Header/BorrowerHeader";
+import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 
-const Writetous = () => {
+const BorrowerWriteToUs = () => {
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
 
   const [writetous, setWriteTous] = useState({
@@ -108,10 +105,10 @@ const Writetous = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <BorrowerHeader />
 
         {/* Sidebar */}
-        <SideBar />
+        <BorrowerSidebar />
 
         {/* Page Wrapper */}
         <div className="page-wrapper">
@@ -257,4 +254,4 @@ const Writetous = () => {
   );
 };
 
-export default Writetous;
+export default BorrowerWriteToUs;

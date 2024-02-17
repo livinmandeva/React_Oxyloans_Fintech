@@ -21,9 +21,7 @@ const MyRichTextEditor = ({ data, setdata }) => {
     //this.quill.setSelection(cursorPosition + 1);
   };
 
-  useEffect(() => {
-    console.log(text);
-  }, [text]);
+  useEffect(() => {}, [text]);
 
   // const modules = {
   //   toolbar: [

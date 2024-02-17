@@ -156,12 +156,14 @@ const BorrowerSidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/myrunningloans"
+                          to="/borrowermyloanApplication"
                           className={`${
-                            "/myrunningloans" === pathName ? "active" : ""
+                            "/borrowermyloanApplication" === pathName
+                              ? "active"
+                              : ""
                           }`}
                         >
-                          My Running Deals
+                          My Running Loans
                         </Link>
                       </li>
                       <li>
@@ -232,7 +234,9 @@ const BorrowerSidebar = (props) => {
                   className={`${
                     "/writetous" === pathName ||
                     "/emicalculator" === pathName ||
-                    "/ticketHistory" === pathName
+                    "/ticketHistory" === pathName ||
+                    "/borrowerwriteTous" === pathName ||
+                    "/borroweremicalculator" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -255,9 +259,9 @@ const BorrowerSidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/writetous"
+                          to="/borrowerwriteTous"
                           className={`${
-                            "/writetous" === pathName ? "active" : ""
+                            "/borrowerwriteTous" === pathName ? "active" : ""
                           }`}
                         >
                           Write To us
@@ -265,9 +269,11 @@ const BorrowerSidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/ticketHistory"
+                          to="/borrowerTicketHistory"
                           className={`${
-                            "/ticketHistory" === pathName ? "active" : ""
+                            "/borrowerTicketHistory" === pathName
+                              ? "active"
+                              : ""
                           }`}
                         >
                           View Ticket History
@@ -275,9 +281,11 @@ const BorrowerSidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/emicalculator"
+                          to="/borroweremicalculator"
                           className={`${
-                            "/emicalculator" === pathName ? "active" : ""
+                            "/borroweremicalculator" === pathName
+                              ? "active"
+                              : ""
                           }`}
                         >
                           EMI Calculator
@@ -296,7 +304,9 @@ const BorrowerSidebar = (props) => {
                   className={`${
                     "/borrowerreferfriend" === pathName ||
                     "/borrowerreferstatus" === pathName ||
-                    "/borrowerrunningLoans" === pathName
+                    "/borrowerrunningLoans" === pathName ||
+                    "/borrowermycontacts" === pathName ||
+                    "/borrowermyearnings" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -341,20 +351,19 @@ const BorrowerSidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/mycontacts"
+                          to="/borrowermycontacts"
                           className={`${
-                            "/mycontacts" === pathName ? "active" : ""
+                            "/borrowermycontacts" === pathName ? "active" : ""
                           }`}
                         >
-                          My contacts
+                          My Contacts
                         </Link>
                       </li>
-
                       <li>
                         <Link
-                          to="/myEarnings"
+                          to="/borrowermyearnings"
                           className={`${
-                            "/myEarnings" === pathName ? "active" : ""
+                            "/borrowermyearnings" === pathName ? "active" : ""
                           }`}
                         >
                           My Earning
@@ -364,16 +373,6 @@ const BorrowerSidebar = (props) => {
                   ) : (
                     ""
                   )}
-                </li>
-
-                <li
-                  className={`${"/loanstatement" === pathName ? "active" : ""}`}
-                >
-                  <Link to="/loanstatement">
-                    <i className="fa-solid fa-user"></i>
-                    <span> Pay EMI </span>
-                    <span className="menu-arrow"></span>
-                  </Link>
                 </li>
 
                 <li className={`${"/" === pathName ? "active" : ""}`}>

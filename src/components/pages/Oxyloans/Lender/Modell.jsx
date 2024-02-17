@@ -33,25 +33,7 @@ export default function Modell({ data, open: propOpen }) {
           left: 80,
         }}
         onCancel={handleCancel}
-        footer={
-          [
-            // <Button key="back" onClick={handleCancel}>
-            //   Return
-            // </Button>,
-            // <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-            //   Submit
-            // </Button>,
-            // <Button
-            //   key="link"
-            //   href="https://google.com"
-            //   type="primary"
-            //   loading={loading}
-            //   onClick={handleOk}
-            // >
-            //   Search on Google
-            // </Button>,
-          ]
-        }
+        footer={[]}
       >
         {/* Interest Statement */}
         <p>

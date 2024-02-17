@@ -129,7 +129,6 @@ const Whatapplog = () => {
             errorMessage: data.response.data.errorMessage,
           });
           toastrError(data.response.data.errorMessage);
-          console.log(data.response.data.errorMessage);
         }
       });
     }

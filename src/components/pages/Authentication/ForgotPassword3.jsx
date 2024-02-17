@@ -69,7 +69,7 @@ const ForgotPassword3 = () => {
                   <p className="account-subtitle">
                     Enter the email address associated with your account and
                     we'll send you a link to reset your password ?{" "}
-                    <Link to="/">LogIn</Link>
+                    <Link to="/">Login</Link>
                   </p>
 
                   <div className="form-group">

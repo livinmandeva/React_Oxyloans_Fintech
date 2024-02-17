@@ -99,7 +99,7 @@ const Loginotp = () => {
     } else {
       if (userLogInInfo.email.length === 10) {
         const response = await handlesenOtp(userLogInInfo.email);
-        console.log(response);
+
         if (response.request.status == 200) {
           if (response.data.id) {
             sessionStorage.setItem("userId", response.data.id);
@@ -144,7 +144,7 @@ const Loginotp = () => {
                   <p className="account-subtitle">
                     Need an account? <Link to="/register">Sign Up</Link>
                   </p>
-                  <h2>LogIn With OTP</h2>
+                  <h2>Login With OTP</h2>
 
                   <div className="form-group">
                     <label htmlFor="userloginusername">
@@ -153,11 +153,11 @@ const Loginotp = () => {
                     </label>
                     <input
                       className="form-control"
-                      type="number"
+                      type="tel"
                       value={userLogInInfo.email}
                       name="email"
                       onChange={handlechange}
-                      maxLength={6}
+                      maxLength={10}
                       id="userloginusername"
                       required
                     />

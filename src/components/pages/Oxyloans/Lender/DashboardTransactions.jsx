@@ -137,8 +137,6 @@ const DashboardTransactions = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data);
-        console.log(data.data.lenderReturnsResponseDto.length);
         setdashboardPrincipalReturns({
           ...dashboardPrincipalReturns,
           apiData: data.data,
@@ -187,7 +185,6 @@ const DashboardTransactions = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        console.log(data.data.referrerResponseDto.length);
         setdashboardReferralEarnings({
           ...dashboardReferralEarnings,
           apiData: data.data,

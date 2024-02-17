@@ -299,7 +299,6 @@ export const participatedapi = async (deal) => {
         ) {
           const response = dealparticipationValidityUser(deal);
           response.then((data) => {
-            console.log(data);
             if (data.request.status === 200) {
               Swal.fire({
                 title: "Congratulations!",
@@ -339,7 +338,6 @@ const tenure = {
 };
 
 export const membership = async (dealId, dealInfo) => {
-  console.log(dealInfo);
   const inputOptions = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -382,7 +380,6 @@ export const membership = async (dealId, dealInfo) => {
           if (response.request.status === 200) {
             const responseValidity = dealparticipationValidityUser(dealInfo);
             responseValidity.then((data) => {
-              console.log(data);
               if (data.request.status === 200) {
                 Swal.fire({
                   title: "Congratulations!",

@@ -20,7 +20,6 @@ function Comment(dataapi) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {console.log(data1)}
           {data1.data?.data ? (
             <>
               <p>No data</p>

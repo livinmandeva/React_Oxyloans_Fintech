@@ -75,9 +75,7 @@ const Mycontacts = () => {
 
     getemail();
   }, []);
-  const handleCheckboxClick = (id) => {
-    console.log(id);
-  };
+  const handleCheckboxClick = (id) => {};
   const column = [
     {
       title: "Email",
@@ -107,7 +105,7 @@ const Mycontacts = () => {
       ...contactdata,
       selectAll: !contactdata.selectAll,
     });
-    console.log("HandleselectClick");
+
     // handlapplyemail()
   };
   const handlapplyemail = () => {
@@ -116,7 +114,6 @@ const Mycontacts = () => {
         ...contactdata,
         email: data.emailAddress,
       });
-      console.log("handlapplyemail");
     });
   };
 

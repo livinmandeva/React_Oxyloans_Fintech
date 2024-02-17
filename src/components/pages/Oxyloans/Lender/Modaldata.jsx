@@ -4,7 +4,6 @@ import Modal from "react-bootstrap/Modal";
 import Table1 from "./Table1";
 
 function Modaldata({ data, open, hidingStatement }) {
-  console.log(data);
   const [lgShow, setLgShow] = useState(open);
   const [donloadlink, setdownloadlink] = useState(data.downloadStatement);
   const [statementDeal, setstatementDeal] = useState(data.dealName);

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../../../Header/Header";
-import SideBar from "../../../SideBar/SideBar";
+
 import Footer from "../../../Footer/Footer";
 import {
   TicketHistoryapi,
   ticketcommentapi,
 } from "../../../HttpRequest/afterlogin";
-import "./InvoiceGrid.css";
+// import "./InvoiceGrid.css";
 import Comment from "../Utills/Modals/Comment";
+import BorrowerHeader from "../../../Header/BorrowerHeader";
+import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 
-const TicketHistory = () => {
+const ViewTicketHistory = () => {
   const [ticket, setticketdata] = useState({});
   const [apires, setapires] = useState([]);
   const [dataapi, setdataapi] = useState();
@@ -57,10 +58,10 @@ const TicketHistory = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <BorrowerHeader />
 
         {/* Sidebar */}
-        <SideBar />
+        <BorrowerSidebar />
 
         {/* Page Wrapper */}
         <div className="page-wrapper">
@@ -223,4 +224,4 @@ const TicketHistory = () => {
   );
 };
 
-export default TicketHistory;
+export default ViewTicketHistory;
