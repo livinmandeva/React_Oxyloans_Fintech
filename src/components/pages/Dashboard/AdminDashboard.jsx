@@ -27,7 +27,6 @@ import {
   dashboard2,
   dashboard3,
   dashboard4,
-  rightclickmark,
 } from "../../imagepath";
 import Footer from "../../Footer/Footer";
 import {
@@ -39,19 +38,18 @@ import {
   personalDetails,
   validityDatemodal,
 } from "../Base UI Elements/SweetAlert";
+import Sidebar from "../../SideBar/AdminSidebar";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const getdashboardData = useSelector((data) => data.dashboard.fetchDashboard);
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
-
+  // const { activitydata } = useDealActivity();
   const [dashboarddata, setdashboarddata] = useState({
     profileData: "",
   });
   const [membershipdata, setmembershipdata] = useState({
     dashboardData: "",
-    ismembershiptrue: "",
-    isnewlender: false,
   });
 
   const [dashboardDealActive, setdashboardDealActvity] = useState({
@@ -326,43 +324,48 @@ const AdminDashboard = () => {
   //   },
   // });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await chatapi();
-  //       if (response && response.data) {
-  //         const data = response.data;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await chatapi(); // Assuming chatapi() is an async function that fetches data
+        if (response && response.data) {
+          const data = response.data;
+          //  const data1= response.data.data.totalInvestment +
+          //   response.data.data.participatedStudentDeals
+          //    +  response.data.data.participatedEscrowDeals
+          //    + response.data.data.participatedNormalDeals
+          //    ;
 
-  //         SetDistributedColumns((prevColumns) => ({
-  //           ...prevColumns,
-  //           series: [
-  //             {
-  //               name: "",
-  //               data: [
-  //                 data.totalInvestment +
-  //                   data.participatedStudentDeals +
-  //                   data.participatedEscrowDeals +
-  //                   data.participatedNormalDeals,
-  //                 data.participatedStudentDeals,
-  //                 data.participatedEscrowDeals,
-  //                 data.participatedNormalDeals,
-  //               ],
-  //             },
-  //           ],
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+          SetDistributedColumns((prevColumns) => ({
+            ...prevColumns,
+            series: [
+              {
+                name: "",
+                data: [
+                  data.totalInvestment +
+                    data.participatedStudentDeals +
+                    data.participatedEscrowDeals +
+                    data.participatedNormalDeals,
+                  data.participatedStudentDeals,
+                  data.participatedEscrowDeals,
+                  data.participatedNormalDeals,
+                ],
+              },
+            ],
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData(); // Fetch data when the component mounts
+  }, []); // Empty dependency array ensures this effect runs once
 
-  // useEffect(() => {
-  //   const response = chatapi();
-  //   response.then((data) => {});
-  // }, []);
+  useEffect(() => {
+    const response = chatapi();
+    response.then((data) => {});
+  }, []);
 
   const [treemap, Settreemap] = useState({
     series: [
@@ -399,7 +402,7 @@ const AdminDashboard = () => {
         },
       },
       xaxis: {
-        categories: ["Active  Amount ", "Closed  Amount", "Total  Amount "],
+        categories: ["Active Deals", "Closed Deals", "Disbursed Deals"],
       },
     },
   });
@@ -566,6 +569,8 @@ const AdminDashboard = () => {
     },
   });
 
+  const earningProfitInterest = useState({});
+
   const [googledata, setgoogledate] = useState([
     [
       { type: "date", id: "Date" },
@@ -620,6 +625,7 @@ const AdminDashboard = () => {
       );
 
       response.then((data) => {
+        console.log(data);
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidata: data.data,
@@ -656,18 +662,26 @@ const AdminDashboard = () => {
     dispatch(fetchData());
     getuserMembershipValidity().then((data) => {
       if (data.request.status == 200) {
-        const validitydate = new Date(data.data?.validityDate);
-        var next_date = new Date();
-        const diffTime = Math.abs(validitydate - next_date);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        const validityDatecheck =
-          validitydate > next_date && data.data?.validityDate !== null;
-
         setmembershipdata({
           ...membershipdata,
           dashboardData: data,
-          ismembershiptrue: validityDatecheck,
         });
+        const currentDate = new Date(); // Get the current date
+
+        // Format the current date as "YYYY-MM-DD"
+        const formattedCurrentDate = currentDate.toISOString().split("T")[0];
+
+        // Assuming data.validityDate is a string in the format "YYYY-MM-DD"
+        const validityDate = data.data.validityDate; // Replace this with your actual date string
+
+        if (validityDate >= formattedCurrentDate) {
+        } else {
+          const skipbutton = localStorage.getItem("skip");
+          if (skipbutton) {
+          } else {
+            validityDatemodal(validityDate);
+          }
+        }
       }
     });
 
@@ -724,35 +738,36 @@ const AdminDashboard = () => {
     return () => {};
   }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
 
-  // useEffect(() => {
-  //   const earningres = getInterestEarnings();
-  //   earningres.then((data) => {
-  //     if (data.request.status == 200) {
-  //       const newapidata = data.data.map((info, index) => {
-  //         let datesplit = info.date.split("-");
-  //         return [
-  //           new Date(
-  //             datesplit[0],
-  //             datesplit[1].includes("0")
-  //               ? datesplit[1].substring(1)
-  //               : datesplit[1],
-  //             datesplit[2]
-  //           ),
-  //           info.amount,
-  //         ];
-  //       });
+  useEffect(() => {
+    const earningres = getInterestEarnings();
+    earningres.then((data) => {
+      if (data.request.status == 200) {
+        const newapidata = data.data.map((info, index) => {
+          let datesplit = info.date.split("-");
+          return [
+            new Date(
+              datesplit[0],
+              datesplit[1].includes("0")
+                ? datesplit[1].substring(1)
+                : datesplit[1],
+              datesplit[2]
+            ),
+            info.amount,
+          ];
+        });
 
-  //       setgoogledate([
-  //         [
-  //           { type: "date", id: "Date" },
-  //           { type: "number", id: "Won/Loss" },
-  //         ],
-  //         ...newapidata,
-  //       ]);
-  //     }
-  //   });
-  //   return () => {};
-  // }, []);
+        setgoogledate([
+          [
+            { type: "date", id: "Date" },
+            { type: "number", id: "Won/Loss" },
+          ],
+          ...newapidata,
+        ]);
+        // googledata;    // [new Date(2023, 1, 4), 38177],
+      }
+    });
+    return () => {};
+  }, []);
 
   useEffect(() => {
     const response = getNoDealsParticipated();
@@ -771,68 +786,33 @@ const AdminDashboard = () => {
   }, []);
 
   useEffect(() => {
-    const profileskip = localStorage.getItem("profileskip");
-    if (profileskip) {
+    const deatilskip = localStorage.getItem("deatilskip");
+
+    if (deatilskip) {
     } else {
       const profileData = dashboarddata?.profileData?.data;
+
       if (profileData) {
-        const { kycStatus, bankDetailsInfo, personalDetailsInfo, groupName } =
-          profileData;
-        const isvalidity = membershipdata.ismembershiptrue;
+        const { kycStatus, bankDetailsInfo, personalDetailsInfo } = profileData;
 
         if (
-          kycStatus == false &&
-          bankDetailsInfo == true &&
-          personalDetailsInfo == true
+          kycStatus !== undefined &&
+          bankDetailsInfo !== undefined &&
+          personalDetailsInfo !== undefined
         ) {
-          personalDetails(
-            "Attention: Update Your Personal Details for Enhanced Services and Security. ",
-            "/profile"
-          );
-        } else if (
-          kycStatus == true &&
-          bankDetailsInfo == true &&
-          personalDetailsInfo == false
-        ) {
-          personalDetails(
-            "Kindly provide/update your bank information,",
-            "/profile"
-          );
-        } else if (
-          kycStatus == true &&
-          bankDetailsInfo == true &&
-          personalDetailsInfo == false
-        ) {
-          personalDetails(
-            " Kindly provide/update your personal Information",
-            "/profile"
-          );
-        } else if (
-          kycStatus == false &&
-          bankDetailsInfo == false &&
-          personalDetailsInfo == false
-        ) {
-          personalDetails(
-            "Personal details are currently unavailable. Kindly provide/update your bank information, nominee details, and complete the KYC process ",
-            "/profile"
-          );
-        } else if (
-          kycStatus == true &&
-          bankDetailsInfo == true &&
-          personalDetailsInfo == true &&
-          isvalidity == false
-        ) {
-          const skipbutton = localStorage.getItem("skip");
-          if (skipbutton) {
+        } else {
+          if (personalDetailsInfo === undefined) {
+            personalDetails("personalDetails is not available", "/profile");
+          } else if (bankDetailsInfo === undefined) {
+            personalDetails("bankdetailsinfo is not available", "/profile");
           } else {
-            validityDatemodal(getdashboardData?.validityDate, groupName);
+            personalDetails("kyc is not available", "/profile");
           }
         }
+      } else {
       }
     }
-    return () => {};
-  }, [dashboarddata.profileData, membershipdata.ismembershiptrue]);
-
+  }, [dashboarddata.profileData]);
   return (
     <>
       <div className="main-wrapper">
@@ -840,7 +820,7 @@ const AdminDashboard = () => {
         <Header />
 
         {/* Sidebar */}
-        <SideBar />
+      <Sidebar />
 
         {/* Page Wrapper */}
         <div className="page-wrapper">
@@ -987,22 +967,11 @@ const AdminDashboard = () => {
                       <span className="text-bold text-success mx-lg-1">
                         Subscription Validity:
                       </span>
-                      {getreducerprofiledata?.length !== 0 &&
-                        (getreducerprofiledata?.groupName === "NewLender" ? (
-                          <span>
-                            You are a new lender, pay the annual membership fee
-                            to participate in the multiple deals
-                            <span className="badge bg-info mx-2">
-                              <Link to="/membership" className="text-white">
-                                Get Membership
-                              </Link>
-                            </span>
-                          </span>
-                        ) : (
-                          <span>
-                            Active until {getdashboardData?.validityDate}
-                          </span>
-                        ))}
+                      {getreducerprofiledata?.length !== 0
+                        ? getreducerprofiledata?.groupName == "NewLender"
+                          ? "You are a new lender group, pay the annual membership fee to participate in the multiple deals. "
+                          : `Active until: ${getdashboardData.validityDate}`
+                        : ""}
                     </span>
                   </div>
                 </div>
@@ -1053,7 +1022,7 @@ const AdminDashboard = () => {
                   <div className="card-header">
                     <div className="row align-items-center">
                       <div className="col-8">
-                        <h6 className="card-title">Deals Amount Monitor</h6>
+                        <h6 className="card-title">Deal Activity Amount</h6>
                       </div>
                     </div>
                   </div>
@@ -1062,7 +1031,7 @@ const AdminDashboard = () => {
                     <Chart
                       options={treemap.options}
                       series={treemap.series}
-                      type="bar"
+                      type="line"
                       className="activechart"
                     />
                   </div>
@@ -1100,7 +1069,7 @@ const AdminDashboard = () => {
                     <div className="row align-items-center">
                       <div className="col-12">
                         <h5 className="card-title text-center">
-                          Participated vs Created In System
+                          Deals Participated vs Deals Created In System
                         </h5>
                       </div>
                     </div>
@@ -1127,12 +1096,9 @@ const AdminDashboard = () => {
                         <div className="circle-graph1" data-percent="50">
                           <div className="progress-less teacher-dashboard">
                             <h4>
-                              {`${
-                                getdashboardData?.numberOfClosedDealsCount +
-                                getdashboardData?.numberOfActiveDealsCount
-                              }/${dealsProgressed.totalDeals}`}
+                              {`${dealsProgressed.participatedDeals}/${dealsProgressed.totalDeals}`}
                             </h4>
-                            <p>Deals </p>
+                            <p>Deals Progressed</p>
                           </div>
                         </div>
                       </ProgressBar>
@@ -1293,7 +1259,7 @@ const AdminDashboard = () => {
                         {regular_runningDeal.apidata
                           .listOfDealsInformationToLender &&
                         regular_runningDeal.apidata
-                          .listOfDealsInformationToLender.length > 0
+                          .listOfDealsInformationToLender.length > 1
                           ? regular_runningDeal.apidata.listOfDealsInformationToLender
                               .slice(0, 4)
                               .map((data, index) => (
@@ -1302,12 +1268,12 @@ const AdminDashboard = () => {
                                   className="activity-awards"
                                 >
                                   <div className="award-boxs">
-                                    <img src={rightclickmark} alt="Award" />
+                                    <img src={awardicon01} alt="Award" />
                                   </div>
                                   <div className="award-list-outs">
                                     <h4> {data.dealName}</h4>
                                     <h5>
-                                      Min: {data.minimumAmountInDeal}, Max:
+                                      Min: {data.minimumAmountInDeal}, Max: {data.lenderPaticipationLimit}
                                       {data.paticipationLimitToLenders}, RoI:
                                       {data.rateOfInterest}%
                                     </h5>

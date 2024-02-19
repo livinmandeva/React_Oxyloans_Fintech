@@ -24,8 +24,7 @@ const WalletToWalletHistory = () => {
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
-    });
-  };
+    }); stash
 
   useEffect(() => {
     const response = getMembershiphistory(

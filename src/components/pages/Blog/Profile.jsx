@@ -277,6 +277,31 @@ const Profile = () => {
     });
   };
 
+
+  useEffect(()=>{
+ 
+      // Calculate today's date
+      const today = new Date();
+      
+      // Calculate the minimum date for someone to be 18 years old
+      const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    
+      // Convert the input value to a Date object
+      const inputDate = new Date(userProfile.dob);
+    
+      // Check if the input date is valid and the user is at least 18 years old
+      if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+        setUserProfile({
+          ...userProfile,
+          doberror: "", // Clear error message
+        });
+      } else {
+        setUserProfile({
+          ...userProfile,
+          doberror: "You must be at least 18 years old",
+        });
+      }
+  },[userProfile.dob])
   const handlefileupload = (event) => {
     const response = uploadkyc(event);
     response
@@ -321,32 +346,7 @@ const Profile = () => {
       }
     }
 
-    
-      // Calculate today's date
-      const today = new Date();
-      
-      // Calculate the minimum date for someone to be 18 years old
-      const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-    
-      // Convert the input value to a Date object
-      const inputDate = new Date(value);
-    
-      // Check if the input date is valid and the user is at least 18 years old
-      if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
-        setUserProfile({
-          ...userProfile,
-          [name]: value,
-          doberror: "", // Clear error message
-        });
-      } else {
-        setUserProfile({
-          ...userProfile,
-          [name]: value,  
-          doberror: "You must be at least 18 years old",
-        });
-      }
 
-    
     setUserProfile({
       ...userProfile,
       [name]: value,
@@ -1541,7 +1541,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="tel"
+                                  type="number"
                                   className="form-control"
                                   placeholder="Enter Pincode"
                                   maxLength={6}
