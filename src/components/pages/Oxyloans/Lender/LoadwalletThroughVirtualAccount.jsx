@@ -87,7 +87,7 @@ const LoadwalletThroughVirtualAccount = () => {
                             <li>
                               Keep in mind that we only accept payments in INR,
                               If you have any queries, please reach out to us by
-                              :
+                              :{" "}
                               <Link className="virtualList" to="/writetous">
                                 Click Here
                               </Link>

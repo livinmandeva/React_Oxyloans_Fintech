@@ -24,6 +24,7 @@ export { default as invoicesicon5 } from "../assets/img/icons/invoices-icon5.png
 export { default as awardicon01 } from "../assets/img/icons/award-icon-01.svg";
 export { default as awardicon04 } from "../assets/img/icons/award-icon-04.svg";
 export { default as bulidingicon } from "../assets/img/icons/buliding-icon.svg";
+export { default as rightclickmark } from "../assets/img/icons/header-icon-03.svg";
 
 export { default as closedLoans } from "../assets/img/closedLoans.png";
 export { default as wallet } from "../assets/img/wallet.png";

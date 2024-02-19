@@ -27,6 +27,7 @@ import {
   dashboard2,
   dashboard3,
   dashboard4,
+  rightclickmark,
 } from "../../imagepath";
 import Footer from "../../Footer/Footer";
 import {
@@ -1301,7 +1302,7 @@ const AdminDashboard = () => {
                                   className="activity-awards"
                                 >
                                   <div className="award-boxs">
-                                    <img src={awardicon01} alt="Award" />
+                                    <img src={rightclickmark} alt="Award" />
                                   </div>
                                   <div className="award-list-outs">
                                     <h4> {data.dealName}</h4>
