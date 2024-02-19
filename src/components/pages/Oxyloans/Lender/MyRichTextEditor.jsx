@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 // import ImageUploader from "react-quill-image-upload";
 import "react-quill/dist/quill.snow.css"; // Import styles
 import { uploadqueryImage } from "../../../HttpRequest/afterlogin";
+import { toastrSuccess, toastrWarning } from "../../Base UI Elements/Toast";
 
 const MyRichTextEditor = ({ data, setdata, documentUpload }) => {
   const [text, settext] = useState("hellllo");
@@ -14,7 +15,10 @@ const MyRichTextEditor = ({ data, setdata, documentUpload }) => {
       imageresponse.request &&
       imageresponse.request.status === 200
     ) {
+      toastrSuccess("image uploaded successfully");
       documentUpload(imageresponse.data.documentId);
+    } else {
+      toastrWarning("something went wrong please try again");
     }
 
     // console.log(imageresponse);
