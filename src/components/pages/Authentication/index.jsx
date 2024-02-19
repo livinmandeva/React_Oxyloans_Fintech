@@ -67,7 +67,7 @@ const Login = () => {
         // dispatch(getProfile({ res: retriveresponse.data }));
         console.log(retriveresponse.data.primaryType)
         if(retriveresponse.data.primaryType === "ADMIN"){
-          history("/mainadmindashboard");
+          history("/dashboard");
         }else if(retriveresponse.data.primaryType === "LENDER"){
           history("/dashboard");
         }else if(retriveresponse.data.primaryType === "BORROWER"){

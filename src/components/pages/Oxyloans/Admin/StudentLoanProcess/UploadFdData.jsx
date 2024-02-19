@@ -3,8 +3,49 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
+import { uploadapi } from "../../../../HttpRequest/admin";
 
 const UploadFdData = () => {
+
+   const  [uploaddata , setuploaddata] =useState({
+    userId:"",
+		fdAmount:"",
+		createdDate:"",
+    userIderror:"",
+		fdAmounterror:"",
+		createdDateerror:"",
+   })   
+
+
+   const  handlechange =(event)=>{
+      const {value , name}=event.target;
+
+      setuploaddata({
+        ...uploaddata,
+        [name]:value,
+      })
+   }
+
+
+   const handlesubmit =()=>{
+    setuploaddata((uploaddata)=>({
+      ...uploaddata,
+      userIderror : uploaddata.userId !="" ? null :"Enter the Borrower id",
+      createdDateerror : uploaddata.createdDate !="" ? null :"Enter the createdDate",
+      fdAmounterror : uploaddata.fdAmount !="" ? null :"Enter the Amount "
+      
+
+    }))
+
+      if(uploaddata.userIderror != "" && uploaddata.createdDate != ""  && uploaddata.fdAmount != ""){
+
+        const response1= uploadapi(uploaddata)
+        console.log(response1);
+      }else{
+        
+      }
+
+   }
   return (
     <>
       <div className="main-wrapper">
@@ -49,10 +90,13 @@ const UploadFdData = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="userId"
+                            onChange={handlechange}
                             className="form-control"
                             placeholder="Enther the Borrower Id "
                           />
+
+                          {uploaddata.userIderror != "" && <div className="errormessage">{uploaddata.userIderror}</div>}
                         </div>
                       </div>
 
@@ -63,10 +107,14 @@ const UploadFdData = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="fdAmount"
                             className="form-control"
+                            onChange={handlechange}
                             placeholder="Enther the Amount  "
                           />
+                 
+              {uploaddata.fdAmounterror != "" && <div className="errormessage">{uploaddata.fdAmounterror}</div>}
+                        </div>
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -76,16 +124,18 @@ const UploadFdData = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="createdDate"
+                            onChange={handlechange}
                             className="form-control"
                             placeholder="Enther the Created on"
-                          />
+                          /> {uploaddata.createdDateerror != "" && <div className="errormessage">{uploaddata.createdDateerror}</div>}
+                          </div>
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"    onClick={handlesubmit}>
                             Save Fd
                           </button>
                         </div>
@@ -95,8 +145,7 @@ const UploadFdData = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+       
         </div>
       </div>
       {/* /Main Wrapper */}

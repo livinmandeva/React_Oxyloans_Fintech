@@ -5,37 +5,28 @@ import { Table } from "antd";
 
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
-import { onShowSizeChange } from "../../../../Pagination";
-import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
+import { getfdmonthlyloansInfo } from "../../../../HttpRequest/admin";
+
 
 const FdmonthlyloansInfo = () => {
-  const [membershiphistory, setmembershiphistory] = useState({
+  const [fdmonthlyloansInfo, setfdmonthlyloansInfo] = useState({
     apiData: "",
+    startDate:"",
+    endDate:"",
     hasdata: false,
     loading: true,
-    pageNo: 1,
-    pageSize: 5,
-    defaultPageSize: 5,
+
   });
 
-  const membershiphistoryPagination = (Pagination) => {
-    setmembershiphistory({
-      ...membershiphistory,
-      defaultPageSize: Pagination.pageSize,
-      pageNo: Pagination.current,
-      pageSize: Pagination.pageSize,
-    });
-  };
 
   useEffect(() => {
-    const response = getMembershiphistory(
-      membershiphistory.pageNo,
-      membershiphistory.pageSize
-    );
+    const response = getfdmonthlyloansInfo(fdmonthlyloansInfo);
     response.then((data) => {
+
+      console.log(data)
       if (data.request.status == 200) {
-        setmembershiphistory({
-          ...membershiphistory,
+        setfdmonthlyloansInfo({
+          ...fdmonthlyloansInfo,
           apiData: data.data,
           loading: false,
           hasdata: data.data.count == 0 ? false : true,
@@ -43,12 +34,12 @@ const FdmonthlyloansInfo = () => {
       }
     });
     return () => {};
-  }, [membershiphistory.pageNo, membershiphistory.pageSize]);
+  }, []);
 
   const datasource = [];
   {
-    membershiphistory.apiData != ""
-      ? membershiphistory.apiData.listOfTransactions.map((data) => {
+    fdmonthlyloansInfo.apiData != ""
+      ? fdmonthlyloansInfo.apiData.map((data) => {
           datasource.push({
             key: Math.random(),
             PaymentDate: data.paymentDate,
@@ -164,19 +155,11 @@ const FdmonthlyloansInfo = () => {
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
-                        pagination={{
-                          total: membershiphistory.apiData.count,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          position: ["topRight"],
-                          showSizeChanger: false,
-                          onShowSizeChange: onShowSizeChange,
-                        }}
                         columns={columns}
-                        dataSource={membershiphistory.hasdata ? datasource : []}
+                        dataSource={fdmonthlyloansInfo.hasdata ? datasource : []}
                         expandable={true}
-                        loading={membershiphistory.loading}
-                        onChange={membershiphistoryPagination}
+                        loading={fdmonthlyloansInfo.loading}
+                        onChange={fdmonthlyloansInfo}
                       />
                     </div>
                   </div>
