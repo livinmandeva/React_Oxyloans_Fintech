@@ -67,7 +67,8 @@ const MywithdrawalHistory = () => {
                   data.status == "REJECTED" ||
                   data.status == "ADMINREJECTED" ||
                   data.status == "USERREJECTED" ||
-                  data.status == "AUTOREJECTED"
+                  data.status == "AUTOREJECTED" ||
+                  data.status == "ADMIN REJECTED"
                     ? true
                     : false
                 }

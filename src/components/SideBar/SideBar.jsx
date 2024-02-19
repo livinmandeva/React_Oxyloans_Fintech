@@ -404,7 +404,7 @@ const Sidebar = (props) => {
                             "/withdrawdealfromDeal" === pathName ? "active" : ""
                           }`}
                         >
-                          Raise a request
+                          Raise a Request
                         </Link>
                       </li>
                       {/* <li>

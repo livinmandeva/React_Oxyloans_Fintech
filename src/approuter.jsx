@@ -7,6 +7,7 @@ import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashb
 import TestDeals from "./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals";
 import ViewCurrentDayDeals from "./components/pages/Oxyloans/Lender/ViewCurrentDayDeals";
 import ViewDeals from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals";
+import UserTestdeals from "./components/pages/Oxyloans/Lender/TestDeal";
 
 import Login from "./components/pages/Authentication";
 import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
@@ -93,6 +94,7 @@ const AppRouter = () => {
           element={<Register_active_proceed />}
         />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/testdeals" element={<UserTestdeals />} />
         <Route path="/forgotpassword" element={<ForgotPassword3 />} />
         <Route path="/partnerRegister" element={<PartnerRegister />} />
         <Route path="/escrowDeals" element={<EscrowDeals />} />
@@ -112,7 +114,7 @@ const AppRouter = () => {
           element={<WalletToWalletHistory />}
         />
         <Route path="/viewdeals" element={<ViewDeals />} />
-        <Route path="/testDeals" element={<TestDeals />} />
+        <Route path="/admintestDeals" element={<TestDeals />} />
         <Route path="/spining" element={<Spining />} />
         <Route path="/admlogin" element={<Admlogin />} />
         <Route
