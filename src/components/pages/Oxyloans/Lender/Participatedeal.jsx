@@ -53,6 +53,7 @@ const Participatedeal = () => {
       const urlparam = new URLSearchParams(window.location.search);
       const dealId = urlparam.get("dealId");
       const response = await handledetail(dealId);
+      console.log(response);
       const newObj = { ...response.data };
       if (newObj.monthlyInterest != 0) {
         newObj.rateOfInterest = newObj.monthlyInterest + " % PM";
@@ -66,7 +67,7 @@ const Participatedeal = () => {
         newObj.rateOfInterest = newObj.halfInterest * 6 + " % PA ";
         newObj["payout"] = "HALFYEARLY";
         localStorage.setItem("choosenPayOutOption", "HALFLY");
-      } else if (newObj.yearlyInterest === "YEARLY") {
+      } else if (newObj.yearlyInterest != 0) {
         newObj.rateOfInterest = newObj.yearlyInterest * 12 + " %  PA ";
         newObj["payout"] = "YEARLY";
         localStorage.setItem("choosenPayOutOption", "YEARLY");
@@ -75,7 +76,6 @@ const Participatedeal = () => {
         newObj["payout"] = "ENDOFTHEDEAL";
         localStorage.setItem("choosenPayOutOption", "ENDOFTHEDEAL");
       }
-
       if (response.request.status == 500) {
         setDeal({
           ...deal,

@@ -15,14 +15,13 @@ const MyRichTextEditor = ({ data, setdata, documentUpload }) => {
       imageresponse.request &&
       imageresponse.request.status === 200
     ) {
-      toastrSuccess("image uploaded successfully");
+      toastrSuccess("image uploaded successfully. ");
       documentUpload(imageresponse.data.documentId);
     } else {
-      toastrWarning("something went wrong please try again");
+      toastrWarning("Something went wrong. Please try again.");
     }
 
     // console.log(imageresponse);
-
     // const formData = new FormData();
     // formData.append("image", imgval);
     // console.log(formData);

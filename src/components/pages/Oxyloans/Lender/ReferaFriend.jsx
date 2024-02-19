@@ -28,6 +28,7 @@ const ReferaFriend = () => {
     inviteType: "SingleInvite",
     mailContent: 0,
     savebtndisable: true,
+    userinviteType: "",
   });
 
   const [emailres, setEmailres] = useState({
@@ -484,6 +485,24 @@ const ReferaFriend = () => {
                                 >
                                   <option value="NRI">NRI</option>
                                   <option value="NONNRI">NON NRI</option>
+                                </select>
+                              </div>
+
+                              <div className="form-group col-12 col-sm-4">
+                                <label>
+                                  Keep me in cc{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <select
+                                  className="form-control form-select"
+                                  name="userinviteType"
+                                  value={profile.userinviteType}
+                                  onChange={handlechanges}
+                                >
+                                  <option value="YES" selected>
+                                    YES
+                                  </option>
+                                  <option value="NO">NO</option>
                                 </select>
                               </div>
 
