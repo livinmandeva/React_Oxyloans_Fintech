@@ -128,6 +128,7 @@ const Participatedeal = () => {
         : ""
     }`;
     const numericAmount = parseInt(amount);
+ 
 
     if (deal.participatedAmount == "") {
       toastrError(
@@ -139,8 +140,11 @@ const Participatedeal = () => {
         "Your participation amount is greater than your wallet balance."
       );
       return false;
-    } else if (deal.participatedAmount > deal.apidata.maximumparticipation) {
-      toastrError("You are participating in more than the maximum amount.");
+    } else if (deal.participatedAmount > deal.apidata.maximumparticipationAmount) {
+ 
+      toastrError(
+        "You are participating in more than the maximum amount."
+        );
       return false;
     } else if (
       deal.participatedAmount < deal.apidata.minimumPaticipationAmount
