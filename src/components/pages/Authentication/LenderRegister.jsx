@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { registerImage } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
+import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
-import OtpInput from "./OtpInput";
-
-import { toastrWarning } from "../Base UI Elements/Toast";
-import "./login.css";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import OtpInput from "./OtpInput";
+import { toastrWarning } from "../Base UI Elements/Toast";
 export default function LenderRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
@@ -51,8 +50,21 @@ export default function LenderRegister() {
       ...registrationField,
       [name]: value,
     });
+  
+    if(/\d/.test(value)) { // Use a regular expression to check if the value contains a number
+      setRegistrationField({
+        ...registrationField,
+        pancarderror: "Enter characters only!", // Corrected typo
+      });
+    } else {
+      // Clear the error if the input is valid
+      setRegistrationField({
+        ...registrationField,
+        pancarderror: "",
+      });
+    }
   };
-
+  
   const handleLenderRegister = async () => {
     setRegistrationField((prevState) => ({
       ...prevState,
@@ -105,25 +117,32 @@ export default function LenderRegister() {
       let session = localStorage.getItem("seesion");
       let otpdata = localStorage.getItem("otp");
       let otp_data = otpdata.replace(/,/g, "");
+
+      // Check if OTP has a valid length (e.g., 6 characters)
       if (otp_data.length === 6) {
+        // Assuming `api.vaildateotp` expects the parameters in this order: otp_data, mobile, name, email, password
         const response = await api.vaildateotp(
           registrationField.email,
           registrationField.moblie,
           otp_data,
           registrationField.pancard,
-          registrationField.password,
+          registrationField.password, // Ensure `password` is available in registrationField
           session,
           registrationField.referrerId
         );
+        //  const mill=gettime()
 
         localStorage.setItem("id", response.responseData.userId);
+
         const mill1 = new Date().getTime();
         localStorage.setItem("timemilll", mill1);
         navigate("/register_active_proceed");
       } else {
+        // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
       }
     } catch (error) {
+      // Handle any errors that occur during OTP validation
       console.error(
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
@@ -141,7 +160,10 @@ export default function LenderRegister() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+
+    // Get the value of the 'ref' parameter
     const refParam = searchParams.get("ref");
+
     if (registrationField.referrerId != "" || refParam != "") {
       setRegistrationField({
         ...registrationField,
@@ -218,6 +240,7 @@ export default function LenderRegister() {
                             className="form-control"
                             type="text"
                             name="pancard"
+                            maxLength={30}
                             onChange={handlechange}
                           />
                           <span className="profile-views">
@@ -235,8 +258,9 @@ export default function LenderRegister() {
                           </label>
                           <input
                             className="form-control"
-                            type="email"
+                            type="text"
                             name="email"
+                            maxLength={35}
                             onChange={handlechange}
                           />
                           <span className="profile-views">
@@ -257,6 +281,7 @@ export default function LenderRegister() {
                             className="form-control pass-input"
                             type="password"
                             name="password"
+                            maxLength={15}
                             onChange={handlechange}
                           />
                           <ReactPasswordToggleIcon
@@ -264,7 +289,10 @@ export default function LenderRegister() {
                             showIcon={showIcon}
                             hideIcon={hideIcon}
                           />
-                          {""}
+                          {/* <input className="form-control pass-input" type="text" />
+                                            <span className="profile-views feather-eye toggle-password">
+                                                <FeatherIcon icon="eye" />
+                                            </span> */}{" "}
                           {registrationField.passworderror && (
                             <div className="error">
                               {registrationField.passworderror}
@@ -357,7 +385,7 @@ export default function LenderRegister() {
                             <div className=" dont-have">
                               Already Registered? <Link to="/">Login</Link>
                             </div>
-                            {error && toastrWarning(error)}
+                            {error && <p className="errormessage">{error}</p>}
                             <div className="form-group mb-0">
                               <button
                                 className="btn btn-primary btn-block"
@@ -384,7 +412,7 @@ export default function LenderRegister() {
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                    <Link to="/whatsapplogin" className="bg-success text-white">
+                    <Link to="/whatapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
                     </Link>
                     {/* <Link onClick={() => {}} to="#">

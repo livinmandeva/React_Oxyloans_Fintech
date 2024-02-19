@@ -208,6 +208,20 @@ const Profile = () => {
     nomineeDetails.city,
   ]);
 
+  useEffect(()=>{
+
+    if(bankaccountprofile.accountNumber === bankaccountprofile.confirmAccountNumber){
+      setBankaccountProfile({
+        ...bankaccountprofile,
+        confirmAccountNumbererror:""
+      });
+    }else{
+      setBankaccountProfile({
+        ...bankaccountprofile,
+        confirmAccountNumbererror:"Account numbers do not match!"
+      })
+    }
+  },[bankaccountprofile.accountNumber , bankaccountprofile.confirmAccountNumber])
   const savebankdetailsProfile = () => {
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
@@ -225,7 +239,7 @@ const Profile = () => {
       const response = savenomineeDeatailsApi(nomineeDetails);
       response.then((data) => {
         if (data.request.status == 200) {
-          Success("success", "Nominee Details Saved Successfully");
+          Success("success", "Nominee Details Save Successfully");
         } else if (data.response.data.errorCode != "200") {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
@@ -236,35 +250,31 @@ const Profile = () => {
   };
 
   const verifybankAccountCashfree = () => {
-    if (bankaccountprofile.mobileOtp == "") {
-      WarningBackendApi("warning", "Enter The mobile OTP");
-    } else {
-      const response = verifyBankAccountAndIfsc(bankaccountprofile);
-      response.then((data) => {
-        if (data.request.status == 200) {
-          if (data.data.status == "SUCCESS") {
-            setdashboarddata({
-              ...dashboarddata,
-              verifyotpText: "Verifed",
-              submitbankdeatail: true,
-            });
+    const response = verifyBankAccountAndIfsc(bankaccountprofile);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        if (data.data.status == "SUCCESS") {
+          setdashboarddata({
+            ...dashboarddata,
+            verifyotpText: "Verifed",
+            submitbankdeatail: true,
+          });
 
-            setBankaccountProfile({
-              ...bankaccountprofile,
-              nameAtBank: data.data.data.nameAtBank,
-              bankName: data.data.data.bankName,
-              bankCity: data.data.data.city,
-              branchName: data.data.data.branch,
-            });
-            toastrSuccess("Sucessfully Verified!", "top-right");
-          } else {
-            WarningBackendApi("warning", data.data.message);
-          }
-        } else if (data.response.data.errorCode != "200") {
-          WarningBackendApi("warning", data.response.data.errorMessage);
+          setBankaccountProfile({
+            ...bankaccountprofile,
+            nameAtBank: data.data.data.nameAtBank,
+            bankName: data.data.data.bankName,
+            bankCity: data.data.data.city,
+            branchName: data.data.data.branch,
+          });
+          toastrSuccess("Sucessfully Verified!", "top-right");
+        } else {
+          WarningBackendApi("warning", data.data.message);
         }
-      });
-    }
+      } else if (data.response.data.errorCode != "200") {
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
   };
 
   const handlefileupload = (event) => {
@@ -276,10 +286,7 @@ const Profile = () => {
             ...prevKyc,
             isValid: !prevKyc.isValid,
           }));
-          Success(
-            "success",
-            `${event.target.name?.toLowerCase()} uploaded successfully`
-          );
+          Success("success", `${event.target.name} Uploaded Successfully`);
         } else if (
           data &&
           data.response &&
@@ -298,13 +305,53 @@ const Profile = () => {
 
   const handlechange = (event) => {
     const { name, value } = event.target;
-    setUserProfile(
-      (prevUserProfile) => ({
-        ...prevUserProfile,
-        [name]: value,
-      }),
-      () => {}
-    );
+  
+    if (name === 'pinCode') {
+      // Validate input to allow only numeric characters
+      const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+      // Limit the input to 6 digits
+      const updatedValue = numericValue.slice(0, 6);
+      if (updatedValue.length !== value.length) {
+        setUserProfile({
+          ...userProfile,
+          pinCodeError: "PIN code must be exactly 6 digits long",
+          [name]: updatedValue,
+        });
+        return; // Exit the function early to prevent setting state again
+      }
+    }
+
+    
+      // Calculate today's date
+      const today = new Date();
+      
+      // Calculate the minimum date for someone to be 18 years old
+      const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    
+      // Convert the input value to a Date object
+      const inputDate = new Date(value);
+    
+      // Check if the input date is valid and the user is at least 18 years old
+      if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+        setUserProfile({
+          ...userProfile,
+          [name]: value,
+          doberror: "", // Clear error message
+        });
+      } else {
+        setUserProfile({
+          ...userProfile,
+          [name]: value,  
+          doberror: "You must be at least 18 years old",
+        });
+      }
+
+    
+    setUserProfile({
+      ...userProfile,
+      [name]: value,
+      pinCodeError: "", // Clear error message if PIN code is valid
+    });
   };
 
   const handlePaste = (event) => {
@@ -326,16 +373,21 @@ const Profile = () => {
   };
 
   const handleprofileUpdate = () => {
+      
     if (
       userProfile.email === "" ||
       userProfile.firstName === "" ||
+      userProfile.lastName === "" ||
       userProfile.mobileNumber === "" ||
       userProfile.whatsAppNumber === "" ||
       userProfile.city === "" ||
       userProfile.pinCode === "" ||
       userProfile.fatherName === "" ||
+      userProfile.city === "" ||
       userProfile.state === "" ||
-      userProfile.aadharNumber === ""
+      userProfile.aadharNumber === "" ||
+      userProfile.city === "" 
+      // userProfile.locality === ""
     ) {
       setUserProfile({
         ...userProfile,
@@ -348,35 +400,39 @@ const Profile = () => {
           userProfile.fatherName === "" ? "Please enter the father Name" : "",
         firstNamrror:
           userProfile.firstName === "" ? "Please enter the first Name" : "",
+          lastNamerror:
+          userProfile.lastName === "" ? "Please enter the last Name" : "",
         panNumbererror:
           userProfile.panNumber === "" ? "Please enter the panNumber" : "",
         permanentAddresserror:
           userProfile.permanentAddress === ""
-            ? "Please enter the Residence Address"
+            ? "Please Enter The Residence Address"
             : "",
         pinCodeerror:
-          userProfile.pinCode === "" ? "Please enter the pinCode" : "",
-        stateerror: userProfile.state === "" ? "Please enter the state" : "",
+          userProfile.pinCode === "" ? "Please Enter The Pincode" : "",
+        stateerror: userProfile.state === "" ? "Please Enter The State" : "",
         whatsAppNumbererror:
           userProfile.whatsAppNumber === ""
-            ? "Please enter the whatsAppNumber"
+            ? "Please Enter The WhatsAppNumber"
             : "",
         aadhaarNumbererror:
           userProfile.aadharNumber === ""
-            ? "Please enter the Aadhaar Number"
+            ? "Please Enter the Aadhaar Number"
             : "",
 
         mobileNumbererror:
           userProfile.mobileNumber === ""
-            ? "Please enter the mobileNumber"
+            ? "Please Enter The MobileNumber"
             : "",
-        emailerror: userProfile.email === "" ? "Please enter the email" : "",
+        emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
+      console.log("eror")
     } else {
+      console.log("sucss")
       const response = profileupadate(userProfile);
       response.then((data) => {
         if (data.request.status == 200) {
-          Success("success", "Personal Details Saved Successfully");
+          Success("success", "Personal Details Save Successfully");
         } else if (data.response.data.errorCode != "200") {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
@@ -435,9 +491,9 @@ const Profile = () => {
             ...dashboarddata,
             sendotpbtn: true,
             verifyotp: true,
-            sendotpbtnText: "Resend OTP",
+            sendotpbtnText: "ReSend OTP",
             sendOtpsession: data.data.mobileOtpSession,
-            isValid: !dashboarddata.isValid,
+            isValid: true,
           });
 
           setBankaccountProfile({
@@ -450,7 +506,7 @@ const Profile = () => {
           toastrWarning(data.response.data.errorMessage);
         }
       });
-      // verifybankAccountCashfree();
+      verifybankAccountCashfree();
     }
   };
 
@@ -670,15 +726,8 @@ const Profile = () => {
 
                       {reduxStoreData.groupName != "NewLender" && (
                         <div className="user-Location my-1">
-                          {/* <i className="fa-solid fa-calendar-days" /> Validity : */}
-                          {reduxStoreDataDashboard?.validityDate != null ? (
-                            <>
-                              <i className="fa-solid fa-calendar-days" />{" "}
-                              Validity : {reduxStoreDataDashboard?.validityDate}
-                            </>
-                          ) : (
-                            ""
-                          )}
+                          <i className="fa-solid fa-calendar-days" /> Validity :
+                          {reduxStoreDataDashboard.validityDate}
                         </div>
                       )}
                     </div>
@@ -914,7 +963,7 @@ const Profile = () => {
                                   name="accountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your Account Number"
-                                  maxLength={18}
+                                  maxLength={16}
                                   value={bankaccountprofile.accountNumber}
                                 />
                                 {bankaccountprofile.accountNumbererror && (
@@ -936,7 +985,7 @@ const Profile = () => {
                                   onChange={handlebankchange}
                                   placeholder="Enter Confirm Account Number"
                                   onPaste={handlePaste}
-                                  maxLength={18}
+                                  maxLength={16}
                                   onCopy={handleCopy}
                                   value={
                                     bankaccountprofile.confirmAccountNumber
@@ -1069,10 +1118,9 @@ const Profile = () => {
                                     Otp <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="text"
                                     className="form-control"
                                     name="mobileOtp"
-                                    maxLength={6}
                                     placeholder=" Enter your Mobile otp"
                                     onChange={handlebankchange}
                                     value={bankaccountprofile.mobileOtp}
@@ -1175,7 +1223,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="tel"
                                     minLength={10}
                                     className="form-control"
                                     placeholder=" Enter  Nominee mobile no "
@@ -1191,7 +1239,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="tel"
                                     className="form-control"
                                     placeholder="  Nominee Name Account No"
                                     value={nomineeDetails.accountNo}
@@ -1303,8 +1351,8 @@ const Profile = () => {
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
-                                  Last Name
-                                  <span className="login-danger"></span>
+                                  Last Name 
+                                  <span className="login-danger">*</span>
                                 </label>
                                 <input
                                   type="text"
@@ -1712,7 +1760,7 @@ const Profile = () => {
                                     type="file"
                                     accept="image/*"
                                     name="aadhar"
-                                    id="aadhaar"
+                                    id="aadhar"
                                     className="hide-input"
                                     onChange={handlefileupload}
                                   />
