@@ -670,8 +670,15 @@ const Profile = () => {
 
                       {reduxStoreData.groupName != "NewLender" && (
                         <div className="user-Location my-1">
-                          <i className="fa-solid fa-calendar-days" /> Validity :
-                          {reduxStoreDataDashboard?.validityDate}
+                          {/* <i className="fa-solid fa-calendar-days" /> Validity : */}
+                          {reduxStoreDataDashboard?.validityDate != null ? (
+                            <>
+                              <i className="fa-solid fa-calendar-days" />{" "}
+                              Validity : {reduxStoreDataDashboard?.validityDate}
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       )}
                     </div>
