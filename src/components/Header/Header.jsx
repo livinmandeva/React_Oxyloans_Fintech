@@ -141,7 +141,7 @@ const Header = (profile) => {
               className="dropdown-toggle nav-link header-nav-list"
               data-bs-toggle="dropdown"
             >
-              <img src={headericon05} alt="" />
+              <img src={headericon05} alt="jeadericon" />
             </Link>
             <div className="dropdown-menu notifications">
               <div className="topnav-dropdown-header">

@@ -505,6 +505,24 @@ export const uploadkyc = async (event) => {
   return response;
 };
 
+export const uploadqueryImage = async (file) => {
+  const token = getToken();
+  const userId = getUserId();
+  var fd = new FormData();
+  // var files = event.target.files[0];
+  fd.append("USERQUERYSCREENSHOT", file);
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/userQueryScreenshot`,
+    "POST",
+    token,
+    fd,
+    {
+      "Content-Type": "multipart/form-data",
+    }
+  );
+  return response;
+};
 export const updatebankDetails = async (bankaccountprofile) => {
   const token = getToken();
   const userId = getUserId();
@@ -609,7 +627,7 @@ export const writequery = async (userdata) => {
 
   const postwritequerydata = {
     query: userdata.query + userdata.urlquery,
-    documentId: 0,
+    documentId: userdata.documentId,
     email: userdata.profiledata.email,
     mobileNumber: userdata.profiledata.mobileNumber,
   };

@@ -547,7 +547,7 @@ const Sidebar = (props) => {
                             "/WalletToWallet" === pathName ? "active" : ""
                           }`}
                         >
-                          Raise a request
+                          Raise a Request
                         </Link>
                       </li>
                       <li>

@@ -2,26 +2,34 @@ import React, { useState, useMemo, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 // import ImageUploader from "react-quill-image-upload";
 import "react-quill/dist/quill.snow.css"; // Import styles
+import { uploadqueryImage } from "../../../HttpRequest/afterlogin";
 
-const MyRichTextEditor = ({ data, setdata }) => {
+const MyRichTextEditor = ({ data, setdata, documentUpload }) => {
   const [text, settext] = useState("hellllo");
 
-  const sendImageToBackend = (img) => {};
+  const sendImageToBackend = async (imgval) => {
+    const imageresponse = await uploadqueryImage(imgval);
+    if (
+      imageresponse &&
+      imageresponse.request &&
+      imageresponse.request.status === 200
+    ) {
+      documentUpload(imageresponse.data.documentId);
+    }
 
+    // console.log(imageresponse);
+
+    // const formData = new FormData();
+    // formData.append("image", imgval);
+    // console.log(formData);
+  };
   const quillRef = useRef(); //
-
   const handleProcedureContentChange = (content, delta, source, editor, e) => {
     settext(editor.getText());
     setdata(editor.getText());
-
-    //let has_attribues = delta.ops[1].attributes || "";
-    //console.log(has_attribues);
-    //const cursorPosition = e.quill.getSelection().index;
-    // this.quill.insertText(cursorPosition, "★");
-    //this.quill.setSelection(cursorPosition + 1);
   };
 
-  useEffect(() => {}, [text]);
+  // useEffect(() => {}, [text]);
 
   // const modules = {
   //   toolbar: [
@@ -54,10 +62,20 @@ const MyRichTextEditor = ({ data, setdata }) => {
           ["link"],
           [{ color: ["red", "#785412"] }],
           [{ background: ["red", "#785412"] }],
+          ["link", "image"],
         ],
-        // handlers: {
-        //   image: selectLocalImage,
-        // },
+        handlers: {
+          image: () => {
+            const input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
+            input.onchange = async () => {
+              const file = input.files[0];
+              sendImageToBackend(file);
+            };
+            input.click();
+          },
+        },
       },
     }),
     []

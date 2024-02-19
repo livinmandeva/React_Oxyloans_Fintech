@@ -26,6 +26,7 @@ const Writetous = () => {
     urlquery: "",
     isval: false,
     isVaild: true,
+    imagedocumentid: "",
   });
 
   const [queryresponse, setqueryresponse] = useState({
@@ -34,10 +35,18 @@ const Writetous = () => {
     cancelledCount: 0,
     pendingCount: 3,
   });
+
   const setDataFun = (query) => {
     setWriteTous({
       ...writetous,
       query: query,
+    });
+  };
+
+  const setImageUploadId = (id) => {
+    setWriteTous({
+      ...writetous,
+      documentId: id,
     });
   };
 
@@ -230,6 +239,7 @@ const Writetous = () => {
                         <MyRichTextEditor
                           data={writetous}
                           setdata={setDataFun}
+                          documentUpload={setImageUploadId}
                         />
                       </div>
 
