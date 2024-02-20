@@ -45,7 +45,7 @@ const Profile = () => {
     sendotpbtnText: "Send OTP",
     sendOtpsession: "",
     verifyotp: false,
-    verifyotpText: "Verify",
+    verifyotpText: "Verify IFSC",
     submitbankdeatail: false,
     profileData: null,
     isValid: false,
@@ -228,6 +228,11 @@ const Profile = () => {
     bankaccountprofile.confirmAccountNumber,
   ]);
   const savebankdetailsProfile = () => {
+    // if(bankaccountprofile.mobileOtp === ""){
+    //   setBankaccountProfile({
+    //     ...
+    //   })
+    // }
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
       if (data.request.status == 200) {
@@ -261,7 +266,7 @@ const Profile = () => {
         if (data.data.status == "SUCCESS") {
           setdashboarddata({
             ...dashboarddata,
-            verifyotpText: "Verifed",
+            verifyotpText: "Verifed IFSC",
             submitbankdeatail: true,
           });
 
@@ -272,7 +277,7 @@ const Profile = () => {
             bankCity: data.data.data.city,
             branchName: data.data.data.branch,
           });
-          toastrSuccess("Sucessfully Verified!", "top-right");
+          toastrSuccess("Verifed BankAccount Ifsc");
         } else {
           WarningBackendApi("warning", data.data.message);
         }
@@ -1154,17 +1159,28 @@ const Profile = () => {
                                     Otp <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="text"
+                                    type="tel"
                                     className="form-control"
                                     name="mobileOtp"
                                     placeholder=" Enter your Mobile otp"
                                     onChange={handlebankchange}
                                     value={bankaccountprofile.mobileOtp}
+                                    maxLength={6}
                                   />
                                 </div>
-                              )}
+                               )} 
 
                               <div className="col-12 row">
+
+                              {/* {dashboarddata.verifyotp && ( */}
+                                  <button
+                                    className="btn btn-warning col-md-2 mx-2"
+                                    type="submit"
+                                    onClick={verifybankAccountCashfree}
+                                  >
+                                    {dashboarddata.verifyotpText}
+                                  </button>
+                                {/* // )} */}
                                 {dashboarddata.sendotpbtn && (
                                   <button
                                     className="btn btn-secondary col-md-2 mx-2"
@@ -1174,15 +1190,7 @@ const Profile = () => {
                                     {dashboarddata.sendotpbtnText}
                                   </button>
                                 )}
-                                {dashboarddata.verifyotp && (
-                                  <button
-                                    className="btn btn-warning col-md-2 mx-2"
-                                    type="submit"
-                                    onClick={verifybankAccountCashfree}
-                                  >
-                                    {dashboarddata.verifyotpText}
-                                  </button>
-                                )}
+                             
 
                                 {dashboarddata.submitbankdeatail && (
                                   <button

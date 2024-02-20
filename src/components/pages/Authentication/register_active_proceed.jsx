@@ -35,8 +35,10 @@ const Register_active_proceed = () => {
     pannumber: "",
     address: "",
     date: "",
-    isbtnvalid: true,
+    isbtnvalid: false,
     doberror:"",
+    panerror:"",
+    addresserror:"",
 
   });
   useEffect(()=>{
@@ -64,6 +66,15 @@ const Register_active_proceed = () => {
     }
 },[date1])
   const handlesubmit = async () => {
+
+    if(data.date ==="" || data.pannumber === ""  || data.address === ""){
+    setdata({
+      ...data,
+      doberror: data.date === "Enter The DOB" ? "" :"",
+      panerror: data.pannumber === "Enter Pan Number" ? "" :"",
+      addresserror: data.address === "Enter The Address" ? "" :"",
+    })
+  }else{
     if (data.date === "") {
       //  setErrordate("Enter DOB");
     }
@@ -90,6 +101,8 @@ const Register_active_proceed = () => {
       setError("please enter vaild pan-card number");
       toastrWarning("please enter vaild pan-card number");
     }
+  }
+    
   };
 
   const handlechanges = (event) => {
@@ -124,19 +137,19 @@ const Register_active_proceed = () => {
   useEffect(() => {
 
 
-    const isvalid =
-    (data.address != "") & (data.pannumber != "") && data.date != "";
-  if (isvalid) {
-    setdata({
-      ...data,
-      isbtnvalid: false,
-    });
-  } else {
-    setdata({
-      ...data,
-      isbtnvalid: true,
-    });
-  }
+  //   const isvalid =
+  //   (data.address != "") & (data.pannumber != "") && data.date != "";
+  // if (isvalid) {
+  //   setdata({
+  //     ...data,
+  //     isbtnvalid: false,
+  //   });
+  // } else {
+  //   setdata({
+  //     ...data,
+  //     isbtnvalid: true,
+  //   });
+  // }
   
 
     var inputDate = data.date;
@@ -188,6 +201,7 @@ const Register_active_proceed = () => {
                     <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span>
+                    {data.panerror   && <div className="error">{data.panerror}</div>}
                   </div>
                   <div className="form-group">
                     <label>
@@ -219,6 +233,7 @@ const Register_active_proceed = () => {
                     <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span>
+                    {data.addresserror   && <div className="error">{data.addresserror}</div>}
                   </div>
 
                   <button
