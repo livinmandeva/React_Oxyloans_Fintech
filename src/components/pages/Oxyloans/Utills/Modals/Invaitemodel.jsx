@@ -4,14 +4,24 @@ import { useEffect, useState } from "react";
 // import '../file.css'
 import Modal from "react-bootstrap/Modal";
 import { uploadapicall } from "../../../../HttpRequest/afterlogin";
+import { toastrSuccess, toastrWarning } from "../../../Base UI Elements/Toast";
+import { WarningBackendApi } from "../../../Base UI Elements/SweetAlert";
 
-export default function Invaitemodel() {
+export default function Invaitemodel({ emailcontentdata, handleinvaite }) {
   const [lgShow, setLgShow] = useState(true);
   const [UploadFile, setUploadFile] = useState("");
 
   const handleFileChange = (event) => {
-    const response = uploadapicall(event);
-    response.then((data) => {});
+    const response = uploadapicall(event, emailcontentdata);
+    response.then((data) => {
+      if (data.response.status == 200) {
+        handleinvaite();
+        toastrSuccess("file uploaded successfully");
+      } else {
+        handleinvaite();
+        WarningBackendApi("warning", data.response.data.errorMessage);
+      }
+    });
   };
 
   //         const form=new FormData();

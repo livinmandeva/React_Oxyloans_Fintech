@@ -203,7 +203,12 @@ const ReferaFriend = () => {
                 </div>
               </div>
             </div>{" "}
-            {emailres.invaitemodel && <Invaitemodel />}
+            {emailres.invaitemodel && (
+              <Invaitemodel
+                emailcontentdata={emailcontentdata}
+                handleinvaite={handleinvaite}
+              />
+            )}
             {/* /Page Header */}
             <div className="row">
               <div className="col-md-12">

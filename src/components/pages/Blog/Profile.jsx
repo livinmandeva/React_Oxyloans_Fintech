@@ -1168,18 +1168,17 @@ const Profile = () => {
                                     maxLength={6}
                                   />
                                 </div>
-                               )} 
+                              )}
 
                               <div className="col-12 row">
-
-                              {/* {dashboarddata.verifyotp && ( */}
-                                  <button
-                                    className="btn btn-warning col-md-2 mx-2"
-                                    type="submit"
-                                    onClick={verifybankAccountCashfree}
-                                  >
-                                    {dashboarddata.verifyotpText}
-                                  </button>
+                                {/* {dashboarddata.verifyotp && ( */}
+                                <button
+                                  className="btn btn-warning col-md-2 mx-2"
+                                  type="submit"
+                                  onClick={verifybankAccountCashfree}
+                                >
+                                  {dashboarddata.verifyotpText}
+                                </button>
                                 {/* // )} */}
                                 {dashboarddata.sendotpbtn && (
                                   <button
@@ -1190,7 +1189,6 @@ const Profile = () => {
                                     {dashboarddata.sendotpbtnText}
                                   </button>
                                 )}
-                             
 
                                 {dashboarddata.submitbankdeatail && (
                                   <button

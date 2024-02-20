@@ -766,14 +766,14 @@ export const TicketHistoryapi = async () => {
   return response;
 };
 
-export const uploadapicall = async (event) => {
+export const uploadapicall = async (event, emailcontentdata) => {
   const token = getToken();
   const userId = getUserId();
   var fd = new FormData();
 
   var files = event.target.files[0];
-  fd.append("BULKINVITE", event.target.name, files);
-  fd.append("content", "");
+  fd.append("BULKINVITE", files);
+  fd.append("content", emailcontentdata);
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `sendBulkInviteThroughExcel/${userId}`,
