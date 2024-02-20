@@ -36,8 +36,33 @@ const Register_active_proceed = () => {
     address: "",
     date: "",
     isbtnvalid: true,
-  });
+    doberror:"",
 
+  });
+  useEffect(()=>{
+ 
+    // Calculate today's date
+    const today = new Date();
+    
+    // Calculate the minimum date for someone to be 18 years old
+    const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+  
+    // Convert the input value to a Date object
+    const inputDate = new Date(date1);
+  
+    // Check if the input date is valid and the user is at least 18 years old
+    if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+      setdata({
+        ...data,
+        doberror: "", // Clear error message
+      });
+    } else {
+      setdata({
+        ...data,
+        doberror: "You must be at least 18 years old",
+      });
+    }
+},[date1])
   const handlesubmit = async () => {
     if (data.date === "") {
       //  setErrordate("Enter DOB");
@@ -81,23 +106,39 @@ const Register_active_proceed = () => {
     setid(id);
   }, []);
 
+  // useEffect(() => {
+  //   const isvalid =
+  //     (data.address != "") & (data.pannumber != "") && data.date != "";
+  //   if (isvalid) {
+  //     setdata({
+  //       ...data,
+  //       isbtnvalid: false,
+  //     });
+  //   } else {
+  //     setdata({
+  //       ...data,
+  //       isbtnvalid: true,
+  //     });
+  //   }
+  // }, [data.address, data.date, data.pannumber]);
   useEffect(() => {
-    const isvalid =
-      (data.address != "") & (data.pannumber != "") && data.date != "";
-    if (isvalid) {
-      setdata({
-        ...data,
-        isbtnvalid: false,
-      });
-    } else {
-      setdata({
-        ...data,
-        isbtnvalid: true,
-      });
-    }
-  }, [data.address, data.date, data.pannumber]);
 
-  useEffect(() => {
+
+    const isvalid =
+    (data.address != "") & (data.pannumber != "") && data.date != "";
+  if (isvalid) {
+    setdata({
+      ...data,
+      isbtnvalid: false,
+    });
+  } else {
+    setdata({
+      ...data,
+      isbtnvalid: true,
+    });
+  }
+  
+
     var inputDate = data.date;
     var dateParts = inputDate.split("-");
     var dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
@@ -113,6 +154,7 @@ const Register_active_proceed = () => {
 
     setdate1(formattedDate);
   }, [data.date]);
+
   return (
     <>
       <div className="main-wrapper login-body">
@@ -160,7 +202,10 @@ const Register_active_proceed = () => {
                     {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span> */}
+                     {data.doberror   && <div className="error">{data.doberror}</div>}
                   </div>
+                  
+                 
                   <div className="form-group">
                     <label>
                       Address <span className="login-danger">*</span>
