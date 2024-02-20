@@ -139,6 +139,23 @@ export default function LenderRegister() {
 
   const navigate = useNavigate();
 
+  useEffect(()=>{
+
+    if(/\d/.test(registrationField.pancard)) { // Use a regular expression to check if the value contains a number
+      setRegistrationField({
+        ...registrationField,
+        pancarderror: "Enter characters only!", // Corrected typo
+      });
+    } else {
+      // Clear the error if the input is valid
+      setRegistrationField({
+        ...registrationField,
+        pancarderror: "",
+      });
+    }
+  },
+  // .
+  [registrationField.pancard])
   useEffect(() => {
     setTimeout(() => {
       setError("");
