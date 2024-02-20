@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
@@ -31,6 +32,7 @@ const WithdrawalFromWallet = () => {
     });
   };
 
+  const maxDate = new Date();
   const ratingChanged = (newRating) => {
     setwithdrawRequest({
       ...withdrawrequest,
@@ -162,11 +164,12 @@ const WithdrawalFromWallet = () => {
                           </label>
 
                           <DatePicker
-                            selected={withdrawrequest.date}
-                            onChange={handleChange}
-                            dateFormat="dd/MM/yyyy"
-                            className="form-control datetimepicker"
-                          />
+                             selected={withdrawrequest.date}
+                             onChange={handleChange}
+                             dateFormat="dd/MM/yyyy"
+                             maxDate={maxDate}
+                             className="form-control datetimepicker"
+                           />
                         </div>
                       </div>
 

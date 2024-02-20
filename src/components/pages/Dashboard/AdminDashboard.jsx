@@ -1274,7 +1274,9 @@ const AdminDashboard = () => {
                                     <h4> {data.dealName}</h4>
                                     <h5>
 
+
                                       Min: {data.minimumAmountInDeal}, Max: {data.lenderPaticipationLimit}
+
                                       {data.paticipationLimitToLenders}, RoI:
 
                                       {/* Min: {data.minimumAmountInDeal}, Max:

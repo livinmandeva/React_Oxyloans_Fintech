@@ -79,7 +79,7 @@ const EarningCertificate = () => {
 
   const columns = [
     {
-      title: "S#",
+      title: "SNO",
       dataIndex: "SO",
       sorter: (a, b) => a.SO - b.SO,
     },
