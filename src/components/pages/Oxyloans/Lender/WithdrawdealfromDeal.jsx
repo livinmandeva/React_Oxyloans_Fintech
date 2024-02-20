@@ -156,12 +156,16 @@ const WithdrawdealfromDeal = () => {
                 <div className="card">
                   <div className="card-header">
                     <div className="row col-12">
-                      <button className="btn  btn-outline-success col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1">
-                        <Link to={"/withdrawalFromWallet"}>
+                      <Link
+                        to={"/withdrawalFromWallet"}
+                        className="col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"
+                      >
+                        <button className="btn  btn-outline-success col-12">
                           <i className="fa-solid fa-briefcase mx-2"></i>
-                          From wallet
-                        </Link>
-                      </button>
+                          From wallet{" "}
+                        </button>
+                      </Link>
+
                       <button
                         onClick={handleWithdrawFromNormal}
                         className="btn  btn-outline-info col-md-2 col-xs-6 col-lg-4 mx-lg-2 my-xs-2 my-md-1"

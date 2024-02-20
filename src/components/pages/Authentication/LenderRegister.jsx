@@ -11,12 +11,12 @@ export default function LenderRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
   const showIcon = () => (
-    <i class="feather feather-eye" aria-hidden="true">
+    <i className="feather feather-eye" aria-hidden="true">
       <FeatherIcon icon="eye" />
     </i>
   );
   const hideIcon = () => (
-    <i class="feather feather-eye-slash" aria-hidden="true">
+    <i className="feather feather-eye-slash" aria-hidden="true">
       <FeatherIcon icon="eye-off" />
     </i>
   );
@@ -39,32 +39,14 @@ export default function LenderRegister() {
   const [error, setError] = useState("");
   const [response1, setResponse] = useState({});
 
-  useEffect(() => {
-    setTimeout(() => {
-      setError("");
-    }, 1000);
-  }, [error]);
   const handlechange = (event) => {
     const { name, value } = event.target;
     setRegistrationField({
       ...registrationField,
       [name]: value,
     });
-  
-    if(/\d/.test(value)) { // Use a regular expression to check if the value contains a number
-      setRegistrationField({
-        ...registrationField,
-        pancarderror: "Enter characters only!", // Corrected typo
-      });
-    } else {
-      // Clear the error if the input is valid
-      setRegistrationField({
-        ...registrationField,
-        pancarderror: "",
-      });
-    }
   };
-  
+
   const handleLenderRegister = async () => {
     setRegistrationField((prevState) => ({
       ...prevState,
@@ -159,6 +141,12 @@ export default function LenderRegister() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 1000);
+  }, [error]);
+
+  useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
 
     // Get the value of the 'ref' parameter
@@ -192,7 +180,7 @@ export default function LenderRegister() {
                       {" "}
                       <div className="maincircle">
                         <div className="circle">
-                          <i class="fa-solid fa-user-check"></i>
+                          <i className="fa-solid fa-user-check"></i>
                         </div>
                       </div>
                       <div className="cend">
@@ -213,7 +201,7 @@ export default function LenderRegister() {
                       {field ? (
                         <>
                           {" "}
-                          <h1>Register as a Lender</h1>
+                          <h1>Register as a Lender </h1>
                         </>
                       ) : (
                         <>
@@ -374,7 +362,7 @@ export default function LenderRegister() {
                             <div className="maincircle">
                               <div className="circle">
                                 {" "}
-                                <i class="fa-solid fa-user-lock"></i>
+                                <i className="fa-solid fa-user-lock"></i>
                               </div>
                             </div>
                             <p>Enhanced Security for Registering on OxyLoans</p>

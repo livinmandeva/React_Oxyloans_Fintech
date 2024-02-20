@@ -1273,8 +1273,13 @@ const AdminDashboard = () => {
                                   <div className="award-list-outs">
                                     <h4> {data.dealName}</h4>
                                     <h5>
+
                                       Min: {data.minimumAmountInDeal}, Max: {data.lenderPaticipationLimit}
                                       {data.paticipationLimitToLenders}, RoI:
+
+                                      {/* Min: {data.minimumAmountInDeal}, Max:
+                                      {data.lenderPaticipationLimit}, RoI: */}
+
                                       {data.rateOfInterest}%
                                     </h5>
                                   </div>
