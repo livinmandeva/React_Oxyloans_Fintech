@@ -120,6 +120,7 @@ const Participatedeal = () => {
   }, [deal.participatedAmount, deal.bank]);
 
   const dealparticipate = async () => {
+    console.log(deal.apidata);
     const amount = `${
       reduxStoreData?.length !== 0
         ? reduxStoreData?.lenderWalletAmount -
@@ -128,26 +129,24 @@ const Participatedeal = () => {
         : ""
     }`;
     const numericAmount = parseInt(amount);
- 
 
-    if (deal.participatedAmount == "") {
+    if (parseInt(deal.participatedAmount) == "") {
       toastrError(
         "Please entere the amount that you wish to lend in this deal."
       );
       return false;
-    } else if (numericAmount < deal.participatedAmount) {
+    } else if (numericAmount < parseInt(deal.participatedAmount)) {
       toastrError(
         "Your participation amount is greater than your wallet balance."
       );
       return false;
-    } else if (deal.participatedAmount > deal.apidata.maximumparticipationAmount) {
- 
-      toastrError(
-        "You are participating in more than the maximum amount."
-        );
+    } else if (
+      parseInt(deal.participatedAmount) > deal.apidata.lenderParticiptionLimit
+    ) {
+      toastrError("You are participating in more than the maximum amount.");
       return false;
     } else if (
-      deal.participatedAmount < deal.apidata.minimumPaticipationAmount
+      parseInt(deal.participatedAmount) < deal.apidata.minimumPaticipationAmount
     ) {
       toastrError("You are participating in less than the minimum amount.");
       return false;
@@ -157,7 +156,8 @@ const Participatedeal = () => {
         deal.apidata.minimumPaticipationAmount
       ) {
         if (
-          deal.participatedAmount < deal.apidata.minimumPaticipationAmount &&
+          parseInt(deal.participatedAmount) <
+            deal.apidata.minimumPaticipationAmount &&
           deal.lenderParticipated == false
         ) {
           toastrError(
@@ -166,7 +166,7 @@ const Participatedeal = () => {
 
           return false;
         } else if (
-          deal.participatedAmount > deal.apidata.remainingAmountInDeal
+          parseInt(deal.participatedAmount) > deal.apidata.remainingAmountInDeal
         ) {
           toastrError(
             "Your participation amount is greater than the Deal available limit."
@@ -183,7 +183,7 @@ const Participatedeal = () => {
 
           return false;
         } else if (
-          deal.participatedAmount < deal.apidata.remainingAmountInDeal
+          parseInt(deal.participatedAmount) < deal.apidata.remainingAmountInDeal
         ) {
           toastrError(
             " investment is INR" + deal.apidata.remainingAmountInDeal
@@ -191,7 +191,7 @@ const Participatedeal = () => {
 
           return false;
         } else if (
-          deal.participatedAmount > deal.apidata.remainingAmountInDeal
+          parseInt(deal.participatedAmount) > deal.apidata.remainingAmountInDeal
         ) {
           toastrError(
             "Your participation amount is greater than the Deal available limit."
