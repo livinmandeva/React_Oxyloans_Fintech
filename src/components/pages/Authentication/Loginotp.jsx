@@ -118,7 +118,9 @@ const Loginotp = () => {
         setUserLoginInfo((prevState) => ({
           ...prevState,
           emailerror:
-            userLogInInfo.email === "" ? "Please 10 digit Moblie Number" : "",
+            userLogInInfo.email.length > 10
+              ? "Please 10 digit Moblie Number"
+              : "",
         }));
       }
     }
@@ -153,7 +155,7 @@ const Loginotp = () => {
                     </label>
                     <input
                       className="form-control"
-                      type="tel"
+                      type="number"
                       value={userLogInInfo.email}
                       name="email"
                       onChange={handlechange}
