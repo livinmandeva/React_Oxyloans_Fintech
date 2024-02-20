@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from "moment";
 import React from "react";
 import SideBar from "../../SideBar/SideBar";
 import Header from "../../Header/Header";
@@ -229,17 +229,16 @@ const Profile = () => {
     bankaccountprofile.confirmAccountNumber,
   ]);
   const savebankdetailsProfile = () => {
-
-    if(dashboarddata.isValid === true ){
-      console.log("data")
-    if(bankaccountprofile.mobileOtp === ""){
-      console.log("data")
-      setBankaccountProfile({
-        ...bankAccount,
-        mobileOtperror:"Enter the OTP"
-      })
+    if (dashboarddata.isValid === true) {
+      console.log("data");
+      if (bankaccountprofile.mobileOtp === "") {
+        console.log("data");
+        setBankaccountProfile({
+          ...bankAccount,
+          mobileOtperror: "Enter the OTP",
+        });
+      }
     }
-  }
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
       if (data.request.status == 200) {
@@ -295,29 +294,32 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const inputDate = moment(userProfile.dob, ['DD/MM/YYYY', 'YYYY-MM-DD'], true);
+    const inputDate = moment(
+      userProfile.dob,
+      ["DD/MM/YYYY", "YYYY-MM-DD"],
+      true
+    );
 
     // Calculate today's date
     const today = moment();
 
     // Calculate the minimum date for someone to be 18 years old
-    const minDate = moment().subtract(18, 'years');
+    const minDate = moment().subtract(18, "years");
 
     // Check if the input date is valid and the user is at least 18 years old
-    setUserProfile(prevProfile => {
+    setUserProfile((prevProfile) => {
       if (inputDate.isValid() && inputDate.isSameOrBefore(minDate)) {
         return {
           ...prevProfile,
-          doberror: '', // Clear error message
+          doberror: "", // Clear error message
         };
       } else {
         return {
           ...prevProfile,
-          doberror: 'You must be at least 18 years old',
+          doberror: "You must be at least 18 years old",
         };
       }
     });
-   
   }, [userProfile.dob]);
   const handlefileupload = (event) => {
     const response = uploadkyc(event);
@@ -363,9 +365,37 @@ const Profile = () => {
       }
     }
 
+    // Calculate today's date
+    const today = new Date();
+
+    // Calculate the minimum date for someone to be 18 years old
+    const minDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate()
+    );
+
+    // Convert the input value to a Date object
+    const inputDate = new Date(value);
+
+    // Check if the input date is valid and the user is at least 18 years old
+    if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+      setUserProfile({
+        ...userProfile,
+        [name]: value,
+        doberror: "", // Clear error message
+      });
+    } else {
+      setUserProfile({
+        ...userProfile,
+        [name]: value,
+        doberror: "You must be at least 18 years old",
+      });
+    }
+
     setUserProfile({
       ...userProfile,
-       [name]:value,
+      [name]: value,
     });
   };
 
@@ -505,7 +535,7 @@ const Profile = () => {
             ...dashboarddata,
             sendotpbtn: true,
             verifyotp: true,
-            submitbankdeatail:true,
+            submitbankdeatail: true,
             sendotpbtnText: "ReSend OTP",
             sendOtpsession: data.data.mobileOtpSession,
             isValid: true,
@@ -1446,7 +1476,7 @@ const Profile = () => {
                                   onChange={handlechange}
                                   value={userProfile.dob}
                                   name="dob"
-                                  max={new Date().toISOString().split("T")[0]} 
+                                  max={new Date().toISOString().split("T")[0]}
                                 />
 
                                 {userProfile.doberror && (
