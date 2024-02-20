@@ -1308,7 +1308,7 @@ const AdminDashboard = () => {
                                     <h4> {data.dealName}</h4>
                                     <h5>
                                       Min: {data.minimumAmountInDeal}, Max:
-                                      {data.paticipationLimitToLenders}, RoI:
+                                      {data.lenderPaticipationLimit}, RoI:
                                       {data.rateOfInterest}%
                                     </h5>
                                   </div>
