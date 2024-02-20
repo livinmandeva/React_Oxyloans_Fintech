@@ -228,11 +228,17 @@ const Profile = () => {
     bankaccountprofile.confirmAccountNumber,
   ]);
   const savebankdetailsProfile = () => {
-    // if(bankaccountprofile.mobileOtp === ""){
-    //   setBankaccountProfile({
-    //     ...
-    //   })
-    // }
+
+    if(dashboarddata.isValid === true ){
+      console.log("data")
+    if(bankaccountprofile.mobileOtp === ""){
+      console.log("data")
+      setBankaccountProfile({
+        ...bankAccount,
+        mobileOtperror:"Enter the OTP"
+      })
+    }
+  }
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
       if (data.request.status == 200) {
@@ -358,38 +364,38 @@ const Profile = () => {
       }
     }
 
-    // Calculate today's date
-    const today = new Date();
+    if(name === "dob"){
+  // Calculate today's date
+  const today = new Date();
 
-    // Calculate the minimum date for someone to be 18 years old
-    const minDate = new Date(
-      today.getFullYear() - 18,
-      today.getMonth(),
-      today.getDate()
-    );
+  // Calculate the minimum date for someone to be 18 years old
+  const minDate = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
+console.log()
+  // Convert the input value to a Date object
+  const inputDate = new Date(value);
 
-    // Convert the input value to a Date object
-    const inputDate = new Date(value);
-
-    // Check if the input date is valid and the user is at least 18 years old
-    if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
-      setUserProfile({
-        ...userProfile,
-        [name]: value,
-        doberror: "", // Clear error message
-      });
-    } else {
-      setUserProfile({
-        ...userProfile,
-        [name]: value,
-        doberror: "You must be at least 18 years old",
-      });
+  // Check if the input date is valid and the user is at least 18 years old
+  if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+    setUserProfile({
+      ...userProfile,         
+      doberror: "", // Clear error message
+    });
+  } else {
+    setUserProfile({
+      ...userProfile,
+      doberror: "You must be at least 18 years old",
+    });
+  }
     }
+  
 
     setUserProfile({
       ...userProfile,
-      [name]: value,
-      pinCodeError: "", // Clear error message if PIN code is valid
+       [name]:value,
     });
   };
 
@@ -529,6 +535,7 @@ const Profile = () => {
             ...dashboarddata,
             sendotpbtn: true,
             verifyotp: true,
+            submitbankdeatail:true,
             sendotpbtnText: "ReSend OTP",
             sendOtpsession: data.data.mobileOtpSession,
             isValid: true,
