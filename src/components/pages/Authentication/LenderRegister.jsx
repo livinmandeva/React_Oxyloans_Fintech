@@ -399,7 +399,7 @@ export default function LenderRegister() {
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                    <Link to="/whatapplogin" className="bg-success text-white">
+                    <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
                     </Link>
                     {/* <Link onClick={() => {}} to="#">
