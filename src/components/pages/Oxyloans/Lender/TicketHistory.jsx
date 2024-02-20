@@ -184,7 +184,7 @@ const TicketHistory = () => {
                                         >
                                           <Link
                                             className="text-white"
-                                            to="/writetous"
+                                            to={`/writetous?id=${item.id}`}
                                           >
                                             Write Reply
                                           </Link>

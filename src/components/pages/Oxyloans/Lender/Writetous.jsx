@@ -14,16 +14,21 @@ import { useSelector } from "react-redux";
 
 const Writetous = () => {
   const getreducerprofiledata = useSelector((data) => data.counter.userProfile);
+  const url = new URLSearchParams(window.location.search);
+  const dealName = url.get("dealName");
+  const dealId = url.get("dealId");
+  const urlTickeRequestId = url.get("id");
 
   const [writetous, setWriteTous] = useState({
     query: "",
-    documentId: "",
+    documentId: 0,
     email: "",
     mobileNumber: "",
-    id: "",
+    id: urlTickeRequestId,
     respondedBy: "USER",
     profiledata: [],
-    urlquery: "",
+    urlquery:
+      dealName == null ? "" : dealName + "/n" + dealId == null ? "" : dealId,
     isval: false,
     isVaild: true,
     imagedocumentid: "",
@@ -58,15 +63,6 @@ const Writetous = () => {
   }, [getreducerprofiledata]);
 
   useEffect(() => {
-    const url = new URLSearchParams(window.location.search);
-    const dealName = url.get("dealName");
-    const dealId = url.get("dealId");
-
-    setWriteTous({
-      ...writetous,
-      urlquery: dealName + "/" + dealId,
-    });
-
     const fetchallQueriesCount1 = async () => {
       try {
         const response = await allQueriesCount1(); // Assuming lenderTotalInvestmentsAndReturns is an asynchronous function
@@ -99,6 +95,7 @@ const Writetous = () => {
       });
     }
   }, [writetous.query]);
+
   const querySubmission = () => {
     setWriteTous({
       ...writetous,

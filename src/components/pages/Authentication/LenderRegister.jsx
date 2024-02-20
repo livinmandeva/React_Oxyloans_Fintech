@@ -80,7 +80,6 @@ export default function LenderRegister() {
         const RegisterResponse = await api.RegisterUser(
           registrationField.moblie
         );
-
         localStorage.setItem("seesion", RegisterResponse);
         setResponse(RegisterResponse);
         setfield(false);

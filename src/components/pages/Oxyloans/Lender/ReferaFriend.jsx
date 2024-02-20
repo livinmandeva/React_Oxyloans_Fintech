@@ -28,7 +28,7 @@ const ReferaFriend = () => {
     inviteType: "SingleInvite",
     mailContent: 0,
     savebtndisable: true,
-    userinviteType: "",
+    userinviteType: "YES",
   });
 
   const [emailres, setEmailres] = useState({
@@ -521,7 +521,7 @@ const ReferaFriend = () => {
                                 />
                               </div>
 
-                              <div className="form-group col-12 col-sm-8">
+                              <div className="form-group col-12 col-sm-4">
                                 <label>
                                   Email Subject
                                   <span className="login-danger">*</span>{" "}

@@ -208,20 +208,25 @@ const Profile = () => {
     nomineeDetails.city,
   ]);
 
-  useEffect(()=>{
-
-    if(bankaccountprofile.accountNumber === bankaccountprofile.confirmAccountNumber){
+  useEffect(() => {
+    if (
+      bankaccountprofile.accountNumber ===
+      bankaccountprofile.confirmAccountNumber
+    ) {
       setBankaccountProfile({
         ...bankaccountprofile,
-        confirmAccountNumbererror:""
+        confirmAccountNumbererror: "",
       });
-    }else{
+    } else {
       setBankaccountProfile({
         ...bankaccountprofile,
-        confirmAccountNumbererror:"Account numbers do not match!"
-      })
+        confirmAccountNumbererror: "Account numbers do not match!",
+      });
     }
-  },[bankaccountprofile.accountNumber , bankaccountprofile.confirmAccountNumber])
+  }, [
+    bankaccountprofile.accountNumber,
+    bankaccountprofile.confirmAccountNumber,
+  ]);
   const savebankdetailsProfile = () => {
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
@@ -330,10 +335,10 @@ const Profile = () => {
 
   const handlechange = (event) => {
     const { name, value } = event.target;
-  
-    if (name === 'pinCode') {
+
+    if (name === "pinCode") {
       // Validate input to allow only numeric characters
-      const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+      const numericValue = value.replace(/\D/g, ""); // Remove non-numeric characters
       // Limit the input to 6 digits
       const updatedValue = numericValue.slice(0, 6);
       if (updatedValue.length !== value.length) {
@@ -346,6 +351,36 @@ const Profile = () => {
       }
     }
 
+<<<<<<< Updated upstream
+=======
+    // Calculate today's date
+    const today = new Date();
+
+    // Calculate the minimum date for someone to be 18 years old
+    const minDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate()
+    );
+
+    // Convert the input value to a Date object
+    const inputDate = new Date(value);
+
+    // Check if the input date is valid and the user is at least 18 years old
+    if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+      setUserProfile({
+        ...userProfile,
+        [name]: value,
+        doberror: "", // Clear error message
+      });
+    } else {
+      setUserProfile({
+        ...userProfile,
+        [name]: value,
+        doberror: "You must be at least 18 years old",
+      });
+    }
+>>>>>>> Stashed changes
 
     setUserProfile({
       ...userProfile,
@@ -373,7 +408,6 @@ const Profile = () => {
   };
 
   const handleprofileUpdate = () => {
-      
     if (
       userProfile.email === "" ||
       userProfile.firstName === "" ||
@@ -386,7 +420,7 @@ const Profile = () => {
       userProfile.city === "" ||
       userProfile.state === "" ||
       userProfile.aadharNumber === "" ||
-      userProfile.city === "" 
+      userProfile.city === ""
       // userProfile.locality === ""
     ) {
       setUserProfile({
@@ -400,7 +434,7 @@ const Profile = () => {
           userProfile.fatherName === "" ? "Please enter the father Name" : "",
         firstNamrror:
           userProfile.firstName === "" ? "Please enter the first Name" : "",
-          lastNamerror:
+        lastNamerror:
           userProfile.lastName === "" ? "Please enter the last Name" : "",
         panNumbererror:
           userProfile.panNumber === "" ? "Please enter the panNumber" : "",
@@ -426,9 +460,9 @@ const Profile = () => {
             : "",
         emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
-      console.log("eror")
+      console.log("eror");
     } else {
-      console.log("sucss")
+      console.log("sucss");
       const response = profileupadate(userProfile);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -724,11 +758,14 @@ const Profile = () => {
                           : ""}
                       </div>
 
-                      {reduxStoreData.groupName != "NewLender" && (
+                      {reduxStoreData.groupName != "NewLender" &&
+                      reduxStoreDataDashboard?.validityDate != null ? (
                         <div className="user-Location my-1">
                           <i className="fa-solid fa-calendar-days" /> Validity :
                           {reduxStoreDataDashboard.validityDate}
                         </div>
+                      ) : (
+                        ""
                       )}
                     </div>
                     <div className="col-auto profile-btn">
@@ -1351,7 +1388,7 @@ const Profile = () => {
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
-                                  Last Name 
+                                  Last Name
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input

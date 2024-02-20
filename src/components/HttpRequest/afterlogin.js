@@ -625,12 +625,24 @@ export const writequery = async (userdata) => {
   const token = getToken();
   const userId = getUserId();
 
-  const postwritequerydata = {
-    query: userdata.query + userdata.urlquery,
-    documentId: userdata.documentId,
-    email: userdata.profiledata.email,
-    mobileNumber: userdata.profiledata.mobileNumber,
-  };
+  if (userdata.id == null) {
+    var postwritequerydata = {
+      query: userdata.query + userdata.urlquery,
+      documentId: userdata.documentId,
+      email: userdata.profiledata.email,
+      mobileNumber: userdata.profiledata.mobileNumber,
+    };
+  } else {
+    var postwritequerydata = {
+      query: userdata.query + userdata.urlquery,
+      documentId: userdata.documentId,
+      email: userdata.profiledata.email,
+      mobileNumber: userdata.profiledata.mobileNumber,
+      id: userdata.id,
+      respondedBy: "USER",
+    };
+  }
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/readingQueriesFromUsers`,
@@ -705,7 +717,23 @@ export const submitWalletToWallet = async (postdata) => {
 export const profilesubmit = async (profile) => {
   const token = getToken();
   const userId = getUserId();
-  const data = profile;
+
+  let referrercountryCode = "91";
+  var data = {
+    email: profile.email,
+    mobileNumber: referrercountryCode + profile.mobileNumber,
+    name: profile.name,
+    mailContent: profile.mailContent,
+    mailSubject: profile.mailSubject,
+    referrerId: userId,
+    primaryType: profile.primaryType,
+    citizenType: profile.citizenType,
+    seekerRequestedId: "0",
+    inviteType: "SingleInvite",
+    userType: null,
+    userInvite: profile.userinviteType,
+  };
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderReferring`,
