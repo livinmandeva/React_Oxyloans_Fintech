@@ -380,7 +380,6 @@ const Profile = () => {
         doberror: "You must be at least 18 years old",
       });
     }
-
     setUserProfile({
       ...userProfile,
       [name]: value,
