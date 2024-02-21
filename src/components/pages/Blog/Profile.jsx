@@ -570,12 +570,12 @@ const Profile = () => {
             : "",
         aadhaarNumbererror:
           userProfile.aadharNumber.length != 12
-            ? " Aadhaar Number should be 12 digits"
+            ? "Aadhaar number should be 12 digits. "
             : "",
 
         mobileNumbererror:
           userProfile.mobileNumber.length != 10
-            ? "Mobile Number should be 10 digits"
+            ? "mobile number should be 10 digits."
             : "",
         emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
@@ -1409,7 +1409,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="tel"
+                                    type="number"
                                     maxLength={10}
                                     className="form-control"
                                     placeholder=" Enter  Nominee mobile no "
@@ -1425,7 +1425,7 @@ const Profile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="tel"
+                                    type="number"
                                     className="form-control"
                                     placeholder="  Nominee Name Account No"
                                     value={nomineeDetails.accountNo}

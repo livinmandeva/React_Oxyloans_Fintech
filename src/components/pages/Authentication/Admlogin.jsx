@@ -52,7 +52,7 @@ const Admlogin = () => {
   };
 
   useEffect(() => {
-    if ((userLogInInfo.userid != "") & (userLogInInfo.password != "")) {
+    if (userLogInInfo.userid != "" && userLogInInfo.password != "") {
       setUserLoginInfo({
         ...userLogInInfo,
         isvalid: false,
