@@ -153,6 +153,7 @@ const LoadwaletThroughQr = () => {
                                 className="form-control"
                                 placeholder="Enter the Amount"
                                 name="amount"
+                                type="number"
                                 onChange={handlechange}
                               />
                               <div className="d-grid gap-2 d-md-block mt-2 button-qr text-center">

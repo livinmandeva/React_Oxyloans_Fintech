@@ -86,7 +86,7 @@ const Mycontacts = () => {
     setTimeout(() => {
       getemail();
       getemailcontact();
-    }, 2000);
+    }, 500);
 
     return () => {};
   }, []);

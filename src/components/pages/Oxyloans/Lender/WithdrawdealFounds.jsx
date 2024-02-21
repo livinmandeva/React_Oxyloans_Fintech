@@ -171,7 +171,7 @@ const WithdrawdealFounds = () => {
                             <span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             name="withdrawalamount"
                             onChange={handlechange}

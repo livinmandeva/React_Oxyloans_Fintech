@@ -190,6 +190,7 @@ const Profile = () => {
       nomineeDetails.nomineeEmail != "" &&
       nomineeDetails.nomineeIfsc != "" &&
       nomineeDetails.nomineeMobile != "" &&
+      nomineeDetails.nomineeMobile.length == 10 &&
       nomineeDetails.nomineeName != "" &&
       nomineeDetails.relation != "" &&
       nomineeDetails.city != "";
@@ -220,14 +221,15 @@ const Profile = () => {
   useEffect(() => {
     if (
       bankaccountprofile.accountNumber ===
-      bankaccountprofile.confirmAccountNumber || bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.accountNumber === ""
+        bankaccountprofile.confirmAccountNumber ||
+      bankaccountprofile.confirmAccountNumber === "" ||
+      bankaccountprofile.accountNumber === ""
     ) {
       setBankaccountProfile({
         ...bankaccountprofile,
         confirmAccountNumbererror: "",
       });
     } else {
-
       setBankaccountProfile({
         ...bankaccountprofile,
         confirmAccountNumbererror: "Account numbers do not match!",
@@ -441,8 +443,15 @@ const Profile = () => {
         brancherror: "",
       }));
     }
-}, [userProfile.state, userProfile.city, nomineeDetails.nomineeName, nomineeDetails.relation, nomineeDetails.bank, nomineeDetails.nomineecity  , nomineeDetails.branch]);
-
+  }, [
+    userProfile.state,
+    userProfile.city,
+    nomineeDetails.nomineeName,
+    nomineeDetails.relation,
+    nomineeDetails.bank,
+    nomineeDetails.nomineecity,
+    nomineeDetails.branch,
+  ]);
 
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -604,18 +613,33 @@ const Profile = () => {
   const sendotp = async () => {
     setBankaccountProfile((bankaccountprofile) => ({
       ...bankaccountprofile,
-      nameAtBankerror: bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
-      moblieNumbererror: bankaccountprofile.moblieNumber === "" || bankaccountprofile.moblieNumber != 10 ? "Enter 10 Digit Mobile Number " : "",
-      accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the Account Number" : "",
-      confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber !== bankaccountprofile.accountNumber ? "Enter the Confirm Account Number" : "",
-      ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
-      bankNameerror: bankaccountprofile.bankName === "" ? "Enter the Bank Name" : "",
-      branchNameerror: bankaccountprofile.branchName === "" ? "Enter the Branch Name" : "",
-      bankCityerror: bankaccountprofile.bankCity === "" ? "Enter the Bank City" : "",
+      nameAtBankerror:
+        bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
+      moblieNumbererror:
+        bankaccountprofile.moblieNumber === "" ||
+        bankaccountprofile.moblieNumber != 10
+          ? "Enter 10 Digit Mobile Number "
+          : "",
+      accountNumbererror:
+        bankaccountprofile.accountNumber === ""
+          ? "Enter the Account Number"
+          : "",
+      confirmAccountNumbererror:
+        bankaccountprofile.confirmAccountNumber === "" ||
+        bankaccountprofile.confirmAccountNumber !==
+          bankaccountprofile.accountNumber
+          ? "Enter the Confirm Account Number"
+          : "",
+      ifscCodeerror:
+        bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
+      bankNameerror:
+        bankaccountprofile.bankName === "" ? "Enter the Bank Name" : "",
+      branchNameerror:
+        bankaccountprofile.branchName === "" ? "Enter the Branch Name" : "",
+      bankCityerror:
+        bankaccountprofile.bankCity === "" ? "Enter the Bank City" : "",
       // Add other error messages as needed
     }));
-
-
 
     if (
       bankaccountprofile.moblieNumber !== "" &&
@@ -627,7 +651,6 @@ const Profile = () => {
       bankaccountprofile.bankCity !== ""
     ) {
       // Check if all error messages are empty
-
 
       const response = await sendMoblieOtp(bankaccountprofile);
       if (response.request.status === 200) {
@@ -653,7 +676,6 @@ const Profile = () => {
 
     // verifybankAccountCashfree();
   };
-
 
   const openTheActiveTabs = (type) => {
     var i, j;
@@ -835,41 +857,42 @@ const Profile = () => {
                         {reduxStoreData.length != 0
                           ? reduxStoreData.firstName
                           : dashboarddata.profileData != null
-                            ? dashboarddata.profileData.data.firstName
-                            : "Livin"}
+                          ? dashboarddata.profileData.data.firstName
+                          : "Livin"}
                       </h4>
                       <h6 className="text-muted">
                         LR
                         {reduxStoreData.length != 0
                           ? reduxStoreData.userId
                           : dashboarddata.profileData != null
-                            ? dashboarddata.profileData.data.userId
-                            : "LR18"}
-                        {`, ${reduxStoreData.length != 0
+                          ? dashboarddata.profileData.data.userId
+                          : "LR18"}
+                        {`, ${
+                          reduxStoreData.length != 0
                             ? reduxStoreData.groupName
                             : dashboarddata.profileData != null
-                              ? dashboarddata.profileData.data.groupName
-                              : "NewLender"
-                          }`}
+                            ? dashboarddata.profileData.data.groupName
+                            : "NewLender"
+                        }`}
                       </h6>
                       <div className="user-Location">
                         <i className="fas fa-map-marker-alt" />{" "}
                         {reduxStoreData.length != 0
                           ? reduxStoreData.city
                           : dashboarddata.profileData != null
-                            ? dashboarddata.profileData.data.city
-                            : ""}
+                          ? dashboarddata.profileData.data.city
+                          : ""}
                       </div>
                       <div className="about-text">
                         {reduxStoreData.length != 0
                           ? reduxStoreData.address
                           : dashboarddata.profileData != null
-                            ? dashboarddata.profileData.data.address
-                            : ""}
+                          ? dashboarddata.profileData.data.address
+                          : ""}
                       </div>
 
                       {reduxStoreData.groupName != "NewLender" &&
-                        reduxStoreDataDashboard?.validityDate != null ? (
+                      reduxStoreDataDashboard?.validityDate != null ? (
                         <div className="user-Location my-1">
                           <i className="fa-solid fa-calendar-days" /> Validity :
                           {reduxStoreDataDashboard.validityDate}
@@ -1250,7 +1273,6 @@ const Profile = () => {
                                   placeholder=" Enter your Mobile Number"
                                   onChange={handlebankchange}
                                   maxLength={10}
-
                                   value={bankaccountprofile.moblieNumber}
                                 />
                                 {bankaccountprofile.moblieNumbererror && (
@@ -1278,8 +1300,6 @@ const Profile = () => {
                               )}
 
                               <div className="col-12 row">
-
-
                                 {dashboarddata.sendotpbtn && (
                                   <button
                                     className="btn btn-secondary col-md-2 mx-2"
@@ -1301,7 +1321,6 @@ const Profile = () => {
                                     </button>
                                   </>
                                 )}
-
 
                                 {dashboarddata.submitbankdeatail && (
                                   <button
@@ -1343,7 +1362,11 @@ const Profile = () => {
                                     name="nomineeName"
                                     onChange={handlerNominee}
                                   />
-                                  {nomineeDetails.nomineeNameerror && <div className="error">{nomineeDetails.nomineeNameerror}</div>}
+                                  {nomineeDetails.nomineeNameerror && (
+                                    <div className="error">
+                                      {nomineeDetails.nomineeNameerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1358,7 +1381,11 @@ const Profile = () => {
                                     name="relation"
                                     onChange={handlerNominee}
                                   />
-                                  {nomineeDetails.relationerror && <div className="error">{nomineeDetails.relationerror}</div>}
+                                  {nomineeDetails.relationerror && (
+                                    <div className="error">
+                                      {nomineeDetails.relationerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1434,7 +1461,11 @@ const Profile = () => {
                                     onChange={handlerNominee}
                                   />
 
-                                  {nomineeDetails.bankerror && <div className="error">{nomineeDetails.bankerror}</div>}
+                                  {nomineeDetails.bankerror && (
+                                    <div className="error">
+                                      {nomineeDetails.bankerror}
+                                    </div>
+                                  )}
                                 </div>
 
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -1450,7 +1481,11 @@ const Profile = () => {
                                     name="nomineecity"
                                     onChange={handlerNominee}
                                   />
-                                  {nomineeDetails.nomineecityerror && <div className="error">{nomineeDetails.nomineecityerror}</div>}
+                                  {nomineeDetails.nomineecityerror && (
+                                    <div className="error">
+                                      {nomineeDetails.nomineecityerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1465,7 +1500,11 @@ const Profile = () => {
                                     name="branch"
                                     onChange={handlerNominee}
                                   />
-                                  {nomineeDetails.brancherror && <div className="error">{nomineeDetails.brancherror}</div>}
+                                  {nomineeDetails.brancherror && (
+                                    <div className="error">
+                                      {nomineeDetails.brancherror}
+                                    </div>
+                                  )}
                                 </div>
 
                                 <div className="row col-12">
@@ -1866,7 +1905,7 @@ const Profile = () => {
                                 </div>
 
                                 {kyc.PanCard != undefined &&
-                                  kyc.PanCard != "" ? (
+                                kyc.PanCard != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.PanCard.fileName}</small>
@@ -1903,7 +1942,7 @@ const Profile = () => {
                                   </label>
                                 </div>
                                 {kyc.CHEQUELEAF != undefined &&
-                                  kyc.CHEQUELEAF != "" ? (
+                                kyc.CHEQUELEAF != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.CHEQUELEAF.fileName}</small>
@@ -1969,7 +2008,7 @@ const Profile = () => {
                                   </label>
                                 </div>
                                 {kyc.DRIVINGLICENCE != undefined &&
-                                  kyc.DRIVINGLICENCE != "" ? (
+                                kyc.DRIVINGLICENCE != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.DRIVINGLICENCE.fileName}</small>
@@ -2000,7 +2039,7 @@ const Profile = () => {
                                 </div>
 
                                 {kyc.VOTERID != undefined &&
-                                  kyc.VOTERID != "" ? (
+                                kyc.VOTERID != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.VOTERID.fileName}</small>
@@ -2034,7 +2073,7 @@ const Profile = () => {
                                 </div>
 
                                 {kyc.Passport != undefined &&
-                                  kyc.Passport != "" ? (
+                                kyc.Passport != "" ? (
                                   <h6 className="settings-size text-success">
                                     <i className="fa-solid fa-check mx-lg-1 "></i>
                                     <small>{kyc.Passport.fileName}</small>
