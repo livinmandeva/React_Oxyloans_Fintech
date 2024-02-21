@@ -538,7 +538,7 @@ const Profile = () => {
     setBankaccountProfile((bankaccountprofile) => ({
         ...bankaccountprofile,
         nameAtBankerror:bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
-        moblieNumbererror: bankaccountprofile.moblieNumber === "" ? "Enter the Mobile Number" : "",
+        moblieNumbererror: bankaccountprofile.moblieNumber === ""  || bankaccountprofile.moblieNumber != 10 ?  "Enter 10 Digit Mobile Number " : "",
         accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the Account Number" : "",
         confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber !== bankaccountprofile.accountNumber ? "Enter the Confirm Account Number" : "",
         ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
@@ -1184,6 +1184,7 @@ const Profile = () => {
                                   placeholder=" Enter your Mobile Number"
                                   onChange={handlebankchange}
                                   maxLength={10}
+                              
                                   value={bankaccountprofile.moblieNumber}
                                 />
                                 {bankaccountprofile.moblieNumbererror && (

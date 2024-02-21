@@ -108,7 +108,7 @@ const TestDeal = () => {
                     to="/regularRunningDeal"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    <i className="fa fa-user mx-1"></i> Another Delas
+                    <i className="fa fa-user mx-1"></i> Another Deals
                   </Link>
                 </div>
               </div>
