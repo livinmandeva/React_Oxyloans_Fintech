@@ -76,7 +76,7 @@ const MyEarnings = () => {
   const Invitelender = async () => {
     const userId = localStorage.getItem("userType");
     const input = document.createElement("input");
-    input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+    input.value = `https://www.p2pclub.oxyloans.com/register?ref=${userId}`;
     document.body.appendChild(input);
     input.select();
     document.execCommand("copy");

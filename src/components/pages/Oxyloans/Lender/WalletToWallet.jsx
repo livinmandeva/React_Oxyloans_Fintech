@@ -156,7 +156,7 @@ const WalletToWallet = () => {
                               <span className="login-danger">*</span>
                             </label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               name="amount"
                               placeholder="Enter Transfer Amount"

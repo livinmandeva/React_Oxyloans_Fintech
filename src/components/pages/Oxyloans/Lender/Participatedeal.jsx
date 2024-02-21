@@ -384,7 +384,7 @@ const Participatedeal = () => {
                   <div className="form-group">
                     <input
                       className="form-control-lg form-control-lg1"
-                      type="text"
+                      type="number"
                       placeholder="Enter amount here..."
                       onChange={(event) => {
                         setDeal({

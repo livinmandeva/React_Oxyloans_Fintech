@@ -116,7 +116,7 @@ const Emicalculator = () => {
                               <span className="login-danger">*</span>
                             </label>
                             <input
-                              type="text"
+                              type="number"
                               name="loanAmount"
                               className="form-control"
                               placeholder="Loan Amount"

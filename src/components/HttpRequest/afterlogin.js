@@ -792,6 +792,8 @@ export const uploadapicall = async (event, emailcontentdata) => {
   var files = event.target.files[0];
   fd.append("BULKINVITE", files);
   fd.append("content", emailcontentdata);
+  fd.append("userInvite", "NO");
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `sendBulkInviteThroughExcel/${userId}`,
@@ -808,9 +810,7 @@ export const uploadapicall = async (event, emailcontentdata) => {
 export const ticketcommentapi = async (id) => {
   const token = getToken();
   const userId = getUserId();
-  // const data={
 
-  // }
   const response = handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${id}/pendingQueriesBasedOnId`,

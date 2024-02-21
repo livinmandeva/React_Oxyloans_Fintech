@@ -87,6 +87,7 @@ const ReferaFriend = () => {
     const inputValid =
       profile.email != "" &&
       profile.mobileNumber != "" &&
+      profile.mobileNumber.length == 10 &&
       profile.name != "" &&
       profile.citizenType != "";
 
@@ -133,7 +134,7 @@ const ReferaFriend = () => {
   const Invitelender = async () => {
     const userId = localStorage.getItem("userType");
     const input = document.createElement("input");
-    input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+    input.value = `https://www.p2pclub.oxyloans.com/register?ref=${userId}`;
     document.body.appendChild(input);
     input.select();
     document.execCommand("copy");

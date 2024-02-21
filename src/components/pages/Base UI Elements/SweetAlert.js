@@ -212,7 +212,7 @@ export const participatedapi = async (deal) => {
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
               cancelButtonColor: "#d33",
-              confirmButtonText: "Cancel",
+              confirmButtonText: "OK",
             });
           } else {
             Swal.fire({
@@ -222,7 +222,7 @@ export const participatedapi = async (deal) => {
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
               cancelButtonColor: "#d33",
-              confirmButtonText: "Cancel",
+              confirmButtonText: "OK",
             });
           }
         });
