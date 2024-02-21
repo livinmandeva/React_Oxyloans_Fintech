@@ -87,6 +87,7 @@ const RegularRunningDeal = () => {
     };
 
     handleRegular();
+    return () => {};
   }, [regular_runningDeal.pageno]);
 
   return (

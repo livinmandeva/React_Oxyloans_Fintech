@@ -81,6 +81,7 @@ const Writetous = () => {
     };
 
     fetchallQueriesCount1();
+    return () => {};
   }, []);
   useEffect(() => {
     if (writetous.query !== "") {
@@ -94,6 +95,7 @@ const Writetous = () => {
         isVaild: true,
       });
     }
+    return () => {};
   }, [writetous.query]);
 
   const querySubmission = () => {

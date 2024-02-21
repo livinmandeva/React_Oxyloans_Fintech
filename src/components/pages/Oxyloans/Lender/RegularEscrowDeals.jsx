@@ -71,6 +71,7 @@ const RegularEscrowDeals = () => {
     };
 
     handleRegular();
+    return () => {};
   }, [escrow_runningDeal.pageno]);
 
   const dataSource = [];
@@ -104,6 +105,7 @@ const RegularEscrowDeals = () => {
     } else {
       // Handle the case where escrow_runningDeal.apidata is empty
     }
+    return () => {};
   }, [escrow_runningDeal.apidata]);
 
   return (

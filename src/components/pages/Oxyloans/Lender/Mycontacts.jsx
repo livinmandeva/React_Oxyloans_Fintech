@@ -4,6 +4,7 @@ import {
   getcontactdeatils,
   sendInvait,
   getemailcontent,
+  fetchGamilCode,
 } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
@@ -13,6 +14,9 @@ import { Button, Table } from "antd";
 import Result1 from "./Result1";
 
 const Mycontacts = () => {
+  const urlparam = new URLSearchParams(window.location.search);
+  const gmailcode = urlparam.get("code");
+
   const [contactdata, setcontactData] = useState({
     apidata: [],
     hasdata: false,
@@ -22,6 +26,7 @@ const Mycontacts = () => {
     selectAll: false,
     setsuccessMessage: "",
     model: true,
+    gmailcode: gmailcode,
   });
 
   const [message, setmesage] = useState({
@@ -45,7 +50,6 @@ const Mycontacts = () => {
         }
       });
     };
-    getemailcontact();
 
     const getemail = async () => {
       try {
@@ -65,7 +69,25 @@ const Mycontacts = () => {
       }
     };
 
-    getemail();
+    const fetchGamilCodeontacts = async () => {
+      if (contactdata.gmailcode != null) {
+        try {
+          const response = await fetchGamilCode(contactdata.gmailcode);
+          if (response.status === 200) {
+          } else {
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    };
+    fetchGamilCodeontacts();
+
+    setTimeout(() => {
+      getemail();
+      getemailcontact();
+    }, 2000);
+
     return () => {};
   }, []);
 

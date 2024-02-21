@@ -71,6 +71,7 @@ const TestDeal = () => {
     };
 
     handleRegular();
+    return () => {};
   }, [regular_runningDeal.pageno]);
 
   return (

@@ -50,6 +50,7 @@ const MyEarnings = () => {
         });
       }
     });
+    return () => {};
   }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
 
   const datasource = [];

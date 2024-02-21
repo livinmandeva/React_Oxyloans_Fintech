@@ -74,6 +74,7 @@ const Mycontacts = () => {
     };
 
     getemail();
+    return () => {};
   }, []);
   const handleCheckboxClick = (id) => {};
   const column = [

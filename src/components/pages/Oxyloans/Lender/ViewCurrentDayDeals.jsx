@@ -74,6 +74,7 @@ const ViewCurrentDayDeals = () => {
     };
 
     handleRegular();
+    return () => {};
   }, [regular_runningDeal.pageno]);
 
   return (

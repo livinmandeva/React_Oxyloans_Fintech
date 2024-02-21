@@ -44,6 +44,7 @@ const RegularPersonalDeal = () => {
     };
 
     handleRegular();
+    return () => {};
   }, [personal_runningDeal.pageno]);
 
   const dataSource = [];

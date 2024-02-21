@@ -149,7 +149,7 @@ const AppRouter = () => {
         <Route path="/myloansStatement" element={<MyloansStatement />} />
         <Route path="/referaFriend" element={<ReferaFriend />} />
         <Route path="/myreferalStatus" element={<MyreferalStatus />} />
-        <Route path="/mycontacts" element={<Mycontacts />} />
+        <Route path="/lendercontacts" element={<Mycontacts />} />
         <Route
           path="/walletToWalletHistory"
           element={<WalletToWalletHistory />}

@@ -129,6 +129,7 @@ const MyRunningDelas = () => {
         loader: false,
       });
     });
+    return () => {};
   }, [runningdeals.pageNo]);
 
   return (

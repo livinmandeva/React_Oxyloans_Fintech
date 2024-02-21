@@ -380,14 +380,12 @@ const ReferaFriend = () => {
                                   Browse From Computer
                                   {/* </button> */}{" "}
                                 </a>
-
-                                {/* <a
+                                <a
                                   href={url}
                                   className="btn btn-outline-warning my-lg-3 border-2 "
                                 >
                                   Invite Through Gmail
-                      
-                                </a> */}
+                                </a>
                               </div>
                             </form>
                           </div>

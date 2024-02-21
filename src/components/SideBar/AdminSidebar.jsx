@@ -79,6 +79,7 @@ const Sidebar = (props) => {
         ).removeClass("hide-logo");
       }
     });
+    return () => {};
   }, []);
 
   let pathName = useLocation().pathname;
@@ -156,9 +157,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/mycontacts"
+                          to="/lendercontacts"
                           className={`${
-                            "/mycontacts" === pathName ? "active" : ""
+                            "/lendercontacts" === pathName ? "active" : ""
                           }`}
                         >
                           View Equity Deals
@@ -749,9 +750,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/mycontacts"
+                          to="/lendercontacts"
                           className={`${
-                            "/mycontacts" === pathName ? "active" : ""
+                            "/lendercontacts" === pathName ? "active" : ""
                           }`}
                         >
                           My contacts

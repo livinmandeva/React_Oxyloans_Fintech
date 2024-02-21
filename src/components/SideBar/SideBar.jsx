@@ -586,7 +586,7 @@ const Sidebar = (props) => {
                     "/referaFriend" === pathName ||
                     "/myreferalStatus" === pathName ||
                     "/myreferalStatus" === pathName ||
-                    "/mycontacts" === pathName ||
+                    "/lendercontacts" === pathName ||
                     "/myEarnings" === pathName
                       ? "active submenu"
                       : "submenu"
@@ -632,9 +632,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/mycontacts"
+                          to="/lendercontacts"
                           className={`${
-                            "/mycontacts" === pathName ? "active" : ""
+                            "/lendercontacts" === pathName ? "active" : ""
                           }`}
                         >
                           My Contacts
