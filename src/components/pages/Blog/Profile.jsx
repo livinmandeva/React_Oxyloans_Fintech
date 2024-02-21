@@ -525,6 +525,9 @@ const Profile = () => {
 
   const handleprofileUpdate = () => {
     if (
+      userProfile.mobileNumber.length != 10 ||
+      userProfile.pinCode.length != 6 ||
+      userProfile.aadharNumber.length != 12 ||
       userProfile.email === "" ||
       userProfile.firstName === "" ||
       userProfile.lastName === "" ||
@@ -559,43 +562,42 @@ const Profile = () => {
             ? "Please Enter The Residence Address"
             : "",
         pinCodeerror:
-          userProfile.pinCode === "" ? "Please Enter The Pincode" : "",
+          userProfile.pinCode.length != 6 ? "Pincode should be 6 digits" : "",
         stateerror: userProfile.state === "" ? "Please Enter The State" : "",
         whatsAppNumbererror:
           userProfile.whatsAppNumber === ""
             ? "Please Enter The WhatsAppNumber"
             : "",
         aadhaarNumbererror:
-          userProfile.aadharNumber === ""
-            ? "Please Enter the Aadhaar Number"
+          userProfile.aadharNumber.length != 12
+            ? " Aadhaar Number should be 12 digits"
             : "",
 
         mobileNumbererror:
-          userProfile.mobileNumber === ""
-            ? "Please Enter The MobileNumber"
+          userProfile.mobileNumber.length != 10
+            ? "Mobile Number should be 10 digits"
             : "",
         emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
-      setTimeout(() => {
-        setUserProfile({
-          ...userProfile,
-
-          addresserror: "",
-          cityer: "",
-          doberror: "",
-          fatherNameerror: "",
-          firstNamrror: "",
-          lastNamerror: "",
-          panNumbererror: "",
-          permanentAddresserror: "",
-          pinCodeerror: "",
-          stateerror: "",
-          whatsAppNumbererror: "",
-          aadhaarNumbererror: "",
-          mobileNumbererror: "",
-          emailerror: "",
-        });
-      }, 3000);
+      // setTimeout(() => {
+      //   setUserProfile({
+      //     ...userProfile,
+      //     addresserror: "",
+      //     cityer: "",
+      //     doberror: "",
+      //     fatherNameerror: "",
+      //     firstNamrror: "",
+      //     lastNamerror: "",
+      //     panNumbererror: "",
+      //     permanentAddresserror: "",
+      //     pinCodeerror: "",
+      //     stateerror: "",
+      //     whatsAppNumbererror: "",
+      //     aadhaarNumbererror: "",
+      //     mobileNumbererror: "",
+      //     emailerror: "",
+      //   });
+      // }, 3000);
       console.log("eror");
     } else {
       console.log("sucss");
@@ -1597,7 +1599,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="tel"
+                                  type="number"
                                   className="form-control"
                                   placeholder="Enter Aadhaar Number"
                                   onChange={handlechange}
@@ -1665,7 +1667,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="tel"
+                                  type="number"
                                   maxLength={10}
                                   className="form-control"
                                   placeholder="Enter Mobile Name"
@@ -1685,7 +1687,7 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="tel"
+                                  type="number"
                                   maxLength={12}
                                   className="form-control"
                                   placeholder="Enter WhatsApp "
