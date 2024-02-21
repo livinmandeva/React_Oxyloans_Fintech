@@ -234,7 +234,8 @@ const Mycontacts = () => {
                             onClick={handleSelectClick}
                           >
                             {contactdata.selectAll ? (
-                              <>De select All</>
+                              // <>De select All</>
+                              <>Un select All</>
                             ) : (
                               <>
                                 <i className="fa-solid fa-share mx-1"></i>{" "}

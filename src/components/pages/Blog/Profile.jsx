@@ -103,7 +103,7 @@ const Profile = () => {
     mobileOtpSession: "",
     bankAccountError: "",
     updateBankDetails: true,
-    nameAtBank: "",
+    nameAtBank: "eerr",
     bankCity: "",
     moblieNumbererror: "",
     bankAccounterror: "",
@@ -212,13 +212,14 @@ const Profile = () => {
   useEffect(() => {
     if (
       bankaccountprofile.accountNumber ===
-      bankaccountprofile.confirmAccountNumber
+      bankaccountprofile.confirmAccountNumber || bankaccountprofile.confirmAccountNumber === "" ||bankaccountprofile.accountNumber === ""
     ) {
       setBankaccountProfile({
         ...bankaccountprofile,
         confirmAccountNumbererror: "",
       });
-    } else {
+    } else {  
+
       setBankaccountProfile({
         ...bankaccountprofile,
         confirmAccountNumbererror: "Account numbers do not match!",
@@ -347,6 +348,35 @@ const Profile = () => {
       });
   };
 
+  useEffect(() => {
+    // Check state for numbers
+    if (/\d/.test(userProfile.state)) {
+        setUserProfile((prevProfile) => ({
+            ...prevProfile,
+            stateerror: "Enter characters only!",
+        }));
+    } else {
+        setUserProfile((prevProfile) => ({
+            ...prevProfile,
+            stateerror: "",
+        }));
+    }
+
+    // Check city for numbers
+    if (/\d/.test(userProfile.city)) {
+        setUserProfile((prevProfile) => ({
+            ...prevProfile,
+            cityer: "Enter characters only!",
+        }));
+    } else {
+        setUserProfile((prevProfile) => ({
+            ...prevProfile,
+            cityer: "",
+        }));
+    }
+}, [userProfile.state, userProfile.city]);
+
+
   const handlechange = (event) => {
     const { name, value } = event.target;
 
@@ -470,6 +500,26 @@ const Profile = () => {
             : "",
         emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
+      setTimeout(() => {
+        setUserProfile({
+          ...userProfile,
+  
+          addresserror: "",
+          cityer:"",
+          doberror: "",
+          fatherNameerror: "",
+          firstNamrror: "",
+          lastNamerror:"",
+          panNumbererror: "",
+          permanentAddresserror: "",
+          pinCodeerror: "",
+          stateerror: "",
+          whatsAppNumbererror: "",
+          aadhaarNumbererror:"",
+          mobileNumbererror: "",
+          emailerror:"",
+        });
+      }, 3000);
       console.log("eror");
     } else {
       console.log("sucss");
@@ -485,75 +535,58 @@ const Profile = () => {
   };
 
   const sendotp = async () => {
-    if (
-      (bankaccountprofile.nameAtBank === "" ||
-        bankaccountprofile.nameAtBank === null) &&
-      (bankaccountprofile.accountNumber === "" ||
-        bankaccountprofile.accountNumber === null) &&
-      (bankaccountprofile.confirmAccountNumber === "" ||
-        bankaccountprofile.confirmAccountNumber === null) &&
-      (bankaccountprofile.ifscCode === "" ||
-        bankaccountprofile.ifscCode === null) &&
-      (bankaccountprofile.bankName === "" ||
-        bankaccountprofile.bankName === null) &&
-      (bankaccountprofile.branchName === "" ||
-        bankaccountprofile.branchName === null) &&
-      (bankaccountprofile.bankCityerror === "" ||
-        bankaccountprofile.bankCity === null) &&
-      (bankaccountprofile.moblieNumbererror === "" ||
-        bankaccountprofile.moblieNumber === null)
-    ) {
-      setBankaccountProfile((stateconta) => ({
-        ...stateconta,
-        moblieNumbererror:
-          bankaccountprofile.moblieNumber !== ""
-            ? "Enter the Mobile Number"
-            : "",
-        accountNumbererror:
-          bankaccountprofile.accountNumber !== ""
-            ? "Enter the account Number"
-            : "",
-        confirmAccountNumbererror:
-          bankaccountprofile.confirmAccountNumber !== ""
-            ? "Enter the Confirm Account Number"
-            : "",
-        ifscCodeerror:
-          bankaccountprofile.ifscCode !== "" ? "Enter the IFSC Code" : "",
-        bankNameerror:
-          bankaccountprofile.bankName !== "" ? "Enter the bank Name " : "",
-        branchNameerror:
-          bankaccountprofile.branchName !== "" ? "Enter the branch Name  " : "",
-        bankCityerror:
-          bankaccountprofile.bankCity !== "" ? "Enter the bank City" : "",
+    setBankaccountProfile((bankaccountprofile) => ({
+        ...bankaccountprofile,
+        nameAtBankerror:bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
+        moblieNumbererror: bankaccountprofile.moblieNumber === "" ? "Enter the Mobile Number" : "",
+        accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the Account Number" : "",
+        confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber !== bankaccountprofile.accountNumber ? "Enter the Confirm Account Number" : "",
+        ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
+        bankNameerror: bankaccountprofile.bankName === "" ? "Enter the Bank Name" : "",
+        branchNameerror: bankaccountprofile.branchName === "" ? "Enter the Branch Name" : "",
+        bankCityerror: bankaccountprofile.bankCity === "" ? "Enter the Bank City" : "",
         // Add other error messages as needed
-      }));
-    } else {
-      const response = sendMoblieOtp(bankaccountprofile);
-      response.then((data) => {
-        if (data.request.status == 200) {
-          setdashboarddata({
-            ...dashboarddata,
-            sendotpbtn: true,
-            verifyotp: true,
-            submitbankdeatail: true,
-            sendotpbtnText: "ReSend OTP",
-            sendOtpsession: data.data.mobileOtpSession,
-            isValid: true,
-          });
+    }));
 
-          setBankaccountProfile({
-            ...bankaccountprofile,
-            mobileOtpSession: data.data.mobileOtpSession,
-          });
 
-          toastrSuccess("Otp Sent Sucessfully!", "top-right");
-        } else if (data.response.data.errorCode != "200") {
-          toastrWarning(data.response.data.errorMessage);
+    
+    if (
+        bankaccountprofile.moblieNumber !== ""  &&
+        bankaccountprofile.accountNumber !== ""  &&
+        bankaccountprofile.confirmAccountNumber !== "" &&
+        bankaccountprofile.ifscCode !== "" &&
+        bankaccountprofile.bankName !== ""  &&
+        bankaccountprofile.branchName !== ""  &&
+        bankaccountprofile.bankCity !== "" 
+    ) {
+    // Check if all error messages are empty
+
+    
+        const response = await sendMoblieOtp(bankaccountprofile);
+        if (response.request.status === 200) {
+            setdashboarddata({
+                ...dashboarddata,
+                sendotpbtn: true,
+                verifyotp: true,
+                sendotpbtnText: "ReSend OTP",
+                sendOtpsession: response.data.mobileOtpSession,
+                isValid: true,
+            });
+
+            setBankaccountProfile({
+                ...bankaccountprofile,
+                mobileOtpSession: response.data.mobileOtpSession,
+            });
+
+            toastrSuccess("Otp Sent Successfully!", "top-right");
+        } else {
+            toastrWarning(response.response.data.errorMessage);
         }
-      });
-      // verifybankAccountCashfree();
     }
-  };
+    
+    // verifybankAccountCashfree();
+};
+
 
   const openTheActiveTabs = (type) => {
     var i, j;
@@ -994,7 +1027,7 @@ const Profile = () => {
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.nameAtBank}
                                 />
-                                {bankaccountprofile.nameAtBank && (
+                                {bankaccountprofile.nameAtBankerror && (
                                   <div className="text-danger">
                                     {bankaccountprofile.nameAtBankerror}
                                   </div>
@@ -1178,15 +1211,8 @@ const Profile = () => {
                               )}
 
                               <div className="col-12 row">
-                                {/* {dashboarddata.verifyotp && ( */}
-                                <button
-                                  className="btn btn-warning col-md-2 mx-2"
-                                  type="submit"
-                                  onClick={verifybankAccountCashfree}
-                                >
-                                  {dashboarddata.verifyotpText}
-                                </button>
-                                {/* // )} */}
+                               
+
                                 {dashboarddata.sendotpbtn && (
                                   <button
                                     className="btn btn-secondary col-md-2 mx-2"
@@ -1196,6 +1222,19 @@ const Profile = () => {
                                     {dashboarddata.sendotpbtnText}
                                   </button>
                                 )}
+
+                                 {dashboarddata.verifyotp && (
+                                  <>
+                                <button
+                                  className="btn btn-warning col-md-2 mx-2"
+                                  type="submit"
+                                  onClick={verifybankAccountCashfree}
+                                >
+                                  {dashboarddata.verifyotpText}
+                                </button>
+                                </>
+                                  )} 
+                               
 
                                 {dashboarddata.submitbankdeatail && (
                                   <button
@@ -1423,11 +1462,12 @@ const Profile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="text"
+                                  type="tel"
                                   className="form-control"
                                   placeholder="Enter PAN Number"
                                   onChange={handlechange}
                                   value={userProfile.panNumber}
+                                  maxLength={10}
                                   name="panNumber"
                                 />
 
