@@ -551,7 +551,7 @@ const Profile = () => {
           toastrWarning(data.response.data.errorMessage);
         }
       });
-      verifybankAccountCashfree();
+      // verifybankAccountCashfree();
     }
   };
 

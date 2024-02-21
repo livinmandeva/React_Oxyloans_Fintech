@@ -212,6 +212,7 @@ const Register_active_proceed = () => {
                       type="date"
                       name="date"
                       onChange={handlechanges}
+                      max={new Date().toISOString().split("T")[0]}
                     />
                     {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
