@@ -384,7 +384,7 @@ const Profile = () => {
     }
 
     if (/\d/.test(nomineeDetails.nomineeName)) {
-      setNomineeDetails((prevDetails) => ({
+      setnomineeDetails((prevDetails) => ({
         ...prevDetails,
         nomineeNameerror: "Enter characters only!",
       }));
@@ -396,7 +396,7 @@ const Profile = () => {
     }
 
     if (/\d/.test(nomineeDetails.relation)) {
-      setNomineeDetails((prevDetails) => ({
+      setnomineeDetails((prevDetails) => ({
         ...prevDetails,
         relationerror: "Enter characters only!",
       }));
