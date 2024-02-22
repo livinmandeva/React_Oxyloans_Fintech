@@ -705,7 +705,6 @@ const Profile = () => {
  
       setUserProfile({
         ...userProfile,
-
         addresserror:
           userProfile.address === "" ? "Please enter the address" : "",
         cityer: userProfile.city === ("" || null)  ? "Please enter the city" : "",
