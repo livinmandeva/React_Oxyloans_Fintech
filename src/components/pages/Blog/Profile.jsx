@@ -31,6 +31,7 @@ import {
   getdataVoterId,
   getdataAadhar,
   handelnomeeclickapi,
+  handlepincodeapicall,
 } from "../../HttpRequest/afterlogin";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -271,7 +272,7 @@ const Profile = () => {
       nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the Nominee Email" : "",
       nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the Nominee Mobile Number" : "",
       accountNoerror: nomineeDetails.accountNo === "" ? "Enter the   Account No" : "",
-      emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the IFSC Code*" : "",
+      emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
       bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
       brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
       nomineecityerror: nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
@@ -700,6 +701,8 @@ const Profile = () => {
       }
     }
 
+  
+
     // Calculate today's date
     const today = new Date();
 
@@ -732,6 +735,23 @@ const Profile = () => {
       ...userProfile,
       [name]: value,
     });
+
+    if(userProfile.pinCode.length === 6){
+       const  response = handlepincodeapicall(userProfile.pinCode);
+       response.then((data) => {
+        if (data.request.status == 200) {
+         console.log(data.data)
+         if(data.data !== ""){
+          setUserProfile({
+            ...userProfile,
+            state:data.data.state,
+            city:data.data.city
+          })
+         }
+        }
+      }
+       )
+    }
   };
 
   const handlePaste = (event) => {

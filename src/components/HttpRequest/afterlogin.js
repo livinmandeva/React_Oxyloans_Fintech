@@ -1316,6 +1316,19 @@ export const referralEarningsInfo = async (pageNo = 1, pageSize = 10) => {
     postdatastring
   );
   return response;
+};  
+
+export const handlepincodeapicall = async (code) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${code}/pincode`,
+    "GET",
+    token,
+  );
+  return response;
 };
 
 export const getholdamountInfo = async () => {
