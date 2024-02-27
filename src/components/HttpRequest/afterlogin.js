@@ -105,6 +105,7 @@ export const handlePaymembershipapi = async (member) => {
     type: "Wallet",
     feeAmount: calculatedfee,
     lenderFeePayments: member,
+    paidFrom: "WEB",
   };
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -435,6 +436,7 @@ export const feeApicall = async (calculatedfee, choosenmembership) => {
     type: "Wallet",
     feeAmount: calculatedfee,
     lenderFeePayments: uppercaseMembership,
+    paidFrom: "WEB",
   };
 
   const response = await handleApiRequestAfterLoginService(
@@ -456,6 +458,7 @@ export const feeapicallforonedeal = async (calculatedfee, dealId) => {
     feeAmount: calculatedfee,
     dealId: dealId,
     lenderFeePayments: "PERDEAL",
+    paidFrom: "WEB",
   };
 
   const response = await handleApiRequestAfterLoginService(
@@ -777,7 +780,7 @@ export const handelnomeeclickapi = async (nomineeDetails) => {
     bankName: nomineeDetails.bank,
     branchName: nomineeDetails.branch,
     city: nomineeDetails.nomineecity,
-  };              
+  };
 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -1443,6 +1446,7 @@ export const confirmthependingamount = async (dealId, amount) => {
     feeAmount: amount,
     dealId,
     lenderFeePayments: "PERDEAL",
+    paidFrom: "WEB",
   });
 
   const response = await handleApiRequestAfterLoginService(

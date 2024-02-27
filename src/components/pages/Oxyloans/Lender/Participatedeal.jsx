@@ -146,14 +146,17 @@ const Participatedeal = () => {
       toastrError("You are participating in more than the maximum amount.");
       return false;
     } else if (
-      parseInt(deal.participatedAmount) < deal.apidata.minimumPaticipationAmount
+      parseInt(deal.participatedAmount) <
+        deal.apidata.minimumPaticipationAmount &&
+      deal.lenderParticipated == false
     ) {
       toastrError("You are participating in less than the minimum amount.");
       return false;
     } else {
       if (
         deal.apidata.remainingAmountInDeal >
-        deal.apidata.minimumPaticipationAmount
+          deal.apidata.minimumPaticipationAmount &&
+        deal.lenderParticipated == false
       ) {
         if (
           parseInt(deal.participatedAmount) <

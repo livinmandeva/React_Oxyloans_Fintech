@@ -130,11 +130,7 @@ export const WarningAlertwithdrow = (errorMessage, redirectTo) => {
     title: "Error",
     text: errorMessage,
     icon: "warning",
-
- 
-  }).then((result) => {
-  
-  });
+  }).then((result) => {});
 };
 
 export const validityDatemodal = (validityDate, groupName) => {
@@ -244,7 +240,6 @@ export const participatedapi = async (deal) => {
             (parseInt(deal.participatedAmount) * 1) / 100;
           var newLenderGstAndFeeCalculation =
             (newLenderFeePercentage * 118) / 100;
-
           response.then((data) => {
             if (data.request.status === 200) {
               Swal.fire({
@@ -288,15 +283,39 @@ export const participatedapi = async (deal) => {
                 }
               });
             } else {
-              Swal.fire({
-                title: "Error!",
-                text: `${data.response.data.errorMessage}`, // Displaying the error message
-                icon: "error",
-                showCancelButton: true,
-                cancelButtonText: "cancel",
-                showConfirmButton: true,
-                confirmButtonText: "ok",
-              });
+              console.log(data.response);
+
+              if (data.response.data.errorCode == "123") {
+                let paymentErrormessage =
+                  data.response.data.errorMessage.match(/\d+(\.\d+)?/g);
+
+                Swal.fire({
+                  title: "Fee Alert",
+                  text: `${data.response.data.errorMessage}`, // Displaying the error message
+                  icon: "info",
+                  showCancelButton: true,
+                  cancelButtonText: "cancel",
+                  showConfirmButton: true,
+                  confirmButtonText: "Wallet",
+                }).then(async (result) => {
+                  if (result.isConfirmed) {
+                    paypendingprocessingAmount(
+                      paymentErrormessage[1],
+                      parseInt(paymentErrormessage[0])
+                    );
+                  }
+                });
+              } else {
+                Swal.fire({
+                  title: "Error!",
+                  text: `${data.response.data.errorMessage}`, // Displaying the error message
+                  icon: "error",
+                  showCancelButton: true,
+                  cancelButtonText: "cancel",
+                  showConfirmButton: true,
+                  confirmButtonText: "ok",
+                });
+              }
             }
           });
         } else if (

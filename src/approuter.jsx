@@ -61,6 +61,7 @@ import TicketHistory from "./components/pages/Oxyloans/Lender/TicketHistory";
 import MywithdrawalHistory from "./components/pages/Oxyloans/Lender/MywithdrawalHistory";
 import WalletToWalletTransactionHistory from "./components/pages/Oxyloans/Lender/WalletToWalletTransactionHistory";
 import RegularEscrowDeals from "./components/pages/Oxyloans/Lender/RegularEscrowDeals";
+import PaymentGateway from "./components/pages/Oxyloans/Lender/PaymentGateway.jsx";
 // import BorrowerDashboard from "./components/pages/Dashboard/BorrowerDashboard";
 // import BorrowerProfile from "./components/pages/Oxyloans/Borrower/BorrowerProfile";
 // import BorrowerAgreedLoans from "./components/pages/Oxyloans/Borrower/AgreedLoan";
@@ -93,12 +94,13 @@ const AppRouter = () => {
           path="/register_active_proceed"
           element={<Register_active_proceed />}
         />
+        <Route path="/paymentgateway" element={<PaymentGateway />} />
+
         <Route path="/profile" element={<Profile />} />
         <Route path="/testdeals" element={<UserTestdeals />} />
         <Route path="/forgotpassword" element={<ForgotPassword3 />} />
         <Route path="/partnerRegister" element={<PartnerRegister />} />
         <Route path="/escrowDeals" element={<EscrowDeals />} />
-
         <Route path="/regularEscrowDeals" element={<RegularEscrowDeals />} />
         <Route
           path="/loadwalletThroughVirtualAccount"
