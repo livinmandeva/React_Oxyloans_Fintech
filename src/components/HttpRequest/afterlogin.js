@@ -762,7 +762,33 @@ export const profilesubmit = async (profile) => {
 
   return response;
 };
+export const handelnomeeclickapi = async (nomineeDetails) => {
+  const token = getToken();
+  const userId = getUserId();
 
+  var data = {
+    userId: userId,
+    relation: nomineeDetails.relation,
+    name: nomineeDetails.nomineeName,
+    mobileNumber: nomineeDetails,
+    email: nomineeDetails.nomineeEmail,
+    accountNumber: nomineeDetails.accountNo,
+    ifscCode: nomineeDetails.nomineeIfsc,
+    bankName: nomineeDetails.bank,
+    branchName: nomineeDetails.branch,
+    city: nomineeDetails.nomineecity,
+  };              
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `nominee`,
+    "POST",
+    token,
+    data
+  );
+
+  return response;
+};
 export const TicketHistoryapi = async () => {
   const token = getToken();
   const userId = getUserId();

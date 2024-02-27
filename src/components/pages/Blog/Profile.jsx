@@ -30,6 +30,7 @@ import {
   getdataDrivingLicence,
   getdataVoterId,
   getdataAadhar,
+  handelnomeeclickapi,
 } from "../../HttpRequest/afterlogin";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -87,6 +88,7 @@ const Profile = () => {
     aadhaarNumbererror: "",
     mobileNumbererror: "",
     emailerror: "",
+    
   });
 
   const [bankaccountprofile, setBankaccountProfile] = useState({
@@ -243,7 +245,7 @@ const Profile = () => {
       if (bankaccountprofile.mobileOtp === "") {
         console.log("data");
         setBankaccountProfile({
-          ...bankAccount,
+          ...bankaccountprofile,
           mobileOtperror: "Enter the OTP",
         });
       }
@@ -258,6 +260,55 @@ const Profile = () => {
     });
   };
 
+
+  const handleNomineeclick=async(event)=>{
+
+
+    setnomineeDetails({
+      ...nomineeDetails,
+      nomineeNameerror:  nomineeDetails.nomineeName === "" ? "Enter the nomineeName" : "",
+      relationerror: nomineeDetails.relation === "" ? "Enter the relation" : "",
+      nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the nomineeEmail" : "",
+      nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the nomineeMobile" : "",
+      accountNoerror: nomineeDetails.accountNo === "" ? "Enter the accountNo" : "",
+      emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
+      bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
+      brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
+      nomineecityerror: nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
+      
+    })
+
+
+
+
+    if(nomineeDetails.nomineeName  !== ""   && nomineeDetails.nomineeName  !== null  &&
+      nomineeDetails.relation  !== ""   && nomineeDetails.relation  !==  null && 
+      nomineeDetails.nomineeEmail  !== ""   && nomineeDetails.nomineeEmail  !==  null &&
+      nomineeDetails.nomineeMobile  !== ""   && nomineeDetails.nomineeMobile  !==  null &&
+      nomineeDetails.accountNo  !== ""   && nomineeDetails.accountNo  !==  null &&
+      nomineeDetails.nomineeEmail  !== ""   && nomineeDetails.nomineeEmail  !==  null &&
+      nomineeDetails.bank  !== ""   && nomineeDetails.bank  !==  null &&
+      nomineeDetails.branch  !== ""   && nomineeDetails.branch  !==  null &&
+      nomineeDetails.nomineecity  !== ""   && nomineeDetails.nomineecity  !==  null  ){
+
+
+        console.log("suceess")
+        event.preventDefault();
+        const response = savenomineeDeatailsApi(nomineeDetails);
+        response.then((data) => {
+          if (data.request.status == 200) {
+            Success("success", "Nominee Details Save Successfully");
+          } else if (data.response.data.errorCode != "200") {
+            WarningBackendApi("warning", data.response.data.errorMessage);
+          }
+        });
+
+    }else{
+
+      console.log("suceess1")
+    }
+    
+  }
   const submitNomineeDetails = (event) => {
     event.preventDefault();
     if (nomineeDetails.isdeatail == true) {
@@ -701,6 +752,9 @@ const Profile = () => {
     });
   };
 
+
+
+
   const handleprofileUpdate = () => {
  
       setUserProfile({
@@ -717,9 +771,14 @@ const Profile = () => {
           userProfile.lastName === "" ? "Please enter the last Name" : "",
         panNumbererror:
           userProfile.panNumber === "" ? "Please enter the panNumber" : "",
+          
         permanentAddresserror:
           userProfile.permanentAddress === ""
             ? "Please Enter The Residence Address"
+            : "",
+            cityer:
+          userProfile.city === ""
+            ? "Please Enter The city"
             : "",
         pinCodeerror:
           userProfile.pinCode === "" ? "Please Enter The Pincode" : "",
@@ -739,51 +798,55 @@ const Profile = () => {
             : "",
         emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
-      // setTimeout(() => {
-      //   setUserProfile({
-      //     ...userProfile,
+      setTimeout(() => {
+        setUserProfile({
+          ...userProfile,
 
-      //     addresserror: "",
-      //     cityer: "",
-      //     doberror: "",
-      //     fatherNameerror: "",
-      //     firstNamrror: "",
-      //     lastNamerror: "",
-      //     panNumbererror: "",
-      //     permanentAddresserror: "",
-      //     pinCodeerror: "",
-      //     stateerror: "",
-      //     whatsAppNumbererror: "",
-      //     aadhaarNumbererror: "",
-      //     mobileNumbererror: "",
-      //     emailerror: "",
-      //   });
-      // }, 3000);
-      console.log("eror");
+          addresserror: "",
+          cityer: "",
+          doberror: "",
+          fatherNameerror: "",
+          firstNamrror: "",
+          lastNamerror: "",
+          panNumbererror: "",
+          permanentAddresserror: "",
+          pinCodeerror: "",
+          stateerror: "",
+          whatsAppNumbererror: "",
+          aadhaarNumbererror: "",
+          mobileNumbererror: "",
+          emailerror: "",
+        });
+      }, 3000);
+
       if (
-        userProfile.email !== ("" || null) &&
-        userProfile.firstName !== ("" || null) &&
-        userProfile.lastName !== ("" || null) &&
-        userProfile.mobileNumber !== ("" || null)&&
-        userProfile.whatsAppNumber !== ("" || null) &&
-        userProfile.city !== ("" || null) &&
-        userProfile.pinCode !== ("" || null) &&
-        userProfile.fatherName !== ("" || null) &&
-        userProfile.city !== ("" || null) &&
-        userProfile.state !== ("" || null) &&
-        userProfile.aadharNumber !== ("" || null) &&
-        userProfile.city !== ("" || null)
-        // userProfile.locality === ""
+        userProfile.email !== null && userProfile.email !== "" &&
+        userProfile.firstName !== null && userProfile.firstName !== "" &&
+        userProfile.lastName !== null && userProfile.lastName !== "" &&
+        userProfile.mobileNumber !== null && userProfile.mobileNumber !== "" &&
+        userProfile.whatsAppNumber !== null && userProfile.whatsAppNumber !== "" &&
+        userProfile.pinCode !== null && userProfile.pinCode !== "" &&
+        userProfile.fatherName !== null && userProfile.fatherName !== "" &&
+        userProfile.state !== null && userProfile.state !== "" &&
+        userProfile.aadharNumber !== null && userProfile.aadharNumber !== "" &&
+        userProfile.panNumber !== null && userProfile.panNumber !== "" &&
+        userProfile.address !== null && userProfile.address !== "" &&
+        userProfile.city !== null && userProfile.city !== "" 
       ) {
-      console.log("sucss");
-      const response = profileupadate(userProfile);
-      response.then((data) => {
-        if (data.request.status == 200) {
-          Success("success", "Personal Details Save Successfully");
-        } else if (data.response.data.errorCode != "200") {
-          WarningBackendApi("warning", data.response.data.errorMessage);
-        }
-      });
+    
+     console.log("sucss");
+     const response = profileupadate(userProfile);
+     response.then((data) => {
+       if (data.request.status == 200) {
+         Success("success", "Personal Details Save Successfully");
+       } else if (data.response.data.errorCode != "200") {
+         WarningBackendApi("warning", data.response.data.errorMessage);
+       }
+     });
+     
+    
+    }else{
+      console.log("file the form");
     }
   };
 
@@ -791,7 +854,7 @@ const Profile = () => {
     setBankaccountProfile((bankaccountprofile) => ({
       ...bankaccountprofile,
       nameAtBankerror: bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
-      moblieNumbererror: bankaccountprofile.moblieNumber === "" || bankaccountprofile.moblieNumber != 10 ? "Enter 10 Digit Mobile Number " : "",
+      moblieNumbererror: bankaccountprofile.moblieNumber === "" || bankaccountprofile.moblieNumber.length != 10 ? "Enter 10 Digit Mobile Number " : "",
       accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the Account Number" : "",
       confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber !== bankaccountprofile.accountNumber ? "Enter the Confirm Account Number" : "",
       ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
@@ -804,16 +867,17 @@ const Profile = () => {
 
 
     if (
-      bankaccountprofile.moblieNumber !== "" &&
-      bankaccountprofile.accountNumber !== "" &&
-      bankaccountprofile.confirmAccountNumber !== "" &&
-      bankaccountprofile.ifscCode !== "" &&
-      bankaccountprofile.bankName !== "" &&
-      bankaccountprofile.branchName !== "" &&
-      bankaccountprofile.bankCity !== ""
+      // bankaccountprofile.moblieNumber !== "" &&
+      bankaccountprofile.moblieNumber !== null && bankaccountprofile.moblieNumber !== "" &&
+      bankaccountprofile.accountNumber !== null &&  bankaccountprofile.accountNumber !== "" &&
+      bankaccountprofile.confirmAccountNumber !== null && bankaccountprofile.confirmAccountNumber !== "" &&
+      bankaccountprofile.ifscCode !== null &&      bankaccountprofile.ifscCode !== "" &&
+      bankaccountprofile.bankName !== null && bankaccountprofile.bankName !== "" &&
+      bankaccountprofile.branchName !== null &&  bankaccountprofile.branchName !== "" &&
+      bankaccountprofile.bankCity !== null  && bankaccountprofile.bankCity !== ""
     ) {
       // Check if all error messages are empty
-
+   console.log("valid")
 
       const response = await sendMoblieOtp(bankaccountprofile);
       if (response.request.status === 200) {
@@ -835,6 +899,8 @@ const Profile = () => {
       } else {
         toastrWarning(response.response.data.errorMessage);
       }
+    }else{
+      console.log("fill the form");
     }
 
     // verifybankAccountCashfree();
@@ -1514,7 +1580,7 @@ const Profile = () => {
                         <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
-                            <form action="#" onSubmit={submitNomineeDetails}>
+                            <form action="#" >
                               <div className="row">
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1558,7 +1624,8 @@ const Profile = () => {
                                     value={nomineeDetails.nomineeEmail}
                                     name="nomineeEmail"
                                     onChange={handlerNominee}
-                                  />
+                                  />  
+                                    {nomineeDetails.nomineeEmaileeror && <div  className="error">{nomineeDetails.nomineeEmaileeror}</div>}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1661,7 +1728,9 @@ const Profile = () => {
                                   <button
                                     className="btn btn-success col-12 col-md-2"
                                     type="submit"
-                                    disabled={nomineeDetails.isbtndisable}
+                                    // disabled={nomineeDetails.isbtndisable}
+
+                                    onClick={()=>handleNomineeclick(event)}
                                   >
                                     Save
                                   </button>

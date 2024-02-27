@@ -10,6 +10,7 @@ import { submitWithdrawalRequestFromWallet } from "../../../HttpRequest/afterlog
 import {
   HandleWithFooter,
   WarningAlert,
+  WarningAlertwithdrow,
 } from "../../Base UI Elements/SweetAlert";
 
 const WithdrawalFromWallet = () => {
@@ -20,9 +21,14 @@ const WithdrawalFromWallet = () => {
     withdrawRating: "",
     withdraReason: "",
     setGivendate: "",
+    withdrawAmounterror: "",
+    withdrawFeedbackerror: "",
+    withdrawRatingerror: "",
+    withdraReasonerror: "",
+    setGivendateerror: "",
     isvalid: true,
   });
-
+  const minDate = new Date();
   const handleChange = (date) => {
     setwithdrawRequest({
       ...withdrawrequest,
@@ -47,16 +53,41 @@ const WithdrawalFromWallet = () => {
     });
   };
   const withdrawrequestHandler = async () => {
-    const response = submitWithdrawalRequestFromWallet(withdrawrequest);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        HandleWithFooter(
-          "Your withdrawal request has been initiated successfully. You will receive mobile and email alerts when the amount is credited to your registered bank accountNote: If you raise a request to withdraw funds from the wallet, please note that the funds will be credited to your bank account within 2 to 7 bank working days"
-        );
-      } else {
-        WarningAlert(data.response.data.errorMessage);
-      }
-    });
+
+
+    setwithdrawRequest((withdrawrequest) => ({
+      ...withdrawrequest,
+      withdrawAmounterror: withdrawrequest.withdrawAmount === "" ? "Enter the Withdrawal Amount" : "",
+      withdrawFeedbackerror: withdrawrequest.withdrawFeedback === "" ? "Enter the Feedback" : "",
+      withdrawRatingerror: withdrawrequest.withdrawRating === "" ? "Give the Rating" : "",
+      withdraReasonerror: withdrawrequest.withdraReason === "" ? "Enter the Reason" : "",
+      setGivendateerror: !withdrawrequest.setGivendate ? "Enter the Withdrawal Date" : "",
+    }));
+    
+
+    if(withdrawrequest.withdrawAmount !== ""  && withdrawrequest.withdrawAmount !== null &&
+    withdrawrequest.withdrawFeedback !== ""  && withdrawrequest.withdrawFeedback !== null &&
+    withdrawrequest.withdrawRating !== ""  && withdrawrequest.withdrawRating !== null &&
+    withdrawrequest.withdraReason !== ""  && withdrawrequest.withdraReason !== null &&
+    withdrawrequest.setGivendate !== ""  && withdrawrequest.setGivendate !== null ){
+
+
+      console.log("WithdrawalFromWallet")
+      const response = submitWithdrawalRequestFromWallet(withdrawrequest);
+      response.then((data) => {
+        console.log(data)
+        if (data.request.status == 200) {
+          HandleWithFooter(
+            "Your withdrawal request has been initiated successfully. You will receive mobile and email alerts when the amount is credited to your registered bank accountNote: If you raise a request to withdraw funds from the wallet, please note that the funds will be credited to your bank account within 2 to 7 bank working days"
+          );
+        } else {
+          WarningAlertwithdrow(data.response.data.errorMessage);
+        }
+      });
+    }  else{
+      console.log("filed  are required");
+    }
+ 
   };
 
   return (
@@ -122,6 +153,7 @@ const WithdrawalFromWallet = () => {
                             onChange={handleInputchange}
                             placeholder="Enter the Withdraw Amount"
                           />
+                           {withdrawrequest.withdrawAmounterror && <div  className="error">{withdrawrequest.withdrawAmounterror}</div>}
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -137,6 +169,7 @@ const WithdrawalFromWallet = () => {
                             onChange={handleInputchange}
                             placeholder="Enter the Feedback"
                           />
+                            {withdrawrequest.withdrawFeedbackerror && <div  className="error">{withdrawrequest.withdrawFeedbackerror}</div>}
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -152,6 +185,7 @@ const WithdrawalFromWallet = () => {
                             onChange={handleInputchange}
                             placeholder="Enter the Reson"
                           />
+                           {withdrawrequest.withdraReasonerror && <div  className="error">{withdrawrequest.withdraReasonerror}</div>}
                         </div>
                       </div>
 
@@ -162,14 +196,23 @@ const WithdrawalFromWallet = () => {
                             <span className="login-danger">*</span>
                           </label>
 
-                          <DatePicker
+                          {/* <DatePicker
                             selected={withdrawrequest.date}
                             onChange={handleChange}
                             dateFormat="dd/MM/yyyy"
                             maxDate={maxDate}
                             className="form-control datetimepicker"
-                          />
+                          /> */}
+                            <DatePicker
+      selected={withdrawrequest.date}
+      onChange={handleChange}
+      dateFormat="dd/MM/yyyy"
+      minDate={minDate}
+      className="form-control datetimepicker"
+    />
+                          {withdrawrequest.setGivendateerror && <div  className="error">{withdrawrequest.setGivendateerror}</div>}
                         </div>
+                        
                       </div>
 
                       <div className="col-12 col-sm-4">
@@ -183,7 +226,10 @@ const WithdrawalFromWallet = () => {
                               activeColor="#ffd700"
                             />
                           </span>
+                          {withdrawrequest.withdrawRatingerror && <div  className="error">{withdrawrequest.withdrawRatingerror}</div>}
                         </div>
+
+                       
                       </div>
                       <div className="col-12">
                         <div className="student-submit">

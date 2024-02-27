@@ -125,6 +125,17 @@ export const WarningAlert = (errorMessage, redirectTo) => {
     }
   });
 };
+export const WarningAlertwithdrow = (errorMessage, redirectTo) => {
+  Swal.fire({
+    title: "Error",
+    text: errorMessage,
+    icon: "warning",
+
+ 
+  }).then((result) => {
+  
+  });
+};
 
 export const validityDatemodal = (validityDate, groupName) => {
   Swal.fire({
