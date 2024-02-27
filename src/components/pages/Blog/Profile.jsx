@@ -263,15 +263,15 @@ const Profile = () => {
 
   const handleNomineeclick=async(event)=>{
 
-
+    event.preventDefault();
     setnomineeDetails({
       ...nomineeDetails,
       nomineeNameerror:  nomineeDetails.nomineeName === "" ? "Enter the nomineeName" : "",
-      relationerror: nomineeDetails.relation === "" ? "Enter the relation" : "",
-      nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the nomineeEmail" : "",
-      nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the nomineeMobile" : "",
-      accountNoerror: nomineeDetails.accountNo === "" ? "Enter the accountNo" : "",
-      emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
+      relationerror: nomineeDetails.relation === "" ? "Enter the Relation" : "",
+      nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the Nominee Email" : "",
+      nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the Nominee Mobile Number" : "",
+      accountNoerror: nomineeDetails.accountNo === "" ? "Enter the   Account No" : "",
+      emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the IFSC Code*" : "",
       bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
       brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
       nomineecityerror: nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
@@ -293,7 +293,7 @@ const Profile = () => {
 
 
         console.log("suceess")
-        event.preventDefault();
+
         const response = savenomineeDeatailsApi(nomineeDetails);
         response.then((data) => {
           if (data.request.status == 200) {
