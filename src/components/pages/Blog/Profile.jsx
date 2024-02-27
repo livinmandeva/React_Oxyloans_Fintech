@@ -691,7 +691,7 @@ const Profile = () => {
       const numericValue = value.replace(/\D/g, ""); // Remove non-numeric characters
       // Limit the input to 6 digits
       const updatedValue = numericValue.slice(0, 6);
-      if (updatedValue.length !== value.length) {
+      if (updatedValue.length !== 6) { // Check against the expected length of 6 digits
         setUserProfile({
           ...userProfile,
           pinCodeError: "PIN code must be exactly 6 digits long",
@@ -699,7 +699,11 @@ const Profile = () => {
         });
         return; // Exit the function early to prevent setting state again
       }
+    
+      // Only proceed with API call if pin code is exactly 6 digits long
+   
     }
+    
 
   
 
@@ -736,22 +740,7 @@ const Profile = () => {
       [name]: value,
     });
 
-    if(userProfile.pinCode.length === 6){
-       const  response = handlepincodeapicall(userProfile.pinCode);
-       response.then((data) => {
-        if (data.request.status == 200) {
-         console.log(data.data)
-         if(data.data !== ""){
-          setUserProfile({
-            ...userProfile,
-            state:data.data.state,
-            city:data.data.city
-          })
-         }
-        }
-      }
-       )
-    }
+    
   };
 
   const handlePaste = (event) => {
@@ -926,7 +915,24 @@ const Profile = () => {
     // verifybankAccountCashfree();
   };
 
+useEffect(()=>{
 
+  if(userProfile.pinCode.length == 6){
+    const response = handlepincodeapicall(userProfile.pinCode);
+    response.then((data) => {
+      if (data.request.status === 200 && data.data !== "") {
+        setUserProfile({
+          ...userProfile,
+          state: data.data.state,
+          city: data.data.city
+        });
+      }
+    }).catch(error => {
+      console.error("Error occurred during API call:", error);
+      // Handle error if necessary
+    });
+  }
+},[userProfile.pinCode])
   const openTheActiveTabs = (type) => {
     var i, j;
     let tablinks = document.getElementsByClassName("nav-link");
