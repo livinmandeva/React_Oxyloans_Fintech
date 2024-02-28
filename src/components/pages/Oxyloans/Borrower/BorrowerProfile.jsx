@@ -635,7 +635,7 @@ const BorrowerProfile = () => {
                           ? reduxStoreData.firstName
                           : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.firstName
-                          : "Livin"}
+                          : ""}
                       </h4>
                       <h6 className="text-muted">
                         BR

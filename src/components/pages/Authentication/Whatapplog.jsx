@@ -112,7 +112,7 @@ const Whatapplog = () => {
   };
   const sethandlewhatappclick = async () => {
     if (value == "") {
-      toastrError("Enter The Whatsapp Number");
+      toastrError("Enter The WhatsApp Number");
     } else {
       const response = sendwhatappotp(value);
       response.then((data) => {
@@ -159,7 +159,7 @@ const Whatapplog = () => {
                       <h2>Sign in</h2>
                       <div className="phoneinput form-group">
                         <label>
-                          Whatsapp number
+                          WhatsApp number
                           <span className="login-danger">*</span>
                         </label>
                         <PhoneInput

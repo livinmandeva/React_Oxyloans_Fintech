@@ -328,8 +328,10 @@ const MyRunningDelas = () => {
 
                               <div className="col-auto">
                                 <a
-                                  href={data.groupLink}
-                                  target="_blank"
+                                  href={
+                                    data.groupLink == "" ? "#" : data.groupLink
+                                  }
+                                  target="_self"
                                   className="badge bg-success"
                                 >
                                   <i className="fa fa-whatsapp"></i> Join Deal

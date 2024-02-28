@@ -127,7 +127,7 @@ const RegularEscrowDeals = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Running Deals </li>
+                    <li className="breadcrumb-item active">Escrow Deals </li>
                   </ul>
                 </div>
               </div>

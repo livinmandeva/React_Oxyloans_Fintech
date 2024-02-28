@@ -36,22 +36,24 @@ const Register_active_proceed = () => {
     address: "",
     date: "",
     isbtnvalid: false,
-    doberror:"",
-    panerror:"",
-    addresserror:"",
-
+    doberror: "",
+    panerror: "",
+    addresserror: "",
   });
-  useEffect(()=>{
- 
+  useEffect(() => {
     // Calculate today's date
     const today = new Date();
-    
+
     // Calculate the minimum date for someone to be 18 years old
-    const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-  
+    const minDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate()
+    );
+
     // Convert the input value to a Date object
     const inputDate = new Date(date1);
-  
+
     // Check if the input date is valid and the user is at least 18 years old
     if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
       setdata({
@@ -61,48 +63,47 @@ const Register_active_proceed = () => {
     } else {
       setdata({
         ...data,
-        doberror: "You must be at least 18 years old",
+        doberror: "Note : Age must be at least 18 years old",
       });
     }
-},[date1])
-  const handlesubmit = async () => {
+  }, [date1]);
 
-    if(data.date ==="" || data.pannumber === ""  || data.address === ""){
-    setdata({
-      ...data,
-      doberror: data.date === "Enter The DOB" ? "" :"",
-      panerror: data.pannumber === "Enter Pan Number" ? "" :"",
-      addresserror: data.address === "Enter The Address" ? "" :"",
-    })
-  }else{
-    if (data.date === "") {
-      //  setErrordate("Enter DOB");
-    }
-    if (data.pannumber.length >= 10) {
-      try {
-        const loginResponse = await api.verifypannumber(
-          data.pannumber,
-          data.address,
-          time,
-          id,
-          date1
-        );
-        registersuccess("Registration successfully completed");
-        setResponse(loginResponse);
-        history("/");
-        setError(null);
-      } catch (error) {
-        console.error("Error:", error.response.data.errorMessage);
-        setError(error.response.data.errorMessage);
-        toastrWarning(error.response.data.errorMessage);
-        // setError('An error occurred during login');
-      }
+  const handlesubmit = async () => {
+    if (data.date === "" || data.pannumber === "" || data.address === "") {
+      setdata({
+        ...data,
+        doberror: data.date === "" ? "Enter The DOB" : "",
+        panerror: data.pannumber === "" ? "Enter Pan Number" : "",
+        addresserror: data.address === "" ? "Enter The Address" : "",
+      });
     } else {
-      setError("please enter vaild pan-card number");
-      toastrWarning("please enter vaild pan-card number");
+      if (data.date === "") {
+        //  setErrordate("Enter DOB");
+      }
+      if (data.pannumber.length >= 10) {
+        try {
+          const loginResponse = await api.verifypannumber(
+            data.pannumber,
+            data.address,
+            time,
+            id,
+            date1
+          );
+          registersuccess("Registration successfully completed");
+          setResponse(loginResponse);
+          history("/");
+          setError(null);
+        } catch (error) {
+          console.error("Error:", error.response.data.errorMessage);
+          setError(error.response.data.errorMessage);
+          toastrWarning(error.response.data.errorMessage);
+          // setError('An error occurred during login');
+        }
+      } else {
+        setError("please enter vaild pan-card number");
+        toastrWarning("please enter vaild pan-card number");
+      }
     }
-  }
-    
   };
 
   const handlechanges = (event) => {
@@ -135,22 +136,19 @@ const Register_active_proceed = () => {
   //   }
   // }, [data.address, data.date, data.pannumber]);
   useEffect(() => {
-
-
-  //   const isvalid =
-  //   (data.address != "") & (data.pannumber != "") && data.date != "";
-  // if (isvalid) {
-  //   setdata({
-  //     ...data,
-  //     isbtnvalid: false,
-  //   });
-  // } else {
-  //   setdata({
-  //     ...data,
-  //     isbtnvalid: true,
-  //   });
-  // }
-  
+    //   const isvalid =
+    //   (data.address != "") & (data.pannumber != "") && data.date != "";
+    // if (isvalid) {
+    //   setdata({
+    //     ...data,
+    //     isbtnvalid: false,
+    //   });
+    // } else {
+    //   setdata({
+    //     ...data,
+    //     isbtnvalid: true,
+    //   });
+    // }
 
     var inputDate = data.date;
     var dateParts = inputDate.split("-");
@@ -201,7 +199,9 @@ const Register_active_proceed = () => {
                     <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span>
-                    {data.panerror   && <div className="error">{data.panerror}</div>}
+                    {data.panerror && (
+                      <div className="error">{data.panerror}</div>
+                    )}
                   </div>
                   <div className="form-group">
                     <label>
@@ -217,10 +217,11 @@ const Register_active_proceed = () => {
                     {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span> */}
-                     {data.doberror   && <div className="error">{data.doberror}</div>}
+                    {data.doberror && (
+                      <div className="error">{data.doberror}</div>
+                    )}
                   </div>
-                  
-                 
+
                   <div className="form-group">
                     <label>
                       Address <span className="login-danger">*</span>
@@ -234,7 +235,9 @@ const Register_active_proceed = () => {
                     <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span>
-                    {data.addresserror   && <div className="error">{data.addresserror}</div>}
+                    {data.addresserror && (
+                      <div className="error">{data.addresserror}</div>
+                    )}
                   </div>
 
                   <button

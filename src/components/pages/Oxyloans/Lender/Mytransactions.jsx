@@ -54,7 +54,7 @@ const Mytransactions = () => {
             TransactionDate: data.transactionDate,
             CreditedAmount: data.creditedAmount,
             DebitedAmount: data.debitedAmount,
-            Status: data.amountFrom,
+            Status: data.amountFrom == " " ? " No data found" : data.amountFrom,
           });
         })
       : "";

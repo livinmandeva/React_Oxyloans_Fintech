@@ -944,7 +944,8 @@ const Profile = () => {
 
     if (
       bankaccountprofile.moblieNumber !== null &&
-      bankaccountprofile.moblieNumber !== ""
+      bankaccountprofile.moblieNumber !== "" &&
+      bankaccountprofile.moblieNumber.length == 10
     ) {
       console.log("valid");
 
@@ -1176,7 +1177,7 @@ const Profile = () => {
                           ? reduxStoreData.firstName
                           : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.firstName
-                          : "Livin"}
+                          : ""}
                       </h4>
                       <h6 className="text-muted">
                         LR
@@ -1631,7 +1632,7 @@ const Profile = () => {
                                       onClick={verifybankAccountCashfree}
                                     >
                                       {/* {dashboarddata.verifyotpText} */}
-                                      verify IFSC
+                                      Verify IFSC
                                     </button>
                                   </>
                                 )}
@@ -1755,7 +1756,7 @@ const Profile = () => {
 
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                    Nominee Name Account No
+                                    Nominee Account No
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
@@ -1901,7 +1902,7 @@ const Profile = () => {
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Last Name
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="text"
