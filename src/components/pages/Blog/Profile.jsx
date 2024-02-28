@@ -382,7 +382,8 @@ const Profile = () => {
       bankaccountprofile.ifscCode !== null &&      bankaccountprofile.ifscCode !== "" &&
       bankaccountprofile.bankName !== null && bankaccountprofile.bankName !== "" &&
       bankaccountprofile.branchName !== null &&  bankaccountprofile.branchName !== "" &&
-     bankaccountprofile.confirmAccountNumbererror === "" &&
+     bankaccountprofile.confirmAccountNumbererror === "" &&  
+     bankaccountprofile.moblieNumber.length === 10  &&
       bankaccountprofile.bankCity !== null  && bankaccountprofile.bankCity !== "" 
 
     ) {
