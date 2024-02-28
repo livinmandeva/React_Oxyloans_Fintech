@@ -28,6 +28,9 @@ const WithdrawalFromWallet = () => {
     setGivendateerror: "",
     isvalid: true,
   });
+
+
+  const  [inputValue  , setInputValue ]=useState("")
   const minDate = new Date();
   const handleChange = (date) => {
     setwithdrawRequest({
@@ -45,6 +48,17 @@ const WithdrawalFromWallet = () => {
     });
   };
 
+
+  const handleKeyPress = (event) => {
+    console.log('Key pressed:', event.key); // Check if the function is triggered
+    const inputChar = event.key;
+    const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
+
+    // Check if the pressed key is an alphabetic character or backspace
+    if (!regex.test(inputChar) && inputChar !== 'Backspace') {
+      event.preventDefault();
+    }
+  };
   const handleInputchange = (event) => {
     const { name, value } = event.target;
     setwithdrawRequest({
@@ -52,6 +66,8 @@ const WithdrawalFromWallet = () => {
       [name]: value,
     });
   };
+
+  console.log(withdrawrequest.withdrawFeedback)
   const withdrawrequestHandler = async () => {
 
 
@@ -162,13 +178,15 @@ const WithdrawalFromWallet = () => {
                             Feedback
                             <span className="login-danger">*</span>
                           </label>
-                          <input
-                            type="text"
-                            name="withdrawFeedback"
-                            className="form-control"
-                            onChange={handleInputchange}
-                            placeholder="Enter the Feedback"
-                          />
+                          <input 
+      type="text" 
+      name="withdrawFeedback"
+      className="form-control"
+      onKeyPress={handleKeyPress}
+      onChange={handleInputchange}
+      placeholder="Enter the Feedback"
+      value={withdrawrequest.withdrawFeedback}
+    />
                             {withdrawrequest.withdrawFeedbackerror && <div  className="error">{withdrawrequest.withdrawFeedbackerror}</div>}
                         </div>
                       </div>
@@ -182,6 +200,7 @@ const WithdrawalFromWallet = () => {
                             type="text"
                             className="form-control"
                             name="withdraReason"
+                            onKeyPress={handleKeyPress}
                             onChange={handleInputchange}
                             placeholder="Enter the Reson"
                           />
@@ -204,12 +223,13 @@ const WithdrawalFromWallet = () => {
                             className="form-control datetimepicker"
                           /> */}
                             <DatePicker
-      selected={withdrawrequest.date}
-      onChange={handleChange}
-      dateFormat="dd/MM/yyyy"
-      minDate={minDate}
-      className="form-control datetimepicker"
-    />
+                               selected={new Date()} // Set selected to today's date
+                               onChange={handleChange}
+                               dateFormat="dd/MM/yyyy"
+                               placeholderText="Enter Withdrawal Date"
+                               minDate={minDate}
+                               className="form-control datetimepicker"
+                      />
                           {withdrawrequest.setGivendateerror && <div  className="error">{withdrawrequest.setGivendateerror}</div>}
                         </div>
                         

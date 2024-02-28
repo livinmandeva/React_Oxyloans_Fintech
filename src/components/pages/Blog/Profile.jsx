@@ -44,10 +44,10 @@ const Profile = () => {
   );
 
   const [dashboarddata, setdashboarddata] = useState({
-    sendotpbtn: true,
+    sendotpbtn: false,
     sendotpbtnText: "Send OTP",
     sendOtpsession: "",
-    verifyotp: false,
+    verifyotp: true,
     verifyotpText: "Verify IFSC",
     submitbankdeatail: false,
     profileData: null,
@@ -121,6 +121,7 @@ const Profile = () => {
     bankAccountError: "",
     nameAtBankerror: "",
     bankCityerror: "",
+    isbankprofilevaild:true
   });
 
   const [nomineeDetails, setnomineeDetails] = useState({
@@ -220,6 +221,17 @@ const Profile = () => {
     nomineeDetails.city,
   ]);
 
+
+  const handleKeyPress = (event) => {
+    console.log('Key pressed:', event.key); // Check if the function is triggered
+    const inputChar = event.key;
+    const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
+
+    // Check if the pressed key is an alphabetic character or backspace
+    if (!regex.test(inputChar) && inputChar !== 'Backspace') {
+      event.preventDefault();
+    }
+  };
   useEffect(() => {
     if (
       bankaccountprofile.accountNumber ===
@@ -228,12 +240,14 @@ const Profile = () => {
       setBankaccountProfile({
         ...bankaccountprofile,
         confirmAccountNumbererror: "",
+        isbankprofilevaild:false
       });
     } else {
 
       setBankaccountProfile({
         ...bankaccountprofile,
         confirmAccountNumbererror: "Account numbers do not match!",
+        isbankprofilevaild:true
       });
     }
   }, [
@@ -290,7 +304,27 @@ const Profile = () => {
       nomineeDetails.nomineeEmail  !== ""   && nomineeDetails.nomineeEmail  !==  null &&
       nomineeDetails.bank  !== ""   && nomineeDetails.bank  !==  null &&
       nomineeDetails.branch  !== ""   && nomineeDetails.branch  !==  null &&
-      nomineeDetails.nomineecity  !== ""   && nomineeDetails.nomineecity  !==  null  ){
+      nomineeDetails.nomineecity  !== ""   && nomineeDetails.nomineecity  !==  null  &&
+      
+      nomineeDetails.nomineeNameerror  === ""  &&
+      nomineeDetails.relationerror  === ""  &&
+      nomineeDetails.nomineeEmaileeror  === ""  &&
+      nomineeDetails.nomineeMobileerror  === ""  &&
+      nomineeDetails.accountNoerror  === ""  &&
+      nomineeDetails.emailerror  === ""  &&
+      nomineeDetails.bankerror  === ""  &&
+      nomineeDetails.nomineecityerror  === "" 
+      
+      // nomineeNameerror:  nomineeDetails.nomineeName === "" ? "Enter the nomineeName" : "",
+      // relationerror: nomineeDetails.relation === "" ? "Enter the Relation" : "",
+      // nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the Nominee Email" : "",
+      // nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the Nominee Mobile Number" : "",
+      // accountNoerror: nomineeDetails.accountNo === "" ? "Enter the   Account No" : "",
+      // emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
+      // bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
+      // brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
+      // nomineecityerror: nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
+      ){
 
 
         console.log("suceess")
@@ -327,6 +361,31 @@ const Profile = () => {
   };
 
   const verifybankAccountCashfree = () => {
+
+    setBankaccountProfile((bankaccountprofile) => ({
+      ...bankaccountprofile,
+      nameAtBankerror: bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
+      moblieNumbererror: bankaccountprofile.moblieNumber === "" || bankaccountprofile.moblieNumber.length != 10 ? "Enter 10 Digit Mobile Number " : "",
+      accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the Account Number" : "",
+      confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber !== bankaccountprofile.accountNumber ? "Enter the Confirm Account Number" : "",
+      ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
+      bankNameerror: bankaccountprofile.bankName === "" ? "Enter the Bank Name" : "",
+      branchNameerror: bankaccountprofile.branchName === "" ? "Enter the Branch Name" : "",
+      bankCityerror: bankaccountprofile.bankCity === "" ? "Enter the Bank City" : "",
+    }));
+
+
+    if (
+      bankaccountprofile.moblieNumber !== null && bankaccountprofile.moblieNumber !== "" &&
+      bankaccountprofile.accountNumber !== null &&  bankaccountprofile.accountNumber !== "" &&
+      bankaccountprofile.confirmAccountNumber !== null && bankaccountprofile.confirmAccountNumber !== "" &&
+      bankaccountprofile.ifscCode !== null &&      bankaccountprofile.ifscCode !== "" &&
+      bankaccountprofile.bankName !== null && bankaccountprofile.bankName !== "" &&
+      bankaccountprofile.branchName !== null &&  bankaccountprofile.branchName !== "" &&
+     bankaccountprofile.confirmAccountNumbererror === "" &&
+      bankaccountprofile.bankCity !== null  && bankaccountprofile.bankCity !== "" 
+
+    ) {
     const response = verifyBankAccountAndIfsc(bankaccountprofile);
     response.then((data) => {
       if (data.request.status == 200) {
@@ -334,7 +393,8 @@ const Profile = () => {
           setdashboarddata({
             ...dashboarddata,
             verifyotpText: "Verifed IFSC",
-            submitbankdeatail: true,
+            // submitbankdeatail: true,
+            sendotpbtn:true
           });
 
           setBankaccountProfile({
@@ -352,6 +412,9 @@ const Profile = () => {
         WarningBackendApi("warning", data.response.data.errorMessage);
       }
     });
+  }else{
+    console.log("enter all input")
+  }
   };
 
   useEffect(() => {
@@ -561,18 +624,7 @@ const Profile = () => {
               cityer: "",  
             }));
           }   
-          if (/\d/.test(userProfile.permanentAddress)) {
-            setUserProfile((prevDetails) => ({
-              ...prevDetails,
-              permanentAddresserror: "Enter characters only!",
-            }));
-          } else {
-      
-              setUserProfile((prevDetails) => ({
-                ...prevDetails,
-                permanentAddresserror: "",  
-              }));
-            }  
+
             if (/\d/.test(bankaccountprofile.bankCity)) {
               setUserProfile((prevDetails) => ({
                 ...prevDetails,
@@ -657,18 +709,7 @@ const Profile = () => {
                         bankCityerror: "",  
                       }));
                     }  
-          if (/\d/.test(userProfile.address)) {
-            setUserProfile((prevDetails) => ({
-              ...prevDetails,
-              addresserror: "Enter characters only!",
-            }));
-          } else {
-      
-              setUserProfile((prevDetails) => ({
-                ...prevDetails,
-                addresserror: "",  
-              }));
-            }   
+
     if (/\d/.test(nomineeDetails.branch)) {
       setnomineeDetails((prevDetails) => ({
         ...prevDetails,
@@ -680,7 +721,7 @@ const Profile = () => {
         brancherror: "",
       }));
     }
-}, [userProfile.state, userProfile.lastName ,  userProfile.aadharNumber  , userProfile.permanentAddress , userProfile.fatherName , userProfile.city, nomineeDetails.nomineeName, nomineeDetails.relation,bankaccountprofile.moblieNumber ,userProfile.whatsAppNumber,  userProfile.address , nomineeDetails.accountNo ,nomineeDetails.bank, nomineeDetails.nomineecity , userProfile.mobileNumber , userProfile.city , nomineeDetails.nomineeMobile ,nomineeDetails.branch ,  nomineeDetails.accountN ,  bankaccountprofile.bankCity]);
+}, [userProfile.state, userProfile.lastName ,  userProfile.aadharNumber   , userProfile.fatherName , userProfile.city, nomineeDetails.nomineeName, nomineeDetails.relation,bankaccountprofile.moblieNumber ,userProfile.whatsAppNumber,  nomineeDetails.accountNo ,nomineeDetails.bank, nomineeDetails.nomineecity , userProfile.mobileNumber , userProfile.city , nomineeDetails.nomineeMobile ,nomineeDetails.branch ,  nomineeDetails.accountN ,  bankaccountprofile.bankCity]);
 
 
   const handlechange = (event) => {
@@ -807,26 +848,7 @@ const Profile = () => {
             : "",
         emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
       });
-      setTimeout(() => {
-        setUserProfile({
-          ...userProfile,
 
-          addresserror: "",
-          cityer: "",
-          doberror: "",
-          fatherNameerror: "",
-          firstNamrror: "",
-          lastNamerror: "",
-          panNumbererror: "",
-          permanentAddresserror: "",
-          pinCodeerror: "",
-          stateerror: "",
-          whatsAppNumbererror: "",
-          aadhaarNumbererror: "",
-          mobileNumbererror: "",
-          emailerror: "",
-        });
-      }, 3000);
 
       if (
         userProfile.email !== null && userProfile.email !== "" &&
@@ -862,30 +884,14 @@ const Profile = () => {
   const sendotp = async () => {
     setBankaccountProfile((bankaccountprofile) => ({
       ...bankaccountprofile,
-      nameAtBankerror: bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
       moblieNumbererror: bankaccountprofile.moblieNumber === "" || bankaccountprofile.moblieNumber.length != 10 ? "Enter 10 Digit Mobile Number " : "",
-      accountNumbererror: bankaccountprofile.accountNumber === "" ? "Enter the Account Number" : "",
-      confirmAccountNumbererror: bankaccountprofile.confirmAccountNumber === "" || bankaccountprofile.confirmAccountNumber !== bankaccountprofile.accountNumber ? "Enter the Confirm Account Number" : "",
-      ifscCodeerror: bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
-      bankNameerror: bankaccountprofile.bankName === "" ? "Enter the Bank Name" : "",
-      branchNameerror: bankaccountprofile.branchName === "" ? "Enter the Branch Name" : "",
-      bankCityerror: bankaccountprofile.bankCity === "" ? "Enter the Bank City" : "",
-      // Add other error messages as needed
     }));
 
 
 
     if (
-      // bankaccountprofile.moblieNumber !== "" &&
-      bankaccountprofile.moblieNumber !== null && bankaccountprofile.moblieNumber !== "" &&
-      bankaccountprofile.accountNumber !== null &&  bankaccountprofile.accountNumber !== "" &&
-      bankaccountprofile.confirmAccountNumber !== null && bankaccountprofile.confirmAccountNumber !== "" &&
-      bankaccountprofile.ifscCode !== null &&      bankaccountprofile.ifscCode !== "" &&
-      bankaccountprofile.bankName !== null && bankaccountprofile.bankName !== "" &&
-      bankaccountprofile.branchName !== null &&  bankaccountprofile.branchName !== "" &&
-      bankaccountprofile.bankCity !== null  && bankaccountprofile.bankCity !== ""
-    ) {
-      // Check if all error messages are empty
+      bankaccountprofile.moblieNumber !== null && bankaccountprofile.moblieNumber !== "" ) {
+
    console.log("valid")
 
       const response = await sendMoblieOtp(bankaccountprofile);
@@ -897,6 +903,7 @@ const Profile = () => {
           sendotpbtnText: "ReSend OTP",
           sendOtpsession: response.data.mobileOtpSession,
           isValid: true,
+          submitbankdeatail:true
         });
 
         setBankaccountProfile({
@@ -1368,6 +1375,7 @@ useEffect(()=>{
                                   className="form-control"
                                   placeholder=" Enter your Name"
                                   name="nameAtBank"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.nameAtBank}
                                 />
@@ -1466,6 +1474,7 @@ useEffect(()=>{
                                   className="form-control"
                                   name="bankName"
                                   onChange={handlebankchange}
+                                  onKeyPress={handleKeyPress}
                                   placeholder=" Enter your Bank Name"
                                   value={bankaccountprofile.bankName}
                                 />
@@ -1486,6 +1495,7 @@ useEffect(()=>{
                                   className="form-control"
                                   name="branchName"
                                   placeholder=" Enter your Branch"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.branchName}
                                 />
@@ -1507,6 +1517,7 @@ useEffect(()=>{
                                   name="bankCity"
                                   placeholder=" Enter your Bank City"
                                   onChange={handlebankchange}
+                                  onKeyPress={handleKeyPress}
                                   value={bankaccountprofile.bankCity}
                                 />
                                 {bankaccountprofile.bankCityerror && (
@@ -1557,7 +1568,18 @@ useEffect(()=>{
 
                               <div className="col-12 row">
 
-
+                              {dashboarddata.verifyotp && (
+                                  <>
+                                    <button
+                                      className="btn btn-warning col-md-2 mx-2"    style={{color:'white'}}
+                                      type="submit"
+                                      onClick={verifybankAccountCashfree}
+                                    >
+                                      {/* {dashboarddata.verifyotpText} */}
+                                      verify  IFSC
+                                    </button>
+                                  </>
+                                )}
                                 {dashboarddata.sendotpbtn && (
                                   <button
                                     className="btn btn-secondary col-md-2 mx-2"
@@ -1568,17 +1590,7 @@ useEffect(()=>{
                                   </button>
                                 )}
 
-                                {dashboarddata.verifyotp && (
-                                  <>
-                                    <button
-                                      className="btn btn-warning col-md-2 mx-2"
-                                      type="submit"
-                                      onClick={verifybankAccountCashfree}
-                                    >
-                                      {dashboarddata.verifyotpText}
-                                    </button>
-                                  </>
-                                )}
+                              
 
 
                                 {dashboarddata.submitbankdeatail && (
@@ -1617,6 +1629,7 @@ useEffect(()=>{
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your Nominee Name"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.nomineeName}
                                     name="nomineeName"
                                     onChange={handlerNominee}
@@ -1632,6 +1645,7 @@ useEffect(()=>{
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your  Relation"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.relation}
                                     name="relation"
                                     onChange={handlerNominee}
@@ -1711,6 +1725,7 @@ useEffect(()=>{
                                     type="text"
                                     className="form-control"
                                     placeholder=" Nominee Bank Name"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.bank}
                                     name="bank"
                                     onChange={handlerNominee}
@@ -1728,6 +1743,7 @@ useEffect(()=>{
                                     type="text"
                                     className="form-control"
                                     placeholder=" Nominee City Name"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.nomineecity}
                                     name="nomineecity"
                                     onChange={handlerNominee}
@@ -1743,6 +1759,7 @@ useEffect(()=>{
                                     type="text"
                                     className="form-control"
                                     placeholder="Nominee Branch"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.branch}
                                     name="branch"
                                     onChange={handlerNominee}
@@ -1785,7 +1802,8 @@ useEffect(()=>{
                                 <input
                                   type="text"
                                   className="form-control"
-                                  placeholder="Enter First Name"
+                                  placeholder="Enter First Name"  
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlechange}
                                   value={userProfile.firstName}
                                   name="firstName"
@@ -1805,6 +1823,7 @@ useEffect(()=>{
                                   type="text"
                                   className="form-control"
                                   placeholder="Enter Last Name"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlechange}
                                   value={userProfile.lastName}
                                   name="lastName"
@@ -1892,8 +1911,8 @@ useEffect(()=>{
                                 </label>
                                 <input
                                   type="text"
-                                  className="form-control"
-                                  placeholder="Enter Father Name"
+                                  className="form-control"      onKeyPress={handleKeyPress}
+                                  placeholder="Enter Father Name"  
                                   onChange={handlechange}
                                   value={userProfile.fatherName}
                                   name="fatherName"
@@ -2030,7 +2049,8 @@ useEffect(()=>{
                                 <input
                                   type="text"
                                   className="form-control"
-                                  placeholder="Enter City "
+                                  placeholder="Enter City " 
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlechange}
                                   value={userProfile.city}
                                   name="city"
@@ -2051,6 +2071,7 @@ useEffect(()=>{
                                   className="form-control"
                                   placeholder="Enter State"
                                   onChange={handlechange}
+                                  onKeyPress={handleKeyPress}
                                   value={userProfile.state}
                                   name="state"
                                 />

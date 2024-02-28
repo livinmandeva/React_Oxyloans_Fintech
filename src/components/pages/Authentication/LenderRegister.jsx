@@ -47,6 +47,18 @@ export default function LenderRegister() {
     });
   };
 
+
+  
+  const handleKeyPress = (event) => {
+    console.log('Key pressed:', event.key); // Check if the function is triggered
+    const inputChar = event.key;
+    const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
+
+    // Check if the pressed key is an alphabetic character or backspace
+    if (!regex.test(inputChar) && inputChar !== 'Backspace') {
+      event.preventDefault();
+    }
+  };
   const handleLenderRegister = async () => {
     setRegistrationField((prevState) => ({
       ...prevState,
@@ -244,7 +256,9 @@ export default function LenderRegister() {
                             className="form-control"
                             type="text"
                             name="pancard"
+                            onKeyPress={handleKeyPress}
                             maxLength={30}
+                         
                             onChange={handlechange}
                           />
                           <span className="profile-views">
@@ -262,7 +276,7 @@ export default function LenderRegister() {
                           </label>
                           <input
                             className="form-control"
-                            type="text"
+                            type="email"
                             name="email"
                             maxLength={35}
                             onChange={handlechange}
