@@ -47,15 +47,13 @@ export default function LenderRegister() {
     });
   };
 
-
-  
   const handleKeyPress = (event) => {
-    console.log('Key pressed:', event.key); // Check if the function is triggered
+    console.log("Key pressed:", event.key); // Check if the function is triggered
     const inputChar = event.key;
     const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
 
     // Check if the pressed key is an alphabetic character or backspace
-    if (!regex.test(inputChar) && inputChar !== 'Backspace') {
+    if (!regex.test(inputChar) && inputChar !== "Backspace") {
       event.preventDefault();
     }
   };
@@ -67,7 +65,7 @@ export default function LenderRegister() {
       pancarderror:
         registrationField.pancard === "" ? "Please enter the Name" : "",
       moblieerror:
-        registrationField.moblie === "" ? "Please enter the moblie" : "",
+        registrationField.moblie === "" ? "Please enter the mobile" : "",
       passworderror:
         registrationField.password === "" ? "Please enter the password" : "",
     }));
@@ -151,23 +149,25 @@ export default function LenderRegister() {
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-
-    if(/\d/.test(registrationField.pancard)) { // Use a regular expression to check if the value contains a number
-      setRegistrationField({
-        ...registrationField,
-        pancarderror: "Enter characters only!", // Corrected typo
-      });
-    } else {
-      // Clear the error if the input is valid
-      setRegistrationField({
-        ...registrationField,
-        pancarderror: "",
-      });
-    }
-  },
-  // .
-  [registrationField.pancard])
+  useEffect(
+    () => {
+      if (/\d/.test(registrationField.pancard)) {
+        // Use a regular expression to check if the value contains a number
+        setRegistrationField({
+          ...registrationField,
+          pancarderror: "Enter characters only!", // Corrected typo
+        });
+      } else {
+        // Clear the error if the input is valid
+        setRegistrationField({
+          ...registrationField,
+          pancarderror: "",
+        });
+      }
+    },
+    // .
+    [registrationField.pancard]
+  );
   useEffect(() => {
     setTimeout(() => {
       setError("");
@@ -258,7 +258,6 @@ export default function LenderRegister() {
                             name="pancard"
                             onKeyPress={handleKeyPress}
                             maxLength={30}
-                         
                             onChange={handlechange}
                           />
                           <span className="profile-views">
@@ -342,7 +341,7 @@ export default function LenderRegister() {
                         </div>
                         <div className="form-group">
                           <label>
-                            Enter Moblie Number
+                            Enter mobile Number
                             <span className="login-danger">*</span>
                           </label>
                           {/* <input className="form-control pass-confirm" type="text" /> */}

@@ -62,6 +62,9 @@ import MywithdrawalHistory from "./components/pages/Oxyloans/Lender/Mywithdrawal
 import WalletToWalletTransactionHistory from "./components/pages/Oxyloans/Lender/WalletToWalletTransactionHistory";
 import RegularEscrowDeals from "./components/pages/Oxyloans/Lender/RegularEscrowDeals";
 import PaymentGateway from "./components/pages/Oxyloans/Lender/PaymentGateway.jsx";
+
+// ********************BORROWER MODULE    ROUTE ************************** //
+
 // import BorrowerDashboard from "./components/pages/Dashboard/BorrowerDashboard";
 // import BorrowerProfile from "./components/pages/Oxyloans/Borrower/BorrowerProfile";
 // import BorrowerAgreedLoans from "./components/pages/Oxyloans/Borrower/AgreedLoan";
@@ -79,6 +82,8 @@ import PaymentGateway from "./components/pages/Oxyloans/Lender/PaymentGateway.js
 // import BorrowerWriteTous from "./components/pages/Oxyloans/Borrower/BorrowerWriteToUs";
 // import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/BorrowerEmaicalculator";
 // import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
+
+// ********************BORROWER MODULE    ROUTES END ************************** //
 
 const AppRouter = () => {
   return (
@@ -180,6 +185,9 @@ const AppRouter = () => {
           path="/walletToWalletTransactionHistory"
           element={<WalletToWalletTransactionHistory />}
         />
+
+        {/* ******************** BORROWER MODULE    ROUTES START **************************  */}
+
         {/* <Route path="/borrowerDashboard" element={<BorrowerDashboard />} />
         <Route path="/borrowerProfile" element={<BorrowerProfile />} />
         <Route path="/borrowerAgreedLoans" element={<BorrowerAgreedLoans />} />
@@ -216,6 +224,8 @@ const AppRouter = () => {
           element={<BorrowerTicketHistory />}
         /> */}
       </Routes>
+
+      {/* ******************** BORROWER MODULE ROUTES END **************************  */}
     </BrowserRouter>
   );
 };

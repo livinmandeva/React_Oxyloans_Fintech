@@ -4,11 +4,10 @@ import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
 import { onShowSizeChange } from "../../../Pagination";
-import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
-import { cancelwithdrawalRequestInformation } from "../../Base UI Elements/SweetAlert";
+import { myagreedloanapplication } from "../../../HttpRequest/afterlogin";
 
 const AgreedLoan = () => {
-  const [mywithdrawalHistory, setmywithdrawalHistory] = useState({
+  const [myagreedloanInfo, setmyAgrredHistory] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
@@ -17,27 +16,23 @@ const AgreedLoan = () => {
     defaultPageSize: 10,
   });
   const mywithdrawalPagination = (Pagination) => {
-    setmywithdrawalHistory({
-      ...mywithdrawalHistory,
+    setmyAgrredHistory({
+      ...myagreedloanInfo,
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
     });
   };
 
-  const confirmcancelrequest = (fromrequest, id) => {
-    cancelwithdrawalRequestInformation(fromrequest, id);
-  };
-
   useEffect(() => {
-    const response = getMyWithdrawalHistory(
-      mywithdrawalHistory.pageNo,
-      mywithdrawalHistory.pageSize
+    const response = myagreedloanapplication(
+      myagreedloanInfo.pageNo,
+      myagreedloanInfo.pageSize
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        setmywithdrawalHistory({
-          ...mywithdrawalHistory,
+        setmyAgrredHistory({
+          ...myagreedloanInfo,
           apiData: data.data,
           loading: false,
           hasdata: data.data.results.length == 0 ? false : true,
@@ -45,12 +40,12 @@ const AgreedLoan = () => {
       }
     });
     return () => {};
-  }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
+  }, [myagreedloanInfo.pageNo, myagreedloanInfo.pageSize]);
 
   const datasource = [];
   {
-    mywithdrawalHistory.apiData != ""
-      ? mywithdrawalHistory.apiData.results.map((data) => {
+    myagreedloanInfo.apiData != ""
+      ? myagreedloanInfo.apiData.results.map((data) => {
           datasource.push({
             key: Math.random(),
             raisedon: data.createdOn,
@@ -58,26 +53,6 @@ const AgreedLoan = () => {
             reason: data.withdrawalReason,
             requestedFrom: data.requestFrom,
             status: data.status,
-            action: (
-              <button
-                type="submit"
-                className="btn  w-70 btn-primary btn-xs"
-                disabled={
-                  data.status == "APPROVED" ||
-                  data.status == "REJECTED" ||
-                  data.status == "ADMINREJECTED" ||
-                  data.status == "USERREJECTED" ||
-                  data.status == "AUTOREJECTED"
-                    ? true
-                    : false
-                }
-                onClick={() => {
-                  confirmcancelrequest(data.requestFrom, data.id);
-                }}
-              >
-                Cancel Request
-              </button>
-            ),
           });
         })
       : "";
@@ -85,33 +60,24 @@ const AgreedLoan = () => {
 
   const columns = [
     {
-      title: "Raised on",
-      dataIndex: "raisedon",
+      title: "Lender Info",
+      dataIndex: "LenderInfo",
       sorter: (a, b) => new Date(a.raisedon) - new Date(b.raisedon),
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
+      title: "Loan Amount Info",
+      dataIndex: "LoanAmountInfo",
       sorter: (a, b) => a.amount - b.amount,
     },
     {
-      title: "Reason",
-      dataIndex: "reason",
+      title: "status",
+      dataIndex: "status",
       sorter: (a, b) => a.reason.length - b.reason.length,
     },
     {
-      title: "Requested From",
-      dataIndex: "requestedFrom",
+      title: "Download Aggrement",
+      dataIndex: "downloadAggrement",
       sorter: (a, b) => a.requestedFrom.length - b.requestedFrom.length,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
     },
   ];
 
@@ -149,8 +115,8 @@ const AgreedLoan = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: mywithdrawalHistory.apiData.totalCount,
-                          defaultPageSize: mywithdrawalHistory.defaultPageSize,
+                          total: myagreedloanInfo.apiData.totalCount,
+                          defaultPageSize: myagreedloanInfo.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
@@ -158,11 +124,9 @@ const AgreedLoan = () => {
                           onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={
-                          mywithdrawalHistory.hasdata ? datasource : []
-                        }
+                        dataSource={myagreedloanInfo.hasdata ? datasource : []}
                         expandable={true}
-                        loading={mywithdrawalHistory.loading}
+                        loading={myagreedloanInfo.loading}
                         onChange={mywithdrawalPagination}
                       />
                     </div>

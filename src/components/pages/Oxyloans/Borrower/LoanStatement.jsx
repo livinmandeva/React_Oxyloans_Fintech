@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import BorrowerHeader from "../../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 import { Link } from "react-router-dom";
-import { Table } from "antd";
+import { Table, Space, Tag, Button, Flex } from "antd";
 import { onShowSizeChange } from "../../../Pagination";
-import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
-import { cancelwithdrawalRequestInformation } from "../../Base UI Elements/SweetAlert";
+import { getBorrowerApplication } from "../../../HttpRequest/afterlogin";
 
 const LoanStatement = () => {
-  const [mywithdrawalHistory, setmywithdrawalHistory] = useState({
+  const [myapplicationStatus, setmyapplication] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
@@ -17,27 +16,23 @@ const LoanStatement = () => {
     defaultPageSize: 10,
   });
   const mywithdrawalPagination = (Pagination) => {
-    setmywithdrawalHistory({
-      ...mywithdrawalHistory,
+    setmyapplication({
+      ...myapplicationStatus,
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
     });
   };
 
-  const confirmcancelrequest = (fromrequest, id) => {
-    cancelwithdrawalRequestInformation(fromrequest, id);
-  };
-
   useEffect(() => {
-    const response = getMyWithdrawalHistory(
-      mywithdrawalHistory.pageNo,
-      mywithdrawalHistory.pageSize
+    const response = getBorrowerApplication(
+      myapplicationStatus.pageNo,
+      myapplicationStatus.pageSize
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        setmywithdrawalHistory({
-          ...mywithdrawalHistory,
+        setmyapplication({
+          ...myapplicationStatus,
           apiData: data.data,
           loading: false,
           hasdata: data.data.results.length == 0 ? false : true,
@@ -45,38 +40,36 @@ const LoanStatement = () => {
       }
     });
     return () => {};
-  }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
+  }, [myapplicationStatus.pageNo, myapplicationStatus.pageSize]);
 
   const datasource = [];
   {
-    mywithdrawalHistory.apiData != ""
-      ? mywithdrawalHistory.apiData.results.map((data) => {
+    myapplicationStatus.apiData != ""
+      ? myapplicationStatus.apiData.results.map((data) => {
           datasource.push({
             key: Math.random(),
-            raisedon: data.createdOn,
-            amount: data.amount,
-            reason: data.withdrawalReason,
-            requestedFrom: data.requestFrom,
-            status: data.status,
+            LoanInfo: [
+              data.loanRequestAmount,
+              data.rateOfInterest + " % PM",
+              data.duration + data.durationType,
+            ],
+            Repayment: [
+              data.repaymentMethod,
+              data.loanRequestedDate,
+              data.loanPurpose,
+              data.loanStatus,
+            ],
             action: (
-              <button
-                type="submit"
-                className="btn  w-70 btn-primary btn-xs"
-                disabled={
-                  data.status == "APPROVED" ||
-                  data.status == "REJECTED" ||
-                  data.status == "ADMINREJECTED" ||
-                  data.status == "USERREJECTED" ||
-                  data.status == "AUTOREJECTED"
-                    ? true
-                    : false
-                }
-                onClick={() => {
-                  confirmcancelrequest(data.requestFrom, data.id);
-                }}
-              >
-                Cancel Request
-              </button>
+              <>
+                <Button type="primary" ghost>
+                  Edit
+                </Button>
+
+                <Button type="primary" danger ghost>
+                  Hold
+                </Button>
+                <Button type="dashed">Delete</Button>
+              </>
             ),
           });
         })
@@ -85,33 +78,81 @@ const LoanStatement = () => {
 
   const columns = [
     {
-      title: "Raised on",
-      dataIndex: "raisedon",
-      sorter: (a, b) => new Date(a.raisedon) - new Date(b.raisedon),
+      title: "Loan Info",
+      dataIndex: "LoanInfo",
+      key: "LoanInfo",
+      render: (_, { LoanInfo }) => (
+        <>
+          {LoanInfo.map((tag, index) => {
+            let color = tag.length > 5 ? "geekblue" : "green";
+            let label = "";
+            if (tag === "loser") {
+              color = "volcano";
+            }
+
+            if (index == 0) {
+              label = "Amount";
+            } else if (index == 1) {
+              label = "ROI";
+            } else if (index == 2) {
+              label = "Duration";
+            }
+            return (
+              <>
+                <div className="m-2">
+                  <Tag color={color} key={tag}>
+                    {`${label} : `} {tag}
+                  </Tag>
+                </div>
+              </>
+            );
+          })}
+        </>
+      ),
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      sorter: (a, b) => a.amount - b.amount,
+      title: "Repayment Info",
+      dataIndex: "Repayment",
+      key: "Repayment",
+      render: (_, { Repayment }) => (
+        <>
+          {Repayment.map((tag, index) => {
+            let label = "";
+            if (index == 0) {
+              label = "Repayment";
+            } else if (index == 1) {
+              label = "Requested Date";
+            } else if (index == 2) {
+              label = "Loan Purpose";
+            } else if (index == 3) {
+              label = "status";
+            }
+            return (
+              <>
+                <div className="m-2">
+                  <Tag color={index % 2 == 0 ? "geekblue" : "green"} key={tag}>
+                    {`${label} : `} {tag}
+                  </Tag>
+                </div>
+              </>
+            );
+          })}
+        </>
+      ),
     },
-    {
-      title: "Reason",
-      dataIndex: "reason",
-      sorter: (a, b) => a.reason.length - b.reason.length,
-    },
-    {
-      title: "Requested From",
-      dataIndex: "requestedFrom",
-      sorter: (a, b) => a.requestedFrom.length - b.requestedFrom.length,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
+
     {
       title: "Action",
       dataIndex: "action",
+      action: (
+        <button
+          type="submit"
+          className="btn  w-70 btn-primary btn-xs"
+          onClick={() => {}}
+        >
+          Edit
+        </button>
+      ),
     },
   ];
 
@@ -127,7 +168,7 @@ const LoanStatement = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Running Loans</h3>
+                  <h3 className="page-title">Running Loans mandeva</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/borrowerDashboard">Dashboard</Link>
@@ -149,8 +190,8 @@ const LoanStatement = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: mywithdrawalHistory.apiData.totalCount,
-                          defaultPageSize: mywithdrawalHistory.defaultPageSize,
+                          total: myapplicationStatus.apiData.totalCount,
+                          defaultPageSize: myapplicationStatus.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
@@ -159,10 +200,10 @@ const LoanStatement = () => {
                         }}
                         columns={columns}
                         dataSource={
-                          mywithdrawalHistory.hasdata ? datasource : []
+                          myapplicationStatus.hasdata ? datasource : []
                         }
                         expandable={true}
-                        loading={mywithdrawalHistory.loading}
+                        loading={myapplicationStatus.loading}
                         onChange={mywithdrawalPagination}
                       />
                     </div>

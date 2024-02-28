@@ -4,11 +4,10 @@ import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
 import { onShowSizeChange } from "../../../Pagination";
-import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
-import { cancelwithdrawalRequestInformation } from "../../Base UI Elements/SweetAlert";
+import { getBorrowerRunningloans } from "../../../HttpRequest/afterlogin";
 
 const MyLoanApplication = () => {
-  const [mywithdrawalHistory, setmywithdrawalHistory] = useState({
+  const [myLoanHistory, setMyLoanApplication] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
@@ -17,27 +16,23 @@ const MyLoanApplication = () => {
     defaultPageSize: 10,
   });
   const mywithdrawalPagination = (Pagination) => {
-    setmywithdrawalHistory({
-      ...mywithdrawalHistory,
+    setMyLoanApplication({
+      ...myLoanHistory,
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
     });
   };
 
-  const confirmcancelrequest = (fromrequest, id) => {
-    cancelwithdrawalRequestInformation(fromrequest, id);
-  };
-
   useEffect(() => {
-    const response = getMyWithdrawalHistory(
-      mywithdrawalHistory.pageNo,
-      mywithdrawalHistory.pageSize
+    const response = getBorrowerRunningloans(
+      myLoanHistory.pageNo,
+      myLoanHistory.pageSize
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        setmywithdrawalHistory({
-          ...mywithdrawalHistory,
+        setMyLoanApplication({
+          ...myLoanHistory,
           apiData: data.data,
           loading: false,
           hasdata: data.data.results.length == 0 ? false : true,
@@ -45,39 +40,18 @@ const MyLoanApplication = () => {
       }
     });
     return () => {};
-  }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
+  }, [myLoanHistory.pageNo, myLoanHistory.pageSize]);
 
   const datasource = [];
   {
-    mywithdrawalHistory.apiData != ""
-      ? mywithdrawalHistory.apiData.results.map((data) => {
+    myLoanHistory.apiData != ""
+      ? myLoanHistory.apiData.results.map((data) => {
           datasource.push({
             key: Math.random(),
-            raisedon: data.createdOn,
-            amount: data.amount,
-            reason: data.withdrawalReason,
-            requestedFrom: data.requestFrom,
-            status: data.status,
-            action: (
-              <button
-                type="submit"
-                className="btn  w-70 btn-primary btn-xs"
-                disabled={
-                  data.status == "APPROVED" ||
-                  data.status == "REJECTED" ||
-                  data.status == "ADMINREJECTED" ||
-                  data.status == "USERREJECTED" ||
-                  data.status == "AUTOREJECTED"
-                    ? true
-                    : false
-                }
-                onClick={() => {
-                  confirmcancelrequest(data.requestFrom, data.id);
-                }}
-              >
-                Cancel Request
-              </button>
-            ),
+            AppID: data.applicationId,
+            DisbursementAmount: data.disbursmentAmount,
+            DisbursementDate: data.disbursedDate,
+            ViewLendersForthisLoan: "button",
           });
         })
       : "";
@@ -85,33 +59,25 @@ const MyLoanApplication = () => {
 
   const columns = [
     {
-      title: "Raised on",
-      dataIndex: "raisedon",
-      sorter: (a, b) => new Date(a.raisedon) - new Date(b.raisedon),
+      title: "App ID",
+      dataIndex: "AppID",
+      sorter: (a, b) => a.AppID - b.AppID,
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      sorter: (a, b) => a.amount - b.amount,
+      title: "Disbursement Amount",
+      dataIndex: "DisbursementAmount",
+      sorter: (a, b) => a.DisbursementAmount - b.DisbursementAmount,
     },
     {
-      title: "Reason",
-      dataIndex: "reason",
-      sorter: (a, b) => a.reason.length - b.reason.length,
+      title: "Disbursement Date",
+      dataIndex: "DisbursementDate",
+      sorter: (a, b) => a.DisbursementDate.length - b.DisbursementDate.length,
     },
     {
-      title: "Requested From",
-      dataIndex: "requestedFrom",
-      sorter: (a, b) => a.requestedFrom.length - b.requestedFrom.length,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
+      title: "View Lenders For this Loan",
+      dataIndex: "ViewLendersForthisLoan",
+      sorter: (a, b) =>
+        a.ViewLendersForthisLoan.length - b.ViewLendersForthisLoan.length,
     },
   ];
 
@@ -149,8 +115,8 @@ const MyLoanApplication = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: mywithdrawalHistory.apiData.totalCount,
-                          defaultPageSize: mywithdrawalHistory.defaultPageSize,
+                          total: myLoanHistory.apiData.totalCount,
+                          defaultPageSize: myLoanHistory.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
@@ -158,11 +124,9 @@ const MyLoanApplication = () => {
                           onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={
-                          mywithdrawalHistory.hasdata ? datasource : []
-                        }
+                        dataSource={myLoanHistory.hasdata ? datasource : []}
                         expandable={true}
-                        loading={mywithdrawalHistory.loading}
+                        loading={myLoanHistory.loading}
                         onChange={mywithdrawalPagination}
                       />
                     </div>

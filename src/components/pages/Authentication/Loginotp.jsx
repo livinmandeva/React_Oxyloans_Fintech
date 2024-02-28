@@ -94,7 +94,7 @@ const Loginotp = () => {
       setUserLoginInfo((prevState) => ({
         ...prevState,
         emailerror:
-          userLogInInfo.email === "" ? "Please Enter The Moblie Number" : "",
+          userLogInInfo.email === "" ? "Please Enter The mobile Number" : "",
       }));
     } else {
       if (userLogInInfo.email.length === 10) {
@@ -119,7 +119,7 @@ const Loginotp = () => {
           ...prevState,
           emailerror:
             userLogInInfo.email.length > 10
-              ? "Please 10 digit Moblie Number"
+              ? "Please 10 digit mobile Number"
               : "",
         }));
       }
@@ -150,7 +150,7 @@ const Loginotp = () => {
 
                   <div className="form-group">
                     <label htmlFor="userloginusername">
-                      Enter Moblie Number{" "}
+                      Enter Mobile Number{" "}
                       <span className="login-danger">*</span>
                     </label>
                     <input

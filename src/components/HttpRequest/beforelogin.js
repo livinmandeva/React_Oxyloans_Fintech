@@ -130,7 +130,6 @@ export const handlesenOtp = async (moblie) => {
   var data = {
     mobileNumber: moblie,
   };
-
   const response = await handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,

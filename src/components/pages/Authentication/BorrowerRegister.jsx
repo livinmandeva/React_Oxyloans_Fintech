@@ -236,7 +236,7 @@ export default function BorrowerRegister() {
                         </div>
                         <div className="form-group">
                           <label>
-                            Enter Moblie Number
+                            Enter Mobile Number
                             <span className="login-danger">*</span>
                           </label>
                           {/* <input className="form-control pass-confirm" type="text" /> */}

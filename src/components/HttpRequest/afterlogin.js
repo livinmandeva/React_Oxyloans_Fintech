@@ -959,6 +959,7 @@ export const getMyWithdrawalHistory = async (pageNo = 1, pageSize = 10) => {
     lastName: "",
     userId: userId,
   });
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `lenderwithdrawalfundssearch`,
@@ -1679,4 +1680,87 @@ export const getNoDealsParticipated = () => {
     token
   );
   return res;
+};
+
+//////////borrower apis/////////
+
+export const getBorrowerRunningloans = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    page: {
+      pageNo,
+      pageSize,
+    },
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/application/loansbyapplication`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getBorrowerApplication = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    leftOperand: {
+      fieldName: "userId",
+      fieldValue: userId,
+      operator: "EQUALS",
+    },
+    logicalOperator: "AND",
+    rightOperand: {
+      fieldName: "parentRequestId",
+      operator: "NULL",
+    },
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/ADMIN/request/search`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const myagreedloanapplication = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    leftOperand: {
+      fieldName: fName,
+      fieldValue: userId,
+      operator: "EQUALS",
+    },
+
+    logicalOperator: "AND",
+
+    rightOperand: {
+      fieldName: "loanStatus",
+      fieldValues: ["Agreed", "Active", "Closed", "Hold"],
+      operator: "IN",
+    },
+    page: {
+      pageNo,
+      pageSize,
+    },
+    sortBy: "loanAcceptedDate",
+    sortOrder: "DESC",
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/BORROWER/search`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
 };
