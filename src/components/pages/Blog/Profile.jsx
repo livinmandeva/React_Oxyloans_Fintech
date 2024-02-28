@@ -878,8 +878,9 @@ const Profile = () => {
         userProfile.pinCode === "" ? "Please Enter The Pincode" : "",
       stateerror: userProfile.state === "" ? "Please Enter The State" : "",
       whatsAppNumbererror:
-        userProfile.whatsAppNumber === ""
-          ? "Please Enter The WhatsAppNumber"
+        userProfile.whatsAppNumber === "" ||
+        userProfile.whatsAppNumber.length < 10
+          ? " WhatsApp Number should be 10 digits"
           : "",
       aadhaarNumbererror:
         userProfile.aadharNumber === ""
@@ -887,7 +888,9 @@ const Profile = () => {
           : "",
 
       mobileNumbererror:
-        userProfile.mobileNumber === "" ? "Please Enter The MobileNumber" : "",
+        userProfile.mobileNumber === "" || userProfile.mobileNumber.length < 10
+          ? " MobileNumber should be 10 digits"
+          : "",
       emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
     });
 
@@ -901,8 +904,10 @@ const Profile = () => {
       userProfile.doberror === "" &&
       userProfile.mobileNumber !== null &&
       userProfile.mobileNumber !== "" &&
+      userProfile.mobileNumber.length == 10 &&
       userProfile.whatsAppNumber !== null &&
       userProfile.whatsAppNumber !== "" &&
+      userProfile.whatsAppNumber.length > 10 &&
       userProfile.pinCode !== null &&
       userProfile.pinCode !== "" &&
       userProfile.fatherName !== null &&
@@ -928,7 +933,7 @@ const Profile = () => {
         }
       });
     } else {
-      console.log("file the form");
+      toastrWarning("fill the mandatory fields");
     }
   };
 
@@ -1902,7 +1907,7 @@ const Profile = () => {
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Last Name
-                                  <span className="login-danger"></span>
+                                  <span className="login-danger">*</span>
                                 </label>
                                 <input
                                   type="text"
@@ -1982,9 +1987,6 @@ const Profile = () => {
                                   max={new Date().toISOString().split("T")[0]}
                                 />
 
-
-                                
-
                                 {userProfile.doberror && (
                                   <div className="text-danger">
                                     {userProfile.doberror}
@@ -2034,7 +2036,7 @@ const Profile = () => {
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
-                                  WhatsApp
+                                  WhatsApp No
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input

@@ -47,33 +47,28 @@ const ReferaFriend = () => {
 
   const handlechanges = (event) => {
     const { name, value } = event.target;
-  
- 
+
     setprofile({
       ...profile,
       [name]: value,
     });
   };
-  
-  
 
   useEffect(() => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-  console.log(profile.email)
+    console.log(profile.email);
     if (!emailRegex.test(profile.email) && profile.email !== "") {
       setprofile({
         ...profile,
-        emailerror: "Please enter a valid email"
+        emailerror: "Please enter a valid email",
       });
     } else {
       setprofile({
         ...profile,
-        emailerror: ""
+        emailerror: "",
       });
     }
   }, [profile.email]);
-  
-
 
   useEffect(() => {
     const getemail = async () => {
@@ -135,14 +130,23 @@ const ReferaFriend = () => {
     setprofile({
       ...profile,
       emailerror: profile.email === "" ? "Enter The Email" : "",
-      mobileNumbererror: profile.mobileNumber.length === 10 ? "" : "Enter The 10 Digit Mobile number",
+      mobileNumbererror:
+        profile.mobileNumber.length === 10
+          ? ""
+          : "Enter The 10 Digit Mobile number",
       nameerror: profile.name === "" ? "Enter The Name" : "",
     });
-  
 
-    
-    if (profile.email !== "" && profile.email !== null && profile.mobileNumber.length === 10 && profile.name !== "" &&  
-    profile.emailerror === ""    && profile.nameerror === ""    && profile.name !== null     && profile.emailerror  == "") {
+    if (
+      profile.email !== "" &&
+      profile.email !== null &&
+      profile.mobileNumber.length === 10 &&
+      profile.name !== "" &&
+      profile.emailerror === "" &&
+      profile.nameerror === "" &&
+      profile.name !== null &&
+      profile.emailerror == ""
+    ) {
       const response = profilesubmit(profile);
       response.then((data) => {
         if (data.request.status === 200) {
@@ -152,11 +156,9 @@ const ReferaFriend = () => {
         }
       });
     } else {
-   console.log("form not vaild")
-  
+      console.log("form not vaild");
     }
   };
-  
 
   const handlebulkInvite = async () => {
     const response = bulkinvitegmailLink();
@@ -502,7 +504,12 @@ const ReferaFriend = () => {
                                   onChange={handlechanges}
                                   required
                                 />
-                                    {profile.nameerror  && <div  className="error"  > {profile.nameerror}</div>}
+                                {profile.nameerror && (
+                                  <div className="error">
+                                    {" "}
+                                    {profile.nameerror}
+                                  </div>
+                                )}
                               </div>
 
                               <div className="form-group col-12 col-sm-4">
@@ -516,7 +523,13 @@ const ReferaFriend = () => {
                                   name="email"
                                   placeholder="Enter The Email"
                                   onChange={handlechanges}
-                                />  {profile.emailerror  && <div  className="error"> {profile.emailerror}</div>}
+                                />{" "}
+                                {profile.emailerror && (
+                                  <div className="error">
+                                    {" "}
+                                    {profile.emailerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4">
                                 <label>
@@ -565,9 +578,14 @@ const ReferaFriend = () => {
                                   name="mobileNumber"
                                   onChange={handlechanges}
                                 />
-                                 {profile.mobileNumbererror  && <div  className="error"> {profile.mobileNumbererror}</div>}
+                                {profile.mobileNumbererror && (
+                                  <div className="error">
+                                    {" "}
+                                    {profile.mobileNumbererror}
+                                  </div>
+                                )}
                               </div>
-                             
+
                               <div className="form-group col-12 col-sm-4">
                                 <label>
                                   Email Subject
@@ -599,7 +617,6 @@ const ReferaFriend = () => {
                                   type="submit"
                                   onClick={handleprofilesubmit}
                                   disabled={profile.savebtndisable}
-                               
                                 >
                                   Save Deatils
                                 </button>
