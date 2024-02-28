@@ -1319,7 +1319,7 @@ export const referralEarningsInfo = async (pageNo = 1, pageSize = 10) => {
     postdatastring
   );
   return response;
-};  
+};
 
 export const handlepincodeapicall = async (code) => {
   const token = getToken();
@@ -1329,7 +1329,7 @@ export const handlepincodeapicall = async (code) => {
     API_BASE_URL,
     `${code}/pincode`,
     "GET",
-    token,
+    token
   );
   return response;
 };

@@ -38,6 +38,11 @@ const MembershipHistory = () => {
           loading: false,
           hasdata: data.data.count == 0 ? false : true,
         });
+      } else {
+        setmembershiphistory({
+          ...membershiphistory,
+          loading: false,
+        });
       }
     });
     return () => {};
