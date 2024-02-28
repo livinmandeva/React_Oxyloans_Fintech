@@ -851,18 +851,20 @@ const Profile = () => {
       });
 
 
-      if (
+      if (   
         userProfile.email !== null && userProfile.email !== "" &&
         userProfile.firstName !== null && userProfile.firstName !== "" &&
         userProfile.lastName !== null && userProfile.lastName !== "" &&
+        userProfile.doberror  ===  "" &&
         userProfile.mobileNumber !== null && userProfile.mobileNumber !== "" &&
         userProfile.whatsAppNumber !== null && userProfile.whatsAppNumber !== "" &&
         userProfile.pinCode !== null && userProfile.pinCode !== "" &&
         userProfile.fatherName !== null && userProfile.fatherName !== "" &&
+        
         userProfile.state !== null && userProfile.state !== "" &&
         userProfile.aadharNumber !== null && userProfile.aadharNumber !== "" &&
         userProfile.panNumber !== null && userProfile.panNumber !== "" &&
-        userProfile.address !== null && userProfile.address !== "" &&
+        userProfile.address !== null && userProfile.address !== "" &&    
         userProfile.city !== null && userProfile.city !== "" 
       ) {
     
