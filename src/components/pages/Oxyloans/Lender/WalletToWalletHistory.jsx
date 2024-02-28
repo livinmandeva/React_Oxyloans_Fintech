@@ -96,7 +96,7 @@ const WalletToWalletHistory = React.memo((pros) => {
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">
-                      Wallet To Wallet History
+                      Wallet debit history
                     </li>
                   </ul>
                 </div>

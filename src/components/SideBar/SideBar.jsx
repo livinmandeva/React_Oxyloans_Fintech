@@ -369,6 +369,76 @@ const Sidebar = (props) => {
                     ""
                   )}
                 </li>
+
+                <li
+                  className={`${
+                    "/WalletToWallet" === pathName ||
+                    "/walletToWalletHistory" === pathName ||
+                    "/walletToWalletTransactionHistory" === pathName
+                      ? "active submenu"
+                      : "submenu"
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className={isSideMenu == "WalletToWallet" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "WalletToWallet" ? "" : "WalletToWallet"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-business-time"></i>
+                    <span>Wallet to Wallet</span>
+                    <span className="menu-arrow" />
+                  </Link>
+                  {isSideMenu == "WalletToWallet" ? (
+                    <ul
+                      style={{
+                        display:
+                          isSideMenu == "WalletToWallet" ? "block" : "none",
+                      }}
+                    >
+                      <li>
+                        <Link
+                          to="/WalletToWallet"
+                          className={`${
+                            "/WalletToWallet" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Raise a Request
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/walletToWalletTransactionHistory"
+                          className={`${
+                            "/walletToWalletTransactionHistory" === pathName
+                              ? "active"
+                              : ""
+                          }`}
+                        >
+                          View history
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/walletToWalletHistory"
+                          className={`${
+                            "/walletToWalletHistory" === pathName
+                              ? "active"
+                              : ""
+                          }`}
+                        >
+                          Debit history
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </li>
                 <li
                   className={`${
                     "/withdrawdealfromDeal" === pathName ||
@@ -503,76 +573,6 @@ const Sidebar = (props) => {
                           }`}
                         >
                           Membership History
-                        </Link>
-                      </li>
-                    </ul>
-                  ) : (
-                    ""
-                  )}
-                </li>
-
-                <li
-                  className={`${
-                    "/WalletToWallet" === pathName ||
-                    "/walletToWalletHistory" === pathName ||
-                    "/walletToWalletTransactionHistory" === pathName
-                      ? "active submenu"
-                      : "submenu"
-                  }`}
-                >
-                  <Link
-                    to="#"
-                    className={isSideMenu == "WalletToWallet" ? "subdrop" : ""}
-                    onClick={() =>
-                      toggleSidebar(
-                        isSideMenu == "WalletToWallet" ? "" : "WalletToWallet"
-                      )
-                    }
-                  >
-                    <i className="fa-solid fa-business-time"></i>
-                    <span>Wallet to Wallet</span>
-                    <span className="menu-arrow" />
-                  </Link>
-                  {isSideMenu == "WalletToWallet" ? (
-                    <ul
-                      style={{
-                        display:
-                          isSideMenu == "WalletToWallet" ? "block" : "none",
-                      }}
-                    >
-                      <li>
-                        <Link
-                          to="/WalletToWallet"
-                          className={`${
-                            "/WalletToWallet" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Raise a Request
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/walletToWalletTransactionHistory"
-                          className={`${
-                            "/walletToWalletTransactionHistory" === pathName
-                              ? "active"
-                              : ""
-                          }`}
-                        >
-                          View history
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link
-                          to="/walletToWalletHistory"
-                          className={`${
-                            "/walletToWalletHistory" === pathName
-                              ? "active"
-                              : ""
-                          }`}
-                        >
-                          Debit history
                         </Link>
                       </li>
                     </ul>

@@ -151,7 +151,7 @@ const MyRunningDelas = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">My running delas</li>
+                    <li className="breadcrumb-item active">My running deals</li>
 
                     {modelopen && (
                       <MyParticipatedStatement

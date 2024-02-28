@@ -1704,6 +1704,37 @@ export const getBorrowerRunningloans = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
+export const fetchcashfree = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    orderAmount: 1.0,
+    userId: userId,
+    return_url: "http://localhost:3000/paymentgateway?myorder={order_id}",
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `cashfreeOrderForReact`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const getpaymentorder = (myorder) => {
+  const token = getToken();
+  const userId = getUserId();
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${myorder}/getOrderbyIdForReact`,
+    "GET",
+    token
+  );
+  return res;
+};
+
 export const getBorrowerApplication = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
