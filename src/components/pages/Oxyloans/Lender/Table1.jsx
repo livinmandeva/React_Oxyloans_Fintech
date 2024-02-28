@@ -18,9 +18,9 @@ const Table1 = ({ data }) => {
 
   const columns = [
     {
-      title: "s#",
+      title: "so",
       dataIndex: "so",
-      sorter: (a, b) => a.no.length - b.no.length,
+      sorter: (a, b) => a.so - b.so,
     },
     {
       title: "Date",
@@ -30,7 +30,7 @@ const Table1 = ({ data }) => {
     {
       title: "Amount",
       dataIndex: "amount",
-      sorter: (a, b) => a.amount.length - b.amount.length,
+      sorter: (a, b) => a.amount - b.amount,
     },
   ];
 

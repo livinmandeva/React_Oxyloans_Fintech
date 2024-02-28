@@ -131,21 +131,20 @@ const ReferaFriend = () => {
       ...profile,
       emailerror: profile.email === "" ? "Enter The Email" : "",
       mobileNumbererror:
-        profile.mobileNumber.length === 10
-          ? ""
-          : "Enter The 10 Digit Mobile number",
+        profile.mobileNumber.length != 10
+          ? "Enter The 10 Digit Mobile number"
+          : "",
       nameerror: profile.name === "" ? "Enter The Name" : "",
     });
 
     if (
       profile.email !== "" &&
       profile.email !== null &&
+      profile.emailerror == "" &&
       profile.mobileNumber.length === 10 &&
       profile.name !== "" &&
-      profile.emailerror === "" &&
-      profile.nameerror === "" &&
       profile.name !== null &&
-      profile.emailerror == ""
+      profile.nameerror == ""
     ) {
       const response = profilesubmit(profile);
       response.then((data) => {
