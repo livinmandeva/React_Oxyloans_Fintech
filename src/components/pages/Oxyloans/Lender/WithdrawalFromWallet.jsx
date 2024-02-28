@@ -225,6 +225,7 @@ const WithdrawalFromWallet = () => {
                             <DatePicker
                                selected={new Date()} // Set selected to today's date
                                onChange={handleChange}
+                           
                                dateFormat="dd/MM/yyyy"
                                placeholderText="Enter Withdrawal Date"
                                minDate={minDate}

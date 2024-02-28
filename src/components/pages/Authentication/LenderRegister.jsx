@@ -256,7 +256,7 @@ export default function LenderRegister() {
                             className="form-control"
                             type="text"
                             name="pancard"
-                            onKeyPress={handleKeyPress}
+                      
                             maxLength={30}
                             onChange={handlechange}
                           />
