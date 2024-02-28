@@ -222,15 +222,13 @@ const WithdrawalFromWallet = () => {
                             maxDate={maxDate}
                             className="form-control datetimepicker"
                           /> */}
-                            <DatePicker
-                               selected={new Date()} // Set selected to today's date
-                               onChange={handleChange}
-                           
-                               dateFormat="dd/MM/yyyy"
-                               placeholderText="Enter Withdrawal Date"
-                               minDate={minDate}
-                               className="form-control datetimepicker"
-                      />
+                        <DatePicker
+                            selected={withdrawrequest.date}
+                            onChange={handleChange}
+                            dateFormat="dd/MM/yyyy"
+                            minDate={minDate}
+                            className="form-control datetimepicker"
+                          />
                           {withdrawrequest.setGivendateerror && <div  className="error">{withdrawrequest.setGivendateerror}</div>}
                         </div>
                         
