@@ -694,17 +694,22 @@ export const submitWithdrawalRequestFromWallet = async (postdate) => {
   const token = getToken();
   const userId = getUserId();
 
-  const postdatastring = JSON.stringify({
+    const withdrawAmount=    postdate.withdrawAmount;
+    const withdrawRating=    postdate.withdrawRating;
+  const postdata = {
     userId,
     userType: "LENDER",
-    amount: postdate.withdrawAmount,
-    amountRequiredDate: postdate.setGivendate,
-    withdrawalReason: postdate.withdraReason,
-    rating: postdate.withdrawRating,
-    feedBack: postdate.withdrawFeedback,
+    amount: parseInt(withdrawAmount),
+    amountRequiredDate: postdate.setGivendate, // It's not clear where setGivendate comes from
+    withdrawalReason: postdate.withdraReason, // It's not clear where withdraReason comes from
+    rating: JSON.stringify(withdrawRating), // Assuming withdrawRating is an object or array
+    feedBack: postdate.withdrawFeedback, // It's not clear where withdrawFeedback comes from
     adminComments: "",
     status: "INITIATED",
-  });
+};
+
+const postdatastring = JSON.stringify(postdata);
+
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `savewithdrawalfundsinfo`,

@@ -92,7 +92,7 @@ const WithdrawalFromWallet = () => {
       const response = submitWithdrawalRequestFromWallet(withdrawrequest);
       response.then((data) => {
         console.log(data)
-        if (data.request.status == 200) {
+        if (data.request.status == 200) {    
           HandleWithFooter(
             "Your withdrawal request has been initiated successfully. You will receive mobile and email alerts when the amount is credited to your registered bank accountNote: If you raise a request to withdraw funds from the wallet, please note that the funds will be credited to your bank account within 2 to 7 bank working days"
           );
@@ -131,9 +131,9 @@ const WithdrawalFromWallet = () => {
                     <li className="breadcrumb-item active">
                       Withdrawal From Wallet
                     </li>
-                  </ul>
+                  </ul>  
                 </div>
-              </div>
+              </div>  
             </div>
             {/* /Page Header */}
             <div className="row">

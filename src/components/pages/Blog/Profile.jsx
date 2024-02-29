@@ -864,8 +864,6 @@ const Profile = () => {
         userProfile.fatherName === "" ? "Please enter the father Name" : "",
       firstNamrror:
         userProfile.firstName === "" ? "Please enter the first Name" : "",
-      lastNamerror:
-        userProfile.lastName === "" ? "Please enter the last Name" : "",
       panNumbererror:
         userProfile.panNumber === "" ? "Please enter the panNumber" : "",
 
@@ -882,10 +880,7 @@ const Profile = () => {
         userProfile.whatsAppNumber.length < 10
           ? " WhatsApp Number should be 10 digits"
           : "",
-      aadhaarNumbererror:
-        userProfile.aadharNumber === ""
-          ? "Please Enter the Aadhaar Number"
-          : "",
+  
 
       mobileNumbererror:
         userProfile.mobileNumber === "" || userProfile.mobileNumber.length < 10
@@ -899,23 +894,18 @@ const Profile = () => {
       userProfile.email !== "" &&
       userProfile.firstName !== null &&
       userProfile.firstName !== "" &&
-      userProfile.lastName !== null &&
-      userProfile.lastName !== "" &&
       userProfile.doberror === "" &&
       userProfile.mobileNumber !== null &&
       userProfile.mobileNumber !== "" &&
-      userProfile.mobileNumber.length == 10 &&
+      userProfile.mobileNumber.length > 10 &&
       userProfile.whatsAppNumber !== null &&
       userProfile.whatsAppNumber !== "" &&
-      userProfile.whatsAppNumber.length > 10 &&
       userProfile.pinCode !== null &&
       userProfile.pinCode !== "" &&
       userProfile.fatherName !== null &&
       userProfile.fatherName !== "" &&
       userProfile.state !== null &&
       userProfile.state !== "" &&
-      userProfile.aadharNumber !== null &&
-      userProfile.aadharNumber !== "" &&
       userProfile.panNumber !== null &&
       userProfile.panNumber !== "" &&
       userProfile.address !== null &&
@@ -1907,7 +1897,7 @@ const Profile = () => {
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Last Name
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="text"
@@ -1942,13 +1932,13 @@ const Profile = () => {
                                 {userProfile.panNumbererror && (
                                   <div className="text-danger">
                                     {userProfile.panNumbererror}
-                                  </div>
+                                  </div> 
                                 )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Aadhaar Number
-                                  <span className="login-danger">*</span>
+                                  <span className="login-danger"></span>
                                 </label>
                                 <input
                                   type="tel"
