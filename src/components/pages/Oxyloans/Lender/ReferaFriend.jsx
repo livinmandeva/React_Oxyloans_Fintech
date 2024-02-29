@@ -154,8 +154,10 @@ const ReferaFriend = () => {
           WarningBackendApi("Error", data.response.data.errorMessage);
         }
       });
-    } else {
-      console.log("form not vaild");
+
+    } else {  
+   console.log("form not vaild")
+
     }
   };
 

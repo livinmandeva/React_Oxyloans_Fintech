@@ -40,34 +40,39 @@ const Register_active_proceed = () => {
     panerror: "",
     addresserror: "",
   });
-  useEffect(() => {
-    // Calculate today's date
-    const today = new Date();
+  // useEffect(() => {
+  //   // Calculate today's date
+  //   const today = new Date();
 
-    // Calculate the minimum date for someone to be 18 years old
-    const minDate = new Date(
-      today.getFullYear() - 18,
-      today.getMonth(),
-      today.getDate()
-    );
+  //   // Calculate the minimum date for someone to be 18 years old
+  //   const minDate = new Date(
+  //     today.getFullYear() - 18,
+  //     today.getMonth(),
+  //     today.getDate()
+  //   );
 
-    // Convert the input value to a Date object
-    const inputDate = new Date(date1);
+  //   // Convert the input value to a Date object
+  //   const inputDate = new Date(date1);
 
-    // Check if the input date is valid and the user is at least 18 years old
-    if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
-      setdata({
-        ...data,
-        doberror: "", // Clear error message
-      });
-    } else {
-      setdata({
-        ...data,
-        doberror: "Note : Age must be at least 18 years old",
-      });
-    }
-  }, [date1]);
+  //   // Check if the input date is valid and the user is at least 18 years old
+  //   if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+  //     setdata({
+  //       ...data,
+  //       doberror: "", // Clear error message
+  //     });
+  //   } else {
+  //     setdata({
+  //       ...data,
+  //       doberror: "Note : Age must be at least 18 years old",
+  //     });
+  //   }
+  // }, [date1]);
 
+
+  const today = new Date();
+today.setFullYear(today.getFullYear() - 18); // Subtract 18 years
+
+const minDate = today.toISOString().split("T")[0];
   const handlesubmit = async () => {
     if (data.date === "" || data.pannumber === "" || data.address === "") {
       setdata({
@@ -208,12 +213,12 @@ const Register_active_proceed = () => {
                       Date of Birth <span className="login-danger">*</span>
                     </label>
                     <input
-                      className="form-control"
-                      type="date"
-                      name="date"
-                      onChange={handlechanges}
-                      max={new Date().toISOString().split("T")[0]}
-                    />
+        className="form-control"
+        type="date"
+        name="date"
+        onChange={handlechanges}
+        max={minDate} // set the max date to 18 years ago
+    />
                     {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span> */}
