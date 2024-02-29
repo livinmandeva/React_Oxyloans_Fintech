@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import "./member.css";
 import "./Dashboardtable.css";
-import { membershipsweetalertconformation } from "../../Base UI Elements/SweetAlert";
+import Swal from "sweetalert2";
+
+import {
+  fetchcashfree,
+  handlePaymembershipapi,
+  getpaymentorder,
+} from "../../../HttpRequest/afterlogin";
+import {
+  registersuccess,
+  WarningAlertwithdrow,
+  membershipsweetalert,
+} from "../../Base UI Elements/SweetAlert";
 
 const Membership = React.memo((pros) => {
   const [mywalletTowalletHistory, setmywalletTowalletHistory] = useState({
@@ -19,6 +30,14 @@ const Membership = React.memo((pros) => {
     loading5: false,
     loading: false,
   });
+  const [payment, setpaymentsession] = useState("");
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const myorder = urlParams.get("myorder");
+
+  const cashfree = Cashfree({
+    mode: "sandbox", //or production
+  });
 
   const handlePaymembershipfree = async (membership, no) => {
     try {
@@ -26,13 +45,8 @@ const Membership = React.memo((pros) => {
         ...mywalletTowalletHistory,
         [`loading${no}`]: true,
       });
-
-      membershipsweetalertconformation(membership, no);
-
-      setmywalletTowalletHistory({
-        ...mywalletTowalletHistory,
-        [`loading${no}`]: false,
-      });
+      const response = await membershipsweetalertconformation(membership, no);
+      console.log(response);
     } catch (error) {
       console.error(`Error: ${error.errorMessage}`);
       setmywalletTowalletHistory({
@@ -41,6 +55,71 @@ const Membership = React.memo((pros) => {
       });
     }
   };
+  const membershipsweetalertconformation = (membership, no) => {
+    Swal.fire({
+      title: "Are you willing to proceed with the payment at this moment ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Pay Through wallet",
+      denyButtonText: "Payment Gateway",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const response = handlePaymembershipapi(membership, no);
+        response.then((data) => {
+          if (data.status == 200) {
+            Swal.fire("Success!", `Payment received successfully!`, "success");
+            setTimeout(() => {
+              window.location.href = `/dashboard`;
+            }, 5000);
+          } else {
+            membershipsweetalert(data.response.data.errorMessage);
+          }
+        });
+      } else if (result.isDenied) {
+        paymentordercreation(membership, no);
+      } else if (result.dismiss) {
+        console.log("dismiss");
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (myorder != null) {
+      const getresponse = getpaymentorder(myorder);
+      getresponse.then((data) => {
+        if (data.data.order_status == "PAID") {
+          registersuccess(
+            `You have successfully paid  INR ${data.data.order_amount} Amount`
+          );
+        } else {
+          WarningAlertwithdrow("something went wrong, payment failed");
+        }
+      });
+    }
+    return () => {};
+  }, [myorder]);
+
+  useEffect(() => {
+    if (payment != null || payment != "") {
+      let checkoutOptions = {
+        paymentSessionId: payment,
+        redirectTarget: "_self", //optional (_self or _blank)
+      };
+      cashfree.checkout(checkoutOptions);
+    }
+    return () => {};
+  }, [payment]);
+
+  const paymentordercreation = async (
+    membership,
+    no,
+    url = `${window.location.href}?myorder={order_id}`
+  ) => {
+    const resposnse = await fetchcashfree(membership, no, url);
+    setpaymentsession(resposnse.data.payment_session_id);
+    console.log(resposnse);
+  };
+
   const buttonNumber = 1;
   const isButtonLoading = mywalletTowalletHistory[`loading${buttonNumber}`];
 

@@ -116,6 +116,23 @@ export const handlePaymembershipapi = async (member) => {
   );
   return response;
 };
+
+export const cashfreemembershipamount = async (member) => {
+  const token = getToken();
+  const userId = getUserId();
+  const membershipfiled = {
+    MONTHLY: "1000",
+    QUARTERLY: "2900",
+    HALFYEARLY: "5600",
+    PERYEAR: "9800",
+    LIFETIME: "100000",
+    FIVEYEARS: "50000",
+    TENYEARS: "90000",
+  };
+  const calculatedfee = (parseInt(membershipfiled[member]) * 118) / 100;
+  return calculatedfee;
+};
+
 export const getuserMembershipValidity = async () => {
   const token = getToken();
   const userId = getUserId();
@@ -1710,14 +1727,17 @@ export const getBorrowerRunningloans = async (pageNo = 1, pageSize = 10) => {
   return response;
 };
 
-export const fetchcashfree = async (pageNo = 1, pageSize = 10) => {
+export const fetchcashfree = async (membership, no, url, dealId = 0) => {
   const token = getToken();
   const userId = getUserId();
 
+  let membershipamount = await cashfreemembershipamount(membership);
+
   const postdatastring = JSON.stringify({
-    orderAmount: 1.0,
+    orderAmount: membershipamount,
     userId: userId,
-    return_url: "http://localhost:3000/paymentgateway?myorder={order_id}",
+    dealId: dealId,
+    return_url: url,
   });
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,

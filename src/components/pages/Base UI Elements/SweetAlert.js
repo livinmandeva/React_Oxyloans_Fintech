@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   getNewSessionTime,
@@ -10,7 +10,6 @@ import {
   nofreeParticipationapi,
   handlePaymembershipapi,
   feeApicall,
-  cashsuccessapihit,
   feeapicallforonedeal,
   cancelMyWithdrawWalletRequest,
   dealparticipationValidityUser,
@@ -532,10 +531,9 @@ export const membershipsweetalertconformation = (membership, no) => {
   Swal.fire({
     title: "Are you willing to proceed with the payment at this moment ?",
     showDenyButton: true,
-    confirmButtonText: "Pay Through wallet",
     showCancelButton: true,
-    cancelButtonText: "cancel",
-    showConfirmButton: true,
+    confirmButtonText: "Pay Through wallet",
+    denyButtonText: "Payment Gateway",
   }).then((result) => {
     if (result.isConfirmed) {
       const response = handlePaymembershipapi(membership, no);
@@ -549,6 +547,10 @@ export const membershipsweetalertconformation = (membership, no) => {
           membershipsweetalert(data.response.data.errorMessage);
         }
       });
+    } else if (result.isDenied) {
+      return "dined";
+    } else if (result.dismiss) {
+      console.log("dismiss");
     }
   });
 };

@@ -880,7 +880,6 @@ const Profile = () => {
         userProfile.whatsAppNumber.length < 10
           ? " WhatsApp Number should be 10 digits"
           : "",
-  
 
       mobileNumbererror:
         userProfile.mobileNumber === "" || userProfile.mobileNumber.length < 10
@@ -897,7 +896,7 @@ const Profile = () => {
       userProfile.doberror === "" &&
       userProfile.mobileNumber !== null &&
       userProfile.mobileNumber !== "" &&
-      userProfile.mobileNumber.length > 10 &&
+      userProfile.mobileNumber.length >= 10 &&
       userProfile.whatsAppNumber !== null &&
       userProfile.whatsAppNumber !== "" &&
       userProfile.pinCode !== null &&
@@ -1932,7 +1931,7 @@ const Profile = () => {
                                 {userProfile.panNumbererror && (
                                   <div className="text-danger">
                                     {userProfile.panNumbererror}
-                                  </div> 
+                                  </div>
                                 )}
                               </div>
                               <div className="form-group col-12 col-sm-4 local-forms">
