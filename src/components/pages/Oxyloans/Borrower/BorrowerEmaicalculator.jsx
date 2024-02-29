@@ -88,7 +88,7 @@ const BorrowerEmaicalculator = () => {
                   <h3 className="page-title">EMI Calculator</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/borrowerDashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">EMI Calculator</li>
                   </ul>

@@ -1,7 +1,9 @@
+import moment from "moment";
 import React from "react";
-
 import BorrowerHeader from "../../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
+// import SideBar from "../../SideBar/SideBar";
+// import Header from "../../Header/Header";
 import { Link } from "react-router-dom";
 import { avatar02 } from "../../../imagepath";
 import FeatherIcon from "feather-icons-react";
@@ -12,6 +14,7 @@ import {
   WarningBackendApi,
 } from "../../Base UI Elements/SweetAlert";
 import { toastrSuccess, toastrWarning } from "../../Base UI Elements/Toast";
+
 import {
   profileupadate,
   getUserDetails,
@@ -29,23 +32,25 @@ import {
   getdataDrivingLicence,
   getdataVoterId,
   getdataAadhar,
+  handelnomeeclickapi,
+  handlepincodeapicall,
 } from "../../../HttpRequest/afterlogin";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../../Redux/Slice";
 
-const BorrowerProfile = () => {
+const Profile = () => {
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
   const reduxStoreDataDashboard = useSelector(
     (data) => data.dashboard.fetchDashboard
   );
 
   const [dashboarddata, setdashboarddata] = useState({
-    sendotpbtn: true,
+    sendotpbtn: false,
     sendotpbtnText: "Send OTP",
     sendOtpsession: "",
-    verifyotp: false,
-    verifyotpText: "Verify",
+    verifyotp: true,
+    verifyotpText: "Verify IFSC",
     submitbankdeatail: false,
     profileData: null,
     isValid: false,
@@ -102,7 +107,7 @@ const BorrowerProfile = () => {
     mobileOtpSession: "",
     bankAccountError: "",
     updateBankDetails: true,
-    nameAtBank: "",
+    nameAtBank: "eerr",
     bankCity: "",
     moblieNumbererror: "",
     bankAccounterror: "",
@@ -117,6 +122,7 @@ const BorrowerProfile = () => {
     bankAccountError: "",
     nameAtBankerror: "",
     bankCityerror: "",
+    isbankprofilevaild: true,
   });
 
   const [nomineeDetails, setnomineeDetails] = useState({
@@ -125,10 +131,18 @@ const BorrowerProfile = () => {
     nomineeEmail: "",
     nomineeMobile: "",
     accountNo: "",
+    nomineeNameerror: "",
+    relationerror: "",
+    nomineeEmaileeror: "",
+    nomineeMobileerror: "",
+    accountNoerror: "",
     nomineeIfsc: "",
     bank: "",
     branch: "",
     nomineecity: "",
+    bankerror: "",
+    brancherror: "",
+    nomineecityerror: "",
     copyerror: "",
     isdeatail: false,
     isbtndisable: true,
@@ -208,7 +222,50 @@ const BorrowerProfile = () => {
     nomineeDetails.city,
   ]);
 
+  const handleKeyPress = (event) => {
+    console.log("Key pressed:", event.key); // Check if the function is triggered
+    const inputChar = event.key;
+    const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
+
+    // Check if the pressed key is an alphabetic character or backspace
+    if (!regex.test(inputChar) && inputChar !== "Backspace") {
+      event.preventDefault();
+    }
+  };
+  useEffect(() => {
+    if (
+      bankaccountprofile.accountNumber ===
+        bankaccountprofile.confirmAccountNumber ||
+      bankaccountprofile.confirmAccountNumber === "" ||
+      bankaccountprofile.accountNumber === ""
+    ) {
+      setBankaccountProfile({
+        ...bankaccountprofile,
+        confirmAccountNumbererror: "",
+        isbankprofilevaild: false,
+      });
+    } else {
+      setBankaccountProfile({
+        ...bankaccountprofile,
+        confirmAccountNumbererror: "Account numbers do not match!",
+        isbankprofilevaild: true,
+      });
+    }
+  }, [
+    bankaccountprofile.accountNumber,
+    bankaccountprofile.confirmAccountNumber,
+  ]);
   const savebankdetailsProfile = () => {
+    if (dashboarddata.isValid === true) {
+      console.log("data");
+      if (bankaccountprofile.mobileOtp === "") {
+        console.log("data");
+        setBankaccountProfile({
+          ...bankaccountprofile,
+          mobileOtperror: "Enter the OTP",
+        });
+      }
+    }
     const response = updatebankDetails(bankaccountprofile);
     response.then((data) => {
       if (data.request.status == 200) {
@@ -219,13 +276,87 @@ const BorrowerProfile = () => {
     });
   };
 
+  const handleNomineeclick = async (event) => {
+    event.preventDefault();
+    setnomineeDetails({
+      ...nomineeDetails,
+      nomineeNameerror:
+        nomineeDetails.nomineeName === "" ? "Enter the nomineeName" : "",
+      relationerror: nomineeDetails.relation === "" ? "Enter the Relation" : "",
+      nomineeEmaileeror:
+        nomineeDetails.nomineeEmail === "" ? "Enter the Nominee Email" : "",
+      nomineeMobileerror:
+        nomineeDetails.nomineeMobile === ""
+          ? "Enter the Nominee Mobile Number"
+          : "",
+      accountNoerror:
+        nomineeDetails.accountNo === "" ? "Enter the   Account No" : "",
+      emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
+      bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
+      brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
+      nomineecityerror:
+        nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
+    });
+
+    if (
+      nomineeDetails.nomineeName !== "" &&
+      nomineeDetails.nomineeName !== null &&
+      nomineeDetails.relation !== "" &&
+      nomineeDetails.relation !== null &&
+      nomineeDetails.nomineeEmail !== "" &&
+      nomineeDetails.nomineeEmail !== null &&
+      nomineeDetails.nomineeMobile !== "" &&
+      nomineeDetails.nomineeMobile !== null &&
+      nomineeDetails.accountNo !== "" &&
+      nomineeDetails.accountNo !== null &&
+      nomineeDetails.nomineeEmail !== "" &&
+      nomineeDetails.nomineeEmail !== null &&
+      nomineeDetails.bank !== "" &&
+      nomineeDetails.bank !== null &&
+      nomineeDetails.branch !== "" &&
+      nomineeDetails.branch !== null &&
+      nomineeDetails.nomineecity !== "" &&
+      nomineeDetails.nomineecity !== null &&
+      nomineeDetails.nomineeNameerror === "" &&
+      nomineeDetails.relationerror === "" &&
+      nomineeDetails.nomineeEmaileeror === "" &&
+      nomineeDetails.nomineeMobileerror === "" &&
+      nomineeDetails.accountNoerror === "" &&
+      nomineeDetails.emailerror === "" &&
+      nomineeDetails.bankerror === "" &&
+      nomineeDetails.nomineecityerror === ""
+
+      // nomineeNameerror:  nomineeDetails.nomineeName === "" ? "Enter the nomineeName" : "",
+      // relationerror: nomineeDetails.relation === "" ? "Enter the Relation" : "",
+      // nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the Nominee Email" : "",
+      // nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the Nominee Mobile Number" : "",
+      // accountNoerror: nomineeDetails.accountNo === "" ? "Enter the   Account No" : "",
+      // emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
+      // bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
+      // brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
+      // nomineecityerror: nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
+    ) {
+      console.log("suceess");
+
+      const response = savenomineeDeatailsApi(nomineeDetails);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          Success("success", "Nominee Details Save Successfully");
+        } else if (data.response.data.errorCode != "200") {
+          WarningBackendApi("warning", data.response.data.errorMessage);
+        }
+      });
+    } else {
+      console.log("suceess1");
+    }
+  };
   const submitNomineeDetails = (event) => {
     event.preventDefault();
     if (nomineeDetails.isdeatail == true) {
       const response = savenomineeDeatailsApi(nomineeDetails);
       response.then((data) => {
         if (data.request.status == 200) {
-          Success("success", "Nominee Details Saved Successfully");
+          Success("success", "Nominee Details Save Successfully");
         } else if (data.response.data.errorCode != "200") {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
@@ -236,17 +367,62 @@ const BorrowerProfile = () => {
   };
 
   const verifybankAccountCashfree = () => {
-    if (bankaccountprofile.mobileOtp == "") {
-      WarningBackendApi("warning", "Enter The mobile OTP");
-    } else {
+    setBankaccountProfile((bankaccountprofile) => ({
+      ...bankaccountprofile,
+      nameAtBankerror:
+        bankaccountprofile.nameAtBank === "" ? "Enter the Name" : "",
+      moblieNumbererror:
+        bankaccountprofile.moblieNumber === "" ||
+        bankaccountprofile.moblieNumber.length != 10
+          ? "Enter 10 Digit Mobile Number "
+          : "",
+      accountNumbererror:
+        bankaccountprofile.accountNumber === ""
+          ? "Enter the Account Number"
+          : "",
+      confirmAccountNumbererror:
+        bankaccountprofile.confirmAccountNumber === "" ||
+        bankaccountprofile.confirmAccountNumber !==
+          bankaccountprofile.accountNumber
+          ? "Enter the Confirm Account Number"
+          : "",
+      ifscCodeerror:
+        bankaccountprofile.ifscCode === "" ? "Enter the IFSC Code" : "",
+      bankNameerror:
+        bankaccountprofile.bankName === "" ? "Enter the Bank Name" : "",
+      branchNameerror:
+        bankaccountprofile.branchName === "" ? "Enter the Branch Name" : "",
+      bankCityerror:
+        bankaccountprofile.bankCity === "" ? "Enter the Bank City" : "",
+    }));
+
+    if (
+      bankaccountprofile.moblieNumber !== null &&
+      bankaccountprofile.moblieNumber !== "" &&
+      bankaccountprofile.accountNumber !== null &&
+      bankaccountprofile.accountNumber !== "" &&
+      bankaccountprofile.confirmAccountNumber !== null &&
+      bankaccountprofile.confirmAccountNumber !== "" &&
+      bankaccountprofile.ifscCode !== null &&
+      bankaccountprofile.ifscCode !== "" &&
+      bankaccountprofile.bankName !== null &&
+      bankaccountprofile.bankName !== "" &&
+      bankaccountprofile.branchName !== null &&
+      bankaccountprofile.branchName !== "" &&
+      bankaccountprofile.confirmAccountNumbererror === "" &&
+      bankaccountprofile.moblieNumber.length === 10 &&
+      bankaccountprofile.bankCity !== null &&
+      bankaccountprofile.bankCity !== ""
+    ) {
       const response = verifyBankAccountAndIfsc(bankaccountprofile);
       response.then((data) => {
         if (data.request.status == 200) {
           if (data.data.status == "SUCCESS") {
             setdashboarddata({
               ...dashboarddata,
-              verifyotpText: "Verifed",
-              submitbankdeatail: true,
+              verifyotpText: "Verifed IFSC",
+              // submitbankdeatail: true,
+              sendotpbtn: true,
             });
 
             setBankaccountProfile({
@@ -256,7 +432,7 @@ const BorrowerProfile = () => {
               bankCity: data.data.data.city,
               branchName: data.data.data.branch,
             });
-            toastrSuccess("Sucessfully Verified!", "top-right");
+            toastrSuccess("Verifed BankAccount Ifsc");
           } else {
             WarningBackendApi("warning", data.data.message);
           }
@@ -264,9 +440,39 @@ const BorrowerProfile = () => {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
       });
+    } else {
+      console.log("enter all input");
     }
   };
 
+  useEffect(() => {
+    const inputDate = moment(
+      userProfile.dob,
+      ["DD/MM/YYYY", "YYYY-MM-DD"],
+      true
+    );
+
+    // Calculate today's date
+    const today = moment();
+
+    // Calculate the minimum date for someone to be 18 years old
+    const minDate = moment().subtract(18, "years");
+
+    // Check if the input date is valid and the user is at least 18 years old
+    setUserProfile((prevProfile) => {
+      if (inputDate.isValid() && inputDate.isSameOrBefore(minDate)) {
+        return {
+          ...prevProfile,
+          doberror: "", // Clear error message
+        };
+      } else {
+        return {
+          ...prevProfile,
+          doberror: "You must be at least 18 years old",
+        };
+      }
+    });
+  }, [userProfile.dob]);
   const handlefileupload = (event) => {
     const response = uploadkyc(event);
     response
@@ -276,10 +482,7 @@ const BorrowerProfile = () => {
             ...prevKyc,
             isValid: !prevKyc.isValid,
           }));
-          Success(
-            "success",
-            `${event.target.name?.toLowerCase()} uploaded successfully`
-          );
+          Success("success", `${event.target.name} Uploaded Successfully`);
         } else if (
           data &&
           data.response &&
@@ -296,15 +499,342 @@ const BorrowerProfile = () => {
       });
   };
 
+  useEffect(() => {
+    // Check state for numbers
+    if (/\d/.test(userProfile.state)) {
+      setUserProfile((prevProfile) => ({
+        ...prevProfile,
+        stateerror: "Enter characters only!",
+      }));
+    } else {
+      setUserProfile((prevProfile) => ({
+        ...prevProfile,
+        stateerror: "",
+      }));
+    }
+
+    // Check city for numbers
+    if (/\d/.test(userProfile.city)) {
+      setUserProfile((prevProfile) => ({
+        ...prevProfile,
+        cityerror: "Enter characters only!",
+      }));
+    } else {
+      setUserProfile((prevProfile) => ({
+        ...prevProfile,
+        cityerror: "",
+      }));
+    }
+
+    if (/\d/.test(nomineeDetails.nomineeName)) {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        nomineeNameerror: "Enter characters only!",
+      }));
+    } else {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        nomineeNameerror: "",
+      }));
+    }
+
+    if (/\d/.test(nomineeDetails.relation)) {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        relationerror: "Enter characters only!",
+      }));
+    } else {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        relationerror: "",
+      }));
+    }
+
+    if (/\d/.test(nomineeDetails.bank)) {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        bankerror: "Enter characters only!",
+      }));
+    } else {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        bankerror: "",
+      }));
+    }
+
+    if (/\d/.test(nomineeDetails.nomineecity)) {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        nomineecityerror: "Enter characters only!",
+      }));
+    } else {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        nomineecityerror: "",
+      }));
+    }
+
+    if (/\d/.test(userProfile.lastName)) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        lastNamerror: "Enter characters only!",
+      }));
+    } else {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        lastNamerror: "",
+      }));
+    }
+
+    if (
+      /^\d+$/.test(userProfile.mobileNumber) ||
+      userProfile.mobileNumber === "" ||
+      userProfile.mobileNumber === null
+    ) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        mobileNumbererror: "",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+
+        mobileNumbererror: "Enter digits only!",
+      }));
+    }
+
+    if (
+      /^\d+$/.test(userProfile.whatsAppNumber) ||
+      userProfile.whatsAppNumber === "" ||
+      userProfile.whatsAppNumber === null
+    ) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        whatsAppNumbererror: "",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+
+        whatsAppNumbererror: "Enter digits only!",
+      }));
+    }
+    if (
+      /^\d+$/.test(userProfile.aadharNumber) ||
+      userProfile.aadharNumber === "" ||
+      userProfile.aadharNumber === null
+    ) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        aadhaarNumbererror: "",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+
+        aadhaarNumbererror: "Enter digits only!",
+      }));
+    }
+
+    if (/\d/.test(userProfile.fatherName)) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        fatherNameerror: "Enter characters only!",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        fatherNameerror: "",
+      }));
+    }
+
+    if (/\d/.test(userProfile.city)) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        cityer: "Enter characters only!",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        cityer: "",
+      }));
+    }
+
+    if (/\d/.test(bankaccountprofile.bankCity)) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        bankCityerror: "Enter characters only!",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        bankCityerror: "",
+      }));
+    }
+
+    if (/\d/.test(bankaccountprofile.branchName)) {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        branchNameerror: "Enter characters only!",
+      }));
+    } else {
+      setUserProfile((prevDetails) => ({
+        ...prevDetails,
+        branchNameerror: "",
+      }));
+    }
+
+    if (
+      /^\d+$/.test(nomineeDetails.nomineeMobile) ||
+      nomineeDetails.nomineeMobile === "" ||
+      nomineeDetails.nomineeMobile === null
+    ) {
+      // Nominee mobile contains only digits or is empty or null
+      console.log(nomineeDetails.nomineeMobile);
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        nomineeMobileerror: "", // No error
+      }));
+    } else {
+      // Nominee mobile contains non-digit characters
+      console.log(nomineeDetails.nomineeMobile);
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        nomineeMobileerror: "Enter digits only!",
+      }));
+    }
+
+    if (
+      /^\d+$/.test(nomineeDetails.accountNo) ||
+      nomineeDetails.accountNo === "" ||
+      nomineeDetails.accountNo === null
+    ) {
+      // Nominee mobile contains only digits or is empty or null
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        accountNoerror: "", // No error
+      }));
+    } else {
+      // Nominee mobile contains non-digit characters
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        accountNoerror: "Enter digits only!",
+      }));
+    }
+
+    if (
+      /^\d+$/.test(bankaccountprofile.moblieNumber) ||
+      bankaccountprofile.moblieNumber === "" ||
+      bankaccountprofile.moblieNumber === null
+    ) {
+      setBankaccountProfile((prevDetails) => ({
+        ...prevDetails,
+        moblieNumbererror: "",
+      }));
+    } else {
+      setBankaccountProfile((prevDetails) => ({
+        ...prevDetails,
+        moblieNumbererror: "Enter digits only!",
+      }));
+    }
+
+    if (/\d/.test(bankaccountprofile.bankCity)) {
+      setBankaccountProfile((prevDetails) => ({
+        ...prevDetails,
+        bankCityerror: "Enter characters only!",
+      }));
+    } else {
+      setBankaccountProfile((prevDetails) => ({
+        ...prevDetails,
+        bankCityerror: "",
+      }));
+    }
+
+    if (/\d/.test(nomineeDetails.branch)) {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        brancherror: "Enter characters only!",
+      }));
+    } else {
+      setnomineeDetails((prevDetails) => ({
+        ...prevDetails,
+        brancherror: "",
+      }));
+    }
+  }, [
+    userProfile.state,
+    userProfile.lastName,
+    userProfile.aadharNumber,
+    userProfile.fatherName,
+    userProfile.city,
+    nomineeDetails.nomineeName,
+    nomineeDetails.relation,
+    bankaccountprofile.moblieNumber,
+    userProfile.whatsAppNumber,
+    nomineeDetails.accountNo,
+    nomineeDetails.bank,
+    nomineeDetails.nomineecity,
+    userProfile.mobileNumber,
+    userProfile.city,
+    nomineeDetails.nomineeMobile,
+    nomineeDetails.branch,
+    nomineeDetails.accountN,
+    bankaccountprofile.bankCity,
+  ]);
+
   const handlechange = (event) => {
     const { name, value } = event.target;
-    setUserProfile(
-      (prevUserProfile) => ({
-        ...prevUserProfile,
-        [name]: value,
-      }),
-      () => {}
+
+    if (name === "pinCode") {
+      // Validate input to allow only numeric characters
+      const numericValue = value.replace(/\D/g, ""); // Remove non-numeric characters
+      // Limit the input to 6 digits
+      const updatedValue = numericValue.slice(0, 6);
+      if (updatedValue.length !== 6) {
+        // Check against the expected length of 6 digits
+        setUserProfile({
+          ...userProfile,
+          pinCodeError: "PIN code must be exactly 6 digits long",
+          [name]: updatedValue,
+        });
+        return; // Exit the function early to prevent setting state again
+      }
+
+      // Only proceed with API call if pin code is exactly 6 digits long
+    }
+
+    // Calculate today's date
+    const today = new Date();
+
+    // Calculate the minimum date for someone to be 18 years old
+    const minDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate()
     );
+
+    // Convert the input value to a Date object
+    const inputDate = new Date(value);
+
+    // Check if the input date is valid and the user is at least 18 years old
+    if (!isNaN(inputDate.getTime()) && inputDate <= minDate) {
+      setUserProfile({
+        ...userProfile,
+        [name]: value,
+        doberror: "", // Clear error message
+      });
+    } else {
+      setUserProfile({
+        ...userProfile,
+        [name]: value,
+        doberror: "You must be at least 18 years old",
+      });
+    }
+
+    setUserProfile({
+      ...userProfile,
+      [name]: value,
+    });
   };
 
   const handlePaste = (event) => {
@@ -326,134 +856,153 @@ const BorrowerProfile = () => {
   };
 
   const handleprofileUpdate = () => {
+    setUserProfile({
+      ...userProfile,
+      addresserror:
+        userProfile.address === "" ? "Please enter the address" : "",
+      cityer: userProfile.city === ("" || null) ? "Please enter the city" : "",
+      doberror: userProfile.dob === "" ? "Please enter the dob" : "",
+      fatherNameerror:
+        userProfile.fatherName === "" ? "Please enter the father Name" : "",
+      firstNamrror:
+        userProfile.firstName === "" ? "Please enter the first Name" : "",
+      lastNamerror:
+        userProfile.lastName === "" ? "Please enter the last Name" : "",
+      panNumbererror:
+        userProfile.panNumber === "" ? "Please enter the panNumber" : "",
+
+      permanentAddresserror:
+        userProfile.permanentAddress === ""
+          ? "Please Enter The Residence Address"
+          : "",
+      cityer: userProfile.city === "" ? "Please Enter The city" : "",
+      pinCodeerror:
+        userProfile.pinCode === "" ? "Please Enter The Pincode" : "",
+      stateerror: userProfile.state === "" ? "Please Enter The State" : "",
+      whatsAppNumbererror:
+        userProfile.whatsAppNumber === "" ||
+        userProfile.whatsAppNumber.length < 10
+          ? " WhatsApp Number should be 10 digits"
+          : "",
+      aadhaarNumbererror:
+        userProfile.aadharNumber === ""
+          ? "Please Enter the Aadhaar Number"
+          : "",
+
+      mobileNumbererror:
+        userProfile.mobileNumber === "" || userProfile.mobileNumber.length < 10
+          ? " MobileNumber should be 10 digits"
+          : "",
+      emailerror: userProfile.email === "" ? "Please Enter The Email" : "",
+    });
+
     if (
-      userProfile.email === "" ||
-      userProfile.firstName === "" ||
-      userProfile.mobileNumber === "" ||
-      userProfile.whatsAppNumber === "" ||
-      userProfile.city === "" ||
-      userProfile.pinCode === "" ||
-      userProfile.fatherName === "" ||
-      userProfile.state === "" ||
-      userProfile.aadharNumber === ""
+      userProfile.email !== null &&
+      userProfile.email !== "" &&
+      userProfile.firstName !== null &&
+      userProfile.firstName !== "" &&
+      userProfile.lastName !== null &&
+      userProfile.lastName !== "" &&
+      userProfile.doberror === "" &&
+      userProfile.mobileNumber !== null &&
+      userProfile.mobileNumber !== "" &&
+      userProfile.mobileNumber.length == 10 &&
+      userProfile.whatsAppNumber !== null &&
+      userProfile.whatsAppNumber !== "" &&
+      userProfile.whatsAppNumber.length > 10 &&
+      userProfile.pinCode !== null &&
+      userProfile.pinCode !== "" &&
+      userProfile.fatherName !== null &&
+      userProfile.fatherName !== "" &&
+      userProfile.state !== null &&
+      userProfile.state !== "" &&
+      userProfile.aadharNumber !== null &&
+      userProfile.aadharNumber !== "" &&
+      userProfile.panNumber !== null &&
+      userProfile.panNumber !== "" &&
+      userProfile.address !== null &&
+      userProfile.address !== "" &&
+      userProfile.city !== null &&
+      userProfile.city !== ""
     ) {
-      setUserProfile({
-        ...userProfile,
-
-        addresserror:
-          userProfile.address === "" ? "Please enter the address" : "",
-        cityer: userProfile.city === "" ? "Please enter the city" : "",
-        doberror: userProfile.dob === "" ? "Please enter the dob" : "",
-        fatherNameerror:
-          userProfile.fatherName === "" ? "Please enter the father Name" : "",
-        firstNamrror:
-          userProfile.firstName === "" ? "Please enter the first Name" : "",
-        panNumbererror:
-          userProfile.panNumber === "" ? "Please enter the panNumber" : "",
-        permanentAddresserror:
-          userProfile.permanentAddress === ""
-            ? "Please enter the Residence Address"
-            : "",
-        pinCodeerror:
-          userProfile.pinCode === "" ? "Please enter the pinCode" : "",
-        stateerror: userProfile.state === "" ? "Please enter the state" : "",
-        whatsAppNumbererror:
-          userProfile.whatsAppNumber === ""
-            ? "Please enter the whatsAppNumber"
-            : "",
-        aadhaarNumbererror:
-          userProfile.aadharNumber === ""
-            ? "Please enter the Aadhaar Number"
-            : "",
-
-        mobileNumbererror:
-          userProfile.mobileNumber === ""
-            ? "Please enter the mobileNumber"
-            : "",
-        emailerror: userProfile.email === "" ? "Please enter the email" : "",
-      });
-    } else {
+      console.log("sucss");
       const response = profileupadate(userProfile);
       response.then((data) => {
         if (data.request.status == 200) {
-          Success("success", "Personal Details Saved Successfully");
+          Success("success", "Personal Details Save Successfully");
         } else if (data.response.data.errorCode != "200") {
           WarningBackendApi("warning", data.response.data.errorMessage);
         }
       });
+    } else {
+      toastrWarning("fill the mandatory fields");
     }
   };
 
   const sendotp = async () => {
+    setBankaccountProfile((bankaccountprofile) => ({
+      ...bankaccountprofile,
+      moblieNumbererror:
+        bankaccountprofile.moblieNumber === "" ||
+        bankaccountprofile.moblieNumber.length != 10
+          ? "Enter 10 Digit Mobile Number "
+          : "",
+    }));
+
     if (
-      (bankaccountprofile.nameAtBank === "" ||
-        bankaccountprofile.nameAtBank === null) &&
-      (bankaccountprofile.accountNumber === "" ||
-        bankaccountprofile.accountNumber === null) &&
-      (bankaccountprofile.confirmAccountNumber === "" ||
-        bankaccountprofile.confirmAccountNumber === null) &&
-      (bankaccountprofile.ifscCode === "" ||
-        bankaccountprofile.ifscCode === null) &&
-      (bankaccountprofile.bankName === "" ||
-        bankaccountprofile.bankName === null) &&
-      (bankaccountprofile.branchName === "" ||
-        bankaccountprofile.branchName === null) &&
-      (bankaccountprofile.bankCityerror === "" ||
-        bankaccountprofile.bankCity === null) &&
-      (bankaccountprofile.moblieNumbererror === "" ||
-        bankaccountprofile.moblieNumber === null)
+      bankaccountprofile.moblieNumber !== null &&
+      bankaccountprofile.moblieNumber !== "" &&
+      bankaccountprofile.moblieNumber.length == 10
     ) {
-      setBankaccountProfile((stateconta) => ({
-        ...stateconta,
-        moblieNumbererror:
-          bankaccountprofile.moblieNumber !== ""
-            ? "Enter the Mobile Number"
-            : "",
-        accountNumbererror:
-          bankaccountprofile.accountNumber !== ""
-            ? "Enter the account Number"
-            : "",
-        confirmAccountNumbererror:
-          bankaccountprofile.confirmAccountNumber !== ""
-            ? "Enter the Confirm Account Number"
-            : "",
-        ifscCodeerror:
-          bankaccountprofile.ifscCode !== "" ? "Enter the IFSC Code" : "",
-        bankNameerror:
-          bankaccountprofile.bankName !== "" ? "Enter the bank Name " : "",
-        branchNameerror:
-          bankaccountprofile.branchName !== "" ? "Enter the branch Name  " : "",
-        bankCityerror:
-          bankaccountprofile.bankCity !== "" ? "Enter the bank City" : "",
-        // Add other error messages as needed
-      }));
+      console.log("valid");
+
+      const response = await sendMoblieOtp(bankaccountprofile);
+      if (response.request.status === 200) {
+        setdashboarddata({
+          ...dashboarddata,
+          sendotpbtn: true,
+          verifyotp: true,
+          sendotpbtnText: "ReSend OTP",
+          sendOtpsession: response.data.mobileOtpSession,
+          isValid: true,
+          submitbankdeatail: true,
+        });
+
+        setBankaccountProfile({
+          ...bankaccountprofile,
+          mobileOtpSession: response.data.mobileOtpSession,
+        });
+
+        toastrSuccess("Otp Sent Successfully!", "top-right");
+      } else {
+        toastrWarning(response.response.data.errorMessage);
+      }
     } else {
-      const response = sendMoblieOtp(bankaccountprofile);
-      response.then((data) => {
-        if (data.request.status == 200) {
-          setdashboarddata({
-            ...dashboarddata,
-            sendotpbtn: true,
-            verifyotp: true,
-            sendotpbtnText: "Resend OTP",
-            sendOtpsession: data.data.mobileOtpSession,
-            isValid: !dashboarddata.isValid,
-          });
-
-          setBankaccountProfile({
-            ...bankaccountprofile,
-            mobileOtpSession: data.data.mobileOtpSession,
-          });
-
-          toastrSuccess("Otp Sent Sucessfully!", "top-right");
-        } else if (data.response.data.errorCode != "200") {
-          toastrWarning(data.response.data.errorMessage);
-        }
-      });
-      // verifybankAccountCashfree();
+      console.log("fill the form");
     }
+
+    // verifybankAccountCashfree();
   };
 
+  useEffect(() => {
+    if (userProfile.pinCode.length == 6) {
+      const response = handlepincodeapicall(userProfile.pinCode);
+      response
+        .then((data) => {
+          if (data.request.status === 200 && data.data !== "") {
+            setUserProfile({
+              ...userProfile,
+              state: data.data.state,
+              city: data.data.city,
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error occurred during API call:", error);
+          // Handle error if necessary
+        });
+    }
+  }, [userProfile.pinCode]);
   const openTheActiveTabs = (type) => {
     var i, j;
     let tablinks = document.getElementsByClassName("nav-link");
@@ -644,7 +1193,7 @@ const BorrowerProfile = () => {
                           : dashboarddata.profileData != null
                           ? dashboarddata.profileData.data.userId
                           : ""}
-                        {", BORROWER"}
+                        {`, ${"BORROWER"}`}
                       </h6>
                       <div className="user-Location">
                         <i className="fas fa-map-marker-alt" />{" "}
@@ -874,10 +1423,11 @@ const BorrowerProfile = () => {
                                   className="form-control"
                                   placeholder=" Enter your Name"
                                   name="nameAtBank"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.nameAtBank}
                                 />
-                                {bankaccountprofile.nameAtBank && (
+                                {bankaccountprofile.nameAtBankerror && (
                                   <div className="text-danger">
                                     {bankaccountprofile.nameAtBankerror}
                                   </div>
@@ -894,7 +1444,7 @@ const BorrowerProfile = () => {
                                   name="accountNumber"
                                   onChange={handlebankchange}
                                   placeholder=" Enter your Account Number"
-                                  maxLength={18}
+                                  maxLength={16}
                                   value={bankaccountprofile.accountNumber}
                                 />
                                 {bankaccountprofile.accountNumbererror && (
@@ -916,7 +1466,7 @@ const BorrowerProfile = () => {
                                   onChange={handlebankchange}
                                   placeholder="Enter Confirm Account Number"
                                   onPaste={handlePaste}
-                                  maxLength={18}
+                                  maxLength={16}
                                   onCopy={handleCopy}
                                   value={
                                     bankaccountprofile.confirmAccountNumber
@@ -972,6 +1522,7 @@ const BorrowerProfile = () => {
                                   className="form-control"
                                   name="bankName"
                                   onChange={handlebankchange}
+                                  onKeyPress={handleKeyPress}
                                   placeholder=" Enter your Bank Name"
                                   value={bankaccountprofile.bankName}
                                 />
@@ -992,6 +1543,7 @@ const BorrowerProfile = () => {
                                   className="form-control"
                                   name="branchName"
                                   placeholder=" Enter your Branch"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlebankchange}
                                   value={bankaccountprofile.branchName}
                                 />
@@ -1013,6 +1565,7 @@ const BorrowerProfile = () => {
                                   name="bankCity"
                                   placeholder=" Enter your Bank City"
                                   onChange={handlebankchange}
+                                  onKeyPress={handleKeyPress}
                                   value={bankaccountprofile.bankCity}
                                 />
                                 {bankaccountprofile.bankCityerror && (
@@ -1049,18 +1602,31 @@ const BorrowerProfile = () => {
                                     Otp <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="tel"
                                     className="form-control"
                                     name="mobileOtp"
-                                    maxLength={6}
                                     placeholder=" Enter your Mobile otp"
                                     onChange={handlebankchange}
                                     value={bankaccountprofile.mobileOtp}
+                                    maxLength={6}
                                   />
                                 </div>
                               )}
 
                               <div className="col-12 row">
+                                {dashboarddata.verifyotp && (
+                                  <>
+                                    <button
+                                      className="btn btn-warning col-md-2 mx-2"
+                                      style={{ color: "white" }}
+                                      type="submit"
+                                      onClick={verifybankAccountCashfree}
+                                    >
+                                      {/* {dashboarddata.verifyotpText} */}
+                                      Verify IFSC
+                                    </button>
+                                  </>
+                                )}
                                 {dashboarddata.sendotpbtn && (
                                   <button
                                     className="btn btn-secondary col-md-2 mx-2"
@@ -1068,15 +1634,6 @@ const BorrowerProfile = () => {
                                     onClick={sendotp}
                                   >
                                     {dashboarddata.sendotpbtnText}
-                                  </button>
-                                )}
-                                {dashboarddata.verifyotp && (
-                                  <button
-                                    className="btn btn-warning col-md-2 mx-2"
-                                    type="submit"
-                                    onClick={verifybankAccountCashfree}
-                                  >
-                                    {dashboarddata.verifyotpText}
                                   </button>
                                 )}
 
@@ -1105,7 +1662,7 @@ const BorrowerProfile = () => {
                         <br />
                         <div className="row">
                           <div className="col-md-12 col-lg-12">
-                            <form action="#" onSubmit={submitNomineeDetails}>
+                            <form action="#">
                               <div className="row">
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1116,10 +1673,16 @@ const BorrowerProfile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your Nominee Name"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.nomineeName}
                                     name="nomineeName"
                                     onChange={handlerNominee}
                                   />
+                                  {nomineeDetails.nomineeNameerror && (
+                                    <div className="error">
+                                      {nomineeDetails.nomineeNameerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1130,10 +1693,16 @@ const BorrowerProfile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder=" Enter your  Relation"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.relation}
                                     name="relation"
                                     onChange={handlerNominee}
                                   />
+                                  {nomineeDetails.relationerror && (
+                                    <div className="error">
+                                      {nomineeDetails.relationerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1148,6 +1717,11 @@ const BorrowerProfile = () => {
                                     name="nomineeEmail"
                                     onChange={handlerNominee}
                                   />
+                                  {nomineeDetails.nomineeEmaileeror && (
+                                    <div className="error">
+                                      {nomineeDetails.nomineeEmaileeror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1155,29 +1729,41 @@ const BorrowerProfile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
-                                    minLength={10}
+                                    type="tel"
+                                    maxLength={10}
                                     className="form-control"
                                     placeholder=" Enter  Nominee mobile no "
                                     value={nomineeDetails.nomineeMobile}
                                     name="nomineeMobile"
                                     onChange={handlerNominee}
                                   />
+
+                                  {nomineeDetails.nomineeMobileerror && (
+                                    <div className="error">
+                                      {nomineeDetails.nomineeMobileerror}
+                                    </div>
+                                  )}
                                 </div>
 
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
-                                    Nominee Name Account No
+                                    Nominee Account No
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="number"
+                                    type="tel"
                                     className="form-control"
                                     placeholder="  Nominee Name Account No"
                                     value={nomineeDetails.accountNo}
                                     name="accountNo"
+                                    maxLength={18}
                                     onChange={handlerNominee}
                                   />
+                                  {nomineeDetails.accountNoerror && (
+                                    <div className="error">
+                                      {nomineeDetails.accountNoerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1185,11 +1771,12 @@ const BorrowerProfile = () => {
                                     <span className="login-danger">*</span>
                                   </label>
                                   <input
-                                    type="text"
+                                    type="tel"
                                     className="form-control"
                                     placeholder="Nominee IFSC Code"
                                     value={nomineeDetails.nomineeIfsc}
                                     name="nomineeIfsc"
+                                    maxLength={11}
                                     onChange={handlerNominee}
                                   />
                                 </div>
@@ -1202,10 +1789,17 @@ const BorrowerProfile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder=" Nominee Bank Name"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.bank}
                                     name="bank"
                                     onChange={handlerNominee}
                                   />
+
+                                  {nomineeDetails.bankerror && (
+                                    <div className="error">
+                                      {nomineeDetails.bankerror}
+                                    </div>
+                                  )}
                                 </div>
 
                                 <div className="form-group col-12 col-md-4 local-forms">
@@ -1217,10 +1811,16 @@ const BorrowerProfile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder=" Nominee City Name"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.nomineecity}
                                     name="nomineecity"
                                     onChange={handlerNominee}
                                   />
+                                  {nomineeDetails.nomineecityerror && (
+                                    <div className="error">
+                                      {nomineeDetails.nomineecityerror}
+                                    </div>
+                                  )}
                                 </div>
                                 <div className="form-group col-12 col-md-4 local-forms">
                                   <label>
@@ -1231,17 +1831,25 @@ const BorrowerProfile = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Nominee Branch"
+                                    onKeyPress={handleKeyPress}
                                     value={nomineeDetails.branch}
                                     name="branch"
                                     onChange={handlerNominee}
                                   />
+                                  {nomineeDetails.brancherror && (
+                                    <div className="error">
+                                      {nomineeDetails.brancherror}
+                                    </div>
+                                  )}
                                 </div>
 
                                 <div className="row col-12">
                                   <button
                                     className="btn btn-success col-12 col-md-2"
                                     type="submit"
-                                    disabled={nomineeDetails.isbtndisable}
+                                    // disabled={nomineeDetails.isbtndisable}
+
+                                    onClick={() => handleNomineeclick(event)}
                                   >
                                     Save
                                   </button>
@@ -1271,6 +1879,7 @@ const BorrowerProfile = () => {
                                   type="text"
                                   className="form-control"
                                   placeholder="Enter First Name"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlechange}
                                   value={userProfile.firstName}
                                   name="firstName"
@@ -1284,12 +1893,13 @@ const BorrowerProfile = () => {
                               <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                   Last Name
-                                  <span className="login-danger"></span>
+                                  <span className="login-danger">*</span>
                                 </label>
                                 <input
                                   type="text"
                                   className="form-control"
                                   placeholder="Enter Last Name"
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlechange}
                                   value={userProfile.lastName}
                                   name="lastName"
@@ -1306,11 +1916,12 @@ const BorrowerProfile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="text"
+                                  type="tel"
                                   className="form-control"
                                   placeholder="Enter PAN Number"
                                   onChange={handlechange}
                                   value={userProfile.panNumber}
+                                  maxLength={10}
                                   name="panNumber"
                                 />
 
@@ -1359,6 +1970,7 @@ const BorrowerProfile = () => {
                                   onChange={handlechange}
                                   value={userProfile.dob}
                                   name="dob"
+                                  max={new Date().toISOString().split("T")[0]}
                                 />
 
                                 {userProfile.doberror && (
@@ -1376,6 +1988,7 @@ const BorrowerProfile = () => {
                                 <input
                                   type="text"
                                   className="form-control"
+                                  onKeyPress={handleKeyPress}
                                   placeholder="Enter Father Name"
                                   onChange={handlechange}
                                   value={userProfile.fatherName}
@@ -1473,7 +2086,7 @@ const BorrowerProfile = () => {
                                   <span className="login-danger">*</span>
                                 </label>
                                 <input
-                                  type="tel"
+                                  type="number"
                                   className="form-control"
                                   placeholder="Enter Pincode"
                                   maxLength={6}
@@ -1514,6 +2127,7 @@ const BorrowerProfile = () => {
                                   type="text"
                                   className="form-control"
                                   placeholder="Enter City "
+                                  onKeyPress={handleKeyPress}
                                   onChange={handlechange}
                                   value={userProfile.city}
                                   name="city"
@@ -1534,6 +2148,7 @@ const BorrowerProfile = () => {
                                   className="form-control"
                                   placeholder="Enter State"
                                   onChange={handlechange}
+                                  onKeyPress={handleKeyPress}
                                   value={userProfile.state}
                                   name="state"
                                 />
@@ -1692,7 +2307,7 @@ const BorrowerProfile = () => {
                                     type="file"
                                     accept="image/*"
                                     name="aadhar"
-                                    id="aadhaar"
+                                    id="aadhar"
                                     className="hide-input"
                                     onChange={handlefileupload}
                                   />
@@ -1832,4 +2447,4 @@ const BorrowerProfile = () => {
   );
 };
 
-export default BorrowerProfile;
+export default Profile;

@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "prod";
+const userisIn = "local";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -140,7 +140,7 @@ export const bulkinvitegmailLink = async () => {
   }
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `getGmailAuthorization/gmailcontacts/${userType}`,
+    `getGmailAuthorization/gmailcontacts/${userType}/REACT`,
     "GET",
     token
   );
@@ -604,6 +604,7 @@ export const fetchGamilCode = async (gmailcode) => {
   const postdata = {
     gmailCode: gmailcode,
     userType: "LENDER",
+    projectType: "REACT",
   };
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -694,8 +695,8 @@ export const submitWithdrawalRequestFromWallet = async (postdate) => {
   const token = getToken();
   const userId = getUserId();
 
-    const withdrawAmount=    postdate.withdrawAmount;
-    const withdrawRating=    postdate.withdrawRating;
+  const withdrawAmount = postdate.withdrawAmount;
+  const withdrawRating = postdate.withdrawRating;
   const postdata = {
     userId,
     userType: "LENDER",
@@ -706,9 +707,9 @@ export const submitWithdrawalRequestFromWallet = async (postdate) => {
     feedBack: postdate.withdrawFeedback, // It's not clear where withdrawFeedback comes from
     adminComments: "",
     status: "INITIATED",
-};
+  };
 
-const postdatastring = JSON.stringify(postdata);
+  const postdatastring = JSON.stringify(postdata);
 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
@@ -1770,6 +1771,12 @@ export const myagreedloanapplication = async (pageNo = 1, pageSize = 10) => {
   const token = getToken();
   const userId = getUserId();
 
+  let fName = "borrowerUserId";
+
+  // if (sprimaryType == "BORROWER") {
+  //   fName = "borrowerUserId";
+  // }
+
   const postdatastring = JSON.stringify({
     leftOperand: {
       fieldName: fName,
@@ -1794,6 +1801,63 @@ export const myagreedloanapplication = async (pageNo = 1, pageSize = 10) => {
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `${userId}/loan/BORROWER/search`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const enachmandate = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({});
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/BORROWER/searchEnachMandateApplicationLevel`,
+    "POST",
+    token,
+    postdatastring
+  );
+  return response;
+};
+
+export const borrowerloaslistings = async (pageNo = 1, pageSize = 10) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  var fieldValueUser = "LENDER";
+  var userUtm = "WEB";
+  const postdatastring = JSON.stringify({
+    leftOperand: {
+      leftOperand: {
+        fieldName: "userPrimaryType",
+        fieldValue: fieldValueUser,
+        operator: "EQUALS",
+      },
+      logicalOperator: "AND",
+      rightOperand: {
+        fieldName: "user.urchinTrackingModule",
+        fieldValue: userUtm,
+        operator: "EQUALS",
+      },
+    },
+    logicalOperator: "AND",
+    rightOperand: {
+      fieldName: "parentRequestId",
+      operator: "NULL",
+    },
+    page: {
+      pageNo,
+      pageSize,
+    },
+    sortBy: "userId",
+    sortOrder: "DESC",
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/BORROWER/request/search`,
     "POST",
     token,
     postdatastring

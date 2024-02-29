@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import BorrowerHeader from "../../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 import { Link } from "react-router-dom";
-import { Table } from "antd";
+import { Table, Pagination } from "antd";
 import { onShowSizeChange } from "../../../Pagination";
-import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
+import { enachmandate } from "../../../HttpRequest/afterlogin";
 import { cancelwithdrawalRequestInformation } from "../../Base UI Elements/SweetAlert";
 
 const Enach = () => {
-  const [mywithdrawalHistory, setmywithdrawalHistory] = useState({
+  const [myEnach, setEnach] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
@@ -17,8 +17,8 @@ const Enach = () => {
     defaultPageSize: 10,
   });
   const mywithdrawalPagination = (Pagination) => {
-    setmywithdrawalHistory({
-      ...mywithdrawalHistory,
+    setEnach({
+      ...myEnach,
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
@@ -30,27 +30,24 @@ const Enach = () => {
   };
 
   useEffect(() => {
-    const response = getMyWithdrawalHistory(
-      mywithdrawalHistory.pageNo,
-      mywithdrawalHistory.pageSize
-    );
+    const response = enachmandate(myEnach.pageNo, myEnach.pageSize);
     response.then((data) => {
       if (data.request.status == 200) {
-        setmywithdrawalHistory({
-          ...mywithdrawalHistory,
+        setEnach({
+          ...myEnach,
           apiData: data.data,
           loading: false,
-          hasdata: data.data.results.length == 0 ? false : true,
+          hasdata: data.data.length == 0 ? false : true,
         });
       }
     });
     return () => {};
-  }, [mywithdrawalHistory.pageNo, mywithdrawalHistory.pageSize]);
+  }, [myEnach.pageNo, myEnach.pageSize]);
 
   const datasource = [];
   {
-    mywithdrawalHistory.apiData != ""
-      ? mywithdrawalHistory.apiData.results.map((data) => {
+    myEnach.apiData != ""
+      ? myEnach.apiData.results.map((data) => {
           datasource.push({
             key: Math.random(),
             raisedon: data.createdOn,
@@ -85,33 +82,19 @@ const Enach = () => {
 
   const columns = [
     {
-      title: "Raised on",
-      dataIndex: "raisedon",
-      sorter: (a, b) => new Date(a.raisedon) - new Date(b.raisedon),
+      title: "Lender info",
+      dataIndex: "Lenderinfo",
+      sorter: (a, b) => a.Lenderinfo - b.Lenderinfo,
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      sorter: (a, b) => a.amount - b.amount,
+      title: "Loan info",
+      dataIndex: "loaninfo",
+      sorter: (a, b) => a.loaninfo - b.loaninfo,
     },
     {
-      title: "Reason",
-      dataIndex: "reason",
-      sorter: (a, b) => a.reason.length - b.reason.length,
-    },
-    {
-      title: "Requested From",
-      dataIndex: "requestedFrom",
-      sorter: (a, b) => a.requestedFrom.length - b.requestedFrom.length,
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
+      title: "enach status",
+      dataIndex: "enachstatus",
+      sorter: (a, b) => a.enachstatus.length - b.enachstatus.length,
     },
   ];
 
@@ -127,7 +110,7 @@ const Enach = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Running Loans</h3>
+                  <h3 className="page-title">Enach</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/borrowerDashboard">Dashboard</Link>
@@ -149,8 +132,8 @@ const Enach = () => {
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: mywithdrawalHistory.apiData.totalCount,
-                          defaultPageSize: mywithdrawalHistory.defaultPageSize,
+                          total: myEnach.apiData.totalCount,
+                          defaultPageSize: myEnach.defaultPageSize,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
@@ -158,11 +141,9 @@ const Enach = () => {
                           onShowSizeChange: onShowSizeChange,
                         }}
                         columns={columns}
-                        dataSource={
-                          mywithdrawalHistory.hasdata ? datasource : []
-                        }
+                        dataSource={myEnach.hasdata ? datasource : []}
                         expandable={true}
-                        loading={mywithdrawalHistory.loading}
+                        loading={myEnach.loading}
                         onChange={mywithdrawalPagination}
                       />
                     </div>

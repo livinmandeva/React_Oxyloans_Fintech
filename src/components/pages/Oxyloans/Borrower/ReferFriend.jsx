@@ -2,10 +2,6 @@ import React, { useEffect, useState } from "react";
 import BorrowerHeader from "../../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 import { Link } from "react-router-dom";
-import { Table } from "antd";
-import { onShowSizeChange } from "../../../Pagination";
-import { getMyWithdrawalHistory } from "../../../HttpRequest/afterlogin";
-import { cancelwithdrawalRequestInformation } from "../../Base UI Elements/SweetAlert";
 import {
   getUserId,
   profilesubmit,
@@ -17,13 +13,17 @@ import {
   HandleWithFooter,
   WarningBackendApi,
 } from "../../Base UI Elements/SweetAlert";
+// import Invaitemodel from "../../../Utills/Modals/Invaitemodel";
 import Invaitemodel from "../Utills/Modals/Invaitemodel";
 
-const ReferFriend = () => {
+const ReferaFriend = () => {
   const [profile, setprofile] = useState({
     email: "",
     mobileNumber: "",
     name: "",
+    emailerror: "",
+    mobileNumbererror: "",
+    nameerror: "",
     mailSubject: 0,
     referrerId: "",
     primaryType: "LENDER",
@@ -31,7 +31,8 @@ const ReferFriend = () => {
     seekerRequestedId: "0",
     inviteType: "SingleInvite",
     mailContent: 0,
-    savebtndisable: true,
+    savebtndisable: false,
+    userinviteType: "YES",
   });
 
   const [emailres, setEmailres] = useState({
@@ -47,11 +48,28 @@ const ReferFriend = () => {
 
   const handlechanges = (event) => {
     const { name, value } = event.target;
+
     setprofile({
       ...profile,
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    console.log(profile.email);
+    if (!emailRegex.test(profile.email) && profile.email !== "") {
+      setprofile({
+        ...profile,
+        emailerror: "Please enter a valid email",
+      });
+    } else {
+      setprofile({
+        ...profile,
+        emailerror: "",
+      });
+    }
+  }, [profile.email]);
 
   useEffect(() => {
     const getemail = async () => {
@@ -86,38 +104,60 @@ const ReferFriend = () => {
     return () => {};
   }, [url]);
 
-  useEffect(() => {
-    const inputValid =
-      profile.email != "" &&
-      profile.mobileNumber != "" &&
-      profile.name != "" &&
-      profile.citizenType != "";
+  // useEffect(() => {
+  //   const inputValid =
+  //     profile.email != "" &&
+  //     profile.mobileNumber != "" &&
+  //     profile.mobileNumber.length == 10 &&
+  //     profile.name != "" &&
+  //     profile.citizenType != "";
 
-    if (inputValid) {
-      setprofile({
-        ...profile,
-        savebtndisable: false,
+  //   if (inputValid) {
+  //     setprofile({
+  //       ...profile,
+  //       savebtndisable: false,
+  //     });
+  //   } else {
+  //     setprofile({
+  //       ...profile,
+  //       savebtndisable: true,
+  //     });
+  //   }
+
+  //   return () => {};
+  // }, [profile.email, profile.name, profile.citizenType, profile.mobileNumber]);
+
+  const handleprofilesubmit = () => {
+    setprofile({
+      ...profile,
+      emailerror: profile.email === "" ? "Enter The Email" : "",
+      mobileNumbererror:
+        profile.mobileNumber.length != 10
+          ? "Enter The 10 Digit Mobile number"
+          : "",
+      nameerror: profile.name === "" ? "Enter The Name" : "",
+    });
+
+    if (
+      profile.email !== "" &&
+      profile.email !== null &&
+      profile.emailerror == "" &&
+      profile.mobileNumber.length === 10 &&
+      profile.name !== "" &&
+      profile.name !== null &&
+      profile.nameerror == ""
+    ) {
+      const response = profilesubmit(profile);
+      response.then((data) => {
+        if (data.request.status === 200) {
+          HandleWithFooter("lender invited successfully ");
+        } else {
+          WarningBackendApi("Error", data.response.data.errorMessage);
+        }
       });
     } else {
-      setprofile({
-        ...profile,
-        savebtndisable: true,
-      });
+      console.log("form not vaild");
     }
-
-    return () => {};
-  }, [profile.email, profile.name, profile.citizenType, profile.mobileNumber]);
-
-  const handleprofilesubmit = (event) => {
-    const response = profilesubmit(profile);
-    response.then((data) => {
-      if (data.request.status == 200) {
-        HandleWithFooter("lender invited successfully ");
-      } else {
-        WarningBackendApi("Error", data.response.data.errorMessage);
-      }
-    });
-    event.preventDefault();
   };
 
   const handlebulkInvite = async () => {
@@ -136,7 +176,7 @@ const ReferFriend = () => {
   const Invitelender = async () => {
     const userId = localStorage.getItem("userType");
     const input = document.createElement("input");
-    input.value = `https://www.oxyloans.com/new/register_lender?ref=${userId}`;
+    input.value = `https://www.p2pclub.oxyloans.com/register?ref=${userId}`;
     document.body.appendChild(input);
     input.select();
     document.execCommand("copy");
@@ -199,14 +239,19 @@ const ReferFriend = () => {
                   <h3 className="page-title">Refer a Friend & Earn INR 1000</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/borrowerDashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">Refer a Friend</li>
                   </ul>
                 </div>
               </div>
             </div>{" "}
-            {emailres.invaitemodel && <Invaitemodel />}
+            {emailres.invaitemodel && (
+              <Invaitemodel
+                emailcontentdata={emailcontentdata}
+                handleinvaite={handleinvaite}
+              />
+            )}
             {/* /Page Header */}
             <div className="row">
               <div className="col-md-12">
@@ -378,14 +423,12 @@ const ReferFriend = () => {
                                   Browse From Computer
                                   {/* </button> */}{" "}
                                 </a>
-
-                                {/* <a
+                                <a
                                   href={url}
                                   className="btn btn-outline-warning my-lg-3 border-2 "
                                 >
                                   Invite Through Gmail
-                      
-                                </a> */}
+                                </a>
                               </div>
                             </form>
                           </div>
@@ -449,7 +492,10 @@ const ReferFriend = () => {
                           <div className="col-md-12 col-lg-12 row">
                             <div className="row mt-3">
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Name </label>
+                                <label>
+                                  Friend Name{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <input
                                   type="text"
                                   className="form-control"
@@ -458,19 +504,38 @@ const ReferFriend = () => {
                                   onChange={handlechanges}
                                   required
                                 />
+                                {profile.nameerror && (
+                                  <div className="error">
+                                    {" "}
+                                    {profile.nameerror}
+                                  </div>
+                                )}
                               </div>
+
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Email</label>
+                                <label>
+                                  Friend Email{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <input
                                   type="email"
                                   className="form-control"
                                   name="email"
                                   placeholder="Enter The Email"
                                   onChange={handlechanges}
-                                />
+                                />{" "}
+                                {profile.emailerror && (
+                                  <div className="error">
+                                    {" "}
+                                    {profile.emailerror}
+                                  </div>
+                                )}
                               </div>
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Location</label>
+                                <label>
+                                  Friend Location{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <select
                                   className="form-control form-select"
                                   name="citizenType"
@@ -483,7 +548,28 @@ const ReferFriend = () => {
                               </div>
 
                               <div className="form-group col-12 col-sm-4">
-                                <label>Friend Mobile </label>
+                                <label>
+                                  Keep me in cc{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
+                                <select
+                                  className="form-control form-select"
+                                  name="userinviteType"
+                                  value={profile.userinviteType}
+                                  onChange={handlechanges}
+                                >
+                                  <option value="YES" selected>
+                                    YES
+                                  </option>
+                                  <option value="NO">NO</option>
+                                </select>
+                              </div>
+
+                              <div className="form-group col-12 col-sm-4">
+                                <label>
+                                  Friend Mobile{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <input
                                   type="tel"
                                   className="form-control"
@@ -492,10 +578,19 @@ const ReferFriend = () => {
                                   name="mobileNumber"
                                   onChange={handlechanges}
                                 />
+                                {profile.mobileNumbererror && (
+                                  <div className="error">
+                                    {" "}
+                                    {profile.mobileNumbererror}
+                                  </div>
+                                )}
                               </div>
 
-                              <div className="form-group col-12 col-sm-8">
-                                <label>Email Subject </label>
+                              <div className="form-group col-12 col-sm-4">
+                                <label>
+                                  Email Subject
+                                  <span className="login-danger">*</span>{" "}
+                                </label>
                                 <input
                                   type="text"
                                   className="form-control"
@@ -506,7 +601,10 @@ const ReferFriend = () => {
                               </div>
 
                               <div className="form-group col-12 col-sm-12">
-                                <label>Email Content </label>
+                                <label>
+                                  Email Content{" "}
+                                  <span className="login-danger">*</span>
+                                </label>
                                 <textarea
                                   className="form-control"
                                   value={emailcontentdata}
@@ -541,4 +639,4 @@ const ReferFriend = () => {
   );
 };
 
-export default ReferFriend;
+export default ReferaFriend;

@@ -179,7 +179,7 @@ const Mycontacts = () => {
                   <h3 className="page-title">My Gmail Contacts</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/borrowerDashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">My Contact</li>
                   </ul>

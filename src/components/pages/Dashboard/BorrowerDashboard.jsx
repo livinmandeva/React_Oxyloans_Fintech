@@ -6,6 +6,7 @@ import SideBar from "../../SideBar/SideBar";
 import ProgressBar from "react-customizable-progressbar";
 import { Link } from "react-router-dom";
 import "../Oxyloans/Lender/table.css";
+import { invoicesicon5 } from "../../imagepath";
 
 import {
   chatapi,
@@ -737,7 +738,7 @@ const BorrowerDashboard = () => {
                   <div className="card-body">
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
-                        <h6>Wallet </h6>
+                        <h6>Applications</h6>
                         <h3>
                           {getreducerprofiledata?.length !== 0
                             ? getreducerprofiledata?.lenderWalletAmount -
@@ -763,7 +764,7 @@ const BorrowerDashboard = () => {
                   <div className="card-body">
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
-                        <h6>Active Deals</h6>
+                        <h6>Active </h6>
                         <h3>
                           {getdashboardData?.length !== 0
                             ? getdashboardData?.numberOfActiveDealsCount ?? 0
@@ -787,7 +788,7 @@ const BorrowerDashboard = () => {
                   <div className="card-body">
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
-                        <h6>Closed Deals</h6>
+                        <h6>Closed </h6>
                         <h3>
                           {getdashboardData?.length !== 0
                             ? getdashboardData?.numberOfClosedDealsCount ?? 0
@@ -811,7 +812,7 @@ const BorrowerDashboard = () => {
                   <div className="card-body">
                     <div className="db-widgets d-flex justify-content-between align-items-center">
                       <div className="db-info">
-                        <h6>Total Deals</h6>
+                        <h6> Disbursed</h6>
                         <h3>
                           {getdashboardData?.length !== 0
                             ? getdashboardData?.numberOfClosedDealsCount +
@@ -833,35 +834,51 @@ const BorrowerDashboard = () => {
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-md-12 col-lg-12">
-                <div className="card">
-                  <div className="card-body">
-                    <span>
-                      <span className="text-bold text-success mx-lg-1">
-                        Subscription Validity:
-                      </span>
-                      {getreducerprofiledata?.length !== 0 &&
-                        (getreducerprofiledata?.groupName === "NewLender" ? (
-                          <span>
-                            You are a new lender, pay the annual membership fee
-                            to participate in the multiple deals
-                            <span className="badge bg-info mx-2">
-                              <Link to="/membership" className="text-white">
-                                Get Membership
-                              </Link>
-                            </span>
-                          </span>
-                        ) : (
-                          <span>
-                            Active until {getdashboardData?.validityDate}
-                          </span>
-                        ))}
-                    </span>
+            <div className="card report-card">
+              <div className="card-body pb-0">
+                <div className="row">
+                  <div className="col-md-12">
+                    <ul className="app-listing">
+                      <li>
+                        <div className="report-btn">
+                          <Link to="#" className="btn">
+                            <img src={invoicesicon5} alt="" className="me-2" />
+                            Active Loans
+                          </Link>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="report-btn">
+                          <Link to="/borrowerAgreedLoans" className="btn">
+                            <img src={invoicesicon5} alt="" className="me-2" />
+                            Closed Loans
+                          </Link>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div className="report-btn">
+                          <Link to="/borrowerAgreedLoans" className="btn">
+                            <img src={invoicesicon5} alt="" className="me-2" />
+                            New Request
+                          </Link>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div className="report-btn">
+                          <Link to="/borrowerAgreedLoans" className="btn">
+                            <img src={invoicesicon5} alt="" className="me-2" />
+                            Agreed Loans
+                          </Link>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
+
             {/* /Overview Section */}
             <div className="row ">
               <div className="col-md-12 col-lg-6 d-none">

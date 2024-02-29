@@ -1,5 +1,5 @@
 import React from "react";
-import AppContainer from "./appcontainer.jsx";
+
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
 
 import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
@@ -223,9 +223,8 @@ const AppRouter = () => {
           path="/borrowerTicketHistory"
           element={<BorrowerTicketHistory />}
         /> */}
+        {/* ******************** BORROWER MODULE ROUTES END **************************  */}
       </Routes>
-
-      {/* ******************** BORROWER MODULE ROUTES END **************************  */}
     </BrowserRouter>
   );
 };

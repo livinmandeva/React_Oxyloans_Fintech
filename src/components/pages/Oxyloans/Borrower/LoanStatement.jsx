@@ -168,7 +168,7 @@ const LoanStatement = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Running Loans mandeva</h3>
+                  <h3 className="page-title">Running Loans </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/borrowerDashboard">Dashboard</Link>

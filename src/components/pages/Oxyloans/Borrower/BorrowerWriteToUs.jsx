@@ -120,7 +120,7 @@ const BorrowerWriteToUs = () => {
                   <h3 className="page-title">Write to us </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/borrowerDashboard">Dashboard</Link>
                     </li>
                     <li className="breadcrumb-item active">Write to us</li>
                   </ul>

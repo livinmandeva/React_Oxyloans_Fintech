@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BorrowerHeader from "../../../Header/BorrowerHeader";
+import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 
-import Footer from "../../../Footer/Footer";
 import {
   TicketHistoryapi,
   ticketcommentapi,
 } from "../../../HttpRequest/afterlogin";
-// import "./InvoiceGrid.css";
+// import ".././InvoiceGrid.css";
 import Comment from "../Utills/Modals/Comment";
-import BorrowerHeader from "../../../Header/BorrowerHeader";
-import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 
-const ViewTicketHistory = () => {
+const TicketHistory = () => {
   const [ticket, setticketdata] = useState({});
   const [apires, setapires] = useState([]);
   const [dataapi, setdataapi] = useState();
@@ -185,7 +184,7 @@ const ViewTicketHistory = () => {
                                         >
                                           <Link
                                             className="text-white"
-                                            to="/writetous"
+                                            to={`/writetous?id=${item.id}`}
                                           >
                                             Write Reply
                                           </Link>
@@ -216,12 +215,10 @@ const ViewTicketHistory = () => {
               </div>
             </div>
           </div>
-
-          <Footer />
         </div>
       </div>
     </>
   );
 };
 
-export default ViewTicketHistory;
+export default TicketHistory;

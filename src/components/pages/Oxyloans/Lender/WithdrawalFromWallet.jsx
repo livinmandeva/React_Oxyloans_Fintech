@@ -29,8 +29,7 @@ const WithdrawalFromWallet = () => {
     isvalid: true,
   });
 
-
-  const  [inputValue  , setInputValue ]=useState("")
+  const [inputValue, setInputValue] = useState("");
   const minDate = new Date();
   const handleChange = (date) => {
     setwithdrawRequest({
@@ -48,14 +47,13 @@ const WithdrawalFromWallet = () => {
     });
   };
 
-
   const handleKeyPress = (event) => {
-    console.log('Key pressed:', event.key); // Check if the function is triggered
+    console.log("Key pressed:", event.key); // Check if the function is triggered
     const inputChar = event.key;
     const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
 
     // Check if the pressed key is an alphabetic character or backspace
-    if (!regex.test(inputChar) && inputChar !== 'Backspace') {
+    if (!regex.test(inputChar) && inputChar !== "Backspace") {
       event.preventDefault();
     }
   };
@@ -67,32 +65,42 @@ const WithdrawalFromWallet = () => {
     });
   };
 
-  console.log(withdrawrequest.withdrawFeedback)
+  console.log(withdrawrequest.withdrawFeedback);
   const withdrawrequestHandler = async () => {
-
-
     setwithdrawRequest((withdrawrequest) => ({
       ...withdrawrequest,
-      withdrawAmounterror: withdrawrequest.withdrawAmount === "" ? "Enter the Withdrawal Amount" : "",
-      withdrawFeedbackerror: withdrawrequest.withdrawFeedback === "" ? "Enter the Feedback" : "",
-      withdrawRatingerror: withdrawrequest.withdrawRating === "" ? "Give the Rating" : "",
-      withdraReasonerror: withdrawrequest.withdraReason === "" ? "Enter the Reason" : "",
-      setGivendateerror: !withdrawrequest.setGivendate ? "Enter the Withdrawal Date" : "",
+      withdrawAmounterror:
+        withdrawrequest.withdrawAmount === ""
+          ? "Enter the Withdrawal Amount"
+          : "",
+      withdrawFeedbackerror:
+        withdrawrequest.withdrawFeedback === "" ? "Enter the Feedback" : "",
+      withdrawRatingerror:
+        withdrawrequest.withdrawRating === "" ? "Give the Rating" : "",
+      withdraReasonerror:
+        withdrawrequest.withdraReason === "" ? "Enter the Reason" : "",
+      setGivendateerror: !withdrawrequest.setGivendate
+        ? "Enter the Withdrawal Date"
+        : "",
     }));
-    
 
-    if(withdrawrequest.withdrawAmount !== ""  && withdrawrequest.withdrawAmount !== null &&
-    withdrawrequest.withdrawFeedback !== ""  && withdrawrequest.withdrawFeedback !== null &&
-    withdrawrequest.withdrawRating !== ""  && withdrawrequest.withdrawRating !== null &&
-    withdrawrequest.withdraReason !== ""  && withdrawrequest.withdraReason !== null &&
-    withdrawrequest.setGivendate !== ""  && withdrawrequest.setGivendate !== null ){
-
-
-      console.log("WithdrawalFromWallet")
+    if (
+      withdrawrequest.withdrawAmount !== "" &&
+      withdrawrequest.withdrawAmount !== null &&
+      withdrawrequest.withdrawFeedback !== "" &&
+      withdrawrequest.withdrawFeedback !== null &&
+      withdrawrequest.withdrawRating !== "" &&
+      withdrawrequest.withdrawRating !== null &&
+      withdrawrequest.withdraReason !== "" &&
+      withdrawrequest.withdraReason !== null &&
+      withdrawrequest.setGivendate !== "" &&
+      withdrawrequest.setGivendate !== null
+    ) {
+      console.log("WithdrawalFromWallet");
       const response = submitWithdrawalRequestFromWallet(withdrawrequest);
       response.then((data) => {
-        console.log(data)
-        if (data.request.status == 200) {    
+        console.log(data);
+        if (data.request.status == 200) {
           HandleWithFooter(
             "Your withdrawal request has been initiated successfully. You will receive mobile and email alerts when the amount is credited to your registered bank accountNote: If you raise a request to withdraw funds from the wallet, please note that the funds will be credited to your bank account within 2 to 7 bank working days"
           );
@@ -100,10 +108,9 @@ const WithdrawalFromWallet = () => {
           WarningAlertwithdrow(data.response.data.errorMessage);
         }
       });
-    }  else{
+    } else {
       console.log("filed  are required");
     }
- 
   };
 
   return (
@@ -131,9 +138,9 @@ const WithdrawalFromWallet = () => {
                     <li className="breadcrumb-item active">
                       Withdrawal From Wallet
                     </li>
-                  </ul>  
+                  </ul>
                 </div>
-              </div>  
+              </div>
             </div>
             {/* /Page Header */}
             <div className="row">
@@ -169,7 +176,11 @@ const WithdrawalFromWallet = () => {
                             onChange={handleInputchange}
                             placeholder="Enter the Withdraw Amount"
                           />
-                           {withdrawrequest.withdrawAmounterror && <div  className="error">{withdrawrequest.withdrawAmounterror}</div>}
+                          {withdrawrequest.withdrawAmounterror && (
+                            <div className="error">
+                              {withdrawrequest.withdrawAmounterror}
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -178,16 +189,20 @@ const WithdrawalFromWallet = () => {
                             Feedback
                             <span className="login-danger">*</span>
                           </label>
-                          <input 
-      type="text" 
-      name="withdrawFeedback"
-      className="form-control"
-      onKeyPress={handleKeyPress}
-      onChange={handleInputchange}
-      placeholder="Enter the Feedback"
-      value={withdrawrequest.withdrawFeedback}
-    />
-                            {withdrawrequest.withdrawFeedbackerror && <div  className="error">{withdrawrequest.withdrawFeedbackerror}</div>}
+                          <input
+                            type="text"
+                            name="withdrawFeedback"
+                            className="form-control"
+                            onKeyPress={handleKeyPress}
+                            onChange={handleInputchange}
+                            placeholder="Enter the Feedback"
+                            value={withdrawrequest.withdrawFeedback}
+                          />
+                          {withdrawrequest.withdrawFeedbackerror && (
+                            <div className="error">
+                              {withdrawrequest.withdrawFeedbackerror}
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -204,7 +219,11 @@ const WithdrawalFromWallet = () => {
                             onChange={handleInputchange}
                             placeholder="Enter the Reson"
                           />
-                           {withdrawrequest.withdraReasonerror && <div  className="error">{withdrawrequest.withdraReasonerror}</div>}
+                          {withdrawrequest.withdraReasonerror && (
+                            <div className="error">
+                              {withdrawrequest.withdraReasonerror}
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -222,16 +241,19 @@ const WithdrawalFromWallet = () => {
                             maxDate={maxDate}
                             className="form-control datetimepicker"
                           /> */}
-                        <DatePicker
+                          <DatePicker
                             selected={withdrawrequest.date}
                             onChange={handleChange}
                             dateFormat="dd/MM/yyyy"
                             minDate={minDate}
                             className="form-control datetimepicker"
                           />
-                          {withdrawrequest.setGivendateerror && <div  className="error">{withdrawrequest.setGivendateerror}</div>}
+                          {withdrawrequest.setGivendateerror && (
+                            <div className="error">
+                              {withdrawrequest.setGivendateerror}
+                            </div>
+                          )}
                         </div>
-                        
                       </div>
 
                       <div className="col-12 col-sm-4">
@@ -245,10 +267,12 @@ const WithdrawalFromWallet = () => {
                               activeColor="#ffd700"
                             />
                           </span>
-                          {withdrawrequest.withdrawRatingerror && <div  className="error">{withdrawrequest.withdrawRatingerror}</div>}
+                          {withdrawrequest.withdrawRatingerror && (
+                            <div className="error">
+                              {withdrawrequest.withdrawRatingerror}
+                            </div>
+                          )}
                         </div>
-
-                       
                       </div>
                       <div className="col-12">
                         <div className="student-submit">
