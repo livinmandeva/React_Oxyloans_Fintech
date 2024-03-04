@@ -9568,7 +9568,6 @@ body[data-layout-mode="dark"]
     width: 310px;
     height: 355px;
   }
-  
 }
 
 /* Icon */
@@ -10165,4 +10164,13 @@ span.flagg {
 }
 .membership-border {
   border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+@media screen and (min-width: 320px) and (max-width: 570px) {
+  .login-right-wrap > h1 {
+    font-size: 18px !important;
+  }
+  .forgotpass {
+    display: block !important;
+  }
 }
