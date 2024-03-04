@@ -58,9 +58,10 @@ const Membership = React.memo((pros) => {
   const membershipsweetalertconformation = (membership, no) => {
     Swal.fire({
       title: "Are you willing to proceed with the payment at this moment ?",
-      showDenyButton: true,
+      showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: "Pay Through wallet",
+      cancelButtonText: "cancel",
       denyButtonText: "Payment Gateway",
     }).then((result) => {
       if (result.isConfirmed) {

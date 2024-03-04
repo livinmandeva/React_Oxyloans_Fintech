@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import { Link } from "react-router-dom";
 import Header from "../../../Header/Header";
 import SideBar from "../../../SideBar/SideBar";
 import ReactStars from "react-rating-stars-component";
-import { submitWithdrawalRequestFromWallet } from "../../../HttpRequest/afterlogin";
+import {
+  submitWithdrawalRequestFromWallet,
+  knowisalredyrequested,
+} from "../../../HttpRequest/afterlogin";
 import {
   HandleWithFooter,
-  WarningAlert,
   WarningAlertwithdrow,
+  Info,
 } from "../../Base UI Elements/SweetAlert";
 
 const WithdrawalFromWallet = () => {
@@ -27,19 +29,26 @@ const WithdrawalFromWallet = () => {
     withdraReasonerror: "",
     setGivendateerror: "",
     isvalid: true,
+    isalredyRequested: false,
+    withdrawarequestedamount: 0,
+    withdrawstatus: "ADD",
   });
 
-  const [inputValue, setInputValue] = useState("");
   const minDate = new Date();
   const handleChange = (date) => {
+    const newdate = new Date(date);
+    const formattedDate = `${newdate.getDate()}/${
+      newdate.getMonth() + 1
+    }/${newdate.getFullYear()}`;
     setwithdrawRequest({
       ...withdrawrequest,
-      date,
-      setGivendate: date.toJSON().slice(0, 10).split("-").reverse().join("/"),
+      date: date,
+      setGivendate: date != null && formattedDate,
     });
   };
 
   const maxDate = new Date();
+
   const ratingChanged = (newRating) => {
     setwithdrawRequest({
       ...withdrawrequest,
@@ -79,9 +88,10 @@ const WithdrawalFromWallet = () => {
         withdrawrequest.withdrawRating === "" ? "Give the Rating" : "",
       withdraReasonerror:
         withdrawrequest.withdraReason === "" ? "Enter the Reason" : "",
-      setGivendateerror: !withdrawrequest.setGivendate
-        ? "Enter the Withdrawal Date"
-        : "",
+      setGivendateerror:
+        withdrawrequest.setGivendate == false
+          ? "Enter the Withdrawal Date"
+          : "",
     }));
 
     if (
@@ -96,22 +106,57 @@ const WithdrawalFromWallet = () => {
       withdrawrequest.setGivendate !== "" &&
       withdrawrequest.setGivendate !== null
     ) {
-      console.log("WithdrawalFromWallet");
-      const response = submitWithdrawalRequestFromWallet(withdrawrequest);
-      response.then((data) => {
-        console.log(data);
-        if (data.request.status == 200) {
-          HandleWithFooter(
-            "Your withdrawal request has been initiated successfully. You will receive mobile and email alerts when the amount is credited to your registered bank accountNote: If you raise a request to withdraw funds from the wallet, please note that the funds will be credited to your bank account within 2 to 7 bank working days"
-          );
-        } else {
-          WarningAlertwithdrow(data.response.data.errorMessage);
-        }
-      });
+      if (withdrawrequest.isalredyRequested == true) {
+        Info(
+          `
+          Withdrawal request for INR ${
+            withdrawrequest.withdrawarequestedamount
+          } already made. Now adding INR ${
+            withdrawrequest.withdrawAmount
+          }, total withdrawal amount will be INR ${
+            parseInt(withdrawrequest.withdrawarequestedamount) +
+            parseInt(withdrawrequest.withdrawAmount)
+          }.`,
+          withdrawrequest
+        );
+      } else {
+        const response = submitWithdrawalRequestFromWallet(
+          withdrawrequest,
+          "first"
+        );
+        response.then((data) => {
+          if (data.request.status == 200) {
+            HandleWithFooter(
+              "Withdrawal request successful. You'll be notified when credited. Note: Funds will be in bank within 2-7 working days."
+            );
+          } else {
+            WarningAlertwithdrow(data.response.data.errorMessage);
+          }
+        });
+      }
     } else {
       console.log("filed  are required");
     }
   };
+
+  useEffect(() => {
+    const newdate = new Date(withdrawrequest.date);
+    const formattedDate = `${newdate.getDate()}/${
+      newdate.getMonth() + 1
+    }/${newdate.getFullYear()}`;
+
+    const isalreadyrequested = knowisalredyrequested();
+    isalreadyrequested.then((data) => {
+      if (data.data.status != null) {
+        setwithdrawRequest({
+          ...withdrawrequest,
+          isalredyRequested: true,
+          withdrawarequestedamount: data.data.amount,
+          setGivendate: formattedDate != null && formattedDate,
+        });
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -234,13 +279,6 @@ const WithdrawalFromWallet = () => {
                             <span className="login-danger">*</span>
                           </label>
 
-                          {/* <DatePicker
-                            selected={withdrawrequest.date}
-                            onChange={handleChange}
-                            dateFormat="dd/MM/yyyy"
-                            maxDate={maxDate}
-                            className="form-control datetimepicker"
-                          /> */}
                           <DatePicker
                             selected={withdrawrequest.date}
                             onChange={handleChange}

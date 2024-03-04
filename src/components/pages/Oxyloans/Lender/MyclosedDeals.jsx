@@ -46,6 +46,12 @@ const MyclosedDeals = () => {
       myclosedDeals.pageNo,
       myclosedDeals.pageSize
     );
+
+    setmyclosedDeals({
+      ...myclosedDeals,
+      loading: true,
+    });
+
     response.then((data) => {
       if (data.request.status == 200) {
         setmyclosedDeals({

@@ -67,10 +67,6 @@ const WithdrawdealFounds = () => {
     return () => {};
   }, [data.withdrawalamount]);
 
-  // const isFormValid = Object.values(data).every(value => value !== "");
-  // useEffect(()=>{
-  //  if(data.withdrawalamount)
-  // },[data.withdrawalamount])
   return (
     <>
       <div className="main-wrapper">

@@ -1,5 +1,5 @@
 import axios from "axios";
-const userisIn = "local";
+const userisIn = "prod";
 const API_BASE_URL =
   userisIn == "local"
     ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
@@ -708,23 +708,38 @@ export const fileuploads = async (files) => {
   return response;
 };
 
-export const submitWithdrawalRequestFromWallet = async (postdate) => {
+export const submitWithdrawalRequestFromWallet = async (postdate, status) => {
   const token = getToken();
   const userId = getUserId();
 
   const withdrawAmount = postdate.withdrawAmount;
   const withdrawRating = postdate.withdrawRating;
-  const postdata = {
-    userId,
-    userType: "LENDER",
-    amount: parseInt(withdrawAmount),
-    amountRequiredDate: postdate.setGivendate, // It's not clear where setGivendate comes from
-    withdrawalReason: postdate.withdraReason, // It's not clear where withdraReason comes from
-    rating: JSON.stringify(withdrawRating), // Assuming withdrawRating is an object or array
-    feedBack: postdate.withdrawFeedback, // It's not clear where withdrawFeedback comes from
-    adminComments: "",
-    status: "INITIATED",
-  };
+
+  const postdata =
+    status == "first"
+      ? {
+          userId,
+          userType: "LENDER",
+          amount: parseInt(withdrawAmount),
+          amountRequiredDate: postdate.setGivendate,
+          withdrawalReason: postdate.withdraReason,
+          rating: JSON.stringify(withdrawRating),
+          feedBack: postdate.withdrawFeedback,
+          adminComments: "",
+          status: "INITIATED",
+        }
+      : {
+          userId,
+          userType: "LENDER",
+          amount: parseInt(withdrawAmount),
+          amountRequiredDate: postdate.setGivendate,
+          withdrawalReason: postdate.withdraReason,
+          rating: JSON.stringify(withdrawRating),
+          feedBack: postdate.withdrawFeedback,
+          adminComments: "",
+          status: "INITIATED",
+          type: "ADD",
+        };
 
   const postdatastring = JSON.stringify(postdata);
 
@@ -1747,6 +1762,18 @@ export const fetchcashfree = async (membership, no, url, dealId = 0) => {
     postdatastring
   );
   return response;
+};
+
+export const knowisalredyrequested = () => {
+  const token = getToken();
+  const userId = getUserId();
+  const res = handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/lenderWithdrawFundsInfo`,
+    "GET",
+    token
+  );
+  return res;
 };
 
 export const getpaymentorder = (myorder) => {

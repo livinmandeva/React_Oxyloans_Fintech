@@ -15,6 +15,7 @@ import {
   dealparticipationValidityUser,
   newlenderdealparticipation,
   confirmthependingamount,
+  submitWithdrawalRequestFromWallet,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 
@@ -88,15 +89,32 @@ export const bottomEnd = () => {
   });
 };
 
-export const Info = () => {
+export const Info = (message, data) => {
   Swal.fire({
-    title: "Info!",
-    text: "You clicked the button!",
+    title: "INFO!",
+    text: message,
     type: "info",
+    icon: "info",
     confirmButtonClass: "btn btn-primary",
-    buttonsStyling: !1,
+    confirmButtonText: "Add",
+    cancelButtonText: "cancel",
+    showCloseButton: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const response = submitWithdrawalRequestFromWallet(data, "ADD");
+      response.then((data) => {
+        if (data.request.status == 200) {
+          HandleWithFooter(
+            "Withdrawal request successful. You'll be notified when credited. Note: Funds will be in bank within 2-7 working days."
+          );
+        } else {
+          WarningAlertwithdrow(data.response.data.errorMessage);
+        }
+      });
+    }
   });
 };
+
 export const registersuccess = (message) => {
   Swal.fire({
     title: "Success!",
