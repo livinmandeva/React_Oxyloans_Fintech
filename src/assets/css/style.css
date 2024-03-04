@@ -9808,8 +9808,8 @@ li.ant-pagination-prev {
   position: relative !important;
 }
 .ant-pagination-total-text {
-  position: absolute !important;
-  left: 0 !important;
+  position: absolute;
+  left: 0;
 }
 /* Pagination */
 
@@ -10172,5 +10172,15 @@ span.flagg {
   }
   .forgotpass {
     display: block !important;
+  }
+
+  .ant-pagination-total-text {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 280px) and (max-width: 428px) {
+    .ant-pagination-total-text {
+    display: none !important;
   }
 }

@@ -1047,7 +1047,7 @@ const AdminDashboard = () => {
                 {/* /Revenue Chart */}
               </div>
 
-              <div className="col-md-12 col-lg-6">
+              <div className="col-md-12 col-lg-6 ">
                 {/* Student Chart */}
                 <div className="card card-chart">
                   <div className="card-header">
