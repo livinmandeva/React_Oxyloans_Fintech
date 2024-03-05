@@ -10177,10 +10177,21 @@ span.flagg {
   .ant-pagination-total-text {
     display: none !important;
   }
+
+  .form-check-input {
+    width: 2rem !important;
+  }
+  .displaycenter {
+    gap: 1rem !important;
+  }
 }
 
 @media screen and (min-width: 280px) and (max-width: 428px) {
-    .ant-pagination-total-text {
+  .ant-pagination-total-text {
     display: none !important;
+    width: 2rem !important;
+  }
+  .form-check-input {
+    width: 2rem !important;
   }
 }
