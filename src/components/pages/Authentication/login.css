@@ -91,6 +91,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}.logincard{
+  height: auto;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .textcenter {
   /* display: flex; */

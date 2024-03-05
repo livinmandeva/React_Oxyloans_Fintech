@@ -6,11 +6,10 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 
 import { registerImage } from "../../imagepath";
 
-import { Link } from "react-router-dom";
+import { Link  , useNavigate} from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
-import { useNavigate } from "react-router-dom";
 import OtpInput from "./OtpInput";
 import {
   sendwhatappotp,
@@ -44,7 +43,8 @@ const Whatapplog = () => {
     otpdata: "",
   });
 
-  const history = useNavigate();
+  const navigate = useNavigate();  
+
   const handleipv6 = () => {
     axios({
       method: "get",
@@ -95,9 +95,11 @@ const Whatapplog = () => {
         
         
         console.log(whatappotp.responsedata)
-        if(data.data.whatsappLoginResponse !== []){
-          history("/whatapploginwith");
-        }else if (accessToken != null) {
+        if (data.data.whatsappLoginResponse && data.data.whatsappLoginResponse.length > 0) {
+          const queryString = encodeURIComponent(JSON.stringify(data.data.whatsappLoginResponse));
+          navigate(`/whatsappuser?data=${queryString}`);
+        }
+      else if (accessToken != null) {
           if (data.data.primaryType == "LENDER") {
             history("/dashboard");
           } else if (data.data.primaryType == "ADMIN") {

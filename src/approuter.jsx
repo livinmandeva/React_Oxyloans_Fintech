@@ -62,6 +62,7 @@ import MywithdrawalHistory from "./components/pages/Oxyloans/Lender/Mywithdrawal
 import WalletToWalletTransactionHistory from "./components/pages/Oxyloans/Lender/WalletToWalletTransactionHistory";
 import RegularEscrowDeals from "./components/pages/Oxyloans/Lender/RegularEscrowDeals";
 import PaymentGateway from "./components/pages/Oxyloans/Lender/PaymentGateway.jsx";
+import Whatappuser from "./components/pages/Authentication/Whatappuser.jsx";
 
 // ********************BORROWER MODULE    ROUTE ************************** //
 
@@ -169,6 +170,7 @@ const AppRouter = () => {
           element={<WithdrawalFromWallet />}
         />
         <Route path="/withdrawdealFounds" element={<WithdrawdealFounds />} />
+        <Route path="/whatappuser" element={<Whatappuser />} />
         <Route path="/membershipHistory" element={<MembershipHistory />} />
         <Route path="/mytransactions" element={<Mytransactions />} />
         <Route path="/autoInvestHistory" element={<AutoInvestHistory />} />

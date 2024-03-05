@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 
 
+
 const CreateDeal = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
 );
@@ -15,6 +16,10 @@ const MainAdminDashboard = React.lazy(() =>
 );
 const Whatapploginwith = React.lazy(() =>
   import("./components/pages/Authentication/Whatapploginwith")
+);
+
+const Whatappuser = React.lazy(() =>
+  import("./components/pages/Authentication/Whatappuser")
 );
   
 const TestDeals = React.lazy(() =>
@@ -577,6 +582,11 @@ export const newRouter = createBrowserRouter([
   {
     path: "/dashboardTransactions",
     element: <DashboardTransactions />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/whatappuser",
+    element: <Whatappuser />,
     errorElement: <Error404></Error404>,
   },
   {

@@ -9,9 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cashfreepayments/cashfree-js": "^1.0.4",
-    "@ckeditor/ckeditor5-build-classic": "^36.0.1",
-    "@ckeditor/ckeditor5-react": "^5.1.0",
     "@emotion/react": "^11.11.0",
     "@emotion/style": "^0.8.0",
     "@emotion/styled": "^11.11.0",
