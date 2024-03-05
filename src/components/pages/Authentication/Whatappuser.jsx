@@ -41,7 +41,7 @@ const Whatappuser = () => {
         name: "MANDEVA LIVEEN",
         email: "liveen@oxyloans.com"
     })
-
+    
     const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const queryString = searchParams.get('data');
