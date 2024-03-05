@@ -300,14 +300,14 @@ const Participatedeal = () => {
             ) : (
               <>
                 <p>Welcome to {deal.apidata && deal.apidata.dealName}</p>
-                <div className="row col-12">
+                {/* <div className="row col-12"> */}
                   <Table
                     dataSource={dataSource.length < 0 ? [] : dataSource}
                     columns={columns}
                     pagination={false}
                     loading={dataSource.length < 0 ? true : false}
                   />
-                </div>
+                {/* </div> */}
 
                 <div className="displaycenter">
                   <h4 style={{ marginTop: "2rem" }}>Return Principal To :</h4>

@@ -142,6 +142,11 @@
   padding: 1rem 4px !important;
 }
 
+
+.ant-table-tbody{
+  width: 100% !important;
+    background: white !important;
+}
 .bi-whatsapp {
   font-size: 14px;
   color: white;
