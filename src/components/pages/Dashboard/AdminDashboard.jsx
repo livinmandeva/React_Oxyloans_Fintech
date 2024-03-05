@@ -906,50 +906,54 @@ const AdminDashboard = () => {
               </div>
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
                 <div className="card bg-comman w-100">
-                  <div className="card-body">
-                    <div className="db-widgets d-flex justify-content-between align-items-center">
-                      <div className="db-info">
-                        <h6>Active Deals</h6>
-                        <h3>
-                          {getdashboardData?.length !== 0
-                            ? getdashboardData?.numberOfActiveDealsCount ?? 0
-                            : ""}
-                        </h3>
-                      </div>
-                      <div className="db-icon">
-                        <img
-                          src={dashboard2}
-                          alt="Dashboard Icon"
-                          height={60}
-                          width={60}
-                        />
+                  <Link to="/myRunningDelas">
+                    <div className="card-body">
+                      <div className="db-widgets d-flex justify-content-between align-items-center">
+                        <div className="db-info">
+                          <h6>Active Deals</h6>
+                          <h3>
+                            {getdashboardData?.length !== 0
+                              ? getdashboardData?.numberOfActiveDealsCount ?? 0
+                              : ""}
+                          </h3>
+                        </div>
+                        <div className="db-icon">
+                          <img
+                            src={dashboard2}
+                            alt="Dashboard Icon"
+                            height={60}
+                            width={60}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </div>
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
                 <div className="card bg-comman w-100">
-                  <div className="card-body">
-                    <div className="db-widgets d-flex justify-content-between align-items-center">
-                      <div className="db-info">
-                        <h6>Closed Deals</h6>
-                        <h3>
-                          {getdashboardData?.length !== 0
-                            ? getdashboardData?.numberOfClosedDealsCount ?? 0
-                            : ""}
-                        </h3>
-                      </div>
-                      <div className="db-icon">
-                        <img
-                          src={dashboard1}
-                          alt="Dashboard Icon"
-                          height={60}
-                          width={60}
-                        />
+                  <Link to="/myclosedDeals">
+                    <div className="card-body">
+                      <div className="db-widgets d-flex justify-content-between align-items-center">
+                        <div className="db-info">
+                          <h6>Closed Deals</h6>
+                          <h3>
+                            {getdashboardData?.length !== 0
+                              ? getdashboardData?.numberOfClosedDealsCount ?? 0
+                              : ""}
+                          </h3>
+                        </div>
+                        <div className="db-icon">
+                          <img
+                            src={dashboard1}
+                            alt="Dashboard Icon"
+                            height={60}
+                            width={60}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </div>
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
