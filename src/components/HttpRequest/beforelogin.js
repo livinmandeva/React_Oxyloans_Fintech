@@ -155,11 +155,13 @@ export const usersubmitotp = async (email, password) => {
 
 export const verifywhatappotp = async (api) => {
   const value1 = localStorage.getItem("otp");
-  const otp = value1.replace(/,/g, "");
+const otpArray = JSON.parse(value1);
+const otpString = otpArray.join(""); // Concatenate the array elements into a single string
+const otpNumber = parseInt(otpString, 10);
   const data = {
     whatsappNumber: api.whatsappNumber,
     session: api.session,
-    otp: otp,
+    otp: otpNumber,
     id: api.id,
     otpGeneratedTime: api.otpGeneratedTime,
   };

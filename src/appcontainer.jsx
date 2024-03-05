@@ -1,6 +1,8 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 
+
+
 const CreateDeal = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
 );
@@ -11,7 +13,10 @@ const EscrowDeals = React.lazy(() =>
 const MainAdminDashboard = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/MainAdminDashboard")
 );
-
+const Whatapploginwith = React.lazy(() =>
+  import("./components/pages/Authentication/Whatapploginwith")
+);
+  
 const TestDeals = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals")
 );
@@ -579,9 +584,15 @@ export const newRouter = createBrowserRouter([
     element: <LoadwalletThroughVirtualAccount />,
     errorElement: <Error404></Error404>,
   },
+  
   {
     path: "/whatsapplogin",
     element: <Whatapplog />,
+    errorElement: <Error404></Error404>,
+  },
+  {
+    path: "/whatapploginwith",
+    element: <Whatapploginwith />,
     errorElement: <Error404></Error404>,
   },
   {

@@ -364,7 +364,7 @@ const Participatedeal = () => {
                       </h4>
                     ) : deal.apidata.lenderValidityStatus == true &&
                       deal.apidata.groupName != "NewLender" ? (
-                      <h4 className="text-bold fs-4 fw-light">
+                      <h4 className="text-bold fs-4 fw-light textquery">
                         <code>Note :</code> Your validity has expired. Please
                         pay to continue your participation.
                       </h4>

@@ -86,10 +86,18 @@ const Whatapplog = () => {
           ...whatappotp,
           responsedata: data,
         });
+       
+        
         sessionStorage.setItem("accessToken", accessToken);
         sessionStorage.setItem("userId", data.data.id);
         sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
-        if (accessToken != null) {
+
+        
+        
+        console.log(whatappotp.responsedata)
+        if(data.data.whatsappLoginResponse !== []){
+          history("/whatapploginwith");
+        }else if (accessToken != null) {
           if (data.data.primaryType == "LENDER") {
             history("/dashboard");
           } else if (data.data.primaryType == "ADMIN") {
@@ -216,7 +224,7 @@ const Whatapplog = () => {
                       </p>
                       <h2>Otp verification</h2>
                       <div className="texts">
-                        <OtpInput />
+                        <OtpInput  data={4}/>
                       </div>
                       {whatappotp.successMessage && (
                         <div className="errorMessage">
@@ -245,7 +253,14 @@ const Whatapplog = () => {
                       </div>
                       {/* Social Login */}
                       <div className="social-login">
-                        <Link to="#">
+
+                      <Link
+                          to="/whatsapplogin"
+                          className="bg-success text-white"
+                        >
+                          <i className="fa fa-whatsapp" />
+                        </Link>
+                        {/* <Link to="#">
                           <i className="fab fa-google-plus-g" />
                         </Link>
                         <Link to="/whatsapplogin">
@@ -256,7 +271,7 @@ const Whatapplog = () => {
                         </Link>
                         <Link to="#">
                           <i className="fab fa-twitter" />
-                        </Link>
+                        </Link> */}
                       </div>
                     </div>
                   </>

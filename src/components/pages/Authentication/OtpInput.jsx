@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function OtpInput() {
+function OtpInput({ data }) {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
 
   const handleChange = (index, value) => {
@@ -15,9 +15,21 @@ function OtpInput() {
   };
 
   const inputRefs = [];
+
   useEffect(() => {
-    localStorage.setItem("otp", otpValues);
+    if (data === 4) {
+      console.log(data);
+      setOtpValues(["", "", "", ""]);
+    } else if (data === 6) {
+      console.log(data);
+      setOtpValues(["", "", "", "", "", ""]);
+    }
+  }, [data]); // Add data as a dependency to useEffect
+
+  useEffect(() => {
+    localStorage.setItem("otp", JSON.stringify(otpValues)); // Store otpValues as a string
   }, [otpValues]);
+
   return (
     <div className="otp-field">
       {otpValues.map((value, index) => (
