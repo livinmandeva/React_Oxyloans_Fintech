@@ -1,131 +1,71 @@
-import React, { useEffect, useRef, useState } from "react";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+import React, { useEffect } from 'react';
+import './user.css';
+import { useNavigate } from 'react-router-dom';
+import { handelapidata } from '../../HttpRequest/beforelogin';
 
-import { registerImage } from "../../imagepath";
-
-import { Link  ,useLocation } from "react-router-dom";
-import axios from "axios";
-import FeatherIcon from "feather-icons-react";
-import "./login.css";
-import { useNavigate } from "react-router-dom";
-import OtpInput from "./OtpInput";
-import {
-  sendwhatappotp,
-  verifywhatappotp,
-} from "../../HttpRequest/beforelogin";
-import { toastrError } from "../Base UI Elements/Toast";
-import Usercard from "./Usercard";
-
-const Whatappuser = () => {
+const Whatappuser = ({ data1 }) => {
+  // Log the initial value of data1
+  console.log('Initial data1:', data1);
 
 
 
-  const [handlewhatapp, sethandlewhatapp] = useState(true);
-  const [value, setValue] = useState("");
-  const [dataIpv6, setdataIpv6] = useState({});
-  const [dataIpv4, setdataIpv4] = useState("");
+  
+  const history = useNavigate();
 
-  const [whatappotp, setwhatappotp] = useState({
-    successMessage: "",
-    otp: "",
-    // otpdata:''
-    errorMessage: "",
-    otpdata: "",
-  });
+  useEffect(() => {
+    // Log data1 whenever it changes
 
-  const [data , setdata]=useState({
-        userId: "LR36549",
-        name: "MANDEVA LIVEEN",
-        email: "liveen@oxyloans.com"
-    })
-    
-    const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const queryString = searchParams.get('data');
-  const whatsappLoginResponse = queryString ? JSON.parse(decodeURIComponent(queryString)) : [];
+    console.log('Updated data1:', data1);
+  }, [data1]);
 
 
-  console.log(whatsappLoginResponse)
-  const verifyotp = async () => {
-    const response = verifywhatappotp(whatappotp.otpdata);
-
-    response.then((data) => {
-      const accessToken = data.data.accessToken;
-
-      if (data) {
-        setwhatappotp({
-          ...whatappotp,
-          responsedata: data,
-        });
-       
-        
-        sessionStorage.setItem("accessToken", accessToken);
-        sessionStorage.setItem("userId", data.data.id);
-        sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
-
-        
-        
-        console.log(whatappotp.responsedata)
-        if(data.data.whatsappLoginResponse !== []){
-          history("/whatappuser");
-        }else if (accessToken != null) {
-          if (data.data.primaryType == "LENDER") {
-            history("/dashboard");
-          } else if (data.data.primaryType == "ADMIN") {
-            history("/dashboard");
-          } else {
-            history("/borrowerDashboard");
-          }
-
-          // history("/dashboard");
+  const handelapi = async (userId) => {
+    try {
+      console.log(userId);
+      const response = await handelapidata(userId);
+      const data = response.data;
+  console.log(response.data)
+      const accessToken = response.data.accessToken;
+      sessionStorage.setItem("accessToken", accessToken);
+     
+  
+      if (accessToken != null) {
+        if (data.primaryType === "LENDER" || data.primaryType === "ADMIN") {
+          history("/dashboard");
+        } else if (data.primaryType === "BORROWER") {
+          history("/borrowerDashboard");
         }
-      } else if (data.response.status === 400) {
-        // const errorMessage = data.response.data.errorMessage;
-
-        setwhatappotp({
-          ...whatappotp,
-          errorMessage: data.response.data.errorMessage,
-        });
       }
-    });
-  };
-  const sethandlewhatappclick = async () => {
-    if (value == "") {
-      toastrError("Enter The WhatsApp Number");
-    } else {
-      const response = sendwhatappotp(value);
-      response.then((data) => {
-        if (data.request.status === 200) {
-          sethandlewhatapp(false);
-          setwhatappotp({
-            ...whatappotp,
-            successMessage: "Otp Sent successfully",
-            otpdata: data.data,
-          });
-        } else {
-          setwhatappotp({
-            ...whatappotp,
-            errorMessage: data.response.data.errorMessage,
-          });
-          toastrError(data.response.data.errorMessage);
-        }
-      });
+    } catch (error) {
+      console.error("Error:", error);
     }
-  };
-
+  }
+ 
+  // console.log()
   return (
     <>
       <div className="main-wrapper login-body">
         <div className="login-wrapper">
           <div className="container">
-            <div className=" logincard" >
-            
-            <Usercard  data={data}/>
-            <Usercard data={data} />
-            <Usercard data={data} />
+            <div className="logincard">
+              <h6><strong>Note :  </strong> Multiple users are mapped with the given WhatsApp number. To proceed, please select the user you want to log in</h6>
+              {/* Render user cards based on data1 */}
+              <br></br>
+              {data1 && data1.length > 0 && data1.map((userData, index) => (
+                <div key={index}>
+                  <div className="card_user">
+                    <div className="card_user-subtitle">{userData.userId}</div>
+                    <div className="card_user-title">{userData.name}</div>
+                    <div className="card_user-subtitle">{userData.email}</div>
+                    <hr className="card_user-divider" />
+                    <div className="card_user-footer card_user-footer11">
+                      <button className="card_user-btn"   onClick={()=>handelapi(userData.userId)}>
+                        Login
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

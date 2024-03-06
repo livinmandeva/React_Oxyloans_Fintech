@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function OtpInput({ data }) {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
+  const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
     if (/^\d*$/.test(value) && value.length <= 1) {
       const updatedOtpValues = [...otpValues];
       updatedOtpValues[index] = value;
       setOtpValues(updatedOtpValues);
-      if (value !== "" && index < 5) {
-        inputRefs[index + 1].focus();
+      if (value !== "" && index < 5 && inputRefs.current[index + 1]) {
+        inputRefs.current[index + 1].focus();
       }
     }
   };
-
-  const inputRefs = [];
 
   useEffect(() => {
     if (data === 4) {
@@ -39,7 +38,7 @@ function OtpInput({ data }) {
           maxLength="1"
           value={value}
           onChange={(e) => handleChange(index, e.target.value)}
-          ref={(input) => inputRefs.push(input)}
+          ref={(input) => (inputRefs.current[index] = input)}
         />
       ))}
     </div>

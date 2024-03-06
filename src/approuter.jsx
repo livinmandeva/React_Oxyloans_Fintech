@@ -106,6 +106,7 @@ const AppRouter = () => {
         <Route path="/testdeals" element={<UserTestdeals />} />
         <Route path="/forgotpassword" element={<ForgotPassword3 />} />
         <Route path="/partnerRegister" element={<PartnerRegister />} />
+        <Route path="/whatsappuser" element={<Whatappuser />} />
         <Route path="/escrowDeals" element={<EscrowDeals />} />
         <Route path="/regularEscrowDeals" element={<RegularEscrowDeals />} />
         <Route

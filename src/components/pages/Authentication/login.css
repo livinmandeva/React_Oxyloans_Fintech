@@ -91,16 +91,30 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-}.logincard{
+}/* .logincard{
   height: auto;
   width: auto;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+} */.logincard {
+  height: 100vh;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap !important;
+  gap: 0.9rem;
 }
 .textcenter {
   /* display: flex; */
   text-align: center;
+}
+
+.imagelo11{
+  height: 6rem;
+  width: auto;
+  object-fit: contain;
 }
 .textcent {
   text-align: center;

@@ -4,9 +4,9 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
-import { registerImage } from "../../imagepath";
+import { registerImage  , oxylogomobile  , oxylogodashboard} from "../../imagepath";
 
-import { Link  , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import FeatherIcon from "feather-icons-react";
 import "./login.css";
@@ -16,6 +16,8 @@ import {
   verifywhatappotp,
 } from "../../HttpRequest/beforelogin";
 import { toastrError } from "../Base UI Elements/Toast";
+import "./user.css";
+import Whatappuser from "./Whatappuser";
 
 const Whatapplog = () => {
   let inputRef = useRef();
@@ -43,7 +45,9 @@ const Whatapplog = () => {
     otpdata: "",
   });
 
-  const navigate = useNavigate();  
+  const [data, setdata] = useState("");
+  const [datavalid, setdatavaild] = useState(false);
+  const navigate = useNavigate();
 
   const handleipv6 = () => {
     axios({
@@ -86,20 +90,15 @@ const Whatapplog = () => {
           ...whatappotp,
           responsedata: data,
         });
-       
-        
+
         sessionStorage.setItem("accessToken", accessToken);
         sessionStorage.setItem("userId", data.data.id);
         sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
 
-        
-        
-        console.log(whatappotp.responsedata)
-        if (data.data.whatsappLoginResponse && data.data.whatsappLoginResponse.length > 0) {
-          const queryString = encodeURIComponent(JSON.stringify(data.data.whatsappLoginResponse));
-          navigate(`/whatsappuser?data=${queryString}`);
-        }
-      else if (accessToken != null) {
+        setdata(data);
+        setdatavaild(true);
+
+        if (accessToken != null) {
           if (data.data.primaryType == "LENDER") {
             history("/dashboard");
           } else if (data.data.primaryType == "ADMIN") {
@@ -130,7 +129,7 @@ const Whatapplog = () => {
           sethandlewhatapp(false);
           setwhatappotp({
             ...whatappotp,
-            successMessage: "Otp Sent successfully",
+            // successMessage: "Otp Sent successfully",
             otpdata: data.data,
           });
         } else {
@@ -146,123 +145,147 @@ const Whatapplog = () => {
 
   return (
     <>
-      <div className="main-wrapper login-body">
-        <div className="login-wrapper">
-          <div className="container">
-            <div className="loginbox">
-              <div className="login-left">
-                <img
-                  className="img-fluid  h-100"
-                  src={registerImage}
-                  alt="Logo"
-                />
+      {datavalid && (
+        <>
+          {" "}
+          <div className="main-wrapper login-body">
+            <div className="login-wrapper">
+              <div className="container">
+                <div        style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <img  src={oxylogodashboard}    className="imagelo11"   alt="images-data" />
+                </div>
+                <div></div>
+                <br></br>
+                <hr></hr>
+              <div className="logincard"  style={{width:'80vw' , height:'64vh'}}> 
+              <Whatappuser data1={data.data.whatsappLoginResponse} />
+                </div> 
               </div>
-              <div className="login-right">
-                {handlewhatapp ? (
-                  <>
-                    <div className="login-right-wrap">
-                      <h1>Welcome to Oxyloans</h1>
-                      <p className="account-subtitle">
-                        Need an account? <Link to="/register">Sign Up</Link>
-                      </p>
+            </div>
+          </div>
+        </>
+      )}
+      {datavalid ? (
+        <></>
+      ) : (
+        <>
+          <div className="main-wrapper login-body">
+            <div className="login-wrapper">
+              <div className="container">
+                <div className="loginbox">
+                  <div className="login-left">
+                    <img
+                      className="img-fluid  h-100"
+                      src={registerImage}
+                      alt="Logo"
+                    />
+                  </div>
 
-                      <h2>Sign in</h2>
-                      <div className="phoneinput form-group">
-                        <label>
-                          WhatsApp number
-                          <span className="login-danger">*</span>
-                        </label>
-                        <PhoneInput
-                          className="phoneinputfiled form-control"
-                          value={value}
-                          onChange={setValue}
-                        />
-                      </div>
-                      <div className="forgotpass">
-                        <Link to="/forgotpassword">Forgot Password?</Link>
-                      </div>
-                      <div className="form-group">
-                        <button
-                          className="btn btn-primary btn-block"
-                          type="submit"
-                          onClick={sethandlewhatappclick}
-                        >
-                          Send OTP
-                        </button>
-                      </div>
+                  <div className="login-right">
+                    {handlewhatapp ? (
+                      <>
+                        <div className="login-right-wrap">
+                          <h1>Welcome to Oxyloans</h1>
+                          <p className="account-subtitle">
+                            Need an account? <Link to="/register">Sign Up</Link>
+                          </p>
 
-                      {/* </form> */}
-                      {/* /Form */}
-                      <div className="login-or">
-                        <span className="or-line" />
-                        <span className="span-or">or</span>
-                      </div>
-                      {/* Social Login */}
-                      <div className="social-login">
-                        {/* <Link to="#">
+                          <h2>Sign in</h2>
+                          <div className="phoneinput form-group">
+                            <label>
+                              WhatsApp number
+                              <span className="login-danger">*</span>
+                            </label>
+                            <PhoneInput
+                              className="phoneinputfiled form-control"
+                              value={value}
+                              onChange={setValue}
+                            />
+                          </div>
+                          <div className="forgotpass">
+                            <Link to="/forgotpassword">Forgot Password?</Link>
+                          </div>
+                          <div className="form-group">
+                            <button
+                              className="btn btn-primary btn-block"
+                              type="submit"
+                              onClick={sethandlewhatappclick}
+                            >
+                              Send OTP
+                            </button>
+                          </div>
+
+                          {/* </form> */}
+                          {/* /Form */}
+                          <div className="login-or">
+                            <span className="or-line" />
+                            <span className="span-or">or</span>
+                          </div>
+                          {/* Social Login */}
+                          <div className="social-login">
+                            {/* <Link to="#">
                           <i className="fab fa-google-plus-g" />
                         </Link> */}
-                        <Link
-                          to="/whatsapplogin"
-                          className="bg-success text-white"
-                        >
-                          <i className="fa fa-whatsapp" />
-                        </Link>
-                        {/* <Link to="#">
+                            <Link
+                              to="/whatsapplogin"
+                              className="bg-success text-white"
+                            >
+                              <i className="fa fa-whatsapp" />
+                            </Link>
+                            {/* <Link to="#">
                           <i className="fab fa-facebook-f" />
                         </Link>
                         <Link to="#">
                           <i className="fab fa-twitter" />
                         </Link> */}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="login-right-wrap">
-                      <h1>Welcome to Oxyloans</h1>
-                      <p className="account-subtitle">
-                        Need an account? <Link to="/register">Sign Up</Link>
-                      </p>
-                      <h2>Otp verification</h2>
-                      <div className="texts">
-                        <OtpInput  data={4}/>
-                      </div>
-                      {whatappotp.successMessage && (
-                        <div className="errorMessage">
-                          {whatappotp.successMessage}{" "}
+                          </div>
                         </div>
-                      )}
-                      {whatappotp.errorMessage && (
-                        <div className="errorMessage">
-                          {whatappotp.errorMessage}{" "}
-                        </div>
-                      )}
-                      <div className="form-group">
-                        <button
-                          className="btn btn-primary btn-block mt-4"
-                          type="submit"
-                          onClick={verifyotp}
-                        >
-                          Submit
-                        </button>
-                      </div>
-                      {/* </form> */}
-                      {/* /Form */}
-                      <div className="login-or">
-                        <span className="or-line" />
-                        <span className="span-or">or</span>
-                      </div>
-                      {/* Social Login */}
-                      <div className="social-login">
-
-                      <Link
-                          to="/whatsapplogin"
-                          className="bg-success text-white"
-                        >
-                          <i className="fa fa-whatsapp" />
-                        </Link>
-                        {/* <Link to="#">
+                      </>
+                    ) : (
+                      <>
+                        <div className="login-right-wrap">
+                          <h1>Welcome to Oxyloans</h1>
+                          <p className="account-subtitle">
+                            Need an account? <Link to="/register">Sign Up</Link>
+                          </p>
+                          <h2>Otp verification</h2>
+                          <div className="texts">
+                            <OtpInput data={4} />
+                          </div>
+                          {whatappotp.successMessage && (
+                            <div className="errorMessage">
+                              {whatappotp.successMessage}{" "}
+                            </div>
+                          )}
+                          {whatappotp.errorMessage && (
+                            <div className="errorMessage">
+                              {whatappotp.errorMessage}{" "}
+                            </div>
+                          )}
+                          <div className="form-group">
+                            <button
+                              className="btn btn-primary btn-block mt-4"
+                              type="submit"
+                              onClick={verifyotp}
+                            >
+                              Submit
+                            </button>
+                          </div>
+                          {/* </form> */}
+                          {/* /Form */}
+                          <div className="login-or">
+                            <span className="or-line" />
+                            <span className="span-or">or</span>
+                          </div>
+                          {/* Social Login */}
+                          <div className="social-login">
+                            <Link
+                              to="/whatsapplogin"
+                              className="bg-success text-white"
+                            >
+                              <i className="fa fa-whatsapp" />
+                            </Link>
+                            {/* <Link to="#">
                           <i className="fab fa-google-plus-g" />
                         </Link>
                         <Link to="/whatsapplogin">
@@ -274,15 +297,17 @@ const Whatapplog = () => {
                         <Link to="#">
                           <i className="fab fa-twitter" />
                         </Link> */}
-                      </div>
-                    </div>
-                  </>
-                )}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };

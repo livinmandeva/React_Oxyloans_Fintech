@@ -153,6 +153,17 @@ export const usersubmitotp = async (email, password) => {
   return response;
 };
 
+export const handelapidata = async (userId) => {
+const userid=userId.substring(2);
+const data={}
+  const response = await handleApiRequestBeforeLogin(
+    "POST",
+    API_BASE_URL,
+    `whatsapp-login-after-otp-verification/${userid}`,
+    data
+  );
+  return response;
+};
 export const verifywhatappotp = async (api) => {
   const value1 = localStorage.getItem("otp");
 const otpArray = JSON.parse(value1);
