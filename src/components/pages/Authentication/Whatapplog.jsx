@@ -149,19 +149,19 @@ const Whatapplog = () => {
         <>
           {" "}
           <div className="main-wrapper login-body">
-            <div className="login-wrapper">
+       
               <div className="container">
                 <div        style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                 <img  src={oxylogodashboard}    className="imagelo11"   alt="images-data" />
                 </div>
-                <div></div>
-                <br></br>
+                {/* <div></div>
+                <br></br> */}
                 <hr></hr>
-              <div className="logincard"  style={{width:'80vw' , height:'64vh'}}> 
+              <div className="logincard" > 
               <Whatappuser data1={data.data.whatsappLoginResponse} />
                 </div> 
               </div>
-            </div>
+
           </div>
         </>
       )}

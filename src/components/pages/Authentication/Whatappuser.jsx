@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './user.css';
 import { useNavigate } from 'react-router-dom';
+import { avtarimage11 } from "../../imagepath";
 import { handelapidata } from '../../HttpRequest/beforelogin';
 
 const Whatappuser = ({ data1 }) => {
@@ -44,8 +45,7 @@ const Whatappuser = ({ data1 }) => {
   // console.log()
   return (
     <>
-      <div className="main-wrapper login-body">
-        <div className="login-wrapper">
+
           <div className="container">
             <div className="logincard">
               <h6><strong>Note :  </strong> Multiple users are mapped with the given WhatsApp number. To proceed, please select the user you want to log in</h6>
@@ -54,9 +54,14 @@ const Whatappuser = ({ data1 }) => {
               {data1 && data1.length > 0 && data1.map((userData, index) => (
                 <div key={index}>
                   <div className="card_user">
+
+                    
+                    <div  className='profileimagediv'>
+                    <img src={avtarimage11}  className='profileiame'  />     
+                    </div>
                     <div className="card_user-subtitle">{userData.userId}</div>
                     <div className="card_user-title">{userData.name}</div>
-                    <div className="card_user-subtitle">{userData.email}</div>
+                    <div className="card_user-subtitle">Email :{userData.email}</div>
                     <hr className="card_user-divider" />
                     <div className="card_user-footer card_user-footer11">
                       <button className="card_user-btn"   onClick={()=>handelapi(userData.userId)}>
@@ -67,8 +72,7 @@ const Whatappuser = ({ data1 }) => {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
+       
       </div>
     </>
   );

@@ -5,6 +5,7 @@ export { default as logo } from "../assets/img/logo.png";
 export { default as logosmall } from "../assets/img/logo-small.png";
 export { default as oxylogomobile } from "../assets/img/oxylogomobile.png";
 export { default as oxylogodashboard } from "../assets/img/oxylogodashboard.png";
+export { default as avtarimage11 } from "../assets/img/avtarimage.png"
 
 export { default as allqueries } from "../assets/img/allqueries.png";
 export { default as cancelled } from "../assets/img/CANCELLED.png";

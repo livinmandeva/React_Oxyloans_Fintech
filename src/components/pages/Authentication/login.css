@@ -102,17 +102,33 @@
   width: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+
+  justify-content: center;
   flex-wrap: wrap !important;
   gap: 0.9rem;
+
 }
 .textcenter {
   /* display: flex; */
   text-align: center;
 }
 
+
+.profileiame{ 
+  height: 4rem;
+  width: 4rem;
+  object-fit: cover;
+
+}
+
+.profileimagediv{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
 .imagelo11{
-  height: 6rem;
+  height: 4rem;
   width: auto;
   object-fit: contain;
 }
