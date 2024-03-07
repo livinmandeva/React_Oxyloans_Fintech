@@ -45,9 +45,10 @@ const Whatapplog = () => {
     otpdata: "",
   });
 
+  const history = useNavigate();
   const [data, setdata] = useState("");
   const [datavalid, setdatavaild] = useState(false);
-  const navigate = useNavigate();
+
 
   const handleipv6 = () => {
     axios({
@@ -91,12 +92,12 @@ const Whatapplog = () => {
           responsedata: data,
         });
 
+          console.log(data)
         sessionStorage.setItem("accessToken", accessToken);
         sessionStorage.setItem("userId", data.data.id);
         sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
 
-        setdata(data);
-        setdatavaild(true);
+     
 
         if (accessToken != null) {
           if (data.data.primaryType == "LENDER") {
@@ -109,6 +110,9 @@ const Whatapplog = () => {
 
           // history("/dashboard");
         }
+
+        setdata(data);
+        setdatavaild(true);
       } else if (data.response.status === 400) {
         // const errorMessage = data.response.data.errorMessage;
 
