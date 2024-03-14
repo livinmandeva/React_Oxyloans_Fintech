@@ -195,11 +195,29 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/myRunningDelas">
                 My Deals
               </Link>
+              {/* {dashboarddata.iswhatAppLogin == "true" && (
+                <Link className="dropdown-item" to="/whatappuser">
+                  Log out from LR43165
+                </Link>
+              )} */}
+
               {dashboarddata.iswhatAppLogin == "true" && (
                 <Link className="dropdown-item" to="/whatappuser">
-                  Back To WhatsApp
+                  Logout as{" "}
+                  {reduxStoreData?.length != 0
+                    ? reduxStoreData?.firstName.charAt(0).toUpperCase() +
+                        reduxStoreData?.firstName.slice(1).toLowerCase() ?? ""
+                    : ""}
+                  {reduxStoreData?.length != 0
+                    ? localStorage.setItem(
+                        "userName",
+                        reduxStoreData?.firstName.charAt(0).toUpperCase() +
+                          reduxStoreData?.firstName.slice(1).toLowerCase()
+                      ) ?? ""
+                    : ""}
                 </Link>
               )}
+
               <Link
                 className="dropdown-item"
                 to="/"

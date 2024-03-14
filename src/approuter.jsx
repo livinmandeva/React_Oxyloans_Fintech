@@ -106,7 +106,7 @@ const AppRouter = () => {
           path="/register_active_proceed"
           element={<Register_active_proceed />}
         />
-        <Route path="/paymentgateway" element={<PaymentGateway />} />
+        {/* <Route path="/paymentgateway" element={<PaymentGateway />} /> */}
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/testdeals" element={<UserTestdeals />} />

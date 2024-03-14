@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./user.css";
 import { useNavigate } from "react-router-dom";
 import { handelapidata } from "../../HttpRequest/beforelogin";
+import { Link } from "react-router-dom";
 
 const Whatappuser = ({ data }) => {
   const [data1, setAppData] = useState(data);
@@ -47,7 +48,10 @@ const Whatappuser = ({ data }) => {
         role="alert"
       >
         Multiple users are mapped with the given WhatsApp number. To proceed,
-        please select the user you want to log in
+        please select the user you want to log in or {""}
+        <Link to="/">
+          <span class="badge text-bg-secondary"> Back to Home</span>
+        </Link>
       </div>
 
       <div className="d-flex  justify-content-start flex-row flex-wrap my-2">

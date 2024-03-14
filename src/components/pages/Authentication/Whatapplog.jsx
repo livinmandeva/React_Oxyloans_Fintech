@@ -98,9 +98,7 @@ const Whatapplog = () => {
         whatsappotpvaluescallback
       );
       response.then((data) => {
-        console.log(data.headers.accesstoken);
-
-        const accessToken = data.headers.accesstoken;
+        const accessToken = data.headers?.accesstoken;
         if (accessToken) {
           setwhatappotp({
             ...whatappotp,
@@ -115,15 +113,16 @@ const Whatapplog = () => {
             } else if (data.data.primaryType == "ADMIN") {
               history("/dashboard");
             } else {
-              history("/borrowerDashboard");
+              toastrError("Try to Login of Lender Only");
             }
           }
           // setdata(data);
-        } else if (data.response?.status === 400) {
-          setwhatappotp({
-            ...whatappotp,
-            errorMessage: data.response.data.errorMessage,
-          });
+        } else if (data.response?.status == 400) {
+          toastrError(data.response.data.errorMessage);
+          // setwhatappotp({
+          //   ...whatappotp,
+          //   errorMessage: data.response.data.errorMessage,
+          // });
         } else {
           setdata(data);
           setdatavaild(true);
@@ -214,6 +213,7 @@ const Whatapplog = () => {
                               className="phoneinputfiled form-control"
                               value={value}
                               onChange={setValue}
+                              defaultCountry="IN"
                             />
                           </div>
                           <div className="forgotpass">
