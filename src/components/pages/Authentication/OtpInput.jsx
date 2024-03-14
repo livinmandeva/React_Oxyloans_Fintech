@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-function OtpInput({ data }) {
+function OtpInput({ data, setwhatsappotphandler }) {
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
 
@@ -9,6 +9,7 @@ function OtpInput({ data }) {
       const updatedOtpValues = [...otpValues];
       updatedOtpValues[index] = value;
       setOtpValues(updatedOtpValues);
+      setwhatsappotphandler(updatedOtpValues);
       if (value !== "" && index < 5 && inputRefs.current[index + 1]) {
         inputRefs.current[index + 1].focus();
       }
@@ -25,9 +26,9 @@ function OtpInput({ data }) {
     }
   }, [data]); // Add data as a dependency to useEffect
 
-  useEffect(() => {
-    localStorage.setItem("otp", JSON.stringify(otpValues)); // Store otpValues as a string
-  }, [otpValues]);
+  // useEffect(() => {
+  //   localStorage.setItem("otp", JSON.stringify(otpValues)); // Store otpValues as a string
+  // }, [otpValues]);
 
   return (
     <div className="otp-field">

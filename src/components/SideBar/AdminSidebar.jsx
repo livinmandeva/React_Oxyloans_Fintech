@@ -376,7 +376,7 @@ const Sidebar = (props) => {
                             "/myclosedDeals" === pathName ? "active" : ""
                           }`}
                         >
-                          Closed Delas
+                          Closed Deals
                         </Link>
                       </li>
                       <li>

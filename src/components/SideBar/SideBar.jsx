@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { Scrollbars } from "react-custom-scrollbars";
+import ReactGA from "react-ga";
+const TRACKING_ID = "UA-84545654-1"; // OUR_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
 
 const Sidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState("");
@@ -83,6 +86,10 @@ const Sidebar = (props) => {
   }, []);
 
   let pathName = useLocation().pathname;
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [window.location.pathname]);
 
   return (
     <>

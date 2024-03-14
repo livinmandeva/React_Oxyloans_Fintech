@@ -83,7 +83,6 @@ export const sendInvait = async (email, mailContent, mailSubject) => {
     token,
     data
   );
-
   return response;
 };
 

@@ -154,8 +154,8 @@ export const usersubmitotp = async (email, password) => {
 };
 
 export const handelapidata = async (userId) => {
-const userid=userId.substring(2);
-const data={}
+  const userid = userId.substring(2);
+  const data = {};
   const response = await handleApiRequestBeforeLogin(
     "POST",
     API_BASE_URL,
@@ -164,11 +164,9 @@ const data={}
   );
   return response;
 };
-export const verifywhatappotp = async (api) => {
-  const value1 = localStorage.getItem("otp");
-const otpArray = JSON.parse(value1);
-const otpString = otpArray.join(""); // Concatenate the array elements into a single string
-const otpNumber = parseInt(otpString, 10);
+export const verifywhatappotp = async (api, whatsapploginotp) => {
+  const otpString = whatsapploginotp; // Concatenate the array elements into a single string
+  const otpNumber = parseInt(otpString, 10);
   const data = {
     whatsappNumber: api.whatsappNumber,
     session: api.session,

@@ -89,7 +89,7 @@ const WithdrawdealFounds = () => {
                     <li className="breadcrumb-item">
                       <Link to="/subject">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Ongoing Delas</li>
+                    <li className="breadcrumb-item active">Ongoing Deals</li>
                   </ul>
                 </div>
               </div>

@@ -1,35 +1,29 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   getUserDetails,
   getSessionExpireTime,
 } from "../HttpRequest/afterlogin";
-import CountUp from "react-countup";
+
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData } from "../Redux/Slice";
 import { fetchDatadashboard } from "../Redux/SliceDashboard";
 
-import {
-  HandleWithFooter,
-  WarningAlert,
-} from "../pages/Base UI Elements/SweetAlert";
-import {
-  headericon05,
-  avatar02,
-  avatar11,
-  avatar17,
-  avatar13,
-  headericon04,
-  oxylogomobile,
-  oxylogodashboard,
-} from "../imagepath";
+import { WarningAlert } from "../pages/Base UI Elements/SweetAlert";
+import { headericon04, oxylogomobile, oxylogodashboard } from "../imagepath";
 
 const Header = (profile) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
   const [dashboarddata, setdashboarddata] = useState({
     profileData: "",
+    iswhatAppLogin: sessionStorage.getItem("whatAppLoginMultipleUser"),
   });
+
+  console.log(dashboarddata);
+  const [currentPage, setCurrentPage] = useState("");
 
   const handlesidebar = () => {
     document.body.classList.toggle("mini-sidebar");
@@ -76,11 +70,19 @@ const Header = (profile) => {
 
   useMemo(() => {
     const sessionsExpire = getSessionExpireTime();
-
     if (sessionsExpire) {
       WarningAlert("Your session is expiring in 5 minutes.", "/dashboard");
     }
   }, []);
+
+  useEffect(() => {
+    if (currentPage == "") {
+      setCurrentPage(location.pathname);
+      if (document.body.classList.contains("slide-nav")) {
+        document.body.classList.remove("slide-nav");
+      }
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -102,18 +104,6 @@ const Header = (profile) => {
           </Link>
         </div>
         {/* Search Bar */}
-        <div className="top-nav-search" style={{ display: "none" }}>
-          <form>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search here"
-            />
-            <button className="btn" type="submit">
-              <i className="fas fa-search" />
-            </button>
-          </form>
-        </div>
         {/* /Search Bar */}
         {/* Mobile Menu Toggle */}
         <Link
@@ -128,144 +118,6 @@ const Header = (profile) => {
         {/* Header Right Menu */}
 
         <ul className="nav user-menu">
-          {/* <li className="nav-item dropdown language-drop me-2">
-            <div>
-              <CountUp start={60} end={0} duration={60} prefix=" 30 : " />
-            </div>
-          </li> */}
-          {/* Notifications */}
-
-          <li className="nav-item dropdown noti-dropdown me-2 d-none">
-            <Link
-              to="#"
-              className="dropdown-toggle nav-link header-nav-list"
-              data-bs-toggle="dropdown"
-            >
-              <img src={headericon05} alt="jeadericon" />
-            </Link>
-            <div className="dropdown-menu notifications">
-              <div className="topnav-dropdown-header">
-                <span className="notification-title">Notifications</span>
-                <Link to="#" className="clear-noti">
-                  Clear All
-                </Link>
-              </div>
-              <div className="noti-content">
-                <ul className="notification-list">
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={avatar02}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">Carlson Tech</span> has
-                            approved{" "}
-                            <span className="noti-title">your estimate</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              4 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={avatar11}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">
-                              International Software Inc
-                            </span>{" "}
-                            has sent you a invoice in the amount of{" "}
-                            <span className="noti-title">$218</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              6 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={avatar17}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">John Hendry</span> sent
-                            a cancellation request{" "}
-                            <span className="noti-title">Apple iPhone XR</span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              8 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="notification-message">
-                    <Link to="#">
-                      <div className="media d-flex">
-                        <span className="avatar avatar-sm flex-shrink-0">
-                          <img
-                            className="avatar-img rounded-circle"
-                            alt="User Image"
-                            src={avatar13}
-                          />
-                        </span>
-                        <div className="media-body flex-grow-1">
-                          <p className="noti-details">
-                            <span className="noti-title">
-                              Mercury Software Inc
-                            </span>{" "}
-                            added a new product{" "}
-                            <span className="noti-title">
-                              Apple MacBook Pro
-                            </span>
-                          </p>
-                          <p className="noti-time">
-                            <span className="notification-time">
-                              12 mins ago
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="topnav-dropdown-footer">
-                <Link to="#">View all Notifications</Link>
-              </div>
-            </div>
-          </li>
-
           <li className="nav-item  has-arrow dropdown-heads ">
             <Link to="#" className="win-maximize maximize-icon">
               <img src={headericon04} alt="" />
@@ -343,7 +195,11 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/myRunningDelas">
                 My Deals
               </Link>
-
+              {dashboarddata.iswhatAppLogin == "true" && (
+                <Link className="dropdown-item" to="/whatappuser">
+                  Back To WhatsApp
+                </Link>
+              )}
               <Link
                 className="dropdown-item"
                 to="/"

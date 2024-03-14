@@ -219,7 +219,7 @@ const WithdrawalFromWallet = () => {
                             className="form-control"
                             name="withdrawAmount"
                             onChange={handleInputchange}
-                            placeholder="Enter the Withdraw Amount"
+                            placeholder="Enter the Withdrawal Amount"
                           />
                           {withdrawrequest.withdrawAmounterror && (
                             <div className="error">
@@ -262,7 +262,7 @@ const WithdrawalFromWallet = () => {
                             name="withdraReason"
                             onKeyPress={handleKeyPress}
                             onChange={handleInputchange}
-                            placeholder="Enter the Reson"
+                            placeholder="Enter the Reason"
                           />
                           {withdrawrequest.withdraReasonerror && (
                             <div className="error">

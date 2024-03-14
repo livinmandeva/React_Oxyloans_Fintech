@@ -1,36 +1,34 @@
-import React, { useEffect } from 'react';
-import './user.css';
-import { useNavigate } from 'react-router-dom';
-import { avtarimage11 } from "../../imagepath";
-import { handelapidata } from '../../HttpRequest/beforelogin';
+import React, { useEffect, useState } from "react";
+import "./user.css";
+import { useNavigate } from "react-router-dom";
+import { handelapidata } from "../../HttpRequest/beforelogin";
 
-const Whatappuser = ({ data1 }) => {
-  // Log the initial value of data1
-  console.log('Initial data1:', data1);
-
-
-
-  
+const Whatappuser = ({ data }) => {
+  const [data1, setAppData] = useState(data);
+  console.log("Initial data1:", data1);
   const history = useNavigate();
 
   useEffect(() => {
-    // Log data1 whenever it changes
-
-    console.log('Updated data1:', data1);
-  }, [data1]);
-
+    const iswhatsAppLogin = sessionStorage.getItem("whatAppLoginMultipleUser");
+    if (iswhatsAppLogin) {
+      const getdata = JSON.parse(sessionStorage.getItem("whatsAppLoginUsers"));
+      setAppData(getdata);
+    }
+  }, []);
 
   const handelapi = async (userId) => {
     try {
-      console.log(userId);
       const response = await handelapidata(userId);
       const data = response.data;
-  console.log(response.data)
-      const accessToken = response.data.accessToken;
-      sessionStorage.setItem("accessToken", accessToken);
-     
-  
+      const accessToken = response.headers.accesstoken;
+      // console.log(accessToken, data.primaryType);
       if (accessToken != null) {
+        sessionStorage.setItem("accessToken", accessToken);
+        sessionStorage.setItem("userId", data.id);
+        sessionStorage.setItem("tokenTime", data.tokenGeneratedTime);
+        sessionStorage.setItem("whatAppLoginMultipleUser", true);
+        sessionStorage.setItem("whatsAppLoginUsers", JSON.stringify(data1));
+
         if (data.primaryType === "LENDER" || data.primaryType === "ADMIN") {
           history("/dashboard");
         } else if (data.primaryType === "BORROWER") {
@@ -40,41 +38,55 @@ const Whatappuser = ({ data1 }) => {
     } catch (error) {
       console.error("Error:", error);
     }
-  }
- 
-  // console.log()
+  };
+
   return (
-    <>
-
-          <div className="container">
-            <div className="logincard">
-              <h6><strong>Note :  </strong> Multiple users are mapped with the given WhatsApp number. To proceed, please select the user you want to log in</h6>
-              {/* Render user cards based on data1 */}
-              <br></br>
-              {data1 && data1.length > 0 && data1.map((userData, index) => (
-                <div key={index}>
-                  <div className="card_user">
-
-                    
-                    <div  className='profileimagediv'>
-                    <img src={avtarimage11}  className='profileiame'  />     
-                    </div>
-                    <div className="card_user-subtitle">{userData.userId}</div>
-                    <div className="card_user-title">{userData.name}</div>
-                    <div className="card_user-subtitle">Email :{userData.email}</div>
-                    <hr className="card_user-divider" />
-                    <div className="card_user-footer card_user-footer11">
-                      <button className="card_user-btn"   onClick={()=>handelapi(userData.userId)}>
-                        Login
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-       
+    <div className="row col-12">
+      <div
+        className="alert alert-primary col-12 vw-100 text-center"
+        role="alert"
+      >
+        Multiple users are mapped with the given WhatsApp number. To proceed,
+        please select the user you want to log in
       </div>
-    </>
+
+      <div className="d-flex  justify-content-start flex-row flex-wrap my-2">
+        {data1 &&
+          data1.length > 0 &&
+          data1.map((userData, index) => (
+            <div
+              key={index}
+              className="col-md-3 col-12 col-sm-12 col-lg-3 mx-auto"
+            >
+              <div className="panel price panel-red">
+                <div className="panel-heading  text-center">
+                  <h3>{userData.userId}</h3>
+                </div>
+                <div className="panel-body text-center">
+                  <ul class="list-group list-group-flush text-center">
+                    <li className="list-group-item">
+                      <b className="paymembership_tenture">{userData.name}</b>
+                    </li>
+                    <li className="list-group-item">
+                      <b className="paymembership_tenture"> {userData.email}</b>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="panel-footer">
+                  <button
+                    className="btn btn-xs btn-block btn-primary"
+                    type="button"
+                    onClick={() => handelapi(userData.userId)}
+                  >
+                    Login
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
   );
 };
 

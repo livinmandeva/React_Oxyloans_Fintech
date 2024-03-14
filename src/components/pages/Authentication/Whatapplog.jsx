@@ -4,7 +4,11 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
-import { registerImage  , oxylogomobile  , oxylogodashboard} from "../../imagepath";
+import {
+  registerImage,
+  oxylogomobile,
+  oxylogodashboard,
+} from "../../imagepath";
 
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -31,11 +35,11 @@ const Whatapplog = () => {
       <FeatherIcon icon="eye-off" />
     </i>
   );
-
   const [handlewhatapp, sethandlewhatapp] = useState(true);
   const [value, setValue] = useState("");
   const [dataIpv6, setdataIpv6] = useState({});
   const [dataIpv4, setdataIpv4] = useState("");
+  const [whatsapploginotp, setwhatsapploginotp] = useState([]);
 
   const [whatappotp, setwhatappotp] = useState({
     successMessage: "",
@@ -48,7 +52,6 @@ const Whatapplog = () => {
   const history = useNavigate();
   const [data, setdata] = useState("");
   const [datavalid, setdatavaild] = useState(false);
-
 
   const handleipv6 = () => {
     axios({
@@ -75,56 +78,62 @@ const Whatapplog = () => {
         console.log(error);
       });
   };
+
+  const setwhatsappotphandler = (otpvalues) => {
+    setwhatsapploginotp(otpvalues);
+  };
   useEffect(() => {
     handleipv6();
     handleip4();
   }, []);
 
   const verifyotp = async () => {
-    const response = verifywhatappotp(whatappotp.otpdata);
+    let whatsappotpvaluescallback =
+      whatsapploginotp.length > 0 ? whatsapploginotp.join("") : "";
+    if (whatsappotpvaluescallback == "") {
+      toastrError("Enter the Whatsapp OTP");
+    } else {
+      const response = verifywhatappotp(
+        whatappotp.otpdata,
+        whatsappotpvaluescallback
+      );
+      response.then((data) => {
+        console.log(data.headers.accesstoken);
 
-    response.then((data) => {
-      const accessToken = data.data.accessToken;
-
-      if (data) {
-        setwhatappotp({
-          ...whatappotp,
-          responsedata: data,
-        });
-
-          console.log(data)
-        sessionStorage.setItem("accessToken", accessToken);
-        sessionStorage.setItem("userId", data.data.id);
-        sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
-
-     
-
-        if (accessToken != null) {
-          if (data.data.primaryType == "LENDER") {
-            history("/dashboard");
-          } else if (data.data.primaryType == "ADMIN") {
-            history("/dashboard");
-          } else {
-            history("/borrowerDashboard");
+        const accessToken = data.headers.accesstoken;
+        if (accessToken) {
+          setwhatappotp({
+            ...whatappotp,
+            responsedata: data,
+          });
+          sessionStorage.setItem("accessToken", accessToken);
+          sessionStorage.setItem("userId", data.data.id);
+          sessionStorage.setItem("tokenTime", data.data.tokenGeneratedTime);
+          if (accessToken != null) {
+            if (data.data.primaryType == "LENDER") {
+              history("/dashboard");
+            } else if (data.data.primaryType == "ADMIN") {
+              history("/dashboard");
+            } else {
+              history("/borrowerDashboard");
+            }
           }
-
-          // history("/dashboard");
+          // setdata(data);
+        } else if (data.response?.status === 400) {
+          setwhatappotp({
+            ...whatappotp,
+            errorMessage: data.response.data.errorMessage,
+          });
+        } else {
+          setdata(data);
+          setdatavaild(true);
         }
-
-        setdata(data);
-        setdatavaild(true);
-      } else if (data.response.status === 400) {
-        // const errorMessage = data.response.data.errorMessage;
-
-        setwhatappotp({
-          ...whatappotp,
-          errorMessage: data.response.data.errorMessage,
-        });
-      }
-    });
+      });
+    }
   };
+
   const sethandlewhatappclick = async () => {
-    if (value == "") {
+    if (value == "" || value == undefined) {
       toastrError("Enter The WhatsApp Number");
     } else {
       const response = sendwhatappotp(value);
@@ -133,7 +142,6 @@ const Whatapplog = () => {
           sethandlewhatapp(false);
           setwhatappotp({
             ...whatappotp,
-            // successMessage: "Otp Sent successfully",
             otpdata: data.data,
           });
         } else {
@@ -151,21 +159,23 @@ const Whatapplog = () => {
     <>
       {datavalid && (
         <>
-          {" "}
-          <div className="main-wrapper login-body">
-       
-              <div className="container">
-                <div        style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <img  src={oxylogodashboard}    className="imagelo11"   alt="images-data" />
+          {/* login-body */}
+          <div className="main-wrapper  container-fluid">
+            <div className="card">
+              <div className="card-header">
+                <div className="d-flex justify-content-center">
+                  <img
+                    src={oxylogodashboard}
+                    className="imagelo11"
+                    alt="images-data"
+                  />
                 </div>
-                {/* <div></div>
-                <br></br> */}
-                <hr></hr>
-              <div className="logincard" > 
-              <Whatappuser data1={data.data.whatsappLoginResponse} />
-                </div> 
               </div>
 
+              <div className="card-body border-0">
+                <Whatappuser data={data.data.whatsappLoginResponse} />
+              </div>
+            </div>
           </div>
         </>
       )}
@@ -254,7 +264,10 @@ const Whatapplog = () => {
                           </p>
                           <h2>Otp verification</h2>
                           <div className="texts">
-                            <OtpInput data={4} />
+                            <OtpInput
+                              data={4}
+                              setwhatsappotphandler={setwhatsappotphandler}
+                            />
                           </div>
                           {whatappotp.successMessage && (
                             <div className="errorMessage">
@@ -290,12 +303,11 @@ const Whatapplog = () => {
                               <i className="fa fa-whatsapp" />
                             </Link>
                             {/* <Link to="#">
+
                           <i className="fab fa-google-plus-g" />
-                        </Link>
-                        <Link to="/whatsapplogin">
-                          <i className="fa fa-whatsapp  " />
-                        </Link>
-                        <Link to="#">
+                        </Link> */}
+
+                            {/* <Link to="#">
                           <i className="fab fa-facebook-f" />
                         </Link>
                         <Link to="#">

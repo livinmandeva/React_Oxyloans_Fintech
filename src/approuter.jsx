@@ -1,6 +1,8 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
+import ReactGA from "react-ga";
+const TRACKING_ID = "UA-84545654-1"; // OUR_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
 
 import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
 import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
@@ -87,6 +89,10 @@ import Whatappuser from "./components/pages/Authentication/Whatappuser.jsx";
 // ********************BORROWER MODULE    ROUTES END ************************** //
 
 const AppRouter = () => {
+  useEffect(() => {
+    console.log(window.location.pathname + window.location.search);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [window.location.pathname]);
   return (
     <BrowserRouter>
       <Routes>

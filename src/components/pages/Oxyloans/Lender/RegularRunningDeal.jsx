@@ -124,7 +124,7 @@ const RegularRunningDeal = () => {
                     to="/myRunningDelas"
                     className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                   >
-                    <i className="fa fa-user mx-1"></i> My Participated Delas
+                    <i className="fa fa-user mx-1"></i> My Participated Deals
                   </Link>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const RegularRunningDeal = () => {
                           <div className="card invoices-grid-card w-100 h-25">
                             <div className="card-header row">
                               <Link
-                                to="/viewinvoice"
+                                to="#"
                                 className="invoice-grid-link col-sm-12 col-lg-4"
                               >
                                 Deal Name: {data.dealName}

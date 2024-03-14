@@ -100,269 +100,11 @@ const AdminDashboard = () => {
       : "";
   }
 
-  // const [data, setObject] = useState({
-  //   chart: {
-  //     height: 350,
-  //     type: "line",
-  //     toolbar: {
-  //       show: false,
-  //     },
-  //     fill: false,
-  //   },
-  //   dataLabels: {
-  //     enabled: false,
-  //   },
-  //   datasets: {
-  //     id: "apaxcharts-line",
-  //   },
-  //   stroke: {
-  //     curve: "smooth",
-  //   },
-  //   colors: ["#3D5EE1", "#70C4CF"],
-  //   borderWidth: 3,
-  //   labels: ["2020", "2021", "2022", "2023"],
-  // });
-
-  // const [series, setSeries] = useState([
-  //   {
-  //     name: "Investment",
-  //     data: [100000, 25000, 1000000, 300000],
-  //   },
-  //   {
-  //     name: "Total Returns",
-  //     data: [120000, 32000, 1300000, 450000],
-  //   },
-  // ]);
-
-  // Student Chart
-
-  const [dataBar, object] = useState({
-    colors: ["#3D5EE1", "#70C4CF"],
-    chart: {
-      type: "bar",
-      height: 350,
-      width: "100%",
-      stacked: false,
-      toolbar: {
-        show: false,
-      },
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "55%",
-        endingShape: "rounded",
-        categoryGap: "30%",
-      },
-    },
-    stroke: {
-      show: true,
-      width: 2,
-      colors: ["transparent"],
-    },
-    series: [
-      {
-        name: "Student",
-        color: "#70C4CF",
-        data: [100000, 100000, 150000, 2000000],
-      },
-      {
-        name: "Escrow",
-        color: "#3D5EE1",
-        data: [100000, 50000, 60000, 100000],
-      },
-      {
-        name: "Others",
-        color: "#3D5EE1",
-        data: [0, 1000, 1500000, 1000],
-      },
-    ],
-    labels: [2020, 2021, 2022, 2023, 2024],
-
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "100%",
-          endingShape: "rounded",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 15,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          style: {
-            colors: "#777",
-          },
-        },
-      },
-      title: {
-        text: "",
-        align: "left",
-        style: {
-          fontSize: "0px",
-        },
-      },
-    },
-  });
-
-  const [studentchart] = useState([
-    {
-      name: "Student",
-      type: "column",
-      data: [0, 100000, 150000, 2000000],
-    },
-    {
-      name: "Escrow",
-      type: "column",
-      data: [1000000, 100000, 150000, 2000000],
-    },
-    {
-      name: "Others",
-      type: "column",
-      data: [0, 100000, 150000, 2000000],
-    },
-  ]);
-
   const [dealsProgressed, setdealsProgressed] = useState({
     totalDeals: 0,
     participatedDeals: 0,
     percentage: 0,
   });
-  const [initialData, setinitialData] = useState({
-    totalInvestment: 0, // Initialize with 0 or another appropriate default value
-    participatedStudentDeals: 0,
-    participatedEscrowDeals: 0,
-    participatedNormalDeals: 0,
-  });
-
-  // const response = chatapi();
-  // response.then((data)=>{
-  //   if(data){
-  //     SetDistributedColumns({
-
-  //         ...DistributedColumns,
-  //         totalInvestment: data.data.totalInvestment, // Initialize with 0 or another appropriate default value
-  //   participatedStudentDeals: data.data.participatedStudentDeals,
-  //   participatedEscrowDeals: data.data.participatedEscrowDeals,
-  //   participatedNormalDeals: data.data.participatedNormalDeals,
-  //     })
-  //   }
-
-  // })
-  // const [DistributedColumns, SetDistributedColumns] = useState({
-  //   series: [
-  //     {
-  //       name: "",
-  //       // data: [300000, 200000, 50000, 50000],
-  //       data: [0, 0, 0, 0],
-  //     },
-  //   ],
-  //   options: {
-  //     chart: {
-  //       height: 350,
-  //       type: "bar",
-  //       events: {
-  //         click: function (chart, w, e) {},
-  //       },
-  //     },
-  //     colors: ["#45C4B0", "#3D5EE1", "#70C4CF", "#777"],
-  //     plotOptions: {
-  //       bar: {
-  //         columnWidth: "45%",
-  //         distributed: true,
-  //       },
-  //     },
-  //     dataLabels: {
-  //       enabled: false,
-  //     },
-  //     legend: {
-  //       show: false,
-  //     },
-  //     xaxis: {
-  //       categories: [
-  //         ["Total Investment"],
-  //         ["Student"],
-  //         ["Escow"],
-  //         ["normalDeals"],
-  //       ],
-  //       labels: {
-  //         style: {
-  //           colors: ["#3D5EE1", "#70C4CF"],
-  //           fontSize: "12px",
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await chatapi();
-  //       if (response && response.data) {
-  //         const data = response.data;
-
-  //         SetDistributedColumns((prevColumns) => ({
-  //           ...prevColumns,
-  //           series: [
-  //             {
-  //               name: "",
-  //               data: [
-  //                 data.totalInvestment +
-  //                   data.participatedStudentDeals +
-  //                   data.participatedEscrowDeals +
-  //                   data.participatedNormalDeals,
-  //                 data.participatedStudentDeals,
-  //                 data.participatedEscrowDeals,
-  //                 data.participatedNormalDeals,
-  //               ],
-  //             },
-  //           ],
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   const response = chatapi();
-  //   response.then((data) => {});
-  // }, []);
 
   const [treemap, Settreemap] = useState({
     series: [
@@ -724,36 +466,6 @@ const AdminDashboard = () => {
     return () => {};
   }, [dashboardInvestment.pageNo, dashboardInvestment.pageSize]);
 
-  // useEffect(() => {
-  //   const earningres = getInterestEarnings();
-  //   earningres.then((data) => {
-  //     if (data.request.status == 200) {
-  //       const newapidata = data.data.map((info, index) => {
-  //         let datesplit = info.date.split("-");
-  //         return [
-  //           new Date(
-  //             datesplit[0],
-  //             datesplit[1].includes("0")
-  //               ? datesplit[1].substring(1)
-  //               : datesplit[1],
-  //             datesplit[2]
-  //           ),
-  //           info.amount,
-  //         ];
-  //       });
-
-  //       setgoogledate([
-  //         [
-  //           { type: "date", id: "Date" },
-  //           { type: "number", id: "Won/Loss" },
-  //         ],
-  //         ...newapidata,
-  //       ]);
-  //     }
-  //   });
-  //   return () => {};
-  // }, []);
-
   useEffect(() => {
     const response = getNoDealsParticipated();
     response.then((data) => {
@@ -823,10 +535,10 @@ const AdminDashboard = () => {
           isvalidity == false
         ) {
           const skipbutton = localStorage.getItem("skip");
-          if (skipbutton) {
-          } else {
-            validityDatemodal(getdashboardData?.validityDate, groupName);
-          }
+          // if (skipbutton) {
+          // } else {
+          //   validityDatemodal(getdashboardData?.validityDate, groupName);
+          // }
         }
       }
     }
@@ -1261,7 +973,6 @@ const AdminDashboard = () => {
                           onShowSizeChange: onShowSizeChange,
                           size: "default",
                           showLessItems: true,
-                          pageSizeOptions: [5, 10, 15, 20],
                           responsive: true,
                         }}
                         columns={columns}

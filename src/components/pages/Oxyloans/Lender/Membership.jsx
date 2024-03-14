@@ -36,7 +36,7 @@ const Membership = React.memo((pros) => {
   const myorder = urlParams.get("myorder");
 
   const cashfree = Cashfree({
-    mode: "sandbox", //or production
+    mode: "production",
   });
 
   const handlePaymembershipfree = async (membership, no) => {
@@ -58,7 +58,7 @@ const Membership = React.memo((pros) => {
   const membershipsweetalertconformation = (membership, no) => {
     Swal.fire({
       title: "Are you willing to proceed with the payment at this moment ?",
-      showDenyButton: false,
+      showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Pay Through wallet",
       cancelButtonText: "cancel",

@@ -200,7 +200,6 @@ const MyRunningDelas = () => {
                     tip="Loading..."
                     className="text-center"
                     large="large"
-                    fullscreen={true}
                   ></Spin>
                 </div>
               ) : Array.isArray(runningdeals.data) &&

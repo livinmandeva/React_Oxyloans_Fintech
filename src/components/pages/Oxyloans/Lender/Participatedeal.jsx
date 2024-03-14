@@ -7,11 +7,7 @@ import "./InvoiceGrid.css";
 import { handledetail } from "../../../HttpRequest/afterlogin";
 import { Button, Table } from "antd";
 import { toastrError } from "../../Base UI Elements/Toast";
-import {
-  WarningAlertWalltTran,
-  membership,
-  participatedapi,
-} from "../../Base UI Elements/SweetAlert";
+import { participatedapi } from "../../Base UI Elements/SweetAlert";
 import Spining from "./Spining";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -53,7 +49,7 @@ const Participatedeal = () => {
       const urlparam = new URLSearchParams(window.location.search);
       const dealId = urlparam.get("dealId");
       const response = await handledetail(dealId);
-      console.log(response);
+
       const newObj = { ...response.data };
       if (newObj.monthlyInterest != 0) {
         newObj.rateOfInterest = newObj.monthlyInterest + " % PM";
@@ -104,8 +100,7 @@ const Participatedeal = () => {
 
     handledealinfo();
   }, []);
-  // deal.participatedAmount >= deal.apidata.minimumPaticipationAmount &&
-  //   deal.participatedAmount <= deal.apidata.lenderParticiptionLimit &&
+
   useEffect(() => {
     const checkCondition = () => {
       if (deal.bank != "") {
@@ -301,12 +296,12 @@ const Participatedeal = () => {
               <>
                 <p>Welcome to {deal.apidata && deal.apidata.dealName}</p>
                 {/* <div className="row col-12"> */}
-                  <Table
-                    dataSource={dataSource.length < 0 ? [] : dataSource}
-                    columns={columns}
-                    pagination={false}
-                    loading={dataSource.length < 0 ? true : false}
-                  />
+                <Table
+                  dataSource={dataSource.length < 0 ? [] : dataSource}
+                  columns={columns}
+                  loading={dataSource.length < 0 ? true : false}
+                  pagination={false}
+                />
                 {/* </div> */}
 
                 <div className="displaycenter">

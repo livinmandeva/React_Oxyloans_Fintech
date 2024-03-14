@@ -16,7 +16,6 @@ import { Provider } from "react-redux";
 import store from "./components/Redux/Store";
 // import { newRouter } from "./appcontainer.jsx";
 import Loader from "./loader.jsx";
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

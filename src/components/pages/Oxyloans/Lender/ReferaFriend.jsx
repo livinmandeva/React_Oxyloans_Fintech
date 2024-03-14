@@ -103,29 +103,6 @@ const ReferaFriend = () => {
     return () => {};
   }, [url]);
 
-  // useEffect(() => {
-  //   const inputValid =
-  //     profile.email != "" &&
-  //     profile.mobileNumber != "" &&
-  //     profile.mobileNumber.length == 10 &&
-  //     profile.name != "" &&
-  //     profile.citizenType != "";
-
-  //   if (inputValid) {
-  //     setprofile({
-  //       ...profile,
-  //       savebtndisable: false,
-  //     });
-  //   } else {
-  //     setprofile({
-  //       ...profile,
-  //       savebtndisable: true,
-  //     });
-  //   }
-
-  //   return () => {};
-  // }, [profile.email, profile.name, profile.citizenType, profile.mobileNumber]);
-
   const handleprofilesubmit = () => {
     setprofile({
       ...profile,
@@ -154,10 +131,8 @@ const ReferaFriend = () => {
           WarningBackendApi("Error", data.response.data.errorMessage);
         }
       });
-
-    } else {  
-   console.log("form not vaild")
-
+    } else {
+      console.log("form not vaild");
     }
   };
 
@@ -540,8 +515,9 @@ const ReferaFriend = () => {
                                 <select
                                   className="form-control form-select"
                                   name="citizenType"
-                                  value={profile.citizenType}
+                                  // value={profile.citizenType}
                                   onChange={handlechanges}
+                                  defaultValue={profile.citizenType}
                                 >
                                   <option value="NRI">NRI</option>
                                   <option value="NONNRI">NON NRI</option>
@@ -556,12 +532,10 @@ const ReferaFriend = () => {
                                 <select
                                   className="form-control form-select"
                                   name="userinviteType"
-                                  value={profile.userinviteType}
+                                  defaultValue={profile.userinviteType}
                                   onChange={handlechanges}
                                 >
-                                  <option value="YES" selected>
-                                    YES
-                                  </option>
+                                  <option value="YES">YES</option>
                                   <option value="NO">NO</option>
                                 </select>
                               </div>
@@ -608,8 +582,9 @@ const ReferaFriend = () => {
                                 </label>
                                 <textarea
                                   className="form-control"
-                                  value={emailcontentdata}
-                                  name="mailContent"
+                                  value={emailres.emailcontent}
+                                  name="emailcontent"
+                                  onChange={handlechanges}
                                 ></textarea>
                               </div>
                               <div className="col-12 ">
