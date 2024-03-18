@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 
-const FdPaymentDetails = () => {
+const FdPaymentDetails = () => {    
   return (
-    <>
+    <>   
       <div className="main-wrapper">
         {/* Header */}
         <Header />
 
-        {/* Sidebar */}
+        {/* Sidebar */}    
         <Sidebar />
 
         {/* Page Wrapper */}

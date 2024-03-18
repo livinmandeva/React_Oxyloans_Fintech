@@ -1,267 +1,432 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Button, pagination, Table } from "antd";
-import { onShowSizeChange, itemRender } from "../../../../../Pagination";
-import Header from "../../../../../Header/Header";
-import Sidebar from "../../../../../SideBar/SideBar";
-import Footer from "../../../../../Footer/Footer";
+
+import { Button, Table, Tag } from "antd";
+
+// import "./inserted.css";
+
 import {
-  Earning,
-  referralEarningsInfo,
-} from "../../../../../HttpRequest/afterlogin";
-import "./viewdeal.css";
+    getborrowerapiclick,
+  getintrestedapi,
+  getintrestedapiclick,
+  getloanborrowerandlender,
+  getviewdealadmin,
+  handelcalcluateapi,
+  handlecalculatapidata,
+} from "../../../../../HttpRequest/admin";
+import { render } from "@fullcalendar/core/preact";
+import Swal from "sweetalert2";
+import Header from "../../../../../Header/Header";
+import Sidebar from "../../../../../SideBar/AdminSidebar";
+
 
 const ViewDeals = () => {
-  const [referalMyearnigs, setreferalMyearnigs] = useState({
+  const [intrested, setintrested] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
-    Invitelender: "",
-    inviteborrower: "",
-    invitenri: "",
-    borrowerlink: true,
-    earninglink: "",
-    lenderlink: true,
-    invitenrilink: true,
+    isvaildcard: true,
+    inputfiledvalue2:false,
+    isfiledvaild:false,
+    inputfiled2:"",
+    inputselectcity:false,
+    inpututm:false
   });
 
-  const referalMyearnigsPagination = (Pagination) => {
-    setreferalMyearnigs({
-      ...referalMyearnigs,
+
+  const  [datavalue   ,setdatavalue]=useState({
+    inputfiled:"",
+    fieldValue:"",
+    fieldValue2:"",
+    utmamountfiled:"",
+    inputfiledvalue:false,
+    fieldValue3:"",
+    fieldValue31:"",
+  })
+
+
+  const [adminviewdeal , setAdminviewdeal]=useState({
+   payload:{
+      pageNo: 1,
+    pageSize: 10,
+    dealType: "HAPPENING"  }
+  })
+  const [buttonindex, setbuttonindex] = useState({
+    btnindex: "",
+    isbuttonvalid: false,
+  });
+  const HandleClick = (id) => {
+    setbuttonindex((prevState) => ({
+      ...prevState,
+      isbuttonvalid: !prevState.isbuttonvalid,
+      btnindex: id,
+    }));
+    console.log(buttonindex.btnindex);
+  };
+  const membershiphistoryPagination = (Pagination) => {
+    setintrested({
+      ...intrested,
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
     });
   };
 
+  const handelchange = (event) => {
+    const { name, value } = event.target;
+    setdatavalue({
+      ...datavalue,
+      [name]: value
+    });
+  
+    console.log(event.target.value);
+
+  };
   useEffect(() => {
-    const response = referralEarningsInfo(
-      referalMyearnigs.pageNo,
-      referalMyearnigs.pageSize
-    );
+    const response = getviewdealadmin(adminviewdeal.payload);
     response.then((data) => {
       if (data.request.status == 200) {
-        setreferalMyearnigs({
-          ...referalMyearnigs,
-          apiData: data.data,
+        console.log(data);
+        setintrested({
+          ...intrested,
+          apiData: data.data.listOfBorrowersDealsResponseDto,
           loading: false,
           hasdata: data.data.count == 0 ? false : true,
         });
       }
     });
-  }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
+    return () => {};
+  }, []);
 
-  console.log(referalMyearnigs);
   const datasource = [];
   {
-    referalMyearnigs.apiData != ""
-      ? referalMyearnigs.apiData.lenderReferenceAmountResponse.map((data) => {
+    intrested.apiData != ""
+      ? intrested.apiData.map((data) => {
           datasource.push({
             key: Math.random(),
-            RefereeName: (
-              <>
-                <div className="tablepara">
-                  <p>
-                    <strong>Deal name :</strong>test hold today 4
-                  </p>
-                  <p>Deal Id :10</p>
-                  <p>Aggrements : PENDING</p>
-                  <p>
-                    <strong>First Participation :</strong> 02-01-2024 12:52:13
-                  </p>
-                  <p>Last Participation : No Data</p>
-                </div>
-              </>
-            ),
-            EarnedAmount: (
-              <>
-                <div className="tablepara">
-                  <p>Participate : 15000</p>
-                  <p>Current Amount : 15000</p>
-                  <p>To Wallet : 0</p>
-                  <p>Return Principal : 0</p>
-                </div>
-              </>
-            ),
-            EarnedAmount: (
-              <>
-                <div className="tablepara">
-                  <p>Participate : 15000</p>
-                  <p>Current Amount : 15000</p>
-                  <p>To Wallet : 0</p>
-                  <p>Return Principal : 0</p>
-                </div>
-              </>
-            ),
-            PaymentStatus: (
-              <>
-                <div className="tablepara">
-                  <p>Borrower :u</p>
-                  <p>Borrower ROI :3</p>
-                  <p>Lender ROI :1.5</p>
-                  <p>Status :Yet to be Achieved</p>
-                  <p>Deal Amount : 100,000</p>
-                  <p>Emi date : 2025-01-02</p>
-                </div>
-              </>
-            ),
-            TransferredOn: (
-              <>
-                <div className="buttongroupline">
-                  <Button>Edit</Button>
-                  <Button danger>Edit</Button>
-                  <Button>Deal Reopen</Button>
-                  <Button>Tenure Extend</Button>
-                </div>
-              </>
-            ),
-            Remarks: (
-              <>
-                <div className="buttongroupline">
-                  <Button> View Lenders</Button>
-                  <Button> Withdrawal Request</Button>
-                  <Button> Principal Summary</Button>
-                </div>
-              </>
-            ),
-            intialbutton: (
-              <>
-                <div className="buttongroupline">
-                  <Button> Pay Interest</Button>
-                  <Button> Initiating Notifications</Button>
-                  <Button> Interest Summary</Button>
-                </div>
-              </>
-            ),
+            PaymentDate: data,
+            TransactionNumber: data,
+            Amount: data,
+            PaidThrough: data,
+            documents: data,
+            comments: data,
           });
         })
       : "";
   }
 
-  const column = [
+  const handlecalculat = (index) => {
+    console.log(index);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are You Sure, you want to update the CIBIL Score?!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Enter the Cibil score",
+          text: "Cibil Score*",
+          icon: "warning",
+          input: "text", // Use 'input' instead of render
+          inputAttributes: {
+            className: "form-control",
+          },
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const inputValue = result.value; // Retrieve the value entered by the user
+            // Now you can use inputValue in your logic
+            console.log("User input:", inputValue);
+            const response = handlecalculatapidata(inputValue, index);
+
+            response.then((data) => {
+              console.log(data);
+              if (data.request.status == 200) {
+                Swal.fire({
+                  title: "CIBIL Score",
+                  text: "Updated",
+                  icon: "success",
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  };
+
+  const handlesendoffer = () => {
+    Swal.fire({
+      text: "Are You Sure, you want to update the CIBIL Score?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      setintrested({
+        ...intrested,
+        isvaildcard: !intrested.isvaildcard,
+      });
+      if (result.isConfirmed) {
+        console.log(intrested.isvaildcard);
+        console.log(intrested.isvaildcard);
+      }
+    });
+  };
+  const handlecalculation = async (index) => {
+    const response = await handelcalcluateapi(index);
+    response.then((data) => {
+      console.log(data);
+      if (data.request.status == 200) {
+        Swal.fire({
+          text: "Are You Sure, you want to update the CIBIL Score?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
+
+  const columns = [
     {
       title: "Deal Name",
-      dataIndex: "RefereeName",
-      sorter: (a, b) => a.RefereeName.length - b.RefereeName.length,
-    },
+      dataIndex: "PaymentDate",
+      sorter: (a, b) => a.PaymentDate - b.PaymentDate,
+      render: (render) => (
+        <>   
+          <p>Deal Id :{render.dealId}</p>
+          <p>Deal name : - {render.dealName}</p>
+          <p>
+            <strong>Aggrements : </strong> 
+            {render.agreementsGenerationStatus}
+          </p>
+          <p>First Participation :     {render.firstParticipationDate}</p>
+          <p>Last Participation :     {render.lastParticipationDate}</p>
 
+         
+
+
+
+
+        </>
+      ),
+    },			
     {
       title: "Deal Info",
-      dataIndex: "EarnedAmount",
-      sorter: (a, b) => a.EarnedAmount.length - b.EarnedAmount.length,
+      dataIndex: "TransactionNumber",
+      sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
+      render: (render) => (
+        <>
+          <div className="insertstart">
+          
+           
+            <p>  Participate :  {render.dealPaticipatedAmount}</p>
+            <p> Current Amount :  {render.dealCurrentAmount}</p>
+            <p>  To Wallet :  {render.dealAmountReturnedToWallet}</p>
+            <p>  Return Principal :  {render.withdrawalAndPrincipalReturned}</p>
+          
+          </div>
+        </>
+      ),
     },
     {
       title: "Deal User",
-      dataIndex: "PaymentStatus",
-      sorter: (a, b) => a.PaymentStatus.length - b.PaymentStatus.length,
+      dataIndex: "Amount",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (render) => (
+        <>
+               <p>  Borrower :OXYLOANS</p>
+            <p> Borrower ROI :2.25</p>
+            <p> Status :Yet to be Achieved</p>
+            <p> Deal Amount : 10,000</p>
+            <p>  Borrower :OXYLOANS</p>
+            
+          <p>
+            <strong>Emi date : </strong>
+            2024-06-04
+          </p>
+        </>
+      ),
     },
     {
       title: "Modify",
-      dataIndex: "TransferredOn",
-      sorter: (a, b) => a.TransferredOn.length - b.TransferredOn.length,
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (render) => (
+        <>
+      
+      
+      <div className="divintrested">  
+            <Link to=""> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
+            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
+            Deal Reopen
+            </Tag>     
+              
+            <Link to=""> <Tag color="#f50">     Stop Participation</Tag>    </Link>
+            <Tag color="#3c8dbc" onClick={() => HandleClick(render.id)}>
+            Tenure Extend
+            </Tag>
+          </div>
+        </>
+      ),
     },
     {
       title: "View Participated Users",
-      dataIndex: "Remarks",
-      sorter: (a, b) => a.Remarks.length - b.Remarks.length,
+      dataIndex: "documents",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (documents, index) => (
+        <>
+            <div className="divintrested">
+            <Link to=""> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
+            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
+            Deal Reopen
+            </Tag>     
+              
+            <Link to=""> <Tag color="#f50">       Stop Participation</Tag>    </Link>
+            <Tag color="#3c8dbc" onClick={() => HandleClick(render.id)}>
+            Tenure Extend 
+            </Tag>
+          </div>
+        </>
+      ),
     },
     {
       title: "Know More",
-      dataIndex: "intialbutton",
-      sorter: (a, b) => a.intialbutton.length - b.intialbutton.length,
+      dataIndex: "comments",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (render, index) => (
+        <>
+            <div className="divintrested">
+            <Link to=""> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
+            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
+            Tenure Extend 
+            </Tag>     
+              
+            <Link to=""> <Tag color="#f50">   Stop Participation</Tag>   </Link>
+            <Tag color="#3c8dbc" onClick={() => HandleClick(render.id)}>
+             Deal Reopen
+            </Tag>
+          </div>
+        </>
+      ),
     },
+   
   ];
+  const handleTagClick = () => {
+    console.log("but");
+  };
 
+
+  const  handelclickuser=()=>{
+
+    console.log(intrested);
+    console.log(datavalue);
+    const response = getborrowerapiclick(
+      intrested,
+      datavalue
+   
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data.data.results)
+        setintrested({
+          ...intrested,
+          apiData: data.data.results,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+  }
+   
   return (
     <>
       <div className="main-wrapper">
-        {/* Header */}
         <Header />
-
-        {/* Sidebar */}
         <Sidebar />
-
-        {/* Page Wrapper */}
-
+        {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
-            {/* Page Header */}
+            {/*Page Header */}
             <div className="page-header">
-              <div className="row align-items-center">
+              <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Running & Closed Deals</h3>
+                  <h3 className="page-title">
+                      Running & Closed Deals
+                  </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">My Network</li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>
             </div>
             {/* /Page Header */}
-            <div className="student-group-form">
-              <div className="row" style={{ display: "none" }}>
-                <div className="col-lg-3 col-md-6">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search by Payment Status "
-                    />
-                  </div>
-                </div>
 
-                <div className="col-lg-2 pull-right">
-                  <div className="search-student-btn">
-                    <button type="btn" className="btn btn-primary">
-                      Regular Running Deals
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="row">
               <div className="col-sm-12">
-                <div className="card card-table">
-                  <div className="card-header">
-                    <button className="btn btn-xs col-md-4 btn-info col-12">
-                      {referalMyearnigs.borrowerlink ? (
-                        <>Regular Running Deals </>
-                      ) : (
-                        <> copied</>
-                      )}
-                    </button>
-                    <button
-                      className="btn btn-xs col-md-4 btn-danger col-12"
-                      style={{ marginLeft: "6px" }}
-                    >
-                      <i className="fa-solid fa-download"></i>
-                      Regular Participation Closed Deals
-                    </button>
-                  </div>
+                <div className="card">
                   <div className="card-body">
-                    <div className="page-header m-0 p-0"></div>
-                    <div className="table-responsive">
+                    <div className="row">
+                  
+                  <Link
+                    to="/myRunningDelas"
+                    className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
+                  >
+                    <i className="fa fa-user mx-1"></i>  Regular Running Deals 
+                  </Link>
+
+                  <Link
+                    to="/myRunningDelas"
+                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2"   style={{color:'white'}}
+                  >
+                    <i className="fa fa-user mx-1"></i>  Participation Closed Deals 
+                  </Link>
+           
+                   
+                      
+                      
+                    </div>
+                    <div>
                       <Table
-                        className="table table-stripped table-hover datatable"
-                        pagination={{
-                          total: referalMyearnigs.apiData.count,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          position: ["topRight"],
-                          showSizeChanger: false,
-                          onShowSizeChange: onShowSizeChange,
-                        }}
-                        columns={column}
-                        dataSource={referalMyearnigs.hasdata ? datasource : []}
+                        className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
+                        // pagination={{
+                        //   total: membershiphistory.apiData.count,
+                        //   showTotal: (total, range) =>
+                        //     `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        //   position: ["topRight"],
+                        //   showSizeChanger: false,
+                        //   onShowSizeChange: onShowSizeChange,
+                        // }}
+                        columns={columns}
+                        dataSource={intrested.hasdata ? datasource : []}
                         expandable={true}
-                        loading={referalMyearnigs.loading}
-                        onChange={referalMyearnigsPagination}
+                        loading={intrested.loading}
+                        onChange={membershiphistoryPagination}
                       />
                     </div>
                   </div>
@@ -269,11 +434,9 @@ const ViewDeals = () => {
               </div>
             </div>
           </div>
-          {/* Footer */}
-          <Footer />
         </div>
+        {/*Page wrapper */}
       </div>
-      {/* /Main Wrapper */}
     </>
   );
 };

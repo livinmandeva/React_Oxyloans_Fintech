@@ -3,9 +3,50 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
+import { handelhandeluploadtranapi } from "../../../../HttpRequest/admin";
 
 const Uploadtransactions = () => {
-  return (
+
+
+  const [data , setdata]=useState({
+    scrowAccountNumber: "",
+    transactionAmount: "",
+    transactionDate: "",
+    documentUploadedId: "",
+    userid:"",
+    TRANSACTIONSS:""   
+
+  })
+
+  const [apidata , setapidate]=useState({
+    apidatares:"",
+  });
+
+  const handelchange =(event)=>{
+    const {name  , value}=event.target;
+    setdata({
+      ...data,
+      [name]:value
+    })
+  }
+
+  // savelendertransaction
+
+  
+  
+  const  handeluploadtran =async()=>{
+    const    response= await  handelhandeluploadtranapi(data);
+    response.then((data) => {
+      if (data.request.status == 200) {
+
+        
+        console.log(data.data.results)
+     
+      }
+    });
+  }
+
+    return (
     <>
       <div className="main-wrapper">
         {/* Header */}
@@ -49,8 +90,9 @@ const Uploadtransactions = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="userid"
                             className="form-control"
+                            onChange={handelchange}
                             // placeholder="Enther the Borrower Id "
                           />
                         </div>
@@ -63,8 +105,9 @@ const Uploadtransactions = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
-                            className="form-control"
+                            name="scrowAccountNumber"
+                            className="form-control"   
+                            onChange={handelchange}
                             // placeholder="Enther the Borrower Id "
                           />
                         </div>
@@ -77,8 +120,9 @@ const Uploadtransactions = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="transactionAmount"
                             className="form-control"
+                            onChange={handelchange}
                             // placeholder="Enther the Borrower Id "
                           />
                         </div>
@@ -90,9 +134,10 @@ const Uploadtransactions = () => {
                             <span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
-                            name="withdrawFeedback"
-                            className="form-control"
+                            type="date"
+                            name="transactionDate"
+                            className="form-control"  
+                            onChange={handelchange}
                             // placeholder="Enther the Borrower Id "
                           />
                         </div>
@@ -106,7 +151,7 @@ const Uploadtransactions = () => {
                           </label>
                           <input
                             type="file"
-                            name="withdrawFeedback"
+                            name="TRANSACTIONSS"  onChange={handelchange}
                             className="form-control"
                             // placeholder="Enther the Borrower Id "
                           />
@@ -114,7 +159,7 @@ const Uploadtransactions = () => {
                       </div>
                       <div className="col-12">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"  onClick={handeluploadtran}>
                             Fetch details
                           </button>
                         </div>

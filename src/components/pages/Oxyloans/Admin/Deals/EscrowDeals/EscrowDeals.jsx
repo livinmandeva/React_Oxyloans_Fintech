@@ -53,6 +53,7 @@ const EscrowDeals = () => {
     });
   }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
 
+  console.log(referalMyearnigs);
   const datasource = [];
   {
     referalMyearnigs.apiData != ""

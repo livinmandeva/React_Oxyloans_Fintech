@@ -7,8 +7,47 @@ import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
+import { handlesubmitdatacredital } from "../../../../HttpRequest/admin";
+import { toastrSuccess } from "../../../Base UI Elements/Toast";
 
 const RemoveCredentials = () => {
+
+
+
+  const [data ,  setdata]=useState({
+    id: "",
+    mobileNumber: "",
+    email: ""
+  })
+//   updateMobileNumberAndEmail {
+//     "id": "8",
+//     "mobileNumber": "54547457457",
+//     "email": "klklklkl@gmail.com"
+// }
+const handlechange=(event)=>{
+  
+  const {name    ,value}=event.target;
+  setdata({
+    
+    ...data,
+    [name]:value
+  })
+}
+const handlesubmit = async () => {
+  console.log(data)
+  try {
+    const response = await handlesubmitdatacredital(data);
+    console.log(response);
+    if (response.request.status === 200) {
+
+      toastrSuccess("You have successfully updated the user details.")
+    }
+  } catch (error) {
+    console.error(error);
+  }    
+};
+
+
   return (
     <>
       <div className="main-wrapper">
@@ -46,9 +85,10 @@ const RemoveCredentials = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="id"
                             className="form-control"
                             placeholder="Enther the Start Date"
+                            onChange={handlechange}
                           />
                         </div>
                       </div>
@@ -60,10 +100,11 @@ const RemoveCredentials = () => {
                             <span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
-                            name="withdrawFeedback"
+                            type="number"
+                            name="mobileNumber"
                             className="form-control"
                             placeholder="Enther the Start Date"
+                            onChange={handlechange}
                           />
                         </div>
                       </div>
@@ -74,17 +115,18 @@ const RemoveCredentials = () => {
                             <span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
-                            name="withdrawFeedback"
+                            type="email"
+                            name="email"
                             className="form-control"
                             placeholder="Enther the Start Date"
+                            onChange={handlechange}
                           />
                         </div>
                       </div>
                       <div className="col-3">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
-                            Fetch Deatils
+                          <button type="button" className="btn btn-primary"   onClick={handlesubmit}>
+                            Submit
                           </button>
                         </div>
                       </div>

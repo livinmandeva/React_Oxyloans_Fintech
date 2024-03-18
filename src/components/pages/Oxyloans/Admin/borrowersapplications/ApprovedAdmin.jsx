@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import { Button, Table, Tag } from "antd";
 
 import Header from "../../../../Header/Header";
-// import "./inserted.css";
+import "./inserted.css";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import {
-    getborrowerapiclick,
   getintrestedapi,
   getintrestedapiclick,
   getloanborrowerandlender,
@@ -17,9 +16,9 @@ import {
 } from "../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
+import Model1 from "./Model1";
 
-
-const LendersLoansinfo = () => {
+const ApprovedAdmin = () => {
   const [intrested, setintrested] = useState({
     apiData: "",
     hasdata: false,
@@ -28,22 +27,14 @@ const LendersLoansinfo = () => {
     pageSize: 5,
     defaultPageSize: 5,
     isvaildcard: true,
-    inputfiledvalue2:false,
-    isfiledvaild:false,
-    inputfiled2:"",
-    inputselectcity:false,
-    inpututm:false
+    isfiledvaild:false
   });
 
 
   const  [datavalue   ,setdatavalue]=useState({
     inputfiled:"",
     fieldValue:"",
-    fieldValue2:"",
-    utmamountfiled:"",
-    inputfiledvalue:false,
-    fieldValue3:"",
-    fieldValue31:"",
+    inputfiledvalue:false
   })
 
   const [buttonindex, setbuttonindex] = useState({
@@ -80,125 +71,13 @@ const LendersLoansinfo = () => {
       setdatavalue({
         ...datavalue,
         inputfiledvalue: true,
-        inputfiled:"Name",
-        inputselectcity:false,
-        inputfiledvalue2:false,
-        inpututm:false,
+        inputfiled:"Name"
       });
-
-     
-    } else if (event.target.value === "borrowersid") {
+    } else if (event.target.value === "Borrowers id") {
       setdatavalue({
         ...datavalue,
         inputfiledvalue: true,
-        inputfiled:"borrowers id",
-        inputselectcity:false,
-        inputfiledvalue2:false,
-        inpututm:false,
-      });
-    }else if (event.target.value === "roi") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue2:true,
-        inputfiled:"Min Roi",
-        inputfiled2:"Max",
-        inputselectcity:false,
-        inpututm:false,
-      });
-    }else if (event.target.value === "amount") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue2:true,
-        inputfiled:"Min Amount",
-        inputselectcity:false,
-        inpututm:false,
-        inputfiled2:"Max ",
-      });
-    }else if (event.target.value === "amount&city") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue2:true,
-        inputfiled:"amount&city",
-        inputfiled1:"Min Amount",
-        inputfiled2:"Max ",
-        inputselectcity:true,
-        inpututm:false
-      });
-    }else if (event.target.value === "city") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: false,
-        inputfiledvalue2:false,
-        inputselectcity:true,
-        isfiledvaild:false,
-        inpututm:false
-      });
-    }else if (event.target.value === "mobileNumber") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiled:"mobileNumber",
-        inputfiledvalue2:false,
-        inputselectcity:false,
-      });
-    }else if (event.target.value === "oxyscore") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue1:false,
-        inputfiled:"oxyscore",
-        
-        inpututm:false,
-      });
-    }else if (event.target.value === "pannumber") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiled:"pannumber",
-        inputfiledvalue2:false,
-        inputfiled2:"OxyScore",
-        inputselectcity:false,
-        inpututm:false,
-        inputselectcity:false,
-      });
-    }else if (event.target.value === "utm") {
-      setdatavalue({
-        ...datavalue,
-        inputfiled:"utm",
-        inputfiledvalue: false,
-        inputfiledvalue2: false,
-        inputselectcity:false,
-        inpututm:true
-      });
-    }else if (event.target.value === "utm&amount") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        utmamountfiled:"utm&amount",
-        inputfiled:"Min Amount",
-        inputfiled2:"Max Amount",
-        inputfiledvalue2: true,
-        inputselectcity:false,
-        inpututm:true
-      });
-    }else if (event.target.value === "utm&city") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: false,
-        inputfiled:"utm&city",
-        inputfiledvalue2:false,
-        inpututm:true,
-        inputselectcity:true
-      });
-    }else if (event.target.value === "utm&city") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiled:"utm&city",
-        inpututm:true
+        inputfiled:"Borrowers id",
       });
     }
   };
@@ -328,7 +207,7 @@ const LendersLoansinfo = () => {
 
   const columns = [
     {
-      title: "Borrower Info",
+      title: "User Info",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
       render: (render) => (
@@ -342,7 +221,7 @@ const LendersLoansinfo = () => {
       ),
     },
     {
-      title: "Name & Mobile",
+      title: "Req Date & Exp Date",
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
       render: (render) => (
@@ -359,7 +238,7 @@ const LendersLoansinfo = () => {
       ),
     },
     {
-      title: "Email & Address",
+      title: "Name & Mobile",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render) => (
@@ -379,7 +258,7 @@ const LendersLoansinfo = () => {
       ),
     },
     {
-      title: "Amount & ROI",
+      title: "Email & Address",
       dataIndex: "PaidThrough",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render) => (
@@ -390,7 +269,7 @@ const LendersLoansinfo = () => {
       ),
     },
     {
-      title: "View Documents",
+      title: "View documents",
       dataIndex: "documents",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (documents, index) => (
@@ -535,7 +414,7 @@ const LendersLoansinfo = () => {
       ),
     },
     {
-      title: "Change Role & User Status",
+      title: "Risk calculations & send offer",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render) => (
@@ -562,32 +441,10 @@ const LendersLoansinfo = () => {
   const handleTagClick = () => {
     console.log("but");
   };
-useEffect(()=>{
-  const response = getborrowerapiclick(
-    intrested,
-    datavalue
- 
-  );
-  response.then((data) => {
-    if (data.request.status == 200) {
-      console.log(data.data.results)
-      setintrested({
-        ...intrested,
-        apiData: data.data.results,
-        loading: false,
-        hasdata: data.data.count == 0 ? false : true,
-      });
-    }
-  });
-},[])
-
 
 
   const  handelclickuser=()=>{
-
-    console.log(intrested);
-    console.log(datavalue);
-    const response = getborrowerapiclick(
+    const response = getintrestedapiclick(
       intrested,
       datavalue
    
@@ -604,7 +461,7 @@ useEffect(()=>{
       }
     });
   }
-   
+  
   return (
     <>
       <div className="main-wrapper">
@@ -618,7 +475,7 @@ useEffect(()=>{
               <div className="row">
                 <div className="col">
                   <h3 className="page-title">
-                  Lenders Loan Applications
+                  Lender and Borrower agreed loans
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -639,7 +496,7 @@ useEffect(()=>{
                       <div className="col-12 col-sm-3">
                         <div className="form-group local-forms">
                           <label>
-                          Choose
+                            Date Range
                             <span className="login-danger"></span>
                           </label>
                           <select
@@ -650,104 +507,21 @@ useEffect(()=>{
                             onChange={handelchange}
                           >
                             <option>-- Choose --</option>
-                            <option value="borrowersid">LENDER id</option>
+                            <option value="Borrowers id">Borrowers id</option>
                             <option value="Name">Name</option>
-                            <option value="roi">ROI</option>
-                            <option value="amount">Amount</option>
-                            <option value="amount&city">Amount&city</option>
-                            <option value="city">City</option>
-                            <option value="mobileNumber">Mobile Number</option>
-                            <option value="oxyscore">Oxyscore</option>
-                            <option value="pannumber">Pan Number</option>
-                            <option value="utm">UTM</option>
-                            <option value="utm&amount">UTM&Amount</option>
-                            <option value="utm&city">UTM&city</option>
-                            {/* <option value="Name">Name</option>
-                            <option value="Name">Name</option> */}
-
-                        
                           </select>
                         </div>
                       </div>
-                      
-                      {datavalue.inputselectcity  && <><div className="col-12 col-sm-3">
-                        <div className="form-group local-forms">
-                          <label>
-                          Select City 
-                            <span className="login-danger">*</span>
-                          </label>
-                          <select
-                            type="text"
-                            name="fieldValue3"  
-                            className="form-control" 
-                            onChange={handelchange}
-                            // placeholder={datavalue.inputfiled}
-                          >
 
-
-                    <option value=""> Select City</option>
-                    <option value="Hyderabad">Hyderabad</option>
-                    <option value="Bangalore">Bangalore</option>
-                    <option value="Mumbai">Mumbai</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Kolkata">Kolkata</option>
-                    <option value="Chennai">Chennai</option>
-                    <option value="Pune">Pune</option>
-                    <option value="Visakhapatnam">Visakhapatnam</option>
-                    <option value="Vijayawada">Vijayawada</option>
-                    <option value="Other">Other</option>
-
-                          </select>
-                        </div>
-                      </div></>}
 {datavalue.inputfiledvalue  && <><div className="col-12 col-sm-3">
                         <div className="form-group local-forms">
                           <label>
-                            {datavalue.inputfiled}  
+                            {datavalue.inputfiled}
                             <span className="login-danger">*</span>
                           </label>
                           <input
                             type="text"
                             name="fieldValue"  
-                            className="form-control" 
-                            onChange={handelchange}
-                            // placeholder={datavalue.inputfiled}
-                          />
-                        </div>
-                      </div></>}   
-
-                        
-                      {datavalue.inpututm  && <><div className="col-12 col-sm-3">
-                        <div className="form-group local-forms">
-                          <label>
-                          utm
-                            <span className="login-danger">*</span>
-                          </label>
-                          <select
-                            type="text"
-                            name="fieldValue31"  
-                            className="form-control" 
-                            onChange={handelchange}
-                            // placeholder={datavalue.inputfiled}
-                          >
-
-
-                    {/* <option value=""> Utm</option> */}
-                    <option value="WEB">Web</option>
-                    <option value="MOBILE">Mobile</option>
-
-                          </select>
-                        </div>
-                      </div></>}
-                      {datavalue.inputfiledvalue2  && <><div className="col-12 col-sm-3">
-                        <div className="form-group local-forms">
-                          <label>
-                            {datavalue.inputfiled2}  
-                            <span className="login-danger">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            name="fieldValue2"   
                             className="form-control" 
                             onChange={handelchange}
                             // placeholder={datavalue.inputfiled}
@@ -761,7 +535,8 @@ useEffect(()=>{
                           </button>
                         </div>
                       </div>
-                    </div>   
+                    </div>     {intrested.isfiledvaild  && <>   <Model1 />
+                    </>}
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -792,4 +567,4 @@ useEffect(()=>{
   );
 };
 
-export default LendersLoansinfo;
+export default ApprovedAdmin;

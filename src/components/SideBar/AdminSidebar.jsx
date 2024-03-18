@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 
-const Sidebar = (props) => {
+const AdminSidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenuLevel, setSideMenuLevel] = useState("");
   const [isSideMenuLevel2, setSideMenuLevel2] = useState("");
@@ -79,7 +79,6 @@ const Sidebar = (props) => {
         ).removeClass("hide-logo");
       }
     });
-    return () => {};
   }, []);
 
   let pathName = useLocation().pathname;
@@ -102,8 +101,8 @@ const Sidebar = (props) => {
             <div id="sidebar-menu" className="sidebar-menu">
               {/* Main Menu */}
               <ul>
-                <li className={`${"/dashboard" === pathName ? "active" : ""}`}>
-                  <Link to="/dashboard">
+                <li className={`${"/mainadmindashboard" === pathName ? "active" : ""}`}>
+                  <Link to="/mainadmindashboard">
                     <i className="fa-solid fa-gauge"></i>{" "}
                     <span> Dashboard </span>
                     <span className="menu-arrow"></span>
@@ -127,7 +126,7 @@ const Sidebar = (props) => {
                     }
                   >
                     <i className="fa-solid fa-network-wired"></i>
-                    <span> Deals</span> <span className="menu-arrow" />
+                    <span>  Deals </span> <span className="menu-arrow" />
                   </Link>
                   {isSideMenu == "Deals" ? (
                     <ul
@@ -137,9 +136,9 @@ const Sidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/referaFriend"
+                          to="/createDeal"
                           className={`${
-                            "/reatenewdeal" === pathName ? "active" : ""
+                            "/createDeal" === pathName ? "active" : ""
                           }`}
                         >
                           Create New Deal
@@ -147,9 +146,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/myreferalStatus"
+                          to="/viewDeals"
                           className={`${
-                            "/myreferalStatus" === pathName ? "active" : ""
+                            "/viewDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View & Edit Deals
@@ -157,9 +156,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/lendercontacts"
+                          to="/equityDeals"
                           className={`${
-                            "/lendercontacts" === pathName ? "active" : ""
+                            "/equityDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View Equity Deals
@@ -168,9 +167,9 @@ const Sidebar = (props) => {
 
                       <li>
                         <Link
-                          to="/myEarnings"
+                          to="/escrowDeals"
                           className={`${
-                            "/myEarnings" === pathName ? "active" : ""
+                            "/escrowDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View Escrow Deals
@@ -179,9 +178,9 @@ const Sidebar = (props) => {
 
                       <li>
                         <Link
-                          to="/myEarnings"
+                          to="/testDeals"
                           className={`${
-                            "/myEarnings" === pathName ? "active" : ""
+                            "/testDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View Test Deals
@@ -189,26 +188,141 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/myEarnings"
+                          to="/salariedDeals"
                           className={`${
-                            "/myEarnings" === pathName ? "active" : ""
+                            "/salariedDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View Personal Deals
                         </Link>
                       </li>
+                      <li>
+                        <Link
+                          to="/feependingusers"
+                          className={`${
+                            "/feependingusers" === pathName ? "active" : ""
+                          }`}
+                        >
+                       Pending Fee users
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/pendingFiles"
+                          className={`${
+                            "/pendingFiles" === pathName ? "active" : ""
+                          }`}
+                        >
+                           Pending Files
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/offlineInterest"
+                          className={`${
+                            "/offlineInterest" === pathName ? "active" : ""
+                          }`}
+                        >
+                         Offline Interest
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/offlineInterest"
+                          className={`${
+                            "/offlineInterest" === pathName ? "active" : ""
+                          }`}
+                        >
+                         Deal Notification
+                        </Link>
+                      </li> 
+                       <li>
+                        <Link
+                          to="/testDeals"
+                          className={`${
+                            "/testDeals" === pathName ? "active" : ""
+                          }`}
+                        >
+                          View Test Deals
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/viewclosedDeals"
+                          className={`${
+                            "/viewclosedDeals" === pathName ? "active" : ""
+                          }`}
+                        >
+                          View Closed Deals
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/getGroupofLender"
+                          className={`${
+                            "/getGroupofLender" === pathName ? "active" : ""
+                          }`}
+                        >
+                       Oxy Founding Groups
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/whatsappNotification"
+                          className={`${
+                            "/whatsappNotification" === pathName ? "active" : ""
+                          }`}
+                        >
+                       WhatsApp Notification
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/lenderparticipateddeal"
+                          className={`${
+                            "/lenderparticipateddeal" === pathName ? "active" : ""
+                          }`}
+                        >
+                              Update Lender Participation
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/equityInvestors"
+                          className={`${
+                            "/equityInvestors" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Equity Investors List
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/paytmTransactions"
+                          className={`${
+                            "/paytmTransactions" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Paytm Nodal
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/runningDealInfo"
+                          className={`${
+                            "/runningDealInfo" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Running Deals Info
+                        </Link>
+                      </li> 
+
                     </ul>
                   ) : (
                     ""
                   )}
                 </li>
-                <li className={`${"/profile" === pathName ? "active" : ""}`}>
-                  <Link to="/profile">
-                    <i className="fa-solid fa-user"></i>
-                    <span> Profile </span>
-                    <span className="menu-arrow"></span>
-                  </Link>
-                </li>
+              
 
                 {/* <li className="menu-title">
                   <span></span>
@@ -231,7 +345,7 @@ const Sidebar = (props) => {
                     }
                   >
                     <i className="fa-solid fa-qrcode"></i>
-                    <span> Load Your Wallet </span>
+                    <span>  Hold Amount </span>
                     <span className="menu-arrow"></span>
                   </Link>
                   {isSideMenu == "LoadYourWallet" ? (
@@ -248,7 +362,7 @@ const Sidebar = (props) => {
                             "/loadwaletThroughQr" === pathName ? "active" : ""
                           }`}
                         >
-                          Through QR
+                            Hold Request 
                         </Link>
                       </li>
                       <li>
@@ -260,7 +374,7 @@ const Sidebar = (props) => {
                               : ""
                           }`}
                         >
-                          Through Virtual Account
+                       Hold Amount 
                         </Link>
                       </li>
                     </ul>
@@ -286,7 +400,7 @@ const Sidebar = (props) => {
                     }
                   >
                     <i className="fas fa-book-reader" />{" "}
-                    <span> Ongoing Deals</span> <span className="menu-arrow" />
+                    <span> Student Loan Process </span> <span className="menu-arrow" />
                   </Link>
                   {isSideMenu == "Subjects" ? (
                     <ul
@@ -296,34 +410,85 @@ const Sidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/regularRunningDeal"
+                          to="/borrowerRunningsinfo"
                           className={`${
-                            "/regularRunningDeal" === pathName ? "active" : ""
+                            "/borrowerRunningsinfo" === pathName ? "active" : ""
                           }`}
                         >
-                          Regular Running Deals
+                           Add Student Bank Ac 
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/regularEscrowDeals"
+                          to="/holdAmountRequest"
                           className={`${
-                            "/regularEscrowDeals" === pathName ? "active" : ""
+                            "/holdAmountRequest" === pathName ? "active" : ""
                           }`}
                         >
-                          Regular Escrow Deals
+                         Bank Verified User 
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/regularPersonalDeal"
+                          to="/uploadFdData"
                           className={`${
-                            "/regularPersonalDeal" === pathName ? "active" : ""
+                            "/uploadFdData" === pathName ? "active" : ""
                           }`}
                         >
-                          Personal Deals
+                           Book FD 
                         </Link>
                       </li>
+
+                      <li>
+                        <Link
+                          to="/verifyPaymentDetail"
+                          className={`${
+                            "/verifyPaymentDetail" === pathName ? "active" : ""
+                          }`}
+                        >
+                            Verify Payment Details
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/fdPaymentDetails"
+                          className={`${
+                            "/fdPaymentDetails" === pathName ? "active" : ""
+                          }`}
+                        >
+                            Payment Details 
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/searchfdUsers"
+                          className={`${
+                            "/searchfdUsers" === pathName ? "active" : ""
+                          }`}
+                        >
+                            Search FD Types
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/transferFunds"
+                          className={`${
+                            "/transferFunds" === pathName ? "active" : ""
+                          }`}
+                        >
+                           Transfer Funds
+                        </Link>
+                      </li> 
+                         <li>
+                        <Link
+                          to="/viewListOfFds"
+                          className={`${
+                            "/viewListOfFds" === pathName ? "active" : ""
+                          }`}
+                        >
+                              View List Of FD'S  
+                        </Link>
+                      </li> 
                     </ul>
                   ) : (
                     ""
@@ -350,7 +515,7 @@ const Sidebar = (props) => {
                       toggleSidebar(isSideMenu == "Invoices" ? "" : "Invoices")
                     }
                   >
-                    <i className="fas fa-clipboard" /> <span> My Deals</span>
+                    <i className="fas fa-clipboard" /> <span> Lender Pending Amount </span>
                     <span className="menu-arrow" />
                   </Link>
                   {isSideMenu == "Invoices" ? (
@@ -361,66 +526,25 @@ const Sidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/myRunningDelas"
+                          to="/pendingamountUser"
                           className={`${
-                            "/myRunningDelas" === pathName ? "active" : ""
+                            "/pendingamountUser" === pathName ? "active" : ""
                           }`}
                         >
-                          Running Deals
+                            Insert Details
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/myclosedDeals"
+                          to="/pendingamountUser"
                           className={`${
-                            "/myclosedDeals" === pathName ? "active" : ""
+                            "/pendingamountUser" === pathName ? "active" : ""
                           }`}
                         >
-                          Closed Deals
+                                    Pending amount User
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          to="/myholdamount"
-                          className={`${
-                            "/myholdamount" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Hold Amount
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link
-                          to="/myinterestEarning"
-                          className={`${
-                            "/myinterestEarning" === pathName ? "active" : ""
-                          }`}
-                        >
-                          My Interest Earning
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/myhighvalueDeals"
-                          className={`${
-                            "/myhighvalueDeals" === pathName ? "active" : ""
-                          }`}
-                        >
-                          High Value Deals
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link
-                          to="/earningCertificate"
-                          className={`${
-                            "/earningCertificate" === pathName ? "active" : ""
-                          }`}
-                        >
-                          Earning Certificate
-                        </Link>
-                      </li>
+                   
 
                       {/* <li>
                         <Link
@@ -456,7 +580,7 @@ const Sidebar = (props) => {
                     }
                   >
                     <i className="fa-solid fa-wallet"></i>
-                    <span>Withdraw Funds</span> <span className="menu-arrow" />
+                    <span>FD Statistics </span> <span className="menu-arrow" />
                   </Link>
                   {isSideMenu == "WithdrawFunds" ? (
                     <ul
@@ -465,35 +589,26 @@ const Sidebar = (props) => {
                           isSideMenu == "WithdrawFunds" ? "block" : "none",
                       }}
                     >
+                    
                       <li>
                         <Link
-                          to="/withdrawdealfromDeal"
+                          to="/fdStatistics"
                           className={`${
-                            "/withdrawdealfromDeal" === pathName ? "active" : ""
+                            "/fdStatistics" === pathName ? "active" : ""
                           }`}
                         >
-                          From Deals
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/withdrawalFromWallet"
-                          className={`${
-                            "/withdrawalFromWallet" === pathName ? "active" : ""
-                          }`}
-                        >
-                          From Wallet
+                          Statistics
                         </Link>
                       </li>
 
                       <li>
                         <Link
-                          to="/MywithdrawalHistory"
+                          to="/fddownloadInvoice"
                           className={`${
-                            "/MywithdrawalHistory" === pathName ? "active" : ""
+                            "/fddownloadInvoice" === pathName ? "active" : ""
                           }`}
                         >
-                          My Withdraw History
+                         Download Invoice 
                         </Link>
                       </li>
                     </ul>
@@ -522,7 +637,7 @@ const Sidebar = (props) => {
                     }
                   >
                     <i className="fa-solid fa-suitcase"></i>
-                    <span>Wallet Transactions</span>
+                    <span>Borrower Loan Process</span>
                     <span className="menu-arrow" />
                   </Link>
                   {isSideMenu == "WalletTrans" ? (
@@ -533,46 +648,270 @@ const Sidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/WalletToWallet"
+                          to="/borrowersapplications"
                           className={`${
-                            "/WalletToWallet" === pathName ? "active" : ""
+                            "/borrowersapplications" === pathName ? "active" : ""
                           }`}
                         >
-                          Wallet To Wallet
+                           Borrowers Loan Applications 
                         </Link>
                       </li>
 
                       <li>
                         <Link
-                          to="/walletToWalletHistory"
+                          to="/intrested"
                           className={`${
-                            "/walletToWalletHistory" === pathName
+                            "/intrested" === pathName
                               ? "active"
                               : ""
                           }`}
                         >
-                          Wallet To Wallet History
+                         Intrested (L1)
                         </Link>
                       </li>
 
                       <li>
                         <Link
-                          to="/mytransactions"
+                          to="/newDisbursed"
                           className={`${
-                            "/mytransactions" === pathName ? "active" : ""
+                            "/newDisbursed" === pathName ? "active" : ""
                           }`}
                         >
-                          Wallet Transactions
+                           New Disbursed(L4)
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/membershipHistory"
+                          to="/loanAprroved"
                           className={`${
-                            "/membershipHistory" === pathName ? "active" : ""
+                            "/loanAprroved" === pathName ? "active" : ""
                           }`}
                         >
-                          Membership History
+                        Offer Accepted Users (L2)
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/ApplicationLevelDisbursed"
+                          className={`${
+                            "/ApplicationLevelDisbursed" === pathName ? "active" : ""
+                          }`}
+                        >
+                Deal Level Disbursed(L4)
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/ApplicationLevelDisbursed"
+                          className={`${
+                            "/ApplicationLevelDisbursed" === pathName ? "active" : ""
+                          }`}
+                        >
+                      Deal Level Disbursed(L4)
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/ApplicationLevelDisbursed"
+                          className={`${
+                            "/ApplicationLevelDisbursed" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Disburse Application Level
+                        </Link>
+                      </li> 
+
+                      <li>
+                        <Link
+                          to="/ApplicationLevelDisbursed"
+                          className={`${
+                            "/ApplicationLevelDisbursed" === pathName ? "active" : ""
+                          }`}
+                        >
+                                Closure
+                        </Link>
+                      </li> 
+                      <li>
+                        <Link
+                          to="/ApplicationLevelDisbursed"
+                          className={`${
+                            "/ApplicationLevelDisbursed" === pathName ? "active" : ""
+                          }`}
+                        >
+                        View Van Number
+                        </Link>
+                      </li> 
+                      
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </li>
+                
+
+              
+              
+              </ul>
+              <ul>
+                {/* <li className="menu-title">
+                  <span>Refer A Friend</span>
+                </li> */}
+                <li
+                  className={`${
+                    "/referaFriend" === pathName ||
+                    "/myreferalStatus" === pathName ||
+                    "/myreferalStatus" === pathName
+                      ? "active submenu"
+                      : "submenu"
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className={isSideMenu == "LENDERS" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "LENDERS" ? "" : "LENDERS"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-network-wired"></i>
+                    <span> LENDERS⚡</span> <span className="menu-arrow" />
+                  </Link>
+                  {isSideMenu == "LENDERS" ? (
+                    <ul
+                      style={{
+                        display: isSideMenu == "LENDERS" ? "block" : "none",
+                      }}
+                    >
+                             <li>
+                        <Link
+                          to="/lendersapplications"
+                          className={`${
+                            "/lendersapplications" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Lenders Loan Applications
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/registerLenderUsers"
+                          className={`${
+                            "/registerLenderUsers" === pathName ? "active" : ""
+                          }`}
+                        >
+                           First Time Investment
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/lenderWallettransactions"
+                          className={`${
+                            "/lenderWallettransactions" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Lender Wallet Trasactions 
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/uploadtransactions"
+                          className={`${
+                            "/uploadtransactions" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Upload Transaction
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/poolingLendrs"
+                          className={`${
+                            "/poolingLendrs" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Pooling Lenders
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/lenderreferalinfo"
+                          className={`${
+                            "/lenderreferalinfo" === pathName ? "active" : ""
+                          }`}
+                        >
+                           Lender Referee Info
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/monthlyReferalEarning"
+                          className={`${
+                            "/monthlyReferalEarning" === pathName ? "active" : ""
+                          }`}
+                        >
+                         Monthly Referrer Earnings
+                        </Link>
+                      </li>   <li>
+                        <Link
+                          to="/approveReferenceamount"
+                          className={`${
+                            "/approveReferenceamount" === pathName ? "active" : ""
+                          }`}
+                        >
+                      Approve Reference Amount
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/editReferenceDeatils"
+                          className={`${
+                            "/editReferenceDeatils" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Edit Reference Details
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/editGroupinfo"
+                          className={`${
+                            "/editGroupinfo" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Update Lender Group
+                
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/lenderstatistics"
+                          className={`${
+                            "/lenderstatistics" === pathName ? "active" : ""
+                          }`}
+                        >
+                    Lender Deal Statistics
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/lendersInAllEquityDeals"
+                          className={`${
+                            "/lendersInAllEquityDeals" === pathName ? "active" : ""
+                          }`}
+                        >
+                  Equity Lenders
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/lenderstatistics"
+                          className={`${
+                            "/lenderstatistics" === pathName ? "active" : ""
+                          }`}
+                        >
+                        Lender's Participated Amount
                         </Link>
                       </li>
                     </ul>
@@ -581,7 +920,17 @@ const Sidebar = (props) => {
                   )}
                 </li>
 
-                <li
+              
+              </ul>
+
+              
+              {/* /Main Menu*/}
+              {/* Management */}
+
+
+              <ul>
+
+              <li
                   className={`${
                     "/writetous" === pathName ||
                     "/emicalculator" === pathName ||
@@ -695,8 +1044,478 @@ const Sidebar = (props) => {
                   )}
                 </li>
               </ul>
-              {/* /Main Menu*/}
-              {/* Management */}
+              <ul>
+
+<li
+    className={`${
+      "/writetous" === pathName ||
+      "/emicalculator" === pathName ||
+      "/ticketHistory" === pathName
+        ? "active submenu"
+        : "submenu"
+    }`}
+  >
+    <Link
+      to="#"
+      className={isSideMenu == "WithdrawalRequest" ? "subdrop" : ""}
+      onClick={() =>
+        toggleSidebar(isSideMenu == "WithdrawalRequest" ? "" : "WithdrawalRequest")
+      }
+    >
+      <i className="fa-solid fa-handshake-angle"></i>
+      <span>  Withdrawal Requests </span> <span className="menu-arrow" />
+    </Link>
+    {isSideMenu == "WithdrawalRequest" ? (
+      <ul
+        style={{
+          display: isSideMenu == "WithdrawalRequest" ? "block" : "none",
+        }}
+      >
+        <li>
+          <Link
+            to="/dealWithdrawRequest"
+            className={`${
+              "/dealWithdrawRequest" === pathName ? "active" : ""
+            }`}
+          >
+          From Deal
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/displaylenderwithdrawalfundsList"
+            className={`${
+              "/displaylenderwithdrawalfundsList" === pathName ? "active" : ""
+            }`}
+          >
+           dealWithdrawRequest
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/walletToWalletHistory"
+            className={`${
+              "/walletToWalletHistory" === pathName ? "active" : ""
+            }`}
+          >
+           Wallet To Wallet 
+          </Link>
+        </li>
+      </ul>
+    ) : (
+      ""
+    )}
+  </li>
+
+  <li
+    className={`${
+      "/configautoInvest" === pathName ||
+      "/autoInvestHistory" === pathName
+        ? "active submenu"
+        : "submenu"
+    }`}
+  >
+    <Link
+      to="#"
+      style={{ display: "none" }}
+      className={isSideMenu == "AutoInvest" ? "subdrop" : ""}
+      onClick={() =>
+        toggleSidebar(
+          isSideMenu == "AutoInvest" ? "" : "AutoInvest"
+        )
+      }
+    >
+      <i className="fas fa-building" /> <span> Auto Invest</span>
+      <span className="menu-arrow" />
+    </Link>
+    {isSideMenu == "AutoInvest" ? (
+      <ul
+        style={{
+          display: isSideMenu == "AutoInvest" ? "block" : "none",
+        }}
+      >
+        <li>
+          <Link
+            to="/configautoInvest"
+            className={`${
+              "/configautoInvest" === pathName ? "active" : ""
+            }`}
+          >
+            Config Auto Invest
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/autoInvestHistory"
+            className={`${
+              "/autoInvestHistory" === pathName ? "active" : ""
+            }`}
+          >
+            Auto Invest History
+          </Link>
+        </li>
+      </ul>
+    ) : (
+      ""
+    )}
+  </li>
+</ul>
+
+                       <ul>
+
+<li
+    className={`${
+      "/writetous" === pathName ||
+      "/emicalculator" === pathName ||
+      "/ticketHistory" === pathName
+        ? "active submenu"
+        : "submenu"
+    }`}
+  >
+    <Link
+      to="#"
+      className={isSideMenu == " LendersWalletAmount" ? "subdrop" : ""}
+      onClick={() =>
+        toggleSidebar(isSideMenu == " LendersWalletAmount" ? "" : "LendersWalletAmount")
+      }
+    >
+      <i className="fa-solid fa-handshake-angle"></i>
+      <span>   Lenders Wallet Amount </span> <span className="menu-arrow" />
+    </Link>
+    {isSideMenu == "LendersWalletAmount" ? (
+      <ul
+        style={{
+          display: isSideMenu == "LendersWalletAmount" ? "block" : "none",
+        }}
+      >
+        <li>
+          <Link
+            to="/checkLenderDashboard"
+            className={`${
+              "/checkLenderDashboard" === pathName ? "active" : ""
+            }`}
+          >
+          Check Lender Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lenderwalletamountdetails"
+            className={`${
+              "/lenderwalletamountdetails" === pathName ? "active" : ""
+            }`}
+          >
+             wallet Transactions history
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lendersemiamount"
+            className={`${
+              "/lendersemiamount" === pathName ? "active" : ""
+            }`}
+          >
+        Lenders EMI Amount Detail
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/borrowersemiamount"
+            className={`${
+              "/borrowersemiamount" === pathName ? "active" : ""
+            }`}
+          >
+        Loan Owners Info
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lendersemiamount"
+            className={`${
+              "/lendersemiamount" === pathName ? "active" : ""
+            }`}
+          >
+      Add Loan owner
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/getOxyFoundingGroups"
+            className={`${
+              "/getOxyFoundingGroups" === pathName ? "active" : ""
+            }`}
+          >
+       Lenders wallet
+          </Link>
+        </li>
+      </ul>
+    ) : (
+      ""
+    )}
+  </li>
+
+  <li
+    className={`${
+      "/configautoInvest" === pathName ||
+      "/autoInvestHistory" === pathName
+        ? "active submenu"
+        : "submenu"
+    }`}
+  >
+    <Link
+      to="#"
+      style={{ display: "none" }}
+      className={isSideMenu == "AutoInvest" ? "subdrop" : ""}
+      onClick={() =>
+        toggleSidebar(
+          isSideMenu == "AutoInvest" ? "" : "AutoInvest"
+        )
+      }
+    >
+      <i className="fas fa-building" /> <span> Auto Invest</span>
+      <span className="menu-arrow" />
+    </Link>
+    {isSideMenu == "AutoInvest" ? (
+      <ul
+        style={{
+          display: isSideMenu == "AutoInvest" ? "block" : "none",
+        }}
+      >
+        <li>
+          <Link
+            to="/configautoInvest"
+            className={`${
+              "/configautoInvest" === pathName ? "active" : ""
+            }`}
+          >
+            Config Auto Invest
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/autoInvestHistory"
+            className={`${
+              "/autoInvestHistory" === pathName ? "active" : ""
+            }`}
+          >
+            Auto Invest History
+          </Link>
+        </li>
+      </ul>
+    ) : (
+      ""
+    )}
+  </li>
+</ul>    
+
+
+<ul>
+                {/* <li className="menu-title">
+                  <span>Refer A Friend</span>
+                </li> */}
+                <li
+                  className={`${
+                    "/referaFriend" === pathName ||
+                    "/myreferalStatus" === pathName ||
+                    "/myreferalStatus" === pathName
+                      ? "active submenu"
+                      : "submenu"
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className={isSideMenu == "LoanRecord" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "LoanRecord" ? "" : "LoanRecord"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-network-wired"></i>
+                    <span> Loan Records </span> <span className="menu-arrow" />
+                  </Link>
+                  {isSideMenu == "LoanRecord" ? (
+                    <ul
+                      style={{
+                        display: isSideMenu == "LoanRecord" ? "block" : "none",
+                      }}
+                    >
+                       <li>
+          <Link
+            to="/runningLoans"
+            className={`${
+              "/runningLoans" === pathName ? "active" : ""
+            }`}
+          >
+         Running Loans
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/closedLoansByPlatform"
+            className={`${
+              "/closedLoansByPlatform" === pathName ? "active" : ""
+            }`}
+          >
+            Closed By Platform
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/closedLoans"
+            className={`${
+              "/closedLoans" === pathName ? "active" : ""
+            }`}
+          >
+           Closed Loans
+          </Link>
+        </li>
+        
+        <li>
+          <Link
+            to="/closedLoansByPlatform"
+            className={`${
+              "/closedLoansByPlatform" === pathName ? "active" : ""
+            }`}
+          >
+      Closed By Platform
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lenderRunningsloans"
+            className={`${
+              "/lenderRunningsloans" === pathName ? "active" : ""
+            }`}
+          >
+      Lenders Running loans
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lenderRunningsloans"
+            className={`${
+              "/lenderRunningsloans" === pathName ? "active" : ""
+            }`}
+          >
+      Paid Borrowers
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lenderRunningsloans"
+            className={`${
+              "/lenderRunningsloans" === pathName ? "active" : ""
+            }`}
+          >
+       Highest Paid Borrowers
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/lendersemiamount"
+            className={`${
+              "/lendersemiamount" === pathName ? "active" : ""
+            }`}
+          >
+      Add Loan owner
+          </Link>
+        </li>
+
+                   
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </li>
+
+              </ul>
+
+              <ul>
+                {/* <li className="menu-title">
+                  <span>Refer A Friend</span>
+                </li> */}
+                <li
+                  className={`${
+                    "/referaFriend" === pathName ||
+                    "/myreferalStatus" === pathName ||
+                    "/myreferalStatus" === pathName
+                      ? "active submenu"
+                      : "submenu"
+                  }`}
+                >
+                  <Link
+                    to="#"
+                    className={isSideMenu == "PAYMENT" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(
+                        isSideMenu == "PAYMENT" ? "" : "PAYMENT"
+                      )
+                    }
+                  >
+                    <i className="fa-solid fa-network-wired"></i>
+                    <span> PAYMENTS</span> <span className="menu-arrow" />
+                  </Link>
+                  {isSideMenu == "PAYMENT" ? (
+                    <ul
+                      style={{
+                        display: isSideMenu == "PAYMENT" ? "block" : "none",
+                      }}
+                    >
+                      <li>
+                        <Link
+                          to="/referaFriend"
+                          className={`${
+                            "/referaFriend" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Refer A friend
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/myreferalStatus"
+                          className={`${
+                            "/myreferalStatus" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Referal Status
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/mycontacts"
+                          className={`${
+                            "/mycontacts" === pathName ? "active" : ""
+                          }`}
+                        >
+                          My contacts
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          to="/myEarnings"
+                          className={`${
+                            "/myEarnings" === pathName ? "active" : ""
+                          }`}
+                        >
+                          My Earning
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
+                </li>
+
+                <li className={`${"/" === pathName ? "active" : ""}`}>
+                  <Link to="/">
+                    <i className="fa-solid fa-right-from-bracket"></i>
+                    <span>Sign Out</span>
+                  </Link>
+                </li>
+              </ul>
               <ul>
                 {/* <li className="menu-title">
                   <span>Refer A Friend</span>
@@ -750,9 +1569,9 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/lendercontacts"
+                          to="/mycontacts"
                           className={`${
-                            "/lendercontacts" === pathName ? "active" : ""
+                            "/mycontacts" === pathName ? "active" : ""
                           }`}
                         >
                           My contacts
@@ -790,4 +1609,4 @@ const Sidebar = (props) => {
     </>
   );
 };
-export default Sidebar;
+export default AdminSidebar;

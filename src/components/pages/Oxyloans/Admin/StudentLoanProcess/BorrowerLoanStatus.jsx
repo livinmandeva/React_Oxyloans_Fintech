@@ -5,89 +5,149 @@ import { Table } from "antd";
 
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
+import './stuenloanprocess.css'
 import { onShowSizeChange } from "../../../../Pagination";
-import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
+import { borrowerLoanStatusapisearchid, getborrowerLoanStatusapi } from "../../../../HttpRequest/admin";
+import { useTrail } from "react-spring";
 
 const BorrowerLoanStatus = () => {
-  const [membershiphistory, setmembershiphistory] = useState({
+
+
+
+  const [borrowerLoanStatusapi ,setborrowerLoanStatusapi]=useState({
     apiData: "",
     hasdata: false,
     loading: true,
     pageNo: 1,
-    pageSize: 5,
-    defaultPageSize: 5,
-  });
-
-  const membershiphistoryPagination = (Pagination) => {
-    setmembershiphistory({
-      ...membershiphistory,
+    pageSize: 10,
+    userId:"",
+        modeldata:"",
+    fdAmount:"",
+    accountNumber:"",
+    userName:"",
+    loanType:"",
+    ifsc:"",
+    defaultPageSize: 10,
+    dataindexdata:1,
+    inputid:"",
+    inputidvalue:true,
+    apiData1:{}
+    
+  })
+  
+  const borrowerLoanStatusapiPagination = (Pagination) => {
+    setborrowerLoanStatusapi({
+      ...borrowerLoanStatusapi,
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
     });
   };
 
-  useEffect(() => {
-    const response = getMembershiphistory(
-      membershiphistory.pageNo,
-      membershiphistory.pageSize
+
+
+
+
+  useEffect(()=>{
+    const response = getborrowerLoanStatusapi(
+      borrowerLoanStatusapi.pageNo ,
+       borrowerLoanStatusapi.pageSize
     );
     response.then((data) => {
       if (data.request.status == 200) {
-        setmembershiphistory({
-          ...membershiphistory,
-          apiData: data.data,
-          loading: false,
-          hasdata: data.data.count == 0 ? false : true,
-        });
+    
+        setborrowerLoanStatusapi({
+          ...borrowerLoanStatusapi,
+          apidata:data.data,
+          loading:false,
+          hasdata:data.data.count == 0 ? false : true,
+        });console.log(data.data.borrowerNewBankDetailsResponseDto)
       }
     });
-    return () => {};
-  }, [membershiphistory.pageNo, membershiphistory.pageSize]);
+  } ,[])
 
-  const datasource = [];
-  {
-    membershiphistory.apiData != ""
-      ? membershiphistory.apiData.listOfTransactions.map((data) => {
-          datasource.push({
-            key: Math.random(),
-            PaymentDate: data.paymentDate,
-            TransactionNumber: data.transactionNumber,
-            Amount: data.amount,
-            PaidThrough: data.paidType,
-          });
-        })
-      : "";
+  useEffect(()=>{
+    const response = getborrowerLoanStatusapi(
+      borrowerLoanStatusapi.pageNo ,
+       borrowerLoanStatusapi.pageSize
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+    
+        setborrowerLoanStatusapi({
+          ...borrowerLoanStatusapi,
+          apidata:data.data,
+          loading:false,
+          hasdata:data.data.count == 0 ? false : true,
+        });console.log(data.data.borrowerNewBankDetailsResponseDto)
+      }
+    });
+  },[borrowerLoanStatusapi.pageNo  , borrowerLoanStatusapi.pageSize])
+
+
+
+  const handlechangesearchid = async () => {
+    try {
+      const response = await borrowerLoanStatusapisearchid(borrowerLoanStatusapi.inputid);
+      
+      if (response.request.status === 200) {
+        setborrowerLoanStatusapi((prevState) => ({
+          ...prevState,
+          apiData1: response.data,
+          inputidvalue: false,
+        }));
+      }
+    } catch (error) {
+      console.error('There was an error while processing the search:', error);
+    }
+  };
+  
+  
+
+
+
+  const  handlegetcurrentid=(index)=>{
+    
+      setborrowerLoanStatusapi({
+        ...borrowerLoanStatusapi,
+        dataindexdata:index,
+        modeldata:borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto[index]
+      })
+      // console.log(index)
+      // console.log(borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto[index])
+      
+      
   }
+  const handelprevclick = () => {
+    if (borrowerLoanStatusapi.pageNo > 0    ) {
+      setborrowerLoanStatusapi(prevstate => ({
+        ...prevstate,
+        pageNo: prevstate.pageNo - 10
+      }));
+      console.log("handelprevclick");
+    }
+  };
+  
+const  handlechange =(event)=>{
+const {name , value}=event.target;
 
-  const columns = [
-    {
-      title: "Borrower Info",
-      dataIndex: "PaymentDate",
-      sorter: (a, b) => a.PaymentDate - b.PaymentDate,
-    },
-    {
-      title: "FD INFO",
-      dataIndex: "TransactionNumber",
-      sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
-    },
-    {
-      title: "	Bank Info ",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-    },
-    {
-      title: "FD Amount",
-      dataIndex: "PaidThrough",
-      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-    },
-    {
-      title: " Edit ",
-      dataIndex: "PaidThrough",
-      sorter: (a, b) => a.PaidThrough.length - b.PaidThrough.length,
-    },
-  ];
 
+setborrowerLoanStatusapi({
+  ...borrowerLoanStatusapi,
+  [name]:value,
+})
+}
+  const handelNextclick =()=>{
+    setborrowerLoanStatusapi(nextstate  =>({
+
+      ...nextstate,
+      pageNo: nextstate.pageNo + 10
+    }))
+
+    console.log("handelNextclick")
+  }  
+
+  
   return (
     <>
       <div className="main-wrapper">
@@ -98,7 +158,7 @@ const BorrowerLoanStatus = () => {
           <div className="content container-fluid">
             {/*Page Header */}
             <div className="page-header">
-              <div className="row">
+              <div className="row">    
                 <div className="col">
                   <h3 className="page-title">Verifed FD Users</h3>
                   <ul className="breadcrumb">
@@ -125,41 +185,311 @@ const BorrowerLoanStatus = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="inputid"
                             className="form-control"
-                            placeholder="Enther the LENDER ID "
+                            placeholder="Enther the User ID "
+                            onChange={handlechange}
                           />
                         </div>
                       </div>
 
                       <div className="col-3">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"    onClick={handlechangesearchid}>
                             Fetch Deatils
                           </button>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <Table
-                        className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
-                        pagination={{
-                          total: membershiphistory.apiData.count,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          position: ["topRight"],
-                          showSizeChanger: false,
-                          onShowSizeChange: onShowSizeChange,
-                        }}
-                        columns={columns}
-                        dataSource={membershiphistory.hasdata ? datasource : []}
-                        expandable={true}
-                        loading={membershiphistory.loading}
-                        onChange={membershiphistoryPagination}
-                      />
-                    </div>
-                  </div>
+
+                    <table className="table">
+  <thead>
+    <tr>
+      <th scope="col">Borrower Info</th>
+      <th scope="col">FD INFO</th>
+      <th scope="col">Bank Info</th>
+      <th scope="col">FD Amount</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+  {/* {
+    "userId": 16,
+    "accountNumber": "026291800001191",
+    "ifsc": "YESB0000262",
+    "city": "MUMBAI",
+    "branch": "SANTACRUZ, MUMBAI",
+    "bankName": "YES BANK",
+    "userName": "JOHN DOE",
+    "bankChoosen": "YES BANK",
+    "leadBy": "SUBBU",
+    "consultancy": "LEO",
+    "roi": 0.6,
+    "fundingType": "DAYS",
+    "country": "uk",
+    "university": "oxford",
+    "studentMobileNumber": "0123456789",
+    "fdAmount": 10000,
+    "bankDetailsVerifiedOn": null,
+    "fdCreatedDate": null,
+    "paymentId": null,
+    "days": null,
+    "fdAmountFromSystem": null,
+    "fdValidityDate": null,
+    "registeredMobileNumber": null,
+    "nameFromProfile": null,
+    "fdClosedDate": null,
+    "status": null,
+    "feeInvoice": null,
+    "paymentsCollection": "STUDENT",
+    "loanType": "ASSET"
+} */}
+    {/* {console.log(borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto)} */}
+   
+
+{borrowerLoanStatusapi.inputidvalue ?  <>  {borrowerLoanStatusapi.apidata && borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto && borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto.length !== 0 &&
+  borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto.map((data, index) => (
+    <tr key={index}>
+      <td>
+        <div className="pargra">
+          <p><strong>ID :</strong> BR {data.userId}</p>
+          <p><strong>Name :</strong> {data.userName}</p>
+          <p><strong>Funding Type :</strong> {data.fundingType}</p>
+          <p><strong>Fee payer :</strong> {data.paymentsCollection}</p>
+        </div>
+      </td>
+      <td>
+        <div className="pargra">
+          <p><strong>Amount :</strong> {data.fdAmount}</p>
+          <p><strong>Lead By :</strong> {data.leadBy}</p>
+          <p><strong>RoI :</strong> {data.roi} % PM</p>
+        </div>
+      </td>
+      <td>
+        <div className="pargra">
+          <p><strong>Ac No :</strong> {data.accountNumber}</p>
+          <p><strong>Ifsc :</strong> {data.ifsc}</p>
+          <p><strong>Bank Name :</strong> {data.bankName}</p>
+        </div>
+      </td>
+      <td>
+        <div className="pargra">
+          <p><strong>Amount :</strong> {data.fdAmount}</p>
+          <p><strong>Loan Type :</strong> {data.loanType}</p>
+        </div>
+      </td>
+      <td>
+        <button type="button" className="btn btn-primary"    class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={()=>handlegetcurrentid(index)}>Edit</button>
+      </td>
+    </tr>
+  ))
+}</>  : <>{borrowerLoanStatusapi.apiData1  && (
+  <>
+ <tr>
+      <td>
+        <div className="pargra">
+          <p><strong>ID :</strong> BR {borrowerLoanStatusapi.apiData1.userId}</p>
+          <p><strong>Name :</strong> {borrowerLoanStatusapi.apiData1.userName}</p>
+          <p><strong>Funding Type :</strong> {borrowerLoanStatusapi.apiData1.fundingType}</p>
+          <p><strong>Fee payer :</strong> {borrowerLoanStatusapi.apiData1.paymentsCollection}</p>
+        </div>
+      </td>
+      <td>
+        <div className="pargra">
+          <p><strong>Amount :</strong> {borrowerLoanStatusapi.apiData1.fdAmount}</p>
+          <p><strong>Lead By :</strong> {borrowerLoanStatusapi.apiData1.leadBy}</p>
+          <p><strong>RoI :</strong> {borrowerLoanStatusapi.apiData1.roi} % PM</p>
+        </div>
+      </td>
+      <td>
+        <div className="pargra">
+          <p><strong>Ac No :</strong> {borrowerLoanStatusapi.apiData1.accountNumber}</p>
+          <p><strong>Ifsc :</strong> {borrowerLoanStatusapi.apiData1.ifsc}</p>
+          <p><strong>Bank Name :</strong> {borrowerLoanStatusapi.apiData1.bankName}</p>
+        </div>
+      </td>
+      <td>
+        <div className="pargra">
+          <p><strong>Amount :</strong> {borrowerLoanStatusapi.apiData1.fdAmount}</p>
+          <p><strong>Loan Type :</strong> {borrowerLoanStatusapi.apiData1.loanType}</p>
+        </div>
+      </td>
+      <td>
+        <button type="button" className="btn btn-primary"    class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"   >Edit</button>
+      </td>
+    </tr>  
+  </>
+)}</>}
+
+
+
+
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#" onClick={handelprevclick}>Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#"   onClick={handelNextclick}>Next</a></li>
+  </ul>
+</nav>
+</div>
+
+                 
                 </div>
+                <>
+                
+                    
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit the Bank Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+    {/* {console.log(borrowerLoanStatusapi.dataindexdata)}
+
+    {borrowerLoanStatusapi.apidata && borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto && borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto.length !== 0 &&     console.log(borrowerLoanStatusapi.apidata.borrowerNewBankDetailsResponseDto[borrowerLoanStatusapi.dataindexdata])
+     } */}
+
+
+
+<div class="row g-3 align-items-center">
+
+                      </div>
+                 
+
+
+
+<div   className="gapdata">
+  <div className="row"  style={{marginTop: '20px',}}>
+<div className=" col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                          Borrower ID
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"   
+                            name="userId"
+                            value={borrowerLoanStatusapi.modeldata.userId}
+                            className="form-control"
+                            placeholder="Borrower ID "
+                            onChange={handlechange}
+                          />
+                        </div>
+                      </div>   
+
+                      <div className="col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                          FD Amount  :
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                         
+                            className="form-control"
+                            value={borrowerLoanStatusapi.modeldata.fdAmount}
+                            name="fdAmount"
+                            placeholder="Enther the FD Amount"
+                            onChange={handlechange}
+                          />
+                        </div>
+                      </div>
+
+
+                      </div>
+                      <div className="row" >
+                <div className=" col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                                Account Number: 
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="accountNumber"
+                            className="form-control" 
+                            value={borrowerLoanStatusapi.modeldata.accountNumber}  
+                            onChange={handlechange}
+                            placeholder="Account Number "
+                          />
+                        </div>
+                      </div>   
+
+                      <div className="col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                                  Name As Per Bank  :
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="userName"
+                            className="form-control"
+                            value={borrowerLoanStatusapi.modeldata.userName}
+                            onChange={handlechange}
+                            placeholder="Name As Per Bank  "
+                          />
+                        </div>
+                      </div>
+
+
+                      </div>
+
+
+                      
+                      <div className="row" >
+<div className=" col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                            IFSC  : 
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="ifsc"
+                            className="form-control"
+                            value={borrowerLoanStatusapi.modeldata.ifsc}
+                            onChange={handlechange}
+                            placeholder="Enther ifsc"
+                          />
+                        </div>
+                      </div>   
+
+                      <div className="col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                                      Loan Type  :
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="loanType"
+                            className="form-control"
+                            value={borrowerLoanStatusapi.modeldata.loanType}
+                            placeholder="Enther  Loan Type "
+                            onChange={handlechange}
+                          />
+                        </div>
+                      </div>  
+
+
+                      </div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Submit</button>
+        <button type="button" class="btn btn-primary">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div></>
               </div>
             </div>
           </div>

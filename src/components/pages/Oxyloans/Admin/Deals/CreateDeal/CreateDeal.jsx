@@ -6,8 +6,94 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../../../Header/Header";
 import Sidebar from "../../../../../SideBar/SideBar";
+import { handeldealcrateapi } from "../../../../../HttpRequest/admin";
 
 const CreateDeal = () => {
+
+const [deal  ,setdeal]=useState({
+    dealId: "",
+		dealName: "",
+		borrowerName: "",
+		dealAmount: "",
+		fundsAcceptanceStartDate: "",
+		fundsAcceptanceEndDate: "",
+		borrowerRateOfInterest: "",
+		dealLink: "",
+		duration: "",
+		satishOxyFoundingMonthlyInterest: "",
+		satishOxyFoundingQuartelyInterest: "",
+		satishOxyFoundingHalfInterest: "",
+		satishOxyFoundingYearlyInterest: "",
+		satishOxyFoundingEndOfTheDealInterest:"",
+		oxyFoundingMonthlyInterest: "",
+		oxyFoundingQuartelyInterest: "",
+		oxyFoundingHalfInterest: "",
+		oxyFoundingYearlyInterest: "",
+		oxyFoundingEndOfTheDealInterest: "",
+		oxyPremiumMonthlyInterest: "",
+		oxyPremiumQuartelyInterest: "",
+		oxyPremiumHalfInterest: "",
+		oxyPremiumYearlyInterest: "",
+		oxyPremiumEndOfTheDealInterest: "",
+		newLendersMonthlyInterest: "",
+		newLendersQuartelyInterest: "",
+		newLendersHalfInterest: "",
+		newLendersYearlyInterest: "",
+		newLendersEndOfTheDealInterest: "",
+		loanActiveDate: "",
+		whatappGroupNames: "",
+		participationLimitToLenders: "",
+		whatappMessageToLenders: "",
+		dealType: "",
+		feeROIforBorrower: "",
+		feeCollectedFromBorrower: "",
+		withdrawalStatus: "",
+		withdrawalRoi: "",
+		participcationLenderType: "",
+		oxyLoanRequestId: "",
+		minimumPaticipationAmount: "",
+		borrowersIdsMappedToDeal: "",
+		enachStatus: "",
+		idsWithLoanAmount: "",
+		dealSubtype: "",
+		whatsappChatId: "",
+		whatsappResponseLink: "",
+		feeStatusToParticipate: "",
+		dealFutureDate: "",
+		dealLaunchHoure: "",
+		dealOpenStatus: "",
+		// processingFeePercentage: "",
+		lifeTimeWaiver: "",
+		lifeTimeWaiverLimit: "",
+		dealCreationNotification: "",
+		whatsappNotification: "",
+		emailNotification: "",
+})
+
+
+
+
+
+const handlechange  =()=>{
+  
+  const {value  ,name}=event.target;
+  setdeal({
+    ...deal,
+    
+    
+    [name]:value,
+  })
+  
+
+
+  console.log(deal)
+}
+const  handelclickdealcreate=async()=>{
+  console.log(deal)
+
+  const response = await handeldealcrateapi(deal);
+  console.log(response);
+}
   return (
     <>
       <div className="main-wrapper">
@@ -25,12 +111,12 @@ const CreateDeal = () => {
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Profile</h3>
+                  <h3 className="page-title">Create New Deal</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Profile</li>
+                    <li className="breadcrumb-item active">Create New Deal</li>
                   </ul>
                 </div>
               </div>
@@ -38,7 +124,7 @@ const CreateDeal = () => {
             {/* /Page Header */}
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title">Personal Details</h5>
+                <h5 className="card-title">Deal Details:</h5>
                 <div className="row">
                   <div className="col-md-12 col-lg-12 row">
                     <div className="row mt-3">
@@ -50,19 +136,19 @@ const CreateDeal = () => {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter Deal Name"
-                          name="dealname"
+                          onChange={handlechange}
+                          name="dealName"
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Primary Borrower
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter Primary Borrower"
+                          onChange={handlechange}
                           name="primaryborrower"
                         />
                       </div>
@@ -88,8 +174,8 @@ const CreateDeal = () => {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter Loan Amount"
-                          name="loanamount"
+                          onChange={handlechange}
+                          name="dealAmount"
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
@@ -101,83 +187,71 @@ const CreateDeal = () => {
                           type="text"
                           maxLength={10}
                           className="form-control"
-                          placeholder="RoI from Borrower"
-                          name="roIfromborrower"
+                          name="borrowerRateOfInterest"
+                          onChange={handlechange}
                         />
                       </div>
-                      <div className="form-group col-12 col-sm-4 local-forms">
-                        <label>
-                          WhatsApp No
-                          <span className="login-danger">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          maxLength={10}
-                          className="form-control"
-                          placeholder="Enter WhatsApp "
-                          name="whatsAppNumber"
-                        />
-                      </div>
+
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Funds Start Date
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="date"
                           className="form-control"
-                          placeholder="Funds Start Date"
-                          name="fundsstartdate"
+                          name="fundsAcceptanceStartDate"
+                          onChange={handlechange}
                         />
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Funds End Date
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="date"
                           className="form-control"
-                          placeholder="Funds End Date"
-                          name="fundsendate"
+                          name="fundsAcceptanceEndDate"
+                          onChange={handlechange}
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Project URL
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter Project URL"
-                          name="projecturl"
+                          name="dealLink"
+                          onChange={handlechange}
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Tenure in Months
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Tenure in Months "
-                          name="tenureinmonths"
+                          name="duration"
+                          onChange={handlechange}
                         />
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           First Interest Date
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="date"
                           className="form-control"
-                          placeholder="First Interest Date "
-                          name="firstinterestdate"
+                          onChange={handlechange}
+                          name="loanActiveDate"
                         />
                       </div>
 
@@ -189,19 +263,19 @@ const CreateDeal = () => {
                         <input
                           type="minimumamount"
                           className="form-control"
-                          placeholder="First Interest Date "
-                          name="firstinterestdate"
+                          name="minimumLimit"
+                          onChange={handlechange}
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
-                          Maximum Amount <span className="login-danger">*</span>
+                          Maximum Amount <span className="login-danger"></span>
                         </label>
                         <input
                           type="number"
                           className="form-control"
-                          placeholder="Enter City "
-                          name="maximumamount"
+                          name="participationLimit"
+                          onChange={handlechange}
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
@@ -212,14 +286,16 @@ const CreateDeal = () => {
                         <select
                           type="text"
                           className="form-control"
-                          placeholder="Deal Type"
-                          name="state"
-                        >
-                          <option className="form-control">EQUITY</option>
-                          <option className="form-control">NORMAL</option>
-                          <option className="form-control">ESCROW</option>
-                          <option className="form-control">ESCROW</option>
-                          <option className="form-control"> PERSONAL </option>
+                          name="dealtype"
+                          onChange={handlechange}
+                        >  <option>-- Choose Deal Type --</option>
+                          <option className="form-control" value="EQUITY">EQUITY</option>
+                          <option className="form-control" value="NORMAL">NORMAL</option>
+                          <option className="form-control" value="ESCROW">ESCROW</option>
+                          {/* <option className="form-control" value="ESCROW">ESCROW</option> */}
+                          <option className="form-control" value="TEST">TEST</option>
+                          <option className="form-control" value="PERSONAL"> PERSONAL </option>
+                          <option className="form-control" value="SELFEMPLOYED"> SELFEMPLOYED </option>
                         </select>
                       </div>
 
@@ -232,8 +308,8 @@ const CreateDeal = () => {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Borrowers Ids Mapped To Deal"
-                          name="borrowersids"
+                          name="mappedUsers"
+                              onChange={handlechange}
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
@@ -244,62 +320,72 @@ const CreateDeal = () => {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Mapped Users Loan Amount"
-                          name="mappedusersloanamount"
+                          name="userLoanAmpuntmap"
+                          onChange={handlechange}
                         />
                       </div>
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Enach Status
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
-                        <input
+                        <select
                           type="text"
                           className="form-control"
-                          placeholder=" Enach Status"
-                          name="projecturl"
-                        />
+                          name="enachTypeUsers"
+                          onChange={handlechange}
+                        >
+                          <option>-- Choose Deal Type --</option>
+                          <option  value="true">true</option>
+                          <option  value="false">false</option>
+                          
+
+
+                        </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Fee ROI for Borrower
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
+                          name="roiBorrower"
+                          onChange={handlechange}
                         />
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Fee Collected From Borrower
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Fee Collected From Borrower"
-                          name="feecollectedfromborrower"
+                          name="feeBorrower"
+                          onChange={handlechange}
                         />
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           AnyTime Withdraw
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <select
                           type="text"
                           className="form-control"
-                          placeholder="AnyTime Withdraw"
-                          name="anytimewithdraw"
+                          name="anyTimeWithRequest"
+                          onChange={handlechange}
                         >
-                          <option className="form-control">No</option>
-                          <option className="form-control">No</option>
+                        <option>-- Choose Deal Type --</option>
+                          <option  value="true">true</option>
+                          <option  value="false">false</option>
+
+
                         </select>
                       </div>
 
@@ -308,122 +394,150 @@ const CreateDeal = () => {
                           Fee To Participate
                           <span className="login-danger">*</span>
                         </label>
-                        <input
+                        <select
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
-                        />
+                          name="feeParticipation"
+
+                          onChange={handlechange}
+                        >
+                       
+
+                       <option>-- Choose option-----</option>
+                          <option value="NEW">NEW LENDER</option>
+                          <option value="ANY">ANY LENDER</option>
+                          </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
-                          Fee To Participate
+                          Participcation Lender Type
                           <span className="login-danger">*</span>
                         </label>
-                        <input
+                        <select
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
-                        />
+                          name="participcationLenderType"
+                          onChange={handlechange}
+                        >
+
+                          <option>-- Choose option-----</option>
+                          <option value="NEW">NEW LENDER</option>
+                          <option value="ANY">ANY LENDER</option>
+                          
+                          </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           WhatsApp Chat Id
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
+                          name="dealWhatsappChatId"
+                          onChange={handlechange}
                         />
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           WhatsApp Response Link
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
+                          name="dealWhatsappDealLink"
+                          onChange={handlechange}
                         />
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Create/Edit Deal Notification
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
-                        <input
+                        <select
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
-                        />
+                          name="dealnotification"   
+                          onChange={handlechange}
+                        >
+
+
+                             <option>-- Choose option-----</option>
+                             <option value="true"> YES</option>
+                             <option  value="false">No</option>
+                          </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Deal Launch
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
-                        <input
+                        <select
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
-                        />
+                          name="deallunchType"
+                          onChange={handlechange}
+                        >
+
+                          <option>-- Choose option-----</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                          </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           life Time Fee waive-off
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <select
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
+                          name="lifetimewaiver"
+                          onChange={handlechange}
                         >
-                          <option>No</option>
-                          <option>No</option>
+                           <option>-- Choose option-----</option> <option value="true">yes</option>
+                        
+                          <option value="false">No</option>
                         </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           WhatsApp Notification
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <select
                           type="text"
                           className="form-control"
-                          placeholder="Fee ROI for Borrower"
-                          name="feeroiforborrower"
+                          name="dealwhatsappnotification"
                         >
-                          <option>No</option>
-                          <option>No</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
                         </select>
                       </div>
 
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Email Notification
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
-                        <input
+                        <select
                           type="text"
                           className="form-control"
-                          placeholder="Email Notification"
-                          name="emailnotification"
-                        />
+                          name="dealemailnotification"
+                          onChange={handlechange}
+                        >
+
+                           <option value="true">Yes</option>
+                          <option value="false">No</option>
+                          </select>
                       </div>
 
                       <table className="table">
@@ -451,6 +565,8 @@ const CreateDeal = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Roi %"
+                                name="oxyPremiumMonthlyInterest"
+                                onChange={handlechange}
                               />
                             </td>
                           </tr>
@@ -465,6 +581,8 @@ const CreateDeal = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Roi %"
+                                name="oxyPremiumYearlyInterest"
+                                onChange={handlechange}
                               />
                             </td>
                             <td>
@@ -472,6 +590,8 @@ const CreateDeal = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Roi %"
+                                name="newLendersYearlyInterest"
+                                onChange={handlechange}
                               />
                             </td>
                           </tr>
@@ -486,6 +606,8 @@ const CreateDeal = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Roi %"
+                                name="oxyPremiumEndOfTheDealInterest"
+                                onChange={handlechange}
                               />
                             </td>
                             <td>
@@ -493,6 +615,8 @@ const CreateDeal = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Roi %"
+                                name="newLendersEndOfTheDealInterest"
+                                onChange={handlechange}
                               />
                             </td>
                           </tr>
@@ -505,13 +629,17 @@ const CreateDeal = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="Roi %"
+                                name="newLendersQuartelyInterest"
+                                onChange={handlechange}
                               />
                             </td>
                             <td>
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Roi %"
+                                placeholder="Roi %"   
+                                name="newLendersQuartelyInterest"
+                                onChange={handlechange}
                               />
                             </td>
                           </tr>
@@ -522,14 +650,18 @@ const CreateDeal = () => {
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Roi %"
+                                placeholder="Roi %"   
+                                name="oxyPremiumHalfInterest"
+                                onChange={handlechange}
                               />
                             </td>
                             <td>
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Roi %"
+                                placeholder="Roi %"  
+                                name="newLendersHalfInterest"
+                                onChange={handlechange}
                               />
                             </td>
                           </tr>
@@ -541,7 +673,7 @@ const CreateDeal = () => {
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Whatapp Group
-                          <span className="login-danger">*</span>
+                          <span className="login-danger"></span>
                         </label>
                         <select
                           type="text"
@@ -551,9 +683,14 @@ const CreateDeal = () => {
                         >
                           <option className="form-control">No</option>
                           <option className="form-control">No</option>
-                        </select>
-                      </div>
+                        </select>    
 
+                        <div  className="form-group col-12 col-sm-4">      Select All  
+                                <input  type="checkbox"  name="selectAll"  
+                                onChange={handlechange} />
+                                 </div>   
+                      </div>
+  
                       {/* <div className="form-group col-12 col-sm-4 local-forms">
                                 <label>
                                 Text message
@@ -571,22 +708,26 @@ const CreateDeal = () => {
 
                         
                               </div>  */}
+ 
+  
                       <div className="form-group col-12 col-sm-4 local-forms">
                         <label>
                           Text message
                           <span className="login-danger">*</span>
                         </label>
                         <textarea
-                          type="checkbo"
+                          // type="checkbo"
+                          type="text"
                           className="form-control"
                           placeholder="AnyTime Withdraw"
-                          name="anytimewithdraw"
+                          name="whatstextmessage"  
+                          onChange={handlechange}
                         ></textarea>
                       </div>
                       <div className="col-12 ">
                         <button
                           className="btn btn-primary col-md-4 col-12"
-                          type="submit"
+                          type="submit"     onClick={handelclickdealcreate}
                         >
                           Create Deal
                         </button>

@@ -5,37 +5,33 @@ import { Table } from "antd";
 
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
-import { onShowSizeChange } from "../../../../Pagination";
-import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
+import { getfddownloadInvoice } from "../../../../HttpRequest/admin";
+
 
 const FddownloadInvoice = () => {
-  const [membershiphistory, setmembershiphistory] = useState({
+  const [fddownloadInvoice, setFddownloadInvoice] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
-    pageNo: 1,
-    pageSize: 5,
-    defaultPageSize: 5,
+    isfiled:false,
+      type: "",
+      startDate: null,
+      endDate: null
+    // pageNo: 1,
+    // pageSize: 5,
+    // defaultPageSize: 5,
   });
 
-  const membershiphistoryPagination = (Pagination) => {
-    setmembershiphistory({
-      ...membershiphistory,
-      defaultPageSize: Pagination.pageSize,
-      pageNo: Pagination.current,
-      pageSize: Pagination.pageSize,
-    });
-  };
+
 
   useEffect(() => {
-    const response = getMembershiphistory(
-      membershiphistory.pageNo,
-      membershiphistory.pageSize
-    );
+    const response = getfddownloadInvoice(fddownloadInvoice);
     response.then((data) => {
       if (data.request.status == 200) {
-        setmembershiphistory({
-          ...membershiphistory,
+
+        console.log(data.data)
+        setFddownloadInvoice({
+          ...fddownloadInvoice,
           apiData: data.data,
           loading: false,
           hasdata: data.data.count == 0 ? false : true,
@@ -43,23 +39,59 @@ const FddownloadInvoice = () => {
       }
     });
     return () => {};
-  }, [membershiphistory.pageNo, membershiphistory.pageSize]);
+  }, []);
+
+ 
+  const handleSubmit =()=>{
+    const response = getfddownloadInvoice(fddownloadInvoice);
+    response.then((data) => {
+      if (data.request.status == 200) {
+
+        console.log(data.data)
+        setFddownloadInvoice({
+          ...fddownloadInvoice,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+  }
 
   const datasource = [];
   {
-    membershiphistory.apiData != ""
-      ? membershiphistory.apiData.listOfTransactions.map((data) => {
+    fddownloadInvoice.apiData != ""
+      ? fddownloadInvoice.apiData.map((data , index) => {
           datasource.push({
-            key: Math.random(),
-            PaymentDate: data.paymentDate,
-            TransactionNumber: data.transactionNumber,
-            Amount: data.amount,
-            PaidThrough: data.paidType,
+            key: index + 1,
+            PaymentDate: index + 1,
+            TransactionNumber: data.invoice,
+
+            Amount:data.invoice
           });
         })
       : "";
   }
+   const handlechange =(event)=>{
+    const {value , name}=event.target;
 
+    // a
+       setFddownloadInvoice({
+        ...fddownloadInvoice,
+        [name]:value,
+       })
+console.log(fddownloadInvoice.type)
+
+
+       if(value === "dataRange"){
+        
+        setFddownloadInvoice((prev)=>({
+          ...prev,
+          type:null,
+          isfiled:!prev.isfiled
+        }))
+       }
+   }
   const columns = [
     {
       title: "s#",
@@ -75,6 +107,12 @@ const FddownloadInvoice = () => {
       title: "Download",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
+      render: (text, record) => (
+        <>
+
+         <Link to={record.Amount} ><button className="btn btn-primary">Download</button> </Link>
+        </>
+      )
     },
   ];
 
@@ -115,47 +153,51 @@ const FddownloadInvoice = () => {
                           </label>
                           <select
                             type="text"
-                            name="withdrawFeedback"
-                            className="form-control"
-                            placeholder="Enther the LENDER ID "
+                            onChange={handlechange}
+                            name="type"
+                            className="form-control"     placeholder="Enther the LENDER ID "  
+                            
                           >
                             <option>-- Choose --</option>
-                            <option>Date Range</option>
+                            <option  value="dataRange">Date Range</option>
                           </select>
                         </div>
                       </div>
-
-                      <div className="col-12 col-sm-3">
+                      {fddownloadInvoice.isfiled  &&  <div>     <div className="col-sm-3">
                         <div className="form-group local-forms">
                           <label>
                             Date Range
                             <span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
-                            name="withdrawFeedback"
+                            type="date"
+                            name="startDate"
                             className="form-control"
+                            onChange={handlechange}
                             placeholder="Enther the Start Date"
                           />
                         </div>
                       </div>
-                      <div className="col-12 col-sm-3">
+                      <div className=" col-sm-3">
                         <div className="form-group local-forms">
                           <label>
                             Date Range
                             <span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
-                            name="withdrawFeedback"
+                            type="date"
+                            name="endDate"
                             className="form-control"
+                            onChange={handlechange}
                             placeholder="Enther start Date"
                           />
                         </div>
-                      </div>
+                      </div></div>}
+
+                 
                       <div className="col-3">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"  onClick={handleSubmit}>
                             Fetch Deatils
                           </button>
                         </div>
@@ -163,20 +205,14 @@ const FddownloadInvoice = () => {
                     </div>
                     <div>
                       <Table
-                        className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
-                        pagination={{
-                          total: membershiphistory.apiData.count,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          position: ["topRight"],
-                          showSizeChanger: false,
-                          onShowSizeChange: onShowSizeChange,
-                        }}
+                        className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"   
+
+
                         columns={columns}
-                        dataSource={membershiphistory.hasdata ? datasource : []}
+                        dataSource={fddownloadInvoice.apiData ? datasource : []}
                         expandable={true}
-                        loading={membershiphistory.loading}
-                        onChange={membershiphistoryPagination}
+                        loading={fddownloadInvoice.loading}
+                        // onChange={fddownloadInvoice}  
                       />
                     </div>
                   </div>

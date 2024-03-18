@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Button, Table } from "antd";
+import { Table } from "antd";
 
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory, getMyWithdrawalHistory } from "../../../../HttpRequest/afterlogin";
-import { checkingcurrentwalletbalanceapi, gettestlenderwallettrns, handleclickapproveapi, lenderwithdrawalfundssearchAPI } from "../../../../HttpRequest/admin";
+import { checkingcurrentwalletbalance, checkingcurrentwalletbalanceapi, handleclickapproveapi, lenderwithdrawalfundssearchAPI } from "../../../../HttpRequest/admin";
 import { WarningAlehandleclick } from "../../../Base UI Elements/SweetAlert";
 
-const LenderWallettransactions = () => {
+const GetOxyFoundingGroups = () => {
   const [membershiphistory, setmembershiphistory] = useState({
     apiData: "",
     pageNo: 1,
@@ -21,6 +21,7 @@ const LenderWallettransactions = () => {
     hasdata:true,
     walletAmountType:"GREATERTHANZERO",
     lenderWalletsExcelLink:"",
+    countdata:''
   });
 
   const membershiphistoryPagination = (Pagination) => {
@@ -31,25 +32,29 @@ const LenderWallettransactions = () => {
       pageSize: Pagination.pageSize,
     });
   };
-useEffect(()=>{
+    const  handleclickLender=()=>{
       
-      const response = gettestlenderwallettrns(
-        membershiphistory.pageNo,        membershiphistory.pageSize,
+      const response = checkingcurrentwalletbalance(
+        membershiphistory.walletAmountType,
   
       );
       response.then((data) => {
         if (data.request.status == 200) {
   
           
-          console.log(data.data.results)
+          console.log(data.data.listOfLenderCurrentWalletBalanceResponse)
           setmembershiphistory({
             ...membershiphistory,
-            apiData: data.data.results,
-           
+            apiData: data.data.listOfLenderCurrentWalletBalanceResponse,
+            lenderWalletsExcelLink:data.data.lenderWalletsExcelLink,
+            countdata:data.data
           });
         }
+
+
+        console.log(data)
       });
-    },[])
+    }
   
 
     const handelchange = (event) => {
@@ -64,26 +69,24 @@ useEffect(()=>{
 
 
   const datasource = [];
-  {
-    membershiphistory.apiData != ""
-      ? membershiphistory.apiData.map((data) => {
-          datasource.push({
-            key: Math.random(),
-            PaymentDate: data,
-            TransactionNumber: data,
-            Amount: data,
-            PaidThrough: data,
-            documents:data,
-            comments:data,
-          });
-        })
-      : "";
+  if (membershiphistory.apiData !== "" && membershiphistory.apiData !== null) {
+    membershiphistory.apiData.map((data) => {
+      datasource.push({
+        key: Math.random(),
+        PaymentDate: data,
+        TransactionNumber: data,
+        Amount: data,
+        PaidThrough: data,
+        documents: data,
+        comments: data,
+      });
+    });
+  
   }    
   const columns = [
     {
       		
-      			
-      title: "Lender Id",
+      title: "User ID",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
       render: (render) => (
@@ -93,32 +96,23 @@ useEffect(()=>{
       )
     },
     {
-      title: "Lender Name",
+      title: "Wallet Amount Info",
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
       render: (render)=>(
         <>
         <div  className="insertstart">
-        <p>{render.firstName}</p>
+          <p> Credit: {render.credit}</p>
+          <p>Debit : {render.debit}</p>
+          <p>Current Wallet : {render.currentWalletAmount}</p>
+          <p>Total Loan Amount : {render.totalLoanAmount}</p> 
+
        </div>
         </>
       )
     },
     {
-      title: "Account Number",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render)=>(
-        <>
-
-<p>{render.scrowAccountNumber}</p>
-
-
-        </>
-      )
-    },
-    {
-      title: "Transaction Date",
+      title: "Lender Name",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render)=>(
@@ -126,85 +120,13 @@ useEffect(()=>{
 
 
 
-
-<p>   {render.transactionDate}</p>
-
-
-        </>
-      )
-    },
-    {
-      title: "Amount",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render)=>(
-        <>
-
-
-<p>   {render.transactionAmount}</p>
-
+<p>   {render.name}</p>
 
 
         </>
       )
     },
-    {
-      title: "Transaction",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render)=>(
-        <>
 
-
-
-<p>   {render.fileName}</p>
-
-
-        </>
-      )
-    },
-    {
-      title: "Screen Shot" ,
-      dataIndex: "Amount",
-      
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render)=>(
-        <>
-
-
-
-<p>   {render.fileName}</p>
-
-
-        </>
-      )
-    },
-    {
-      title: "Status",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render)=>(
-        <>
-
-
-
-<p>   {render.status}</p>
-
-
-        </>
-      )
-    },
-    {
-      title: "Approve",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render)=>(
-        <>
-          <Button  >Approve</Button>
-          <Button  >Reject</Button>
-        </>
-      )
-    },
    
    
   ];
@@ -221,12 +143,12 @@ useEffect(()=>{
             <div className="page-header">
               <div className="row">
                 <div className="col">
-                  <h3 className="page-title">Lender Withdrawal List</h3>
+                  <h3 className="page-title">Lenders Wallet Info</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Hold Deal Users</li>
+                    <li className="breadcrumb-item active">Lenders Wallet Info</li>
                   </ul>
                 </div>
               </div>
@@ -240,27 +162,29 @@ useEffect(()=>{
                 <div className="card">
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-12 col-sm-3">
+                      <div className="col-12 col-sm-4">
                         <div className="form-group local-forms">
                           <label>
-                         Enter Id
+                          Select Lender Group
                             <span className="login-danger">*</span>
                           </label>
-                          <input
+                          <select
                             type="text"
                             name="walletAmountType"
                             className="form-control"   onChange={handelchange}
                             // placeholder="Enther the Borrower Id "
-                            />
-                        
+                          >
+                            <option value="GREATERTHANZERO">GREATERTHANZERO</option>
+                            <option  value="ZERO">ZERO</option>
+                            <option  value="LESSTHANZERO">LESSTHANZERO</option>
                           
-            
+                          </select>
                         </div>
                       </div>
 
                       <div className="col-4">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary" >
+                          <button type="button" className="btn btn-primary" onClick={handleclickLender}>
                             Fetch details
                           </button>
                         </div>
@@ -275,7 +199,7 @@ useEffect(()=>{
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
                         pagination={{
-                          total: membershiphistory.apiData.count,
+                          total: membershiphistory.countdata.count  !== null ? membershiphistory.apiData.count : membershiphistory.countdata.count,  
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           position: ["topRight"],
@@ -301,4 +225,4 @@ useEffect(()=>{
   );
 };
 
-export default LenderWallettransactions;
+export default GetOxyFoundingGroups;

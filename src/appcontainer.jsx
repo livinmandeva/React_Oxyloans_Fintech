@@ -1,9 +1,8 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
+import CreateDeal from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal";
 
-const CreateDeal = React.lazy(() =>
-  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
-);
+
 const EscrowDeals = React.lazy(() =>
   import("./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals")
 );
@@ -27,9 +26,7 @@ const ViewCurrentDayDeals = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/ViewCurrentDayDeals")
 );
 
-const ViewDeals = React.lazy(() =>
-  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals")
-);
+
 
 const TestDeal = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/TestDeal")
@@ -571,6 +568,24 @@ export const newRouter = createBrowserRouter([
     element: <Mytransactions />,
     errorElement: <Error404></Error404>,
   },
+  {
+    path: "/createDeal",
+    element: <CreateDeal />,
+    errorElement: <Error404></Error404>,
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
   {
     path: "/autoInvestHistory",
     element: <AutoInvestHistory />,

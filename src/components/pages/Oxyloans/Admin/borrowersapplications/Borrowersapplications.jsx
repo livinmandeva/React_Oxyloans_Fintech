@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Table, Tag } from "antd";
 
 import Header from "../../../../Header/Header";
-// import "./inserted.css";
+import "./inserted.css";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import {
@@ -17,9 +17,9 @@ import {
 } from "../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
+import Model1 from "./Model1";
 
-
-const LendersLoansinfo = () => {
+const Borrowersapplications = () => {
   const [intrested, setintrested] = useState({
     apiData: "",
     hasdata: false,
@@ -562,25 +562,6 @@ const LendersLoansinfo = () => {
   const handleTagClick = () => {
     console.log("but");
   };
-useEffect(()=>{
-  const response = getborrowerapiclick(
-    intrested,
-    datavalue
- 
-  );
-  response.then((data) => {
-    if (data.request.status == 200) {
-      console.log(data.data.results)
-      setintrested({
-        ...intrested,
-        apiData: data.data.results,
-        loading: false,
-        hasdata: data.data.count == 0 ? false : true,
-      });
-    }
-  });
-},[])
-
 
 
   const  handelclickuser=()=>{
@@ -618,7 +599,7 @@ useEffect(()=>{
               <div className="row">
                 <div className="col">
                   <h3 className="page-title">
-                  Lenders Loan Applications
+                Borrower Loan Applications
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -639,7 +620,7 @@ useEffect(()=>{
                       <div className="col-12 col-sm-3">
                         <div className="form-group local-forms">
                           <label>
-                          Choose
+                            Date Range
                             <span className="login-danger"></span>
                           </label>
                           <select
@@ -650,7 +631,7 @@ useEffect(()=>{
                             onChange={handelchange}
                           >
                             <option>-- Choose --</option>
-                            <option value="borrowersid">LENDER id</option>
+                            <option value="borrowersid">Borrowers id</option>
                             <option value="Name">Name</option>
                             <option value="roi">ROI</option>
                             <option value="amount">Amount</option>
@@ -761,7 +742,8 @@ useEffect(()=>{
                           </button>
                         </div>
                       </div>
-                    </div>   
+                    </div>     {intrested.isfiledvaild  && <>   <Model1 />
+                    </>}
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -792,4 +774,4 @@ useEffect(()=>{
   );
 };
 
-export default LendersLoansinfo;
+export default Borrowersapplications;

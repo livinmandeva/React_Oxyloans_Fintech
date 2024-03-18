@@ -233,6 +233,11 @@ const AppRouter = () => {
           element={<BorrowerTicketHistory />}
         /> */}
         {/* ******************** BORROWER MODULE ROUTES END **************************  */}
+
+      
+
+
+
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,17 @@
+
+
+
+
+.pargra  > p {
+
+    margin-bottom: 6px !important;
+}
+
+
+.gapdata{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px !important;
+}

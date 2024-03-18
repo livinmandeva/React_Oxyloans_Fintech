@@ -1,10 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
+import './style.css'
 import Sidebar from "../../../../SideBar/AdminSidebar";
+import { fdstatitckapi } from "../../../../HttpRequest/admin";
 
 const FdStatistics = () => {
+
+  
+  const  [fdstatisticsdata , setfdstatisticsdata]=useState({
+      type: "ALL",
+      startDate: null,
+      endDate: null,
+      isfiledvaild:false
+  });   
+
+const [apdata  , setapidata]=useState({
+    rsponsedata:""
+})
+const handlechange = (event) => {
+  const { value, name } = event.target;
+
+  // Set the value in state
+  setfdstatisticsdata({
+    ...fdstatisticsdata,
+    [name]: value,
+  });
+
+  // Check the value after it's updated
+  if (value === "dateRange") {
+    // Since state updates are asynchronous, we can't rely on fdstatisticsdata.type immediately after setting it
+    // Therefore, we should directly check 'value' instead of 'fdstatisticsdata.type'
+    setfdstatisticsdata((prevData) => ({
+      ...prevData,
+      type: null,
+      isfiledvaild: !prevData.isfiledvaild,
+    }));
+  }
+
+  console.log(value);
+};
+
+const  handlefdstatistic =async()=>{
+  const   response = await fdstatitckapi(fdstatisticsdata);
+
+  setapidata({
+    ...apdata,
+    rsponsedata:response.data
+  });
+  console.log(response.data)
+  console.log(apdata.rsponsedata)
+}
+
+ useEffect(()=>{
+
+  const  fdstatisticsdataapi =async()=>{
+      const   response = await fdstatitckapi(fdstatisticsdata);
+
+      setapidata({
+        ...apdata,
+        rsponsedata:response.data
+      });
+      console.log(response.data)
+      console.log(apdata.rsponsedata)
+    }
+
+    fdstatisticsdataapi()
+ },[])
+
   return (
     <>
       <div className="main-wrapper">
@@ -42,34 +106,57 @@ const FdStatistics = () => {
                   <div className="card-body">
                     {/* <form> */}
                     <div className="row">
-                      <div className="col-12 col-sm-4">
-                        <div className="form-group local-forms">
-                          <label>
-                            Borrower Id :<span className="login-danger">*</span>
-                          </label>
-                          <select
-                            type="text"
-                            name="withdrawFeedback"
-                            className="form-control"
-                            placeholder="Enther the Borrower Id "
-                          >
-                            <option>Please choose option</option>
-                            <option>Date Range</option>
-                          </select>
-                        </div>
-                      </div>
+  <div className="col-12 col-sm-4">
+    <div className="form-group local-forms">
+      <label>
+        Borrower Id :<span className="login-danger">*</span>
+      </label>
+      <select
+        type="text"
+        // name="userid" 
+        className="form-control"
+        name="type"
+        placeholder="Enter the Borrower Id"
+        onChange={handlechange}
+      >
+        <option >Please choose an option</option>
+        <option value="dateRange">Date Range</option>
+      </select>
+    </div>
+  </div>
+  {fdstatisticsdata.isfiledvaild && <>
+    <div className="col-12 col-sm-4">
+      <div className="form-group local-forms">
+        <label>
+        Start Date  :<span className="login-danger">*</span>
+        </label>
 
-                      <div className="col-12">
-                        <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
-                            Fetch details
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+<input type="date" className="form-control"   name="startDate"  onChange={handlechange} />
+      </div>
+    </div>
+    <div className="col-12 col-sm-4">
+      <div className="form-group local-forms">
+        <label>
+        End Date :<span className="login-danger">*</span>
+        </label>
+        <input type="date" className="form-control"   
+         name="endDate" 
+         onChange={handlechange} />
+      </div>
+    </div>
+  </>}
+  <div className="col-12">
+    <div className="student-submit">
+      <button type="button" className="btn btn-primary"   onClick={handlefdstatistic}>
+        Fetch details
+      </button>
+    </div>
+  </div>
+</div>
 
-                    <div className="row col-6" style={{ marginTop: "1rem" }}>
-                      <table className="table table-hover">
+
+                    {/* <div className="row col-6" style={{ marginTop: "1rem" }}>
+                      <table className="table table-hover tableinfo">
                         <tr>
                           <td className="table-primary">No of FDs Done</td>
                           <td className="table-secondary"> 4</td>
@@ -113,7 +200,55 @@ const FdStatistics = () => {
                           <td className="table-secondary"> INR 2510000</td>
                         </tr>
                       </table>
-                    </div>
+                    </div> */}
+<div>
+<table class="content-table">
+  <thead>
+    <tr>
+      <th>FD Statistics</th>
+      <th>Table</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>No of FDs Done</td>
+ 
+      <td>{apdata.rsponsedata  !="" ?  <>{apdata.rsponsedata.noOfFdsDone}</>  : null}</td>
+    </tr>
+    <tr class="active-row">
+    <td>Value of the FDS</td>
+    <td>{apdata.rsponsedata  !="" && apdata.rsponsedata.valueOfFd}</td>
+    </tr>
+    <tr>
+    <td>No of the active FDS</td>
+    <td>{apdata.rsponsedata  !="" && apdata.rsponsedata.noOfActiveFds}</td>
+    </tr>
+    <tr class="active-row">
+    <td>Value of the active Fds</td>
+    <td>{apdata.rsponsedata  !="" && apdata.rsponsedata.noOfActiveFdsAmount}</td>
+    </tr>
+    <tr>
+    <td>Total Interest Received to ICICI</td>
+    <td>{apdata.rsponsedata  !="" && apdata.rsponsedata.amountReceivedToIcici}</td>
+    </tr>
+    <tr class="active-row">
+    <td>Total Interest Received to HDFC</td>
+    <td>{apdata.rsponsedata  !="" && apdata.rsponsedata.amountReceivedToHdfc}</td>
+    </tr>
+    {/* <tr>
+    <td>No of the active FDS</td>
+    </tr> */}
+      <tr>
+    <td>Total Fd Closed Interest</td>
+    <td>{apdata.rsponsedata  !="" && apdata.rsponsedata.totalFdClosedInterest}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+                    <div>
+
+            </div>
                     {/*   </form> */}
                   </div>
                 </div>

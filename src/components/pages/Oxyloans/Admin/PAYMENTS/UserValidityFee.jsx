@@ -7,6 +7,7 @@ import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory } from "../../../../HttpRequest/afterlogin";
+import { lender_fee_payment_detailsapi } from "../../../../HttpRequest/admin";
 
 const UserValidityFee = () => {
   const [membershiphistory, setmembershiphistory] = useState({
@@ -16,6 +17,7 @@ const UserValidityFee = () => {
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
+    type:"Wallet",
   });
 
   const membershiphistoryPagination = (Pagination) => {
@@ -28,9 +30,10 @@ const UserValidityFee = () => {
   };
 
   useEffect(() => {
-    const response = getMembershiphistory(
+    const response = lender_fee_payment_detailsapi(
       membershiphistory.pageNo,
-      membershiphistory.pageSize
+      membershiphistory.pageSize,
+      membershiphistory.type
     );
     response.then((data) => {
       if (data.request.status == 200) {

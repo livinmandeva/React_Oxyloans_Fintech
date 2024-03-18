@@ -4,7 +4,50 @@ import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 
-const InsertPendingInformation = () => {
+const InsertPendingInformation = () => {     
+
+
+  const [insertdata  ,setinsertdata] =useState({
+    id:"",
+		userId:"",
+		amount:"",
+		dealId:"",
+		reason:"",
+		amountType:"",
+		transactionType:"",
+		noOfDays:"",
+    userIderror:"",
+		amounterror:"",
+		dealIderror:"",
+		reasonerror:"",
+		amountTypeerror:"",
+		transactionTypeerror:"",
+		noOfDayserror:"",
+  })
+
+  const handelchange=(event)=>{
+         const {value , name}=event.target;
+         setinsertdata({
+          ...insertdata,
+          [name]:value,
+         })
+  }   
+
+  const handlesubmit=async()=>{
+       setinsertdata((insertdata)=>({
+        ...insertdata,
+        userIderror:insertdata.insertdata != "" ? null : "Enter the userId",
+        amounterror:insertdata.amount != "" ? null : "Enter the amount",
+        dealIderror:insertdata.dealId != "" ? null : "Enter the dealId",
+        reasonerror:insertdata.reason != "" ? null : "Enter the reason",
+        amountTypeerror:insertdata.amountType != "" ? null : "Enter the amountType",
+        transactionTypeerror:insertdata.transactionType != "" ? null : "Enter the transactionType",
+        noOfDayserror:insertdata.noOfDays != "" ? null : "Enter the noOfDays",
+       }));
+
+       const response = await handalapicall(insertdata);
+       console.log(response);
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -64,10 +107,12 @@ const InsertPendingInformation = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="userId"
                             className="form-control"
                             placeholder="Enther the Borrower Id "
+                            onChange={handelchange}
                           />
+                      
                         </div>
                       </div>
                       <div className="col-12 col-sm-4">
@@ -77,9 +122,10 @@ const InsertPendingInformation = () => {
                           </label>
                           <select
                             type="text"
-                            name="withdrawFeedback"
+                            name="amount"
                             className="form-control"
                             placeholder="Enther the  Amount Type"
+                            onChange={handelchange}
                           >
                             <option>LENDER INTEREST</option>
                             <option>LENDER PRINCIPAL</option>
@@ -96,9 +142,10 @@ const InsertPendingInformation = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="amount"
                             className="form-control"
                             placeholder="Enther the Amount "
+                            onChange={handelchange}
                           />
                         </div>
                       </div>
@@ -110,7 +157,7 @@ const InsertPendingInformation = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="dealId"  onChange={handelchange}
                             className="form-control"
                             placeholder="Enther the deal Id  "
                           />
@@ -125,7 +172,7 @@ const InsertPendingInformation = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="reason"     onChange={handelchange}
                             className="form-control"
                             placeholder="Enther the Reason "
                           />
@@ -139,7 +186,7 @@ const InsertPendingInformation = () => {
                           </label>
                           <select
                             type="text"
-                            name="withdrawFeedback"
+                            name="amountType"   onChange={handelchange}
                             className="form-control"
                             placeholder="Enther the Borrower Id "
                           >
@@ -158,16 +205,16 @@ const InsertPendingInformation = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="noOfDays"    onChange={handelchange}
                             className="form-control"
-                            placeholder="Enther the Borrower Id "
+                            placeholder="Enther the No Of Days"
                           />
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"  onChange={handlesubmit}>
                             submit
                           </button>
                         </div>
@@ -178,6 +225,8 @@ const InsertPendingInformation = () => {
                 </div>
               </div>
             </div>
+
+            
           </div>
         </div>
       </div>
