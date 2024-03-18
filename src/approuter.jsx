@@ -65,6 +65,20 @@ import WalletToWalletTransactionHistory from "./components/pages/Oxyloans/Lender
 import RegularEscrowDeals from "./components/pages/Oxyloans/Lender/RegularEscrowDeals";
 import PaymentGateway from "./components/pages/Oxyloans/Lender/PaymentGateway.jsx";
 import Whatappuser from "./components/pages/Authentication/Whatappuser.jsx";
+import CreateDeal from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal.jsx";
+import EquityDeals from "./components/pages/Oxyloans/Admin/Deals/Equitydeals/EquityDeals.jsx";
+import ViewDealTypePayOut from "./components/pages/Oxyloans/Admin/ViewDealTypePayOut.jsx";
+import HoldAmountRequest from "./components/pages/Oxyloans/Admin/Deals/Hold/HoldAmountRequest.jsx";
+import HoldAmountBreakUp from "./components/pages/Oxyloans/Admin/Deals/Hold/HoldAmountBreakUp.jsx";
+import BorrowerRunningsinfo from "./components/pages/Oxyloans/Admin/StudentLoanProcess/BorrowerRunningsinfo.jsx";
+import UploadFdData from "./components/pages/Oxyloans/Admin/StudentLoanProcess/UploadFdData.jsx";
+import FdPaymentDetails from "./components/pages/Oxyloans/Admin/StudentLoanProcess/FdPaymentDetails.jsx";
+import VerifyPaymentDetail from "./components/pages/Oxyloans/Admin/StudentLoanProcess/VerifyPaymentDetail.jsx";
+import TransferFunds from "./components/pages/Oxyloans/Admin/StudentLoanProcess/TransferFunds.jsx";
+import ViewListOfFds from "./components/pages/Oxyloans/Admin/StudentLoanProcess/ViewListOfFds.jsx";
+import SearchfdUsers from "./components/pages/Oxyloans/Admin/Deals/LenderPending.jsx/SearchfdUsers.jsx";
+import InsertPendingInformation from "./components/pages/Oxyloans/Admin/LenderPending/InsertPendingInformation.jsx";
+import PendingamountUser from "./components/pages/Oxyloans/Admin/LenderPending/PendingamountUser.jsx";
 
 // ********************BORROWER MODULE    ROUTE ************************** //
 
@@ -237,6 +251,28 @@ const AppRouter = () => {
       
 
 
+
+
+
+
+
+        <Route path="/createDeal" element={<CreateDeal />} /> 
+        <Route path="/ViewDealsadmin" element={<ViewDeals />} />
+        <Route path="/equityDeals" element={<EquityDeals />} />
+        <Route path="/escrowDealsadmin" element={<EscrowDeals />} />
+        <Route path="/testDeals" element={<TestDeals />} />
+        <Route path="/viewDealTypePayOut" element={<ViewDealTypePayOut />} />
+        <Route path="/holdAmountRequest" element={<HoldAmountRequest/>} />
+        <Route path="/holdAmountBreakUp" element={<HoldAmountBreakUp/>} />
+        <Route path="/borrowerRunningsinfo" element={<BorrowerRunningsinfo/>} />
+        <Route path="/uploadFdData" element={<UploadFdData/>} />
+        <Route path="/FdPaymentDetails" element={<FdPaymentDetails/>} />
+        <Route path="/verifyPaymentDetail" element={<VerifyPaymentDetail/>} />
+        <Route path="/transferFunds" element={<TransferFunds />} />
+        <Route path="/viewListOfFds" element={<ViewListOfFds />} />
+        <Route path="/SearchfdUsers" element={<SearchfdUsers/>} />
+        <Route path="/InsertPendingInformation" element={<InsertPendingInformation />} />
+        <Route path="/pendingamountUser" element={<PendingamountUser />} />
 
       </Routes>
     </BrowserRouter>

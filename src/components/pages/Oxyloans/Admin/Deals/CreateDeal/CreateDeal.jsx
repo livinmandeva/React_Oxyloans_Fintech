@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../../../Header/Header";
 import Sidebar from "../../../../../SideBar/SideBar";
 import { handeldealcrateapi } from "../../../../../HttpRequest/admin";
+import AdminSidebar from "../../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../../Header/AdminHeader";
 
 const CreateDeal = () => {
 
@@ -98,10 +100,10 @@ const  handelclickdealcreate=async()=>{
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Sidebar */}
-        <Sidebar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
 

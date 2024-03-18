@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import CreateDeal from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal";
+
 
 
 const EscrowDeals = React.lazy(() =>
@@ -14,6 +14,10 @@ const Whatapploginwith = React.lazy(() =>
   import("./components/pages/Authentication/Whatapploginwith")
 );
 
+
+const CreateDeal = React.lazy(() =>
+  import("./components/pages/Oxyloans/Admin/Deals/CreateDeal/CreateDeal")
+);
 const Whatappuser = React.lazy(() =>
   import("./components/pages/Authentication/Whatappuser")
 );

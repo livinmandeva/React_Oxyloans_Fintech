@@ -3,16 +3,18 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
 
 const TransferFunds = () => {
   return (
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Sidebar */}
-        <Sidebar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
 

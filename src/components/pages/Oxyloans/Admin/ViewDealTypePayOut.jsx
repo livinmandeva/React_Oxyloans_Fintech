@@ -2,13 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Table } from "antd";
-import { onShowSizeChange } from "../../../../Pagination";
 
-import SideBar from "../../../../SideBar/SideBar";
-import Footer from "../../../../Footer/Footer";
-import { referralEarningsInfo } from "../../../../HttpRequest/afterlogin";
 
-import Header from "../../../../Header/Header";
+
+import { referralEarningsInfo } from "../../../HttpRequest/afterlogin";
+import AdminHeader from "../../../Header/AdminHeader";
+import AdminSidebar from "../../../SideBar/AdminSidebar";
+import { onShowSizeChange } from "../../../Pagination";
+import Footer from "../../../Footer/Footer";
+
+
 
 const ViewDealTypePayOut = () => {
   const [referalMyearnigs, setreferalMyearnigs] = useState({
@@ -177,10 +180,10 @@ const ViewDealTypePayOut = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Sidebar */}
-        <SideBar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
 

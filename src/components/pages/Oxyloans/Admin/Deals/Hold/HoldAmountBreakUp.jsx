@@ -7,6 +7,8 @@ import Header from "../../../../../Header/Header";
 import Sidebar from "../../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../../Pagination";
 import { getMembershiphistory } from "../../../../../HttpRequest/afterlogin";
+import AdminHeader from "../../../../../Header/AdminHeader";
+import AdminSidebar from "../../../../../SideBar/AdminSidebar";
 
 const HoldAmountBreakUp = () => {
   const [membershiphistory, setmembershiphistory] = useState({
@@ -96,8 +98,8 @@ const HoldAmountBreakUp = () => {
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">

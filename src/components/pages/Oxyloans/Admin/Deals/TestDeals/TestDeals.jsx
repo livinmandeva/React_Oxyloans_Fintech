@@ -11,6 +11,8 @@ import {
   referralEarningsInfo,
 } from "../../../../../HttpRequest/afterlogin";
 import Header from "../../../../../Header/Header";
+import AdminHeader from "../../../../../Header/AdminHeader";
+import AdminSidebar from "../../../../../SideBar/AdminSidebar";
 
 const TestDeals = () => {
   const [referalMyearnigs, setreferalMyearnigs] = useState({
@@ -179,10 +181,10 @@ const TestDeals = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Sidebar */}
-        <SideBar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
 

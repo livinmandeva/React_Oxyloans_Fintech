@@ -146,9 +146,9 @@ const AdminSidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/viewDeals"
+                          to="/ViewDealsadmin"
                           className={`${
-                            "/viewDeals" === pathName ? "active" : ""
+                            "/ViewDealsadmin" === pathName ? "active" : ""
                           }`}
                         >
                           View & Edit Deals
@@ -167,9 +167,9 @@ const AdminSidebar = (props) => {
 
                       <li>
                         <Link
-                          to="/escrowDeals"
+                          to="/escrowDealsadmin"
                           className={`${
-                            "/escrowDeals" === pathName ? "active" : ""
+                            "/escrowDealsadmin" === pathName ? "active" : ""
                           }`}
                         >
                           View Escrow Deals
@@ -329,8 +329,8 @@ const AdminSidebar = (props) => {
                 </li> */}
                 <li
                   className={`${
-                    "/loadwaletThroughQr" === pathName ||
-                    "/loadwalletThroughVirtualAccount" === pathName
+                    "/holdAmountRequest" === pathName ||
+                    "/holdAmountBreakUp" === pathName
                       ? "active submenu"
                       : "submenu"
                   }`}
@@ -357,9 +357,9 @@ const AdminSidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/loadwaletThroughQr"
+                          to="/holdAmountRequest"
                           className={`${
-                            "/loadwaletThroughQr" === pathName ? "active" : ""
+                            "/holdAmountRequest" === pathName ? "active" : ""
                           }`}
                         >
                             Hold Request 
@@ -367,9 +367,9 @@ const AdminSidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/loadwalletThroughVirtualAccount"
+                          to="/holdAmountBreakUp"
                           className={`${
-                            "/loadwalletThroughVirtualAccount" === pathName
+                            "/holdAmountBreakUp" === pathName
                               ? "active"
                               : ""
                           }`}
