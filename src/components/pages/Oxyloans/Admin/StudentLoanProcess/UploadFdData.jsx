@@ -3,7 +3,10 @@ import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
-import { uploadapi } from "../../../../HttpRequest/admin";
+import { updatefdcreateddateamount, uploadapi } from "../../../../HttpRequest/admin";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
+import { Error, Info } from "../../../Base UI Elements/SweetAlert";
 
 const UploadFdData = () => {
 
@@ -14,6 +17,7 @@ const UploadFdData = () => {
     userIderror:"",
 		fdAmounterror:"",
 		createdDateerror:"",
+    
    })   
 
 
@@ -37,12 +41,20 @@ const UploadFdData = () => {
 
     }))
 
+
+ 
       if(uploaddata.userIderror != "" && uploaddata.createdDate != ""  && uploaddata.fdAmount != ""){
 
-        const response1= uploadapi(uploaddata)
+        const response1= updatefdcreateddateamount(uploaddata)
         console.log(response1);
+        response1.then((data) => {
+          if (data.request.status == 200) {
+            console.log(data);
+         Info("Sucessfully Updated the Fd Details")
+          }
+        });
       }else{
-        
+        Error(response1)
       }
 
    }
@@ -50,10 +62,10 @@ const UploadFdData = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Sidebar */}
-        <Sidebar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
 
@@ -123,7 +135,7 @@ const UploadFdData = () => {
                             Created on :<span className="login-danger">*</span>
                           </label>
                           <input
-                            type="text"
+                            type="date"
                             name="createdDate"
                             onChange={handlechange}
                             className="form-control"

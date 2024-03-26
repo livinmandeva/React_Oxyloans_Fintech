@@ -79,6 +79,58 @@ import ViewListOfFds from "./components/pages/Oxyloans/Admin/StudentLoanProcess/
 import SearchfdUsers from "./components/pages/Oxyloans/Admin/Deals/LenderPending.jsx/SearchfdUsers.jsx";
 import InsertPendingInformation from "./components/pages/Oxyloans/Admin/LenderPending/InsertPendingInformation.jsx";
 import PendingamountUser from "./components/pages/Oxyloans/Admin/LenderPending/PendingamountUser.jsx";
+import FdStatistics from "./components/pages/Oxyloans/Admin/FdStatistics/FdStatistics.jsx";
+import FddownloadInvoice from "./components/pages/Oxyloans/Admin/FdStatistics/FddownloadInvoice.jsx";
+import FdmonthlyloansInfo from "./components/pages/Oxyloans/Admin/FdStatistics/FdmonthlyloansInfo.jsx";
+import FdexecutedPayment from "./components/pages/Oxyloans/Admin/FdStatistics/FdexecutedPayment.jsx";
+import Borrowersapplications from "./components/pages/Oxyloans/Admin/borrowersapplications/Borrowersapplications";
+import FdClosedDetails from "./components/pages/Oxyloans/Admin/FdStatistics/FdClosedDetails.jsx";
+import Intrested from "./components/pages/Oxyloans/Admin/borrowersapplications/Intrested.jsx";
+import LoanAprroved from "./components/pages/Oxyloans/Admin/borrowersapplications/LoanAprroved.jsx";
+import Approved from "./components/pages/Oxyloans/Admin/borrowersapplications/Approved";
+import NewDisbursed from "./components/pages/Oxyloans/Admin/borrowersapplications/NewDisbursed.jsx";
+import ApplicationLevelDisbursed from "./components/pages/Oxyloans/Admin/borrowersapplications/ApplicationLevelDisbursed.jsx";
+import LendersLoanApplications from "./components/pages/Oxyloans/Admin/LENDERS/LendersLoanApplications.jsx";
+import RegisterLenderUsers from "./components/pages/Oxyloans/RegisterLenderUsers.jsx";
+import LenderWallettransactions from "./components/pages/Oxyloans/Admin/LENDERS/LenderWallettransactions.jsx";
+import Uploadtransactions from "./components/pages/Oxyloans/Admin/LENDERS/Uploadtransactions.jsx";
+import PoolingLendrs from "./components/pages/Oxyloans/Admin/LENDERS/PoolingLendrs.jsx";
+import Lenderreferalinfo from "./components/pages/Oxyloans/Admin/LENDERS/Lenderreferalinfo.jsx";
+import MonthlyReferalEarning from "./components/pages/Oxyloans/MonthlyReferalEarning.jsx";
+import ApproveReferenceamount from "./components/pages/Oxyloans/Admin/LENDERS/ApproveReferenceamount.jsx";
+import EditReferenceDeatils from "./components/pages/Oxyloans/Admin/LENDERS/EditReferenceDeatils.jsx";
+import EditGroupinfo from "./components/pages/Oxyloans/Admin/LENDERS/EditGroupinfo.jsx";
+import Lenderstatistics from "./components/pages/Oxyloans/Admin/LENDERS/Lenderstatistics.jsx";
+import SumofDealAmountInfo2 from "./components/pages/Oxyloans/Admin/LENDERS/SumofDealAmountInfo2.jsx";
+import LendersInAllEquityDeals from "./components/pages/Oxyloans/Admin/LENDERS/LendersInAllEquityDeals.jsx";
+import DisplaylenderwithdrawalfundsList from "./components/pages/Oxyloans/Admin/WithdrawalRequests/DisplaylenderwithdrawalfundsList.jsx";
+import CheckLenderDashboard from "./components/pages/Oxyloans/LendersWallet/CheckLenderDashboard.jsx";
+import Lendersemiamount from "./components/pages/Oxyloans/LendersWallet/Lendersemiamount.jsx";
+import Lenderwalletamountdetails from "./components/pages/Oxyloans/LendersWallet/Lenderwalletamountdetails.jsx";
+import Borrowersemiamount from "./components/pages/Oxyloans/LendersWallet/Borrowersemiamount.jsx";
+import Addloanowner from "./components/pages/Oxyloans/LendersWallet/Addloanowner.jsx";
+import GetOxyFoundingGroups from "./components/pages/Oxyloans/Admin/LENDERS/GetOxyFoundingGroups.jsx";
+import RunningLoans from "./components/pages/Oxyloans/Admin/LoanRecords/RunningLoans.jsx";
+import ClosedLoans from "./components/pages/Oxyloans/Admin/LoanRecords/ClosedLoans.jsx";
+import ClosedLoansByPlatform from "./components/pages/Oxyloans/Admin/LoanRecords/ClosedLoansByPlatform.jsx";
+import LenderRunningsloans from "./components/pages/Oxyloans/Admin/LoanRecords/LenderRunningsloans.jsx";
+import UserValidityFee from "./components/pages/Oxyloans/Admin/PAYMENTS/UserValidityFee.jsx";
+import UploadedStatus from "./components/pages/Oxyloans/Admin/PAYMENTS/UploadedStatus.jsx";
+import QrTransactions from "./components/pages/Oxyloans/Admin/PAYMENTS/QrTransactions.jsx";
+import ApprovedStatus from "./components/pages/Oxyloans/Admin/PAYMENTS/ApprovedStatus.jsx";
+import NotyetReflected from "./components/pages/Oxyloans/Admin/PAYMENTS/NotyetReflected.jsx";
+import ECSPaymentHistory from "./components/pages/Oxyloans/Admin/PAYMENTS/ECSPaymentHistory.jsx";
+import Borrowersrecovery from "./components/pages/Oxyloans/Admin/PAYMENTS/Borrowersrecovery.jsx";
+import UserQueryDetails from "./components/pages/Oxyloans/Admin/HelpDesk/UserQueryDetails.jsx";
+import Resolved from "./components/pages/Oxyloans/Admin/HelpDesk/Resolved.jsx";
+import ClosedQuery from "./components/pages/Oxyloans/Admin/HelpDesk/ClosedQuery.jsx";
+import TotalPendingEMIs from "./components/pages/Oxyloans/Admin/EMIModule/TotalPendingEMIs.jsx";
+import PendingCurrentEMI from "./components/pages/Oxyloans/Admin/EMIModule/PendingCurrentEMI.jsx";
+import EditDealInfo from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/EditDealInfo.jsx";
+import Feependingusers from "./components/pages/Oxyloans/Admin/Deals/Feependingusers.jsx";
+import Feepaidusers from "./components/pages/Oxyloans/Admin/Deals/Feepaidusers.jsx";
+import OfflineInterest from "./components/pages/Oxyloans/Admin/Deals/OfflineInterest.jsx";
+
 
 // ********************BORROWER MODULE    ROUTE ************************** //
 
@@ -272,7 +324,75 @@ const AppRouter = () => {
         <Route path="/viewListOfFds" element={<ViewListOfFds />} />
         <Route path="/SearchfdUsers" element={<SearchfdUsers/>} />
         <Route path="/InsertPendingInformation" element={<InsertPendingInformation />} />
-        <Route path="/pendingamountUser" element={<PendingamountUser />} />
+        <Route path="/pendingamountUser" element={<PendingamountUser />} />   
+        <Route path="/fdStatistics" element={<FdStatistics />} />
+        <Route path="/fddownloadInvoice" element={<FddownloadInvoice />} /> 
+        <Route path="/fdmonthlyloansInfo" element={<FdmonthlyloansInfo />} /> 
+        <Route path="/fdexecutedPayment" element={<FdexecutedPayment />} /> 
+        <Route path="/fdClosedDetails" element={<FdClosedDetails />} /> 
+        <Route path="/borrowersapplications" element={<Borrowersapplications />} /> 
+        <Route path="/intrested" element={<Intrested />} /> 
+        <Route path="/loanAprroved" element={<LoanAprroved />} /> 
+        <Route path="/approved" element={<Approved />} /> 
+        <Route path="/newDisbursed" element={<NewDisbursed />} /> 
+        <Route path="/ApplicationLevelDisbursed" element={<ApplicationLevelDisbursed />} /> 
+        <Route path="/borrowerRunningsinfo" element={<BorrowerRunningsinfo />} />      
+        <Route path="/viewVanNumber" element={<NewDisbursed />} /> 
+        <Route path="/lendersapplications" element={<LendersLoanApplications />} /> 
+        <Route path="/registerLenderUsers" element={<RegisterLenderUsers />} /> 
+        <Route path="/lenderWallettransactions" element={<LenderWallettransactions />} />
+        <Route path="/uploadtransactions" element={<Uploadtransactions />} />
+
+        <Route path="/poolingLendrs" element={<PoolingLendrs />} /> 
+        <Route path="/lenderreferalinfo" element={<Lenderreferalinfo />} /> 
+        <Route path="/monthlyReferalEarning" element={<MonthlyReferalEarning />} /> 
+        <Route path="/approveReferenceamount" element={<ApproveReferenceamount />} /> 
+        <Route path="/editReferenceDeatils" element={<EditReferenceDeatils />} /> 
+        <Route path="/editGroupinfo" element={<EditGroupinfo />} />
+        <Route path="/lenderstatistics" element={<Lenderstatistics />} /> 
+        <Route path="/sumofDealAmountInfo" element={<SumofDealAmountInfo2 />} /> 
+        <Route path="/lendersInAllEquityDeals" element={<LendersInAllEquityDeals />} />
+        <Route path="/displaylenderwithdrawalfundsList" element={<DisplaylenderwithdrawalfundsList />} /> 
+        <Route path="/walletToWalletHistory" element={<WalletToWalletHistory />} />runningLoans
+        <Route path="/checkLenderDashboard" element={<CheckLenderDashboard />} />
+
+
+        <Route path="/lenderwalletamountdetails" element={<Lenderwalletamountdetails />} />
+        <Route path="/lendersemiamount" element={<Lendersemiamount />} />
+        <Route path="/borrowersemiamount" element={<Borrowersemiamount />} />
+
+        <Route path="/addloanowner" element={<Addloanowner />} /> 
+        <Route path="/getOxyFoundingGroups" element={<GetOxyFoundingGroups />} /> 
+
+        <Route path="/getOxyFoundingGroups" element={<GetOxyFoundingGroups />} /> 
+
+        <Route path="/runningLoans" element={<RunningLoans />} />
+
+        <Route path="/closedLoans" element={<ClosedLoans />} />
+        <Route path="/closedLoansByPlatform" element={<ClosedLoansByPlatform />} />     
+        <Route path="/lenderRunningsloans" element={<LenderRunningsloans />} />
+        <Route path="/uservalidityfee" element={<UserValidityFee />} />
+        <Route path="/uservalidityfee" element={<UserValidityFee />} />
+        <Route path="/feepaidusers" element={<Feepaidusers />} />
+        <Route path="/uploadedStatus" element={<UploadedStatus />} />
+        <Route path="/feependingusers" element={<Feependingusers />} />
+        <Route path="/qrTransactions" element={<QrTransactions />} />
+        <Route path="/offlineInterest" element={<OfflineInterest />} />
+        <Route path="/approvedStatus" element={<ApprovedStatus />} />
+        <Route path="/notyetReflected" element={<NotyetReflected />} />
+        <Route path="/ECSPaymentHistory" element={<ECSPaymentHistory />} />
+        <Route path="/editDealInfo" element={<EditDealInfo />} />
+
+        <Route path="/borrowersrecovery" element={<Borrowersrecovery />} />
+        <Route path="/userQueryDetails" element={<UserQueryDetails />} />
+        <Route path="/userQueryDetails" element={<UserQueryDetails />} />
+        <Route path="/resolved" element={<Resolved />} />
+        <Route path="/closedQuery" element={<ClosedQuery />} />
+        <Route path="/totalPendingEMI" element={<TotalPendingEMIs />} />
+        <Route path="/pendingCurrentEMI" element={<PendingCurrentEMI />} />
+                <Route path="/pendingCurrentEMI" element={<PendingCurrentEMI />} />
+                <Route path="/checkfeatureEMIs" element={<checkfeatureEMIs />} />
+
 
       </Routes>
     </BrowserRouter>

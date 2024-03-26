@@ -12,12 +12,18 @@ import {
   getloanborrowerandlender,
   getviewdealadmin,
   handelcalcluateapi,
+  handleStopPartici,
   handlecalculatapidata,
 } from "../../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
 import Header from "../../../../../Header/Header";
 import Sidebar from "../../../../../SideBar/AdminSidebar";
+import MainAdminDashboard from "../../MainAdminDashboard";
+import AdminSidebar from "../../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../../Header/AdminHeader";
+import { onShowSizeChange } from "../../../../../Pagination";
+import { dealreopen, handleextenddealTenureapi } from "../../../../Base UI Elements/SweetAlert";
 
 
 const ViewDeals = () => {
@@ -66,6 +72,29 @@ const ViewDeals = () => {
     }));
     console.log(buttonindex.btnindex);
   };
+
+
+  const extenddealTenure =async(dealId)=>{
+    const   response  =await   handleextenddealTenureapi(dealId)
+
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+        Swal.fire("Deal Closed successfully");
+      }
+    });
+  }
+  const handleStopParticipation=(dealId)=>{
+
+    const response =handleStopPartici(dealId);
+    console.log(response);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+        Swal.fire("Deal Closed successfully");
+      }
+    });
+  }
   const membershiphistoryPagination = (Pagination) => {
     setintrested({
       ...intrested,
@@ -86,7 +115,7 @@ const ViewDeals = () => {
 
   };
   useEffect(() => {
-    const response = getviewdealadmin(adminviewdeal.payload);
+    const response = getviewdealadmin(adminviewdeal.payload.pageNo  ,adminviewdeal.payload.pageSize  ,   adminviewdeal.payload.dealType);
     response.then((data) => {
       if (data.request.status == 200) {
         console.log(data);
@@ -99,8 +128,27 @@ const ViewDeals = () => {
       }
     });
     return () => {};
-  }, []);
+  }, [adminviewdeal.pageNo , adminviewdeal.pageSize]);
 
+
+     const handelClick =(type)=>{
+      setAdminviewdeal({
+        ...adminviewdeal,
+        dealType:type
+      })
+      const response = getviewdealadmin(adminviewdeal.payload.pageNo  ,adminviewdeal.payload.pageSize  ,   type);
+      response.then((data) => {
+        if (data.request.status == 200) {
+          console.log(data);
+          setintrested({
+            ...intrested,
+            apiData: data.data.listOfBorrowersDealsResponseDto,
+            loading: false,
+            hasdata: data.data.count == 0 ? false : true,
+          });
+        }
+      });
+     }
   const datasource = [];
   {
     intrested.apiData != ""
@@ -118,96 +166,7 @@ const ViewDeals = () => {
       : "";
   }
 
-  const handlecalculat = (index) => {
-    console.log(index);
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Are You Sure, you want to update the CIBIL Score?!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: "Enter the Cibil score",
-          text: "Cibil Score*",
-          icon: "warning",
-          input: "text", // Use 'input' instead of render
-          inputAttributes: {
-            className: "form-control",
-          },
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const inputValue = result.value; // Retrieve the value entered by the user
-            // Now you can use inputValue in your logic
-            console.log("User input:", inputValue);
-            const response = handlecalculatapidata(inputValue, index);
 
-            response.then((data) => {
-              console.log(data);
-              if (data.request.status == 200) {
-                Swal.fire({
-                  title: "CIBIL Score",
-                  text: "Updated",
-                  icon: "success",
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-  };
-
-  const handlesendoffer = () => {
-    Swal.fire({
-      text: "Are You Sure, you want to update the CIBIL Score?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      setintrested({
-        ...intrested,
-        isvaildcard: !intrested.isvaildcard,
-      });
-      if (result.isConfirmed) {
-        console.log(intrested.isvaildcard);
-        console.log(intrested.isvaildcard);
-      }
-    });
-  };
-  const handlecalculation = async (index) => {
-    const response = await handelcalcluateapi(index);
-    response.then((data) => {
-      console.log(data);
-      if (data.request.status == 200) {
-        Swal.fire({
-          text: "Are You Sure, you want to update the CIBIL Score?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-          }
-        });
-      }
-    });
-  };
 
   const columns = [
     {
@@ -279,16 +238,16 @@ const ViewDeals = () => {
       
       
       <div className="divintrested">  
-            <Link to=""> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
-            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
+            <Link to={`/editDealInfo?${render.dealId}`}> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
+            <Tag color="#3d5ee1" onClick={() => dealreopen(render.dealId)}>
             Deal Reopen
             </Tag>     
               
-            <Link to=""> <Tag color="#f50">     Stop Participation</Tag>    </Link>
-            <Tag color="#3c8dbc" onClick={() => HandleClick(render.id)}>
+            <Link to=""> <Tag color="#f50" onClick={()=>handleStopParticipation(render.dealId)}>     Stop Participation</Tag>    </Link>
+            <Link to="">  <Tag color="#3c8dbc"  onClick={() => extenddealTenure(render.dealId)}>
             Tenure Extend
-            </Tag>
-          </div>
+            </Tag></Link>
+          </div>  
         </>
       ),
     },
@@ -298,18 +257,16 @@ const ViewDeals = () => {
       sorter: (a, b) => a.Amount - b.Amount,
       render: (documents, index) => (
         <>
-            <div className="divintrested">
-            <Link to=""> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
-            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
-            Deal Reopen
-            </Tag>     
-              
-            <Link to=""> <Tag color="#f50">       Stop Participation</Tag>    </Link>
-            <Tag color="#3c8dbc" onClick={() => HandleClick(render.id)}>
-            Tenure Extend 
-            </Tag>
-          </div>
-        </>
+        <div className="divintrested">
+        <Link to=""> <Tag color="#0dcaf0">  View Lenders</Tag>    </Link>
+        <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
+        Withdrawal Request
+        </Tag>     
+          
+        <Link to=""> <Tag color="#f50">      Principal Summary</Tag>   </Link>
+     
+      </div>
+    </>
       ),
     },
     {
@@ -319,14 +276,14 @@ const ViewDeals = () => {
       render: (render, index) => (
         <>
             <div className="divintrested">
-            <Link to=""> <Tag color="#0dcaf0"> Edit</Tag>    </Link>
-            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
-            Tenure Extend 
-            </Tag>     
+            <Link to=""> <Tag color="#0dcaf0">  Pay Interest</Tag>    </Link>
+            {/* <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
+            Withdrawal Request
+            </Tag>      */}
               
-            <Link to=""> <Tag color="#f50">   Stop Participation</Tag>   </Link>
+            <Link to=""> <Tag color="#f50">      Initiating Notifications</Tag>   </Link>
             <Tag color="#3c8dbc" onClick={() => HandleClick(render.id)}>
-             Deal Reopen
+            Interest Summary
             </Tag>
           </div>
         </>
@@ -364,8 +321,8 @@ const ViewDeals = () => {
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
@@ -393,19 +350,19 @@ const ViewDeals = () => {
                   <div className="card-body">
                     <div className="row">
                   
-                  <Link
-                    to="/myRunningDelas"
-                    className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
-                  >
+                    <button
+               
+               className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2"   style={{color:'white'}}   onClick={()=>handelClick("HAPPENING")}
+             >
                     <i className="fa fa-user mx-1"></i>  Regular Running Deals 
-                  </Link>
+                  </button>
 
-                  <Link
-                    to="/myRunningDelas"
-                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2"   style={{color:'white'}}
+                  <button
+               
+                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2"   style={{color:'white'}}   onClick={()=>handelClick("CLOSED")}
                   >
                     <i className="fa fa-user mx-1"></i>  Participation Closed Deals 
-                  </Link>
+                  </button>
            
                    
                       
@@ -414,14 +371,14 @@ const ViewDeals = () => {
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
-                        // pagination={{
-                        //   total: membershiphistory.apiData.count,
-                        //   showTotal: (total, range) =>
-                        //     `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        //   position: ["topRight"],
-                        //   showSizeChanger: false,
-                        //   onShowSizeChange: onShowSizeChange,
-                        // }}
+                        pagination={{
+                          total: intrested.apiData.count,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          position: ["topRight"],
+                          showSizeChanger: false,
+                          onShowSizeChange: onShowSizeChange,
+                        }}
                         columns={columns}
                         dataSource={intrested.hasdata ? datasource : []}
                         expandable={true}

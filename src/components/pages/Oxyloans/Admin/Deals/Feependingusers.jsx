@@ -3,26 +3,27 @@ import { Link } from "react-router-dom";
 
 import { Button, Table, Tag } from "antd";
 
+// import "./inserted.css";
+
 import {
     getborrowerapiclick,
-  getdealpay,
-  getintrestedapi,
-  getintrestedapiclick,
-  getloanborrowerandlender,
+
+  getviewdealadmin,
   handelcalcluateapi,
   handlecalculatapidata,
-} from "../../../HttpRequest/admin";
+  lendersfeestatus,
+} from "../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
-import AdminHeader from "../../../Header/AdminHeader";
-import AdminSidebar from "../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
 
 
-const ViewDealTypePayOut = () => {
+const Feependingusers = () => {
   const [intrested, setintrested] = useState({
     apiData: "",
     hasdata: false,
-    loading: false,
+    loading: true,
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
@@ -45,6 +46,13 @@ const ViewDealTypePayOut = () => {
     fieldValue31:"",
   })
 
+
+  const [adminviewdeal , setAdminviewdeal]=useState({
+   payload:{
+      pageNo: 1,
+    pageSize: 10,
+    dealType: "HAPPENING"  }
+  })
   const [buttonindex, setbuttonindex] = useState({
     btnindex: "",
     isbuttonvalid: false,
@@ -66,72 +74,27 @@ const ViewDealTypePayOut = () => {
     });
   };
 
-  const handelchange = (event) => {
-    const { name, value } = event.target;
-    setdatavalue({
-      ...datavalue,
-      [name]: value
-    });
-  
-    console.log(event.target.value);
-  
-     if (event.target.value === "viewdealsPayouts") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiled:"viewdealsPayouts",
-        inputselectcity:false,
-        inputfiledvalue2:false,
-        inpututm:false,
-      });
-    }else if (event.target.value === "roi") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue2:true,
-        inputfiled:"Min Roi",
-        inputfiled2:"Max",
-        inputselectcity:false,
-        inpututm:false,
-      });
-    }else if (event.target.value === "amount") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue2:true,
-        inputfiled:"Min Amount",
-        inputselectcity:false,
-        inpututm:false,
-        inputfiled2:"Max ",
-      });
-    }else if (event.target.value === "amount&city") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: true,
-        inputfiledvalue2:true,
-        inputfiled:"amount&city",
-        inputfiled1:"Min Amount",
-        inputfiled2:"Max ",
-        inputselectcity:true,
-        inpututm:false
-      });
-    }else if (event.target.value === "city") {
-      setdatavalue({
-        ...datavalue,
-        inputfiledvalue: false,
-        inputfiledvalue2:false,
-        inputselectcity:true,
-        isfiledvaild:false,
-        inpututm:false
-      });
-    }
-  };
 
+  useEffect(() => {
+    const response = lendersfeestatus();
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+        setintrested({
+          ...intrested,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+    return () => {};
+  }, []);
 
   const datasource = [];
   {
     intrested.apiData != ""
-      ? intrested.apiData.map((data) => {
+      ? intrested.apiData.lenderFeeTransactionResponse.map((data) => {
           datasource.push({
             key: Math.random(),
             PaymentDate: data,
@@ -238,51 +201,93 @@ const ViewDealTypePayOut = () => {
 
   const columns = [
     {
-     		
-      title: "Deal Info",
+        					
+      title: "User Name",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
       render: (render) => (
-        <>
-    <p> Deal name: {render.dealName}</p> 
-   <p> Deal Amount :  {render.dealAmount} </p> 
-     <p> Rate Of Interest {render.rateOfInterest} </p> 
+        <>   
+          <p>Lr{render.firstName}</p>
+     
+     
+
+         
+
+
+
+
         </>
       ),
-    },
+    },			
     {
-      title: "Dates Info",
+      title: "User Id",
       dataIndex: "TransactionNumber",
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
       render: (render) => (
         <>
           <div className="insertstart">
-          <p> Funds Acceptance End Date : {render.fundsAcceptanceEndDate}</p> 
-   <p> Funds Acceptance Start Date :{render.fundsAcceptanceStartDate} </p> 
-     <p> Loan Active Date:{render.loanActiveDate} </p> 
+          
+           
+            <p> Lr {render.userId}</p>
+    
+          
           </div>
-
-
         </>
       ),
     },
     {
-      title: "Duration",
+      title: "Mobile No",
       dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render) => (
         <>
-       
-
-
-       <p> Duration :{render.duration}</p> 
-   <p> WithDrawalRoi: {render.withDrawalRoi}</p> 
-
- 
+               <p>    {render.mobileNumber}</p>
+    
         </>
       ),
     },
- 
+    {
+      title: "lender Type",
+      dataIndex: "PaidThrough",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (render) => (
+        <>
+      
+      
+      <div className="divintrested">  
+      <p>  {render.lenderType}</p>
+        
+           
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Deal Id",
+      dataIndex: "documents",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (documents, index) => (
+        <>
+            <div className="divintrested">
+            <p>  {documents.dealId}</p>
+          
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Amount",
+      dataIndex: "comments",
+      sorter: (a, b) => a.Amount - b.Amount,
+      render: (render, index) => (
+        <>
+            <div className="divintrested">
+            <p>  {render.amount}</p>
+          </div>
+        </>
+      ),
+    },
+   
   ];
   const handleTagClick = () => {
     console.log("but");
@@ -293,7 +298,7 @@ const ViewDealTypePayOut = () => {
 
     console.log(intrested);
     console.log(datavalue);
-    const response = getdealpay(
+    const response = getborrowerapiclick(
       intrested,
       datavalue
    
@@ -303,7 +308,7 @@ const ViewDealTypePayOut = () => {
         console.log(data.data.results)
         setintrested({
           ...intrested,
-          apiData: data.data.listOfBorrowersDealsResponseDto,
+          apiData: data.data.results,
           loading: false,
           hasdata: data.data.count == 0 ? false : true,
         });
@@ -324,13 +329,13 @@ const ViewDealTypePayOut = () => {
               <div className="row">
                 <div className="col">
                   <h3 className="page-title">
-                  Deal Payout
+                  Fee Pending Users
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Deal Payout</li>
+                    <li className="breadcrumb-item active">Hold Deal Users</li>
                   </ul>
                 </div>
               </div>
@@ -342,87 +347,21 @@ const ViewDealTypePayOut = () => {
                 <div className="card">
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-12 col-sm-3">
-                        <div className="form-group local-forms">
-                          <label>
-                          Choose Deal Type and Payout
-                            <span className="login-danger"></span>
-                          </label>
-                          <select
-                            type="text"
-                            name="inputfiled"
-                            className="form-control"
-                            placeholder="Enther the LENDER ID "
-                            onChange={handelchange}
-                          >
-                            <option>-- Choose  --</option>
-                            <option value="viewdealsPayouts">Dealtype & payout</option>
-                         
-                       
+                  
+          
 
-                        
-                          </select>
-                        </div>
-                      </div>
-                      
+                  <Link
+                    to={intrested.apiData.lenderExcelDownload}
+                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2  mb-2"   style={{color:'white'}}
+                  >
+                    <i className="fa fa-user mx-1"></i>  
+                    Download Excel 
+                  </Link>
            
-{datavalue.inputfiledvalue  && <><div className="col-12 col-sm-3">
-                        <div className="form-group local-forms">
-                          <label>
-                            Deal Type
-                            <span className="login-danger">*</span>
-                          </label>
-                          <select
-                            type="text"
-                            name="fieldValue3"  
-                            className="form-control" 
-                            onChange={handelchange}
-                            // placeholder={datavalue.inputfiled}
-                          >
-
-
-                    {/* <option value=""> Utm</option> */}
-                    <option value="CLOSED">CLOSED</option>
-                    <option value="OPENED">OPENED</option>
-
-                          </select>
-                        </div>
-                      </div></>}   
-
-                        
-                      {datavalue.inputfiledvalue  && <><div className="col-12 col-sm-3">
-                        <div className="form-group local-forms">
-                          <label>
-                          Payout
-                            <span className="login-danger">*</span>
-                          </label>
-                          <select
-                            type="text"
-                            name="fieldValue31"  
-                            className="form-control" 
-                            onChange={handelchange}
-                            // placeholder={datavalue.inputfiled}
-                          >
-
-
-                    {/* <option value=""> Utm</option> */}
-                    <option value="YEARLY">YEARLY</option>
-                    <option value="MONTHLY">MONTHLY</option>
-                    <option value="QUARTERLY">QUARTERLY</option>
-                    <option value="ENDOFTHEDEAL">ENDOFTHEDEAL</option>
-
-                          </select>
-                        </div>
-                      </div></>}
-                
-                      <div className="col-3">
-                        <div className="student-submit">
-                          <button type="button" className="btn btn-primary"  onClick={()=>handelclickuser()}>
-                            Fetch Deatils
-                          </button>
-                        </div>
-                      </div>
-                    </div>    
+                   
+                      
+                      
+                    </div>
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -453,4 +392,4 @@ const ViewDealTypePayOut = () => {
   );
 };
 
-export default ViewDealTypePayOut;
+export default Feependingusers;

@@ -2,7 +2,7 @@ import axios from "axios";
 const userisIn = "local";
 const API_BASE_URL =
   userisIn == "local"
-    ? "http://35.154.48.120:8080/oxynew/v1/user/"
+    ? "http://ec2-15-207-239-145.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/"
     : "https://fintech.oxyloans.com/oxyloans/v1/user/";
 
 const getToken = () => {
@@ -162,6 +162,52 @@ export const handleholdamountapi = async (holdAmountRequest) => {
   );
   return response;
 };
+
+export    const  handelclicknewaccountdetailsapi= async  (data)=>{
+  const token = getToken();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${data.userId}/new-account-details`,
+    "GET",
+    token,
+    data
+  );
+  return response;
+}
+export    const  handefeecalculationapi= async  (data)=>{
+  const token = getToken();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${data.userId}/payment-upload`,
+    "GET",
+    token,
+    data
+  );
+  return response;
+}
+
+export    const  updatefdcreateddateamount= async  (upload)=>{
+  const token = getToken();
+  var parts = upload.createdDate.split("-");
+
+  // Rearrange the parts to form the desired format
+  var formattedDate = parts[2] + "/" + parts[1] + "/" + parts[0];
+  const data ={
+    userId:upload.userId,
+		fdAmount:upload.fdAmount,
+		createdDate:formattedDate,
+  }
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `update-fdcreated-date-amount`,
+    "PATCH",
+    token,
+    data
+  );
+  return response;
+}
 export    const  uploadapi= async  (upload)=>{
   const token = getToken();
 
@@ -1359,10 +1405,81 @@ export const getloanborrowerandlender = async (intrested , datavalue)=>{
   return response;
 }
 
-export const getviewdealadmin = async (data)=>{
+export const dealreopenmessageapi = async (dealId, fundsAcceptanceEndDate)=>{
+  const data = {
+    dealId: dealId,
+    fundsAcceptanceEndDate: fundsAcceptanceEndDate.split("-").reverse().join("/")
+};
+ const token = getToken();
 
+ const response = await handleApiRequestAfterLoginService(
+   API_BASE_URL,
+   `deal-reopen`,
+   "PATCH",   
+   token,
+   data
+ );
+ return response;
+}
+export const lendersfeestatus = async ()=>{
+ 
+ const token = getToken();
+
+ const response = await handleApiRequestAfterLoginService(
+   API_BASE_URL,
+   `lenders_fee_status`,
+   "GET",   
+   token,
+   
+ );
+ return response;
+}
+export const extendsDurationapi = async (dealId, fundsAcceptanceEndDate)=>{
+  const data = 
+    { dealId: dealId,
+    duration: fundsAcceptanceEndDate 
+    }
+
+ const token = getToken();
+
+ const response = await handleApiRequestAfterLoginService(
+   API_BASE_URL,
+   `extendsDuration`,
+   "PATCH",   
+   token,
+   data
+ );
+ return response;
+}
+export const listOfDealsInformationForEquityDealsapi = async (type, dealname , pageno , pagesize)=>{
+  const data = 
+  {
+    pageNo: pageno,
+    pageSize:  pagesize,
+    dealType: type,
+    dealName: dealname
+  }
+
+ const token = getToken();
+ const userId  =getUserId()
+
+ const response = await handleApiRequestAfterLoginService(
+   API_BASE_URL,
+   `${userId}/listOfDealsInformationForEquityDeals`,
+   "POST",   
+   token,
+   data
+ );
+ return response;
+}
+export const getviewdealadmin = async ( pageNo, pageSize , dealType)=>{
+   const data={
+    pageNo,
+    pageSize,
+    dealType,
+  }
   const token = getToken();
-
+ 
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `listOfDealsInformationForNormalDeals`,
@@ -1372,6 +1489,108 @@ export const getviewdealadmin = async (data)=>{
   );
   return response;
 }
+
+
+export const getlistOfDealsInformationForEquityDeals = async ( data)=>{
+
+ const token = getToken();  const userId = getUserId();
+
+ const response = await handleApiRequestAfterLoginService(
+   API_BASE_URL,
+   `${userId}/listOfDealsInformationForEquityDeals`,
+   "POST",   
+   token,
+   data
+ );
+ return response;
+}
+
+export   const  handleStopPartici= async(dealId)=>{
+  const token = getToken();
+  const useid =getUserId()
+  const data =   { 
+    statusType: "ACHIEVED"
+   }
+  const jsonString = JSON.stringify(data);
+  
+  console.log(jsonString);   
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${dealId}/dealPaticipationStatusUpdation`,
+    "PATCH",   
+    token,
+    data
+  );
+  return response;
+} 
+
+
+
+export   const  listOfDealsInformationForEquityDeals= async(data)=>{
+  const token = getToken();
+  const useid =getUserId()
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${useid}/listOfDealsInformationForEquityDeals`,
+    "POST",   
+    token,
+    data
+  );
+  return response;
+} 
+
+export   const  apidealreopen= async(date5)=>{
+  const token = getToken();
+  const useid =getUserId()
+  const dealId  = localStorage.getItem("dealId")
+  const data =   { 
+      dealId: dealId,
+      fundsAcceptanceEndDate: date5.split("-").reverse().join("/")
+
+   }
+  
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deal-reopen `,
+    "PATCH",   
+    token,
+    data
+  );
+  return response;
+}
+
+
+export   const  handlesubmitapi= async(dealId    , type)=>{
+  const token = getToken();
+  const useid =getUserId()
+ 
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deal-summary?dealId=${dealId}&amountType=${type}`,
+    "GET",   
+    token,
+  );
+  return response;
+}
+export   const  handleextenddealTenureapi= async(dealId)=>{
+  const token = getToken();
+  const useid =getUserId()
+  const data =   { 
+    statusType: "ACHIEVED"
+   }
+  const jsonString = JSON.stringify(data);
+  
+  console.log(jsonString);   
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${dealId}/dealPaticipationStatusUpdation`,
+    "PATCH",   
+    token,
+    data
+  );
+  return response;
+} 
 export const getintrestedapi = async (intrested , datavalue)=>{
 
   const token = getToken();
@@ -1531,6 +1750,31 @@ const data={
   );
   return response;
 }  
+
+export  const interestDetailsForDeall  = async (input)=>{
+
+
+  const token = getToken();
+
+const data={
+
+    paymentDate: "21-02-2024",
+    originalPaymentDate: "08-02-2024",
+    dealId: "11",
+    status: "APPROVED",
+    totalAmount: "1",
+    paymentMode: "OFFLINE"
+
+}
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `interestDetailsForDeall`,
+    "POST",   
+    token,
+    data
+  );
+  return response;
+}
 export  const handlecalculatapidata  = async (input , id)=>{
 
 
@@ -1548,6 +1792,22 @@ const data={
   );
   return response;
 }
+
+export  const lenderFee_excel_sheet    =async(data)=>{
+  const token = getToken();
+     
+
+
+  
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${data}/lenderFee_excel_sheet`,
+    "POST",   
+    token,
+  );
+  return response;
+}
+
 export  const getfdmonthlyloansInfo    =async(fdmonthlyloansInfo)=>{
   const token = getToken();
      const data={
@@ -1560,6 +1820,24 @@ export  const getfdmonthlyloansInfo    =async(fdmonthlyloansInfo)=>{
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `fd-monthly-details`,
+    "POST",   
+    token,
+    data
+  );
+  return response;
+}
+export  const getdealpay    =async(intrested,  datavalue)=>{
+  const token = getToken();
+     const data={
+      dealType: datavalue.fieldValue3,
+      payOutType: datavalue.fieldValue31
+  }
+
+
+  
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deals`,
     "POST",   
     token,
     data

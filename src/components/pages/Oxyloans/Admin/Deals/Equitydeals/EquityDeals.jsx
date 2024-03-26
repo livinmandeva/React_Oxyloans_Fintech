@@ -9,6 +9,7 @@ import {
     getborrowerapiclick,
   getintrestedapi,
   getintrestedapiclick,
+  getlistOfDealsInformationForEquityDeals,
   getloanborrowerandlender,
   getviewdealadmin,
   handelcalcluateapi,
@@ -18,6 +19,8 @@ import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
 import Header from "../../../../../Header/Header";
 import Sidebar from "../../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../../Header/AdminHeader";
+import AdminSidebar from "../../../../../SideBar/AdminSidebar";
 
 
 const EquityDeals = () => {
@@ -52,7 +55,8 @@ const EquityDeals = () => {
    payload:{
       pageNo: 1,
     pageSize: 10,
-    dealType: "HAPPENING"  }
+    dealType: "HAPPENING",
+    dealName: "EQUITY" }
   })
   const [buttonindex, setbuttonindex] = useState({
     btnindex: "",
@@ -86,7 +90,7 @@ const EquityDeals = () => {
 
   };
   useEffect(() => {
-    const response = getviewdealadmin(adminviewdeal.payload);
+    const response = getlistOfDealsInformationForEquityDeals(adminviewdeal.payload);
     response.then((data) => {
       if (data.request.status == 200) {
         console.log(data);
@@ -101,6 +105,33 @@ const EquityDeals = () => {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const response = getlistOfDealsInformationForEquityDeals(adminviewdeal.payload);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+        setintrested({
+          ...intrested,
+          apiData: data.data.listOfBorrowersDealsResponseDto,
+          loading: false,
+          hasdata: data.data.count == 0 ? false : true,
+        });
+      }
+    });
+    return () => {};
+  }, [adminviewdeal.payload.dealName , adminviewdeal.payload.dealType]);
+
+  const handelclickequity = (dealType, dealName) => {
+    setAdminviewdeal(prevState => ({
+      ...prevState,
+      payload: {
+        ...prevState.payload,
+        dealType: dealType,
+        dealName: dealName
+      }
+    }));
+    console.log(dealType   , dealName) 
+  };
   const datasource = [];
   {
     intrested.apiData != ""
@@ -364,8 +395,8 @@ const EquityDeals = () => {
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
@@ -380,7 +411,7 @@ const EquityDeals = () => {
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Hold Deal Users</li>
+                    <li className="breadcrumb-item active">Equity Deals</li>
                   </ul>
                 </div>
               </div>
@@ -394,17 +425,19 @@ const EquityDeals = () => {
                     <div className="row">
                   
                   <Link
-                    to="/myRunningDelas"
-                    className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
-                  >
+                    to=""
+                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2" 
+
+                    style={{height:'35px'}}
+                    onClick={()=>handelclickequity("EQUITY" , "HAPPENING")}  >
                     <i className="fa fa-user mx-1"></i>  
                                     Equity Running Deals 
                   </Link>
 
                   <Link
-                    to="/myRunningDelas"
-                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2"   style={{color:'white'}}
-                  >
+                    to=""       
+                    className="btn btn-warning col-lg-3 col-sm-6  mx-lg-2"   style={{color:'white',height:'35px'}}
+                onClick={()=>handelclickequity("EQUITY" , "CLOSED")}  >
                     <i className="fa fa-user mx-1"></i>  
                                     Equity Participation Closed Deals 
                   </Link>

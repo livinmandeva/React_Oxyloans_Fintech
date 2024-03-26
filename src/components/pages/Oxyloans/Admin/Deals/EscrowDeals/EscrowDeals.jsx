@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import { Button, pagination, Table } from "antd";
 import { onShowSizeChange, itemRender } from "../../../../../Pagination";
 
-import SideBar from "../../../../../SideBar/SideBar";
+
 import Footer from "../../../../../Footer/Footer";
 
 import Header from "../../../../../Header/Header";
 import { referralEarningsInfo } from "../../../../../HttpRequest/afterlogin";
+import AdminHeader from "../../../../../Header/AdminHeader";
+import AdminSidebar from "../../../../../SideBar/AdminSidebar";
+import { listOfDealsInformationForEquityDealsapi } from "../../../../../HttpRequest/admin";
 
 const EscrowDeals = () => {
   const [referalMyearnigs, setreferalMyearnigs] = useState({
@@ -16,8 +19,8 @@ const EscrowDeals = () => {
     hasdata: false,
     loading: true,
     pageNo: 1,
-    pageSize: 5,
-    defaultPageSize: 5,
+    pageSize: 10,
+    defaultPageSize: 10,
     Invitelender: "",
     inviteborrower: "",
     invitenri: "",
@@ -25,6 +28,8 @@ const EscrowDeals = () => {
     earninglink: "",
     lenderlink: true,
     invitenrilink: true,
+    dealname:"ESCROW",
+    type:"HAPPENING",
   });
 
   const referalMyearnigsPagination = (Pagination) => {
@@ -37,27 +42,58 @@ const EscrowDeals = () => {
   };
 
   useEffect(() => {
-    const response = referralEarningsInfo(
+
+    const response = listOfDealsInformationForEquityDealsapi(
+      referalMyearnigs.type,
+      referalMyearnigs.dealname,
       referalMyearnigs.pageNo,
       referalMyearnigs.pageSize
+      
     );
     response.then((data) => {
       if (data.request.status == 200) {
+
+        console.log(data)
         setreferalMyearnigs({
           ...referalMyearnigs,
           apiData: data.data,
           loading: false,
-          hasdata: data.data.count == 0 ? false : true,
+          hasdata: data.data.count == 0 ? true : true,
         });
       }
     });
-  }, [referalMyearnigs.pageNo, referalMyearnigs.pageSize]);
+  }, []);
 
+
+
+
+  
+  const  handelclick =(type , dealname)=>{
+    const response = listOfDealsInformationForEquityDealsapi(
+      type,
+      dealname,
+      referalMyearnigs.pageNo,
+      referalMyearnigs.pageSize
+      
+    );
+    response.then((data) => {
+      if (data.request.status == 200) {
+
+        console.log(data)
+        setreferalMyearnigs({
+          ...referalMyearnigs,
+          apiData: data.data,
+          loading: false,
+          hasdata: data.data.count == 0 ? true : true,
+        });
+      }
+    });
+  }
   console.log(referalMyearnigs);
   const datasource = [];
   {
     referalMyearnigs.apiData != ""
-      ? referalMyearnigs.apiData.lenderReferenceAmountResponse.map((data) => {
+      ? referalMyearnigs.apiData.listOfBorrowersDealsResponseDto.map((data) => {
           datasource.push({
             key: Math.random(),
             RefereeName: (
@@ -178,10 +214,10 @@ const EscrowDeals = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
 
         {/* Sidebar */}
-        <SideBar />
+        <AdminSidebar />
 
         {/* Page Wrapper */}
 
@@ -217,7 +253,8 @@ const EscrowDeals = () => {
                 <div className="col-lg-2 pull-right">
                   <div className="search-student-btn">
                     <button type="btn" className="btn btn-primary">
-                      Escrow Running Deals
+                    
+                    Escrow Running Deals 
                     </button>
                   </div>
                 </div>
@@ -227,19 +264,18 @@ const EscrowDeals = () => {
               <div className="col-sm-12">
                 <div className="card card-table">
                   <div className="card-header">
-                    <button className="btn btn-xs col-md-4 btn-info col-12">
-                      {referalMyearnigs.borrowerlink ? (
-                        <>Equity Participation Closed Deals </>
-                      ) : (
-                        <> copied</>
-                      )}
+                  <button type="btn" className="btn btn-primary col-md-4 col-12"   onClick={()=>handelclick( "HAPPENING", "ESCROW"  )}>
+                    
+                    Escrow Running Deals 
                     </button>
+
+
                     <button
                       className="btn btn-xs col-md-4 btn-success col-12"
-                      style={{ marginLeft: "6px" }}
+                      style={{ marginLeft: "6px" }}     onClick={()=>handelclick( "CLOSED", "ESCROW"  )}
                     >
-                      <i className="fa-solid fa-download"></i>
-                      Escrow Participation Closed Deals
+                   
+                      Escrow Participation Closed Deals 
                     </button>
                   </div>
                   <div className="card-body">

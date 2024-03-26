@@ -18,6 +18,8 @@ import {
   submitWithdrawalRequestFromWallet,
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
+import { error } from "jquery";
+import { dealreopenmessageapi, extendsDurationapi } from "../../HttpRequest/admin";
 
 export const HandleClick = () => {
   Swal.fire({
@@ -75,6 +77,16 @@ export const bottomStart = () => {
     timer: 1500,
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
+  });   
+};
+
+export const bottomStartmessage = () => {
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "Deal Tenure Successfully Updated",
+    showConfirmButton: false,
+    timer: 1500
   });
 };
 export const bottomEnd = () => {
@@ -124,6 +136,60 @@ export const registersuccess = (message) => {
     buttonsStyling: !1,
   });
 };
+
+
+export const handleextenddealTenureapi = (dealId) => {
+
+  console.log(dealId)
+  Swal.fire({
+    title: "How Many months would you like to increase The deal's Tenure?",
+    icon: "info",
+    html: `<select type="text" id="fundsAcceptanceEndDate" class="form-control">
+    <option  value="1">1</option>
+    <option  value="2">2</option>
+    </select>`,
+    showDenyButton: true,
+    confirmButtonText: "Continue",
+    denyButtonText: "Cancel",
+    denyButtonColor: "#5c9b45",
+    preConfirm: () => {
+      return {
+        fundsAcceptanceEndDate: document.getElementById('fundsAcceptanceEndDate').value
+      };
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const fundsAcceptanceEndDate = document.getElementById('fundsAcceptanceEndDate').value;
+      console.log(dealId, fundsAcceptanceEndDate);
+
+      const response = extendsDurationapi(dealId, fundsAcceptanceEndDate);
+      response.then((data) => {
+        if (data && data.request && data.request.status === 200) {
+          console.log(data);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Deal Tenure Successfully Updated",
+            showConfirmButton: false,
+        
+          });
+        } else {
+          console.error("Error occurred while reopening deal:");
+          // Handle error case
+        }
+      }).catch((error) => {
+        console.error("Error occurred while reopening deal:", error);
+        // Handle error case
+      });
+    } else if (result.isDenied) {
+      console.log("Deal reopening was denied.");
+      // Handle denial case
+    }
+  }).catch((error) => {
+    console.error("Error occurred while reopening deal:", error);
+    // Handle error case
+  });
+};
 export const WarningAlert = (errorMessage, redirectTo) => {
   Swal.fire({
     title: "Session Expiring",
@@ -142,6 +208,59 @@ export const WarningAlert = (errorMessage, redirectTo) => {
     }
   });
 };
+
+
+export const dealreopen = (dealId) => {
+
+  console.log(dealId)
+  Swal.fire({
+    title: "Reopen the deal",
+    icon: "info",
+    html: `<input type="date" id="fundsAcceptanceEndDate" class="form-control">`,
+    showDenyButton: true,
+    confirmButtonText: "Continue",
+    denyButtonText: "Cancel",
+    denyButtonColor: "#5c9b45",
+    preConfirm: () => {
+      return {
+        fundsAcceptanceEndDate: document.getElementById('fundsAcceptanceEndDate').value
+      };
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const fundsAcceptanceEndDate = document.getElementById('fundsAcceptanceEndDate').value;
+      console.log(dealId, fundsAcceptanceEndDate);
+   
+      const response = dealreopenmessageapi(dealId, fundsAcceptanceEndDate);
+      response.then((data) => {
+        if (data && data.request && data.request.status === 200) {
+          console.log(data);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Deal Tenure Successfully Updated",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          console.error("Error occurred while reopening deal:");
+          // Handle error case
+        }
+      }).catch((error) => {
+        console.error("Error occurred while reopening deal:", error);
+        // Handle error case
+      });
+    } else if (result.isDenied) {
+      console.log("Deal reopening was denied.");
+      // Handle denial case
+    }
+  }).catch((error) => {
+    console.error("Error occurred while reopening deal:", error);
+    // Handle error case
+  });
+};
+
+
 export const WarningAlertwithdrow = (errorMessage, redirectTo) => {
   Swal.fire({
     title: "Error",
@@ -509,6 +628,18 @@ export const WarningAlertWalltTran = (errorMessage, redirectTo) => {
     confirmButtonText: "ok",
   }).then((result) => {});
 };
+
+
+export const Message = (message) => {
+  Swal.fire({
+    title: "INFO!",
+    text: message,
+    type: "info",
+    icon: "info",
+    confirmButtonClass: "btn btn-primary",
+    showCloseButton: true,
+  })
+};
 export const PrincipalTransfer = (warningType, errormessage) => {
   Swal.fire("Principal Payout!", errormessage, warningType);
   setTimeout(() => {
@@ -528,10 +659,10 @@ export const WarningAlerterror = (errorMessage, redirectTo) => {
     confirmButtonText: "ok",
   });
 };
-export const Error = () => {
+export const Error = (errorMessage) => {
   Swal.fire({
     title: "Error!",
-    text: " You clicked the button!",
+    text: errorMessage,
     type: "error",
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,

@@ -178,9 +178,9 @@ const AdminSidebar = (props) => {
 
                       <li>
                         <Link
-                          to="/testDeals"
+                          to="/admintestDeals"
                           className={`${
-                            "/testDeals" === pathName ? "active" : ""
+                            "/admintestDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View Test Deals
@@ -216,7 +216,7 @@ const AdminSidebar = (props) => {
                            Pending Files
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link
                           to="/offlineInterest"
                           className={`${
@@ -225,8 +225,8 @@ const AdminSidebar = (props) => {
                         >
                          Offline Interest
                         </Link>
-                      </li>
-                      <li>
+                      </li> */}
+                      {/* <li>
                         <Link
                           to="/offlineInterest"
                           className={`${
@@ -235,18 +235,18 @@ const AdminSidebar = (props) => {
                         >
                          Deal Notification
                         </Link>
-                      </li> 
+                      </li>  */}
                        <li>
                         <Link
-                          to="/testDeals"
+                          to="/admintestDeals"
                           className={`${
-                            "/testDeals" === pathName ? "active" : ""
+                            "/admintestDeals" === pathName ? "active" : ""
                           }`}
                         >
                           View Test Deals
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link
                           to="/viewclosedDeals"
                           className={`${
@@ -255,8 +255,8 @@ const AdminSidebar = (props) => {
                         >
                           View Closed Deals
                         </Link>
-                      </li> 
-                      <li>
+                      </li>  */}
+                      {/* <li>
                         <Link
                           to="/getGroupofLender"
                           className={`${
@@ -265,8 +265,8 @@ const AdminSidebar = (props) => {
                         >
                        Oxy Founding Groups
                         </Link>
-                      </li> 
-                      <li>
+                      </li>  */}
+                      {/* <li>
                         <Link
                           to="/whatsappNotification"
                           className={`${
@@ -275,8 +275,8 @@ const AdminSidebar = (props) => {
                         >
                        WhatsApp Notification
                         </Link>
-                      </li> 
-                      <li>
+                      </li>  */}
+                      {/* <li>
                         <Link
                           to="/lenderparticipateddeal"
                           className={`${
@@ -285,8 +285,8 @@ const AdminSidebar = (props) => {
                         >
                               Update Lender Participation
                         </Link>
-                      </li> 
-                      <li>
+                      </li>  */}
+                      {/* <li>
                         <Link
                           to="/equityInvestors"
                           className={`${
@@ -295,8 +295,8 @@ const AdminSidebar = (props) => {
                         >
                         Equity Investors List
                         </Link>
-                      </li> 
-                      <li>
+                      </li>  */}
+                      {/* <li>
                         <Link
                           to="/paytmTransactions"
                           className={`${
@@ -305,8 +305,8 @@ const AdminSidebar = (props) => {
                         >
                         Paytm Nodal
                         </Link>
-                      </li> 
-                      <li>
+                      </li>  */}
+                      {/* <li>
                         <Link
                           to="/runningDealInfo"
                           className={`${
@@ -315,7 +315,7 @@ const AdminSidebar = (props) => {
                         >
                         Running Deals Info
                         </Link>
-                      </li> 
+                      </li>  */}
 
                     </ul>
                   ) : (
@@ -327,7 +327,7 @@ const AdminSidebar = (props) => {
                 {/* <li className="menu-title">
                   <span></span>
                 </li> */}
-                <li
+                {/* <li
                   className={`${
                     "/holdAmountRequest" === pathName ||
                     "/holdAmountBreakUp" === pathName
@@ -381,7 +381,7 @@ const AdminSidebar = (props) => {
                   ) : (
                     ""
                   )}
-                </li>
+                </li> */}
 
                 <li
                   className={`${
@@ -508,7 +508,7 @@ const AdminSidebar = (props) => {
                       : "submenu"
                   }`}
                 >
-                  <Link
+                  {/* <Link
                     to="#"
                     className={isSideMenu == "Invoices" ? "subdrop" : ""}
                     onClick={() =>
@@ -517,7 +517,7 @@ const AdminSidebar = (props) => {
                   >
                     <i className="fas fa-clipboard" /> <span> Lender Pending Amount </span>
                     <span className="menu-arrow" />
-                  </Link>
+                  </Link> */}
                   {isSideMenu == "Invoices" ? (
                     <ul
                       style={{
@@ -657,7 +657,7 @@ const AdminSidebar = (props) => {
                         </Link>
                       </li>
 
-                      <li>
+                      {/* <li>
                         <Link
                           to="/intrested"
                           className={`${
@@ -668,9 +668,9 @@ const AdminSidebar = (props) => {
                         >
                          Intrested (L1)
                         </Link>
-                      </li>
+                      </li> */}
 
-                      <li>
+                      {/* <li>
                         <Link
                           to="/newDisbursed"
                           className={`${
@@ -740,7 +740,7 @@ const AdminSidebar = (props) => {
                         >
                         View Van Number
                         </Link>
-                      </li> 
+                      </li>  */}
                       
                     </ul>
                   ) : (
@@ -793,7 +793,7 @@ const AdminSidebar = (props) => {
                         Lenders Loan Applications
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link
                           to="/registerLenderUsers"
                           className={`${
@@ -913,7 +913,7 @@ const AdminSidebar = (props) => {
                         >
                         Lender's Participated Amount
                         </Link>
-                      </li>
+                      </li> */}
                     </ul>
                   ) : (
                     ""
@@ -1172,7 +1172,7 @@ const AdminSidebar = (props) => {
         : "submenu"
     }`}
   >
-    <Link
+    {/* <Link
       to="#"
       className={isSideMenu == " LendersWalletAmount" ? "subdrop" : ""}
       onClick={() =>
@@ -1181,7 +1181,7 @@ const AdminSidebar = (props) => {
     >
       <i className="fa-solid fa-handshake-angle"></i>
       <span>   Lenders Wallet Amount </span> <span className="menu-arrow" />
-    </Link>
+    </Link> */}
     {isSideMenu == "LendersWalletAmount" ? (
       <ul
         style={{
@@ -1262,7 +1262,7 @@ const AdminSidebar = (props) => {
         : "submenu"
     }`}
   >
-    <Link
+    {/* <Link
       to="#"
       style={{ display: "none" }}
       className={isSideMenu == "AutoInvest" ? "subdrop" : ""}
@@ -1274,7 +1274,7 @@ const AdminSidebar = (props) => {
     >
       <i className="fas fa-building" /> <span> Auto Invest</span>
       <span className="menu-arrow" />
-    </Link>
+    </Link> */}
     {isSideMenu == "AutoInvest" ? (
       <ul
         style={{
@@ -1313,7 +1313,7 @@ const AdminSidebar = (props) => {
                 {/* <li className="menu-title">
                   <span>Refer A Friend</span>
                 </li> */}
-                <li
+                {/* <li
                   className={`${
                     "/referaFriend" === pathName ||
                     "/myreferalStatus" === pathName ||
@@ -1427,7 +1427,7 @@ const AdminSidebar = (props) => {
                   ) : (
                     ""
                   )}
-                </li>
+                </li> */}
 
               </ul>
 
@@ -1509,12 +1509,12 @@ const AdminSidebar = (props) => {
                   )}
                 </li>
 
-                <li className={`${"/" === pathName ? "active" : ""}`}>
+                {/* <li className={`${"/" === pathName ? "active" : ""}`}>
                   <Link to="/">
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span>Sign Out</span>
                   </Link>
-                </li>
+                </li> */}
               </ul>
               <ul>
                 {/* <li className="menu-title">
@@ -1529,7 +1529,7 @@ const AdminSidebar = (props) => {
                       : "submenu"
                   }`}
                 >
-                  <Link
+                  {/* <Link
                     to="#"
                     className={isSideMenu == "MyNetwork" ? "subdrop" : ""}
                     onClick={() =>
@@ -1540,7 +1540,7 @@ const AdminSidebar = (props) => {
                   >
                     <i className="fa-solid fa-network-wired"></i>
                     <span> My Network</span> <span className="menu-arrow" />
-                  </Link>
+                  </Link> */}
                   {isSideMenu == "MyNetwork" ? (
                     <ul
                       style={{

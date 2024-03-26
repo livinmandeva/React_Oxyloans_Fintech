@@ -5,8 +5,42 @@ import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import AdminHeader from "../../../../Header/AdminHeader";
 import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import { HandleClick } from "../../../Base UI Elements/SweetAlert";
+import { handefeecalculationapi } from "../../../../HttpRequest/admin";
 
-const FdPaymentDetails = () => {    
+const FdPaymentDetails = () => {     
+  
+  
+
+  
+  const  [data  , setdata]=useState({
+         userId:"",
+  })
+
+
+  const handlechange=(event)=>{
+       const   {name , value}=event.target;
+
+
+       setdata({
+        ...data,
+        [name]:value,
+       })
+  }
+
+  const handleClickapi =async()=>{
+    const response = await handefeecalculationapi(data);
+    
+
+
+    console.log(response);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        console.log(data);
+      }
+    });
+
+  }
   return (
     <>   
       <div className="main-wrapper">
@@ -52,16 +86,18 @@ const FdPaymentDetails = () => {
                           </label>
                           <input
                             type="text"
-                            name="withdrawFeedback"
+                            name="userId"
                             className="form-control"
                             placeholder="Enther the Borrower Id "
+
+                            onChange={handlechange}
                           />
                         </div>
                       </div>
 
                       <div className="col-3">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"       onClick={handleClickapi}>
                             Fetch
                           </button>
                         </div>

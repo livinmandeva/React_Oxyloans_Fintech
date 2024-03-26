@@ -13,7 +13,7 @@ import { fetchDatadashboard } from "../Redux/SliceDashboard";
 import { WarningAlert } from "../pages/Base UI Elements/SweetAlert";
 import { headericon04, oxylogomobile, oxylogodashboard } from "../imagepath";
 
-const Header = (profile) => {
+const AdminHeader = (profile) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
@@ -63,17 +63,17 @@ const Header = (profile) => {
           profileData: data,
         });
       } else if (data.response.data.errorCode != "200") {
-        WarningAlert(data.response.data.errorMessage, "/");
+        // WarningAlert(data.response.data.errorMessage, "/");
       }
     });
   }, []);
 
-  useMemo(() => {
-    const sessionsExpire = getSessionExpireTime();
-    if (sessionsExpire) {
-      WarningAlert("Your session is expiring in 5 minutes.", "/dashboard");
-    }
-  }, []);
+  // useMemo(() => {
+  //   const sessionsExpire = getSessionExpireTime();
+  //   if (sessionsExpire) {
+  //     WarningAlert("Your session is expiring in 5 minutes.", "/dashboard");
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (currentPage == "") {
@@ -239,4 +239,4 @@ const Header = (profile) => {
   );
 };
 
-export default React.memo(Header);
+export default React.memo(AdminHeader);

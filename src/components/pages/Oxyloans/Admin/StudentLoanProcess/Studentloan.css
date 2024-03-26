@@ -1,0 +1,24 @@
+
+
+
+.conatine{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.formcontiner{
+    display: grid  !important;
+    grid-template-columns: 72% auto !important;
+    flex-direction: row !important;
+}
+
+.carddata{
+    height: auto;
+    width: 20vw;
+    border: none;
+    border-radius: 9px;
+    box-shadow: 2px 2px 2px 2px gray;
+    padding: 8px;
+}
