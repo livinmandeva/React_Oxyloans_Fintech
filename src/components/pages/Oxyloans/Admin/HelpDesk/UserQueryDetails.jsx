@@ -12,7 +12,8 @@ import Swal from "sweetalert2";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { uploadkyc } from "../../../../HttpRequest/afterlogin";
 import { Success, WarningBackendApi } from "../../../Base UI Elements/SweetAlert";
-
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader  from "../../../../Header/AdminHeader";
 
 
 const UserQueryDetails = () => {
@@ -96,6 +97,10 @@ const HandleClick = (id) => {
     return () => {};
   }, [intrested.pageNo, intrested.pageSize]);
 
+
+  useEffect(()=>{
+    // handelClickPendinglender("Completed"  ,"LENDER")
+  },[])
   const datasource = [];
   {
     intrested.apiData != ""
@@ -351,8 +356,8 @@ response.then((data) => {
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
@@ -549,7 +554,7 @@ response.then((data) => {
               </div>
             </div>
           </div>
-        </div>
+        </div>  
         {/*Page wrapper */}
       </div>
     </>

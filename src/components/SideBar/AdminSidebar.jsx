@@ -957,32 +957,32 @@ const AdminSidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/writetous"
+                          to="/userQueryDetails"
                           className={`${
-                            "/writetous" === pathName ? "active" : ""
+                            "/userQueryDetails" === pathName ? "active" : ""
                           }`}
                         >
-                          Write To us
+                         Unresolved Queries
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/ticketHistory"
+                          to="/resolved"
                           className={`${
-                            "/ticketHistory" === pathName ? "active" : ""
+                            "/resolved" === pathName ? "active" : ""
                           }`}
                         >
-                          View Ticket History
+                          Resolved Queries
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to="/emicalculator"
+                          to="/closedQuery"
                           className={`${
-                            "/emicalculator" === pathName ? "active" : ""
+                            "/closedQuery" === pathName ? "active" : ""
                           }`}
                         >
-                          EMI Calculator
+                          Cancelled Queries
                         </Link>
                       </li>
                     </ul>

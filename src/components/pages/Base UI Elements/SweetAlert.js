@@ -19,7 +19,7 @@ import {
 } from "../../HttpRequest/afterlogin";
 import { toastrSuccess } from "./Toast";
 import { error } from "jquery";
-import { dealreopenmessageapi, extendsDurationapi } from "../../HttpRequest/admin";
+import { commentapi1, dealreopenmessageapi, extendsDurationapi, handlechangeprimarytypeapi, updateuserstatusapi } from "../../HttpRequest/admin";
 
 export const HandleClick = () => {
   Swal.fire({
@@ -640,6 +640,113 @@ export const Message = (message) => {
     showCloseButton: true,
   })
 };
+
+
+export const changeprimarytypeapi  =(id , param)=>{
+
+
+  Swal.fire({
+    title: "Are You Sure ?",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+
+
+      const response =  handlechangeprimarytypeapi(id , param);
+      console.log(response);
+      if(response.status === 200){
+        console.log(response.data);
+        updateemicomment(id)
+      }
+      Swal.fire("Saved!", "", "success");
+      // 58/changeprimarytype/BORROWER
+    } else if (result.isDenied) {
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
+}
+
+
+
+  export const updateuserstatus  =()=>{
+
+
+    Swal.fire({
+      title: "Are You Sure ?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+  
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+  
+  
+        const response =  updateuserstatusapi();
+        console.log(response);
+        if(response.status === 200){
+          console.log(response.data);
+      
+        }
+        Swal.fire("Saved!", "", "success");
+        // 58/changeprimarytype/BORROWER
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  }     
+
+  export const commentapi = (id) => {
+
+    console.log(id)
+    Swal.fire({
+      title: "Comments",
+      icon: "info",
+      html: `<input type="text" id="fundsAcceptanceEndDate" class="form-control">`,
+      showDenyButton: true,
+      confirmButtonText: "Continue",
+      denyButtonText: "Cancel",
+      denyButtonColor: "#5c9b45",
+      preConfirm: () => {
+        return {
+          fundsAcceptanceEndDate: document.getElementById('fundsAcceptanceEndDate').value
+        };
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const fundsAcceptanceEndDate = document.getElementById('fundsAcceptanceEndDate').value;
+        console.log(id, fundsAcceptanceEndDate);
+     
+        const response = commentapi1(id , fundsAcceptanceEndDate);
+        response.then((data) => {
+          if (data && data.request && data.request.status === 200) {
+            console.log(data);
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Deal Tenure Successfully Updated",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          } else {
+            console.error("Error occurred while reopening deal:");
+            // Handle error case
+          }
+        }).catch((error) => {
+          console.error("Error occurred while reopening deal:", error);
+          // Handle error case
+        });
+      } else if (result.isDenied) {
+        console.log("Deal reopening was denied.");
+        // Handle denial case
+      }
+    }).catch((error) => {
+      console.error("Error occurred while reopening deal:", error);
+      // Handle error case
+    });
+  };
 export const PrincipalTransfer = (warningType, errormessage) => {
   Swal.fire("Principal Payout!", errormessage, warningType);
   setTimeout(() => {

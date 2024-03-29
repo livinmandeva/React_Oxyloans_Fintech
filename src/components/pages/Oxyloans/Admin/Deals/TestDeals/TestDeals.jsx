@@ -13,8 +13,9 @@ import {
 import Header from "../../../../../Header/Header";
 import AdminHeader from "../../../../../Header/AdminHeader";
 import AdminSidebar from "../../../../../SideBar/AdminSidebar";
-import { apidealreopen, handalapicall, handlesubmitapi, listOfDealsInformationForEquityDeals } from "../../../../../HttpRequest/admin";
+import { apidealreopen, handalapicall, handelsubmitmodalapi, handlesubmitapi, handlesubmitapicallmethod3, listOfDealsInformationForEquityDeals } from "../../../../../HttpRequest/admin";
 import { Message } from "../../../../Base UI Elements/SweetAlert";
+import { error } from "jquery";
 
 const TestDeals = () => {
 
@@ -38,6 +39,10 @@ const TestDeals = () => {
     inviteborrower: "",
     invitenri: "",
     date:"",
+    modaldata:"",
+    buttondata:"",
+    tabledata:"",
+    tabledata1:"",
     borrowerlink: true,
     earninglink: "",
     lenderlink: true,
@@ -118,17 +123,21 @@ const handelsubmitdealreopen = async () => {
       dealType:param
     })
   }
-       const handlesubmit =async()=>{
+       const handlesubmit =async(dealId , type)=>{
         try { const response  = await handlesubmitapi (dealId , type)
  
           // const response = await apidealreopen(referalMyearnigs.date);
           console.log(response);
-         setreferalMyearnigs({
-          ...referalMyearnigs,
-         })
+         
           // Assuming response is an object containing the response status
           if (response.status === 200) {
             console.log("Request successful");
+            setreferalMyearnigs({
+              ...referalMyearnigs,
+              modaldata:response.data,
+              loading: false,
+              hasdata: data.data.count == 0 ? false : true,
+             })
             // Additional handling if needed
           } else {
             console.log("Request failed");
@@ -138,6 +147,29 @@ const handelsubmitdealreopen = async () => {
           console.error("Error occurred:", error);
           // Handle error if needed
         }
+       }     
+
+
+       const handelsubmitmodal =async(dealId , type)=>{
+
+        console.log("function call")
+  // const response =await  handelsubmitmodalapi(dealId , type);
+  
+  
+  try{
+   const  response = await handelsubmitmodalapi(dealId , type);
+   if(request.status === 200){
+    setreferalMyearnigs({
+      ...referalMyearnigs,
+      tabledata1:response.data,
+      loading: false,
+      hasdata: data.data.count == 0 ? false : true,
+    })
+   }
+  }
+  catch{
+  
+  }
        }
   const datasource = [];
   // {
@@ -240,6 +272,57 @@ const handelsubmitdealreopen = async () => {
         })
       : "";
   }
+
+
+  const datasource1 = [];
+  {
+    referalMyearnigs.modaldata != ""
+         ? referalMyearnigs.modaldata.listOfBorrowersDealsResponseDto.map((data) => {
+          datasource1.push({
+            key: Math.random(),
+            RefereeName: data,
+            TransactionNumber: data,
+            Amount: data,
+            Remarks: data,
+            documents: data,
+            comments: data,
+          });
+        })
+      : "";
+  }
+
+
+  
+  const datasource3 = [];
+  {
+    referalMyearnigs.tabledata1 != ""
+         ? referalMyearnigs.tabledata1.map((data) => {
+          datasource3.push({
+            key: Math.random(),
+            RefereeName: data,
+            TransactionNumber: data,
+            Amount: data,
+            Remarks: data,
+            documents: data,
+            comments: data,
+          });
+        })
+      : "";
+  }
+  const handlesubmitapicallmethod =async()=>{
+    const dealId=localStorage.getItem("dealId")
+
+    try{
+    const  response = await  handlesubmitapicallmethod3(dealId  , referalMyearnigs.buttondata)
+
+            Message("Thanks, the lenders will get the email notifications.")
+ }
+ catch{
+   console.log("error",  error)
+ }
+ 
+ 
+  }
   const column = [
     {
       title: "Deal Name",
@@ -319,6 +402,87 @@ const handelsubmitdealreopen = async () => {
     },
     {
       title: "Know More",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.intialbutton.length - b.intialbutton.length,
+
+      render: (render) => (
+        <>   
+          
+          <div  className="col"  style={{display:'flex',flexDirection:'column', gap:'10px'}}> 
+          {/* <button></button>     */}
+         <Link  to={`/lendersInterest?id=${render.dealId}`}   ><Tag color="#87d068" className="text-center"> Pay Interest</Tag>    </Link>
+          <Tag  color="#00c0ef" className="text-center"  data-bs-toggle="modal" data-bs-target="#exampleModal11"  onClick={localStorage.setItem("dealId" , render.dealId)}> Initiating Notifications</Tag>
+          <Tag  color="rgb(59, 89, 153)"className="text-center"  data-bs-toggle="modal" data-bs-target="#exampleModal12"  onClick={()=>handelsubmitmodal(render.dealId ,   "INTEREST")}>   Interest Summary</Tag> 
+          </div> 
+        </>
+      ),
+    },
+  ];
+  const column1 = [
+    {
+      				
+      title: "Paid Date",
+      dataIndex: "RefereeName",
+      sorter: (a, b) => a.RefereeName.length - b.RefereeName.length,
+
+      render: (render) => (
+        <>   
+         
+            <p>Deal name :{render.dealName}</p>
+            <p>Deal Id : {render.dealId}</p>
+            {/* <p>Aggrements : {}</p> */}
+            <p>First Participation :  {render.firstParticipationDate}</p>
+            <p>Last Participation :   {render.lastParticipationDate}</p>
+        </>
+      ),
+    },
+
+    {
+      title: "File Status",
+      dataIndex: "TransactionNumber",
+      sorter: (a, b) => a.EarnedAmount.length - b.EarnedAmount.length,
+
+      render: (render) => (
+        <>   
+        <p>Participate : {render.lenderPaticipationAmount} </p>
+        <p>Current Amount :  {render.dealCurrentAmount}  </p>
+        <p>To Wallet : 0  </p>
+        <p>Return Principal : 0  </p>
+
+        </>
+      ),
+    },
+    {
+      title: "Amount Type",
+      dataIndex: "TransactionNumber",
+      sorter: (a, b) => a.PaymentStatus.length - b.PaymentStatus.length,
+         render: (render) => (
+        <>   
+
+         <p>Borrower :  {render.borrowerName} </p>
+         <p>Borrower ROI :    {render.borrowerRateOfInterest} </p>
+         <p>Lender ROI : {render.monthlyInterest}  </p>
+         <p>Status :  {render.fundingStatus} </p>
+         <p>Deal Amount :   {render.dealAmount} </p>   
+        </>
+      ),
+    },
+    {
+      title: "Amount",
+      dataIndex: "Amount",
+      sorter: (a, b) => a.TransferredOn.length - b.TransferredOn.length,
+      render: (render) => (
+        <> 
+        <div  className="col"  style={{display:'flex',flexDirection:'column', gap:'10px'}}> 
+          {/* <button></button>     */}
+            <Link to={`/editDealInfo?id=${render.dealId}`} ><Tag className="text-center" color="#87d068" >Edit</Tag>    </Link>
+              <Tag  className="text-center" color="#00c0ef" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={localStorage.setItem("dealId", render.dealId)}>Deal Reopen</Tag>
+          </div> 
+          </>
+      ),
+    },
+    {
+      title: "File Name",
       dataIndex: "PaidThrough",
       sorter: (a, b) => a.intialbutton.length - b.intialbutton.length,
 
@@ -335,7 +499,8 @@ const handelsubmitdealreopen = async () => {
       ),
     },
   ];
-  const column1 = [
+
+  const column3 = [
     {
       				
       title: "Paid Date",
@@ -479,6 +644,75 @@ const handelsubmitdealreopen = async () => {
   </div>
 </div>
 
+
+<div class="modal fade" id="exampleModal11" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">Are you sure you want to send the principal/interest email notification for this deal?</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div className="col-12 col-sm-6">
+                        <div className="form-group local-forms">
+                          <label>
+                          Initiate Method: <span className="login-danger">*</span>
+                          </label>
+                          <select
+                            type="date"
+                            name="buttondata"
+                            className="form-control"
+                            onChange={handlechange}
+                            placeholder="Enther the LENDER ID "
+                          >
+
+                            <option value="">Choose Initiate Method </option>
+                            <option value="Interest">Interest </option>
+                            <option value="Principal">Principal</option>
+                            {/* <option value=""></option> */}
+
+                            </select>
+                        </div>
+                      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  onClick={handlesubmitapicallmethod}>Save </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModal12" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog    modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLabel">Deal Name: TEST2424
+</h6>
+Payout: Interest
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <Table
+                        className="table table-stripped table-hover datatable"
+                       
+                        columns={column3}
+                        dataSource={referalMyearnigs.hasdata ? datasource3 : []}
+                        expandable={true}
+
+                      />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -499,7 +733,7 @@ const handelsubmitdealreopen = async () => {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"  onClick={handelsubmitdealreopen}>Save </button>
+        <button type="button" class="btn btn-primary"  >Save </button>
       </div>
     </div>
   </div>

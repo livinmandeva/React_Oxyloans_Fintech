@@ -7,8 +7,11 @@ import Header from "../../../../Header/Header";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import { getMembershiphistory, getMyWithdrawalHistory } from "../../../../HttpRequest/afterlogin";
-import { handleclickapproveapi, lenderwithdrawalfundssearchAPI } from "../../../../HttpRequest/admin";
+import { handleclickapproveapi, lenderwithdrawalfundssearchAPI, lenderwithdrawalfundssearchAPI3 } from "../../../../HttpRequest/admin";
 import { WarningAlehandleclick } from "../../../Base UI Elements/SweetAlert";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
+import { error } from "jquery";
 
 const DisplaylenderwithdrawalfundsList = () => {
   const [membershiphistory, setmembershiphistory] = useState({
@@ -18,8 +21,11 @@ const DisplaylenderwithdrawalfundsList = () => {
     pageNo: 1,
     pageSize: 10,
     defaultPageSize: 10,
+    inputfiled3:"",
+    inputfiled2:"",
     userid:0,
-    comment:""
+    comment:"",
+    inputname:"",
   });
 
   const membershiphistoryPagination = (Pagination) => {
@@ -59,8 +65,36 @@ const DisplaylenderwithdrawalfundsList = () => {
       
       })
     }
+const handelchange1 =(event)=>{
+      const {name , value}=event.target;
+      setmembershiphistory({
+        ...membershiphistory,
+        [name]:value
+      })
+}
 
 
+
+
+const lenderwithdrawalfundssearch = async () => {
+  try {
+    const response = await lenderwithdrawalfundssearchAPI3(membershiphistory.pageNo, membershiphistory.pageSize, membershiphistory);
+    
+    if (response.request.status === 200) {
+      console.log(response.data.results);
+      setmembershiphistory({
+        ...membershiphistory,
+        apiData: response.data.results,
+        loading: false,
+        hasdata: response.data.totalCount === 0 ? false : true,
+      });
+    } else {
+      console.error("Error: Request failed with status code", response.request.status);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
   const handleclickapprove  =async()=>{
 
@@ -95,7 +129,9 @@ const DisplaylenderwithdrawalfundsList = () => {
           });
         })
       : "";
-  }    
+  }   
+  
+  
   const columns = [
     {
       title: "LR ID & Name",
@@ -188,8 +224,8 @@ const DisplaylenderwithdrawalfundsList = () => {
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
@@ -245,19 +281,53 @@ const DisplaylenderwithdrawalfundsList = () => {
                           </label>
                           <select
                             type="text"
-                            name="withdrawFeedback"
+                            name="inputname"
                             className="form-control"
-                            // placeholder="Enther the Borrower Id "
+                            // placeholder="Enther the Borrower Id "  
+                            onChange={handelchange1}
                           >
-                            <option>Lender ID</option>
-                            <option>Name</option>
+                                 <option></option><option value="Lender ID">Lender ID</option>
+                            <option value="Name">Name</option>
                           </select>
                         </div>
                       </div>
 
+                      {membershiphistory.inputname  &&   <><div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                         {membershiphistory.inputname}
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="inputfiled3"
+                            className="form-control"
+                            // placeholder="Enther the Borrower Id "  
+                            onChange={handelchange1}
+                          />
+                     
+                        </div>
+                      </div>   
+                      {membershiphistory.inputname ==  "Name"   &&      <div className="col-12 col-sm-3">
+                        <div className="form-group local-forms">
+                          <label>
+                               last Name
+                            <span className="login-danger">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            name="inputfiled2"
+                            className="form-control"
+                            // placeholder="Enther the Borrower Id "  
+                            onChange={handelchange1}
+                          />
+                     
+                        </div>
+                      </div>      }
+                        </>}
                       <div className="col-4">
                         <div className="student-submit">
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"  onClick={()=>lenderwithdrawalfundssearch()}>
                             Fetch details
                           </button>
                         </div>

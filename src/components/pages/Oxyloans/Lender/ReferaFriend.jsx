@@ -14,6 +14,8 @@ import {
   WarningBackendApi,
 } from "../../Base UI Elements/SweetAlert";
 import Invaitemodel from "../Utills/Modals/Invaitemodel";
+import AdminHeader from "../../../Header/AdminHeader";
+import AdminSidebar from "../../../SideBar/AdminSidebar";
 
 const ReferaFriend = () => {
   const [profile, setprofile] = useState({
@@ -202,9 +204,9 @@ const ReferaFriend = () => {
     <>
       <div className="main-wrapper">
         {/* Header */}
-        <Header />
+        <AdminHeader />
         {/* Sidebar */}
-        <SideBar />
+        <AdminSidebar />
         {/* Page Wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">

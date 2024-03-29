@@ -15,9 +15,12 @@ import {
   getwallet_to_wallet_initiated_transfer,
   handelcalcluateapi,
   handlecalculatapidata,
+  wallet_to_wallet_initiated_transfer,
 } from "../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
 
 
 const WalletToWalletHistory = () => {
@@ -69,12 +72,12 @@ const [apipayload , setapipayload]=useState({
 
 
   useEffect(() => {
-    const response = getwallet_to_wallet_initiated_transfer(apipayload);
+    const response = wallet_to_wallet_initiated_transfer(apipayload);
     response.then((data) => {
       if (data.request.status == 200) {
         console.log(data.data.walletTransferLenderToLenderResponseDto);
         setintrested({
-          ...intrested,
+          ...intrested,   
           apiData: data.data.walletTransferLenderToLenderResponseDto,
           loading: false,
           hasdata: data.data.totalCount == 0 ? false : true,
@@ -269,8 +272,8 @@ const [apipayload , setapipayload]=useState({
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">

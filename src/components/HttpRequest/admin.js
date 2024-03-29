@@ -292,6 +292,32 @@ export const lenderwithdrawalfundssearchAPI = async (pageNo, pageSize ,id) => {
 };
 
 
+export const lenderwithdrawalfundssearchAPI3 = async (pageNo, pageSize ,param) => {
+  const token = getToken();
+  // const userId = getUserId();
+
+
+  console.log(param.inputname)
+  console.log(param.inputfiled3)
+  const data={
+    page: {
+      pageNo: pageNo,
+      pageSize: pageSize
+    },
+    firstName: param.inputname == "Name" ? param.inputfiled3 : "",
+    lastName: param.inputname == "Name" ? param.inputfiled2 : "",
+    userId: param.inputname == "Lender ID" ? param.inputfiled3 : "0"
+  }
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lenderwithdrawalfundssearch`,
+    "POST",
+    token,
+    data
+  );
+  return response;
+};
+
 
 export  const handleclickapproveapi = (comment)=>{
 const id   =localStorage.getItem("commentid");
@@ -392,6 +418,23 @@ export  const handeldealcrateapi =async()=>{
     );
     return response;
   }  
+
+  export const wallet_to_wallet_initiated_transfer = async (data)=>{
+
+    const token = getToken();
+      
+  
+  
+    
+    const response = await handleApiRequestAfterLoginService(
+      API_BASE_URL,
+      `wallet_to_wallet_initiated_transfer`,
+      "POST",   
+      token,
+      data
+    );
+    return response;
+  }
   export const getfddownloadInvoice = async (fddownloadInvoice)=>{
 
     const token = getToken();
@@ -493,7 +536,7 @@ export const userquerydetailsAPI = async ( status, type, reslove ,)=>{
   
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `testqueryDetailsBasedOnPrimaryType`,
+    `queryDetailsBasedOnPrimaryType`,
     "POST",   
     token,
     data
@@ -621,24 +664,24 @@ console.log(value);
   const token = getToken();
   let  data={
     leftOperand: {
-        fieldName: "userPrimaryType",
-        fieldValue: "LENDER",
-        operator: "EQUALS"
+      fieldName: "userPrimaryType",
+      fieldValue: "LENDER",
+      operator: "EQUALS"
     },
     logicalOperator: "AND",
     rightOperand: {
-        fieldName: "user.status",
-        fieldValue: "REGISTERED",
-        operator: "EQUALS"
+      fieldName: "user.status",
+      fieldValue: "REGISTERED",
+      operator: "EQUALS"
     },
     page: {
-        pageNo: 1,
-        pageSize: 10
+      pageNo: 1,
+      pageSize: 10
     },
     sortBy: "loanRequestedDate",
     sortOrder: "DESC"
-} ; // Define data object outside of conditional blocks
-
+  }// Define data object outside of conditional blocks
+    
   console.log(datavalue.inputfiled);
   
   console.log(datavalue.inputfiled2);
@@ -1194,7 +1237,7 @@ console.log(value);
 	}
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `1/loan/ADMIN/request/testsearch`,
+    `1/loan/ADMIN/request/search`,
     "POST",
     token,
     data
@@ -1561,6 +1604,22 @@ export   const  apidealreopen= async(date5)=>{
 }
 
 
+
+export   const  handelsubmitmodalapi= async(dealId  , type)=>{
+  const token = getToken();
+  const useid =getUserId()
+
+  
+  
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `deal-summary?dealId=${dealId}&amountType=${type}`,
+    "GET",   
+    token,
+    data
+  );
+  return response;
+}
 export   const  handlesubmitapi= async(dealId    , type)=>{
   const token = getToken();
   const useid =getUserId()
@@ -1573,6 +1632,41 @@ export   const  handlesubmitapi= async(dealId    , type)=>{
   );
   return response;
 }
+
+export   const  handlesubmitapicallmethod3= async(dealId   , type)=>{
+  const token = getToken();
+  const useid =getUserId()
+  const data =   { 
+      dealId: dealId,
+      amountType: type
+   }
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `sendingEmailWhileInitiatingAmount`,
+    "POST",   
+    token,
+    data
+  );
+  return response;
+}       
+export   const  handlesubmitapi4= async( modelform)=>{
+  const token = getToken();
+  const useid =getUserId()
+  const data =   { 
+    statusType: "ACHIEVED"
+   }
+  const jsonString = JSON.stringify(data);
+  
+  console.log(jsonString);   
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${dealId}/dealPaticipationStatusUpdation`,
+    "PATCH",   
+    token,
+    data
+  );
+  return response;
+} 
 export   const  handleextenddealTenureapi= async(dealId)=>{
   const token = getToken();
   const useid =getUserId()
@@ -1591,30 +1685,50 @@ export   const  handleextenddealTenureapi= async(dealId)=>{
   );
   return response;
 } 
-export const getintrestedapi = async (intrested , datavalue)=>{
+export const getintrestedapi = async (pageNo , pageSize , intrested)=>{
 
   const token = getToken();
 
 
-     const data = {
-          leftOperand: {
-          fieldName: "user.adminComments",
-          fieldValue: "INTERESTED",
-          operator: "EQUALS"
-      },
-      logicalOperator: "AND",
-      rightOperand: {
-          fieldName: "parentRequestId",
-          operator: "NULL"
-      },
-      page: {
-          pageNo: intrested.pageNo,
-          pageSize: intrested.pageSize
-      },
-      sortBy: "loanRequestedDate",
-      sortOrder: "DESC"
-  }
+  //    const data = {
+  //         leftOperand: {
+  //         fieldName: "user.adminComments",
+  //         fieldValue: "INTERESTED",
+  //         operator: "EQUALS"
+  //     },
+  //     logicalOperator: "AND",
+  //     rightOperand: {
+  //         fieldName: "parentRequestId",
+  //         operator: "NULL"
+  //     },
+  //     page: {
+  //         pageNo: intrested.pageNo,
+  //         pageSize: intrested.pageSize
+  //     },
+  //     sortBy: "loanRequestedDate",
+  //     sortOrder: "DESC"
+  // }
 
+
+  const data = {
+    "leftOperand": {
+      "fieldName": "userPrimaryType",
+      "fieldValue": `${intrested.type}`,
+      "operator": "EQUALS"
+    },
+    "logicalOperator": "AND",
+    "rightOperand": {
+      "fieldName": "user.status",
+      "fieldValue": "REGISTERED",
+      "operator": "EQUALS"
+    },
+    "page": {
+      "pageNo": 1,
+      "pageSize": 30
+    },
+    "sortBy": "loanRequestedDate",
+    "sortOrder": "DESC"
+  }
   // const data = {
   //   leftOperand: {
   //     leftOperand: {
@@ -1659,6 +1773,8 @@ export const getintrestedapi = async (intrested , datavalue)=>{
   );
   return response;
 }
+
+
 export  const handelcalcluateapi    =async(id)=>{
   const token = getToken();
 
@@ -1733,6 +1849,51 @@ const data={
   );
   return response;
 }  
+
+export   const  updateuserstatusapi= async(id )=>{
+  const token = getToken();
+  const userId =getUserId();
+  
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/ADMIN/updateuserstatus`,
+    "PATCH",   
+    token,
+
+  );
+  return response;
+} 
+export   const  commentapi1= async(id  ,  message)=>{
+  const token = getToken();
+  const userId =getUserId();
+  
+     const data={
+        comments: message
+     }
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/ADMIN/request/${id}/comment`,
+    "PATCH",   
+    token,
+    data
+  );
+  return response;
+}
+
+export   const  updateemicommentsapi= async(id )=>{
+  const token = getToken();
+  
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${id}/updateemicomments`,
+    "GET",   
+    token,
+
+  );
+  return response;
+}  
 export   const  ticketHistoryapiget= async(id ,userId)=>{
   const token = getToken();
   
@@ -1749,7 +1910,7 @@ const data={
     data
   );
   return response;
-}  
+} 
 
 export  const interestDetailsForDeall  = async (input)=>{
 
@@ -1772,6 +1933,37 @@ const data={
     "POST",   
     token,
     data
+  );
+  return response;
+}
+export  const sendpdfapi1  = async (id)=>{
+
+
+  const token = getToken();
+
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${id}/sendpdf/LENDER`,
+    "GET",   
+    token,
+
+  );
+  return response;
+}
+
+
+
+export  const handlechangeprimarytypeapi  = async (id , param)=>{
+
+
+  const token = getToken();
+
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${id}/changeprimarytype/${param}`,
+    "PATCH",   
+    token,
   );
   return response;
 }

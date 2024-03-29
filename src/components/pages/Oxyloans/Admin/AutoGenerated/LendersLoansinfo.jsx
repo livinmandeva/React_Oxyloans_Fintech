@@ -14,9 +14,14 @@ import {
   getloanborrowerandlender,
   handelcalcluateapi,
   handlecalculatapidata,
+  sendpdfapi1,
+  updateemicommentsapi,
 } from "../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
+import { changeprimarytypeapi, commentapi, updateuserstatus } from "../../../Base UI Elements/SweetAlert";
 
 
 const LendersLoansinfo = () => {
@@ -26,6 +31,7 @@ const LendersLoansinfo = () => {
     loading: true,
     pageNo: 1,
     pageSize: 5,
+    type:"LENDER",
     defaultPageSize: 5,
     isvaildcard: true,
     inputfiledvalue2:false,
@@ -211,13 +217,46 @@ const LendersLoansinfo = () => {
           ...intrested,
           apiData: data.data.results,
           loading: false,
-          hasdata: data.data.count == 0 ? false : true,
+          hasdata: data.data.totalCount == 0 ? false : true,
         });
       }
     });
     return () => {};
   }, [intrested.pageNo, intrested.pageSize]);
 
+
+ 
+
+  const  sendpdfapi=async(id)=>{
+   
+    const response =await sendpdfapi1(
+id);
+
+      if (data.request.status == 200) {
+        console.log(data.data.results)
+  
+      }
+  }
+
+
+
+  const updateEmiComments =async(id)=>{
+
+    try{
+      const response = await  updateemicommentsapi(id);
+        
+
+      console.log(response);
+      if(response.request === 200){
+        console.log(response.data);
+    
+      }
+    }catch{
+          console.log("error" , error);
+    }
+
+
+  }
   const datasource = [];
   {
     intrested.apiData != ""
@@ -326,18 +365,45 @@ const LendersLoansinfo = () => {
     });
   };
 
-  const columns = [
-    {
+  const columns = [   
+    	
+    {						
       title: "Borrower Info",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
       render: (render) => (
         <>
-          <p>BR : -{render.user.id}</p>
-          <p>
-            <strong>Status:</strong> <br></br>
-            {render.user.status}
-          </p>
+ <p>Lr {render.userDisplayId}</p>      
+
+<p>Loan Process Type:- {render.loanProcessType}</p>
+
+<p>Lender Group ID {render.groupId}</p>
+<p>Lender Group:-  {render.groupName}</p>
+
+
+
+        </>
+      ),
+    },
+    {
+      title: "Regd Date & Exp Date",
+      dataIndex: "TransactionNumber",
+      sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
+      render: (render) => (
+        <>
+          <div className="insertstart">
+          <p>Regd Date :- {render.loanRequestedDate}  </p>
+
+<p>Exp Date :- {render.expectedDate}</p>
+
+<p>Wallet Value:- {render.walletAmount}</p>
+
+<p>PAN NUMBER {render.user.panNumber}</p>
+
+<p>DOB: {render.user.dob}</p>
+
+
+          </div>
         </>
       ),
     },
@@ -348,56 +414,51 @@ const LendersLoansinfo = () => {
       render: (render) => (
         <>
           <div className="insertstart">
-            <p>
-              <strong>Req Date:-</strong> {render.loanRequestedDate}
-            </p>
-            <p>
-              <strong>Exp Date:-</strong> {render.expectedDate}
-            </p>
+          <p>{render.lenderUser.firstName}</p>
+          <p>{render.lenderUser.mobileNumber}</p>
+          <p>{render.lenderUser.city}</p>
+          <p>UTM From :- {render.lenderUser.utmSource}  </p>
+
+<p>City :- {render.lenderUser.city}</p>
+
+
+<p>INR {render.loanRequestAmount}</p>
+<p>{render.rateOfInterest} %</p>
           </div>
         </>
       ),
     },
     {
       title: "Email & Address",
-      dataIndex: "Amount",
+      dataIndex: "TransactionNumber",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render) => (
         <>
-          <p>
-            {" "}
-            {render.user.firstName} {render.user.mobileNumber}
-          </p>
-          <p>
-            <strong>city :</strong>
-            {render.borrowerUsercity}
-          </p>
-          <p>
-            <strong>oxyScore :{render.lenderUser.oxyScore}</strong>
-          </p>
-        </>
-      ),
-    },
-    {
-      title: "Amount & ROI",
-      dataIndex: "PaidThrough",
-      sorter: (a, b) => a.Amount - b.Amount,
-      render: (render) => (
-        <>
-          <p>{render.user.email}</p>
-          <p>{render.user.address}</p>
+    <p> {render.lenderUser.email}</p>
+    <p>{render.lenderUser.address}</p>
+    <p>Bank Account Details</p>
+<p>{render.lenderUser.firstName}</p>
+<p>{render.lenderUser.accountNumber}</p>
+<p>{render.lenderUser.ifscCode}</p>
+<p>{render.branchName}</p>
         </>
       ),
     },
     {
       title: "View Documents",
-      dataIndex: "documents",
+      dataIndex: "comments",
       sorter: (a, b) => a.Amount - b.Amount,
       render: (documents, index) => (
         <>
-          {documents &&
-            documents.borrowerKycDocuments &&
-            documents.borrowerKycDocuments.map((document, docIndex) => (
+
+
+        
+<div className="">
+
+
+{documents &&
+            documents.lenderKycDocuments &&
+            documents.lenderKycDocuments.map((document, docIndex) => (
               <div key={docIndex}>
                 <Link
                   to={document.documentSubType == "PAN" && document.downloadUrl}
@@ -486,51 +547,45 @@ const LendersLoansinfo = () => {
                 </Link>
               </div>
             ))}
+</div>
+<div className="divintrested">
+
+            <Tag color="#2db7f5" onClick={() => sendpdfapi(render.id)}>
+            send loan statement
+          </Tag>
+          <Tag color="#2db7f5" onClick={() => updateEmiComments(render.id)}>
+          update emi Comments   
+          </Tag>
+           
+          </div>
         </>
       ),
     },
     {
       title: "Comments",
-      dataIndex: "comments",
+      dataIndex: "Amount",
       sorter: (a, b) => a.Amount - b.Amount,
-      render: (render, index) => (
+      render: (render) => (
         <>
-          <Tag color="#2db7f5" onClick={() => HandleClick(render.id)}>
-            Click here to view the comments
+          {/* <Button size="small"> Risk Calculation</Button>
+         <Button size="small">Cibil score</Button>
+         <Button size="small">Send Offer</Button>
+         <Button size="small">Reject Offer</Button>
+         <Button size="small">Approved & Create Deal</Button> */}
+
+          <div className="divintrested">
+          <Tag color="#2db7f5" onClick={() => changeprimarytypeapi(render.userDisplayId , "BORROWER")}>
+            Change to Borrower
           </Tag>
-
-          {intrested.isfiledvaild &&  <>
-
-            <br></br>
-            Location:
-            <br></br>
-            Residence Address :
-            <br></br>
-            Company Name:
-            <br></br>
-            Company Address :
-            <br></br>
-            Role :
-            <br></br>
-            Loan Requirement:
-            <br></br>
-            Salary :
-            <br></br>
-            Loan Eligibility:
-            <br></br>
-            Current EMIs:
-            <br></br>
-            PAN Password:
-            <br></br>
-            Payslips Password:
-            <br></br>
-            Aadhar Password:
-            <br></br>
-            Bank Password:
-            <br></br>
-            Cibil Password:
-            <br></br>
-            Commets Section Before Nov 25th 2020:-</>}
+          <Tag color="#2db7f5" onClick={() => changeprimarytypeapi(render.userDisplayId , "LENDER")}>
+          Change to Test Lender
+          </Tag>
+            <Tag color="#f50">
+            Interested</Tag>
+            <Tag color="#3d5ee1"  onClick={() => commentapi(render.userDisplayId)}>
+            Write to comments 
+            </Tag>
+          </div>
         </>
       ),
     },
@@ -547,13 +602,18 @@ const LendersLoansinfo = () => {
          <Button size="small">Approved & Create Deal</Button> */}
 
           <div className="divintrested">
-            <Link to="">
-              View Requests &<br></br> Responses to this borrower
-            </Link>
-            <Tag color="#f50">Reject Offer</Tag>
-            <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
-              APP Level Approved
-            </Tag>
+
+            <Tag color="#2db7f5" onClick={() => changeprimarytypeapi(render.userDisplayId , "BORROWER")}>
+            Change to Borrower
+          </Tag>
+          <Tag color="#2db7f5" onClick={() => changeprimarytypeapi(render.userDisplayId , "LENDER")}>
+          Change to Test Lender
+          </Tag>
+            <Tag color="#f50"    onClick={() => updateuserstatus(render.userDisplayId , "LENDER")}>
+            Interested</Tag>
+            <Tag color="#f50"   onClick={() => commentapi(render.userDisplayId)}>
+            Write to comments </Tag>
+           
           </div>
         </>
       ),
@@ -562,24 +622,24 @@ const LendersLoansinfo = () => {
   const handleTagClick = () => {
     console.log("but");
   };
-useEffect(()=>{
-  const response = getborrowerapiclick(
-    intrested,
-    datavalue
+// useEffect(()=>{
+//   const response = getborrowerapiclick(
+//     intrested,
+//     datavalue
  
-  );
-  response.then((data) => {
-    if (data.request.status == 200) {
-      console.log(data.data.results)
-      setintrested({
-        ...intrested,
-        apiData: data.data.results,
-        loading: false,
-        hasdata: data.data.count == 0 ? false : true,
-      });
-    }
-  });
-},[])
+//   );
+//   response.then((data) => {
+//     if (data.request.status == 200) {
+//       console.log(data.data.results)
+//       setintrested({
+//         ...intrested,
+//         apiData: data.data.results,
+//         loading: false,
+//         hasdata: data.data.count == 0 ? false : true,
+//       });
+//     }
+//   });
+// },[])
 
 
 
@@ -605,11 +665,15 @@ useEffect(()=>{
     });
   }
    
+
+  const sendlenderMonthlyStatements =(userID , data)=>{
+
+  }
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">

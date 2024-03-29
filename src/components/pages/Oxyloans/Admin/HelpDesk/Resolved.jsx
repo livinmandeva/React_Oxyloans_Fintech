@@ -1,3 +1,4 @@
+
 import React,{ useEffect, useState }  from "react";
 import { Link } from "react-router-dom";
 
@@ -9,6 +10,8 @@ import Sidebar from "../../../../SideBar/AdminSidebar";
 import './helpdesk.css'
 import { getintrestedapi, handelcalcluateapi, handlecalculatapidata, userquerydetails, userquerydetailsAPI } from "../../../../HttpRequest/admin";
 import Swal from "sweetalert2";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
 
 
 
@@ -206,6 +209,11 @@ const handelClickPendingborrower = async (status, type,) => {
 
 
 
+useEffect(()=>{
+  handelClickPendinglender("Completed"  ,"LENDER")
+},[])
+
+
 
   const columns = [
 
@@ -269,8 +277,8 @@ const handelClickPendingborrower = async (status, type,) => {
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">

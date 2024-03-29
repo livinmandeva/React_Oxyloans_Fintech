@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 import { Button, Table, Tag } from "antd";
 
+import './common.css'
 import Header from "../../../../Header/Header";
-import "./inserted.css";
+// import "./inserted.css";
 import Sidebar from "../../../../SideBar/AdminSidebar";
 import { onShowSizeChange } from "../../../../Pagination";
 import {
@@ -17,13 +18,16 @@ import {
 } from "../../../../HttpRequest/admin";
 import { render } from "@fullcalendar/core/preact";
 import Swal from "sweetalert2";
-import Model1 from "./Model1";
+import AdminSidebar from "../../../../SideBar/AdminSidebar";
+import AdminHeader from "../../../../Header/AdminHeader";
 
-const Borrowersapplications = () => {
+
+const LendersLoansinfo = () => {
   const [intrested, setintrested] = useState({
     apiData: "",
     hasdata: false,
     loading: true,
+    type:"BORROWER",
     pageNo: 1,
     pageSize: 5,
     defaultPageSize: 5,
@@ -50,6 +54,27 @@ const Borrowersapplications = () => {
     btnindex: "",
     isbuttonvalid: false,
   });
+
+
+  
+  const [modalform ,  setmodalform]= useState({
+
+    location: "",
+		locationResidence: "",
+		companyName: "",
+		companyResidence: "",
+		role: "",
+		loanRequirement: "",
+		emi: "",
+		salary: "",
+		eligibility: "",
+		cibilPassword: "",
+		comments: "",
+		aadharPassword: "",
+		panPassword: "",
+		bankPassword: "",
+		payslipsPassword: "",
+  })
   const HandleClick = (id) => {
     setbuttonindex((prevState) => ({
       ...prevState,
@@ -67,6 +92,11 @@ const Borrowersapplications = () => {
     });
   };
 
+
+
+  const   handlechange =(event)=>{
+
+  }
   const handelchange = (event) => {
     const { name, value } = event.target;
     setdatavalue({
@@ -202,8 +232,16 @@ const Borrowersapplications = () => {
       });
     }
   };
+
+  const handelchangemodel =(event)=>{
+   const {name ,value}=event.target;
+    setmodalform({
+      ...modalform,
+    [name]:value
+    })
+  }
   useEffect(() => {
-    const response = getintrestedapi(intrested.pageNo, intrested.pageSize);
+    const response = getintrestedapi(intrested.pageNo, intrested.pageSize , intrested);
     response.then((data) => {
       if (data.request.status == 200) {
         console.log(data.data.results);
@@ -326,8 +364,10 @@ const Borrowersapplications = () => {
     });
   };
 
-  const columns = [
+  const columns = [   
+    	
     {
+      						
       title: "Borrower Info",
       dataIndex: "PaymentDate",
       sorter: (a, b) => a.PaymentDate - b.PaymentDate,
@@ -335,8 +375,12 @@ const Borrowersapplications = () => {
         <>
           <p>BR : -{render.user.id}</p>
           <p>
-            <strong>Status:</strong> <br></br>
-            {render.user.status}
+         <p> Status: {render.borrowerUser.status}</p>
+<p>Regd Date:-{render.loanRequestedDate}</p>
+<p>Exp Date:-{render.expectedDate}</p>
+<p>CIF NO :</p>
+<p>Fino Employee NO :</p>
+
           </p>
         </>
       ),
@@ -347,45 +391,51 @@ const Borrowersapplications = () => {
       sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
       render: (render) => (
         <>
-          <div className="insertstart">
-            <p>
-              <strong>Req Date:-</strong> {render.loanRequestedDate}
-            </p>
-            <p>
-              <strong>Exp Date:-</strong> {render.expectedDate}
-            </p>
+             <div className="insertstart">
+          <p>{render.borrowerUser.firstName}</p>
+          <p>{render.borrowerUser.mobileNumber}</p>
+          <p>{render.borrowerUser.city}</p>
+          <p>UTM From :- {render.borrowerUser.utmSource}  </p>
+
+<p>OXY SCORE :- {render.borrowerUser.city}</p>
+
+
+<p>PAN NUMBER :- {render.loanRequestAmount}</p>
+<p>DOB : {render.rateOfInterest} %</p>
+<p>Van NO:</p>
           </div>
         </>
       ),
     },
     {
       title: "Email & Address",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount - b.Amount,
+      dataIndex: "TransactionNumber",
+        sorter: (a, b) => a.TransactionNumber.length - b.TransactionNumber.length,
       render: (render) => (
         <>
-          <p>
-            {" "}
-            {render.user.firstName} {render.user.mobileNumber}
-          </p>
-          <p>
-            <strong>city :</strong>
-            {render.borrowerUsercity}
-          </p>
-          <p>
-            <strong>oxyScore :{render.lenderUser.oxyScore}</strong>
-          </p>
+        <p>{render.borrowerUser.email}</p>
+        <p>{render.user.address}</p>
+        <p>{render.user.pinCode}</p>
+        <p>{render.user.state}</p>
+
+
         </>
       ),
     },
     {
       title: "Amount & ROI",
-      dataIndex: "PaidThrough",
+      dataIndex: "documents",
       sorter: (a, b) => a.Amount - b.Amount,
-      render: (render) => (
+      render: (documents, index) => (
         <>
-          <p>{render.user.email}</p>
-          <p>{render.user.address}</p>
+        
+ 
+
+         <p> INR   {documents.loanRequestAmount}</p>
+         <p>   
+          {/* 0 */}
+          {documents.rateOfInterest} % Monthly</p>
+
         </>
       ),
     },
@@ -395,97 +445,15 @@ const Borrowersapplications = () => {
       sorter: (a, b) => a.Amount - b.Amount,
       render: (documents, index) => (
         <>
-          {documents &&
-            documents.borrowerKycDocuments &&
-            documents.borrowerKycDocuments.map((document, docIndex) => (
-              <div key={docIndex}>
-                <Link
-                  to={document.documentSubType == "PAN" && document.downloadUrl}
-                >
-                  <p>
-                    {document.documentSubType == "PAN" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
+         
+         <p>   {documents.eamil}</p>
+<p>{documents.address}</p>
 
-                <Link
-                  to={
-                    document.documentSubType == "AADHAR" && document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "AADHAR" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-                <Link
-                  to={
-                    document.documentSubType == "Bank Statement" &&
-                    document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "Bank Statement" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-                <Link
-                  to={
-                    document.documentSubType == "PASSPORT" &&
-                    document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "PASSPORT" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-                <Link
-                  to={
-                    document.documentSubType == "DRIVINGLICENCE" &&
-                    document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "DRIVINGLICENCE" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-                <Link
-                  to={
-                    document.documentSubType == "VOTERID" &&
-                    document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "VOTERID" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-                <Link
-                  to={
-                    document.documentSubType == "PAYSLIPS" &&
-                    document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "PAYSLIPS" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-                <Link
-                  to={
-                    document.documentSubType == "BANKSTATEMENT" &&
-                    document.downloadUrl
-                  }
-                >
-                  <p>
-                    {document.documentSubType == "BANKSTATEMENT" &&
-                      document.documentSubType}
-                  </p>
-                </Link>
-              </div>
-            ))}
+<p>Bank Account Details</p>
+{documents.userNameAccordingToBank}<br/>
+              {documents.accountNumber}<br/>
+              {documents.ifscCode}<br/>
+              {documents.branchName}<br/>
         </>
       ),
     },
@@ -495,42 +463,23 @@ const Borrowersapplications = () => {
       sorter: (a, b) => a.Amount - b.Amount,
       render: (render, index) => (
         <>
-          <Tag color="#2db7f5" onClick={() => HandleClick(render.id)}>
-            Click here to view the comments
+
+
+        
+<div className="divintrested">
+          <Tag color="#2db7f5"  data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => localStorage.setItem("idfor" , render.id)}>
+          Comments By Admin
           </Tag>
 
-          {intrested.isfiledvaild &&  <>
+          <Tag color="#2db7f5" onClick={() => handlecalculat(render.id)}>
+          Upload Cibil
+          </Tag>
+          <Tag color="#2db7f5" onClick={() => updateEmiComments(render.id)}>
+          Click here to view the comments
+          </Tag>
 
-            <br></br>
-            Location:
-            <br></br>
-            Residence Address :
-            <br></br>
-            Company Name:
-            <br></br>
-            Company Address :
-            <br></br>
-            Role :
-            <br></br>
-            Loan Requirement:
-            <br></br>
-            Salary :
-            <br></br>
-            Loan Eligibility:
-            <br></br>
-            Current EMIs:
-            <br></br>
-            PAN Password:
-            <br></br>
-            Payslips Password:
-            <br></br>
-            Aadhar Password:
-            <br></br>
-            Bank Password:
-            <br></br>
-            Cibil Password:
-            <br></br>
-            Commets Section Before Nov 25th 2020:-</>}
+     
+</div>
         </>
       ),
     },
@@ -547,12 +496,15 @@ const Borrowersapplications = () => {
          <Button size="small">Approved & Create Deal</Button> */}
 
           <div className="divintrested">
-            <Link to="">
-              View Requests &<br></br> Responses to this borrower
-            </Link>
-            <Tag color="#f50">Reject Offer</Tag>
+
+
+          <Tag color="#2db7f5" onClick={() => updateEmiComments(render.id)}>
+          Change to Lender
+          </Tag>
+            <Tag color="#f50">
+            Interested</Tag>
             <Tag color="#3d5ee1" onClick={() => HandleClick(render.id)}>
-              APP Level Approved
+            View Experian Report
             </Tag>
           </div>
         </>
@@ -562,6 +514,25 @@ const Borrowersapplications = () => {
   const handleTagClick = () => {
     console.log("but");
   };
+// useEffect(()=>{
+//   const response = getborrowerapiclick(
+//     intrested,
+//     datavalue
+ 
+//   );
+//   response.then((data) => {
+//     if (data.request.status == 200) {
+//       console.log(data.data.results)
+//       setintrested({
+//         ...intrested,
+//         apiData: data.data.results,
+//         loading: false,
+//         hasdata: data.data.count == 0 ? false : true,
+//       });
+//     }
+//   });
+// },[])
+
 
 
   const  handelclickuser=()=>{
@@ -586,11 +557,15 @@ const Borrowersapplications = () => {
     });
   }
    
+
+  const sendlenderMonthlyStatements =(userID , data)=>{
+
+  }
   return (
     <>
       <div className="main-wrapper">
-        <Header />
-        <Sidebar />
+        <AdminHeader />
+        <AdminSidebar />
         {/*Page wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid">
@@ -599,19 +574,235 @@ const Borrowersapplications = () => {
               <div className="row">
                 <div className="col">
                   <h3 className="page-title">
-                Borrower Loan Applications
+                  Borrower Loan Applications
                   </h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="breadcrumb-item active">Hold Deal Users</li>
+                    <li className="breadcrumb-item active"> Borrower Loan</li>
                   </ul>
                 </div>
               </div>
             </div>
             {/* /Page Header */}
 
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Admin Comments</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+   
+
+<div  className="formdatatable">
+      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                        Location :
+                          <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="location"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+      
+Residence Address :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handlechange}
+                          name="locationResidence"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                        Company Name :
+                          <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="companyName"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                          
+Company Address :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="companyResidence"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                        Role :
+                          <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="role"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                    
+                    Loan Requirement :
+                 <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="loanRequirement"
+                        />
+                      </div>
+
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                        Salary :
+                          <span className="login-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="salary"
+                        />
+                      </div>
+
+   
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                          Loan Eligibility :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="eligibility"
+                        />
+                      </div>
+
+
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                            Cibil Password :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="cibilPassword"
+                        />
+                      </div>
+ 
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                         
+                           Aadhar Password :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="aadharPassword"
+                        />
+                      </div>
+  
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                             Pan Password :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="panPassword"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                          
+                           BankStatements Password :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="bankPassword"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                             Payslips Password :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="payslipsPassword"
+                        />
+                      </div>
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                            Current Emi :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="emi"
+                        />
+                      </div>
+                      
+                      <div className="form-group  col-sm-4 local-forms">
+                        <label>
+                        Comments :
+                          <span className="login-danger"></span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handelchangemodel}
+                          name="comments"
+                        />
+                      </div>
+                      
+                      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  onClick={()=>handlesubmitapi(intrested , modalform )}>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
@@ -620,7 +811,7 @@ const Borrowersapplications = () => {
                       <div className="col-12 col-sm-3">
                         <div className="form-group local-forms">
                           <label>
-                            Date Range
+                          Choose
                             <span className="login-danger"></span>
                           </label>
                           <select
@@ -631,7 +822,7 @@ const Borrowersapplications = () => {
                             onChange={handelchange}
                           >
                             <option>-- Choose --</option>
-                            <option value="borrowersid">Borrowers id</option>
+                            <option value="borrowersid">LENDER id</option>
                             <option value="Name">Name</option>
                             <option value="roi">ROI</option>
                             <option value="amount">Amount</option>
@@ -742,8 +933,7 @@ const Borrowersapplications = () => {
                           </button>
                         </div>
                       </div>
-                    </div>     {intrested.isfiledvaild  && <>   <Model1 />
-                    </>}
+                    </div>   
                     <div>
                       <Table
                         className="table-responsive table-responsive-md table-responsive-lg table-responsive-xs"
@@ -774,4 +964,4 @@ const Borrowersapplications = () => {
   );
 };
 
-export default Borrowersapplications;
+export default LendersLoansinfo;
