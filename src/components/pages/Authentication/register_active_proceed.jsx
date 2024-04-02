@@ -68,11 +68,10 @@ const Register_active_proceed = () => {
   //   }
   // }, [date1]);
 
-
   const today = new Date();
-today.setFullYear(today.getFullYear() - 18); // Subtract 18 years
+  today.setFullYear(today.getFullYear() - 18); // Subtract 18 years
 
-const minDate = today.toISOString().split("T")[0];
+  const minDate = today.toISOString().split("T")[0];
   const handlesubmit = async () => {
     if (data.date === "" || data.pannumber === "" || data.address === "") {
       setdata({
@@ -213,12 +212,12 @@ const minDate = today.toISOString().split("T")[0];
                       Date of Birth <span className="login-danger">*</span>
                     </label>
                     <input
-        className="form-control"
-        type="date"
-        name="date"
-        onChange={handlechanges}
-        max={minDate} // set the max date to 18 years ago
-    />
+                      className="form-control"
+                      type="date"
+                      name="date"
+                      onChange={handlechanges}
+                      max={minDate} // set the max date to 18 years ago
+                    />
                     {/* <span className="profile-views">
                       <i className="fas fa-user-circle" />
                     </span> */}

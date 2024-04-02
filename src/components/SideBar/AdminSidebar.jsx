@@ -334,7 +334,7 @@ const Sidebar = (props) => {
                   className={`${
                     "/myinterestEarning" === pathName ||
                     "/myhighvalueDeals" === pathName ||
-                    "/myRunningDelas" === pathName ||
+                    "/myRunningDeals" === pathName ||
                     "/myholdamount" === pathName ||
                     "/earningCertificate" === pathName ||
                     "/loansStatement" === pathName ||
@@ -361,9 +361,9 @@ const Sidebar = (props) => {
                     >
                       <li>
                         <Link
-                          to="/myRunningDelas"
+                          to="/myRunningDeals"
                           className={`${
-                            "/myRunningDelas" === pathName ? "active" : ""
+                            "/myRunningDeals" === pathName ? "active" : ""
                           }`}
                         >
                           Running Deals

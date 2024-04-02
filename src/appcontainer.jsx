@@ -116,8 +116,8 @@ const MypartiallClosedDeal = React.lazy(() =>
 const MyreferalStatus = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/MyreferalStatus")
 );
-const MyRunningDelas = React.lazy(() =>
-  import("./components/pages/Oxyloans/Lender/MyRunningDelas")
+const myRunningDeals = React.lazy(() =>
+  import("./components/pages/Oxyloans/Lender/myRunningDeals")
 );
 const ReferaFriend = React.lazy(() =>
   import("./components/pages/Oxyloans/Lender/ReferaFriend")
@@ -472,8 +472,8 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
   {
-    path: "/myRunningDelas",
-    element: <MyRunningDelas />,
+    path: "/myRunningDeals",
+    element: <myRunningDeals />,
     errorElement: <Error404></Error404>,
   },
   {

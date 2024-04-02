@@ -221,7 +221,6 @@ const Profile = () => {
   ]);
 
   const handleKeyPress = (event) => {
-    console.log("Key pressed:", event.key); // Check if the function is triggered
     const inputChar = event.key;
     const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
 
@@ -255,9 +254,7 @@ const Profile = () => {
   ]);
   const savebankdetailsProfile = () => {
     if (dashboarddata.isValid === true) {
-      console.log("data");
       if (bankaccountprofile.mobileOtp === "") {
-        console.log("data");
         setBankaccountProfile({
           ...bankaccountprofile,
           mobileOtperror: "Enter the OTP",
@@ -323,19 +320,7 @@ const Profile = () => {
       nomineeDetails.emailerror === "" &&
       nomineeDetails.bankerror === "" &&
       nomineeDetails.nomineecityerror === ""
-
-      // nomineeNameerror:  nomineeDetails.nomineeName === "" ? "Enter the nomineeName" : "",
-      // relationerror: nomineeDetails.relation === "" ? "Enter the Relation" : "",
-      // nomineeEmaileeror: nomineeDetails.nomineeEmail === "" ? "Enter the Nominee Email" : "",
-      // nomineeMobileerror: nomineeDetails.nomineeMobile === "" ? "Enter the Nominee Mobile Number" : "",
-      // accountNoerror: nomineeDetails.accountNo === "" ? "Enter the   Account No" : "",
-      // emailerror: nomineeDetails.nomineeEmail === "" ? "Enter the Email" : "",
-      // bankerror: nomineeDetails.bank === "" ? "Enter the bank" : "",
-      // brancherror: nomineeDetails.branch === "" ? "Enter the accountNo" : "",
-      // nomineecityerror: nomineeDetails.nomineecity === "" ? "Enter the nomineecity" : "",
     ) {
-      console.log("suceess");
-
       const response = savenomineeDeatailsApi(nomineeDetails);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -345,7 +330,6 @@ const Profile = () => {
         }
       });
     } else {
-      console.log("suceess1");
     }
   };
   const submitNomineeDetails = (event) => {
@@ -439,7 +423,6 @@ const Profile = () => {
         }
       });
     } else {
-      console.log("enter all input");
     }
   };
 
@@ -489,7 +472,6 @@ const Profile = () => {
         ) {
           WarningBackendApi("warning", data.response.data.errorMessage);
         } else {
-          console.error("Unexpected response structure:", data);
         }
       })
       .catch((error) => {
@@ -688,14 +670,14 @@ const Profile = () => {
       nomineeDetails.nomineeMobile === null
     ) {
       // Nominee mobile contains only digits or is empty or null
-      console.log(nomineeDetails.nomineeMobile);
+
       setnomineeDetails((prevDetails) => ({
         ...prevDetails,
         nomineeMobileerror: "", // No error
       }));
     } else {
       // Nominee mobile contains non-digit characters
-      console.log(nomineeDetails.nomineeMobile);
+
       setnomineeDetails((prevDetails) => ({
         ...prevDetails,
         nomineeMobileerror: "Enter digits only!",
@@ -912,7 +894,6 @@ const Profile = () => {
       userProfile.city !== null &&
       userProfile.city !== ""
     ) {
-      console.log("sucss");
       const response = profileupadate(userProfile);
       response.then((data) => {
         if (data.request.status == 200) {
@@ -941,8 +922,6 @@ const Profile = () => {
       bankaccountprofile.moblieNumber !== "" &&
       bankaccountprofile.moblieNumber.length == 10
     ) {
-      console.log("valid");
-
       const response = await sendMoblieOtp(bankaccountprofile);
       if (response.request.status === 200) {
         setdashboarddata({
@@ -965,7 +944,6 @@ const Profile = () => {
         toastrWarning(response.response.data.errorMessage);
       }
     } else {
-      console.log("fill the form");
     }
 
     // verifybankAccountCashfree();
@@ -985,7 +963,6 @@ const Profile = () => {
           }
         })
         .catch((error) => {
-          console.error("Error occurred during API call:", error);
           // Handle error if necessary
         });
     }
@@ -1119,9 +1096,7 @@ const Profile = () => {
           aadhar: responses[5].data,
         });
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      .catch((error) => {});
   }, [kyc.isValid]);
 
   return (

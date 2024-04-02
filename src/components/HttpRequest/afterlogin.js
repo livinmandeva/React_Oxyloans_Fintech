@@ -90,15 +90,15 @@ export const handlePaymembershipapi = async (member) => {
   const token = getToken();
   const userId = getUserId();
   const membershipfiled = {
-    MONTHLY: "1000",
-    QUARTERLY: "2900",
-    HALFYEARLY: "5600",
-    PERYEAR: "9800",
-    LIFETIME: "100000",
-    FIVEYEARS: "50000",
-    TENYEARS: "90000",
+    MONTHLY: "1180",
+    QUARTERLY: "3422",
+    HALFYEARLY: "6608",
+    PERYEAR: "5900",
+    LIFETIME: "29500",
+    FIVEYEARS: "23600",
+    TENYEARS: "26550",
   };
-  const calculatedfee = (parseInt(membershipfiled[member]) * 118) / 100;
+  const calculatedfee = parseInt(membershipfiled[member]);
   const data = {
     userId,
     type: "Wallet",
@@ -120,15 +120,15 @@ export const cashfreemembershipamount = async (member) => {
   const token = getToken();
   const userId = getUserId();
   const membershipfiled = {
-    MONTHLY: "1000",
-    QUARTERLY: "2900",
-    HALFYEARLY: "5600",
-    PERYEAR: "9800",
-    LIFETIME: "100000",
-    FIVEYEARS: "50000",
-    TENYEARS: "90000",
+    MONTHLY: "1180",
+    QUARTERLY: "3422",
+    HALFYEARLY: "6608",
+    PERYEAR: "5900",
+    LIFETIME: "29500",
+    FIVEYEARS: "23600",
+    TENYEARS: "26550",
   };
-  const calculatedfee = (parseInt(membershipfiled[member]) * 118) / 100;
+  const calculatedfee = parseInt(membershipfiled[member]);
   return calculatedfee;
 };
 

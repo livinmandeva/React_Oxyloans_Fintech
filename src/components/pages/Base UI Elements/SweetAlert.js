@@ -122,6 +122,12 @@ export const registersuccess = (message) => {
     type: "info",
     confirmButtonClass: "btn btn-primary",
     buttonsStyling: !1,
+    confirmButtonText: "Login",
+    showConfirmButton: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = "/";
+    }
   });
 };
 export const WarningAlert = (errorMessage, redirectTo) => {
@@ -339,7 +345,11 @@ export const participatedapi = async (deal) => {
           deal.apidata.lenderValidityStatus == true &&
           deal.apidata.groupName != "NewLender"
         ) {
-          const membershipExpiredUser = membership(deal.urldealId, deal);
+          const membershipExpiredUser = membership(
+            deal.urldealId,
+            deal,
+            deal.participatedAmount
+          );
         } else if (
           deal.apidata.lenderValidityStatus == false &&
           deal.apidata.groupName != "NewLender"
@@ -374,17 +384,19 @@ export const participatedapi = async (deal) => {
   });
 };
 
-const tenure = {
-  monthly: 1000,
-  quarterly: 2900,
-  halfyearly: 5600,
-  peryear: 9800,
-  lifetime: 100000,
-  fiveyears: 50000,
-  tenyears: 90000,
-};
-
-export const membership = async (dealId, dealInfo) => {
+export const membership = async (dealId, dealInfo, participatedAmount) => {
+  let amount;
+  let calculate;
+  const tenure = {
+    monthly: 1000,
+    quarterly: 2900,
+    halfyearly: 5600,
+    peryear: 9800,
+    lifetime: 100000,
+    fiveyears: 50000,
+    tenyears: 90000,
+    PerDeal: participatedAmount,
+  };
   const inputOptions = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -395,13 +407,14 @@ export const membership = async (dealId, dealInfo) => {
         lifetime: "Five Years",
         fiveyears: "Ten Years",
         tenyears: "Life Time",
+        PerDeal: "PerDeal",
       });
     }, 1000);
   });
 
   const { value: choosenPayoutMethod } = await Swal.fire({
     title: "Select Payment Method",
-    width: "1000px",
+    width: "1100px",
     input: "radio",
     inputOptions,
     cancelButtonText: "Cancel",
@@ -414,8 +427,15 @@ export const membership = async (dealId, dealInfo) => {
 
   if (choosenPayoutMethod) {
     const selectedOption = choosenPayoutMethod;
-    const amount = tenure[selectedOption];
-    const calculate = (amount * 118) / 100;
+    if (selectedOption == "PerDeal") {
+      amount = tenure[selectedOption];
+      const onepercentage = (amount * 1) / 100;
+      calculate = (onepercentage * 118) / 100;
+    } else {
+      amount = tenure[selectedOption];
+      calculate = (amount * 118) / 100;
+    }
+
     Swal.fire({
       html: `You selected: ${choosenPayoutMethod}  membership tenure and you have to pay the ${calculate} to participate the deal `,
       showCancelButton: true,
@@ -548,7 +568,7 @@ export const membershipsweetalert = (message) => {
 export const membershipsweetalertconformation = (membership, no) => {
   Swal.fire({
     title: "Are you willing to proceed with the payment at this moment ?",
-    showDenyButton: true,
+    showDenyButton: false,
     showCancelButton: true,
     confirmButtonText: "Pay Through wallet",
     denyButtonText: "Payment Gateway",

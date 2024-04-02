@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
-import ReactGA from "react-ga";
-const TRACKING_ID = "UA-84545654-1"; // OUR_TRACKING_ID
-ReactGA.initialize(TRACKING_ID);
 
 import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
 import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
@@ -34,7 +31,7 @@ import MyinterestEarning from "./components/pages/Oxyloans/Lender/MyinterestEarn
 import MyloansStatement from "./components/pages/Oxyloans/Lender/MyloansStatement";
 import MypartiallClosedDeal from "./components/pages/Oxyloans/Lender/MypartiallClosedDeal";
 import MyreferalStatus from "./components/pages/Oxyloans/Lender/MyreferalStatus";
-import MyRunningDelas from "./components/pages/Oxyloans/Lender/MyRunningDelas";
+import MyRunningDeals from "./components/pages/Oxyloans/Lender/MyRunningDelas";
 import ReferaFriend from "./components/pages/Oxyloans/Lender/ReferaFriend";
 
 import RegularRunningDeal from "./components/pages/Oxyloans/Lender/RegularRunningDeal";
@@ -89,10 +86,6 @@ import Whatappuser from "./components/pages/Authentication/Whatappuser.jsx";
 // ********************BORROWER MODULE    ROUTES END ************************** //
 
 const AppRouter = () => {
-  useEffect(() => {
-    console.log(window.location.pathname + window.location.search);
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, [window.location.pathname]);
   return (
     <BrowserRouter>
       <Routes>
@@ -150,7 +143,7 @@ const AppRouter = () => {
         <Route path="/viewAutoHistory" element={<ViewAutoHistory />} />
         <Route path="/participatedeal" element={<Participatedeal />} />
         <Route path="/regularRunningDeal" element={<RegularRunningDeal />} />
-        <Route path="/myRunningDelas" element={<MyRunningDelas />} />
+        <Route path="/myRunningDeals" element={<MyRunningDeals />} />
         <Route path="/myclosedDeals" element={<MyclosedDeals />} />
         <Route path="/myholdamount" element={<Myholdamount />} />
         <Route

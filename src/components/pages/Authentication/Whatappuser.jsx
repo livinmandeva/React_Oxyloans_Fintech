@@ -48,7 +48,7 @@ const Whatappuser = ({ data }) => {
         role="alert"
       >
         Multiple users are mapped with the given WhatsApp number. To proceed,
-        please select the user you want to log in or {""}
+        please select the user you want to login or {""}
         <Link to="/">
           <span class="badge text-bg-secondary"> Back to Home</span>
         </Link>

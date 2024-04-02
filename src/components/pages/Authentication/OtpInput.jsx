@@ -26,9 +26,9 @@ function OtpInput({ data, setwhatsappotphandler }) {
     }
   }, [data]); // Add data as a dependency to useEffect
 
-  // useEffect(() => {
-  //   localStorage.setItem("otp", JSON.stringify(otpValues)); // Store otpValues as a string
-  // }, [otpValues]);
+  useEffect(() => {
+    localStorage.setItem("otp", JSON.stringify(otpValues)); // Store otpValues as a string
+  }, [otpValues]);
 
   return (
     <div className="otp-field">

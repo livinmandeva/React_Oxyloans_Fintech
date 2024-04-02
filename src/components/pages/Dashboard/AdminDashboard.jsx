@@ -618,7 +618,7 @@ const AdminDashboard = () => {
               </div>
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
                 <div className="card bg-comman w-100">
-                  <Link to="/myRunningDelas">
+                  <Link to="/myRunningDeals">
                     <div className="card-body">
                       <div className="db-widgets d-flex justify-content-between align-items-center">
                         <div className="db-info">
@@ -716,7 +716,13 @@ const AdminDashboard = () => {
                           </span>
                         ) : (
                           <span>
-                            Active until {getdashboardData?.validityDate}
+                            {getdashboardData?.validityDate &&
+                              `Active until ${getdashboardData?.validityDate}`}{" "}
+                            <span className="badge bg-info mx-2">
+                              <Link to="/membership" className="text-white">
+                                Get Membership
+                              </Link>
+                            </span>
                           </span>
                         ))}
                     </span>

@@ -11,12 +11,17 @@ import "./assets/plugins/select2/css/select2.min.css";
 //Font Awesome
 import "./assets/plugins/fontawesome/css/fontawesome.min.css";
 import "./assets/plugins/fontawesome/css/all.min.css";
+
 import Approuter from "./approuter";
 import { Provider } from "react-redux";
 import store from "./components/Redux/Store";
 // import { newRouter } from "./appcontainer.jsx";
 import Loader from "./loader.jsx";
+import ReactGA from "react-ga";
+const TRACKING_ID = "374962014"; // OUR_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <Provider store={store}>
     <Suspense fallback={<Loader />}>

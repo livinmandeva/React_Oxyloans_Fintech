@@ -10,16 +10,13 @@ import { toastrWarning } from "../Base UI Elements/Toast";
 export default function LenderRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
-  const showIcon = () => (
-    <i className="feather feather-eye" aria-hidden="true">
-      <FeatherIcon icon="eye" />
-    </i>
-  );
-  const hideIcon = () => (
-    <i className="feather feather-eye-slash" aria-hidden="true">
-      <FeatherIcon icon="eye-off" />
-    </i>
-  );
+  const navigate = useNavigate();
+
+  const [field, setfield] = useState(true);
+  const [submitotp, setsubmitotp] = useState(false);
+  const [error, setError] = useState("");
+  const [response1, setResponse] = useState({});
+
   const [registrationField, setRegistrationField] = useState({
     email: "",
     pancard: "",
@@ -33,11 +30,8 @@ export default function LenderRegister() {
     referrerIderror: "",
     uniqueNumber: "",
     moblieerror: "",
+    mobileOTPNew: "",
   });
-  const [field, setfield] = useState(true);
-  const [submitotp, setsubmitotp] = useState(false);
-  const [error, setError] = useState("");
-  const [response1, setResponse] = useState({});
 
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -47,6 +41,25 @@ export default function LenderRegister() {
     });
   };
 
+  const setwhatsappotphandler = (OTP) => {
+    const output = String(OTP.join(""));
+
+    setRegistrationField({
+      ...registrationField,
+      mobileOTPNew: output,
+    });
+  };
+
+  const showIcon = () => (
+    <i className="feather feather-eye" aria-hidden="true">
+      <FeatherIcon icon="eye" />
+    </i>
+  );
+  const hideIcon = () => (
+    <i className="feather feather-eye-slash" aria-hidden="true">
+      <FeatherIcon icon="eye-off" />
+    </i>
+  );
   const handleKeyPress = (event) => {
     console.log("Key pressed:", event.key); // Check if the function is triggered
     const inputChar = event.key;
@@ -97,43 +110,35 @@ export default function LenderRegister() {
       } catch (error) {
         console.error("Error:", error.response.data.errorMessage);
         setError(error.response.data.errorMessage);
-        // setError('An error occurred during login');
       }
     }
   };
 
   const Otpverify = async () => {
     try {
-      // Retrieve OTP from local storage and clean it up
       let session = localStorage.getItem("seesion");
-      let otpdata = localStorage.getItem("otp");
-      let otp_data = otpdata.replace(/,/g, "");
 
-      // Check if OTP has a valid length (e.g., 6 characters)
-      if (otp_data.length === 6) {
-        // Assuming `api.vaildateotp` expects the parameters in this order: otp_data, mobile, name, email, password
+      if (registrationField.mobileOTPNew.length == 6) {
         const response = await api.vaildateotp(
           registrationField.email,
           registrationField.moblie,
-          otp_data,
+          registrationField.mobileOTPNew,
           registrationField.pancard,
-          registrationField.password, // Ensure `password` is available in registrationField
+          registrationField.password,
           session,
           registrationField.referrerId
         );
-        //  const mill=gettime()
 
         localStorage.setItem("id", response.responseData.userId);
-
         const mill1 = new Date().getTime();
         localStorage.setItem("timemilll", mill1);
         navigate("/register_active_proceed");
       } else {
-        // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
       }
     } catch (error) {
-      // Handle any errors that occur during OTP validation
+      console.log("enter error");
+
       console.error(
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
@@ -146,8 +151,6 @@ export default function LenderRegister() {
       );
     }
   };
-
-  const navigate = useNavigate();
 
   useEffect(
     () => {
@@ -168,11 +171,11 @@ export default function LenderRegister() {
     // .
     [registrationField.pancard]
   );
-  useEffect(() => {
-    setTimeout(() => {
-      setError("");
-    }, 1000);
-  }, [error]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setError("");
+  //   }, 1000);
+  // }, [error]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -256,7 +259,6 @@ export default function LenderRegister() {
                             className="form-control"
                             type="text"
                             name="pancard"
-                      
                             maxLength={30}
                             onChange={handlechange}
                           />
@@ -397,7 +399,10 @@ export default function LenderRegister() {
                             <p>Enhanced Security for Registering on OxyLoans</p>
                             <hr />
                             <div className="otpfiled">
-                              <OtpInput />
+                              <OtpInput
+                                data={6}
+                                setwhatsappotphandler={setwhatsappotphandler}
+                              />
                             </div>
                             <div className=" dont-have">
                               Already Registered? <Link to="/">Login</Link>

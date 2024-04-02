@@ -22,7 +22,6 @@ const Header = (profile) => {
     iswhatAppLogin: sessionStorage.getItem("whatAppLoginMultipleUser"),
   });
 
-  console.log(dashboarddata);
   const [currentPage, setCurrentPage] = useState("");
 
   const handlesidebar = () => {
@@ -192,7 +191,7 @@ const Header = (profile) => {
               <Link className="dropdown-item" to="/profile">
                 My Profile
               </Link>
-              <Link className="dropdown-item" to="/myRunningDelas">
+              <Link className="dropdown-item" to="/myRunningDeals">
                 My Deals
               </Link>
               {/* {dashboarddata.iswhatAppLogin == "true" && (

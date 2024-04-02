@@ -122,7 +122,7 @@ const RegularPersonalDeal = () => {
             <div className="card-body h-10">
               <div className="row">
                 <Link
-                  to="/myRunningDelas"
+                  to="/myRunningDeals"
                   className="btn btn-success col-lg-3 col-sm-6  mx-lg-2"
                 >
                   <i className="fa fa-user mx-1"></i> My Participated Deals

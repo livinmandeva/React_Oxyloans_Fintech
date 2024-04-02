@@ -16,7 +16,7 @@ import ModalComponet from "../../Base UI Elements/ModalComponet";
 import MyParticipatedStatement from "../Utills/Modals/MyParticipatedStatement";
 import { paypendingprocessingAmount } from "../../Base UI Elements/SweetAlert";
 
-const MyRunningDelas = () => {
+const MyRunningDeals = () => {
   const [modelopen, setOpen] = useState(false);
   const [runningdeals, setrunningdeals] = useState({
     data: "",
@@ -409,4 +409,4 @@ const MyRunningDelas = () => {
   );
 };
 
-export default MyRunningDelas;
+export default MyRunningDeals;
