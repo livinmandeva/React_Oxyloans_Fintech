@@ -369,7 +369,13 @@ export default function LenderRegister() {
                             {toastrWarning(error)}
                           </div>
                         )}
-                        <div className=" dont-have">
+                        <div className="dont-have">
+                          Register as a{" "}
+                          <Link to="https://www.oxyloans.com/new/register_borrower">
+                            Borrower
+                          </Link>
+                        </div>
+                        <div className="dont-have">
                           Already Registered ? <Link to="/">Login</Link>
                         </div>
                         <div className="form-group mb-0">

@@ -65,23 +65,24 @@ import Whatappuser from "./components/pages/Authentication/Whatappuser.jsx";
 
 // ********************BORROWER MODULE    ROUTE ************************** //
 
-// import BorrowerDashboard from "./components/pages/Dashboard/BorrowerDashboard";
-// import BorrowerProfile from "./components/pages/Oxyloans/Borrower/BorrowerProfile";
-// import BorrowerAgreedLoans from "./components/pages/Oxyloans/Borrower/AgreedLoan";
-// import BorrowerEnach from "./components/pages/Oxyloans/Borrower/Enach";
-// import BorrowerLoanEligibility from "./components/pages/Oxyloans/Borrower/LoanEligibility";
-// import BorrowerLoanListing from "./components/pages/Oxyloans/Borrower/LoanListings";
-// import BorrowerLoanstatement from "./components/pages/Oxyloans/Borrower/LoanStatement";
-// import Borrowermycontacts from "./components/pages/Oxyloans/Borrower/Mycontacts";
-// import BorrowerMyEarnings from "./components/pages/Oxyloans/Borrower/MyEarnings";
-// import BorrowerMyLoanApplication from "./components/pages/Oxyloans/Borrower/MyLoanApplication";
-// import BorrowerPayEmi from "./components/pages/Oxyloans/Borrower/PayEmi";
-// import BorrowerReferFriend from "./components/pages/Oxyloans/Borrower/ReferFriend";
-// import BorrowerReferStatus from "./components/pages/Oxyloans/Borrower/ReferralStatus";
-// import BorrowerRunningLoans from "./components/pages/Oxyloans/Borrower/RunningLoan";
-// import BorrowerWriteTous from "./components/pages/Oxyloans/Borrower/BorrowerWriteToUs";
-// import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/BorrowerEmaicalculator";
-// import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
+import BorrowerDashboard from "./components/pages/Dashboard/BorrowerDashboard";
+import BorrowerProfile from "./components/pages/Oxyloans/Borrower/BorrowerProfile";
+import BorrowerAgreedLoans from "./components/pages/Oxyloans/Borrower/AgreedLoan";
+import BorrowerEnach from "./components/pages/Oxyloans/Borrower/Enach";
+import BorrowerLoanEligibility from "./components/pages/Oxyloans/Borrower/LoanEligibility";
+import BorrowerLoanListing from "./components/pages/Oxyloans/Borrower/LoanListings";
+import BorrowerLoanstatement from "./components/pages/Oxyloans/Borrower/LoanStatement";
+import Borrowermycontacts from "./components/pages/Oxyloans/Borrower/Mycontacts";
+import BorrowerMyEarnings from "./components/pages/Oxyloans/Borrower/MyEarnings";
+import BorrowerMyLoanApplication from "./components/pages/Oxyloans/Borrower/MyLoanApplication";
+import BorrowerPayEmi from "./components/pages/Oxyloans/Borrower/PayEmi";
+import BorrowerReferFriend from "./components/pages/Oxyloans/Borrower/ReferFriend";
+import BorrowerReferStatus from "./components/pages/Oxyloans/Borrower/ReferralStatus";
+import BorrowerRunningLoans from "./components/pages/Oxyloans/Borrower/RunningLoan";
+import BorrowerWriteTous from "./components/pages/Oxyloans/Borrower/BorrowerWriteToUs";
+import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/BorrowerEmaicalculator";
+import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
+import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest.jsx";
 
 // ********************BORROWER MODULE    ROUTES END ************************** //
 
@@ -190,7 +191,7 @@ const AppRouter = () => {
 
         {/* ******************** BORROWER MODULE    ROUTES START **************************  */}
 
-        {/* <Route path="/borrowerDashboard" element={<BorrowerDashboard />} />
+        <Route path="/borrowerDashboard" element={<BorrowerDashboard />} />
         <Route path="/borrowerProfile" element={<BorrowerProfile />} />
         <Route path="/borrowerAgreedLoans" element={<BorrowerAgreedLoans />} />
         <Route path="/borrowerenach" element={<BorrowerEnach />} />
@@ -210,6 +211,7 @@ const AppRouter = () => {
           element={<BorrowerMyLoanApplication />}
         />
         <Route path="/borrowerpayemi" element={<BorrowerPayEmi />} />
+        <Route path="/loanRequest" element={<LoanRequest />} />
         <Route path="/borrowerreferfriend" element={<BorrowerReferFriend />} />
         <Route path="/borrowerreferstatus" element={<BorrowerReferStatus />} />
         <Route
@@ -224,7 +226,7 @@ const AppRouter = () => {
         <Route
           path="/borrowerTicketHistory"
           element={<BorrowerTicketHistory />}
-        /> */}
+        />
         {/* ******************** BORROWER MODULE ROUTES END **************************  */}
       </Routes>
     </BrowserRouter>

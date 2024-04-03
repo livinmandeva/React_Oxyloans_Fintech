@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import BorrowerHeader from "../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../SideBar/BorrowerSidebar";
-import SideBar from "../../SideBar/SideBar";
+
 import ProgressBar from "react-customizable-progressbar";
 import { Link } from "react-router-dom";
 import "../Oxyloans/Lender/table.css";
@@ -841,7 +841,7 @@ const BorrowerDashboard = () => {
                     <ul className="app-listing">
                       <li>
                         <div className="report-btn">
-                          <Link to="#" className="btn">
+                          <Link to="/borrowermyloanApplication" className="btn">
                             <img src={invoicesicon5} alt="" className="me-2" />
                             Active Loans
                           </Link>
@@ -858,7 +858,7 @@ const BorrowerDashboard = () => {
 
                       <li>
                         <div className="report-btn">
-                          <Link to="/borrowerAgreedLoans" className="btn">
+                          <Link to="/loanRequest" className="btn">
                             <img src={invoicesicon5} alt="" className="me-2" />
                             New Request
                           </Link>

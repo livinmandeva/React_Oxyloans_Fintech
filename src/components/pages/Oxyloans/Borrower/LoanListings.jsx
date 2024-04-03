@@ -3,7 +3,7 @@ import BorrowerHeader from "../../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { Link } from "react-router-dom";
-import { Pagination } from "antd";
+import { Pagination, Spin } from "antd";
 import { borrowerloaslistings } from "../../../HttpRequest/afterlogin";
 import { avatar04, invoicesicon5 } from "../../../imagepath";
 
@@ -50,8 +50,8 @@ const LoanListings = () => {
         {/* Sidebar */}
         <BorrowerSidebar />
         {/* Page Wrapper */}
-        <div class="page-wrapper">
-          <div class="content container-fluid">
+        <div className="page-wrapper">
+          <div className="content container-fluid">
             {/* Page Header */}
             <div className="page-header">
               <div className="row align-items-center">
@@ -121,85 +121,92 @@ const LoanListings = () => {
                   />
                 </div>
 
-                {myloanlisting.apiData.length > 0
-                  ? myloanlisting.apiData.map((data, index) => {
-                      {
-                        console.log(data);
-                      }
-                      return (
-                        <div className="col-sm-6 col-lg-4 col-xl-6 d-flex">
-                          <div className="card invoices-grid-card w-100">
-                            <div className="card-header d-flex justify-content-between align-items-center">
-                              <Link
-                                to="/viewinvoice"
-                                className="invoice-grid-link"
-                              >
-                                {data.loanRequest}
+                {myloanlisting.apiData.length > 0 ? (
+                  myloanlisting.apiData.map((data, index) => {
+                    return (
+                      <div
+                        className="col-sm-6 col-lg-4 col-xl-6 d-flex"
+                        key={index}
+                      >
+                        <div className="card invoices-grid-card w-100">
+                          <div className="card-header d-flex justify-content-between align-items-center">
+                            <Link
+                              to="/viewinvoice"
+                              className="invoice-grid-link"
+                            >
+                              {data.loanRequest}
+                            </Link>
+                          </div>
+                          <div className="card-middle">
+                            <h2 className="card-middle-avatar">
+                              <Link to="/borrowerloanListing">
+                                <img
+                                  className="avatar avatar-sm me-2 avatar-img rounded-circle"
+                                  src={avatar04}
+                                  alt="User Image"
+                                />{" "}
+                                {data.user.firstName + " "}
+                                {data.user.lastName}
                               </Link>
-                            </div>
-                            <div className="card-middle">
-                              <h2 className="card-middle-avatar">
-                                <Link to="/borrowerloanListing">
-                                  <img
-                                    className="avatar avatar-sm me-2 avatar-img rounded-circle"
-                                    src={avatar04}
-                                    alt="User Image"
-                                  />{" "}
-                                  {data.user.firstName + " "}
-                                  {data.user.lastName}
-                                </Link>
-                              </h2>
-                            </div>
-                            <div className="card-body">
-                              <div className="row align-items-center">
-                                <div className="col">
-                                  <span>
-                                    <i className="far fa-money-bill-alt" />{" "}
-                                    Amount
-                                  </span>
-                                  <h6 className="mb-0">
-                                    INR {data.loanRequestAmount}
-                                  </h6>
-                                </div>
-                                <div className="col-auto">
-                                  <span>
-                                    <i className="far fa-calendar-alt" />{" "}
-                                    Available on
-                                  </span>
-                                  <h6 className="mb-0">{data.expectedDate}</h6>
-                                </div>
+                            </h2>
+                          </div>
+                          <div className="card-body">
+                            <div className="row align-items-center">
+                              <div className="col">
+                                <span>
+                                  <i className="far fa-money-bill-alt" /> Amount
+                                </span>
+                                <h6 className="mb-0">
+                                  INR {data.loanRequestAmount}
+                                </h6>
+                              </div>
+                              <div className="col-auto">
+                                <span>
+                                  <i className="far fa-calendar-alt" />{" "}
+                                  Available on
+                                </span>
+                                <h6 className="mb-0">{data.expectedDate}</h6>
+                              </div>
 
-                                <div className="col-auto">
-                                  <span>
-                                    <i className="far fa-user" /> Lender
-                                  </span>
-                                  <h6 className="mb-0">
-                                    LR {data.userDisplayId}
-                                  </h6>
-                                </div>
+                              <div className="col-auto">
+                                <span>
+                                  <i className="far fa-user" /> Lender
+                                </span>
+                                <h6 className="mb-0">
+                                  LR {data.userDisplayId}
+                                </h6>
+                              </div>
 
-                                <div className="col-auto">
-                                  <span>
-                                    <i className="far fa-user" /> Duration
-                                  </span>
-                                  <h6 className="mb-0"> {data.duration} M</h6>
-                                </div>
+                              <div className="col-auto">
+                                <span>
+                                  <i className="far fa-user" /> Duration
+                                </span>
+                                <h6 className="mb-0"> {data.duration} M</h6>
                               </div>
                             </div>
-                            <div className="card-footer">
-                              <div className="row align-items-center">
-                                <div className="col-auto">
-                                  <span className="badge bg-success-dark">
-                                    Application
-                                  </span>
-                                </div>
+                          </div>
+                          <div className="card-footer">
+                            <div className="row align-items-center">
+                              <div className="col-auto">
+                                <span className="badge bg-success-dark">
+                                  Application
+                                </span>
                               </div>
                             </div>
                           </div>
                         </div>
-                      );
-                    })
-                  : ""}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="row d-flex justify-content-center">
+                    <Spin
+                      tip="Loading..."
+                      className="text-center"
+                      large="large"
+                    ></Spin>
+                  </div>
+                )}
               </div>
             </>
           </div>

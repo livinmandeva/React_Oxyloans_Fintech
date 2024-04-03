@@ -1113,7 +1113,7 @@ const Profile = () => {
       return getdataAadhar();
     };
 
-    Promise.all([
+    Promise.allSettled([
       fetchApiData1(),
       fetchApiData2(),
       fetchApiData3(),

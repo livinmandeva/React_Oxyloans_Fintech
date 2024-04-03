@@ -1910,3 +1910,28 @@ export const borrowerloaslistings = async (pageNo = 1, pageSize = 10) => {
   );
   return response;
 };
+
+export const submitloanRequest = async (postdata) => {
+  console.log(postdata);
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdatastring = JSON.stringify({
+    duration: postdata.duration,
+    durationType: postdata.durationType,
+    expectedDate: postdata.expectedDate,
+    loanPurpose: postdata.loanpurpose,
+    loanRequestAmount: postdata.loanamount,
+    rateOfInterest: postdata.roi,
+    repaymentMethod: postdata.repayment,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/BORROWER/newrequest`,
+    "POST",
+    token,
+    postdatastring
+  );
+
+  return response;
+};

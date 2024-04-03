@@ -62,39 +62,32 @@ export default function BorrowerRegister() {
     } catch (error) {
       console.error("Error:", error.response.data.errorMessage);
       setError(error.response.data.errorMessage);
-      // setError('An error occurred during login');
     }
   };
   const handlesumitmoblie = () => {};
 
   const Otpverify = async () => {
     try {
-      // Retrieve OTP from local storage and clean it up
       let session = localStorage.getItem("seesion");
       let otpdata = localStorage.getItem("otp");
       let otp_data = otpdata.replace(/,/g, "");
 
-      // Check if OTP has a valid length (e.g., 6 characters)
       if (otp_data.length === 6) {
-        // Assuming `api.vaildateotp` expects the parameters in this order: otp_data, mobile, name, email, password
         const response = await api.vaildateotp(
           registrationField.email,
           registrationField.moblie,
           otp_data,
           registrationField.name,
-          registrationField.password, // Ensure `password` is available in registrationField
+          registrationField.password,
           session,
           registrationField.referrerId
         );
 
-        // Handle the successful response, e.g., update state
         setRegistrationSu(response);
       } else {
-        // Handle the case where the OTP length is not valid
         setError("Please enter a valid OTP");
       }
     } catch (error) {
-      // Handle any errors that occur during OTP validation
       console.error(
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
@@ -221,7 +214,7 @@ export default function BorrowerRegister() {
                             ENTER THE REFERRER ID{" "}
                             <span className="login-danger">*</span>
                           </label>
-                          {/* <input className="form-control pass-confirm" type="text" /> */}
+
                           <input
                             ref={inputRef2}
                             className="form-control pass-confirm"
