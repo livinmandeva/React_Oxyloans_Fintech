@@ -369,12 +369,7 @@ export default function LenderRegister() {
                             {toastrWarning(error)}
                           </div>
                         )}
-                        <div className="dont-have">
-                          Register as a{" "}
-                          <Link to="/borrower_register">
-                            Borrower
-                          </Link>
-                        </div>
+                
                         <div className="dont-have">
                           Already Registered ? <Link to="/">Login</Link>
                         </div>
@@ -440,9 +435,14 @@ export default function LenderRegister() {
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                    <Link to="/whatsapplogin" className="bg-success text-white">
+                            <div className="dont-have">
+                          Register as a{" "}
+                          <Link to="/borrower_register">
+                            Borrower
+                          </Link></div>
+                    {/* <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
-                    </Link>
+                    </Link> */}
                     {/* <Link onClick={() => {}} to="#">
                       <i className="fab fa-facebook-f" />
                     </Link>
