@@ -371,7 +371,7 @@ export default function LenderRegister() {
                         )}
                         <div className="dont-have">
                           Register as a{" "}
-                          <Link to="https://www.oxyloans.com/new/register_borrower">
+                          <Link to="/borrower_register">
                             Borrower
                           </Link>
                         </div>

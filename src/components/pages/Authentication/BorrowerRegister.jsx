@@ -371,7 +371,7 @@ export default function BorrowerRegister() {
                         )}
                         <div className="dont-have">
                           Register as a{" "}Borrower
-                          <Link to="/borrower">
+                          <Link to="/register">     {" "}
                             Lender
                           </Link>
                         </div>
