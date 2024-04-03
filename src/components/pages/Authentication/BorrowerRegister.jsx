@@ -1,36 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
-import { login } from "../../imagepath";
-import { Link } from "react-router-dom";
+import { registerImage } from "../../imagepath";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import OtpInput from "./OtpInput";
-
+import { toastrWarning } from "../Base UI Elements/Toast";
 export default function BorrowerRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
-  const showIcon = () => (
-    <i class="feather feather-eye" aria-hidden="true">
-      <FeatherIcon icon="eye" />
-    </i>
-  );
-  const hideIcon = () => (
-    <i class="feather feather-eye-slash" aria-hidden="true">
-      <FeatherIcon icon="eye-off" />
-    </i>
-  );
+  const navigate = useNavigate();
+
+  const [field, setfield] = useState(true);
+  const [submitotp, setsubmitotp] = useState(false);
+  const [error, setError] = useState("");
+  const [response1, setResponse] = useState({});
+
   const [registrationField, setRegistrationField] = useState({
     email: "",
     pancard: "",
     password: "",
     referrerId: "",
     moblie: "",
+    emailerror: "",
+    pancarderror: "",
+    passworderror: "",
+    eamilerror: "",
+    referrerIderror: "",
+    uniqueNumber: "",
+    moblieerror: "",
+    mobileOTPNew: "",
   });
-  const [field, setfield] = useState(true);
-  const [submitotp, setsubmitotp] = useState(false);
-  const [error, setError] = useState("");
-  const [response1, setResponse] = useState({});
 
   const handlechange = (event) => {
     const { name, value } = event.target;
@@ -40,7 +41,48 @@ export default function BorrowerRegister() {
     });
   };
 
+  const setwhatsappotphandler = (OTP) => {
+    const output = String(OTP.join(""));
+
+    setRegistrationField({
+      ...registrationField,
+      mobileOTPNew: output,
+    });
+  };
+
+  const showIcon = () => (
+    <i className="feather feather-eye" aria-hidden="true">
+      <FeatherIcon icon="eye" />
+    </i>
+  );
+  const hideIcon = () => (
+    <i className="feather feather-eye-slash" aria-hidden="true">
+      <FeatherIcon icon="eye-off" />
+    </i>
+  );
+  const handleKeyPress = (event) => {
+    console.log("Key pressed:", event.key); // Check if the function is triggered
+    const inputChar = event.key;
+    const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
+
+    // Check if the pressed key is an alphabetic character or backspace
+    if (!regex.test(inputChar) && inputChar !== "Backspace") {
+      event.preventDefault();
+    }
+  };
   const handleLenderRegister = async () => {
+    setRegistrationField((prevState) => ({
+      ...prevState,
+      emailerror:
+        registrationField.email === "" ? "Please enter the email" : "",
+      pancarderror:
+        registrationField.pancard === "" ? "Please enter the Name" : "",
+      moblieerror:
+        registrationField.moblie === "" ? "Please enter the mobile" : "",
+      passworderror:
+        registrationField.password === "" ? "Please enter the password" : "",
+    }));
+
     const validationError = api.validateRegisterInput(
       registrationField.email,
       registrationField.password,
@@ -51,47 +93,58 @@ export default function BorrowerRegister() {
       setError(validationError);
       return;
     }
-
-    try {
-      const RegisterResponse = await api.RegisterUser(registrationField.moblie);
-      alert(RegisterResponse);
-      localStorage.setItem("seesion", RegisterResponse);
-      setResponse(RegisterResponse);
-      setfield(false);
-      setError(null);
-    } catch (error) {
-      console.error("Error:", error.response.data.errorMessage);
-      setError(error.response.data.errorMessage);
+    if (
+      registrationField.emailerror === "" &&
+      registrationField.pancarderror === "" &&
+      registrationField.moblieerror === "" &&
+      registrationField.passworderror === ""
+    ) {
+      try {
+        const RegisterResponse = await api.RegisterUser(
+          registrationField.moblie
+        );
+        localStorage.setItem("seesion", RegisterResponse);
+        localStorage.setItem("type", "Borrower");
+        setResponse(RegisterResponse);
+        setfield(false);
+        setError(null);
+      } catch (error) {
+        console.error("Error:", error.response.data.errorMessage);
+        setError(error.response.data.errorMessage);
+      }
     }
   };
-  const handlesumitmoblie = () => {};
 
   const Otpverify = async () => {
     try {
       let session = localStorage.getItem("seesion");
-      let otpdata = localStorage.getItem("otp");
-      let otp_data = otpdata.replace(/,/g, "");
 
-      if (otp_data.length === 6) {
+      if (registrationField.mobileOTPNew.length == 6) {
         const response = await api.vaildateotp(
           registrationField.email,
           registrationField.moblie,
-          otp_data,
-          registrationField.name,
+          registrationField.mobileOTPNew,
+          registrationField.pancard,
           registrationField.password,
           session,
-          registrationField.referrerId
+          registrationField.referrerId,
         );
 
-        setRegistrationSu(response);
+        localStorage.setItem("id", response.responseData.userId);
+        const mill1 = new Date().getTime();
+        localStorage.setItem("timemilll", mill1);
+        navigate("/register_active_proceed");
       } else {
         setError("Please enter a valid OTP");
       }
     } catch (error) {
+      console.log("enter error");
+
       console.error(
         "Error:",
         error.response ? error.response.data.errorMessage : error.message
       );
+
       setError(
         error.response
           ? error.response.data.errorMessage
@@ -100,6 +153,45 @@ export default function BorrowerRegister() {
     }
   };
 
+  useEffect(
+    () => {
+      if (/\d/.test(registrationField.pancard)) {
+        // Use a regular expression to check if the value contains a number
+        setRegistrationField({
+          ...registrationField,
+          pancarderror: "Enter characters only!", // Corrected typo
+        });
+      } else {
+        // Clear the error if the input is valid
+        setRegistrationField({
+          ...registrationField,
+          pancarderror: "",
+        });
+      }
+    },
+    // .
+    [registrationField.pancard]
+  );
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setError("");
+  //   }, 1000);
+  // }, [error]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // Get the value of the 'ref' parameter
+    const refParam = searchParams.get("ref");
+
+    if (registrationField.referrerId != "" || refParam != "") {
+      setRegistrationField({
+        ...registrationField,
+        referrerId: refParam,
+      });
+    } else {
+    }
+  }, []);
   return (
     <div>
       <div className="main-wrapper login-body">
@@ -107,7 +199,11 @@ export default function BorrowerRegister() {
           <div className="container">
             <div className="loginbox">
               <div className="login-left">
-                <img className="img-fluid" src={login} alt="Logo" />
+                <img
+                  className="img-fluid h-100"
+                  src={registerImage}
+                  alt="Logo"
+                />
               </div>
               <div className="login-right">
                 <div className="login-right-wrap">
@@ -116,7 +212,7 @@ export default function BorrowerRegister() {
                       {" "}
                       <div className="maincircle">
                         <div className="circle">
-                          <i class="fa-solid fa-user-check"></i>
+                          <i className="fa-solid fa-user-check"></i>
                         </div>
                       </div>
                       <div className="cend">
@@ -137,11 +233,11 @@ export default function BorrowerRegister() {
                       {field ? (
                         <>
                           {" "}
-                          <h1>Register as a Borrower</h1>
+                          <h1>Register as a Borrower </h1>
                         </>
                       ) : (
                         <>
-                          <h1>Enter the otp sent to your mobile number</h1>
+                          <h1 className="center">Please Enter the OTP </h1>
                         </>
                       )}{" "}
                     </>
@@ -157,18 +253,24 @@ export default function BorrowerRegister() {
                       <>
                         <div className="form-group">
                           <label>
-                            NAME AS PER PANCARD{" "}
+                            Name as per PAN card
                             <span className="login-danger">*</span>
                           </label>
                           <input
                             className="form-control"
                             type="text"
-                            name="name"
+                            name="pancard"
+                            maxLength={30}
                             onChange={handlechange}
                           />
                           <span className="profile-views">
                             <i className="fas fa-user-circle" />
                           </span>
+                          {registrationField.pancarderror && (
+                            <div className="error">
+                              {registrationField.pancarderror}
+                            </div>
+                          )}
                         </div>
                         <div className="form-group">
                           <label>
@@ -176,13 +278,19 @@ export default function BorrowerRegister() {
                           </label>
                           <input
                             className="form-control"
-                            type="text"
+                            type="email"
                             name="email"
+                            maxLength={35}
                             onChange={handlechange}
                           />
                           <span className="profile-views">
                             <i className="fas fa-envelope" />
                           </span>
+                          {registrationField.emailerror && (
+                            <div className="error">
+                              {registrationField.emailerror}
+                            </div>
+                          )}
                         </div>
                         <div className="form-group">
                           <label>
@@ -193,6 +301,7 @@ export default function BorrowerRegister() {
                             className="form-control pass-input"
                             type="password"
                             name="password"
+                            maxLength={15}
                             onChange={handlechange}
                           />
                           <ReactPasswordToggleIcon
@@ -203,51 +312,71 @@ export default function BorrowerRegister() {
                           {/* <input className="form-control pass-input" type="text" />
                                             <span className="profile-views feather-eye toggle-password">
                                                 <FeatherIcon icon="eye" />
-                                            </span> */}
+                                            </span> */}{" "}
+                          {registrationField.passworderror && (
+                            <div className="error">
+                              {registrationField.passworderror}
+                            </div>
+                          )}
                         </div>
                         <p className="reffertext">
-                          If you are referred by an existing lender,Please enter
-                          his/her referrer id ( EX : BR100001)
+                        If you are referred by an existing Borrower,Please enter his/her referrer id ( EX : BR100001)
                         </p>
                         <div className="form-group">
-                          <label>
-                            ENTER THE REFERRER ID{" "}
-                            <span className="login-danger">*</span>
-                          </label>
-
+                          <label>Enter the referrer ID</label>
                           <input
                             ref={inputRef2}
                             className="form-control pass-confirm"
                             type="text"
                             name="referrerId"
+                            value={registrationField.referrerId}
                             onChange={handlechange}
                           />
-
-                          <span className="profile-views">
+                          {/* <span className="profile-views">
                             <i className="fas fa-phone" />
-                          </span>
+                          </span>{" "} */}
+                          {registrationField.referrerIderror && (
+                            <div className="error">
+                              {registrationField.referrerIderror}
+                            </div>
+                          )}
                         </div>
                         <div className="form-group">
                           <label>
-                            Enter Mobile Number
+                            Enter mobile Number
                             <span className="login-danger">*</span>
                           </label>
                           {/* <input className="form-control pass-confirm" type="text" /> */}
                           <input
                             ref={inputRef2}
                             className="form-control pass-confirm"
-                            type="text"
+                            type="tel"
                             name="moblie"
+                            maxLength={10}
                             onChange={handlechange}
                           />
-
                           <span className="profile-views">
                             <i className="fas fa-phone" />
-                          </span>
+                          </span>{" "}
+                          {registrationField.moblieerror && (
+                            <div className="error">
+                              {registrationField.moblieerror}
+                            </div>
+                          )}
                         </div>
-                        {error && <div className="errormessage">{error}</div>}
-                        <div className=" dont-have">
-                          Already Registered? <Link to="/login">Login</Link>
+                        {error && (
+                          <div className="errormessage">
+                            {toastrWarning(error)}
+                          </div>
+                        )}
+                        <div className="dont-have">
+                          Register as a{" "}Borrower
+                          <Link to="/borrower">
+                            Lender
+                          </Link>
+                        </div>
+                        <div className="dont-have">
+                          Already Registered ? <Link to="/">Login</Link>
                         </div>
                         <div className="form-group mb-0">
                           <button
@@ -270,16 +399,19 @@ export default function BorrowerRegister() {
                             <div className="maincircle">
                               <div className="circle">
                                 {" "}
-                                <i class="fa-solid fa-user-lock"></i>
+                                <i className="fa-solid fa-user-lock"></i>
                               </div>
                             </div>
                             <p>Enhanced Security for Registering on OxyLoans</p>
                             <hr />
                             <div className="otpfiled">
-                              <OtpInput />
+                              <OtpInput
+                                data={6}
+                                setwhatsappotphandler={setwhatsappotphandler}
+                              />
                             </div>
                             <div className=" dont-have">
-                              Already Registered? <Link to="/login">Login</Link>
+                              Already Registered? <Link to="/">Login</Link>
                             </div>
                             {error && <p className="errormessage">{error}</p>}
                             <div className="form-group mb-0">
@@ -305,18 +437,18 @@ export default function BorrowerRegister() {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
-                    <Link to="#">
+                    {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
+                    </Link> */}
+                    <Link to="/whatsapplogin" className="bg-success text-white">
+                      <i className="fa fa-whatsapp" />{" "}
                     </Link>
-                    <Link to="#">
+                    {/* <Link onClick={() => {}} to="#">
                       <i className="fab fa-facebook-f" />
                     </Link>
                     <Link to="#">
                       <i className="fab fa-twitter" />
-                    </Link>
-                    <Link to="#">
-                      <i className="fab fa-linkedin-in" />
-                    </Link>
+                    </Link> */}
                   </div>
                   {/* /Social Login */}
                 </div>

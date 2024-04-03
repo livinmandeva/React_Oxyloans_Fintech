@@ -199,6 +199,7 @@ export const vaildateotp = async (
   referrerId
 ) => {
   const uniqnumber = localStorage.getItem("uniqnumber");
+  const utmForPartner = localStorage.getItem("type");
 
   if (uniqnumber === null) {
     var data = {
@@ -215,6 +216,7 @@ export const vaildateotp = async (
       // uuid: "asdfghjkl",
       cifNumber: null,
       finoEmployeeMobileNumber: null,
+      
     };
   } else {
     var data = {
@@ -222,7 +224,7 @@ export const vaildateotp = async (
       mobileOtpSession: session,
       mobileOtpValue: otp_data,
       primaryType: "LENDER",
-      name: "shiva",
+      name: name,
       email: email,
       password: password,
       citizenship: "NONNRI",
@@ -234,7 +236,12 @@ export const vaildateotp = async (
       // uuid: "asdfghjkl",
     };
   }
-
+  if (utmForPartner === "Borrower") {
+    data.utmForPartner = "";
+    data.primaryType = "Borrower";
+    
+    localStorage.setItem("type", "")
+  }
   try {
     const response = await axios.post(
       API_BASE_URL + "/newUserRegistration",
