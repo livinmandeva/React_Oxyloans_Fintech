@@ -194,8 +194,8 @@ export const verifywhatappotp = async (api, whatsapploginotp) => {
 // };
 
 export const passwordupdated = async (
-  email,
   emailToken,
+  email,
   password,
   confirmPassword
 ) => {
