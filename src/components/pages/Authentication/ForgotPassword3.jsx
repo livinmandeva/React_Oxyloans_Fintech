@@ -32,8 +32,6 @@ const ForgotPassword3 = () => {
     try {
       const sendOtpEmail = await sendotpemail(email.emailid);
 
-      // setemailisvaild(!emailisvaild);
-
       if (sendOtpEmail.status === 200) {
         setEmail({
           ...email,
@@ -99,15 +97,7 @@ const ForgotPassword3 = () => {
                       Reset My Password
                     </button>
                   </div>
-                  <div className="form-group mb-0">
-                    {/* <button
-                      className="btn btn-primary primary-reset btn-block"
-                      type="submit"
-                      onClick="./admindashboard"
-                    >
-                      Login
-                    </button> */}
-                  </div>
+                  <div className="form-group mb-0"></div>
                 </div>
               </div>
             </div>

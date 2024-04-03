@@ -127,7 +127,7 @@ export default function BorrowerRegister() {
           registrationField.pancard,
           registrationField.password,
           session,
-          registrationField.referrerId,
+          registrationField.referrerId
         );
 
         localStorage.setItem("id", response.responseData.userId);
@@ -320,7 +320,8 @@ export default function BorrowerRegister() {
                           )}
                         </div>
                         <p className="reffertext">
-                        If you are referred by an existing Borrower,Please enter his/her referrer id ( EX : BR100001)
+                          If you are referred by an existing Borrower,Please
+                          enter his/her referrer id ( EX : BR100001)
                         </p>
                         <div className="form-group">
                           <label>Enter the referrer ID</label>
@@ -369,7 +370,14 @@ export default function BorrowerRegister() {
                             {toastrWarning(error)}
                           </div>
                         )}
+<<<<<<< Updated upstream
                   
+=======
+                        <div className="dont-have">
+                          Register as a Borrower
+                          <Link to="/register"> Lender</Link>
+                        </div>
+>>>>>>> Stashed changes
                         <div className="dont-have">
                           Already Registered ? <Link to="/">Login</Link>
                         </div>

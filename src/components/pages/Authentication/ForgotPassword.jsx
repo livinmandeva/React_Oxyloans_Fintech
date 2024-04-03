@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { registerImage } from "../../imagepath";
 
-import { passwordupdated } from "../../HttpRequest/beforelogin";import ReactPasswordToggleIcon from "react-password-toggle-icon";
+import { passwordupdated } from "../../HttpRequest/beforelogin";
+import ReactPasswordToggleIcon from "react-password-toggle-icon";
 import { registersuccess } from "../Base UI Elements/SweetAlert";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import { toastrError } from "../Base UI Elements/Toast";
@@ -27,7 +28,6 @@ const ForgotPassword = () => {
     });
   };
 
-
   let inputRef = useRef();
   const showIcon = () => (
     <i className="feather feather-eye" aria-hidden="true">
@@ -40,9 +40,6 @@ const ForgotPassword = () => {
     </i>
   );
 
-
-
-  
   let inputRef1 = useRef();
   const showIcon1 = () => (
     <i className="feather feather-eye" aria-hidden="true">
@@ -68,8 +65,6 @@ const ForgotPassword = () => {
   }, [emailisvaild]);
 
   const handlepassword = async () => {
-
-    
     if (email.password === email.confirmpassword) {
       try {
         const response = await passwordupdated(
@@ -78,21 +73,20 @@ const ForgotPassword = () => {
           email.password,
           email.confirmpassword
         );
-    
+
         console.log(response); // Log the response
-    
+
         if (response.status === 200) {
           registersuccess("Password is successfully updated.");
         } else {
           // If the update fails, set the error message received from the server
 
-
-          toastrError(response.response.data.errorMessage)
+          toastrError(response.response.data.errorMessage);
         }
       } catch (error) {
         // Log and handle errors
         // console.log(error.response.data.errorMessage);
-        toastrError(error.response.data.errorMessage)
+        toastrError(error.response.data.errorMessage);
         // console.error(error);
       }
     } else {
@@ -100,10 +94,9 @@ const ForgotPassword = () => {
       // setemail({
       //   ...email,
       //   error: "Password and confirm password must be the same",
-      // }); 
+      // });
       toastrError("Password and confirm password must be the same");
     }
-    
   };
 
   return (
@@ -158,14 +151,14 @@ const ForgotPassword = () => {
                         name="password"
                         onChange={handlechange}
                       />
-                        {/* <span className="profile-views">
+                      {/* <span className="profile-views">
                         <i className="fas fa-envelope" />
                       </span> */}
-                    <ReactPasswordToggleIcon
-                      inputRef={inputRef}
-                      showIcon={showIcon}
-                      hideIcon={hideIcon}
-                    />
+                      <ReactPasswordToggleIcon
+                        inputRef={inputRef}
+                        showIcon={showIcon}
+                        hideIcon={hideIcon}
+                      />
                     </div>
                     <div className="form-group">
                       <label>
@@ -179,11 +172,11 @@ const ForgotPassword = () => {
                         onChange={handlechange}
                       />
 
-                    <ReactPasswordToggleIcon
-                      inputRef={inputRef1}
-                      showIcon={showIcon1}
-                      hideIcon={hideIcon1}
-                    />
+                      <ReactPasswordToggleIcon
+                        inputRef={inputRef1}
+                        showIcon={showIcon1}
+                        hideIcon={hideIcon1}
+                      />
                       {/* <span className="profile-views">
                         <i className="fas fa-envelope" />
                       </span> */}
