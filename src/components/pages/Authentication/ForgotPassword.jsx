@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { registerImage } from "../../imagepath";
 
-import { passwordupdated } from "../../HttpRequest/beforelogin";
+import { passwordupdated } from "../../HttpRequest/beforelogin";import ReactPasswordToggleIcon from "react-password-toggle-icon";
+import { registersuccess } from "../Base UI Elements/SweetAlert";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import { toastrError } from "../Base UI Elements/Toast";
 
 const ForgotPassword = () => {
   const [email, setemail] = useState({
@@ -24,6 +27,33 @@ const ForgotPassword = () => {
     });
   };
 
+
+  let inputRef = useRef();
+  const showIcon = () => (
+    <i className="feather feather-eye" aria-hidden="true">
+      <FeatherIcon icon="eye" />
+    </i>
+  );
+  const hideIcon = () => (
+    <i className="feather feather-eye-slash" aria-hidden="true">
+      <FeatherIcon icon="eye-off" />
+    </i>
+  );
+
+
+
+  
+  let inputRef1 = useRef();
+  const showIcon1 = () => (
+    <i className="feather feather-eye" aria-hidden="true">
+      <FeatherIcon icon="eye" />
+    </i>
+  );
+  const hideIcon1 = () => (
+    <i className="feather feather-eye-slash" aria-hidden="true">
+      <FeatherIcon icon="eye-off" />
+    </i>
+  );
   useEffect(() => {
     const urlemail = new URLSearchParams(window.location.search);
     const email = urlemail.get("email");
@@ -38,12 +68,9 @@ const ForgotPassword = () => {
   }, [emailisvaild]);
 
   const handlepassword = async () => {
-    if (email.password !== email.confirmpassword) {
-      setemail({
-        ...email,
-        passworderror: "password and confirm password must be the same",
-      });
-    } else {
+
+    
+    if (email.password === email.confirmpassword) {
       try {
         const response = await passwordupdated(
           email.emailToken,
@@ -51,10 +78,32 @@ const ForgotPassword = () => {
           email.password,
           email.confirmpassword
         );
+    
+        console.log(response); // Log the response
+    
+        if (response.status === 200) {
+          registersuccess("Password is successfully updated.");
+        } else {
+          // If the update fails, set the error message received from the server
+
+
+          toastrError(response.response.data.errorMessage)
+        }
       } catch (error) {
-        console.error(error);
+        // Log and handle errors
+        // console.log(error.response.data.errorMessage);
+        toastrError(error.response.data.errorMessage)
+        // console.error(error);
       }
+    } else {
+      // If passwords don't match, set an error message
+      // setemail({
+      //   ...email,
+      //   error: "Password and confirm password must be the same",
+      // }); 
+      toastrError("Password and confirm password must be the same");
     }
+    
   };
 
   return (
@@ -104,13 +153,19 @@ const ForgotPassword = () => {
                       </label>
                       <input
                         className="form-control"
+                        ref={inputRef}
                         type="text"
-                        name="emailid"
+                        name="password"
                         onChange={handlechange}
                       />
-                      <span className="profile-views">
+                        {/* <span className="profile-views">
                         <i className="fas fa-envelope" />
-                      </span>
+                      </span> */}
+                    <ReactPasswordToggleIcon
+                      inputRef={inputRef}
+                      showIcon={showIcon}
+                      hideIcon={hideIcon}
+                    />
                     </div>
                     <div className="form-group">
                       <label>
@@ -118,13 +173,20 @@ const ForgotPassword = () => {
                       </label>
                       <input
                         className="form-control"
+                        ref={inputRef1}
                         type="text"
-                        name="emailid"
+                        name="confirmpassword"
                         onChange={handlechange}
                       />
-                      <span className="profile-views">
+
+                    <ReactPasswordToggleIcon
+                      inputRef={inputRef1}
+                      showIcon={showIcon1}
+                      hideIcon={hideIcon1}
+                    />
+                      {/* <span className="profile-views">
                         <i className="fas fa-envelope" />
-                      </span>
+                      </span> */}
                     </div>
                     {email.error && (
                       <div className="errormessage">{email.error}</div>

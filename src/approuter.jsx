@@ -83,6 +83,7 @@ import BorrowerWriteTous from "./components/pages/Oxyloans/Borrower/BorrowerWrit
 import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/BorrowerEmaicalculator";
 import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
 import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest.jsx";
+import ForgotPassword from "./components/pages/Authentication/ForgotPassword.jsx";
 
 // ********************BORROWER MODULE    ROUTES END ************************** //
 
@@ -106,6 +107,7 @@ const AppRouter = () => {
         <Route path="/testdeals" element={<UserTestdeals />} />
         <Route path="/forgotpassword" element={<ForgotPassword3 />} />
         <Route path="/partnerRegister" element={<PartnerRegister />} />
+        <Route path="/forgotpassword2" element={<ForgotPassword />} />
         <Route path="/whatsappuser" element={<Whatappuser />} />
         <Route path="/escrowDeals" element={<EscrowDeals />} />
         <Route path="/regularEscrowDeals" element={<RegularEscrowDeals />} />

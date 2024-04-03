@@ -369,12 +369,7 @@ export default function BorrowerRegister() {
                             {toastrWarning(error)}
                           </div>
                         )}
-                        <div className="dont-have">
-                          Register as a{" "}Borrower
-                          <Link to="/register">     {" "}
-                            Lender
-                          </Link>
-                        </div>
+                  
                         <div className="dont-have">
                           Already Registered ? <Link to="/">Login</Link>
                         </div>
@@ -437,12 +432,19 @@ export default function BorrowerRegister() {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
+
+                  <div className="dont-have">
+                          Register as a{" "}
+                          <Link to="/register">     {" "}
+                            Lender
+                          </Link>
+                        </div>
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                    <Link to="/whatsapplogin" className="bg-success text-white">
+                    {/* <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
-                    </Link>
+                    </Link> */}
                     {/* <Link onClick={() => {}} to="#">
                       <i className="fab fa-facebook-f" />
                     </Link>
