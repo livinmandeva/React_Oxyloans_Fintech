@@ -16,8 +16,10 @@ const ForgotPassword = () => {
     emailToken: "",
     email: "",
     password: "",
-    passworderror: "",
+    passworderror: "", 
+       isvaild:true,
     confirmpassword: "",
+
   });
   const [emailisvaild, setemailisvaild] = useState(true);
   const handlechange = (event) => {
@@ -57,14 +59,17 @@ const ForgotPassword = () => {
 
     const emailToken = urlemail.get("emailToken");
 
-    setemail({
-      ...email,
+    setemail((prestate)=>({
+      ...prestate,
       email: email,
       emailToken: emailToken,
-    });
-  }, [emailisvaild]);
+    }));
+  }, []);
 
   const handlepassword = async () => {
+    // if(email.password === "" && email.confirmpassword ===""){
+
+    // }
     if (email.password === email.confirmpassword) {
       try {
         const response = await passwordupdated(
@@ -98,6 +103,20 @@ const ForgotPassword = () => {
       toastrError("Password and confirm password must be the same");
     }
   };
+
+  useEffect(()=>{
+    if( email.password === ""  || email.confirmpassword === ""){
+      setemail((prestate)=>({
+        ...prestate,
+        isvaild:true
+      }))
+    }else{
+      setemail((prestate)=>({
+        ...prestate,
+        isvaild:false
+      }))
+    }
+  }   ,[ email.password, email.confirmpassword ])
 
   return (
     <>
@@ -192,6 +211,7 @@ const ForgotPassword = () => {
                         className="btn btn-primary btn-block"
                         type="submit"
                         onClick={handlepassword}
+                        disabled={email.isvaild}
                       >
                         Reset My Password
                       </button>
