@@ -30,7 +30,6 @@ const LoanRequest = () => {
   };
 
   const handleSubmitHandler = () => {
-    alert("entered");
     const response = submitloanRequest(newloandrequest);
     response.then((data) => {
       if (data.request.status == 200) {
@@ -90,14 +89,18 @@ const LoanRequest = () => {
                       <code>
                         <b>Note : </b>
                       </code>
-                      Loan Eligibility Criteria for a borrower: You should prove
-                      your monthly salary — upload your salary slip in the
-                      system. If your salary is INR 24,000 per month and one
-                      user registers through your referral link, then your loan
-                      eligibility will be INR 2400 (24,000/10=2400). If 50
-                      people join logically, your loan eligibility will be
-                      50*2400=INR 1,20000, but we consider your salary i.e., INR
-                      24000 as your maximum loan eligibility.
+
+                      <div>
+                        {" "}
+                        Loan Eligibility Criteria for a borrower: You should
+                        prove your monthly salary — upload your salary slip in
+                        the system. If your salary is INR 24,000 per month and
+                        one user registers through your referral link, then your
+                        loan eligibility will be INR 2400 (24,000/10=2400). If
+                        50 people join logically, your loan eligibility will be
+                        50*2400=INR 1,20000, but we consider your salary i.e.,
+                        INR 24000 as your maximum loan eligibility.
+                      </div>
                     </p>
                   </div>
                   <div className="card-body">
@@ -248,7 +251,7 @@ const LoanRequest = () => {
                             >
                               ""
                               <option value="null">-- Duration Type --</option>
-                              <option value="month">Month</option>
+                              <option value="months">Month</option>
                               <option value="Days">Days</option>
                             </select>
                           </div>
@@ -314,7 +317,7 @@ const LoanRequest = () => {
                             <button
                               type="button"
                               className="btn btn-primary"
-                              onSubmit={handleSubmitHandler}
+                              onClick={handleSubmitHandler}
                             >
                               Submit
                             </button>

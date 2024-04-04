@@ -155,13 +155,13 @@ const RegularRunningDeal = () => {
                               </Link>
 
                               <div className="col-sm-12 col-lg-2">
-                                RoI : {data.rateOfInterest} %
+                                ROI : {data.rateOfInterest} %
                               </div>
                               <div className="col-sm-12 col-lg-3">
                                 Tenure : {data.duration} Months
                               </div>
                               <div className="col-auto col-lg-3">
-                                Deal Value : {data.dealAmount}
+                                Deal Value : INR {data.dealAmount}
                               </div>
                               {/* <div>Status : Open</div> */}
                             </div>
@@ -204,19 +204,19 @@ const RegularRunningDeal = () => {
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Available Limit</span>
                                   <h6 className="mb-0">
-                                    {data.remainingAmountToPaticipateInDeal}
+                                    INR {data.remainingAmountToPaticipateInDeal}
                                   </h6>
                                 </div>
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Min Amount</span>
                                   <h6 className="mb-0">
-                                    {data.minimumAmountInDeal}
+                                    INR {data.minimumAmountInDeal}
                                   </h6>
                                 </div>
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Max Amount</span>
                                   <h6 className="mb-0">
-                                    {data.lenderPaticipationLimit}
+                                    INR {data.lenderPaticipationLimit}
                                   </h6>
                                 </div>
                                 <div className="col-sm-6 col-lg-2">

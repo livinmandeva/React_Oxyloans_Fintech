@@ -135,14 +135,14 @@ const ViewCurrentDayDeals = () => {
                           <div className="card invoices-grid-card w-100 h-25">
                             <div className="card-header row">
                               <Link
-                                to="/viewinvoice"
+                                to="#"
                                 className="invoice-grid-link col-sm-12 col-lg-4"
                               >
                                 Deal Name: {data.dealName}
                               </Link>
 
                               <div className="col-sm-12 col-lg-2">
-                                RoI : {data.rateOfInterest} %
+                                ROI : {data.rateOfInterest} %
                               </div>
                               <div className="col-sm-12 col-lg-3">
                                 Tenure : {data.duration} Months
@@ -188,19 +188,19 @@ const ViewCurrentDayDeals = () => {
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Available Limit</span>
                                   <h6 className="mb-0">
-                                    {data.remainingAmountToPaticipateInDeal}
+                                    INR {data.remainingAmountToPaticipateInDeal}
                                   </h6>
                                 </div>
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Min Amount</span>
                                   <h6 className="mb-0">
-                                    {data.minimumAmountInDeal}
+                                    INR {data.minimumAmountInDeal}
                                   </h6>
                                 </div>
                                 <div className="col-sm-6 col-lg-2">
                                   <span>Max Amount</span>
                                   <h6 className="mb-0">
-                                    {data.lenderPaticipationLimit}
+                                    INR {data.lenderPaticipationLimit}
                                   </h6>
                                 </div>
                                 <div className="col-sm-6 col-lg-2">

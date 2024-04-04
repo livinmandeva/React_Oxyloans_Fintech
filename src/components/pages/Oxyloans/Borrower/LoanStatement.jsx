@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import BorrowerHeader from "../../../Header/BorrowerHeader";
 import BorrowerSidebar from "../../../SideBar/BorrowerSidebar";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Table, Space, Tag, Button, Flex } from "antd";
 import { onShowSizeChange } from "../../../Pagination";
-import { getBorrowerApplication } from "../../../HttpRequest/afterlogin";
+import {
+  getBorrowerApplication,
+  editloanNewRequestHold,
+} from "../../../HttpRequest/afterlogin";
+import {
+  HandleWithFooter,
+  WarningAlertWalltTran,
+  WarningAlerterror,
+} from "../../Base UI Elements/SweetAlert";
 
 const LoanStatement = () => {
   const [myapplicationStatus, setmyapplication] = useState({
@@ -21,6 +29,21 @@ const LoanStatement = () => {
       defaultPageSize: Pagination.pageSize,
       pageNo: Pagination.current,
       pageSize: Pagination.pageSize,
+    });
+  };
+
+  const editandrejectLoanRequest = (status) => {
+    const response = editloanNewRequestHold(status);
+    response.then((data) => {
+      if (data.request.status == 200) {
+        HandleWithFooter(
+          `You have successfully modified the loan request as ${status}`
+        );
+      } else if (data.request.status == 403) {
+        WarningAlertWalltTran(data.response.data.errorMessage);
+      } else {
+        WarningAlerterror(data.response.data.errorMessage);
+      }
     });
   };
 
@@ -62,13 +85,27 @@ const LoanStatement = () => {
             action: (
               <>
                 <Button type="primary" ghost>
-                  Edit
+                  <NavLink to={"/loanRequest"}>Edit</NavLink>
                 </Button>
 
-                <Button type="primary" danger ghost>
+                <Button
+                  type="primary"
+                  danger
+                  ghostn
+                  onClick={() => {
+                    editandrejectLoanRequest("Hold");
+                  }}
+                >
                   Hold
                 </Button>
-                <Button type="dashed">Delete</Button>
+                <Button
+                  type="dashed"
+                  onClick={() => {
+                    editandrejectLoanRequest("Rejected");
+                  }}
+                >
+                  Delete
+                </Button>
               </>
             ),
           });

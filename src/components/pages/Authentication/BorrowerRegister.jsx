@@ -370,14 +370,10 @@ export default function BorrowerRegister() {
                             {toastrWarning(error)}
                           </div>
                         )}
-<<<<<<< Updated upstream
-                  
-=======
-                        <div className="dont-have">
+                        {/* <div className="dont-have">
                           Register as a Borrower
                           <Link to="/register"> Lender</Link>
-                        </div>
->>>>>>> Stashed changes
+                        </div> */}
                         <div className="dont-have">
                           Already Registered ? <Link to="/">Login</Link>
                         </div>
@@ -440,13 +436,9 @@ export default function BorrowerRegister() {
                   </div>
                   {/* Social Login */}
                   <div className="social-login">
-
-                  <div className="dont-have">
-                          Register as a{" "}
-                          <Link to="/register">     {" "}
-                            Lender
-                          </Link>
-                        </div>
+                    <div className="dont-have">
+                      Register as a <Link to="/register"> Lender</Link>
+                    </div>
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}

@@ -1912,7 +1912,6 @@ export const borrowerloaslistings = async (pageNo = 1, pageSize = 10) => {
 };
 
 export const submitloanRequest = async (postdata) => {
-  console.log(postdata);
   const token = getToken();
   const userId = getUserId();
 
@@ -1929,6 +1928,23 @@ export const submitloanRequest = async (postdata) => {
     API_BASE_URL,
     `${userId}/loan/BORROWER/newrequest`,
     "POST",
+    token,
+    postdatastring
+  );
+
+  return response;
+};
+
+export const editloanNewRequestHold = async (status) => {
+  const token = getToken();
+  const userId = getUserId();
+  const postdatastring = JSON.stringify({
+    status: status,
+  });
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `${userId}/loan/BORROWER/updateLoanRequest`,
+    "PATCH",
     token,
     postdatastring
   );
