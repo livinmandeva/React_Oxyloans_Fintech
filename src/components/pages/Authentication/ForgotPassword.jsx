@@ -53,6 +53,7 @@ const ForgotPassword = () => {
       <FeatherIcon icon="eye-off" />
     </i>
   );
+ 
   useEffect(() => {
     const urlemail = new URLSearchParams(window.location.search);
     const email = urlemail.get("email");
