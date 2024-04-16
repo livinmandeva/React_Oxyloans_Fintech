@@ -369,6 +369,18 @@ const ReferaFriend = () => {
                         Setup Neo Bank
                       </Link>
                     </li>
+
+                    <li className="nav-item">
+                      <Link
+                        className="nav-link"
+                        data-bs-toggle="tab"
+                        to="#BulkInvite_tab"
+                        onClick={handlebulkInvite}
+                      >
+                        <i className="fa-solid mx-1 fa-cloud-arrow-up"></i>
+                        Vinod
+                      </Link>
+                    </li>
                   </ul>
                 </div>
                 <div className="tab-content profile-tab-cont">

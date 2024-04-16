@@ -84,6 +84,7 @@ import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/Borrower
 import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
 import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest.jsx";
 import ForgotPassword from "./components/pages/Authentication/ForgotPassword.jsx";
+import Mycontacts1 from "./components/pages/Oxyloans/Lender/Mycontacts1.jsx";
 
 // ********************BORROWER MODULE    ROUTES END ************************** //
 
@@ -161,6 +162,7 @@ const AppRouter = () => {
         <Route path="/referaFriend" element={<ReferaFriend />} />
         <Route path="/myreferalStatus" element={<MyreferalStatus />} />
         <Route path="/lendercontacts" element={<Mycontacts />} />
+        <Route path="/lendercontacts1" element={<Mycontacts1 />} />
         <Route
           path="/walletToWalletHistory"
           element={<WalletToWalletHistory />}

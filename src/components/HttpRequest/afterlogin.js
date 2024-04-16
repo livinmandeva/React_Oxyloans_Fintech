@@ -631,6 +631,24 @@ export const fetchGamilCode = async (gmailcode) => {
   );
   return response;
 };
+export const fetchGamilCode1 = async (gmailcode) => {
+  const token = getToken();
+  const userId = getUserId();
+
+  const postdata = {
+    gmailCode: gmailcode,
+    userType: "LENDER",
+    projectType: "REACT",
+  };
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `getAllContactsFromGmailAccount/${userId}`,
+    "POST",
+    token,
+    postdata
+  );
+  return response;
+};
 
 export const handleapicall = async (
   dealId,
