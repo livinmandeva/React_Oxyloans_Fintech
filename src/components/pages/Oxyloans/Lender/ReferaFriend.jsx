@@ -370,7 +370,7 @@ const ReferaFriend = () => {
                       </Link>
                     </li>
 
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <Link
                         className="nav-link"
                         data-bs-toggle="tab"
@@ -380,7 +380,7 @@ const ReferaFriend = () => {
                         <i className="fa-solid mx-1 fa-cloud-arrow-up"></i>
                         Vinod
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
                 <div className="tab-content profile-tab-cont">
