@@ -237,7 +237,7 @@ export const vaildateotp = async (
     };
   }
   if (utmForPartner === "Borrower") {
-    data.utmForPartner = "";
+    data.utmForPartner = "";   
     data.primaryType = "BORROWER";
     // localStorage.setItem("type", "")
 }

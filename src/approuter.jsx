@@ -76,15 +76,12 @@ import BorrowerRunningLoans from "./components/pages/Oxyloans/Borrower/RunningLo
 import BorrowerWriteTous from "./components/pages/Oxyloans/Borrower/BorrowerWriteToUs";
 import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/BorrowerEmaicalculator";
 import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
-<<<<<<< Updated upstream
+
 
 import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest.jsx";
 import ForgotPassword from "./components/pages/Authentication/ForgotPassword.jsx";
 import Mycontacts1 from "./components/pages/Oxyloans/Lender/Mycontacts1.jsx";
-=======
-import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest";
-import ForgotPassword from "./components/pages/Authentication/ForgotPassword";
->>>>>>> Stashed changes
+
 
 // ********************BORROWER MODULE    ROUTES END ************************** //
 
@@ -102,10 +99,6 @@ const AppRouter = () => {
           path="/register_active_proceed"
           element={<Register_active_proceed />}
         />
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         <Route path="/profile" element={<Profile />} />
         <Route path="/testdeals" element={<UserTestdeals />} />
         <Route path="/forgotpassword" element={<ForgotPassword3 />} />
