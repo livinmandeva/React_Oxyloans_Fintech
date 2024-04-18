@@ -127,13 +127,14 @@ export default function BorrowerRegister() {
           registrationField.pancard,
           registrationField.password,
           session,
-          registrationField.referrerId
+          registrationField.referrerId,
+          "Borrower"
         );
 
         localStorage.setItem("id", response.responseData.userId);
         const mill1 = new Date().getTime();
         localStorage.setItem("timemilll", mill1);
-        navigate("/register_active_proceed");
+        // navigate("/register_active_proceed");
       } else {
         setError("Please enter a valid OTP");
       }
