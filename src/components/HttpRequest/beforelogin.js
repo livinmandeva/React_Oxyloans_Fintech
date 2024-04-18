@@ -32,7 +32,7 @@ const handleApiRequestBeforeLogin = async (
 export const sendotpemail = async (email) => {
   const data = {
     email: email,
-    projectType:"REACT"
+    projectType: "REACT",
   };
   const response = handleApiRequestBeforeLogin(
     "POST",

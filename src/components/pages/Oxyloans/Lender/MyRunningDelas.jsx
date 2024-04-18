@@ -224,7 +224,7 @@ const MyRunningDeals = () => {
                             </Link>
 
                             <div className="col-sm-12 col-lg-2">
-                              RoI :{data.rateOfInterest} %
+                              ROI :{data.rateOfInterest} %
                             </div>
                             <div className="col-sm-12 col-lg-3">
                               Tenure : {data.dealDuration} M

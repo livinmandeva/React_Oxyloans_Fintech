@@ -58,7 +58,7 @@ const Membership = React.memo((pros) => {
   const membershipsweetalertconformation = (membership, no) => {
     Swal.fire({
       title: "Are you willing to proceed with the payment at this moment ?",
-      showDenyButton: false,
+      showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Pay Through wallet",
       cancelButtonText: "cancel",
@@ -162,7 +162,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong> INR 1180 </strong>
+                              <strong> 1000 + 18 % GST </strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">
@@ -212,7 +212,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong>INR 3422</strong>
+                              <strong>2900+18 % GST</strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">
@@ -268,7 +268,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong>INR 6608</strong>
+                              <strong>5600 + 18 % GST</strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">
@@ -324,7 +324,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong>INR 5900</strong>
+                              <strong>9800 + 18 % GST</strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">
@@ -380,7 +380,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong> INR 23600</strong>
+                              <strong> 50000 + 18 % GST</strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">
@@ -436,7 +436,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong>INR 26550</strong>
+                              <strong>90000 + 18 % GST</strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">
@@ -492,7 +492,7 @@ const Membership = React.memo((pros) => {
                           </div>
                           <div className="card-body">
                             <p className="lead">
-                              <strong>INR 29500</strong>
+                              <strong>100000 + 18 % GST</strong>
                             </p>
                             <ul className="list-group">
                               <li className="list-group-item">

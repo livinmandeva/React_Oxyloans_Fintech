@@ -65,7 +65,7 @@ const Writetous = () => {
   useEffect(() => {
     const fetchallQueriesCount1 = async () => {
       try {
-        const response = await allQueriesCount1(); // Assuming lenderTotalInvestmentsAndReturns is an asynchronous function
+        const response = await allQueriesCount1();
 
         setqueryresponse({
           ...queryresponse,

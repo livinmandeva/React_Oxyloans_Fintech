@@ -22,7 +22,7 @@ const MyParticipateStatementTable = ({ data }) => {
 
   const columns = [
     {
-      title: "S no",
+      title: "S#",
       dataIndex: "Sno",
       sorter: (a, b) => parseInt(a) - parseInt(b),
     },

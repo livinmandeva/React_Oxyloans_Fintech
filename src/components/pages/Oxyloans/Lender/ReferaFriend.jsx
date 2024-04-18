@@ -259,7 +259,7 @@ const ReferaFriend = () => {
                         For more information and frequently asked questions,
                         please visit{" "}
                         <a
-                          href="https://sites.google.com/oxyloans.com/referrer-faq/home"
+                          href="https://sites.google.com/oxyloans.com/oxyloansfaq/referral-faq?authuser=0"
                           target="_blank"
                         >
                           FAQS / MORE

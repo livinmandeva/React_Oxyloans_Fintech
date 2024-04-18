@@ -7,10 +7,8 @@ import { Link } from "react-router-dom";
 import "../Oxyloans/Lender/table.css";
 
 import {
-  chatapi,
   getDashboardInvestment,
   regular_Api,
-  getInterestEarnings,
   getNoDealsParticipated,
 } from "../../HttpRequest/afterlogin";
 import { Table } from "antd";
@@ -22,7 +20,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   awardicon01,
-  awardicon04,
   dashboard1,
   dashboard2,
   dashboard3,
@@ -35,10 +32,7 @@ import {
   getUserDetails,
   getactivityApisData,
 } from "../../HttpRequest/afterlogin";
-import {
-  personalDetails,
-  validityDatemodal,
-} from "../Base UI Elements/SweetAlert";
+import { personalDetails } from "../Base UI Elements/SweetAlert";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -145,191 +139,6 @@ const AdminDashboard = () => {
       },
     },
   });
-
-  const [investmentTotalEaring, setinvestmentTotalEaring] = useState({
-    series: [
-      {
-        name: "Principal Return",
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 70, 62, 66],
-      },
-      {
-        name: "Interest Earning",
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 80, 61, 69],
-      },
-      {
-        name: "Referal Earning",
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 92, 88, 66],
-      },
-    ],
-    options: {
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      colors: ["#237abf", "#5c9b45", "#93B1A6"],
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          endingShape: "rounded",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-      },
-      yaxis: {
-        // title: {
-        //   text: " My Interest vs Principal vs Earning",
-        // },
-      },
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val;
-          },
-        },
-      },
-    },
-  });
-
-  const [noofdeals, setnoofdeals] = useState({
-    series: [
-      {
-        name: "Investment ",
-        data: [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      },
-      {
-        name: "Interest Earnings",
-        data: [50, 32, 33, 52, 13, 43, 32, 41, 37, 22, 43, 21],
-      },
-      {
-        name: "Principal Returned",
-        data: [90, 17, 11, 9, 15, 11, 20, 41, 37, 22, 43, 21],
-      },
-      {
-        name: "Referral Earnings",
-        data: [80, 7, 5, 8, 6, 9, 4, 41, 37, 22, 43, 21],
-      },
-      {
-        name: "Total Earnings",
-        data: [96, 12, 19, 32, 25, 24, 10, 41, 37, 22, 43, 21],
-      },
-    ],
-    options: {
-      colors: ["#AEC3AE", "#EAC696", "#EEE0C9", "#ADC4CE", "#96B6C5"],
-      chart: {
-        type: "bar",
-        height: 350,
-        stacked: true,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          verticial: true,
-          dataLabels: {
-            total: {
-              enabled: true,
-              offsetX: 0,
-            },
-          },
-        },
-      },
-      stroke: {
-        width: 1,
-      },
-      title: {
-        text: "",
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "June",
-          "July",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ],
-        labels: {
-          formatter: function (val) {
-            return val;
-          },
-        },
-      },
-      yaxis: {
-        title: {
-          text: undefined,
-        },
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return val + "K";
-          },
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      legend: {
-        position: "top",
-        horizontalAlign: "left",
-        offsetX: -20,
-      },
-    },
-  });
-
-  const [googledata, setgoogledate] = useState([
-    [
-      { type: "date", id: "Date" },
-      { type: "number", id: "Won/Loss" },
-    ],
-  ]);
-
-  // const googledata = [
-  //   [
-  //     { type: "date", id: "Date" },
-  //     { type: "number", id: "Won/Loss" },
-  //   ],
-  //   [new Date(2023, 1, 4), 38177],
-  //   [new Date(2023, 1, 5), 38705],
-  //   [new Date(2023, 1, 12), 38210],
-  //   [new Date(2023, 1, 13), 38029],
-  //   [new Date(2023, 1, 19), 38823],
-  //   [new Date(2023, 1, 23), 38345],
-  //   [new Date(2023, 1, 24), 38436],
-  //   [new Date(2023, 2, 10), 38447],
-  //   [new Date(2023, 11, 10), 38447],
-  // ];
 
   const columns = [
     {
@@ -575,7 +384,7 @@ const AdminDashboard = () => {
                     </h3>
                     <ul className="breadcrumb">
                       <li className="breadcrumb-item active">
-                        <Link to="/viewCurrentDayDeals">Today Delas</Link>
+                        <Link to="/viewCurrentDayDeals">Today Deals</Link>
                       </li>
                       <li className="breadcrumb-item">
                         {" "}
@@ -731,44 +540,7 @@ const AdminDashboard = () => {
               </div>
             </div>
             {/* /Overview Section */}
-            <div className="row ">
-              <div className="col-md-12 col-lg-6 d-none">
-                {/* Revenue Chart */}
-                <div className="card card-chart d-i">
-                  <div className="card-header">
-                    <div className="row align-items-center">
-                      <div className="col-6">
-                        <small className="card-title">
-                          Investment & Returns
-                        </small>
-                      </div>
-                      <div className="col-6">
-                        <ul className="chart-list-out">
-                          <li>
-                            <span className="circle-blue" />
-                            Investment
-                          </li>
-                          <li>
-                            <span className="circle-green" />
-                            Total Returns
-                          </li>
-                          <li className="star-menus">
-                            <Link to="#">
-                              <i className="fas fa-ellipsis-v" />
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <div id="apexcharts-area"></div>
-                    {/* <Chart options={data} series={series} type="line" /> */}
-                  </div>
-                </div>
-                {/* /Revenue Chart */}
-              </div>
-
+            <div className="row">
               <div className="col-md-12 col-lg-6 ">
                 {/* Student Chart */}
                 <div className="card card-chart">
@@ -793,29 +565,6 @@ const AdminDashboard = () => {
                 {/* /Student Chart */}
               </div>
 
-              <div className="col-md-12 col-lg-6 d-none">
-                {/* Student Chart */}
-                <div className="card card-chart">
-                  <div className="card-header">
-                    <div className="row align-items-center">
-                      <div className="col-6">
-                        <h6 className="card-title">Investment In Deals</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <div id="apexcharts-area"></div>
-                    {/* <Chart
-                      options={DistributedColumns.options}
-                      series={DistributedColumns.series}
-                      type="bar"
-                    /> */}
-                  </div>
-                </div>
-
-                {/* /Student Chart */}
-              </div>
-
               <div className="col-12 col-lg-4 col-xl-6 d-flex">
                 <div className="card flex-fill comman-shadow">
                   <div className="card-header">
@@ -829,7 +578,6 @@ const AdminDashboard = () => {
                   </div>
                   <div className="dash-widget d-flex justify-content-center align-items-center">
                     <div className="circle-bar circle-bar">
-                      {/* <div className="circle-graph1" data-percent={50}> */}
                       <ProgressBar
                         width={270}
                         radius={75}
@@ -862,95 +610,6 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="col-xl-12 col-md-12 d-flex d-none">
-                <div className="card flex-fill comman-shadow">
-                  <div className="card-header">
-                    <div className="row align-items-center">
-                      <div className="col-12">
-                        <h5 className="card-title text-center">
-                          Interest Earnings Day-Wise Report : 2023
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="dash-widget d-flex justify-content-center align-items-center">
-                    <div className="w-100 scrolling">
-                      {/* <GoogleChart
-                        chartType="Calendar"
-                        loader={<div>Loading Chart</div>}
-                        data={googledata}
-                        options={{
-                          calendar: {
-                            dayOfWeekLabel: {
-                              fontName: "Times-Roman",
-                              fontSize: 12,
-                              color: "#1a8763",
-                              bold: true,
-                              italic: true,
-                            },
-                            cellColor: {
-                              stroke: "#76a7fa",
-                              strokeOpacity: 0.5,
-                              strokeWidth: 1,
-                            },
-
-                            dayOfWeekRightSpace: 10,
-                          },
-                        }}
-                      /> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-12 col-lg-12 d-none">
-                {/* Student Chart */}
-                <div className="card card-chart">
-                  <div className="card-header">
-                    <div className="row align-items-center">
-                      <div className="col-6">
-                        <h6 className="card-title">MY Earnings & Returns</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <div id="apexcharts-area"></div>
-                    <Chart
-                      options={investmentTotalEaring.options}
-                      series={investmentTotalEaring.series}
-                      type="bar"
-                      height={350}
-                    />
-                  </div>
-                </div>
-
-                {/* /Student Chart */}
-              </div>
-
-              <div className="col-md-12 col-lg-12" style={{ display: "none" }}>
-                {/* Student Chart */}
-                <div className="card card-chart">
-                  <div className="card-header">
-                    <div className="row align-items-center">
-                      <div className="col-6">
-                        <h6 className="card-title">My Activities : 2023</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-body">
-                    <div id="apexcharts-area"></div>
-                    <Chart
-                      options={noofdeals.options}
-                      series={noofdeals.series}
-                      type="bar"
-                      height={420}
-                    />
-                  </div>
-                </div>
-
-                {/* /Student Chart */}
               </div>
             </div>
             <div className="row">
@@ -1079,78 +738,6 @@ const AdminDashboard = () => {
                                   </div>
                                 </div>
                               ))}
-
-                        {/* {regular_runningDeal.apidata
-                        .listOfDealsInformationToLender &&
-                      Array.isArray(
-                        regular_runningDeal.apidata
-                          .listOfDealsInformationToLender
-                      )
-                        ? regular_runningDeal.apidataESCROW
-                          ? regular_runningDeal.apidata.listOfDealsInformationToLender.map(
-                              (data, index) => (
-                                <div
-                                  key={`listOfDealsInfo-${index}`}
-                                  className="activity-awards"
-                                >
-                                  <div className="award-boxs">
-                                    <img src={awardicon01} alt="Award" />
-                                  </div>
-                                  <div className="award-list-outs">
-                                    <h4> {data.dealName}</h4>
-                                    <h5>
-                                      Min: {data.minimumAmountInDeal}, Max:
-                                      {data.lenderPaticipationLimit}, RoI:
-                                      {data.rateOfInterest}%{data.repaymentType}
-                                    </h5>
-                                  </div>
-                                  <div className="award-time-list">
-                                    <Link
-                                      to={`participatedeal?dealId=${data.dealId}`}
-                                    >
-                                      <span>Participate</span>
-                                    </Link>
-                                  </div>
-                                </div>
-                              )
-                            )
-                          : regular_runningDeal.apidata.listOfDealsInformationToLender
-                              .slice(0, 4)
-                              .map((data, index) => (
-                                <div
-                                  key={`listOfDealsInfo-${index}`}
-                                  className="activity-awards"
-                                >
-                                  <div className="award-boxs">
-                                    <img src={awardicon01} alt="Award" />
-                                  </div>
-                                  <div className="award-list-outs">
-                                    <h4
-                                      style={{
-                                        fontWeight: "400",
-                                        inlineSize: "18rem",
-                                      }}
-                                      className="textwrap"
-                                    >
-                                      {data.dealName}
-                                    </h4>
-                                    <h5>
-                                      Min: {data.minimumAmountInDeal}, Max:{" "}
-                                      {data.lenderPaticipationLimit}, RoI:{" "}
-                                      {data.rateOfInterest}%{" "}
-                                      {data.repaymentType}
-                                    </h5>
-                                  </div>
-                                  <div className="award-time-list">
-                                    <Link
-                                      to={`participatedeal?dealId=${data.dealId}`}
-                                    >
-                                      <span>Participate</span>
-                                    </Link>
-                                  </div>
-                                </div>
-                              ))
-                        : "No running deals are available."} */}
                       </div>
                     </div>
                   </div>

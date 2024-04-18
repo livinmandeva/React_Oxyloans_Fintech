@@ -4,7 +4,7 @@ import { regular_Api } from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import "./InvoiceGrid.css";
 import SideBar from "../../../SideBar/SideBar";
-import { Table, Pagination, Progress, Space } from "antd";
+import { Table, Pagination, Progress } from "antd";
 
 const RegularRunningDeal = () => {
   const [regular_runningDeal, setRegularRunningDeal] = useState({

@@ -1,22 +1,20 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import EscrowDeals from "./components/pages/Oxyloans/Admin/Deals/EscrowDeals/EscrowDeals";
+import Login from "./components/pages/Authentication";
+import AdminDashboard from "./components/pages/Dashboard/AdminDashboard";
 import MainAdminDashboard from "./components/pages/Oxyloans/Admin/MainAdminDashboard";
 import TestDeals from "./components/pages/Oxyloans/Admin/Deals/TestDeals/TestDeals";
 import ViewCurrentDayDeals from "./components/pages/Oxyloans/Lender/ViewCurrentDayDeals";
 import ViewDeals from "./components/pages/Oxyloans/Admin/Deals/CreateDeal/ViewDeals";
 import UserTestdeals from "./components/pages/Oxyloans/Lender/TestDeal";
-
-import Login from "./components/pages/Authentication";
 import Participatedeal from "./components/pages/Oxyloans/Lender/Participatedeal";
 import Admlogin from "./components/pages/Authentication/Admlogin";
 import Membership from "./components/pages/Oxyloans/Lender/Membership";
 import Spining from "./components/pages/Oxyloans/Lender/Spining";
 import Loginotp from "./components/pages/Authentication/Loginotp";
-
 import ConfigautoInvest from "./components/pages/Oxyloans/Lender/ConfigautoInvest";
-import AdminDashboard from "./components/pages/Dashboard/AdminDashboard";
 import EarningCertificate from "./components/pages/Oxyloans/Lender/EarningCertificate";
 import Emicalculator from "./components/pages/Oxyloans/Lender/Emicalculator";
 import LoadwaletThroughQr from "./components/pages/Oxyloans/Lender/LoadwaletThroughQr";
@@ -33,7 +31,6 @@ import MypartiallClosedDeal from "./components/pages/Oxyloans/Lender/MypartiallC
 import MyreferalStatus from "./components/pages/Oxyloans/Lender/MyreferalStatus";
 import MyRunningDeals from "./components/pages/Oxyloans/Lender/MyRunningDelas";
 import ReferaFriend from "./components/pages/Oxyloans/Lender/ReferaFriend";
-
 import RegularRunningDeal from "./components/pages/Oxyloans/Lender/RegularRunningDeal";
 import TransferWalletToWallet from "./components/pages/Oxyloans/Lender/TransferWalletToWallet";
 import ViewAutoHistory from "./components/pages/Oxyloans/Lender/ViewAutoHistory";
@@ -60,11 +57,8 @@ import TicketHistory from "./components/pages/Oxyloans/Lender/TicketHistory";
 import MywithdrawalHistory from "./components/pages/Oxyloans/Lender/MywithdrawalHistory";
 import WalletToWalletTransactionHistory from "./components/pages/Oxyloans/Lender/WalletToWalletTransactionHistory";
 import RegularEscrowDeals from "./components/pages/Oxyloans/Lender/RegularEscrowDeals";
-import PaymentGateway from "./components/pages/Oxyloans/Lender/PaymentGateway.jsx";
-import Whatappuser from "./components/pages/Authentication/Whatappuser.jsx";
 
-// ********************BORROWER MODULE    ROUTE ************************** //
-
+import Whatappuser from "./components/pages/Authentication/Whatappuser";
 import BorrowerDashboard from "./components/pages/Dashboard/BorrowerDashboard";
 import BorrowerProfile from "./components/pages/Oxyloans/Borrower/BorrowerProfile";
 import BorrowerAgreedLoans from "./components/pages/Oxyloans/Borrower/AgreedLoan";
@@ -82,6 +76,7 @@ import BorrowerRunningLoans from "./components/pages/Oxyloans/Borrower/RunningLo
 import BorrowerWriteTous from "./components/pages/Oxyloans/Borrower/BorrowerWriteToUs";
 import BorrowerEmiCalculator from "./components/pages/Oxyloans/Borrower/BorrowerEmaicalculator";
 import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTicketHistory";
+
 import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest.jsx";
 import ForgotPassword from "./components/pages/Authentication/ForgotPassword.jsx";
 import Mycontacts1 from "./components/pages/Oxyloans/Lender/Mycontacts1.jsx";
@@ -102,8 +97,6 @@ const AppRouter = () => {
           path="/register_active_proceed"
           element={<Register_active_proceed />}
         />
-        {/* <Route path="/paymentgateway" element={<PaymentGateway />} /> */}
-
         <Route path="/profile" element={<Profile />} />
         <Route path="/testdeals" element={<UserTestdeals />} />
         <Route path="/forgotpassword" element={<ForgotPassword3 />} />

@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, RouterProvider } from "react-router-dom";
-// import { App } from "./app";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/plugins/bootstrap/css/bootstrap.min.css";
 //CSS & Bootstrap
@@ -15,10 +14,11 @@ import "./assets/plugins/fontawesome/css/all.min.css";
 import Approuter from "./approuter";
 import { Provider } from "react-redux";
 import store from "./components/Redux/Store";
-// import { newRouter } from "./appcontainer.jsx";
+
 import Loader from "./loader.jsx";
 import ReactGA from "react-ga";
 const TRACKING_ID = "374962014"; // OUR_TRACKING_ID
+
 ReactGA.initialize(TRACKING_ID);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -26,7 +26,6 @@ root.render(
   <Provider store={store}>
     <Suspense fallback={<Loader />}>
       <Approuter></Approuter>
-      {/* <RouterProvider router={newRouter} /> */}
     </Suspense>
   </Provider>
 );

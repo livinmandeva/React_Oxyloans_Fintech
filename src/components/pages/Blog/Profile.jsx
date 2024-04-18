@@ -3,39 +3,30 @@ import React from "react";
 import SideBar from "../../SideBar/SideBar";
 import Header from "../../Header/Header";
 import { Link } from "react-router-dom";
-import { avatar02 } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { useState, useEffect } from "react";
-import {
-  Success,
-  WarningAlerterror,
-  WarningBackendApi,
-} from "../Base UI Elements/SweetAlert";
+import { Success, WarningBackendApi } from "../Base UI Elements/SweetAlert";
 import { toastrSuccess, toastrWarning } from "../Base UI Elements/Toast";
 
 import {
   profileupadate,
   getUserDetails,
-  handleapicall,
   sendMoblieOtp,
   loadlendernomineeDetails,
   savenomineeDeatailsApi,
   verifyBankAccountAndIfsc,
   updatebankDetails,
   uploadkyc,
-  getAllUploadedDocs,
   getPanDoc,
   getdataPassport,
   getdatachequeLeaf,
   getdataDrivingLicence,
   getdataVoterId,
   getdataAadhar,
-  handelnomeeclickapi,
   handlepincodeapicall,
 } from "../../HttpRequest/afterlogin";
 
-import { useDispatch, useSelector } from "react-redux";
-import { getProfile } from "../../Redux/Slice";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const reduxStoreData = useSelector((data) => data.counter.userProfile);
@@ -222,9 +213,8 @@ const Profile = () => {
 
   const handleKeyPress = (event) => {
     const inputChar = event.key;
-    const regex = /^[a-zA-Z]*$/; // Regular expression to allow only alphabets
+    const regex = /^[a-zA-Z]*$/;
 
-    // Check if the pressed key is an alphabetic character or backspace
     if (!regex.test(inputChar) && inputChar !== "Backspace") {
       event.preventDefault();
     }
