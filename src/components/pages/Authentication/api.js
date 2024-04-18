@@ -211,11 +211,11 @@ export const vaildateotp = async (
       email: email,
       password: password,
       citizenship: "NONNRI",
-      uniqueNumber: 0,
+      uniqueNumber: "0",
       utm: "WEB",
       // uuid: "asdfghjkl",
       cifNumber: null,
-      finoEmployeeMobileNumber: null,
+      finoEmployeeMobileNumber: "0",
       
     };
   } else {
@@ -229,7 +229,7 @@ export const vaildateotp = async (
       password: password,
       citizenship: "NONNRI",
       uniqueNumber: uniqnumber,
-      utmForPartner: null,
+      utmForPartner: "",
       utm: "WEB",
       cifNumber: null,
       finoEmployeeMobileNumber: null,
@@ -238,10 +238,9 @@ export const vaildateotp = async (
   }
   if (utmForPartner === "Borrower") {
     data.utmForPartner = "";
-    data.primaryType = "Borrower";
-    
-    localStorage.setItem("type", "")
-  }
+    data.primaryType = "BORROWER";
+    // localStorage.setItem("type", "")
+}
   try {
     const response = await axios.post(
       API_BASE_URL + "/newUserRegistration",
