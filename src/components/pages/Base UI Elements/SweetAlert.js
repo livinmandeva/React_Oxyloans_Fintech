@@ -34,6 +34,18 @@ export const HandleWithTitle = () => {
     buttonsStyling: !1,
   });
 };
+
+export const emailLinkActive = (message) => {
+  Swal.fire({
+    type: "success",
+    type: "info",
+    icon: "success",
+    title: "You are one step away from completing registration.",
+    text: "An activation link has been sent to your registered e-mail. Please check your inbox and activate your OxyLoans account to start Lending",
+    confirmButtonClass: "btn btn-primary",
+    buttonsStyling: !1,
+  });
+};
 export const HandleWithFooter = (message) => {
   Swal.fire({
     type: "success",

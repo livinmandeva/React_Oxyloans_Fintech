@@ -118,8 +118,16 @@ const Register_active_proceed = () => {
     });
   };
   useEffect(() => {
-    const id = localStorage.getItem("id");
-    const getimemail = localStorage.getItem("timemilll");
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const getimemail = urlParams.get("time");
+
+    console.log("ID:", id);
+
+    console.log("Time:", getimemail);
+
+    // const id = localStorage.getItem("id");
+    // const getimemail = localStorage.getItem("timemilll");
     settime(getimemail);
     setid(id);
   }, []);

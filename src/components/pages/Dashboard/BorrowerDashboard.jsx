@@ -18,7 +18,7 @@ import {
 } from "../../imagepath";
 import Footer from "../../Footer/Footer";
 
-import { personalDetails } from "../Base UI Elements/SweetAlert";
+
 
 const BorrowerDashboard = () => {
   const dispatch = useDispatch();

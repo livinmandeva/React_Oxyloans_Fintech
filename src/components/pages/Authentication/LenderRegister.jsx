@@ -7,6 +7,7 @@ import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import OtpInput from "./OtpInput";
 import { toastrWarning } from "../Base UI Elements/Toast";
+import { emailLinkActive } from "../Base UI Elements/SweetAlert";
 export default function LenderRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
@@ -21,7 +22,7 @@ export default function LenderRegister() {
     email: "",
     pancard: "",
     password: "",
-    referrerId: "",
+    referrerId: "0",
     moblie: "",
     emailerror: "",
     pancarderror: "",
@@ -71,6 +72,7 @@ export default function LenderRegister() {
     }
   };
   const handleLenderRegister = async () => {
+   
     setRegistrationField((prevState) => ({
       ...prevState,
       emailerror:
@@ -131,8 +133,9 @@ export default function LenderRegister() {
 
         localStorage.setItem("id", response.responseData.userId);
         const mill1 = new Date().getTime();
-        localStorage.setItem("timemilll", mill1);
-        navigate("/register_active_proceed");
+        // localStorage.setItem("timemilll", mill1);
+        // navigate("/register_active_proceed");
+         emailLinkActive();
       } else {
         setError("Please enter a valid OTP");
       }
@@ -369,7 +372,6 @@ export default function LenderRegister() {
                             {toastrWarning(error)}
                           </div>
                         )}
-                
                         <div className="dont-have">
                           Already Registered ? <Link to="/">Login</Link>
                         </div>
@@ -435,11 +437,10 @@ export default function LenderRegister() {
                     {/* <Link to="#">
                       <i className="fab fa-google-plus-g" />
                     </Link> */}
-                            <div className="dont-have">
-                          Register as a{" "}
-                          <Link to="/borrower_register">
-                            Borrower
-                          </Link></div>
+                    <div className="dont-have">
+                      Register as a{" "}
+                      <Link to="/borrower_register">Borrower</Link>
+                    </div>
                     {/* <Link to="/whatsapplogin" className="bg-success text-white">
                       <i className="fa fa-whatsapp" />{" "}
                     </Link> */}

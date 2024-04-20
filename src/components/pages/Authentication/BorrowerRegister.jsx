@@ -7,6 +7,7 @@ import * as api from "./api";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import OtpInput from "./OtpInput";
 import { toastrWarning } from "../Base UI Elements/Toast";
+import { emailLinkActive } from "../Base UI Elements/SweetAlert";
 export default function BorrowerRegister() {
   let inputRef = useRef();
   let inputRef2 = useRef();
@@ -133,8 +134,9 @@ export default function BorrowerRegister() {
 
         localStorage.setItem("id", response.responseData.userId);
         const mill1 = new Date().getTime();
-        localStorage.setItem("timemilll", mill1);
+        // localStorage.setItem("timemilll", mill1);
         // navigate("/register_active_proceed");
+        emailLinkActive();
       } else {
         setError("Please enter a valid OTP");
       }
