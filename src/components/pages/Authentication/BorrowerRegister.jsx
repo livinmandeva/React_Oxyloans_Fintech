@@ -134,13 +134,12 @@ export default function BorrowerRegister() {
         localStorage.setItem("id", response.responseData.userId);
         const mill1 = new Date().getTime();
         localStorage.setItem("timemilll", mill1);
-        // navigate("/register_active_proceed");
+        navigate("/register_active_proceed");
       } else {
         setError("Please enter a valid OTP");
       }
     } catch (error) {
       console.log("enter error");
-
       console.error(
         "Error:",
         error.response ? error.response.data.errorMessage : error.message

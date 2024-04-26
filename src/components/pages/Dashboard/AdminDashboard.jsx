@@ -94,6 +94,8 @@ const AdminDashboard = () => {
       : "";
   }
 
+  const [dashboardcarddata , setdashboardcarddata]=useState({})
+
   const [dealsProgressed, setdealsProgressed] = useState({
     totalDeals: 0,
     participatedDeals: 0,
@@ -112,6 +114,7 @@ const AdminDashboard = () => {
         color: "#664DC9",
       },
     ],
+  
     options: {
       chart: {
         height: 350,
@@ -237,6 +240,8 @@ const AdminDashboard = () => {
     const activeres = getactivityApisData();
     activeres.then((data) => {
       if (data.request.status == 200) {
+
+        setdashboardcarddata(data.data)
         Settreemap({
           ...treemap,
           series: [
@@ -382,15 +387,7 @@ const AdminDashboard = () => {
                               .toLowerCase() ?? ""
                         : ""}
                     </h3>
-                    <ul className="breadcrumb">
-                      <li className="breadcrumb-item active">
-                        <Link to="/viewCurrentDayDeals">Today Deals</Link>
-                      </li>
-                      <li className="breadcrumb-item">
-                        {" "}
-                        <Link to="/myRunningDeals">Participated Deals</Link>
-                      </li>
-                    </ul>
+     
                   </div>
                 </div>
               </div>
@@ -437,6 +434,9 @@ const AdminDashboard = () => {
                               ? getdashboardData?.numberOfActiveDealsCount ?? 0
                               : ""}
                           </h3>
+                          <span className="badge bg-success  mt-2">INR {dashboardcarddata?.length !== 0
+                              ? dashboardcarddata?.activeDealsAmount ?? 0
+                              : ""}</span>
                         </div>
                         <div className="db-icon">
                           <img
@@ -463,6 +463,9 @@ const AdminDashboard = () => {
                               ? getdashboardData?.numberOfClosedDealsCount ?? 0
                               : ""}
                           </h3>
+                          <span className="badge bg-warning mt-2">INR  {dashboardcarddata?.length !== 0
+                              ? dashboardcarddata?.closedDealsAmount ?? 0
+                              : ""} </span>   
                         </div>
                         <div className="db-icon">
                           <img
@@ -489,7 +492,11 @@ const AdminDashboard = () => {
                               getdashboardData?.numberOfActiveDealsCount
                             : ""}
                         </h3>
-                      </div>
+
+                        <span className="badge bg-success mt-2">INR {dashboardcarddata?.length !== 0
+                              ? dashboardcarddata?.disbursedDealsAmount ?? 0
+                              : ""}</span>
+                      </div>    
                       <div className="db-icon">
                         <img
                           src={dashboard4}
