@@ -420,6 +420,7 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   </div>
+                 <Link to="/earningCertificate">  <div  className="card-footer m-0 p-1 c-black"  style={{ color:'gray' ,textAlign:'center'}}>Earnings FY :  24-25</div></Link>
                 </div>
               </div>
               <div className="col-xl-3 col-sm-6 col-12 d-flex">
@@ -434,9 +435,9 @@ const AdminDashboard = () => {
                               ? getdashboardData?.numberOfActiveDealsCount ?? 0
                               : ""}
                           </h3>
-                          <span className="badge bg-success  mt-2">INR {dashboardcarddata?.length !== 0
+                          {/* <span className="badge bg-success  mt-2">INR {dashboardcarddata?.length !== 0
                               ? dashboardcarddata?.activeDealsAmount ?? 0
-                              : ""}</span>
+                              : ""}</span> */}
                         </div>
                         <div className="db-icon">
                           <img
@@ -448,6 +449,9 @@ const AdminDashboard = () => {
                         </div>
                       </div>
                     </div>
+                    <div  className="card-footer m-0 p-1 c-black"  style={{ color:'gray' ,textAlign:'center'}}><strong>INR </strong> {dashboardcarddata?.length !== 0
+                              ? dashboardcarddata?.activeDealsAmount ?? 0
+                              : ""}</div>
                   </Link>
                 </div>
               </div>
@@ -463,9 +467,9 @@ const AdminDashboard = () => {
                               ? getdashboardData?.numberOfClosedDealsCount ?? 0
                               : ""}
                           </h3>
-                          <span className="badge bg-warning mt-2">INR  {dashboardcarddata?.length !== 0
+                          {/* <span className="badge bg- mt-2" style={{backgroundColor: "rgb(245 116 89)",}}>INR  {dashboardcarddata?.length !== 0
                               ? dashboardcarddata?.closedDealsAmount ?? 0
-                              : ""} </span>   
+                              : ""} </span>    */}
                         </div>
                         <div className="db-icon">
                           <img
@@ -477,6 +481,9 @@ const AdminDashboard = () => {
                         </div>
                       </div>
                     </div>
+                    <div  className="card-footer m-0 p-1 c-black"  style={{ color:'gray' ,textAlign:'center'}}><strong>INR :</strong> {dashboardcarddata?.length !== 0
+                              ? dashboardcarddata?.closedDealsAmount ?? 0
+                              : ""}</div>
                   </Link>
                 </div>
               </div>
@@ -493,9 +500,9 @@ const AdminDashboard = () => {
                             : ""}
                         </h3>
 
-                        <span className="badge bg-success mt-2">INR {dashboardcarddata?.length !== 0
+                        {/* <span className="badge bg-warning mt-2">INR {dashboardcarddata?.length !== 0
                               ? dashboardcarddata?.disbursedDealsAmount ?? 0
-                              : ""}</span>
+                              : ""}</span> */}
                       </div>    
                       <div className="db-icon">
                         <img
@@ -507,6 +514,9 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   </div>
+                  <div  className="card-footer m-0 p-1 c-black"  style={{ color:'gray' ,textAlign:'center'}}><strong>INR :</strong> {dashboardcarddata?.length !== 0
+                              ? dashboardcarddata?.disbursedDealsAmount ?? 0
+                              : ""}</div>
                 </div>
               </div>
             </div>
