@@ -463,7 +463,7 @@ const AdminDashboard = () => {
                               ? getdashboardData?.numberOfClosedDealsCount ?? 0
                               : ""}
                           </h3>
-                          <span className="badge bg-warning mt-2">INR  {dashboardcarddata?.length !== 0
+                          <span className="badge bg- mt-2" style={{backgroundColor: "rgb(245 116 89)",}}>INR  {dashboardcarddata?.length !== 0
                               ? dashboardcarddata?.closedDealsAmount ?? 0
                               : ""} </span>   
                         </div>
@@ -493,7 +493,7 @@ const AdminDashboard = () => {
                             : ""}
                         </h3>
 
-                        <span className="badge bg-success mt-2">INR {dashboardcarddata?.length !== 0
+                        <span className="badge bg-warning mt-2">INR {dashboardcarddata?.length !== 0
                               ? dashboardcarddata?.disbursedDealsAmount ?? 0
                               : ""}</span>
                       </div>    
