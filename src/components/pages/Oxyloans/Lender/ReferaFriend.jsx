@@ -161,6 +161,8 @@ const ReferaFriend = () => {
     setEmailres({
       ...emailres,
       invaitlenderlink: !emailres.invaitlenderlink,
+      invaitNrilink:false,
+      invaitborrowerlink:false
     });
   };
   const invitenri = async () => {
@@ -175,12 +177,14 @@ const ReferaFriend = () => {
     setEmailres({
       ...emailres,
       invaitNrilink: !emailres.invaitNrilink,
+      invaitlenderlink: false,
+      invaitborrowerlink:false
     });
   };
   const Inviteborrower = async () => {
     const userId = localStorage.getItem("userType");
     const input = document.createElement("input");
-    input.value = `https://www.oxyloans.com/new/register_borrower?ref=${userId}`;
+    input.value = `https://www.p2pclub.oxyloans.com/borrower_register?ref=${userId}`;
     document.body.appendChild(input);
     input.select();
     document.execCommand("copy");
@@ -188,7 +192,9 @@ const ReferaFriend = () => {
 
     setEmailres({
       ...emailres,
-      invaitlenderlink: !emailres.invaitlenderlink,
+      invaitborrowerlink: !emailres.invaitborrowerlink,
+      invaitNrilink: false,
+      invaitlenderlink: false,
     });
   };
 
@@ -606,7 +612,7 @@ const ReferaFriend = () => {
                                   onClick={handleprofilesubmit}
                                   disabled={profile.savebtndisable}
                                 >
-                                  Save Deatils
+                                  Send
                                 </button>
                               </div>
                             </div>
