@@ -35,7 +35,7 @@ const Profile = () => {
   );
 
   const [dashboarddata, setdashboarddata] = useState({
-    sendotpbtn: false,
+    sendotpbtn: true,
     sendotpbtnText: "Send OTP",
     sendOtpsession: "",
     verifyotp: true,
@@ -848,7 +848,7 @@ const Profile = () => {
         userProfile.pinCode === "" ? "Please Enter The Pincode" : "",
       stateerror: userProfile.state === "" ? "Please Enter The State" : "",
       whatsAppNumbererror:
-        userProfile.whatsAppNumber === "" ||
+        userProfile.whatsAppNumber === "" || userProfile.whatsAppNumber === null ||
         userProfile.whatsAppNumber.length < 10
           ? " WhatsApp Number should be 10 digits"
           : "",
@@ -1076,18 +1076,22 @@ const Profile = () => {
       fetchApiData6(),
     ])
       .then((responses) => {
+        console.log(responses[0].value.data)
         setKyc({
           ...kyc,
-          PanCard: responses[0].data,
-          Passport: responses[1].data,
-          CHEQUELEAF: responses[2].data,
-          DRIVINGLICENCE: responses[3].data,
-          VOTERID: responses[4].data,
-          aadhar: responses[5].data,
+          PanCard: responses[0].value.data,
+          Passport: responses[1].value.data,
+          CHEQUELEAF: responses[2].value.data,
+          DRIVINGLICENCE: responses[3].value.data,
+          VOTERID: responses[4].value.data,
+          aadhar: responses[5].value.data,
         });
       })
       .catch((error) => {});
   }, [kyc.isValid]);
+  
+
+  
 
   return (
     <>
@@ -1096,7 +1100,7 @@ const Profile = () => {
         <Header />
 
         {/* Sidebar */}
-        <SideBar />
+        <SideBar />    
 
         {/* Page Wrapper */}
 
@@ -1582,19 +1586,19 @@ const Profile = () => {
                               )}
 
                               <div className="col-12 row">
-                                {dashboarddata.verifyotp && (
+                                {/* {dashboarddata.verifyotp && (
                                   <>
                                     <button
                                       className="btn btn-warning col-md-2 mx-2"
                                       style={{ color: "white" }}
                                       type="submit"
                                       onClick={verifybankAccountCashfree}
-                                    >
+                                    > */}
                                       {/* {dashboarddata.verifyotpText} */}
-                                      Verify IFSC
-                                    </button>
+                                      {/* Verify IFSC */}
+                                    {/* </button>
                                   </>
-                                )}
+                                )}     */}
                                 {dashboarddata.sendotpbtn && (
                                   <button
                                     className="btn btn-secondary col-md-2 mx-2"
@@ -2214,7 +2218,8 @@ const Profile = () => {
                                     </i>
                                   </label>
                                 </div>
-
+                                   
+                                   {console.log(kyc)}
                                 {kyc.PanCard != undefined &&
                                 kyc.PanCard != "" ? (
                                   <h6 className="settings-size text-success">

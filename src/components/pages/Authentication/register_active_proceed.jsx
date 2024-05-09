@@ -117,11 +117,21 @@ const Register_active_proceed = () => {
       [name]: value,
     });
   };
+  // useEffect(() => {
+  //   const id = localStorage.getItem("id");
+  //   const time = localStorage.getItem("time");
+  //   settime(time);
+  //   setid(id);
+  // }, []);
   useEffect(() => {
-    const id = localStorage.getItem("id");
-    const getimemail = localStorage.getItem("timemilll");
-    settime(getimemail);
+    const urlemail = new URLSearchParams(window.location.search);
+    const id = urlemail.get("id");
+
+    const time = urlemail.get("time");
+    console.log(id , time)
+    settime(time);
     setid(id);
+  
   }, []);
 
   // useEffect(() => {

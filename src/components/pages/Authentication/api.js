@@ -72,6 +72,10 @@ export const sendotpemail = async (email) => {
 };
 
 export const verifypannumber = async (pannumber, address, time, id, date) => {
+
+ 
+
+  
   var data = {
     address: address,
     dob: date,
@@ -211,6 +215,7 @@ export const vaildateotp = async (
       email: email,
       password: password,
       citizenship: "NONNRI",
+      projectType: "REACT",
       uniqueNumber: "0",
       utm: "WEB",
       // uuid: "asdfghjkl",
@@ -229,6 +234,7 @@ export const vaildateotp = async (
       password: password,
       citizenship: "NONNRI",
       uniqueNumber: uniqnumber,
+      projectType: "REACT",
       utmForPartner: "",
       utm: "WEB",
       cifNumber: null,

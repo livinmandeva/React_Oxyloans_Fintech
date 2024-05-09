@@ -131,10 +131,12 @@ export default function BorrowerRegister() {
           "Borrower"
         );
 
+        setfield(false);
+        setsubmitotp(true);
         localStorage.setItem("id", response.responseData.userId);
         const mill1 = new Date().getTime();
         localStorage.setItem("timemilll", mill1);
-        navigate("/register_active_proceed");
+        // navigate("/register_active_proceed");
       } else {
         setError("Please enter a valid OTP");
       }
@@ -223,7 +225,7 @@ export default function BorrowerRegister() {
                         <p className="textcent">
                           An activation link has been sent to your registered
                           e-mail. Please check your inbox and activate your
-                          OxyLoans account to start Lending
+                          OxyLoans account to start borrowing
                         </p>
                       </div>
                     </>
