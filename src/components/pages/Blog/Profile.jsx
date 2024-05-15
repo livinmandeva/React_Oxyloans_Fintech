@@ -96,7 +96,7 @@ const Profile = () => {
     mobileOtpSession: "",
     bankAccountError: "",
     updateBankDetails: true,
-    nameAtBank: "eerr",
+    nameAtBank: "",
     bankCity: "",
     moblieNumbererror: "",
     bankAccounterror: "",
@@ -222,9 +222,9 @@ const Profile = () => {
   useEffect(() => {
     if (
       bankaccountprofile.accountNumber ===
-        bankaccountprofile.confirmAccountNumber ||
-      bankaccountprofile.confirmAccountNumber === "" ||
-      bankaccountprofile.accountNumber === ""
+        bankaccountprofile.confirmAccountNumber 
+      // bankaccountprofile.confirmAccountNumber !== "" &&
+      // bankaccountprofile.accountNumber !== ""
     ) {
       setBankaccountProfile({
         ...bankaccountprofile,

@@ -139,16 +139,18 @@ const ForgotPassword = () => {
                   {/* <form action="./login"> */}
 
                   <div>
-                    <h1>Reset Password</h1>
-                    <p className="account-subtitle">
+                    <h1  className="text-center">Reset Password</h1> 
+                    <p></p>
+                    {/* <p className="account-subtitle">
                       Enter the email address associated with your account and
                       we'll send you a link to reset your password
-                    </p>
+                    </p> */}
+                    <p></p>
                     {/* Form */}
                     {/* <form action="./login"> */}
                     <div className="form-group">
                       <label>
-                        email address <span className="login-danger">*</span>
+                        Email address <span className="login-danger">*</span>
                       </label>
                       <input
                         className="form-control"
@@ -162,7 +164,7 @@ const ForgotPassword = () => {
                     </div>
                     <div className="form-group">
                       <label>
-                        password <span className="login-danger">*</span>
+                        Password <span className="login-danger">*</span>
                       </label>
                       <input
                         className="form-control"
@@ -182,7 +184,7 @@ const ForgotPassword = () => {
                     </div>
                     <div className="form-group">
                       <label>
-                        confirm password <span className="login-danger">*</span>
+                        Confirm password <span className="login-danger">*</span>
                       </label>
                       <input
                         className="form-control"

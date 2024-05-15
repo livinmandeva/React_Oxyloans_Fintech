@@ -84,7 +84,6 @@ import Mycontacts1 from "./components/pages/Oxyloans/Lender/Mycontacts1.jsx";
 
 
 // ********************BORROWER MODULE    ROUTES END ************************** //
-
 const AppRouter = () => {
   return (
     <BrowserRouter>
