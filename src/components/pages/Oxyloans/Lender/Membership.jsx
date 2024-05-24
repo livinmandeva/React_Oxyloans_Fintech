@@ -217,7 +217,7 @@ const Membership = React.memo((pros) => {
                             <ul className="list-group">
                               <li className="list-group-item">
                                 <i className="icon-ok text-danger"></i>
-                                <b className="paymembership_tenture">3</b> Month
+                                <b className="paymembership_tenture">3</b> Months
                                 Membership
                               </li>
                               <li className="list-group-item">
@@ -273,7 +273,7 @@ const Membership = React.memo((pros) => {
                             <ul className="list-group">
                               <li className="list-group-item">
                                 <i className="icon-ok text-danger"></i>
-                                <b className="paymembership_tenture">6</b> Month
+                                <b className="paymembership_tenture">6</b> Months
                                 Membership
                               </li>
                               <li className="list-group-item">

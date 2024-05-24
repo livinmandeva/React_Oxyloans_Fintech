@@ -18,7 +18,7 @@ const Table1 = ({ data }) => {
 
   const columns = [
     {
-      title: "so",
+      title: "S no",
       dataIndex: "so",
       sorter: (a, b) => a.so - b.so,
     },

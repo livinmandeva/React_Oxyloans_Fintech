@@ -761,7 +761,7 @@ export const confirmationAlertFyYear = (startdate, enddate, downloadType) => {
 export const downloadClosedLoanStatementAlert = (type) => {
   Swal.fire({
     title: "Are you sure?",
-    text: `You want to download All  Closed Loan Information  `,
+    text: `You want to download All  Closed Deal Information  `,
     icon: "info",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

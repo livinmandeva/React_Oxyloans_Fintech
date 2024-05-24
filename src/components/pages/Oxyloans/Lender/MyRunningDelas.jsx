@@ -230,7 +230,7 @@ const MyRunningDeals = () => {
                               Tenure : {data.dealDuration} M
                             </div>
                             <div className="col-auto col-lg-3">
-                              Participated : INR {data.paticipatedAmount}
+                              Participated Amount: INR {data.paticipatedAmount}
                             </div>
                             {/* <div>Status : Open</div> */}
                           </div>
@@ -262,7 +262,7 @@ const MyRunningDeals = () => {
                                 <h6 className="mb-0">{data.lederReturnType}</h6>
                               </div>
                               <div className="col-sm-6 col-lg-1">
-                                <span>Is ATW</span>
+                                <span> ATW</span>
                                 <h6 className="mb-0">{data.withdrawStatus}</h6>
                               </div>
 

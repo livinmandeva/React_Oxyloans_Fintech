@@ -89,7 +89,7 @@ const EarningCertificate = () => {
       sorter: (a, b) => a.FY.length - b.FY.length,
     },
     {
-      title: "Earnings",
+      title: "EARNINGS",
       dataIndex: "EARNINGS",
       sorter: (a, b) => a.EARNINGS - b.EARNINGS,
     },
