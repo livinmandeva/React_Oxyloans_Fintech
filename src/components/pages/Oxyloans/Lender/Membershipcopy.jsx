@@ -10,7 +10,6 @@ import {
   fetchcashfree,
   handlePaymembershipapi,
   getpaymentorder,
-  lenderfeeamountdetailsapi,
 } from "../../../HttpRequest/afterlogin";
 import {
   registersuccess,
@@ -31,12 +30,6 @@ const Membership = React.memo((pros) => {
     loading5: false,
     loading: false,
   });
-
-  const [loadingIndex, setLoadingIndex] = useState(null);
-  const [membershipdata, setmebershipdata]=useState({
-    data:[],
-    isLoading:true,
-  })
   const [payment, setpaymentsession] = useState("");
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -46,21 +39,23 @@ const Membership = React.memo((pros) => {
     mode: "production",
   });
 
-  const handlePaymembershipfree = async (membership, no , feeAmountWithGst) => {
+  const handlePaymembershipfree = async (membership, no) => {
     try {
       setmywalletTowalletHistory({
         ...mywalletTowalletHistory,
         [`loading${no}`]: true,
       });
-      setLoadingIndex(no);
-      const response = await membershipsweetalertconformation(membership, no ,feeAmountWithGst);
+      const response = await membershipsweetalertconformation(membership, no);
       console.log(response);
     } catch (error) {
       console.error(`Error: ${error.errorMessage}`);
-      setLoadingIndex(no);
+      setmywalletTowalletHistory({
+        ...mywalletTowalletHistory,
+        [`loading${no}`]: false,
+      });
     }
   };
-  const membershipsweetalertconformation = (membership, no  , feeAmountWithGst) => {
+  const membershipsweetalertconformation = (membership, no) => {
     Swal.fire({
       title: "Are you willing to proceed with the payment at this moment ?",
       showDenyButton: true,
@@ -70,7 +65,7 @@ const Membership = React.memo((pros) => {
       denyButtonText: "Payment Gateway",
     }).then((result) => {
       if (result.isConfirmed) {
-        const response = handlePaymembershipapi(membership, no , feeAmountWithGst);
+        const response = handlePaymembershipapi(membership, no);
         response.then((data) => {
           if (data.status == 200) {
             Swal.fire("Success!", `Payment received successfully!`, "success");
@@ -79,16 +74,10 @@ const Membership = React.memo((pros) => {
             }, 5000);
           } else {
             membershipsweetalert(data.response.data.errorMessage);
-            setmywalletTowalletHistory({
-              [`loading${no}`]: false,
-            })
           }
         });
       } else if (result.isDenied) {
         paymentordercreation(membership, no);
-          setmywalletTowalletHistory({
-              [`loading${no}`]: false,
-            })
       } else if (result.dismiss) {
         console.log("dismiss");
       }
@@ -111,31 +100,6 @@ const Membership = React.memo((pros) => {
     return () => {};
   }, [myorder]);
 
-
-
-  useEffect(() => {
-    const lenderfeeamountdetails = async () => {
-      try {
-        const response = await lenderfeeamountdetailsapi();
-        if (response.status === 200) {
-          setmebershipdata({
-            data: response.data,
-            isLoading: false,
-          });
-        } else {
-          throw new Error('Failed to fetch data');
-        }
-      } catch (error) {
-        console.error(error);
-        setMembershipdata({
-          data: [],
-          isLoading: false,
-        });
-      }
-    };
-
-    lenderfeeamountdetails();
-  }, [lenderfeeamountdetailsapi]);
   useEffect(() => {
     if (payment != null || payment != "") {
       let checkoutOptions = {
@@ -157,11 +121,9 @@ const Membership = React.memo((pros) => {
     console.log(resposnse);
   };
 
-  const buttonNumber = 0;
+  const buttonNumber = 1;
   const isButtonLoading = mywalletTowalletHistory[`loading${buttonNumber}`];
-  if (membershipdata.isLoading) {
-    return <div>Loading...</div>;
-  }
+
   return (
     <>
       <div className="main-wrapper">
@@ -193,128 +155,13 @@ const Membership = React.memo((pros) => {
                 <div className="card card-table">
                   <div className="card-body">
                     <div className="row">
-
-{console.log(membershipdata.data[6])}
-
-
- {membershipdata.data.length !== 0 ? (
-  
-        <>
-          {membershipdata.data.slice(6, 7).map((data , index) => (
-            <div className="col-lg-4 col-md-12 col-sm-12" >
-              <div className="card text-center membership-border">
-                <div className="card-header">
-                  {/* {console.log(data.feeAmount)} */}
-                  <h3   className="card_heading" style={{textTransform: "capitalize  !important"}}>{data.lenderFeePayments} PLAN</h3>                </div>
-                <div className="card-body">
-                  <p className="lead" style={{fontSize:'16px',fontWeight:"bold"}}>
-                    <strong> {data.feeAmount} + 18% GST = {data.feeAmountWithGst}</strong>
-                  </p>
-                  <ul className="list-group">
-                    <li className="list-group-item">
-                      <i className="icon-ok text-danger"></i>
-                      <b className="paymembership_tenture"></b>{data.lenderFeePayments}  Membership
-                    </li>
-                    <li className="list-group-item">
-                      <i className="icon-ok text-danger"></i>
-                      Unlimited Deals Participation
-                    </li>
-                  </ul>
-                </div>
-                <div className="card-footer">
-                  
-                {console.log(isButtonLoading , index)}
-                  {isButtonLoading   ?(
-                    <button
-                      type="button"
-                      className="btn bg-success bg-gradient btn-block text-center text-white"
-                    >
-                      <div className="spinner-border text-light" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className={`btn bg-success bg-gradient btn-block text-center text-white bg-succe11 bg-success${index}`}
-                      onClick={() => {
-                        // handlePaymembershipfree("MONTHLY", 1).finally(() => {
-                        // });
-
-                        handlePaymembershipfree(data.lenderFeePayments, index + 1 , data.feeAmountWithGst).finally(() => {
-                           });
-                      }}
-                    >
-                      Subscribe
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-    {membershipdata.data.slice(0, 6).map((data , index) => (
-            <div className="col-lg-4 col-md-12 col-sm-12" >
-              <div className="card text-center membership-border">
-                <div className="card-header">
-                  {/* {console.log(data.feeAmount)} */}
-                  <h3   className="card_heading" style={{textTransform: "capitalize  !important"}}>{data.lenderFeePayments} PLAN</h3>                </div>
-                <div className="card-body">
-                  <p className="lead" style={{fontSize:'16px',fontWeight:"bold"}}>
-                    <strong> {data.feeAmount} + 18% GST = {data.feeAmountWithGst}</strong>
-                  </p>
-                  <ul className="list-group">
-                    <li className="list-group-item">
-                      <i className="icon-ok text-danger"></i>
-                      <b className="paymembership_tenture"></b>{data.lenderFeePayments}  Membership
-                    </li>
-                    <li className="list-group-item">
-                      <i className="icon-ok text-danger"></i>
-                      Unlimited Deals Participation
-                    </li>
-                  </ul>
-                </div>
-                <div className="card-footer">
-                  
-                {console.log(isButtonLoading , index)}
-                  {isButtonLoading   ?(
-                    <button
-                      type="button"
-                      className="btn bg-success bg-gradient btn-block text-center text-white"
-                    >
-                      <div className="spinner-border text-light" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className={`btn bg-success bg-gradient btn-block text-center text-white  bg-success${index}`}
-                      onClick={() => {
-                        // handlePaymembershipfree("MONTHLY", 1).finally(() => {
-                        // });
-
-                        handlePaymembershipfree(data.lenderFeePayments, index + 1 , data.feeAmountWithGst).finally(() => {
-                           });
-                      }}
-                    >
-                      Subscribe
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </>
-      ) : (
-        <div>no data</div>
-      )}
-                      {/* <div className="col-lg-4  col-md-12 col-sm-12">
+                      <div className="col-lg-4  col-md-12 col-sm-12">
                         <div className="card text-center membership-border">
                           <div className="card-header">
                             <h3>1 Month Plan</h3>
                           </div>
                           <div className="card-body">
-                            <p c-lassName="lead">
+                            <p className="lead">
                               <strong> 1000 + 18 % GST </strong>
                             </p>
                             <ul className="list-group">
@@ -357,8 +204,8 @@ const Membership = React.memo((pros) => {
                             )}
                           </div>
                         </div>
-                      </div> */}
-                      {/* <div className="col-lg-4  col-md-12 col-sm-12 border-5 border-info">
+                      </div>
+                      <div className="col-lg-4  col-md-12 col-sm-12 border-5 border-info">
                         <div className="card text-center membership-border">
                           <div className="card-header">
                             <h3>3 Months plan</h3>
@@ -693,7 +540,7 @@ const Membership = React.memo((pros) => {
                             )}
                           </div>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 </div>

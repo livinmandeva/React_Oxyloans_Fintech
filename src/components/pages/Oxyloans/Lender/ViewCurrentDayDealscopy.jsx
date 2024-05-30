@@ -68,7 +68,7 @@ const ViewCurrentDayDeals = () => {
         setRegularRunningDeal({
           ...regular_runningDeal,
           apidata: data.data,
-          paginationCount: data.data.listOfDealsInformationToLender.length,
+          paginationCount: data.data.totalCount,
         });
       });
     };

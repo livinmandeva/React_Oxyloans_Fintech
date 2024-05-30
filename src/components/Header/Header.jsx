@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   getUserDetails,
   getSessionExpireTime,
+  getUserDetails1,
 } from "../HttpRequest/afterlogin";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -54,7 +55,7 @@ const Header = (profile) => {
   useEffect(() => {
     dispatch(fetchData());
     dispatch(fetchDatadashboard());
-    getUserDetails().then((data) => {
+    getUserDetails1().then((data) => {
       if (data.request.status == 200) {
         localStorage.setItem("userType", data.data.userDisplayId);
         setdashboarddata({

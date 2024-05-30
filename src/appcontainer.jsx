@@ -426,6 +426,11 @@ export const newRouter = createBrowserRouter([
     errorElement: <Error404></Error404>,
   },
   {
+    path: "/todaydeal",
+    element: <Todaydeal />,
+    errorElement: <Error404></Error404>,
+  },
+  {
     path: "/emicalculator",
     element: <Emicalculator />,
     errorElement: <Error404></Error404>,

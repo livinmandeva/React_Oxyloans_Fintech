@@ -3,6 +3,7 @@ import { getUserDetails } from "../HttpRequest/afterlogin";
 
 export const fetchData = createAsyncThunk("fetchData", async () => {
   const response = getUserDetails().then((data) => data.data);
+  console.log(response)
   return response;
 });
 

@@ -1,20 +1,79 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { regular_Api } from "../../../HttpRequest/afterlogin";
+import {
+  getNotAchievedDealsapi,
+  regular_Api,
+} from "../../../HttpRequest/afterlogin";
 import Header from "../../../Header/Header";
 import "./InvoiceGrid.css";
 import SideBar from "../../../SideBar/SideBar";
 import { Table, Pagination, Progress, Space } from "antd";
 
-const ViewCurrentDayDeals = () => {
+const Testdeal1 = () => {
   const navigate = useNavigate();
 
-  const [regular_runningDeal, setRegularRunningDeal] = useState({
-    apidata: "",
-    dealtype: "CURRENT",
-    paginationCount: 1,
-    pageno: 1,
-  });
+  const [regular_runningDeal, setRegularRunningDeal] = useState([
+    // {
+    //   groupId: null,
+    //   groupName: null,
+    //   dealId: 668,
+    //   dealName: "LOAD 27-05-24",
+    //   borrowerName: "OXYLOANS",
+    //   dealAmount: 500000.0,
+    //   rateOfInterest: 0.1,
+    //   fundsAcceptanceStartDate: null,
+    //   fundsAcceptanceEndDate: "2024-05-27",
+    //   dealLink: "amazonn.in",
+    //   fundingStatus: null,
+    //   duration: 1,
+    //   lenderMonthlyRateOfInterest: null,
+    //   remainingAmountToPaticipateInDeal: null,
+    //   lenderPaticipateStatus: null,
+    //   dealCreatedType: null,
+    //   totalPaticipatedAmount: null,
+    //   minimumAmountInDeal: 5000,
+    //   lenderPaticipationLimit: 50000,
+    //   firstParticipationDate: null,
+    //   lastParticipationDate: null,
+    //   listOfBorrowersMappedTodeal: null,
+    //   withdrawStatus: null,
+    //   roiForWithdraw: null,
+    //   messageSentToLenders: null,
+    //   borrowersMappedStatus: false,
+    //   repaymentType: null,
+    //   dealStatus: null,
+    // },
+    // {
+    //   groupId: null,
+    //   groupName: null,
+    //   dealId: 668,
+    //   dealName: "LOAD 27-05-24",
+    //   borrowerName: "OXYLOANS",
+    //   dealAmount: 500000.0,
+    //   rateOfInterest: 0.1,
+    //   fundsAcceptanceStartDate: null,
+    //   fundsAcceptanceEndDate: "2024-05-27",
+    //   dealLink: "amazonn.in",
+    //   fundingStatus: null,
+    //   duration: 1,
+    //   lenderMonthlyRateOfInterest: null,
+    //   remainingAmountToPaticipateInDeal: null,
+    //   lenderPaticipateStatus: null,
+    //   dealCreatedType: null,
+    //   totalPaticipatedAmount: null,
+    //   minimumAmountInDeal: 5000,
+    //   lenderPaticipationLimit: 50000,
+    //   firstParticipationDate: null,
+    //   lastParticipationDate: null,
+    //   listOfBorrowersMappedTodeal: null,
+    //   withdrawStatus: null,
+    //   roiForWithdraw: null,
+    //   messageSentToLenders: null,
+    //   borrowersMappedStatus: false,
+    //   repaymentType: null,
+    //   dealStatus: null,
+    // },
+  ]);
 
   const dataSource = [];
 
@@ -47,35 +106,53 @@ const ViewCurrentDayDeals = () => {
   ];
 
   const changepagination = (pros) => {
+    console.log(pros);
     setRegularRunningDeal({
       ...regular_runningDeal,
       pageno: pros,
     });
   };
 
+  //   useEffect(() => {
+  //     const urlparams = window.location.pathname;
+  //     const urldealname = urlparams.slice(1);
+
+  //     const handleRegular = () => {
+  //       const response = regular_Api(
+  //         regular_runningDeal.dealtype,
+  //         urldealname,
+  //         regular_runningDeal.pageno
+  //       );
+
+  //       response.then((data) => {
+  //         setRegularRunningDeal({
+  //           ...regular_runningDeal,
+  //           apidata: data.data,
+  //           paginationCount: data.data.listOfDealsInformationToLender.length,
+  //         });
+  //       });
+  //     };
+
+  //     handleRegular();
+  //     return () => {};
+  //   }, [regular_runningDeal.pageno]);
+
   useEffect(() => {
     const urlparams = window.location.pathname;
     const urldealname = urlparams.slice(1);
 
     const handleRegular = () => {
-      const response = regular_Api(
-        regular_runningDeal.dealtype,
-        urldealname,
-        regular_runningDeal.pageno
-      );
+      const response = getNotAchievedDealsapi("TEST");
 
       response.then((data) => {
-        setRegularRunningDeal({
-          ...regular_runningDeal,
-          apidata: data.data,
-          paginationCount: data.data.listOfDealsInformationToLender.length,
-        });
+        console.log(data.data);
+        setRegularRunningDeal(data.data);
       });
     };
 
     handleRegular();
     return () => {};
-  }, [regular_runningDeal.pageno]);
+  }, []);
 
   return (
     <>
@@ -91,7 +168,7 @@ const ViewCurrentDayDeals = () => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col">
-                  <h3 className="page-title">Today's Deals</h3>
+                  <h3 className="page-title">Test Deals</h3>
                   <ul className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/dashboard">Dashboard</Link>
@@ -124,11 +201,10 @@ const ViewCurrentDayDeals = () => {
                 onChange={changepagination}
               />
             </div>
-            {regular_runningDeal.apidata != "" && (
+            {regular_runningDeal != "" && (
               <>
-                {regular_runningDeal.apidata.listOfDealsInformationToLender
-                  .length > 0 ? (
-                  regular_runningDeal.apidata.listOfDealsInformationToLender.map(
+                {regular_runningDeal.length > 0 ? (
+                  regular_runningDeal?.map(
                     (data, index) => (
                       <div className="row" key={index}>
                         <div className="col-sm-12 col-lg-12 col-xl-12 col-12 my-lg-2">
@@ -144,34 +220,37 @@ const ViewCurrentDayDeals = () => {
                               <div className="col-sm-12 col-lg-2">
                                 ROI : {data.rateOfInterest} %
                               </div>
+                              <div className="col-sm-12 col-lg-2">
+                                Deal Id : {data.dealId}
+                              </div>
                               <div className="col-sm-12 col-lg-3">
                                 Tenure : {data.duration} Months
                               </div>
-                              <div className="col-auto col-lg-3">
+                              {/* <div className="col-auto col-lg-3">
                                 Deal Value : {data.dealAmount}
-                              </div>
+                              </div> */}
                               {/* <div>Status : Open</div> */}
                             </div>
                             <div className="card-middle row">
                               <div className="col-sm-12 col-lg-6">
-                                <h6>
+                                {/* <h6>
                                   Deal Opened Time :{" "}
                                   {data.fundsAcceptanceStartDate}
-                                </h6>
+                                </h6> */}
                                 <h6>
                                   Deal Closing Time :{" "}
                                   {data.fundsAcceptanceEndDate}
                                 </h6>
-                                <h6>
+                                {/* <h6>
                                   First Participation :{" "}
                                   {data.firstParticipationDate}
-                                </h6>
+                                </h6> */}
                               </div>
-                              <div className="col-sm-12 col-lg-6">
+                              {/* <div className="col-sm-12 col-lg-6">
                                 <small>
                                   Comments : {data.messageSentToLenders}
                                 </small>
-                              </div>
+                              </div> */}
                             </div>
                             <div className="card-body">
                               <div className="row col-12 align-items-center">
@@ -203,12 +282,12 @@ const ViewCurrentDayDeals = () => {
                                     INR {data.lenderPaticipationLimit}
                                   </h6>
                                 </div>
-                                <div className="col-sm-6 col-lg-2">
+                                {/* <div className="col-sm-6 col-lg-2">
                                   <span>ATW</span>
                                   <h6 className="mb-0">
                                     {data.withdrawStatus}
                                   </h6>
-                                </div>
+                                </div> */}
 
                                 {data.withdrawStatus == "YES" && (
                                   <div className="col-sm-6 col-lg-2">
@@ -279,4 +358,4 @@ const ViewCurrentDayDeals = () => {
   );
 };
 
-export default ViewCurrentDayDeals;
+export default Testdeal1;

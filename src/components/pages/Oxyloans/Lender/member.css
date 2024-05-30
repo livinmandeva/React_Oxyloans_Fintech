@@ -7,3 +7,29 @@
   align-items: center;
   justify-content: center;
 }
+
+
+.card_heading{
+  text-transform:  capitalize !important;
+}
+
+.bg-success1{
+  background-color: gray !important;
+}
+.bg-success2{
+  background-color: #0a58ca !important;
+}
+
+.bg-success4{
+  background-color: gray !important;
+}
+.bg-success5{
+  background-color: #0a58ca !important;
+}
+/* .bg-success0{
+  background-color: #0a58ca !important;
+} */
+
+.bg-succe11{
+  background-color: #0a58ca !important;
+}

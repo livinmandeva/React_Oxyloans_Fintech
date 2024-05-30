@@ -198,6 +198,7 @@ const Sidebar = (props) => {
                     "/regularRunningDeal" === pathName ||
                     "/regularEscrowDeals" === pathName ||
                     "/regularPersonalDeal" === pathName ||
+                    "todaydeal"  === pathName  ||
                     "/viewCurrentDayDeals" === pathName
                       ? "active submenu"
                       : "submenu"
@@ -219,7 +220,7 @@ const Sidebar = (props) => {
                         display: isSideMenu == "Subjects" ? "block" : "none",
                       }}
                     >
-                      <li>
+                      {/* <li>
                         <Link
                           to="/viewCurrentDayDeals"
                           className={`${
@@ -228,8 +229,18 @@ const Sidebar = (props) => {
                         >
                           Today Deals
                         </Link>
+                      </li> */}
+                      
+                      <li>
+                        <Link
+                          to="/todaydeal"
+                          className={`${
+                            "/todaydeal" === pathName ? "active" : ""
+                          }`}
+                        >
+                          Today Deals
+                        </Link>
                       </li>
-
                       <li>
                         <Link
                           to="/regularRunningDeal"
@@ -303,7 +314,7 @@ const Sidebar = (props) => {
                             "/myRunningDeals" === pathName ? "active" : ""
                           }`}
                         >
-                          Running Deals
+                         Participate Deals
                         </Link>
                       </li>
                       <li>

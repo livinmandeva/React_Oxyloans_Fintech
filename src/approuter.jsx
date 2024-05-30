@@ -81,6 +81,8 @@ import BorrowerTicketHistory from "./components/pages/Oxyloans/Borrower/ViewTick
 import LoanRequest from "./components/pages/Oxyloans/Borrower/LoanRequest.jsx";
 import ForgotPassword from "./components/pages/Authentication/ForgotPassword.jsx";
 import Mycontacts1 from "./components/pages/Oxyloans/Lender/Mycontacts1.jsx";
+import Todaydeal from "./components/pages/Oxyloans/Lender/Todaydeal.jsx";
+import Testdeal1 from "./components/pages/Oxyloans/Lender/Testdeal1.jsx";
 
 
 // ********************BORROWER MODULE    ROUTES END ************************** //
@@ -134,6 +136,9 @@ const AppRouter = () => {
         <Route path="/mywithdrawalHistory" element={<MywithdrawalHistory />} />
         <Route path="/writetous" element={<Writetous />} />
         <Route path="/viewTicketHistory" element={<ViewTicketHistory />} />
+        <Route path="/todaydeal" element={<Todaydeal />} />
+
+        <Route path="/testdeals1" element={<Testdeal1 />} />
         <Route path="/viewCurrentDayDeals" element={<ViewCurrentDayDeals />} />
         <Route path="/emicalculator" element={<Emicalculator />} />
         <Route path="/configautoInvest" element={<ConfigautoInvest />} />

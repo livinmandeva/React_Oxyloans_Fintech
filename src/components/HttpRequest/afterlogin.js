@@ -87,23 +87,23 @@ export const sendInvait = async (email, mailContent, mailSubject) => {
   return response;
 };
 
-export const handlePaymembershipapi = async (member) => {
+export const handlePaymembershipapi = async (member , no  , feeAmountWithGst) => {
   const token = getToken();
   const userId = getUserId();
-  const membershipfiled = {
-    MONTHLY: 1000,
-    QUARTERLY: 2900,
-    HALFYEARLY: 5600,
-    PERYEAR: 9800,
-    LIFETIME: 100000,
-    FIVEYEARS: 50000,
-    TENYEARS: 90000,
-  };
-  const calculatedfee = (membershipfiled[member] * 118) / 100;
+  // const membershipfiled = {
+  //   MONTHLY: 1000,
+  //   QUARTERLY: 2900,
+  //   HALFYEARLY: 5600,
+  //   PERYEAR: 9800,
+  //   LIFETIME: 100000,
+  //   FIVEYEARS: 50000,
+  //   TENYEARS: 90000,
+  // };
+  // const calculatedfee = (membershipfiled[member] * 118) / 100;
   const data = {
     userId,
     type: "Wallet",
-    feeAmount: calculatedfee,
+    feeAmount: feeAmountWithGst,
     lenderFeePayments: member,
     paidFrom: "WEB",
   };
@@ -117,6 +117,18 @@ export const handlePaymembershipapi = async (member) => {
   return response;
 };
 
+
+export const lenderfeeamountdetailsapi =async()=>{
+const token =getToken();
+const userId =getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lender_fee_amount_details`,
+    "GET",
+    token
+  )
+  return  response;
+}
 export const cashfreemembershipamount = async (member) => {
   const membershipfiled = {
     MONTHLY: 1000,
@@ -168,6 +180,18 @@ export const getUserDetails = async () => {
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
     `personal/${userId}`,
+    "GET",
+    token
+  );
+  return response;
+};
+
+export const getUserDetails1 = async () => {
+  const token = getToken();
+  const userId = getUserId();
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `lender/personal/${userId}`,
     "GET",
     token
   );
@@ -370,6 +394,23 @@ export const handelapi = async (dealId) => {
   );
   return response;
 };
+
+
+export  const  getNotAchievedDealsapi =async(prama)=>{
+  const token = getToken();
+  const userId = getUserId();
+  const data = {
+    dealType :prama
+  }
+  const response = await handleApiRequestAfterLoginService(
+    API_BASE_URL,
+    `getNotAchievedDeals`,
+    "POST",
+    token,
+    data
+  );
+  return response;
+}
 export const regular_Api = async (dealType, urldealname, pageNo = 1) => {
   const token = getToken();
   const userId = getUserId();
@@ -398,6 +439,14 @@ export const regular_Api = async (dealType, urldealname, pageNo = 1) => {
       dealType: dealType,
     };
   } else if (urldealname == "viewCurrentDayDeals") {
+    var url = "listOfDealsInformationToLender";
+    var data = {
+      pageNo: pageNo,
+      pageSize: 10,
+      dealType: "CURRENT",
+    };
+  }
+  else if (urldealname == "Todaydeal") {
     var url = "listOfDealsInformationToLender";
     var data = {
       pageNo: pageNo,
@@ -964,7 +1013,7 @@ export const getMembershiphistory = async (pageNo = 1, pageSize = 10) => {
   });
   const response = await handleApiRequestAfterLoginService(
     API_BASE_URL,
-    `${userId}/fee_details_for_lender`,
+    `${userId}/lender_fee_paid_type`,
     "POST",
     token,
     postdatastring

@@ -32,6 +32,7 @@ const MembershipHistory = () => {
     );
     response.then((data) => {
       if (data.request.status == 200) {
+        console.log(data)
         setmembershiphistory({
           ...membershiphistory,
           apiData: data.data,
