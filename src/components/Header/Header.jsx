@@ -94,7 +94,7 @@ const Header = (profile) => {
             <img src={oxylogodashboard} alt="Logo" />
           </Link>
           <Link to="/dashboard" className="logo logo-small">
-            <img src={oxylogomobile} alt="Logo" width={30} height={30} />
+            <img src={oxylogomobile} alt="Logo" width={40} height={40} />
           </Link>
         </div>
         {/* /Logo */}
